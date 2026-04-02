@@ -1,0 +1,25 @@
+<h1><a href="gmail_v1.html">Gmail API</a> . <a href="gmail_v1.users.html">users</a> . <a href="gmail_v1.users.history.html">history</a></h1>
+  <code><a href="#list">list(userId, historyTypes=None, labelId=None, maxResults=None, pageToken=None, startHistoryId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Lists the history of all changes to the given mailbox. History results are returned in chronological order (increasing `historyId`).</p>
+    <code class="details" id="list">list(userId, historyTypes=None, labelId=None, maxResults=None, pageToken=None, startHistoryId=None, x__xgafv=None)</code>
+  <pre>Lists the history of all changes to the given mailbox. History results are returned in chronological order (increasing `historyId`).
+  historyTypes: string, History types to be returned by the function (repeated)
+      messageAdded - 
+      messageDeleted - 
+      labelAdded - 
+      labelRemoved - 
+  labelId: string, Only return messages with a label matching the ID.
+  maxResults: integer, Maximum number of history records to return. This field defaults to 100. The maximum allowed value for this field is 500.
+  startHistoryId: string, Required. Returns history records after the specified `startHistoryId`. The supplied `startHistoryId` should be obtained from the `historyId` of a message, thread, or previous `list` response. History IDs increase chronologically but are not contiguous with random gaps in between valid IDs. Supplying an invalid or out of date `startHistoryId` typically returns an `HTTP 404` error code. A `historyId` is typically valid for at least a week, but in some rare circumstances may be valid for only a few hours. If you receive an `HTTP 404` error response, your application should perform a full sync. If you receive no `nextPageToken` in the response, there are no updates to retrieve and you can store the returned `historyId` for a future request.
+  &quot;history&quot;: [ # List of history records. Any `messages` contained in the response will typically only have `id` and `threadId` fields populated.
+    { # A record of a change to the user&#x27;s mailbox. Each history change may affect multiple messages in multiple ways.
+      &quot;id&quot;: &quot;A String&quot;, # The mailbox sequence ID.
+      &quot;labelsAdded&quot;: [ # Labels added to messages in this history record.
+          &quot;labelIds&quot;: [ # Label IDs added to the message.
+          &quot;message&quot;: { # An email message.
+      &quot;labelsRemoved&quot;: [ # Labels removed from messages in this history record.
+          &quot;labelIds&quot;: [ # Label IDs removed from the message.
+      &quot;messages&quot;: [ # List of messages changed in this history record. The fields for specific change types, such as `messagesAdded` may duplicate messages in this field. We recommend using the specific change-type fields instead of this.
+      &quot;messagesAdded&quot;: [ # Messages added to the mailbox in this history record.
+      &quot;messagesDeleted&quot;: [ # Messages deleted (not Trashed) from the mailbox in this history record.
+  &quot;historyId&quot;: &quot;A String&quot;, # The ID of the mailbox&#x27;s current history record.

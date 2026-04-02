@@ -1,0 +1,191 @@
+ * The {@link YamlItemDTOTest} contains tests for the {@link YamlItemDTO} class.
+public class YamlItemDTOTest {
+    public void testGetType() throws IOException {
+        YamlItemDTO item = new YamlItemDTO();
+        assertEquals(null, item.getType());
+        item.type = "Number";
+        assertEquals("Number", item.getType());
+        item.type = "number";
+        item.dimension = "Dimensionless";
+        assertEquals("Number:Dimensionless", item.getType());
+        item.dimension = "dimensionless";
+        assertFalse(item.isValid(null, null));
+        item.type = "Switch";
+        item.name = "name";
+        assertTrue(item.isValid(null, null));
+        item.name = "$name";
+        item.name = "my-name";
+        item.name = "my_name";
+        item.type = "Group";
+        item.type = "GRoup";
+        item.group = new YamlGroupDTO();
+        item.group.type = "Switch";
+        item.group.function = "OR";
+        item.group.parameters = List.of("ON", "OFF");
+        item.type = "String";
+        item.group = null;
+        item.type = "string";
+        item.type = "Other";
+        item.dimension = "Other";
+        item.type = "Color";
+        item.dimension = null;
+        item.label = "My label";
+        item.icon = "xx:source:set:icon";
+        item.icon = "source:set:icon";
+        item.icon = "icon-source:$icon-set:my_icon";
+        item.icon = "icon-source:icon-set:my_icon";
+        item.groups = List.of("group1", "group 2");
+        item.groups = List.of("group1", "group2");
+        item.tags = Set.of("Tag1", "Tag 2");
+        item.channel = "binding:type:channelid";
+        item.channel = "binding:$type:uid:group#channelid";
+        item.channel = "binding:type:uid:group$channelid";
+        item.channel = "binding:type:uid:channelid";
+        item.channel = "binding:type:uid:group#channelid";
+        item.channels = Map.of("binding:type:uid:channelid2", Map.of());
+        item.channels = Map.of("binding:type:uid:channelid2", Map.of("param", 50));
+        item.channels = Map.of("binding:type:uid:channelid2", Map.of("param", 50, "profile", "system.offset"));
+        item.channels = Map.of("binding:type:uid:channelid2", Map.of("param", 50, "profile", "system:off.set"));
+        item.channels = Map.of("binding:type:uid:channelid2", Map.of("param", 50, "profile", "xxx:system:offset"));
+        item.channels = Map.of("binding:type:uid:channelid2", Map.of("param", 50, "profile", "system:offset"));
+        item.channels = Map.of("binding:type:uid:channelid2", Map.of("param", 50, "profile", "offset"));
+        YamlItemDTO item1 = new YamlItemDTO();
+        YamlItemDTO item2 = new YamlItemDTO();
+        item1.name = "item_name";
+        item2.name = "item_name_2";
+        assertFalse(item1.equals(item2));
+        item2.name = "item_name";
+        assertTrue(item1.equals(item2));
+        assertEquals(item1.hashCode(), item2.hashCode());
+        item1.type = "Number";
+        item2.type = "String";
+        item2.type = "Number";
+        item2.type = "number";
+        item1.dimension = "Temperature";
+        item2.dimension = "Humidity";
+        item2.dimension = "Temperature";
+        item1.label = "A label";
+        item2.label = "A label";
+        item1.icon = "oh:classic:temperature";
+        item2.icon = "oh:classic:temperature";
+        item1.groups = List.of("group1", "group2");
+        item2.groups = List.of("group1", "group2");
+        item1.tags = Set.of("Tag1", "Tag 2");
+        item2.tags = Set.of("Tag1", "Tag 2");
+        item1.group = new YamlGroupDTO();
+        item1.group.type = "Switch";
+        item1.group.function = "OR";
+        item1.group.parameters = List.of("ON", "OFF");
+        item2.group = new YamlGroupDTO();
+        item2.group.type = "Switch";
+        item2.group.function = "OR";
+        item2.group.parameters = List.of("ON", "OFF");
+        item1.channel = "binding:type:uid:channelid";
+        item2.channel = "binding:type:uid:channelid";
+        item1.channels = Map.of("binding:type:uid:channelid2", Map.of());
+        item2.channels = Map.of("binding:type:uid:channelid2", Map.of());
+        YamlMetadataDTO md = new YamlMetadataDTO();
+        md.value = "value";
+        md.config = Map.of("param", 50);
+        item1.metadata = Map.of("namespace", md);
+        YamlMetadataDTO md2 = new YamlMetadataDTO();
+        md2.value = "value";
+        md2.config = Map.of("param", 50);
+        item2.metadata = Map.of("namespace", md2);
+    public void testEqualsWithLabel() throws IOException {
+        item1.type = "String";
+        item1.label = null;
+        item2.label = null;
+        item2.label = "A different label";
+    public void testEqualsWithIcon() throws IOException {
+        item1.icon = null;
+        item2.icon = null;
+        item1.icon = "humidity";
+        item2.icon = "humidity";
+        item2.icon = "temperature";
+    public void testEqualsWithFormat() throws IOException {
+        item1.format = null;
+        item2.format = null;
+        item1.format = "%.1f °C";
+        item2.format = "%.1f °C";
+        item2.format = "%.0f °C";
+    public void testEqualsWithUnit() throws IOException {
+        item1.unit = null;
+        item2.unit = null;
+        item1.unit = "°C";
+        item2.unit = "°C";
+        item2.unit = "°F";
+    public void testEqualsWithAutoupdate() throws IOException {
+        item1.autoupdate = null;
+        item2.autoupdate = null;
+        item1.autoupdate = false;
+        item2.autoupdate = true;
+        item1.autoupdate = true;
+        item2.autoupdate = false;
+    public void testEqualsWithExpire() throws IOException {
+        item1.type = "Switch";
+        item2.type = "Switch";
+        item1.expire = null;
+        item2.expire = null;
+        item1.expire = "5m";
+        item2.expire = "5m";
+        item2.expire = "1h";
+    public void testEqualsWithGroups() throws IOException {
+        item1.groups = null;
+        item2.groups = null;
+        item1.groups = List.of();
+        item2.groups = List.of();
+        item2.groups = List.of("group1");
+        item2.groups = List.of("group1", "group2", "group3");
+        item2.groups = List.of("group2", "group1");
+    public void testEqualsWithTags() throws IOException {
+        item1.tags = null;
+        item2.tags = null;
+        item1.tags = Set.of();
+        item2.tags = Set.of();
+        item1.tags = Set.of("tag1", "tag2");
+        item2.tags = Set.of("tag1");
+        item2.tags = Set.of("tag1", "tag2", "tag3");
+        item2.tags = Set.of("tag1", "tag2");
+        item2.tags = Set.of("tag2", "tag1");
+    public void testEqualsWithChannels() throws IOException {
+        item2.channel = "binding:type:uid2:channelid";
+        item1.channels = null;
+        item2.channels = null;
+        item1.channels = Map.of();
+        item2.channels = Map.of();
+        item2.channels = Map.of("binding:type:uid:channelid2", Map.of(), "binding:type:uid:channelid3", Map.of());
+        item1.channels = Map.of("binding:type:uid:channelid2", Map.of(), "binding:type:uid:channelid3", Map.of());
+        item2.channels = Map.of("binding:type:uid:channelid3", Map.of(), "binding:type:uid:channelid2", Map.of());
+        item1.channels = Map.of("binding:type:uid:channelid2",
+                Map.of("profile", "anyprofile", "param", "profile param"));
+        item2.channels = Map.of("binding:type:uid:channelid2",
+                Map.of("param", "profile param", "profile", "anyprofile"));
+        item2.channels = Map.of("binding:type:uid:channelid2", Map.of("profile", "anyprofile"));
+    public void testEqualsWithMetadata() throws IOException {
+        YamlMetadataDTO md1 = new YamlMetadataDTO();
+        md1.value = "value";
+        md1.config = Map.of("param", 50);
+        md2.config = Map.of("param", "parameter value");
+        YamlMetadataDTO md3 = new YamlMetadataDTO();
+        md3.value = "value";
+        md3.config = Map.of("param", 50);
+        item1.metadata = null;
+        item2.metadata = null;
+        item1.metadata = Map.of();
+        item2.metadata = Map.of();
+        item1.metadata = Map.of("namespace", md1);
+        item2.metadata = Map.of("namespace2", md3);
+        item2.metadata = Map.of("namespace", md3);
+        item2.metadata = Map.of("namespace", md3, "namespace2", md2);
+    public void testExpireMetadataWarning() throws IOException {
+        item.name = "item_name";
+        item.expire = "10m";
+        md.value = "5m";
+        item.metadata = Map.of("expire", md);
+        assertTrue(item.isValid(errors, warnings));
+        assertTrue(errors.isEmpty());
+        assertEquals(1, warnings.size());
+        assertEquals(
+                "item \"item_name\": \"expire\" field is redundant with \"expire\" metadata; value \"5m\" will be considered",
+                warnings.getFirst());

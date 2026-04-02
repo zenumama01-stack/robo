@@ -1,0 +1,34 @@
+<h1><a href="bigtableadmin_v2.html">Cloud Bigtable Admin API</a> . <a href="bigtableadmin_v2.projects.html">projects</a> . <a href="bigtableadmin_v2.projects.instances.html">instances</a> . <a href="bigtableadmin_v2.projects.instances.tables.html">tables</a> . <a href="bigtableadmin_v2.projects.instances.tables.schemaBundles.html">schemaBundles</a></h1>
+  <code><a href="#create">create(parent, body=None, schemaBundleId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Creates a new schema bundle in the specified table.</p>
+<p class="firstline">Deletes a schema bundle in the specified table.</p>
+<p class="firstline">Gets metadata information about the specified schema bundle.</p>
+<p class="firstline">Lists all schema bundles associated with the specified table.</p>
+<p class="firstline">Updates a schema bundle in the specified table.</p>
+    <code class="details" id="create">create(parent, body=None, schemaBundleId=None, x__xgafv=None)</code>
+  <pre>Creates a new schema bundle in the specified table.
+  parent: string, Required. The parent resource where this schema bundle will be created. Values are of the form `projects/{project}/instances/{instance}/tables/{table}`. (required)
+{ # A named collection of related schemas.
+  &quot;etag&quot;: &quot;A String&quot;, # Optional. The etag for this schema bundle. This may be sent on update and delete requests to ensure the client has an up-to-date value before proceeding. The server returns an ABORTED error on a mismatched etag.
+  &quot;name&quot;: &quot;A String&quot;, # Identifier. The unique name identifying this schema bundle. Values are of the form `projects/{project}/instances/{instance}/tables/{table}/schemaBundles/{schema_bundle}`
+  &quot;protoSchema&quot;: { # Represents a protobuf schema. # Schema for Protobufs.
+    &quot;protoDescriptors&quot;: &quot;A String&quot;, # Required. Contains a protobuf-serialized [google.protobuf.FileDescriptorSet](https://github.com/protocolbuffers/protobuf/blob/main/src/google/protobuf/descriptor.proto), which could include multiple proto files. To generate it, [install](https://grpc.io/docs/protoc-installation/) and run `protoc` with `--include_imports` and `--descriptor_set_out`. For example, to generate for moon/shot/app.proto, run ``` $protoc --proto_path=/app_path --proto_path=/lib_path \ --include_imports \ --descriptor_set_out=descriptors.pb \ moon/shot/app.proto ``` For more details, see protobuffer [self description](https://developers.google.com/protocol-buffers/docs/techniques#self-description).
+  schemaBundleId: string, Required. The unique ID to use for the schema bundle, which will become the final component of the schema bundle&#x27;s resource name.
+  <pre>Deletes a schema bundle in the specified table.
+  name: string, Required. The unique name of the schema bundle to delete. Values are of the form `projects/{project}/instances/{instance}/tables/{table}/schemaBundles/{schema_bundle}` (required)
+  etag: string, Optional. The etag of the schema bundle. If this is provided, it must match the server&#x27;s etag. The server returns an ABORTED error on a mismatched etag.
+  <pre>Gets metadata information about the specified schema bundle.
+  name: string, Required. The unique name of the schema bundle to retrieve. Values are of the form `projects/{project}/instances/{instance}/tables/{table}/schemaBundles/{schema_bundle}` (required)
+  <pre>Lists all schema bundles associated with the specified table.
+  parent: string, Required. The parent, which owns this collection of schema bundles. Values are of the form `projects/{project}/instances/{instance}/tables/{table}`. (required)
+  pageSize: integer, The maximum number of schema bundles to return. If the value is positive, the server may return at most this value. If unspecified, the server will return the maximum allowed page size.
+  pageToken: string, A page token, received from a previous `ListSchemaBundles` call. Provide this to retrieve the subsequent page. When paginating, all other parameters provided to `ListSchemaBundles` must match the call that provided the page token.
+  view: string, Optional. The resource_view to be applied to the returned SchemaBundles&#x27; fields. Defaults to NAME_ONLY.
+      SCHEMA_BUNDLE_VIEW_UNSPECIFIED - Uses the default view for each method as documented in the request.
+      BASIC - Only populates the SchemaBundle&#x27;s basic metadata. This includes: name, etag, create_time, update_time.
+      FULL - Populates every field.
+    { # The response for ListSchemaBundles.
+  &quot;schemaBundles&quot;: [ # The schema bundles from the specified table.
+  <pre>Updates a schema bundle in the specified table.
+  name: string, Identifier. The unique name identifying this schema bundle. Values are of the form `projects/{project}/instances/{instance}/tables/{table}/schemaBundles/{schema_bundle}` (required)
+  ignoreWarnings: boolean, Optional. If set, ignore the safety checks when updating the Schema Bundle. The safety checks are: - The new Schema Bundle is backwards compatible with the existing Schema Bundle.

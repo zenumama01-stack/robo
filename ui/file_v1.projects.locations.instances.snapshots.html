@@ -1,0 +1,24 @@
+<h1><a href="file_v1.html">Cloud Filestore API</a> . <a href="file_v1.projects.html">projects</a> . <a href="file_v1.projects.locations.html">locations</a> . <a href="file_v1.projects.locations.instances.html">instances</a> . <a href="file_v1.projects.locations.instances.snapshots.html">snapshots</a></h1>
+  <code><a href="#create">create(parent, body=None, snapshotId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Creates a snapshot.</p>
+<p class="firstline">Gets the details of a specific snapshot.</p>
+<p class="firstline">Lists all snapshots in a project for either a specified location or for all locations.</p>
+<p class="firstline">Updates the settings of a specific snapshot.</p>
+    <code class="details" id="create">create(parent, body=None, snapshotId=None, x__xgafv=None)</code>
+  <pre>Creates a snapshot.
+  parent: string, Required. The Filestore Instance to create the snapshots of, in the format `projects/{project_id}/locations/{location}/instances/{instance_id}` (required)
+{ # A Filestore snapshot.
+  &quot;createTime&quot;: &quot;A String&quot;, # Output only. The time when the snapshot was created.
+  &quot;description&quot;: &quot;A String&quot;, # A description of the snapshot with 2048 characters or less. Requests with longer descriptions will be rejected.
+  &quot;filesystemUsedBytes&quot;: &quot;A String&quot;, # Output only. The amount of bytes needed to allocate a full copy of the snapshot content
+  &quot;name&quot;: &quot;A String&quot;, # Output only. The resource name of the snapshot, in the format `projects/{project_id}/locations/{location_id}/instances/{instance_id}/snapshots/{snapshot_id}`.
+  &quot;state&quot;: &quot;A String&quot;, # Output only. The snapshot state.
+  snapshotId: string, Required. The ID to use for the snapshot. The ID must be unique within the specified instance. This value must start with a lowercase letter followed by up to 62 lowercase letters, numbers, or hyphens, and cannot end with a hyphen.
+  name: string, Required. The snapshot resource name, in the format `projects/{project_id}/locations/{location}/instances/{instance_id}/snapshots/{snapshot_id}` (required)
+  <pre>Gets the details of a specific snapshot.
+  <pre>Lists all snapshots in a project for either a specified location or for all locations.
+  parent: string, Required. The instance for which to retrieve snapshot information, in the format `projects/{project_id}/locations/{location}/instances/{instance_id}`. (required)
+    { # ListSnapshotsResponse is the result of ListSnapshotsRequest.
+  &quot;snapshots&quot;: [ # A list of snapshots in the project for the specified instance.
+  <pre>Updates the settings of a specific snapshot.
+  name: string, Output only. The resource name of the snapshot, in the format `projects/{project_id}/locations/{location_id}/instances/{instance_id}/snapshots/{snapshot_id}`. (required)

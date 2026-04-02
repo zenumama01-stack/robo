@@ -1,0 +1,42 @@
+<h1><a href="compute_alpha.html">Compute Engine API</a> . <a href="compute_alpha.httpHealthChecks.html">httpHealthChecks</a></h1>
+  <code><a href="#delete">delete(project, httpHealthCheck, requestId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Deletes the specified HttpHealthCheck resource.</p>
+  <code><a href="#get">get(project, httpHealthCheck, x__xgafv=None)</a></code></p>
+<p class="firstline">Returns the specified HttpHealthCheck resource.</p>
+<p class="firstline">Creates a HttpHealthCheck resource in the specified project using the data</p>
+<p class="firstline">Retrieves the list of HttpHealthCheck resources available to the specified</p>
+  <code><a href="#patch">patch(project, httpHealthCheck, body=None, requestId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Updates a HttpHealthCheck resource in the specified project using the data</p>
+  <code><a href="#update">update(project, httpHealthCheck, body=None, requestId=None, x__xgafv=None)</a></code></p>
+    <code class="details" id="delete">delete(project, httpHealthCheck, requestId=None, x__xgafv=None)</code>
+  <pre>Deletes the specified HttpHealthCheck resource.
+  httpHealthCheck: string, Name of the HttpHealthCheck resource to delete. (required)
+    <code class="details" id="get">get(project, httpHealthCheck, x__xgafv=None)</code>
+  <pre>Returns the specified HttpHealthCheck resource.
+  httpHealthCheck: string, Name of the HttpHealthCheck resource to return. (required)
+    { # Represents a legacy HTTP Health Check resource.
+    # Legacy HTTP health checks are now only required by target pool-based network
+    # load balancers. For all other load balancers, including backend service-based
+    # network load balancers, and for managed instance group auto-healing, you must
+    # use modern (non-legacy) health checks.
+  &quot;checkIntervalSec&quot;: 42, # How often (in seconds) to send a health check. The default value is5 seconds.
+      # empty (default value), the public IP on behalf of which this health check
+      # is performed will be used.
+  &quot;kind&quot;: &quot;compute#httpHealthCheck&quot;, # Output only. [Output Only] Type of the resource. Alwayscompute#httpHealthCheck for HTTP health checks.
+  &quot;port&quot;: 42, # The TCP port number for the HTTP health check request. The default value is80.
+  &quot;requestPath&quot;: &quot;A String&quot;, # The request path of the HTTP health check request. The default value is/. This field does not support query
+      # parameters. Must comply withRFC3986.
+  &quot;timeoutSec&quot;: 42, # How long (in seconds) to wait before claiming failure. The default value is5 seconds. It is invalid for timeoutSec to have
+      # greater value than checkIntervalSec.
+  &quot;unhealthyThreshold&quot;: 42, # A so-far healthy instance will be marked unhealthy after this
+      # many consecutive failures. The default value is 2.
+  <pre>Creates a HttpHealthCheck resource in the specified project using the data
+  <pre>Retrieves the list of HttpHealthCheck resources available to the specified
+    { # Contains a list of HttpHealthCheck resources.
+  &quot;items&quot;: [ # A list of HttpHealthCheck resources.
+  &quot;kind&quot;: &quot;compute#httpHealthCheckList&quot;, # Output only. Type of resource.
+    <code class="details" id="patch">patch(project, httpHealthCheck, body=None, requestId=None, x__xgafv=None)</code>
+  <pre>Updates a HttpHealthCheck resource in the specified project using the data
+  httpHealthCheck: string, Name of the HttpHealthCheck resource to patch. (required)
+    <code class="details" id="update">update(project, httpHealthCheck, body=None, requestId=None, x__xgafv=None)</code>
+  httpHealthCheck: string, Name of the HttpHealthCheck resource to update. (required)

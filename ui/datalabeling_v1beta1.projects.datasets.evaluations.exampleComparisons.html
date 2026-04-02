@@ -1,0 +1,12 @@
+<h1><a href="datalabeling_v1beta1.html">Data Labeling API</a> . <a href="datalabeling_v1beta1.projects.html">projects</a> . <a href="datalabeling_v1beta1.projects.datasets.html">datasets</a> . <a href="datalabeling_v1beta1.projects.datasets.evaluations.html">evaluations</a> . <a href="datalabeling_v1beta1.projects.datasets.evaluations.exampleComparisons.html">exampleComparisons</a></h1>
+<p class="firstline">Searches example comparisons from an evaluation. The return format is a list of example comparisons that show ground truth and prediction(s) for a single input. Search by providing an evaluation ID.</p>
+  <pre>Searches example comparisons from an evaluation. The return format is a list of example comparisons that show ground truth and prediction(s) for a single input. Search by providing an evaluation ID.
+  parent: string, Required. Name of the Evaluation resource to search for example comparisons from. Format: &quot;projects/{project_id}/datasets/{dataset_id}/evaluations/ {evaluation_id}&quot; (required)
+{ # Request message of SearchExampleComparisons.
+  &quot;pageSize&quot;: 42, # Optional. Requested page size. Server may return fewer results than requested. Default value is 100.
+  &quot;pageToken&quot;: &quot;A String&quot;, # Optional. A token identifying a page of results for the server to return. Typically obtained by the nextPageToken of the response to a previous search rquest. If you don&#x27;t specify this field, the API call requests the first page of the search.
+    { # Results of searching example comparisons.
+  &quot;exampleComparisons&quot;: [ # A list of example comparisons matching the search criteria.
+    { # Example comparisons comparing ground truth output and predictions for a specific input.
+      &quot;groundTruthExample&quot;: { # An Example is a piece of data and its annotation. For example, an image with label &quot;house&quot;. # The ground truth output for the input.
+      &quot;modelCreatedExamples&quot;: [ # Predictions by the model for the input.

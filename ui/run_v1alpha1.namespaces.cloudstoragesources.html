@@ -1,0 +1,35 @@
+<h1><a href="run_v1alpha1.html">Cloud Run Admin API</a> . <a href="run_v1alpha1.namespaces.html">namespaces</a> . <a href="run_v1alpha1.namespaces.cloudstoragesources.html">cloudstoragesources</a></h1>
+<p class="firstline">Creates a new cloudstoragesource.</p>
+<p class="firstline">Rpc to delete a cloudstoragesource.</p>
+<p class="firstline">Rpc to get information about a cloudstoragesource.</p>
+<p class="firstline">Rpc to list cloudstoragesources.</p>
+  <code><a href="#replaceCloudStorageSource">replaceCloudStorageSource(name, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Rpc to replace a cloudstoragesource. Only the spec and metadata labels and annotations are modifiable. After the Update request, Cloud Run will work to make the 'status' match the requested 'spec'. May provide metadata.resourceVersion to enforce update from last read for optimistic concurrency control.</p>
+  <pre>Creates a new cloudstoragesource.
+  parent: string, Required. The project ID or project number in which this cloudstoragesource should be created. (required)
+{ # The CloudStorageSource resource.
+  &quot;kind&quot;: &quot;A String&quot;, # The kind of resource, in this case &quot;CloudStorageSource&quot;.
+  &quot;metadata&quot;: { # ObjectMeta is metadata that all persisted resources must have, which includes all objects users must create. # Metadata associated with this CloudStorageSource.
+  &quot;spec&quot;: { # The desired state of the CloudStorageSource. # Spec defines the desired state of the CloudStorageSource.
+    &quot;bucket&quot;: &quot;A String&quot;, # Bucket to subscribe to.
+    &quot;eventTypes&quot;: [ # EventTypes to subscribe to. If unspecified, then subscribe to all events.
+    &quot;objectNamePrefix&quot;: &quot;A String&quot;, # ObjectNamePrefix limits the notifications to objects with this prefix.
+    &quot;payloadFormat&quot;: &quot;A String&quot;, # PayloadFormat specifies the contents of the message payload. See https://cloud.google.com/storage/docs/pubsub-notifications#payload.
+    &quot;project&quot;: &quot;A String&quot;, # Project is the ID of the Google Cloud Project that the PubSub Topic exists in. If omitted, defaults to same as the cluster.
+    &quot;pubsubSecret&quot;: { # Cloud Run fully managed: not supported Cloud Run on GKE: supported SecretKeySelector selects a key of a Secret. # PubSubSecret is the credential to use to create Topic / PullSubscription resources. If omitted, uses Secret.
+    &quot;serviceAccountName&quot;: &quot;A String&quot;, # ServiceAccountName holds the name of the Kubernetes service account as which the underlying K8s resources should be run. If unspecified this will default to the &quot;default&quot; service account for the namespace in which the GCS exists.
+  &quot;status&quot;: { # CloudStorageSourceStatus represents the current state of a CloudStorageSource. # Status represents the current state of the CloudStorageSource. This data may be out of date.
+    &quot;conditions&quot;: [ # Array of observed CloudStorageSourceConditions, indicating the current state of the CloudStorageSource.
+    &quot;observedGeneration&quot;: 42, # ObservedGeneration is the &#x27;Generation&#x27; of the CloudStorageSource that was last processed by the controller.
+  <pre>Rpc to delete a cloudstoragesource.
+  name: string, Required. The name of the cloudstoragesource being deleted. If needed, replace {namespace_id} with the project ID. (required)
+  <pre>Rpc to get information about a cloudstoragesource.
+  name: string, Required. The name of the cloudstoragesource being retrieved. If needed, replace {namespace_id} with the project ID. (required)
+  <pre>Rpc to list cloudstoragesources.
+  parent: string, Required. The project ID or project number from which the cloudstoragesources should be listed. (required)
+    { # ListCloudStorageSourcesResponse is a list of CloudStorageSource resources.
+  &quot;items&quot;: [ # List of CloudStorageSources.
+  &quot;kind&quot;: &quot;A String&quot;, # The kind of this resource, in this case &quot;CloudStorageSourceList&quot;.
+  &quot;metadata&quot;: { # ListMeta describes metadata that synthetic resources must have, including lists and various status objects. A resource may have only one of {ObjectMeta, ListMeta}. # Metadata associated with this CloudStorageSource list.
+    <code class="details" id="replaceCloudStorageSource">replaceCloudStorageSource(name, body=None, x__xgafv=None)</code>
+  <pre>Rpc to replace a cloudstoragesource. Only the spec and metadata labels and annotations are modifiable. After the Update request, Cloud Run will work to make the &#x27;status&#x27; match the requested &#x27;spec&#x27;. May provide metadata.resourceVersion to enforce update from last read for optimistic concurrency control.

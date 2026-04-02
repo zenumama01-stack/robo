@@ -1,0 +1,47 @@
+<h1><a href="admin_directory_v1.html">Admin SDK API</a> . <a href="admin_directory_v1.groups.html">groups</a></h1>
+  <code><a href="admin_directory_v1.groups.aliases.html">aliases()</a></code>
+<p class="firstline">Returns the aliases Resource.</p>
+  <code><a href="#delete">delete(groupKey, x__xgafv=None)</a></code></p>
+<p class="firstline">Deletes a group.</p>
+  <code><a href="#get">get(groupKey, x__xgafv=None)</a></code></p>
+<p class="firstline">Retrieves a group's properties.</p>
+<p class="firstline">Creates a group.</p>
+  <code><a href="#list">list(customer=None, domain=None, maxResults=None, orderBy=None, pageToken=None, query=None, sortOrder=None, userKey=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Retrieves all groups of a domain or of a user given a userKey (paginated).</p>
+  <code><a href="#patch">patch(groupKey, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Updates a group's properties. This method supports [patch semantics](https://developers.google.com/workspace/admin/directory/v1/guides/performance#patch).</p>
+  <code><a href="#update">update(groupKey, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Updates a group's properties.</p>
+    <code class="details" id="delete">delete(groupKey, x__xgafv=None)</code>
+  <pre>Deletes a group.
+    <code class="details" id="get">get(groupKey, x__xgafv=None)</code>
+  <pre>Retrieves a group&#x27;s properties.
+    { # Google Groups provide your users the ability to send messages to groups of people using the group&#x27;s email address. For more information about common tasks, see the [Developer&#x27;s Guide](https://developers.google.com/workspace/admin/directory/v1/guides/manage-groups). For information about other types of groups, see the [Cloud Identity Groups API documentation](https://cloud.google.com/identity/docs/groups). Note: The user calling the API (or being impersonated by a service account) must have an assigned [role](https://developers.google.com/workspace/admin/directory/v1/guides/manage-roles) that includes Admin API Groups permissions, such as Super Admin or Groups Admin.
+  &quot;adminCreated&quot;: True or False, # Read-only. Value is `true` if this group was created by an administrator rather than a user.
+  &quot;aliases&quot;: [ # Read-only. The list of a group&#x27;s alias email addresses. To add, update, or remove a group&#x27;s aliases, use the `groups.aliases` methods. If edited in a group&#x27;s POST or PUT request, the edit is ignored.
+  &quot;description&quot;: &quot;A String&quot;, # An extended description to help users determine the purpose of a group. For example, you can include information about who should join the group, the types of messages to send to the group, links to FAQs about the group, or related groups. Maximum length is `4,096` characters.
+  &quot;directMembersCount&quot;: &quot;A String&quot;, # The number of users that are direct members of the group. If a group is a member (child) of this group (the parent), members of the child group are not counted in the `directMembersCount` property of the parent group.
+  &quot;email&quot;: &quot;A String&quot;, # The group&#x27;s email address. If your account has multiple domains, select the appropriate domain for the email address. The `email` must be unique. This property is required when creating a group. Group email addresses are subject to the same character usage rules as usernames, see the [help center](https://support.google.com/a/answer/9193374) for details.
+  &quot;id&quot;: &quot;A String&quot;, # Read-only. The unique ID of a group. A group `id` can be used as a group request URI&#x27;s `groupKey`.
+  &quot;kind&quot;: &quot;admin#directory#group&quot;, # The type of the API resource. For Groups resources, the value is `admin#directory#group`.
+  &quot;name&quot;: &quot;A String&quot;, # The group&#x27;s display name.
+  &quot;nonEditableAliases&quot;: [ # Read-only. The list of the group&#x27;s non-editable alias email addresses that are outside of the account&#x27;s primary domain or subdomains. These are functioning email addresses used by the group. This is a read-only property returned in the API&#x27;s response for a group. If edited in a group&#x27;s POST or PUT request, the edit is ignored.
+  <pre>Creates a group.
+    <code class="details" id="list">list(customer=None, domain=None, maxResults=None, orderBy=None, pageToken=None, query=None, sortOrder=None, userKey=None, x__xgafv=None)</code>
+  <pre>Retrieves all groups of a domain or of a user given a userKey (paginated).
+  customer: string, The unique ID for the customer&#x27;s Google Workspace account. In case of a multi-domain account, to fetch all groups for a customer, use this field instead of `domain`. You can also use the `my_customer` alias to represent your account&#x27;s `customerId`. The `customerId` is also returned as part of the [Users](https://developers.google.com/workspace/admin/directory/v1/reference/users) resource. You must provide either the `customer` or the `domain` parameter.
+  domain: string, The domain name. Use this field to get groups from only one domain. To return all domains for a customer account, use the `customer` query parameter instead.
+  maxResults: integer, Maximum number of results to return. Max allowed value is 200.
+  orderBy: string, Column to use for sorting results
+      email - Email of the group.
+  pageToken: string, Token to specify next page in the list
+  query: string, Query string search. Contains one or more search clauses, each with a field, operator, and value. For complete documentation, go to [Search for groups](https://developers.google.com/workspace/admin/directory/v1/guides/search-groups).
+  sortOrder: string, Whether to return results in ascending or descending order. Only of use when orderBy is also used
+  userKey: string, Email or immutable ID of the user if only those groups are to be listed, the given user is a member of. If it&#x27;s an ID, it should match with the ID of the user object. Cannot be used with the `customer` parameter.
+  &quot;groups&quot;: [ # A list of group objects.
+  &quot;kind&quot;: &quot;admin#directory#groups&quot;, # Kind of resource this is.
+  &quot;nextPageToken&quot;: &quot;A String&quot;, # Token used to access next page of this result.
+    <code class="details" id="patch">patch(groupKey, body=None, x__xgafv=None)</code>
+  <pre>Updates a group&#x27;s properties. This method supports [patch semantics](https://developers.google.com/workspace/admin/directory/v1/guides/performance#patch).
+    <code class="details" id="update">update(groupKey, body=None, x__xgafv=None)</code>
+  <pre>Updates a group&#x27;s properties.

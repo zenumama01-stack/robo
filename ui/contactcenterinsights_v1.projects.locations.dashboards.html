@@ -1,0 +1,50 @@
+<h1><a href="contactcenterinsights_v1.html">Contact Center AI Insights API</a> . <a href="contactcenterinsights_v1.projects.html">projects</a> . <a href="contactcenterinsights_v1.projects.locations.html">locations</a> . <a href="contactcenterinsights_v1.projects.locations.dashboards.html">dashboards</a></h1>
+  <code><a href="contactcenterinsights_v1.projects.locations.dashboards.charts.html">charts()</a></code>
+<p class="firstline">Returns the charts Resource.</p>
+  <code><a href="#create">create(parent, body=None, dashboardId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Creates a Dashboard.</p>
+<p class="firstline">Deletes a Dashboard.</p>
+<p class="firstline">Gets a Dashboard.</p>
+<p class="firstline">Lists Dashboards.</p>
+<p class="firstline">Updates a Dashboard.</p>
+    <code class="details" id="create">create(parent, body=None, dashboardId=None, x__xgafv=None)</code>
+  <pre>Creates a Dashboard.
+  parent: string, Required. The parent resource of the dashboard. (required)
+{ # Configurable dashboard
+  &quot;createTime&quot;: &quot;A String&quot;, # Output only. Dashboard creation time.
+  &quot;dateRangeConfig&quot;: { # Date range configuration for dashboard charts. # Date range config applied to all charts in the dashboard.
+  &quot;description&quot;: &quot;A String&quot;, # Dashboard description
+  &quot;displayName&quot;: &quot;A String&quot;, # User provided display name of the dashboard.
+  &quot;filter&quot;: &quot;A String&quot;, # Filter applied to all charts in the dashboard. Should support scope later.
+  &quot;name&quot;: &quot;A String&quot;, # Identifier. Dashboard resource name. Format: projects/{project}/locations/{location}/dashboards/{dashboard}
+  &quot;readOnly&quot;: True or False, # Output only. Whether the dashboard is read-only. All predefined dashboards are read-only and cannot be modified by the user.
+  &quot;rootContainer&quot;: { # Configurable dashboard&#x27;s container. Container can contain multiple widgets. # The dashboard&#x27;s root widget container. We want to display the dashboard layout in a tree-like structure, where the root container contains other widgets (containers or charts) as children.
+    &quot;containerId&quot;: &quot;A String&quot;, # Output only. Unique ID for the container.
+    &quot;dateRangeConfig&quot;: { # Date range configuration for dashboard charts. # Date range config applied to all charts in the container.
+    &quot;description&quot;: &quot;A String&quot;, # Container description
+    &quot;displayName&quot;: &quot;A String&quot;, # User provided display name of the Container.
+    &quot;height&quot;: 42, # The height of the container in grid units.
+    &quot;widgets&quot;: [ # Widgets in the Container.
+      { # Represents a dashboard element, could be a nested Container or Chart.
+        &quot;chart&quot;: { # Configurable dashboard&#x27;s widget that displays data as a chart. # A chart widget.
+        &quot;chartReference&quot;: &quot;A String&quot;, # A reference to a chart widget. Format: projects/{project}/locations/{location}/dashboards/{dashboard}/charts/{chart}
+        &quot;container&quot;: # Object with schema name: GoogleCloudContactcenterinsightsV1Container # A container widget.
+    &quot;width&quot;: 42, # The width of the container in grid units.
+  &quot;updateTime&quot;: &quot;A String&quot;, # Output only. Dashboard last update time.
+  dashboardId: string, Optional. A unique ID for the new Dashboard. This ID will become the final component of the Dashboard&#x27;s resource name. If no ID is specified, a server-generated ID will be used. This value should be 4-64 characters and must match the regular expression `^[a-z]([a-z0-9-]{0,61}[a-z0-9])?$`.
+  <pre>Deletes a Dashboard.
+  name: string, Required. The name of the dashboard to delete. (required)
+  <pre>Gets a Dashboard.
+  name: string, Required. The name of the dashboard to get. (required)
+  <pre>Lists Dashboards.
+  parent: string, Required. The parent resource of the dashboards. (required)
+  filter: string, Optional. The filter expression to filter dashboards listed in the response.
+  orderBy: string, Optional. The order by expression to order dashboards listed in the response.
+  pageSize: integer, Optional. The maximum number of dashboards to return. The service may return fewer than this value. The default and maximum value is 100.
+  pageToken: string, Optional. The value returned by the last `ListDashboardsResponse`. This value indicates that this is a continuation of a prior `ListDashboards` call and that the system should return the next page of data.
+    { # The response of listing dashboards.
+  &quot;dashboards&quot;: [ # The dashboards under the parent.
+  &quot;nextPageToken&quot;: &quot;A String&quot;, # The value returned by the last `ListDashboardsResponse`. This value indicates that this is a continuation of a prior `ListDashboards` call and that the system should return the next page of data.
+  <pre>Updates a Dashboard.
+  name: string, Identifier. Dashboard resource name. Format: projects/{project}/locations/{location}/dashboards/{dashboard} (required)
+  updateMask: string, Optional. List of fields to be updated. All possible fields can be updated by passing `*`, or a subset of the following updateable fields can be provided: * `display_name` * `root_container` * `description`

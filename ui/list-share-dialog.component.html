@@ -1,0 +1,80 @@
+    [title]="dialogTitle"
+    <div class="share-dialog-content">
+          <mj-loading text="Loading shares..."></mj-loading>
+      @if (!loading) {
+        <!-- Add new share section -->
+        @if (canModifyShares) {
+          <div class="add-share-section">
+            <h4 class="section-title">Add people or roles</h4>
+            <!-- Search type toggle -->
+            <div class="search-type-toggle">
+                [fillMode]="searchType === 'User' ? 'solid' : 'outline'"
+                [themeColor]="searchType === 'User' ? 'primary' : 'base'"
+                (click)="setSearchType('User')">
+                <i class="fa-solid fa-user"></i> Users
+                [fillMode]="searchType === 'Role' ? 'solid' : 'outline'"
+                [themeColor]="searchType === 'Role' ? 'primary' : 'base'"
+                (click)="setSearchType('Role')">
+                <i class="fa-solid fa-users"></i> Roles
+                (valueChange)="onSearchInput($event)"
+                [placeholder]="'Search for ' + (searchType === 'User' ? 'users' : 'roles') + '...'"
+                (blur)="showSearchResults = false">
+              <!-- Search results dropdown -->
+              @if (showSearchResults && searchResults.length > 0) {
+                  @for (recipient of searchResults; track recipient) {
+                    <div class="search-result-item"
+                      (mousedown)="selectRecipient(recipient)">
+                      <i [class]="getShareTypeIcon(recipient.type)"></i>
+                      <div class="recipient-info">
+                        <span class="recipient-name">{{ recipient.name }}</span>
+                        @if (recipient.email) {
+                          <span class="recipient-email">{{ recipient.email }}</span>
+            <!-- Selected recipient and permission -->
+            @if (selectedRecipient) {
+              <div class="selected-recipient">
+                <div class="recipient-chip">
+                  <i [class]="getShareTypeIcon(selectedRecipient.type)"></i>
+                  <span>{{ selectedRecipient.name }}</span>
+                  <button kendoButton [look]="'flat'" [icon]="'close'" (click)="clearSearch()"></button>
+                  [data]="permissionOptions"
+                  [(ngModel)]="selectedPermission"
+                  class="permission-dropdown">
+                    <div class="permission-option">
+                      <span class="permission-label">{{ dataItem.label }}</span>
+                      <span class="permission-desc">{{ dataItem.description }}</span>
+                  (click)="addShare()">
+                  <i class="fa-solid fa-plus"></i> Add
+        @if (currentShares.length > 0 && canModifyShares) {
+          <hr class="section-divider">
+        <!-- Current shares section -->
+        @if (currentShares.length > 0) {
+          <div class="current-shares-section">
+            <h4 class="section-title">People with access</h4>
+            <div class="share-list">
+              @for (share of currentShares; track share) {
+                <div class="share-item">
+                  <div class="share-info">
+                    <i [class]="getShareTypeIcon(share.type)" class="share-type-icon"></i>
+                    <div class="share-details">
+                      <span class="share-name">{{ share.recipientName }}</span>
+                      @if (share.recipientEmail) {
+                        <span class="share-email">{{ share.recipientEmail }}</span>
+                      @if (share.type === 'Role') {
+                        <span class="share-type-label">Role</span>
+                  <div class="share-actions">
+                        [value]="share.permissionLevel"
+                        (valueChange)="updateSharePermission(share, $event)"
+                        class="permission-dropdown-small">
+                    @if (!canModifyShares) {
+                        {{ getPermissionLabel(share.permissionLevel) }}
+                        [look]="'flat'"
+                        title="Remove access"
+                        (click)="removeShare(share)">
+        @if (currentShares.length === 0 && !loading) {
+            <i class="fa-solid fa-share-nodes empty-icon"></i>
+            <p>This list hasn't been shared with anyone yet.</p>
+              <p class="empty-hint">
+                Use the search above to find users or roles to share with.
+        <!-- Read-only notice -->
+            <span>Only the list owner can manage sharing.</span>
+      <button kendoButton themeColor="primary" (click)="onDone()">Done</button>

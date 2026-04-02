@@ -1,0 +1,58 @@
+<h1><a href="cloudbuild_v2.html">Cloud Build API</a> . <a href="cloudbuild_v2.projects.html">projects</a> . <a href="cloudbuild_v2.projects.locations.html">locations</a> . <a href="cloudbuild_v2.projects.locations.connections.html">connections</a> . <a href="cloudbuild_v2.projects.locations.connections.repositories.html">repositories</a></h1>
+  <code><a href="#accessReadToken">accessReadToken(repository, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Fetches read token of a given repository.</p>
+  <code><a href="#accessReadWriteToken">accessReadWriteToken(repository, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Fetches read/write token of a given repository.</p>
+<p class="firstline">Creates multiple repositories inside a connection.</p>
+<p class="firstline">Creates a Repository.</p>
+<p class="firstline">Deletes a single repository.</p>
+  <code><a href="#fetchGitRefs">fetchGitRefs(repository, pageSize=None, pageToken=None, refType=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Fetch the list of branches or tags for a given repository.</p>
+  <code><a href="#fetchGitRefs_next">fetchGitRefs_next()</a></code></p>
+<p class="firstline">Gets details of a single repository.</p>
+  <code><a href="#list">list(parent, filter=None, pageSize=None, pageToken=None, returnPartialSuccess=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Lists Repositories in a given connection.</p>
+    <code class="details" id="accessReadToken">accessReadToken(repository, body=None, x__xgafv=None)</code>
+  <pre>Fetches read token of a given repository.
+  repository: string, Required. The resource name of the repository in the format `projects/*/locations/*/connections/*/repositories/*`. (required)
+{ # Message for fetching SCM read token.
+    { # Message for responding to get read token.
+  &quot;expirationTime&quot;: &quot;A String&quot;, # Expiration timestamp. Can be empty if unknown or non-expiring.
+  &quot;token&quot;: &quot;A String&quot;, # The token content.
+    <code class="details" id="accessReadWriteToken">accessReadWriteToken(repository, body=None, x__xgafv=None)</code>
+  <pre>Fetches read/write token of a given repository.
+{ # Message for fetching SCM read/write token.
+    { # Message for responding to get read/write token.
+  <pre>Creates multiple repositories inside a connection.
+  parent: string, Required. The connection to contain all the repositories being created. Format: projects/*/locations/*/connections/* The parent field in the CreateRepositoryRequest messages must either be empty or match this field. (required)
+{ # Message for creating repositoritories in batch.
+  &quot;requests&quot;: [ # Required. The request messages specifying the repositories to create.
+    { # Message for creating a Repository.
+      &quot;parent&quot;: &quot;A String&quot;, # Required. The connection to contain the repository. If the request is part of a BatchCreateRepositoriesRequest, this field should be empty or match the parent specified there.
+      &quot;repository&quot;: { # A repository associated to a parent connection. # Required. The repository to create.
+      &quot;repositoryId&quot;: &quot;A String&quot;, # Required. The ID to use for the repository, which will become the final component of the repository&#x27;s resource name. This ID should be unique in the connection. Allows alphanumeric characters and any of -._~%!$&amp;&#x27;()*+,;=@.
+  <pre>Creates a Repository.
+  parent: string, Required. The connection to contain the repository. If the request is part of a BatchCreateRepositoriesRequest, this field should be empty or match the parent specified there. (required)
+  repositoryId: string, Required. The ID to use for the repository, which will become the final component of the repository&#x27;s resource name. This ID should be unique in the connection. Allows alphanumeric characters and any of -._~%!$&amp;&#x27;()*+,;=@.
+  <pre>Deletes a single repository.
+  name: string, Required. The name of the Repository to delete. Format: `projects/*/locations/*/connections/*/repositories/*`. (required)
+  etag: string, The current etag of the repository. If an etag is provided and does not match the current etag of the repository, deletion will be blocked and an ABORTED error will be returned.
+    <code class="details" id="fetchGitRefs">fetchGitRefs(repository, pageSize=None, pageToken=None, refType=None, x__xgafv=None)</code>
+  <pre>Fetch the list of branches or tags for a given repository.
+  pageSize: integer, Optional. Number of results to return in the list. Default to 20.
+  pageToken: string, Optional. Page start.
+  refType: string, Type of refs to fetch
+      REF_TYPE_UNSPECIFIED - No type specified.
+      TAG - To fetch tags.
+      BRANCH - To fetch branches.
+    { # Response for fetching git refs
+  &quot;refNames&quot;: [ # Name of the refs fetched.
+    <code class="details" id="fetchGitRefs_next">fetchGitRefs_next()</code>
+  <pre>Gets details of a single repository.
+  name: string, Required. The name of the Repository to retrieve. Format: `projects/*/locations/*/connections/*/repositories/*`. (required)
+    <code class="details" id="list">list(parent, filter=None, pageSize=None, pageToken=None, returnPartialSuccess=None, x__xgafv=None)</code>
+  <pre>Lists Repositories in a given connection.
+  parent: string, Required. The parent, which owns this collection of Repositories. Format: `projects/*/locations/*/connections/*`. (required)
+  filter: string, A filter expression that filters resources listed in the response. Expressions must follow API improvement proposal [AIP-160](https://google.aip.dev/160). e.g. `remote_uri:&quot;https://github.com*&quot;`.
+    { # Message for response to listing Repositories.
+  &quot;repositories&quot;: [ # The list of Repositories.

@@ -1,0 +1,19 @@
+<h1><a href="analyticsadmin_v1alpha.html">Google Analytics Admin API</a> . <a href="analyticsadmin_v1alpha.properties.html">properties</a> . <a href="analyticsadmin_v1alpha.properties.dataStreams.html">dataStreams</a> . <a href="analyticsadmin_v1alpha.properties.dataStreams.eventCreateRules.html">eventCreateRules</a></h1>
+<p class="firstline">Creates an EventCreateRule.</p>
+<p class="firstline">Deletes an EventCreateRule.</p>
+<p class="firstline">Lookup for a single EventCreateRule.</p>
+<p class="firstline">Lists EventCreateRules on a web data stream.</p>
+<p class="firstline">Updates an EventCreateRule.</p>
+  <pre>Creates an EventCreateRule.
+  parent: string, Required. Example format: properties/123/dataStreams/456 (required)
+{ # An Event Create Rule defines conditions that will trigger the creation of an entirely new event based upon matched criteria of a source event. Additional mutations of the parameters from the source event can be defined. Unlike Event Edit rules, Event Creation Rules have no defined order. They will all be run independently. Event Edit and Event Create rules can&#x27;t be used to modify an event created from an Event Create rule.
+  <pre>Deletes an EventCreateRule.
+  name: string, Required. Example format: properties/123/dataStreams/456/eventCreateRules/789 (required)
+  <pre>Lookup for a single EventCreateRule.
+  name: string, Required. The name of the EventCreateRule to get. Example format: properties/123/dataStreams/456/eventCreateRules/789 (required)
+  <pre>Lists EventCreateRules on a web data stream.
+  pageToken: string, A page token, received from a previous `ListEventCreateRules` call. Provide this to retrieve the subsequent page. When paginating, all other parameters provided to `ListEventCreateRules` must match the call that provided the page token.
+    { # Response message for ListEventCreateRules RPC.
+  &quot;eventCreateRules&quot;: [ # List of EventCreateRules. These will be ordered stably, but in an arbitrary order.
+  <pre>Updates an EventCreateRule.
+  name: string, Output only. Resource name for this EventCreateRule resource. Format: properties/{property}/dataStreams/{data_stream}/eventCreateRules/{event_create_rule} (required)

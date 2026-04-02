@@ -1,0 +1,128 @@
+<h1><a href="compute_alpha.html">Compute Engine API</a> . <a href="compute_alpha.regionTargetHttpsProxies.html">regionTargetHttpsProxies</a></h1>
+  <code><a href="#delete">delete(project, region, targetHttpsProxy, requestId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Deletes the specified TargetHttpsProxy resource.</p>
+  <code><a href="#get">get(project, region, targetHttpsProxy, x__xgafv=None)</a></code></p>
+<p class="firstline">Returns the specified TargetHttpsProxy resource in the specified region.</p>
+<p class="firstline">Creates a TargetHttpsProxy resource in the specified project and region</p>
+<p class="firstline">Retrieves the list of TargetHttpsProxy resources available</p>
+  <code><a href="#patch">patch(project, region, targetHttpsProxy, body=None, requestId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Patches the specified regional TargetHttpsProxy resource with the data</p>
+  <code><a href="#setSslCertificates">setSslCertificates(project, region, targetHttpsProxy, body=None, requestId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Replaces SslCertificates for TargetHttpsProxy.</p>
+  <code><a href="#setUrlMap">setUrlMap(project, region, targetHttpsProxy, body=None, requestId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Changes the URL map for TargetHttpsProxy.</p>
+    <code class="details" id="delete">delete(project, region, targetHttpsProxy, requestId=None, x__xgafv=None)</code>
+  <pre>Deletes the specified TargetHttpsProxy resource.
+  targetHttpsProxy: string, Name of the TargetHttpsProxy resource to delete. (required)
+    <code class="details" id="get">get(project, region, targetHttpsProxy, x__xgafv=None)</code>
+  <pre>Returns the specified TargetHttpsProxy resource in the specified region.
+  targetHttpsProxy: string, Name of the TargetHttpsProxy resource to return. (required)
+    { # Represents a Target HTTPS Proxy resource.
+    # Google Compute Engine has two Target HTTPS Proxy resources:
+    # * [Global](/compute/docs/reference/rest/alpha/targetHttpsProxies)
+    # * [Regional](/compute/docs/reference/rest/alpha/regionTargetHttpsProxies)
+    # A target HTTPS proxy is a component of Google Cloud HTTPS load balancers.
+    # * targetHttpsProxies are used by global external Application Load Balancers,
+    # * regionTargetHttpsProxies are used by regional internal Application Load
+    # Forwarding rules reference a target HTTPS proxy, and the target proxy
+  &quot;authentication&quot;: &quot;A String&quot;, # [Deprecated] Use serverTlsPolicy instead.
+  &quot;authorization&quot;: &quot;A String&quot;, # [Deprecated] Use authorizationPolicy instead.
+  &quot;authorizationPolicy&quot;: &quot;A String&quot;, # Optional. A URL referring to a networksecurity.AuthorizationPolicy resource
+      # that describes how the proxy should authorize inbound traffic. If left
+      # blank, access will not be restricted by an authorization policy.
+      #  Refer to the AuthorizationPolicy resource for additional
+      # details.
+      #  authorizationPolicy only applies to a globalTargetHttpsProxy attached toglobalForwardingRules with theloadBalancingScheme set to INTERNAL_SELF_MANAGED.
+      #  Note: This field currently has no impact.
+  &quot;certificateMap&quot;: &quot;A String&quot;, # URL of a certificate map that identifies a certificate map associated with
+      # the given target proxy.
+      # This field can only be set for Global external Application Load Balancer or
+      # Classic Application Load Balancer. For other products use Certificate
+      # Manager Certificates instead.
+      # If set, sslCertificates will be ignored.
+      #  Accepted format is//certificatemanager.googleapis.com/projects/{project}/locations/{location}/certificateMaps/{resourceName}.
+      # inserting a TargetHttpsProxy. An up-to-date fingerprint must
+      # be provided in order to patch the TargetHttpsProxy; otherwise, the request
+      # TargetHttpsProxy.
+      # enabled for xDS clients using this configuration. For example,https://networkservices.googleapis.com/beta/projects/project/locations/location/httpFilters/httpFilter
+  &quot;kind&quot;: &quot;compute#targetHttpsProxy&quot;, # Output only. [Output Only] Type of resource. Alwayscompute#targetHttpsProxy for target HTTPS proxies.
+  &quot;quicOverride&quot;: &quot;A String&quot;, # Specifies the QUIC override policy for this TargetHttpsProxy resource. This
+      # setting determines whether the load balancer attempts to negotiate QUIC
+      # with clients.
+      # You can specify NONE, ENABLE, orDISABLE.
+      #    - When quic-override is set to NONE,
+      #    Google manages whether QUIC is used.
+      #    - When quic-override is set to ENABLE, the
+      #    load balancer uses QUIC when possible.
+      #    - When quic-override is set to DISABLE, the
+      #    load balancer doesn&#x27;t use QUIC.
+      #    - If the quic-override flag is not specified,NONE is implied.
+  &quot;region&quot;: &quot;A String&quot;, # Output only. [Output Only] URL of the region where the regional TargetHttpsProxy
+      # resides. This field is not applicable to global TargetHttpsProxies.
+  &quot;serverTlsPolicy&quot;: &quot;A String&quot;, # Optional. A URL referring to a networksecurity.ServerTlsPolicy resource
+      # that describes how the proxy should authenticate inbound traffic.
+      #  serverTlsPolicy only applies to a globalTargetHttpsProxy attached toglobalForwardingRules with theloadBalancingScheme set to INTERNAL_SELF_MANAGED
+      # or EXTERNAL orEXTERNAL_MANAGED or INTERNAL_MANAGED.
+      # It also applies to a regional TargetHttpsProxy attached to
+      # regional forwardingRules with theloadBalancingScheme set to EXTERNAL_MANAGED orINTERNAL_MANAGED. For details whichServerTlsPolicy resources are accepted withINTERNAL_SELF_MANAGED and which with EXTERNAL,INTERNAL_MANAGED, EXTERNAL_MANAGEDloadBalancingScheme consult ServerTlsPolicy
+      #   If left blank, communications are not encrypted.
+  &quot;sslCertificates&quot;: [ # URLs to SslCertificate resources that are used to authenticate
+      # connections between users and the load balancer. At least one SSL
+      # certificate must be specified. SslCertificates do not apply when the load
+      # balancing scheme is set to INTERNAL_SELF_MANAGED.
+      # The URLs should refer to a SSL Certificate resource or Certificate Manager
+      # Certificate resource. Mixing Classic Certificates and Certificate Manager
+      # Certificates is not allowed. Certificate Manager Certificates must include
+      # the certificatemanager API namespace. Using Certificate Manager
+      # Certificates in this field is not supported by Global external Application
+      # Load Balancer or Classic Application Load Balancer, use certificate_map
+      # Currently, you may specify up to 15 Classic SSL Certificates or up to 100
+      # Certificate Manager Certificates.
+      # Certificate Manager Certificates accepted formats are:
+      #    - //certificatemanager.googleapis.com/projects/{project}/locations/{location}/certificates/{resourceName}.
+      #    - https://certificatemanager.googleapis.com/v1alpha1/projects/{project}/locations/{location}/certificates/{resourceName}.
+  &quot;sslPolicy&quot;: &quot;A String&quot;, # URL of SslPolicy resource that will be associated with the TargetHttpsProxy
+      # resource. If not set, the TargetHttpsProxy resource has no
+      # SSL policy configured.
+  &quot;tlsEarlyData&quot;: &quot;A String&quot;, # Specifies whether TLS 1.3 0-RTT Data (&quot;Early Data&quot;) should be accepted
+      # for this service. Early Data allows a TLS resumption handshake to include
+      # the initial application payload (a HTTP request) alongside the handshake,
+      # reducing the effective round trips to &quot;zero&quot;. This applies to TLS 1.3
+      # connections over TCP (HTTP/2) as well as over UDP (QUIC/h3).
+      # This can improve application performance, especially on networks where
+      # interruptions may be common, such as on mobile.
+      # Requests with Early Data will have the &quot;Early-Data&quot; HTTP header set on
+      # the request, with a value of &quot;1&quot;, to allow the backend to determine whether
+      # Early Data was included.
+      # Note: TLS Early Data may allow requests to be replayed, as the data is
+      # sent to the backend before the handshake has fully completed. Applications
+      # that allow idempotent HTTP methods to make non-idempotent changes, such as
+      # a GET request updating a database, should not accept Early Data on those
+      # requests, and reject requests with the &quot;Early-Data: 1&quot; HTTP header by
+      # returning a HTTP 425 (Too Early) status code, in order to remain RFC
+      # compliant.
+      # The default value is DISABLED.
+  &quot;urlMap&quot;: &quot;A String&quot;, # A fully-qualified or valid partial URL to the UrlMap resource that defines
+      # the mapping from URL to the BackendService. For example, the following are
+      # all valid URLs for specifying a URL map:
+      #    - https://www.googleapis.compute/v1/projects/project/global/urlMaps/url-map
+      #    - projects/project/global/urlMaps/url-map
+      #    - global/urlMaps/url-map
+  <pre>Creates a TargetHttpsProxy resource in the specified project and region
+  <pre>Retrieves the list of TargetHttpsProxy resources available
+    { # Contains a list of TargetHttpsProxy resources.
+  &quot;items&quot;: [ # A list of TargetHttpsProxy resources.
+  &quot;kind&quot;: &quot;compute#targetHttpsProxyList&quot;, # Output only. Type of resource. Always compute#targetHttpsProxyList for
+      # lists of target HTTPS proxies.
+    <code class="details" id="patch">patch(project, region, targetHttpsProxy, body=None, requestId=None, x__xgafv=None)</code>
+  <pre>Patches the specified regional TargetHttpsProxy resource with the data
+  targetHttpsProxy: string, Name of the TargetHttpsProxy resource to patch. (required)
+    <code class="details" id="setSslCertificates">setSslCertificates(project, region, targetHttpsProxy, body=None, requestId=None, x__xgafv=None)</code>
+  <pre>Replaces SslCertificates for TargetHttpsProxy.
+  targetHttpsProxy: string, Name of the TargetHttpsProxy resource to set an
+SslCertificates resource for. (required)
+  &quot;sslCertificates&quot;: [ # New set of SslCertificate resources to associate
+      # with this TargetHttpsProxy resource.
+    <code class="details" id="setUrlMap">setUrlMap(project, region, targetHttpsProxy, body=None, requestId=None, x__xgafv=None)</code>
+  <pre>Changes the URL map for TargetHttpsProxy.
+  targetHttpsProxy: string, Name of the TargetHttpsProxy to set a URL map for. (required)

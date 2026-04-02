@@ -1,0 +1,18 @@
+<h1><a href="aiplatform_v1beta1.html">Vertex AI API</a> . <a href="aiplatform_v1beta1.publishers.html">publishers</a> . <a href="aiplatform_v1beta1.publishers.models.html">models</a></h1>
+  <code><a href="#get">get(name, huggingFaceToken=None, includeEquivalentModelGardenModelDeploymentConfigs=None, isHuggingFaceModel=None, languageCode=None, view=None, x__xgafv=None)</a></code></p>
+  <code><a href="#list">list(parent, filter=None, languageCode=None, listAllVersions=None, orderBy=None, pageSize=None, pageToken=None, view=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Lists publisher models in Model Garden.</p>
+    <code class="details" id="get">get(name, huggingFaceToken=None, includeEquivalentModelGardenModelDeploymentConfigs=None, isHuggingFaceModel=None, languageCode=None, view=None, x__xgafv=None)</code>
+  includeEquivalentModelGardenModelDeploymentConfigs: boolean, Optional. Whether to cnclude the deployment configs from the equivalent Model Garden model if the requested model is a Hugging Face model.
+  &quot;parent&quot;: { # The information about the parent of a model. # Optional. The parent that this model was customized from. E.g., Vision API, Natural Language API, LaMDA, T5, etc. Foundation models don&#x27;t have parents.
+    &quot;displayName&quot;: &quot;A String&quot;, # Required. The display name of the parent. E.g., LaMDA, T5, Vision API, Natural Language API.
+    &quot;reference&quot;: { # Reference to a resource. # Optional. The Google Cloud resource name or the URI reference.
+    <code class="details" id="list">list(parent, filter=None, languageCode=None, listAllVersions=None, orderBy=None, pageSize=None, pageToken=None, view=None, x__xgafv=None)</code>
+  <pre>Lists publisher models in Model Garden.
+  parent: string, Required. The name of the Publisher from which to list the PublisherModels. Format: `publishers/{publisher}` (required)
+  languageCode: string, Optional. The IETF BCP-47 language code representing the language in which the publisher models&#x27; text information should be written in. If not set, by default English (en).
+  listAllVersions: boolean, Optional. List all publisher model versions if the flag is set to true.
+  pageToken: string, Optional. The standard list page token. Typically obtained via ListPublisherModelsResponse.next_page_token of the previous ModelGardenService.ListPublisherModels call.
+    { # Response message for ModelGardenService.ListPublisherModels.
+  &quot;nextPageToken&quot;: &quot;A String&quot;, # A token to retrieve next page of results. Pass to ListPublisherModels.page_token to obtain that page.
+  &quot;publisherModels&quot;: [ # List of PublisherModels in the requested page.

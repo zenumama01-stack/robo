@@ -1,0 +1,56 @@
+<!-- Query Config Panel - Compact layout with tree dropdown and collapsible sections -->
+  <!-- Query Selection (Primary) -->
+      Select Query
+      #queryDropdown
+      [BranchConfig]="QueryCategoryConfig"
+      [LeafConfig]="QueryLeafConfig"
+      [Value]="QueryIdAsKey"
+      [Placeholder]="'Search or browse queries...'"
+      (SelectionChange)="onQuerySelection($event)"
+      [class.error]="queryError">
+    @if (queryError) {
+      <span class="form-error">{{ queryError }}</span>
+    @if (!queryError && !queryId) {
+        Browse categories or search to find a query
+    @if (!queryError && queryId) {
+        Selected: {{ queryName }}
+      [placeholder]="queryName ? 'Default: ' + queryName : 'Enter a custom title'"
+    <span class="form-hint">Leave empty to use query name as title</span>
+  <!-- Advanced Options (Collapsible) -->
+      (click)="toggleAdvancedOptions()"
+      [attr.aria-expanded]="showAdvancedOptions">
+        [class.fa-chevron-down]="!showAdvancedOptions"
+      [class.fa-chevron-up]="showAdvancedOptions"></i>
+        <!-- Parameter Layout -->
+          <label>Parameter Layout</label>
+          <div class="radio-group radio-group--horizontal">
+            <label class="radio-option radio-option--compact" [class.selected]="parameterLayout === 'header'">
+                name="parameterLayout"
+                value="header"
+                [(ngModel)]="parameterLayout"
+                (change)="onParameterLayoutChange()">
+              <span class="radio-mark"></span>
+              <span class="radio-label">
+                <i class="fa-solid fa-arrow-up-from-bracket"></i>
+            <label class="radio-option radio-option--compact" [class.selected]="parameterLayout === 'sidebar'">
+                value="sidebar"
+            <label class="radio-option radio-option--compact" [class.selected]="parameterLayout === 'dialog'">
+                value="dialog"
+                <i class="fa-solid fa-window-restore"></i>
+                Dialog
+          <span class="form-hint">{{ getParameterLayoutDescription() }}</span>
+        <!-- Auto Refresh -->
+          <label for="autoRefresh">
+            Auto Refresh
+            [(ngModel)]="autoRefreshSeconds"
+            (change)="onAutoRefreshChange()">
+            <option [ngValue]="0">Disabled</option>
+            <option [ngValue]="30">Every 30 seconds</option>
+            <option [ngValue]="60">Every minute</option>
+            <option [ngValue]="300">Every 5 minutes</option>
+            <option [ngValue]="600">Every 10 minutes</option>
+        <!-- Options -->
+                [(ngModel)]="showParameterControls"
+              <span class="checkbox-label">Show Parameter Controls</span>
+                [(ngModel)]="showExecutionMetadata"
+              <span class="checkbox-label">Show Execution Metadata</span>

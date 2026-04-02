@@ -1,0 +1,17 @@
+<h1><a href="merchantapi_quota_v1.html">Merchant API</a> . <a href="merchantapi_quota_v1.accounts.html">accounts</a> . <a href="merchantapi_quota_v1.accounts.limits.html">limits</a></h1>
+<p class="firstline">Retrieves an account limit.</p>
+<p class="firstline">Lists the limits of an account.</p>
+  <pre>Retrieves an account limit.
+  name: string, Required. The name of the limit to retrieve. Format: `accounts/{account}/limits/{limit}` For example: `accounts/123/limits/products~ADS_NON_EEA` (required)
+    { # A limit of a certain type that is applied to an account.
+  &quot;name&quot;: &quot;A String&quot;, # Identifier. The limit part of the name will be a combination of the type and the scope. For example: `accounts/123/limits/products~ADS_NON_EEA` Format: `accounts/{account}/limits/{limit}`
+  &quot;products&quot;: { # The limit for products. # The limit for products.
+    &quot;limit&quot;: &quot;A String&quot;, # Required. The maximum number of products that are allowed in the account in the given scope.
+    &quot;scope&quot;: &quot;A String&quot;, # Required. The scope of the product limit.
+  <pre>Lists the limits of an account.
+  parent: string, Required. The parent account. Format: `accounts/{account}` (required)
+  filter: string, Required. A filter on the limit `type` is required, for example, `type = &quot;products&quot;`.
+  pageSize: integer, Optional. The maximum number of limits to return. The service may return fewer than this value. If unspecified, at most 100 limits will be returned. The maximum value is 100; values above 100 will be coerced to 100.
+  pageToken: string, Optional. A page token, received from a previous `ListAccountLimits` call. Provide this to retrieve the subsequent page. When paginating, all other parameters provided to `ListAccountLimits` must match the call that provided the page token.
+    { # Response message for the `ListAccountLimits` method.
+  &quot;accountLimits&quot;: [ # The limits for the given account.

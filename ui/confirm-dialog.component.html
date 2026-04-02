@@ -1,0 +1,24 @@
+<!-- Confirm Dialog -->
+  <div class="config-dialog-overlay" (click)="cancel()">
+    <div class="config-dialog confirm-dialog" (click)="$event.stopPropagation()">
+        <div class="confirm-icon" [class.warning]="type === 'warning'" [class.danger]="type === 'danger'">
+        <h3 class="confirm-title">{{ title }}</h3>
+        <p class="confirm-message">{{ message }}</p>
+      <!-- Footer - Action button on left, Cancel on right -->
+          [class]="type === 'danger' ? 'btn-danger' : 'btn-primary'"
+          (click)="confirm()">
+          {{ confirmText }}
+        <button class="btn-secondary" (click)="cancel()">{{ cancelText }}</button>
+  <div class="dialog-backdrop" (click)="OnCancel()"></div>
+      <span>{{ Title }}</span>
+    <button class="close-btn" (click)="OnCancel()" title="Close">
+    <p class="message">{{ Message }}</p>
+    @if (DetailMessage) {
+      <p class="detail-message">{{ DetailMessage }}</p>
+      class="btn btn-confirm"
+      [class.btn-primary]="ConfirmStyle === 'primary'"
+      [class.btn-danger]="ConfirmStyle === 'danger'"
+      (click)="OnConfirm()">
+      {{ ConfirmText }}
+    <button class="btn btn-cancel" (click)="OnCancel()">
+      {{ CancelText }}

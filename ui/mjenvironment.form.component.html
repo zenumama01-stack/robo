@@ -1,0 +1,21 @@
+    <!-- Environment Definition Section -->
+        SectionKey="environmentDefinition"
+        SectionName="Environment Definition"
+    <!-- Environment Settings Section -->
+        SectionKey="environmentSettings"
+        SectionName="Environment Settings"
+            FieldName="Settings"
+                [Params]="BuildRelationshipViewParamsByEntityName('MJ: Artifacts','EnvironmentID')"
+                [Params]="BuildRelationshipViewParamsByEntityName('MJ: Collections','EnvironmentID')"
+    <!-- MJ: Projects Section -->
+        SectionKey="mJProjects"
+        SectionName="MJ: Projects"
+        [BadgeCount]="GetSectionRowCount('mJProjects')"
+                [Params]="BuildRelationshipViewParamsByEntityName('MJ: Projects','EnvironmentID')"
+                [NewRecordValues]="NewRecordValues('MJ: Projects')"
+                [AllowLoad]="IsSectionExpanded('mJProjects')"
+                (AfterDataLoad)="SetSectionRowCount('mJProjects', $event.totalRowCount)"
+                [Params]="BuildRelationshipViewParamsByEntityName('MJ: Dashboards','EnvironmentID')"
+                [Params]="BuildRelationshipViewParamsByEntityName('MJ: Tasks','EnvironmentID')"
+                [Params]="BuildRelationshipViewParamsByEntityName('MJ: Reports','EnvironmentID')"
+                [Params]="BuildRelationshipViewParamsByEntityName('MJ: Conversations','EnvironmentID')"

@@ -1,0 +1,22 @@
+<h1><a href="merchantapi_accounts_v1.html">Merchant API</a> . <a href="merchantapi_accounts_v1.accounts.html">accounts</a> . <a href="merchantapi_accounts_v1.accounts.gbpAccounts.html">gbpAccounts</a></h1>
+  <code><a href="#linkGbpAccount">linkGbpAccount(parent, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Link the specified merchant to a GBP account for all countries. To run this method, you must have admin access to the Merchant Center account. If you don't have admin access, the request fails with the error message `User is not an administrator of account {ACCOUNT_ID}`.</p>
+<p class="firstline">List the GBP accounts for a given merchant.</p>
+    <code class="details" id="linkGbpAccount">linkGbpAccount(parent, body=None, x__xgafv=None)</code>
+  <pre>Link the specified merchant to a GBP account for all countries. To run this method, you must have admin access to the Merchant Center account. If you don&#x27;t have admin access, the request fails with the error message `User is not an administrator of account {ACCOUNT_ID}`.
+  parent: string, Required. The name of the parent resource to which the GBP account is linked. Format: `accounts/{account}`. (required)
+{ # Request message for the LinkGbpAccount method.
+  &quot;gbpEmail&quot;: &quot;A String&quot;, # Required. The email address of the Business Profile account.
+    { # Response message for the LinkGbpAccount method.
+  &quot;response&quot;: { # A generic empty message that you can re-use to avoid defining duplicated empty messages in your APIs. A typical example is to use it as the request or the response type of an API method. For instance: service Foo { rpc Bar(google.protobuf.Empty) returns (google.protobuf.Empty); } # Empty response.
+  <pre>List the GBP accounts for a given merchant.
+  parent: string, Required. The name of the parent resource under which the GBP accounts are listed. Format: `accounts/{account}`. (required)
+  pageSize: integer, Optional. The maximum number of `GbpAccount` resources to return. The service returns fewer than this value if the number of gbp accounts is less that than the `pageSize`. The default value is 50. The maximum value is 1000; If a value higher than the maximum is specified, then the `pageSize` will default to the maximum.
+  pageToken: string, Optional. A page token, received from a previous `ListGbpAccounts` call. Provide the page token to retrieve the subsequent page. When paginating, all other parameters provided to `ListGbpAccounts` must match the call that provided the page token.
+    { # Response message for the ListGbpAccounts method.
+  &quot;gbpAccounts&quot;: [ # The GBP accounts from the specified merchant in the specified country.
+    { # Collection of information related to a Google Business Profile (GBP) account.
+      &quot;gbpAccountId&quot;: &quot;A String&quot;, # The id of the GBP account.
+      &quot;gbpAccountName&quot;: &quot;A String&quot;, # The name of the Business Profile. For personal accounts: Email id of the owner. For Business accounts: Name of the Business Account.
+      &quot;name&quot;: &quot;A String&quot;, # Identifier. The resource name of the GBP account. Format: `accounts/{account}/gbpAccount/{gbp_account}`
+      &quot;type&quot;: &quot;A String&quot;, # The type of the Business Profile.

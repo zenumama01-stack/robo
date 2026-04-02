@@ -1,0 +1,16 @@
+<h1><a href="adsense_v2.html">AdSense Management API</a> . <a href="adsense_v2.accounts.html">accounts</a> . <a href="adsense_v2.accounts.adclients.html">adclients</a> . <a href="adsense_v2.accounts.adclients.urlchannels.html">urlchannels</a></h1>
+<p class="firstline">Gets information about the selected url channel.</p>
+<p class="firstline">Lists active url channels.</p>
+  <pre>Gets information about the selected url channel.
+  name: string, Required. The name of the url channel to retrieve. Format: accounts/{account}/adclients/{adclient}/urlchannels/{urlchannel} (required)
+    { # Representation of a URL channel. URL channels allow you to track the performance of particular pages in your site; see [URL channels](https://support.google.com/adsense/answer/2923836) for more information.
+  &quot;name&quot;: &quot;A String&quot;, # Output only. Resource name of the URL channel. Format: accounts/{account}/adclients/{adclient}/urlchannels/{urlchannel}
+  &quot;reportingDimensionId&quot;: &quot;A String&quot;, # Output only. Unique ID of the custom channel as used in the `URL_CHANNEL_ID` reporting dimension.
+  &quot;uriPattern&quot;: &quot;A String&quot;, # URI pattern of the channel. Does not include &quot;http://&quot; or &quot;https://&quot;. Example: www.example.com/home
+  <pre>Lists active url channels.
+  parent: string, Required. The ad client which owns the collection of url channels. Format: accounts/{account}/adclients/{adclient} (required)
+  pageSize: integer, The maximum number of url channels to include in the response, used for paging. If unspecified, at most 10000 url channels will be returned. The maximum value is 10000; values above 10000 will be coerced to 10000.
+  pageToken: string, A page token, received from a previous `ListUrlChannels` call. Provide this to retrieve the subsequent page. When paginating, all other parameters provided to `ListUrlChannels` must match the call that provided the page token.
+    { # Response definition for the url channels list rpc.
+  &quot;nextPageToken&quot;: &quot;A String&quot;, # Continuation token used to page through url channels. To retrieve the next page of the results, set the next request&#x27;s &quot;page_token&quot; value to this.
+  &quot;urlChannels&quot;: [ # The url channels returned in this list response.

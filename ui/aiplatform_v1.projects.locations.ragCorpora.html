@@ -1,0 +1,55 @@
+<h1><a href="aiplatform_v1.html">Vertex AI API</a> . <a href="aiplatform_v1.projects.html">projects</a> . <a href="aiplatform_v1.projects.locations.html">locations</a> . <a href="aiplatform_v1.projects.locations.ragCorpora.html">ragCorpora</a></h1>
+  <code><a href="aiplatform_v1.projects.locations.ragCorpora.operations.html">operations()</a></code>
+  <code><a href="aiplatform_v1.projects.locations.ragCorpora.ragFiles.html">ragFiles()</a></code>
+<p class="firstline">Returns the ragFiles Resource.</p>
+<p class="firstline">Creates a RagCorpus.</p>
+<p class="firstline">Deletes a RagCorpus.</p>
+<p class="firstline">Gets a RagCorpus.</p>
+<p class="firstline">Lists RagCorpora in a Location.</p>
+  <code><a href="#patch">patch(name, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Updates a RagCorpus.</p>
+  <pre>Creates a RagCorpus.
+  parent: string, Required. The resource name of the Location to create the RagCorpus in. Format: `projects/{project}/locations/{location}` (required)
+{ # A RagCorpus is a RagFile container and a project can have multiple RagCorpora.
+  &quot;corpusStatus&quot;: { # RagCorpus status. # Output only. RagCorpus state.
+    &quot;state&quot;: &quot;A String&quot;, # Output only. RagCorpus life state.
+  &quot;createTime&quot;: &quot;A String&quot;, # Output only. Timestamp when this RagCorpus was created.
+  &quot;description&quot;: &quot;A String&quot;, # Optional. The description of the RagCorpus.
+  &quot;displayName&quot;: &quot;A String&quot;, # Required. The display name of the RagCorpus. The name can be up to 128 characters long and can consist of any UTF-8 characters.
+  &quot;encryptionSpec&quot;: { # Represents a customer-managed encryption key specification that can be applied to a Vertex AI resource. # Optional. Immutable. The CMEK key name used to encrypt at-rest data related to this Corpus. Only applicable to RagManagedDb option for Vector DB. This field can only be set at corpus creation time, and cannot be updated or deleted.
+  &quot;name&quot;: &quot;A String&quot;, # Output only. The resource name of the RagCorpus.
+  &quot;updateTime&quot;: &quot;A String&quot;, # Output only. Timestamp when this RagCorpus was last updated.
+  &quot;vectorDbConfig&quot;: { # Config for the Vector DB to use for RAG. # Optional. Immutable. The config for the Vector DBs.
+    &quot;apiAuth&quot;: { # The generic reusable api auth config. Deprecated. Please use AuthConfig (google/cloud/aiplatform/master/auth.proto) instead. # Authentication config for the chosen Vector DB.
+    &quot;pinecone&quot;: { # The config for the Pinecone. # The config for the Pinecone.
+      &quot;indexName&quot;: &quot;A String&quot;, # Pinecone index name. This value cannot be changed after it&#x27;s set.
+    &quot;ragEmbeddingModelConfig&quot;: { # Config for the embedding model to use for RAG. # Optional. Immutable. The embedding model config of the Vector DB.
+      &quot;vertexPredictionEndpoint&quot;: { # Config representing a model hosted on Vertex Prediction Endpoint. # The Vertex AI Prediction Endpoint that either refers to a publisher model or an endpoint that is hosting a 1P fine-tuned text embedding model. Endpoints hosting non-1P fine-tuned text embedding models are currently not supported. This is used for dense vector search.
+        &quot;endpoint&quot;: &quot;A String&quot;, # Required. The endpoint resource name. Format: `projects/{project}/locations/{location}/publishers/{publisher}/models/{model}` or `projects/{project}/locations/{location}/endpoints/{endpoint}`
+        &quot;model&quot;: &quot;A String&quot;, # Output only. The resource name of the model that is deployed on the endpoint. Present only when the endpoint is not a publisher model. Pattern: `projects/{project}/locations/{location}/models/{model}`
+        &quot;modelVersionId&quot;: &quot;A String&quot;, # Output only. Version ID of the model that is deployed on the endpoint. Present only when the endpoint is not a publisher model.
+    &quot;ragManagedDb&quot;: { # The config for the default RAG-managed Vector DB. # The config for the RAG-managed Vector DB.
+      &quot;ann&quot;: { # Config for ANN search. RagManagedDb uses a tree-based structure to partition data and facilitate faster searches. As a tradeoff, it requires longer indexing time and manual triggering of index rebuild via the ImportRagFiles and UpdateRagCorpus API. # Performs an ANN search on RagCorpus. Use this if you have a lot of files (&gt; 10K) in your RagCorpus and want to reduce the search latency.
+        &quot;leafCount&quot;: 42, # Number of leaf nodes in the tree-based structure. Each leaf node contains groups of closely related vectors along with their corresponding centroid. Recommended value is 10 * sqrt(num of RagFiles in your RagCorpus). Default value is 500.
+        &quot;treeDepth&quot;: 42, # The depth of the tree-based structure. Only depth values of 2 and 3 are supported. Recommended value is 2 if you have if you have O(10K) files in the RagCorpus and set this to 3 if more than that. Default value is 2.
+      &quot;knn&quot;: { # Config for KNN search. # Performs a KNN search on RagCorpus. Default choice if not specified.
+    &quot;vertexVectorSearch&quot;: { # The config for the Vertex Vector Search. # The config for the Vertex Vector Search.
+      &quot;index&quot;: &quot;A String&quot;, # The resource name of the Index. Format: `projects/{project}/locations/{location}/indexes/{index}`
+      &quot;indexEndpoint&quot;: &quot;A String&quot;, # The resource name of the Index Endpoint. Format: `projects/{project}/locations/{location}/indexEndpoints/{index_endpoint}`
+  &quot;vertexAiSearchConfig&quot;: { # Config for the Vertex AI Search. # Optional. Immutable. The config for the Vertex AI Search.
+    &quot;servingConfig&quot;: &quot;A String&quot;, # Vertex AI Search Serving Config resource full name. For example, `projects/{project}/locations/{location}/collections/{collection}/engines/{engine}/servingConfigs/{serving_config}` or `projects/{project}/locations/{location}/collections/{collection}/dataStores/{data_store}/servingConfigs/{serving_config}`.
+  <pre>Deletes a RagCorpus.
+  name: string, Required. The name of the RagCorpus resource to be deleted. Format: `projects/{project}/locations/{location}/ragCorpora/{rag_corpus}` (required)
+  force: boolean, Optional. If set to true, any RagFiles in this RagCorpus will also be deleted. Otherwise, the request will only work if the RagCorpus has no RagFiles.
+  <pre>Gets a RagCorpus.
+  name: string, Required. The name of the RagCorpus resource. Format: `projects/{project}/locations/{location}/ragCorpora/{rag_corpus}` (required)
+  <pre>Lists RagCorpora in a Location.
+  parent: string, Required. The resource name of the Location from which to list the RagCorpora. Format: `projects/{project}/locations/{location}` (required)
+  pageSize: integer, Optional. The standard list page size. The maximum value is 100. If not specified, a default value of 100 will be used.
+  pageToken: string, Optional. The standard list page token. Typically obtained via ListRagCorporaResponse.next_page_token of the previous VertexRagDataService.ListRagCorpora call.
+    { # Response message for VertexRagDataService.ListRagCorpora.
+  &quot;nextPageToken&quot;: &quot;A String&quot;, # A token to retrieve the next page of results. Pass to ListRagCorporaRequest.page_token to obtain that page.
+  &quot;ragCorpora&quot;: [ # List of RagCorpora in the requested page.
+    <code class="details" id="patch">patch(name, body=None, x__xgafv=None)</code>
+  <pre>Updates a RagCorpus.
+  name: string, Output only. The resource name of the RagCorpus. (required)

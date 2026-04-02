@@ -1,0 +1,12 @@
+<h1><a href="displayvideo_v1.html">Display & Video 360 API</a> . <a href="displayvideo_v1.advertisers.html">advertisers</a> . <a href="displayvideo_v1.advertisers.assets.html">assets</a></h1>
+  <code><a href="#upload">upload(advertiserId, body=None, media_body=None, media_mime_type=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Uploads an asset. Returns the ID of the newly uploaded asset if successful. The asset file size should be no more than 10 MB for images, 200 MB for ZIP files, and 1 GB for videos. Must be used within the [multipart media upload process](/display-video/api/guides/how-tos/upload#multipart). Examples using provided client libraries can be found in our [Creating Creatives guide](/display-video/api/guides/creating-creatives/overview#upload_an_asset).</p>
+    <code class="details" id="upload">upload(advertiserId, body=None, media_body=None, media_mime_type=None, x__xgafv=None)</code>
+  <pre>Uploads an asset. Returns the ID of the newly uploaded asset if successful. The asset file size should be no more than 10 MB for images, 200 MB for ZIP files, and 1 GB for videos. Must be used within the [multipart media upload process](/display-video/api/guides/how-tos/upload#multipart). Examples using provided client libraries can be found in our [Creating Creatives guide](/display-video/api/guides/creating-creatives/overview#upload_an_asset).
+  advertiserId: string, Required. The ID of the advertiser this asset belongs to. (required)
+{ # A request message for CreateAsset.
+  &quot;filename&quot;: &quot;A String&quot;, # Required. The filename of the asset, including the file extension. The filename must be UTF-8 encoded with a maximum size of 240 bytes.
+    { # A response message for CreateAsset.
+  &quot;asset&quot;: { # A single asset. # The uploaded asset, if successful.
+    &quot;content&quot;: &quot;A String&quot;, # The asset content. For uploaded assets, the content is the serving path.
+    &quot;mediaId&quot;: &quot;A String&quot;, # Media ID of the uploaded asset. This is a unique identifier for the asset. This ID can be passed to other API calls, e.g. CreateCreative to associate the asset with a creative. The Media ID space updated on **April 5, 2023**. Update media IDs cached before **April 5, 2023** by retrieving the new media ID from associated creative resources or re-uploading the asset.

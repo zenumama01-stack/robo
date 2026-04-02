@@ -1,0 +1,11 @@
+<nav class="action-breadcrumb" aria-label="Category navigation">
+  @for (item of Breadcrumbs; track item.id; let i = $index; let last = $last) {
+    @if (!last) {
+      <button class="breadcrumb-item"
+        (click)="selectCategory(item.id)"
+        [title]="item.name">
+        @if (i === 0) {
+        <span class="breadcrumb-text">{{ item.name }}</span>
+      <span class="breadcrumb-separator">
+      <span class="breadcrumb-item current" [title]="item.name">
+        @if (Breadcrumbs.length === 1) {

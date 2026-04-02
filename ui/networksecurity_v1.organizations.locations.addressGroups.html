@@ -1,0 +1,67 @@
+<h1><a href="networksecurity_v1.html">Network Security API</a> . <a href="networksecurity_v1.organizations.html">organizations</a> . <a href="networksecurity_v1.organizations.locations.html">locations</a> . <a href="networksecurity_v1.organizations.locations.addressGroups.html">addressGroups</a></h1>
+  <code><a href="#addItems">addItems(addressGroup, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Adds items to an address group.</p>
+  <code><a href="#cloneItems">cloneItems(addressGroup, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Clones items from one address group to another.</p>
+  <code><a href="#create">create(parent, addressGroupId=None, body=None, requestId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Creates a new address group in a given project and location.</p>
+<p class="firstline">Deletes an address group.</p>
+<p class="firstline">Gets details of a single address group.</p>
+<p class="firstline">Lists address groups in a given project and location.</p>
+  <code><a href="#listReferences">listReferences(addressGroup, pageSize=None, pageToken=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Lists references of an address group.</p>
+  <code><a href="#listReferences_next">listReferences_next()</a></code></p>
+<p class="firstline">Updates parameters of an address group.</p>
+  <code><a href="#removeItems">removeItems(addressGroup, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Removes items from an address group.</p>
+    <code class="details" id="addItems">addItems(addressGroup, body=None, x__xgafv=None)</code>
+  <pre>Adds items to an address group.
+  addressGroup: string, Required. A name of the AddressGroup to add items to. Must be in the format `projects|organization/*/locations/{location}/addressGroups/*`. (required)
+{ # Request used by the AddAddressGroupItems method.
+  &quot;items&quot;: [ # Required. List of items to add.
+    <code class="details" id="cloneItems">cloneItems(addressGroup, body=None, x__xgafv=None)</code>
+  <pre>Clones items from one address group to another.
+  addressGroup: string, Required. A name of the AddressGroup to clone items to. Must be in the format `projects|organization/*/locations/{location}/addressGroups/*`. (required)
+{ # Request used by the CloneAddressGroupItems method.
+  &quot;sourceAddressGroup&quot;: &quot;A String&quot;, # Required. Source address group to clone items from.
+    <code class="details" id="create">create(parent, addressGroupId=None, body=None, requestId=None, x__xgafv=None)</code>
+  <pre>Creates a new address group in a given project and location.
+  parent: string, Required. The parent resource of the AddressGroup. Must be in the format `projects/*/locations/{location}`. (required)
+{ # AddressGroup is a resource that specifies how a collection of IP/DNS used in Firewall Policy.
+  &quot;capacity&quot;: 42, # Required. Capacity of the Address Group
+  &quot;description&quot;: &quot;A String&quot;, # Optional. Free-text description of the resource.
+  &quot;items&quot;: [ # Optional. List of items.
+  &quot;labels&quot;: { # Optional. Set of label tags associated with the AddressGroup resource.
+  &quot;name&quot;: &quot;A String&quot;, # Required. Name of the AddressGroup resource. It matches pattern `projects/*/locations/{location}/addressGroups/`.
+  &quot;purpose&quot;: [ # Optional. List of supported purposes of the Address Group.
+  &quot;type&quot;: &quot;A String&quot;, # Required. The type of the Address Group. Possible values are &quot;IPv4&quot; or &quot;IPV6&quot;.
+  &quot;updateTime&quot;: &quot;A String&quot;, # Output only. The timestamp when the resource was updated.
+  addressGroupId: string, Required. Short name of the AddressGroup resource to be created. This value should be 1-63 characters long, containing only letters, numbers, hyphens, and underscores, and should not start with a number. E.g. &quot;authz_policy&quot;.
+  <pre>Deletes an address group.
+  name: string, Required. A name of the AddressGroup to delete. Must be in the format `projects/*/locations/{location}/addressGroups/*`. (required)
+  <pre>Gets details of a single address group.
+  name: string, Required. A name of the AddressGroup to get. Must be in the format `projects/*/locations/{location}/addressGroups/*`. (required)
+  <pre>Lists address groups in a given project and location.
+  parent: string, Required. The project and location from which the AddressGroups should be listed, specified in the format `projects/*/locations/{location}`. (required)
+  pageSize: integer, Maximum number of AddressGroups to return per call.
+  pageToken: string, The value returned by the last `ListAddressGroupsResponse` Indicates that this is a continuation of a prior `ListAddressGroups` call, and that the system should return the next page of data.
+    { # Response returned by the ListAddressGroups method.
+  &quot;addressGroups&quot;: [ # List of AddressGroups resources.
+    <code class="details" id="listReferences">listReferences(addressGroup, pageSize=None, pageToken=None, x__xgafv=None)</code>
+  <pre>Lists references of an address group.
+  pageSize: integer, The maximum number of references to return. If unspecified, server will pick an appropriate default. Server may return fewer items than requested. A caller should only rely on response&#x27;s next_page_token to determine if there are more AddressGroupUsers left to be queried.
+    { # Response of the ListAddressGroupReferences method.
+  &quot;addressGroupReferences&quot;: [ # A list of references that matches the specified filter in the request.
+    { # The Reference of AddressGroup.
+      &quot;firewallPolicy&quot;: &quot;A String&quot;, # FirewallPolicy that is using the Address Group.
+      &quot;rulePriority&quot;: 42, # Rule priority of the FirewallPolicy that is using the Address Group.
+      &quot;securityPolicy&quot;: &quot;A String&quot;, # Cloud Armor SecurityPolicy that is using the Address Group.
+    <code class="details" id="listReferences_next">listReferences_next()</code>
+  <pre>Updates parameters of an address group.
+  name: string, Required. Name of the AddressGroup resource. It matches pattern `projects/*/locations/{location}/addressGroups/`. (required)
+  updateMask: string, Optional. Field mask is used to specify the fields to be overwritten in the AddressGroup resource by the update. The fields specified in the update_mask are relative to the resource, not the full request. A field will be overwritten if it is in the mask. If the user does not provide a mask then all fields will be overwritten.
+    <code class="details" id="removeItems">removeItems(addressGroup, body=None, x__xgafv=None)</code>
+  <pre>Removes items from an address group.
+  addressGroup: string, Required. A name of the AddressGroup to remove items from. Must be in the format `projects|organization/*/locations/{location}/addressGroups/*`. (required)
+{ # Request used by the RemoveAddressGroupItems method.
+  &quot;items&quot;: [ # Required. List of items to remove.

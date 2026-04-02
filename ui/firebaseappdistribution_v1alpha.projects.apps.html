@@ -1,0 +1,38 @@
+<h1><a href="firebaseappdistribution_v1alpha.html">Firebase App Distribution API</a> . <a href="firebaseappdistribution_v1alpha.projects.html">projects</a> . <a href="firebaseappdistribution_v1alpha.projects.apps.html">apps</a></h1>
+  <code><a href="firebaseappdistribution_v1alpha.projects.apps.releases.html">releases()</a></code>
+  <code><a href="firebaseappdistribution_v1alpha.projects.apps.testCases.html">testCases()</a></code>
+  <code><a href="#getTestConfig">getTestConfig(name, x__xgafv=None)</a></code></p>
+<p class="firstline">Gets configuration for automated tests.</p>
+  <code><a href="#updateTestConfig">updateTestConfig(name, body=None, updateMask=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Updates automated test configuration.</p>
+    <code class="details" id="getTestConfig">getTestConfig(name, x__xgafv=None)</code>
+  <pre>Gets configuration for automated tests.
+  name: string, Required. The name of the `TestConfig` resource to retrieve. Format: `projects/{project_number}/apps/{app}/testConfig` (required)
+    { # Configuration for automated tests
+  &quot;displayName&quot;: &quot;A String&quot;, # Optional. Display name of the AI driven test. Required if the release test is created with multiple goals.
+  &quot;name&quot;: &quot;A String&quot;, # Identifier. The name of the test configuration resource. Format: `projects/{project_number}/apps/{app}/testConfig`
+  &quot;roboCrawler&quot;: { # Configuration for Robo crawler # Optional. Configuration for Robo crawler
+    &quot;aiInstructions&quot;: { # Optional. Instructions for AI driven test
+      &quot;steps&quot;: [ # Required. Steps to be accomplished by the AI
+        { # A step to be accomplished by the AI
+          &quot;assertion&quot;: &quot;A String&quot;, # An assertion to be checked by the AI
+          &quot;goal&quot;: &quot;A String&quot;, # A goal to be accomplished by the AI
+          &quot;hint&quot;: &quot;A String&quot;, # Optional. Hint text containing suggestions to help the agent accomplish the goal
+          &quot;successCriteria&quot;: &quot;A String&quot;, # Optional. A visual description of the screen&#x27;s expected state after the step has been successfully completed. This is referred to as the &quot;final screen assertion&quot; in the Firebase console and CLI tools. This field must be provided for the last step in a test case, and is optional for all other steps.
+          &quot;testCase&quot;: &quot;A String&quot;, # Output only. The test case that contained this step. Note: The test case may have changed or been deleted since this step was created. Format: `projects/{project_number}/apps/{app}/testCases/{test_case}`
+    &quot;loginCredential&quot;: { # Login credential for automated tests # Optional. Login credential for automated tests
+      &quot;fieldHints&quot;: { # Hints to the crawler for identifying input fields # Optional. Hints to the crawler for identifying input fields
+        &quot;passwordResourceName&quot;: &quot;A String&quot;, # Required. The Android resource name of the password UI element. For example, in Java: R.string.foo in xml: @string/foo Only the &quot;foo&quot; part is needed. Reference doc: https://developer.android.com/guide/topics/resources/accessing-resources.html
+        &quot;usernameResourceName&quot;: &quot;A String&quot;, # Required. The Android resource name of the username UI element. For example, in Java: R.string.foo in xml: @string/foo Only the &quot;foo&quot; part is needed. Reference doc: https://developer.android.com/guide/topics/resources/accessing-resources.html
+      &quot;google&quot;: True or False, # Optional. Are these credentials for Google?
+      &quot;password&quot;: &quot;A String&quot;, # Optional. Password for automated tests
+      &quot;username&quot;: &quot;A String&quot;, # Optional. Username for automated tests
+  &quot;testDevices&quot;: [ # Optional. Tests will be run on this list of devices
+    { # A device on which automated tests can be run.
+      &quot;locale&quot;: &quot;A String&quot;, # Optional. The locale of the device (e.g. &quot;en_US&quot; for US English) during the test.
+      &quot;model&quot;: &quot;A String&quot;, # Required. The device model.
+      &quot;orientation&quot;: &quot;A String&quot;, # Optional. The orientation of the device during the test.
+      &quot;version&quot;: &quot;A String&quot;, # Required. The version of the device (API level on Android).
+    <code class="details" id="updateTestConfig">updateTestConfig(name, body=None, updateMask=None, x__xgafv=None)</code>
+  <pre>Updates automated test configuration.
+  name: string, Identifier. The name of the test configuration resource. Format: `projects/{project_number}/apps/{app}/testConfig` (required)

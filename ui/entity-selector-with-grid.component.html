@@ -1,0 +1,8 @@
+<div >
+    [data]="entityList"
+    valueField="Name"
+    placeholder="Select an entity..."
+    class="entity-selector"
+    [(value)]="CurrentEntity"
+  @if (CurrentEntity) {
+    <mj-entity-permissions-grid class="inner-grid" [EntityName]="CurrentEntity.Name" (PermissionChanged)="handlePermissionChanged($event)"></mj-entity-permissions-grid>

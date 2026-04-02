@@ -1,0 +1,13 @@
+    <!-- Filter Details Section -->
+        SectionKey="filterDetails"
+        SectionName="Filter Details"
+            FieldName="UserDescription"
+            FieldName="CodeExplanation"
+    <!-- Entity Action Filters Section -->
+        SectionKey="entityActionFilters"
+        SectionName="Entity Action Filters"
+        Icon="fa fa-filter"
+        [BadgeCount]="GetSectionRowCount('entityActionFilters')"
+                [Params]="BuildRelationshipViewParamsByEntityName('MJ: Entity Action Filters','ActionFilterID')"
+                [AllowLoad]="IsSectionExpanded('entityActionFilters')"
+                (AfterDataLoad)="SetSectionRowCount('entityActionFilters', $event.totalRowCount)"

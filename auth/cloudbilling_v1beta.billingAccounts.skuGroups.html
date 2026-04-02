@@ -1,0 +1,15 @@
+<h1><a href="cloudbilling_v1beta.html">Cloud Billing API</a> . <a href="cloudbilling_v1beta.billingAccounts.html">billingAccounts</a> . <a href="cloudbilling_v1beta.billingAccounts.skuGroups.html">skuGroups</a></h1>
+  <code><a href="cloudbilling_v1beta.billingAccounts.skuGroups.skus.html">skus()</a></code>
+<p class="firstline">Gets a SKU group visible to a billing account.</p>
+<p class="firstline">Lists SKU groups visible to a billing account.</p>
+  <pre>Gets a SKU group visible to a billing account.
+  name: string, Required. The name of the BillingAccountSkuGroup to retrieve. Format: billingAccounts/{billing_account}/skuGroups/{sku_group} (required)
+    { # Encapsulates a stock keeping (SKU) group visible to a billing account. A SKU group represents a collection of SKUs that are related to each other. For example, the `AI Platform APIs` SKU group includes SKUs from the Cloud Dialogflow API, the Cloud Text-to-Speech API, and additional related APIs.
+  &quot;displayName&quot;: &quot;A String&quot;, # Description of the BillingAccountSkuGroup. Example: &quot;A2 VMs (1 Year CUD)&quot;.
+  &quot;name&quot;: &quot;A String&quot;, # Resource name for the BillingAccountSkuGroup. Example: &quot;billingAccounts/012345-567890-ABCDEF/skuGroups/0e6403d1-4694-44d2-a696-7a78b1a69301&quot;.
+  <pre>Lists SKU groups visible to a billing account.
+  parent: string, Required. The billing account to list billing account SKU groups from. Format: billingAccounts/{billing_account} (required)
+  pageSize: integer, Maximum number of billing account SKU groups to return. Results may return fewer than this value. Default value is 50 and maximum value is 5000.
+  pageToken: string, Page token received from a previous ListBillingAccountSkuGroups call to retrieve the next page of results. If this field is empty, the first page is returned.
+    { # Response message for ListBillingAccountSkuGroups.
+  &quot;billingAccountSkuGroups&quot;: [ # The returned publicly listed billing account SKU groups.

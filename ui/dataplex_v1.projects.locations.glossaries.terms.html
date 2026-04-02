@@ -1,0 +1,34 @@
+<h1><a href="dataplex_v1.html">Cloud Dataplex API</a> . <a href="dataplex_v1.projects.html">projects</a> . <a href="dataplex_v1.projects.locations.html">locations</a> . <a href="dataplex_v1.projects.locations.glossaries.html">glossaries</a> . <a href="dataplex_v1.projects.locations.glossaries.terms.html">terms</a></h1>
+  <code><a href="#create">create(parent, body=None, termId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Creates a new GlossaryTerm resource.</p>
+<p class="firstline">Deletes a GlossaryTerm resource.</p>
+<p class="firstline">Gets a GlossaryTerm resource.</p>
+<p class="firstline">Lists GlossaryTerm resources in a Glossary.</p>
+<p class="firstline">Updates a GlossaryTerm resource.</p>
+    <code class="details" id="create">create(parent, body=None, termId=None, x__xgafv=None)</code>
+  <pre>Creates a new GlossaryTerm resource.
+  parent: string, Required. The parent resource where the GlossaryTerm will be created. Format: projects/{project_id_or_number}/locations/{location_id}/glossaries/{glossary_id} where location_id refers to a Google Cloud region. (required)
+{ # GlossaryTerms are the core of Glossary. A GlossaryTerm holds a rich text description that can be attached to Entries or specific columns to enrich them.
+  &quot;createTime&quot;: &quot;A String&quot;, # Output only. The time at which the GlossaryTerm was created.
+  &quot;description&quot;: &quot;A String&quot;, # Optional. The user-mutable description of the GlossaryTerm.
+  &quot;displayName&quot;: &quot;A String&quot;, # Optional. User friendly display name of the GlossaryTerm. This is user-mutable. This will be same as the GlossaryTermId, if not specified.
+  &quot;labels&quot;: { # Optional. User-defined labels for the GlossaryTerm.
+  &quot;name&quot;: &quot;A String&quot;, # Output only. Identifier. The resource name of the GlossaryTerm. Format: projects/{project_id_or_number}/locations/{location_id}/glossaries/{glossary_id}/terms/{term_id}
+  &quot;parent&quot;: &quot;A String&quot;, # Required. The immediate parent of the GlossaryTerm in the resource-hierarchy. It can either be a Glossary or a GlossaryCategory. Format: projects/{project_id_or_number}/locations/{location_id}/glossaries/{glossary_id} OR projects/{project_id_or_number}/locations/{location_id}/glossaries/{glossary_id}/categories/{category_id}
+  &quot;uid&quot;: &quot;A String&quot;, # Output only. System generated unique id for the GlossaryTerm. This ID will be different if the GlossaryTerm is deleted and re-created with the same name.
+  &quot;updateTime&quot;: &quot;A String&quot;, # Output only. The time at which the GlossaryTerm was last updated.
+  termId: string, Required. GlossaryTerm identifier.
+  <pre>Deletes a GlossaryTerm resource.
+  name: string, Required. The name of the GlossaryTerm to delete. Format: projects/{project_id_or_number}/locations/{location_id}/glossaries/{glossary_id}/terms/{term_id} (required)
+  <pre>Gets a GlossaryTerm resource.
+  name: string, Required. The name of the GlossaryTerm to retrieve. Format: projects/{project_id_or_number}/locations/{location_id}/glossaries/{glossary_id}/terms/{term_id} (required)
+  <pre>Lists GlossaryTerm resources in a Glossary.
+  parent: string, Required. The parent, which has this collection of GlossaryTerms. Format: projects/{project_id_or_number}/locations/{location_id}/glossaries/{glossary_id} where location_id refers to a Google Cloud region. (required)
+  filter: string, Optional. Filter expression that filters GlossaryTerms listed in the response. Filters are supported on the following fields: - immediate_parentExamples of using a filter are: - immediate_parent=&quot;projects/{project_id_or_number}/locations/{location_id}/glossaries/{glossary_id}&quot; - immediate_parent=&quot;projects/{project_id_or_number}/locations/{location_id}/glossaries/{glossary_id}/categories/{category_id}&quot;This will only return the GlossaryTerms that are directly nested under the specified parent.
+  orderBy: string, Optional. Order by expression that orders GlossaryTerms listed in the response. Order by fields are: name or create_time for the result. If not specified, the ordering is undefined.
+  pageSize: integer, Optional. The maximum number of GlossaryTerms to return. The service may return fewer than this value. If unspecified, at most 50 GlossaryTerms will be returned. The maximum value is 1000; values above 1000 will be coerced to 1000.
+  pageToken: string, Optional. A page token, received from a previous ListGlossaryTerms call. Provide this to retrieve the subsequent page. When paginating, all other parameters provided to ListGlossaryTerms must match the call that provided the page token.
+    { # List GlossaryTerms Response
+  &quot;terms&quot;: [ # Lists the GlossaryTerms in the specified parent.
+  <pre>Updates a GlossaryTerm resource.
+  name: string, Output only. Identifier. The resource name of the GlossaryTerm. Format: projects/{project_id_or_number}/locations/{location_id}/glossaries/{glossary_id}/terms/{term_id} (required)

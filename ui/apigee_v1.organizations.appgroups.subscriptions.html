@@ -1,0 +1,28 @@
+<h1><a href="apigee_v1.html">Apigee API</a> . <a href="apigee_v1.organizations.html">organizations</a> . <a href="apigee_v1.organizations.appgroups.html">appgroups</a> . <a href="apigee_v1.organizations.appgroups.subscriptions.html">subscriptions</a></h1>
+<p class="firstline">Creates a subscription to an API product. </p>
+  <code><a href="#expire">expire(name, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Expires an API product subscription immediately.</p>
+<p class="firstline">Get an api product subscription for an appgroup.</p>
+<p class="firstline">List all api product subscriptions for an appgroup.</p>
+  <pre>Creates a subscription to an API product. 
+  parent: string, Required. Name of the appgroup that is purchasing a subscription to the API product. Use the following structure in your request: `organizations/{org}/appgroups/{appgroup}` (required)
+{ # AppGroup Subscription details.
+  &quot;apiproduct&quot;: &quot;A String&quot;, # Required. Name of the API product for which the appgroup is purchasing a subscription.
+  &quot;createdAt&quot;: &quot;A String&quot;, # Output only. Time when the API product subscription was created in milliseconds since epoch.
+  &quot;endTime&quot;: &quot;A String&quot;, # Output only. Time when the API product subscription ends in milliseconds since epoch.
+  &quot;lastModifiedAt&quot;: &quot;A String&quot;, # Output only. Time when the API product subscription was last modified in milliseconds since epoch.
+  &quot;name&quot;: &quot;A String&quot;, # Output only. Name of the API product subscription.
+  &quot;startTime&quot;: &quot;A String&quot;, # Output only. Time when the API product subscription starts in milliseconds since epoch.
+    <code class="details" id="expire">expire(name, body=None, x__xgafv=None)</code>
+  <pre>Expires an API product subscription immediately.
+  name: string, Required. Name of the API product subscription. Use the following structure in your request: `organizations/{org}/appgroups/{appgroup}/subscriptions/{subscription}` (required)
+{ # Request for ExpireAppGroupSubscription.
+  <pre>Get an api product subscription for an appgroup.
+  name: string, Required. The name of the AppGroupSubscription to retrieve. Format: `organizations/{org}/appgroups/{appgroup}/subscriptions/{subscription}` (required)
+  <pre>List all api product subscriptions for an appgroup.
+  parent: string, Required. Name of the appgroup. Use the following structure in your request: `organizations/{org}/appgroups/{appgroup}` (required)
+  pageSize: integer, Optional. The maximum number of subscriptions to return. The service may return fewer than this value. If unspecified, at most 100 subscriptions will be returned. The maximum value is 1000; values above 1000 will be coerced to 1000.
+  pageToken: string, Optional. A page token, received from a previous `ListAppGroupSubscriptions` call. Provide this to retrieve the subsequent page. When paginating, all other parameters provided to `ListAppGroupSubscriptions` must match the call that provided the page token.
+    { # Response for ListAppGroupSubscriptions.
+  &quot;appGroupSubscriptions&quot;: [ # The list of subscriptions for an AppGroup.
+  &quot;nextPageToken&quot;: &quot;A String&quot;, # Value that can be sent as `pageToken` to retrieve the next page of content. If this field is omitted, there are no subsequent pages.

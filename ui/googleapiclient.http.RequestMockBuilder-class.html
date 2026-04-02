@@ -1,0 +1,57 @@
+  <title>googleapiclient.http.RequestMockBuilder</title>
+        Class&nbsp;RequestMockBuilder
+            >]&nbsp;|&nbsp;<a href="googleapiclient.http.RequestMockBuilder-class.html"
+<h1 class="epydoc">Class RequestMockBuilder</h1><p class="nomargin-top"><span class="codelink"><a href="googleapiclient.http-pysrc.html#RequestMockBuilder">source&nbsp;code</a></span></p>
+        <strong class="uidshort">RequestMockBuilder</strong>
+Pass in a dictionary to the constructor that maps request methodIds to
+tuples of (httplib2.Response, content, opt_expected_body) that should be
+returned when that method is called. None may also be passed in for the
+httplib2.Response, in which case a 200 OK response will be generated.
+If an opt_expected_body (str or dict) is provided, it will be compared to
+the body and UnexpectedBodyError will be raised on inequality.
+  response = '{&quot;data&quot;: {&quot;id&quot;: &quot;tag:google.c...'
+  requestBuilder = RequestMockBuilder(
+      'plus.activities.get': (None, response),
+  googleapiclient.discovery.build(&quot;plus&quot;, &quot;v1&quot;, requestBuilder=requestBuilder)
+Methods that you do not supply a response for will return a
+200 OK with an empty string as the response content or raise an excpetion
+if check_unexpected is set to True. The methodId is taken from the rpcName
+in the discovery document.
+For more details see the project wiki.
+          <td><span class="summary-sig"><a href="googleapiclient.http.RequestMockBuilder-class.html#__init__" class="summary-sig-name">__init__</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">responses</span>,
+        <span class="summary-sig-arg">check_unexpected</span>=<span class="summary-sig-default">False</span>)</span><br />
+      Constructor for RequestMockBuilder</td>
+            <span class="codelink"><a href="googleapiclient.http-pysrc.html#RequestMockBuilder.__init__">source&nbsp;code</a></span>
+          <td><span class="summary-sig"><a href="googleapiclient.http.RequestMockBuilder-class.html#__call__" class="summary-sig-name">__call__</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">postproc</span>,
+        <span class="summary-sig-arg">methodId</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">resumable</span>=<span class="summary-sig-default">None</span>)</span><br />
+      Implements the callable interface that discovery.build() expects of 
+      requestBuilder, which is to build an object compatible with 
+      HttpRequest.execute().</td>
+            <span class="codelink"><a href="googleapiclient.http-pysrc.html#RequestMockBuilder.__call__">source&nbsp;code</a></span>
+        <span class="sig-arg">responses</span>,
+        <span class="sig-arg">check_unexpected</span>=<span class="sig-default">False</span>)</span>
+    ><span class="codelink"><a href="googleapiclient.http-pysrc.html#RequestMockBuilder.__init__">source&nbsp;code</a></span>&nbsp;
+Constructor for RequestMockBuilder
+The constructed object should be a callable object
+that can replace the class HttpResponse.
+responses - A dictionary that maps methodIds into tuples
+            of (httplib2.Response, content). The methodId
+            comes from the 'rpcName' field in the discovery
+check_unexpected - A boolean setting whether or not UnexpectedMethodError
+                   should be raised on unsupplied method.
+<a name="__call__"></a>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">__call__</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">postproc</span>,
+        <span class="sig-arg">method</span>=<span class="sig-default"><code class="variable-quote">'</code><code class="variable-string">GET</code><code class="variable-quote">'</code></span>,
+        <span class="sig-arg">body</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">headers</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">methodId</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">resumable</span>=<span class="sig-default">None</span>)</span>
+    <br /><em class="fname">(Call operator)</em>
+    ><span class="codelink"><a href="googleapiclient.http-pysrc.html#RequestMockBuilder.__call__">source&nbsp;code</a></span>&nbsp;
+  <p>Implements the callable interface that discovery.build() expects of 
+  HttpRequest.execute(). See that method for the description of the 
+  parameters and the expected response.</p>

@@ -1,0 +1,62 @@
+<h1><a href="servicemanagement_v1.html">Service Management API</a> . <a href="servicemanagement_v1.services.html">services</a></h1>
+  <code><a href="servicemanagement_v1.services.configs.html">configs()</a></code>
+  <code><a href="servicemanagement_v1.services.consumers.html">consumers()</a></code>
+<p class="firstline">Returns the consumers Resource.</p>
+  <code><a href="servicemanagement_v1.services.rollouts.html">rollouts()</a></code>
+<p class="firstline">Creates a new managed service. A managed service is immutable, and is subject to mandatory 30-day data retention. You cannot move a service or recreate it within 30 days after deletion. One producer project can own no more than 500 services. For security and reliability purposes, a production service should be hosted in a dedicated producer project. Operation</p>
+  <code><a href="#delete">delete(serviceName, x__xgafv=None)</a></code></p>
+<p class="firstline">Deletes a managed service. This method will change the service to the `Soft-Delete` state for 30 days. Within this period, service producers may call UndeleteService to restore the service. After 30 days, the service will be permanently deleted. Operation</p>
+  <code><a href="#generateConfigReport">generateConfigReport(body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Generates and returns a report (errors, warnings and changes from existing configurations) associated with GenerateConfigReportRequest.new_value If GenerateConfigReportRequest.old_value is specified, GenerateConfigReportRequest will contain a single ChangeReport based on the comparison between GenerateConfigReportRequest.new_value and GenerateConfigReportRequest.old_value. If GenerateConfigReportRequest.old_value is not specified, this method will compare GenerateConfigReportRequest.new_value with the last pushed service configuration.</p>
+  <code><a href="#get">get(serviceName, x__xgafv=None)</a></code></p>
+<p class="firstline">Gets a managed service. Authentication is required unless the service is public.</p>
+  <code><a href="#getConfig">getConfig(serviceName, configId=None, view=None, x__xgafv=None)</a></code></p>
+  <code><a href="#list">list(consumerId=None, pageSize=None, pageToken=None, producerProjectId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Lists managed services. Returns all public services. For authenticated users, also returns all services the calling user has "servicemanagement.services.get" permission for.</p>
+  <code><a href="#undelete">undelete(serviceName, x__xgafv=None)</a></code></p>
+<p class="firstline">Revives a previously deleted managed service. The method restores the service using the configuration at the time the service was deleted. The target service must exist and must have been deleted within the last 30 days. Operation</p>
+  <pre>Creates a new managed service. A managed service is immutable, and is subject to mandatory 30-day data retention. You cannot move a service or recreate it within 30 days after deletion. One producer project can own no more than 500 services. For security and reliability purposes, a production service should be hosted in a dedicated producer project. Operation
+{ # The full representation of a Service that is managed by Google Service Management.
+  &quot;producerProjectId&quot;: &quot;A String&quot;, # ID of the project that produces and owns this service.
+  &quot;serviceName&quot;: &quot;A String&quot;, # The name of the service. See the [overview](https://cloud.google.com/service-infrastructure/docs/overview) for naming requirements.
+    <code class="details" id="delete">delete(serviceName, x__xgafv=None)</code>
+  <pre>Deletes a managed service. This method will change the service to the `Soft-Delete` state for 30 days. Within this period, service producers may call UndeleteService to restore the service. After 30 days, the service will be permanently deleted. Operation
+    <code class="details" id="generateConfigReport">generateConfigReport(body=None, x__xgafv=None)</code>
+  <pre>Generates and returns a report (errors, warnings and changes from existing configurations) associated with GenerateConfigReportRequest.new_value If GenerateConfigReportRequest.old_value is specified, GenerateConfigReportRequest will contain a single ChangeReport based on the comparison between GenerateConfigReportRequest.new_value and GenerateConfigReportRequest.old_value. If GenerateConfigReportRequest.old_value is not specified, this method will compare GenerateConfigReportRequest.new_value with the last pushed service configuration.
+{ # Request message for GenerateConfigReport method.
+  &quot;newConfig&quot;: { # Required. Service configuration for which we want to generate the report. For this version of API, the supported types are google.api.servicemanagement.v1.ConfigRef, google.api.servicemanagement.v1.ConfigSource, and google.api.Service
+  &quot;oldConfig&quot;: { # Optional. Service configuration against which the comparison will be done. For this version of API, the supported types are google.api.servicemanagement.v1.ConfigRef, google.api.servicemanagement.v1.ConfigSource, and google.api.Service
+    { # Response message for GenerateConfigReport method.
+  &quot;changeReports&quot;: [ # list of ChangeReport, each corresponding to comparison between two service configurations.
+    { # Change report associated with a particular service configuration. It contains a list of ConfigChanges based on the comparison between two service configurations.
+      &quot;configChanges&quot;: [ # List of changes between two service configurations. The changes will be alphabetically sorted based on the identifier of each change. A ConfigChange identifier is a dot separated path to the configuration. Example: visibility.rules[selector=&#x27;LibraryService.CreateBook&#x27;].restriction
+        { # Output generated from semantically comparing two versions of a service configuration. Includes detailed information about a field that have changed with applicable advice about potential consequences for the change, such as backwards-incompatibility.
+          &quot;advices&quot;: [ # Collection of advice provided for this change, useful for determining the possible impact of this change.
+            { # Generated advice about this change, used for providing more information about how a change will affect the existing service.
+              &quot;description&quot;: &quot;A String&quot;, # Useful description for why this advice was applied and what actions should be taken to mitigate any implied risks.
+          &quot;changeType&quot;: &quot;A String&quot;, # The type for this change, either ADDED, REMOVED, or MODIFIED.
+          &quot;element&quot;: &quot;A String&quot;, # Object hierarchy path to the change, with levels separated by a &#x27;.&#x27; character. For repeated fields, an applicable unique identifier field is used for the index (usually selector, name, or id). For maps, the term &#x27;key&#x27; is used. If the field has no unique identifier, the numeric index is used. Examples: - visibility.rules[selector==&quot;google.LibraryService.ListBooks&quot;].restriction - quota.metric_rules[selector==&quot;google&quot;].metric_costs[key==&quot;reads&quot;].value - logging.producer_destinations[0]
+          &quot;newValue&quot;: &quot;A String&quot;, # Value of the changed object in the new Service configuration, in JSON format. This field will not be populated if ChangeType == REMOVED.
+          &quot;oldValue&quot;: &quot;A String&quot;, # Value of the changed object in the old Service configuration, in JSON format. This field will not be populated if ChangeType == ADDED.
+  &quot;diagnostics&quot;: [ # Errors / Linter warnings associated with the service definition this report belongs to.
+    { # Represents a diagnostic message (error or warning)
+      &quot;kind&quot;: &quot;A String&quot;, # The kind of diagnostic information provided.
+      &quot;location&quot;: &quot;A String&quot;, # File name and line number of the error or warning.
+      &quot;message&quot;: &quot;A String&quot;, # Message describing the error or warning.
+  &quot;id&quot;: &quot;A String&quot;, # ID of the service configuration this report belongs to.
+  &quot;serviceName&quot;: &quot;A String&quot;, # Name of the service this report belongs to.
+    <code class="details" id="get">get(serviceName, x__xgafv=None)</code>
+  <pre>Gets a managed service. Authentication is required unless the service is public.
+  serviceName: string, Required. The name of the service. See the `ServiceManager` overview for naming requirements. For example: `example.googleapis.com`. (required)
+    <code class="details" id="getConfig">getConfig(serviceName, configId=None, view=None, x__xgafv=None)</code>
+  configId: string, Required. The id of the service configuration resource. This field must be specified for the server to return all fields, including `SourceInfo`.
+    <code class="details" id="list">list(consumerId=None, pageSize=None, pageToken=None, producerProjectId=None, x__xgafv=None)</code>
+  <pre>Lists managed services. Returns all public services. For authenticated users, also returns all services the calling user has &quot;servicemanagement.services.get&quot; permission for.
+  consumerId: string, Include services consumed by the specified consumer. The Google Service Management implementation accepts the following forms: - project:
+  pageSize: integer, The max number of items to include in the response list. Page size is 50 if not specified. Maximum value is 500.
+  producerProjectId: string, Include services produced by the specified project.
+    { # Response message for `ListServices` method.
+  &quot;nextPageToken&quot;: &quot;A String&quot;, # Token that can be passed to `ListServices` to resume a paginated query.
+  &quot;services&quot;: [ # The returned services will only have the name field set.
+    <code class="details" id="undelete">undelete(serviceName, x__xgafv=None)</code>
+  <pre>Revives a previously deleted managed service. The method restores the service using the configuration at the time the service was deleted. The target service must exist and must have been deleted within the last 30 days. Operation

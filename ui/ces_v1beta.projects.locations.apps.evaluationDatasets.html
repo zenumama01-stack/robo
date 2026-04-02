@@ -1,0 +1,65 @@
+<h1><a href="ces_v1beta.html">Gemini Enterprise for Customer Experience API</a> . <a href="ces_v1beta.projects.html">projects</a> . <a href="ces_v1beta.projects.locations.html">locations</a> . <a href="ces_v1beta.projects.locations.apps.html">apps</a> . <a href="ces_v1beta.projects.locations.apps.evaluationDatasets.html">evaluationDatasets</a></h1>
+  <code><a href="#create">create(parent, body=None, evaluationDatasetId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Creates an evaluation dataset.</p>
+<p class="firstline">Deletes an evaluation dataset.</p>
+<p class="firstline">Gets details of the specified evaluation dataset.</p>
+<p class="firstline">Lists all evaluation datasets in the given app.</p>
+<p class="firstline">Updates an evaluation dataset.</p>
+    <code class="details" id="create">create(parent, body=None, evaluationDatasetId=None, x__xgafv=None)</code>
+  <pre>Creates an evaluation dataset.
+  parent: string, Required. The app to create the evaluation for. Format: `projects/{project}/locations/{location}/apps/{app}` (required)
+{ # An evaluation dataset represents a set of evaluations that are grouped together basaed on shared tags.
+  &quot;aggregatedMetrics&quot;: { # Aggregated metrics for an evaluation or evaluation dataset. # Output only. The aggregated metrics for this evaluation dataset across all runs.
+    &quot;metricsByAppVersion&quot;: [ # Output only. Aggregated metrics, grouped by app version ID.
+      { # Metrics aggregated per app version.
+        &quot;appVersionId&quot;: &quot;A String&quot;, # Output only. The app version ID.
+        &quot;failCount&quot;: 42, # Output only. The number of times the evaluation failed.
+        &quot;hallucinationMetrics&quot;: [ # Output only. Metrics for hallucination within this app version.
+          { # Metrics for hallucination results.
+            &quot;score&quot;: 3.14, # Output only. The average hallucination score (0 to 1).
+        &quot;metricsByTurn&quot;: [ # Output only. Metrics aggregated per turn within this app version.
+          { # Metrics aggregated per turn.
+            &quot;hallucinationMetrics&quot;: [ # Output only. Metrics for hallucination within this turn.
+            &quot;semanticSimilarityMetrics&quot;: [ # Output only. Metrics for semantic similarity within this turn.
+              { # Metrics for semantic similarity results.
+                &quot;score&quot;: 3.14, # Output only. The average semantic similarity score (0-4).
+            &quot;toolCallLatencyMetrics&quot;: [ # Output only. Metrics for tool call latency within this turn.
+              { # Metrics for tool call latency.
+                &quot;averageLatency&quot;: &quot;A String&quot;, # Output only. The average latency of the tool calls.
+                &quot;tool&quot;: &quot;A String&quot;, # Output only. The name of the tool.
+            &quot;toolMetrics&quot;: [ # Output only. Metrics for each tool within this turn.
+              { # Metrics for a single tool.
+                &quot;failCount&quot;: 42, # Output only. The number of times the tool failed.
+                &quot;passCount&quot;: 42, # Output only. The number of times the tool passed.
+            &quot;turnIndex&quot;: 42, # Output only. The turn index (0-based).
+            &quot;turnLatencyMetrics&quot;: [ # Output only. Metrics for turn latency within this turn.
+              { # Metrics for turn latency.
+                &quot;averageLatency&quot;: &quot;A String&quot;, # Output only. The average latency of the turns.
+        &quot;passCount&quot;: 42, # Output only. The number of times the evaluation passed.
+        &quot;semanticSimilarityMetrics&quot;: [ # Output only. Metrics for semantic similarity within this app version.
+        &quot;toolCallLatencyMetrics&quot;: [ # Output only. Metrics for tool call latency within this app version.
+        &quot;toolMetrics&quot;: [ # Output only. Metrics for each tool within this app version.
+        &quot;turnLatencyMetrics&quot;: [ # Output only. Metrics for turn latency within this app version.
+  &quot;createTime&quot;: &quot;A String&quot;, # Output only. Timestamp when the evaluation dataset was created.
+  &quot;createdBy&quot;: &quot;A String&quot;, # Output only. The user who created the evaluation dataset.
+  &quot;displayName&quot;: &quot;A String&quot;, # Required. User-defined display name of the evaluation dataset. Unique within an App.
+  &quot;evaluations&quot;: [ # Optional. Evaluations that are included in this dataset.
+  &quot;lastUpdatedBy&quot;: &quot;A String&quot;, # Output only. The user who last updated the evaluation dataset.
+  &quot;name&quot;: &quot;A String&quot;, # Identifier. The unique identifier of this evaluation dataset. Format: `projects/{project}/locations/{location}/apps/{app}/evaluationDatasets/{evaluationDataset}`
+  &quot;updateTime&quot;: &quot;A String&quot;, # Output only. Timestamp when the evaluation dataset was last updated.
+  evaluationDatasetId: string, Optional. The ID to use for the evaluation dataset, which will become the final component of the evaluation dataset&#x27;s resource name. If not provided, a unique ID will be automatically assigned for the evaluation.
+  <pre>Deletes an evaluation dataset.
+  name: string, Required. The resource name of the evaluation dataset to delete. (required)
+  etag: string, Optional. The current etag of the evaluation dataset. If an etag is not provided, the deletion will overwrite any concurrent changes. If an etag is provided and does not match the current etag of the evaluation dataset, deletion will be blocked and an ABORTED error will be returned.
+  <pre>Gets details of the specified evaluation dataset.
+  name: string, Required. The resource name of the evaluation dataset to retrieve. (required)
+  <pre>Lists all evaluation datasets in the given app.
+  parent: string, Required. The resource name of the app to list evaluation datasets from. (required)
+  filter: string, Optional. Filter to be applied when listing the evaluation datasets. See https://google.aip.dev/160 for more details.
+  orderBy: string, Optional. Field to sort by. Only &quot;name&quot; and &quot;create_time&quot;, and &quot;update_time&quot; are supported. Time fields are ordered in descending order, and the name field is ordered in ascending order. If not included, &quot;update_time&quot; will be the default. See https://google.aip.dev/132#ordering for more details.
+  pageToken: string, Optional. The next_page_token value returned from a previous list EvaluationService.ListEvaluationDatasets call.
+    { # Response message for EvaluationService.ListEvaluationDatasets.
+  &quot;evaluationDatasets&quot;: [ # The list of evaluation datasets.
+  &quot;nextPageToken&quot;: &quot;A String&quot;, # A token that can be sent as ListEvaluationDatasetsRequest.page_token to retrieve the next page. Absence of this field indicates there are no subsequent pages.
+  <pre>Updates an evaluation dataset.
+  name: string, Identifier. The unique identifier of this evaluation dataset. Format: `projects/{project}/locations/{location}/apps/{app}/evaluationDatasets/{evaluationDataset}` (required)

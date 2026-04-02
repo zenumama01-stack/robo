@@ -1,0 +1,21 @@
+__all__ = ["BatchUsage", "InputTokensDetails", "OutputTokensDetails"]
+class InputTokensDetails(BaseModel):
+    """A detailed breakdown of the input tokens."""
+    cached_tokens: int
+    """The number of tokens that were retrieved from the cache.
+    [More on prompt caching](https://platform.openai.com/docs/guides/prompt-caching).
+class OutputTokensDetails(BaseModel):
+    """A detailed breakdown of the output tokens."""
+    reasoning_tokens: int
+    """The number of reasoning tokens."""
+class BatchUsage(BaseModel):
+    breakdown of output tokens, and the total tokens used. Only populated on
+    batches created after September 7, 2025.
+    input_tokens: int
+    """The number of input tokens."""
+    input_tokens_details: InputTokensDetails
+    output_tokens: int
+    """The number of output tokens."""
+    output_tokens_details: OutputTokensDetails
+    total_tokens: int
+    """The total number of tokens used."""

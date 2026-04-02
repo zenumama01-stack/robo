@@ -1,0 +1,27 @@
+<h1><a href="analyticshub_v1.html">Analytics Hub API</a> . <a href="analyticshub_v1.projects.html">projects</a> . <a href="analyticshub_v1.projects.locations.html">locations</a> . <a href="analyticshub_v1.projects.locations.subscriptions.html">subscriptions</a></h1>
+<p class="firstline">Deletes a subscription.</p>
+<p class="firstline">Gets the details of a Subscription.</p>
+<p class="firstline">Lists all subscriptions in a given project and location.</p>
+  <code><a href="#refresh">refresh(name, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Refreshes a Subscription to a Data Exchange. A Data Exchange can become stale when a publisher adds or removes data. This is a long-running operation as it may create many linked datasets.</p>
+  <code><a href="#revoke">revoke(name, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Revokes a given subscription.</p>
+  <pre>Deletes a subscription.
+  name: string, Required. Resource name of the subscription to delete. e.g. projects/123/locations/us/subscriptions/456 (required)
+  <pre>Gets the details of a Subscription.
+  name: string, Required. Resource name of the subscription. e.g. projects/123/locations/us/subscriptions/456 (required)
+  <pre>Lists all subscriptions in a given project and location.
+  parent: string, Required. The parent resource path of the subscription. e.g. projects/myproject/locations/us (required)
+  filter: string, An expression for filtering the results of the request. Eligible fields for filtering are: + `listing` + `data_exchange` Alternatively, a literal wrapped in double quotes may be provided. This will be checked for an exact match against both fields above. In all cases, the full Data Exchange or Listing resource name must be provided. Some example of using filters: + data_exchange=&quot;projects/myproject/locations/us/dataExchanges/123&quot; + listing=&quot;projects/123/locations/us/dataExchanges/456/listings/789&quot; + &quot;projects/myproject/locations/us/dataExchanges/123&quot;
+    { # Message for response to the listing of subscriptions.
+  &quot;subscriptions&quot;: [ # The list of subscriptions.
+    <code class="details" id="refresh">refresh(name, body=None, x__xgafv=None)</code>
+  <pre>Refreshes a Subscription to a Data Exchange. A Data Exchange can become stale when a publisher adds or removes data. This is a long-running operation as it may create many linked datasets.
+  name: string, Required. Resource name of the Subscription to refresh. e.g. `projects/subscriberproject/locations/us/subscriptions/123` (required)
+{ # Message for refreshing a subscription.
+    <code class="details" id="revoke">revoke(name, body=None, x__xgafv=None)</code>
+  <pre>Revokes a given subscription.
+  name: string, Required. Resource name of the subscription to revoke. e.g. projects/123/locations/us/subscriptions/456 (required)
+{ # Message for revoking a subscription.
+  &quot;revokeCommercial&quot;: True or False, # Optional. If the subscription is commercial then this field must be set to true, otherwise a failure is thrown. This acts as a safety guard to avoid revoking commercial subscriptions accidentally.
+    { # Message for response when you revoke a subscription. Empty for now.

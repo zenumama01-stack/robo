@@ -1,0 +1,146 @@
+package org.openhab.core.transform;
+import static java.nio.file.StandardWatchEventKinds.*;
+import java.io.FilenameFilter;
+import java.nio.file.FileSystems;
+import java.nio.file.WatchEvent;
+import java.nio.file.WatchKey;
+import java.nio.file.WatchService;
+ * Base class for cacheable and localizable file based transformation
+ * {@link TransformationService}.
+ * It expects the transformation to be applied to be read from a file stored
+ * under the 'transform' folder within the configuration path. To organize the various
+ * transformations one might use subfolders.
+ * @deprecated use the {@link TransformationRegistry} instead
+ * @author Kai Kreuzer - File caching mechanism
+public abstract class AbstractFileTransformationService<T> implements TransformationService {
+    private static final char EXTENSION_SEPARATOR = '.';
+    private static final char UNIX_SEPARATOR = '/';
+    private static final char WINDOWS_SEPARATOR = '\\';
+    private @Nullable WatchService watchService = null;
+    protected final Map<String, T> cachedFiles = new ConcurrentHashMap<>();
+    private final Map<WatchKey, Path> registeredKeys = new ConcurrentHashMap<>();
+    protected final List<String> watchedDirectories = new ArrayList<>();
+    private final Logger logger = LoggerFactory.getLogger(AbstractFileTransformationService.class);
+    private @NonNullByDefault({}) ServiceTracker<LocaleProvider, LocaleProvider> localeProviderTracker;
+    private class LocaleProviderServiceTrackerCustomizer
+            implements ServiceTrackerCustomizer<LocaleProvider, LocaleProvider> {
+        private final BundleContext context;
+        public LocaleProviderServiceTrackerCustomizer(final BundleContext context) {
+        public LocaleProvider addingService(@Nullable ServiceReference<LocaleProvider> reference) {
+            localeProvider = context.getService(reference);
+            return localeProvider;
+        public void modifiedService(@Nullable ServiceReference<LocaleProvider> reference, LocaleProvider service) {
+        public void removedService(@Nullable ServiceReference<LocaleProvider> reference, LocaleProvider service) {
+    protected void activate(final BundleContext context) {
+        localeProviderTracker = new ServiceTracker<>(context, LocaleProvider.class,
+                new LocaleProviderServiceTrackerCustomizer(context));
+        localeProviderTracker.open();
+        localeProviderTracker.close();
+        stopWatchService();
+    protected Locale getLocale() {
+        return localeProvider.getLocale();
+     * Transforms the input <code>source</code> by the according method defined in subclass to another string.
+     * It expects the transformation to be read from a file which is stored
+     * under the 'conf/transform'
+     * @param filename the name of the file which contains the transformation definition.
+     *            The name may contain subfoldernames
+     *            as well
+     * @param source the input to transform
+     * @throws TransformationException
+    public @Nullable String transform(String filename, String source) throws TransformationException {
+        if (filename == null || source == null) {
+            throw new TransformationException("the given parameters 'filename' and 'source' must not be null");
+        final WatchService watchService = getWatchService();
+        processFolderEvents(watchService);
+        String transformFile = getLocalizedProposedFilename(filename, watchService);
+        T transform = cachedFiles.get(transformFile);
+        if (transform == null) {
+            transform = internalLoadTransform(transformFile);
+            cachedFiles.put(transformFile, transform);
+            return internalTransform(transform, source);
+            logger.warn("Could not transform '{}' with the file '{}' : {}", source, filename, e.getMessage());
+     * Abstract method defined by subclasses to effectively operate the
+     * transformation according to its rules
+     * @param transform transformation held by the file provided to <code>transform</code> method
+     * @return the transformed result or null if the transformation couldn't be completed for any reason.
+    protected abstract @Nullable String internalTransform(T transform, String source) throws TransformationException;
+     * Abstract method defined by subclasses to effectively read the transformation
+     * source file according to their own needs.
+     * @param filename Name of the file to be read. This filename may have been transposed to a localized one
+     * @return An object containing the source file
+     * @throws TransformationException file couldn't be read for any reason
+    protected abstract T internalLoadTransform(String filename) throws TransformationException;
+    private synchronized WatchService getWatchService() throws TransformationException {
+        WatchService watchService = this.watchService;
+        if (watchService != null) {
+            return watchService;
+            watchService = this.watchService = FileSystems.getDefault().newWatchService();
+            logger.error("Unable to start transformation directory monitoring");
+            throw new TransformationException("Cannot get a new watch service.");
+        watchSubDirectory("", watchService);
+    private void watchSubDirectory(String subDirectory, final WatchService watchService) {
+        if (!watchedDirectories.contains(subDirectory)) {
+            String watchedDirectory = getSourcePath() + subDirectory;
+            Path transformFilePath = Path.of(watchedDirectory);
+                WatchKey registrationKey = transformFilePath.register(watchService, ENTRY_DELETE, ENTRY_MODIFY);
+                logger.debug("Watching directory {}", transformFilePath);
+                watchedDirectories.add(subDirectory);
+                registeredKeys.put(registrationKey, transformFilePath);
+                logger.warn("Unable to watch transformation directory : {}", watchedDirectory);
+                cachedFiles.clear();
+     * Ensures that a modified or deleted cached files does not stay in the cache
+    private void processFolderEvents(final WatchService watchService) {
+        WatchKey key = watchService.poll();
+            for (WatchEvent<?> e : key.pollEvents()) {
+                if (e.kind() == OVERFLOW) {
+                // Context for directory entry event is the file name of entry
+                WatchEvent<Path> ev = (WatchEvent<Path>) e;
+                Path path = ev.context();
+                logger.debug("Refreshing transformation file '{}'", path);
+                for (String fileEntry : cachedFiles.keySet()) {
+                    if (fileEntry.endsWith(path.toString())) {
+                        cachedFiles.remove(fileEntry);
+            key.reset();
+    private synchronized void stopWatchService() {
+            for (WatchKey watchKey : registeredKeys.keySet()) {
+                watchKey.cancel();
+            registeredKeys.clear();
+            watchedDirectories.clear();
+                watchService.close();
+                logger.warn("Cannot deactivate transformation directory watcher", e);
+            watchService = null;
+    private String getFileExtension(String fileName) {
+        int extensionPos = fileName.lastIndexOf(EXTENSION_SEPARATOR);
+        int lastSeparatorPos = Math.max(fileName.lastIndexOf(UNIX_SEPARATOR), fileName.lastIndexOf(WINDOWS_SEPARATOR));
+        return lastSeparatorPos > extensionPos ? "" : fileName.substring(extensionPos + 1);
+     * Returns the name of the localized transformation file
+     * if it actually exists, keeps the original in the other case
+     * @param filename name of the requested transformation file
+     * @return original or localized transformation file to use
+    protected String getLocalizedProposedFilename(String filename, final WatchService watchService) {
+        final File file = new File(filename);
+        final String parent = file.getParent();
+        if (parent != null) {
+            watchSubDirectory(parent, watchService);
+        String sourcePath = getSourcePath();
+        String extension = getFileExtension(filename);
+        // the filename may already contain locale information
+        if (!filename.matches(".*_[a-z]{2}." + extension + "$")) {
+            String alternatePath = sourcePath + filename.substring(0, filename.length() - extension.length() - 1) + "_"
+                    + getLocale().getLanguage() + "." + extension;
+            if (new File(alternatePath).exists()) {
+                return alternatePath;
+        return sourcePath + filename;
+     * Returns the path to the root of the transformation folder
+    protected String getSourcePath() {
+        return OpenHAB.getConfigFolder() + File.separator + TransformationService.TRANSFORM_FOLDER_NAME
+                + File.separator;
+     * Returns a list of all files with the given extensions in the transformation folder
+    protected List<String> getFilenames(String[] validExtensions) {
+        File path = new File(getSourcePath());
+        return Arrays.stream(path.listFiles(new FileExtensionsFilter(validExtensions))).map(File::getName).toList();
+    protected static class FileExtensionsFilter implements FilenameFilter {
+        private final String[] validExtensions;
+        public FileExtensionsFilter(String[] validExtensions) {
+        public boolean accept(@Nullable File dir, @Nullable String name) {
+                    if (name.toLowerCase().endsWith(EXTENSION_SEPARATOR + extension)) {

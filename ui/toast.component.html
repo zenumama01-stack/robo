@@ -1,0 +1,9 @@
+<div class="toast-container">
+  @for (toast of toasts; track trackByToastId($index, toast)) {
+      class="toast toast-{{ toast.type }}"
+      [@slideIn]
+        <i [class]="getIconClass(toast.type)" class="toast-icon"></i>
+        <span class="toast-message">{{ toast.message }}</span>
+          class="toast-close"
+          (click)="dismiss(toast.id)"
+          aria-label="Close notification"

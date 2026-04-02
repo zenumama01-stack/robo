@@ -1,0 +1,37 @@
+    <!-- Dashboard Identity & Description Section -->
+        SectionKey="dashboardIdentityDescription"
+        SectionName="Dashboard Identity & Description"
+            FieldName="Thumbnail"
+    <!-- Access & Scope Settings Section -->
+        SectionKey="accessScopeSettings"
+        SectionName="Access & Scope Settings"
+            FieldName="Scope"
+    <!-- Technical Configuration Section -->
+        SectionKey="technicalConfiguration"
+        SectionName="Technical Configuration"
+            FieldName="UIConfigDetails"
+    <!-- MJ: Dashboard Category Links Section -->
+        SectionKey="mJDashboardCategoryLinks"
+        SectionName="MJ: Dashboard Category Links"
+        [BadgeCount]="GetSectionRowCount('mJDashboardCategoryLinks')"
+                [Params]="BuildRelationshipViewParamsByEntityName('MJ: Dashboard Category Links','DashboardID')"
+                [NewRecordValues]="NewRecordValues('MJ: Dashboard Category Links')"
+                [AllowLoad]="IsSectionExpanded('mJDashboardCategoryLinks')"
+                (AfterDataLoad)="SetSectionRowCount('mJDashboardCategoryLinks', $event.totalRowCount)"
+    <!-- MJ: Dashboard User States Section -->
+        SectionKey="mJDashboardUserStates"
+        SectionName="MJ: Dashboard User States"
+        [BadgeCount]="GetSectionRowCount('mJDashboardUserStates')"
+                [Params]="BuildRelationshipViewParamsByEntityName('MJ: Dashboard User States','DashboardID')"
+                [NewRecordValues]="NewRecordValues('MJ: Dashboard User States')"
+                [AllowLoad]="IsSectionExpanded('mJDashboardUserStates')"
+                (AfterDataLoad)="SetSectionRowCount('mJDashboardUserStates', $event.totalRowCount)"
+    <!-- MJ: Dashboard Permissions Section -->
+        SectionKey="mJDashboardPermissions"
+        SectionName="MJ: Dashboard Permissions"
+        [BadgeCount]="GetSectionRowCount('mJDashboardPermissions')"
+                [Params]="BuildRelationshipViewParamsByEntityName('MJ: Dashboard Permissions','DashboardID')"
+                [NewRecordValues]="NewRecordValues('MJ: Dashboard Permissions')"
+                [AllowLoad]="IsSectionExpanded('mJDashboardPermissions')"
+                (AfterDataLoad)="SetSectionRowCount('mJDashboardPermissions', $event.totalRowCount)"
+                [Params]="BuildRelationshipViewParamsByEntityName('MJ: Dashboard User Preferences','DashboardID')"

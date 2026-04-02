@@ -1,0 +1,16 @@
+<h1><a href="oracledatabase_v1.html">Oracle Database@Google Cloud API</a> . <a href="oracledatabase_v1.projects.html">projects</a> . <a href="oracledatabase_v1.projects.locations.html">locations</a> . <a href="oracledatabase_v1.projects.locations.dbVersions.html">dbVersions</a></h1>
+<p class="firstline">List DbVersions for the given project and location.</p>
+  <pre>List DbVersions for the given project and location.
+  parent: string, Required. The parent value for the DbVersion resource with the format: projects/{project}/locations/{location} (required)
+  filter: string, Optional. Filter expression that matches a subset of the DbVersions to show. The supported filter for dbSystem creation is `db_system_shape = {db_system_shape} AND storage_management = {storage_management}`. If no filter is provided, all DbVersions will be returned.
+  pageSize: integer, Optional. The maximum number of items to return. If unspecified, a maximum of 50 DbVersions will be returned. The maximum value is 1000; values above 1000 will be reset to 1000.
+    { # The response for `DbVersions.List`.
+  &quot;dbVersions&quot;: [ # The list of DbVersions.
+    { # A valid Oracle Database version.
+      &quot;name&quot;: &quot;A String&quot;, # Output only. The name of the DbVersion resource in the following format: projects/{project}/locations/{region}/dbVersions/{db_version}
+      &quot;properties&quot;: { # The properties of a DbVersion. # Output only. The properties of the DbVersion.
+        &quot;isLatestForMajorVersion&quot;: True or False, # Output only. True if this version of the Oracle Database software is the latest version for a release.
+        &quot;isPreviewDbVersion&quot;: True or False, # Output only. True if this version of the Oracle Database software is the preview version.
+        &quot;isUpgradeSupported&quot;: True or False, # Output only. True if this version of the Oracle Database software is supported for Upgrade.
+        &quot;supportsPdb&quot;: True or False, # Output only. True if this version of the Oracle Database software supports pluggable databases.
+        &quot;version&quot;: &quot;A String&quot;, # Output only. A valid Oracle Database version.

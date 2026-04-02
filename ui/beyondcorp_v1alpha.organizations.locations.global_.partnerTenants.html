@@ -1,0 +1,22 @@
+<h1><a href="beyondcorp_v1alpha.html">BeyondCorp API</a> . <a href="beyondcorp_v1alpha.organizations.html">organizations</a> . <a href="beyondcorp_v1alpha.organizations.locations.html">locations</a> . <a href="beyondcorp_v1alpha.organizations.locations.global_.html">global_</a> . <a href="beyondcorp_v1alpha.organizations.locations.global_.partnerTenants.html">partnerTenants</a></h1>
+<p class="firstline">Deletes a single PartnerTenant.</p>
+<p class="firstline">Gets details of a single PartnerTenant.</p>
+<p class="firstline">Lists PartnerTenants in a given organization.</p>
+  <pre>Deletes a single PartnerTenant.
+  <pre>Gets details of a single PartnerTenant.
+  name: string, Required. The resource name of the PartnerTenant using the form: `organizations/{organization_id}/locations/global/partnerTenants/{partner_tenant_id}` (required)
+    { # Information about a BeyoncCorp Enterprise PartnerTenant.
+  &quot;displayName&quot;: &quot;A String&quot;, # Optional. An arbitrary caller-provided name for the PartnerTenant. Cannot exceed 64 characters.
+  &quot;group&quot;: { # Message to capture group information # Optional. Group information for the users enabled to use the partnerTenant. If the group information is not provided then the partnerTenant will be enabled for all users.
+    &quot;email&quot;: &quot;A String&quot;, # The group email id
+    &quot;id&quot;: &quot;A String&quot;, # Google group id
+  &quot;name&quot;: &quot;A String&quot;, # Output only. Unique resource name of the PartnerTenant. The name is ignored when creating PartnerTenant.
+  &quot;partnerMetadata&quot;: { # Metadata associated with PartnerTenant and is provided by the Partner. # Optional. Metadata provided by the Partner associated with PartnerTenant.
+    &quot;internalTenantId&quot;: &quot;A String&quot;, # Optional. UUID used by the Partner to refer to the PartnerTenant in their internal systems.
+    &quot;partnerTenantId&quot;: &quot;A String&quot;, # Optional. UUID used by the Partner to refer to the PartnerTenant in their internal systems.
+  <pre>Lists PartnerTenants in a given organization.
+  parent: string, Required. The parent organization to which the PartnerTenants belong. Format: `organizations/{organization_id}/locations/global` (required)
+  filter: string, Optional. A filter specifying constraints of a list operation. All fields in the PartnerTenant message are supported. For example, the following query will return the PartnerTenants with displayName &quot;test-tenant&quot; organizations/${ORG_ID}/locations/${LOCATION}/partnerTenants?filter=displayName=&quot;test-tenant&quot; Nested fields are also supported. The follow query will return PartnerTenants with internal_tenant_id &quot;1234&quot; organizations/${ORG_ID}/locations/${LOCATION}/partnerTenants?filter=partnerMetadata.internalTenantId=&quot;1234&quot; For more information, please refer to https://google.aip.dev/160.
+  pageToken: string, Optional. The next_page_token value returned from a previous ListPartnerTenantsResponse, if any.
+    { # Message for response to listing PartnerTenants.
+  &quot;partnerTenants&quot;: [ # The list of PartnerTenant objects.

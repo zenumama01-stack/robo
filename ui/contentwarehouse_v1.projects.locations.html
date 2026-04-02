@@ -1,0 +1,64 @@
+<h1><a href="contentwarehouse_v1.html">Document AI Warehouse API</a> . <a href="contentwarehouse_v1.projects.html">projects</a> . <a href="contentwarehouse_v1.projects.locations.html">locations</a></h1>
+  <code><a href="contentwarehouse_v1.projects.locations.documentSchemas.html">documentSchemas()</a></code>
+<p class="firstline">Returns the documentSchemas Resource.</p>
+  <code><a href="contentwarehouse_v1.projects.locations.documents.html">documents()</a></code>
+  <code><a href="contentwarehouse_v1.projects.locations.operations.html">operations()</a></code>
+  <code><a href="contentwarehouse_v1.projects.locations.ruleSets.html">ruleSets()</a></code>
+<p class="firstline">Returns the ruleSets Resource.</p>
+  <code><a href="contentwarehouse_v1.projects.locations.synonymSets.html">synonymSets()</a></code>
+<p class="firstline">Returns the synonymSets Resource.</p>
+  <code><a href="#getStatus">getStatus(location, x__xgafv=None)</a></code></p>
+<p class="firstline">Get the project status.</p>
+  <code><a href="#initialize">initialize(location, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Provisions resources for given tenant project. Returns a long running operation.</p>
+  <code><a href="#runPipeline">runPipeline(name, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Run a predefined pipeline.</p>
+    <code class="details" id="getStatus">getStatus(location, x__xgafv=None)</code>
+  <pre>Get the project status.
+  location: string, Required. The location to be queried Format: projects/{project_number}/locations/{location}. (required)
+    { # Status of a project, including the project state, dbType, aclMode and etc.
+  &quot;accessControlMode&quot;: &quot;A String&quot;, # Access control mode.
+  &quot;databaseType&quot;: &quot;A String&quot;, # Database type.
+  &quot;documentCreatorDefaultRole&quot;: &quot;A String&quot;, # The default role for the person who create a document.
+  &quot;location&quot;: &quot;A String&quot;, # The location of the queried project.
+  &quot;qaEnabled&quot;: True or False, # If the qa is enabled on this project.
+  &quot;state&quot;: &quot;A String&quot;, # State of the project.
+    <code class="details" id="initialize">initialize(location, body=None, x__xgafv=None)</code>
+  <pre>Provisions resources for given tenant project. Returns a long running operation.
+  location: string, Required. The location to be initialized Format: projects/{project_number}/locations/{location}. (required)
+{ # Request message for projectService.InitializeProject
+  &quot;accessControlMode&quot;: &quot;A String&quot;, # Required. The access control mode for accessing the customer data
+  &quot;databaseType&quot;: &quot;A String&quot;, # Required. The type of database used to store customer data
+  &quot;documentCreatorDefaultRole&quot;: &quot;A String&quot;, # Optional. The default role for the person who create a document.
+  &quot;enableCalUserEmailLogging&quot;: True or False, # Optional. Whether to enable CAL user email logging.
+  &quot;kmsKey&quot;: &quot;A String&quot;, # Optional. The KMS key used for CMEK encryption. It is required that the kms key is in the same region as the endpoint. The same key will be used for all provisioned resources, if encryption is available. If the kms_key is left empty, no encryption will be enforced.
+    <code class="details" id="runPipeline">runPipeline(name, body=None, x__xgafv=None)</code>
+  <pre>Run a predefined pipeline.
+  name: string, Required. The resource name which owns the resources of the pipeline. Format: projects/{project_number}/locations/{location}. (required)
+{ # Request message for DocumentService.RunPipeline.
+  &quot;exportCdwPipeline&quot;: { # The configuration of exporting documents from the Document Warehouse to CDW pipeline. # Export docuemnts from Document Warehouse to CDW for training purpose.
+    &quot;docAiDataset&quot;: &quot;A String&quot;, # Optional. The CDW dataset resource name. This field is optional. If not set, the documents will be exported to Cloud Storage only. Format: projects/{project}/locations/{location}/processors/{processor}/dataset
+    &quot;documents&quot;: [ # The list of all the resource names of the documents to be processed. Format: projects/{project_number}/locations/{location}/documents/{document_id}.
+    &quot;exportFolderPath&quot;: &quot;A String&quot;, # The Cloud Storage folder path used to store the exported documents before being sent to CDW. Format: `gs:///`.
+    &quot;trainingSplitRatio&quot;: 3.14, # Ratio of training dataset split. When importing into Document AI Workbench, documents will be automatically split into training and test split category with the specified ratio. This field is required if doc_ai_dataset is set.
+  &quot;gcsIngestPipeline&quot;: { # The configuration of the Cloud Storage Ingestion pipeline. # Cloud Storage ingestion pipeline.
+    &quot;inputPath&quot;: &quot;A String&quot;, # The input Cloud Storage folder. All files under this folder will be imported to Document Warehouse. Format: `gs:///`.
+    &quot;pipelineConfig&quot;: { # The ingestion pipeline config. # Optional. The config for the Cloud Storage Ingestion pipeline. It provides additional customization options to run the pipeline and can be skipped if it is not applicable.
+      &quot;cloudFunction&quot;: &quot;A String&quot;, # The Cloud Function resource name. The Cloud Function needs to live inside consumer project and is accessible to Document AI Warehouse P4SA. Only Cloud Functions V2 is supported. Cloud function execution should complete within 5 minutes or this file ingestion may fail due to timeout. Format: `https://{region}-{project_id}.cloudfunctions.net/{cloud_function}` The following keys are available the request json payload. * display_name * properties * plain_text * reference_id * document_schema_name * raw_document_path * raw_document_file_type The following keys from the cloud function json response payload will be ingested to the Document AI Warehouse as part of Document proto content and/or related information. The original values will be overridden if any key is present in the response. * display_name * properties * plain_text * document_acl_policy * folder
+      &quot;documentAclPolicy&quot;: { # An Identity and Access Management (IAM) policy, which specifies access controls for Google Cloud resources. A `Policy` is a collection of `bindings`. A `binding` binds one or more `members`, or principals, to a single `role`. Principals can be user accounts, service accounts, Google groups, and domains (such as G Suite). A `role` is a named list of permissions; each `role` can be an IAM predefined role or a user-created custom role. For some types of Google Cloud resources, a `binding` can also specify a `condition`, which is a logical expression that allows access to a resource only if the expression evaluates to `true`. A condition can add constraints based on attributes of the request, the resource, or both. To learn which resources support conditions in their IAM policies, see the [IAM documentation](https://cloud.google.com/iam/help/conditions/resource-policies). **JSON example:** ``` { &quot;bindings&quot;: [ { &quot;role&quot;: &quot;roles/resourcemanager.organizationAdmin&quot;, &quot;members&quot;: [ &quot;user:mike@example.com&quot;, &quot;group:admins@example.com&quot;, &quot;domain:google.com&quot;, &quot;serviceAccount:my-project-id@appspot.gserviceaccount.com&quot; ] }, { &quot;role&quot;: &quot;roles/resourcemanager.organizationViewer&quot;, &quot;members&quot;: [ &quot;user:eve@example.com&quot; ], &quot;condition&quot;: { &quot;title&quot;: &quot;expirable access&quot;, &quot;description&quot;: &quot;Does not grant access after Sep 2020&quot;, &quot;expression&quot;: &quot;request.time &lt; timestamp(&#x27;2020-10-01T00:00:00.000Z&#x27;)&quot;, } } ], &quot;etag&quot;: &quot;BwWWja0YfJA=&quot;, &quot;version&quot;: 3 } ``` **YAML example:** ``` bindings: - members: - user:mike@example.com - group:admins@example.com - domain:google.com - serviceAccount:my-project-id@appspot.gserviceaccount.com role: roles/resourcemanager.organizationAdmin - members: - user:eve@example.com role: roles/resourcemanager.organizationViewer condition: title: expirable access description: Does not grant access after Sep 2020 expression: request.time &lt; timestamp(&#x27;2020-10-01T00:00:00.000Z&#x27;) etag: BwWWja0YfJA= version: 3 ``` For a description of IAM and its features, see the [IAM documentation](https://cloud.google.com/iam/docs/). # The document level acl policy config. This refers to an Identity and Access (IAM) policy, which specifies access controls for all documents ingested by the pipeline. The role and members under the policy needs to be specified. The following roles are supported for document level acl control: * roles/contentwarehouse.documentAdmin * roles/contentwarehouse.documentEditor * roles/contentwarehouse.documentViewer The following members are supported for document level acl control: * user:user-email@example.com * group:group-email@example.com Note that for documents searched with LLM, only single level user or group acl check is supported.
+      &quot;enableDocumentTextExtraction&quot;: True or False, # The document text extraction enabled flag. If the flag is set to true, DWH will perform text extraction on the raw document.
+      &quot;folder&quot;: &quot;A String&quot;, # Optional. The name of the folder to which all ingested documents will be linked during ingestion process. Format is `projects/{project}/locations/{location}/documents/{folder_id}`
+    &quot;processorType&quot;: &quot;A String&quot;, # The Doc AI processor type name. Only used when the format of ingested files is Doc AI Document proto format.
+    &quot;schemaName&quot;: &quot;A String&quot;, # The Document Warehouse schema resource name. All documents processed by this pipeline will use this schema. Format: projects/{project_number}/locations/{location}/documentSchemas/{document_schema_id}.
+    &quot;skipIngestedDocuments&quot;: True or False, # The flag whether to skip ingested documents. If it is set to true, documents in Cloud Storage contains key &quot;status&quot; with value &quot;status=ingested&quot; in custom metadata will be skipped to ingest.
+  &quot;gcsIngestWithDocAiProcessorsPipeline&quot;: { # The configuration of the Cloud Storage Ingestion with DocAI Processors pipeline. # Use DocAI processors to process documents in Cloud Storage and ingest them to Document Warehouse.
+    &quot;extractProcessorInfos&quot;: [ # The extract processors information. One matched extract processor will be used to process documents based on the classify processor result. If no classify processor is specified, the first extract processor will be used.
+      { # The DocAI processor information.
+        &quot;documentType&quot;: &quot;A String&quot;, # The processor will process the documents with this document type.
+        &quot;processorName&quot;: &quot;A String&quot;, # The processor resource name. Format is `projects/{project}/locations/{location}/processors/{processor}`, or `projects/{project}/locations/{location}/processors/{processor}/processorVersions/{processorVersion}`
+        &quot;schemaName&quot;: &quot;A String&quot;, # The Document schema resource name. All documents processed by this processor will use this schema. Format: projects/{project_number}/locations/{location}/documentSchemas/{document_schema_id}.
+    &quot;pipelineConfig&quot;: { # The ingestion pipeline config. # Optional. The config for the Cloud Storage Ingestion with DocAI Processors pipeline. It provides additional customization options to run the pipeline and can be skipped if it is not applicable.
+    &quot;processorResultsFolderPath&quot;: &quot;A String&quot;, # The Cloud Storage folder path used to store the raw results from processors. Format: `gs:///`.
+    &quot;splitClassifyProcessorInfo&quot;: { # The DocAI processor information. # The split and classify processor information. The split and classify result will be used to find a matched extract processor.
+  &quot;processWithDocAiPipeline&quot;: { # The configuration of processing documents in Document Warehouse with DocAi processors pipeline. # Use a DocAI processor to process documents in Document Warehouse, and re-ingest the updated results into Document Warehouse.
+    &quot;processorInfo&quot;: { # The DocAI processor information. # The CDW processor information.

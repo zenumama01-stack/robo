@@ -1,0 +1,41 @@
+<h1><a href="fitness_v1.html">Fitness API</a> . <a href="fitness_v1.users.html">users</a> . <a href="fitness_v1.users.dataset.html">dataset</a></h1>
+  <code><a href="#aggregate">aggregate(userId, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Aggregates data of a certain type or stream into buckets divided by a given type of boundary. Multiple data sets of multiple types and from multiple sources can be aggregated into exactly one bucket type per request.</p>
+    <code class="details" id="aggregate">aggregate(userId, body=None, x__xgafv=None)</code>
+  <pre>Aggregates data of a certain type or stream into buckets divided by a given type of boundary. Multiple data sets of multiple types and from multiple sources can be aggregated into exactly one bucket type per request.
+  userId: string, Aggregate data for the person identified. Use me to indicate the authenticated user. Only me is supported at this time. (required)
+{ # Next id: 10
+  &quot;aggregateBy&quot;: [ # The specification of data to be aggregated. At least one aggregateBy spec must be provided. All data that is specified will be aggregated using the same bucketing criteria. There will be one dataset in the response for every aggregateBy spec.
+    { # The specification of which data to aggregate.
+      &quot;dataSourceId&quot;: &quot;A String&quot;, # A data source ID to aggregate. Only data from the specified data source ID will be included in the aggregation. If specified, this data source must exist; the OAuth scopes in the supplied credentials must grant read access to this data type. The dataset in the response will have the same data source ID. Note: Data can be aggregated by either the dataTypeName or the dataSourceId, not both.
+      &quot;dataTypeName&quot;: &quot;A String&quot;, # The data type to aggregate. All data sources providing this data type will contribute data to the aggregation. The response will contain a single dataset for this data type name. The dataset will have a data source ID of derived::com.google.android.gms:aggregated. If the user has no data for this data type, an empty data set will be returned. Note: Data can be aggregated by either the dataTypeName or the dataSourceId, not both.
+  &quot;bucketByActivitySegment&quot;: { # Specifies that data be aggregated each activity segment recorded for a user. Similar to bucketByActivitySegment, but bucketing is done for each activity segment rather than all segments of the same type. Mutually exclusive of other bucketing specifications.
+    &quot;activityDataSourceId&quot;: &quot;A String&quot;, # The default activity stream will be used if a specific activityDataSourceId is not specified.
+    &quot;minDurationMillis&quot;: &quot;A String&quot;, # Specifies that only activity segments of duration longer than minDurationMillis are considered and used as a container for aggregated data.
+  &quot;bucketByActivityType&quot;: { # Specifies that data be aggregated by the type of activity being performed when the data was recorded. All data that was recorded during a certain activity type (.for the given time range) will be aggregated into the same bucket. Data that was recorded while the user was not active will not be included in the response. Mutually exclusive of other bucketing specifications.
+  &quot;bucketBySession&quot;: { # Specifies that data be aggregated by user sessions. Data that does not fall within the time range of a session will not be included in the response. Mutually exclusive of other bucketing specifications.
+    &quot;minDurationMillis&quot;: &quot;A String&quot;, # Specifies that only sessions of duration longer than minDurationMillis are considered and used as a container for aggregated data.
+  &quot;bucketByTime&quot;: { # Specifies that data be aggregated by a single time interval. Mutually exclusive of other bucketing specifications.
+    &quot;durationMillis&quot;: &quot;A String&quot;, # Specifies that result buckets aggregate data by exactly durationMillis time frames. Time frames that contain no data will be included in the response with an empty dataset.
+    &quot;period&quot;: {
+      &quot;timeZoneId&quot;: &quot;A String&quot;, # org.joda.timezone.DateTimeZone
+      &quot;value&quot;: 42,
+  &quot;endTimeMillis&quot;: &quot;A String&quot;, # The end of a window of time. Data that intersects with this time window will be aggregated. The time is in milliseconds since epoch, inclusive. The maximum allowed difference between start_time_millis // and end_time_millis is 7776000000 (roughly 90 days).
+  &quot;filteredDataQualityStandard&quot;: [ # DO NOT POPULATE THIS FIELD. It is ignored.
+  &quot;startTimeMillis&quot;: &quot;A String&quot;, # The start of a window of time. Data that intersects with this time window will be aggregated. The time is in milliseconds since epoch, inclusive.
+  &quot;bucket&quot;: [ # A list of buckets containing the aggregated data.
+      &quot;activity&quot;: 42, # Available for Bucket.Type.ACTIVITY_TYPE, Bucket.Type.ACTIVITY_SEGMENT
+      &quot;dataset&quot;: [ # There will be one dataset per AggregateBy in the request.
+      &quot;endTimeMillis&quot;: &quot;A String&quot;, # The end time for the aggregated data, in milliseconds since epoch, inclusive.
+      &quot;session&quot;: { # Sessions contain metadata, such as a user-friendly name and time interval information. # Available for Bucket.Type.SESSION
+        &quot;activeTimeMillis&quot;: &quot;A String&quot;, # Session active time. While start_time_millis and end_time_millis define the full session time, the active time can be shorter and specified by active_time_millis. If the inactive time during the session is known, it should also be inserted via a com.google.activity.segment data point with a STILL activity value
+        &quot;activityType&quot;: 42, # The type of activity this session represents.
+        &quot;application&quot;: { # The application that created the session.
+        &quot;description&quot;: &quot;A String&quot;, # A description for this session.
+        &quot;endTimeMillis&quot;: &quot;A String&quot;, # An end time, in milliseconds since epoch, inclusive.
+        &quot;id&quot;: &quot;A String&quot;, # A client-generated identifier that is unique across all sessions owned by this particular user.
+        &quot;modifiedTimeMillis&quot;: &quot;A String&quot;, # A timestamp that indicates when the session was last modified.
+        &quot;name&quot;: &quot;A String&quot;, # A human readable name of the session.
+        &quot;startTimeMillis&quot;: &quot;A String&quot;, # A start time, in milliseconds since epoch, inclusive.
+      &quot;startTimeMillis&quot;: &quot;A String&quot;, # The start time for the aggregated data, in milliseconds since epoch, inclusive.
+      &quot;type&quot;: &quot;A String&quot;, # The type of a bucket signifies how the data aggregation is performed in the bucket.

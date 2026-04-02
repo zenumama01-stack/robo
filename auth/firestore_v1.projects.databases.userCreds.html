@@ -1,0 +1,36 @@
+<h1><a href="firestore_v1.html">Cloud Firestore API</a> . <a href="firestore_v1.projects.html">projects</a> . <a href="firestore_v1.projects.databases.html">databases</a> . <a href="firestore_v1.projects.databases.userCreds.html">userCreds</a></h1>
+  <code><a href="#create">create(parent, body=None, userCredsId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Create a user creds.</p>
+<p class="firstline">Deletes a user creds.</p>
+<p class="firstline">Disables a user creds. No-op if the user creds are already disabled.</p>
+<p class="firstline">Enables a user creds. No-op if the user creds are already enabled.</p>
+<p class="firstline">Gets a user creds resource. Note that the returned resource does not contain the secret value itself.</p>
+<p class="firstline">List all user creds in the database. Note that the returned resource does not contain the secret value itself.</p>
+  <code><a href="#resetPassword">resetPassword(name, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Resets the password of a user creds.</p>
+    <code class="details" id="create">create(parent, body=None, userCredsId=None, x__xgafv=None)</code>
+  <pre>Create a user creds.
+  parent: string, Required. A parent name of the form `projects/{project_id}/databases/{database_id}` (required)
+{ # A Cloud Firestore User Creds.
+  &quot;createTime&quot;: &quot;A String&quot;, # Output only. The time the user creds were created.
+  &quot;name&quot;: &quot;A String&quot;, # Identifier. The resource name of the UserCreds. Format: `projects/{project}/databases/{database}/userCreds/{user_creds}`
+  &quot;resourceIdentity&quot;: { # Describes a Resource Identity principal. # Resource Identity descriptor.
+    &quot;principal&quot;: &quot;A String&quot;, # Output only. Principal identifier string. See: https://cloud.google.com/iam/docs/principal-identifiers
+  &quot;securePassword&quot;: &quot;A String&quot;, # Output only. The plaintext server-generated password for the user creds. Only populated in responses for CreateUserCreds and ResetUserPassword.
+  &quot;state&quot;: &quot;A String&quot;, # Output only. Whether the user creds are enabled or disabled. Defaults to ENABLED on creation.
+  &quot;updateTime&quot;: &quot;A String&quot;, # Output only. The time the user creds were last updated.
+  userCredsId: string, Required. The ID to use for the user creds, which will become the final component of the user creds&#x27;s resource name. This value should be 4-63 characters. Valid characters are /a-z-/ with first character a letter and the last a letter or a number. Must not be UUID-like /[0-9a-f]{8}(-[0-9a-f]{4}){3}-[0-9a-f]{12}/.
+  <pre>Deletes a user creds.
+  name: string, Required. A name of the form `projects/{project_id}/databases/{database_id}/userCreds/{user_creds_id}` (required)
+  <pre>Disables a user creds. No-op if the user creds are already disabled.
+{ # The request for FirestoreAdmin.DisableUserCreds.
+  <pre>Enables a user creds. No-op if the user creds are already enabled.
+{ # The request for FirestoreAdmin.EnableUserCreds.
+  <pre>Gets a user creds resource. Note that the returned resource does not contain the secret value itself.
+  <pre>List all user creds in the database. Note that the returned resource does not contain the secret value itself.
+  parent: string, Required. A parent database name of the form `projects/{project_id}/databases/{database_id}` (required)
+    { # The response for FirestoreAdmin.ListUserCreds.
+  &quot;userCreds&quot;: [ # The user creds for the database.
+    <code class="details" id="resetPassword">resetPassword(name, body=None, x__xgafv=None)</code>
+  <pre>Resets the password of a user creds.
+{ # The request for FirestoreAdmin.ResetUserPassword.

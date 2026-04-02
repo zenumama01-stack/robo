@@ -1,0 +1,25 @@
+  <div class="image-viewer-backdrop"
+    (click)="onBackdropClick($event)">
+        @if (fileName) {
+          <span class="file-name">{{ fileName }}</span>
+        <button class="toolbar-btn" (click)="zoomOut()" title="Zoom Out">
+        <span class="zoom-display">{{ zoomPercentage }}</span>
+        <button class="toolbar-btn" (click)="zoomIn()" title="Zoom In">
+        <button class="toolbar-btn" (click)="resetZoom()" title="Reset Zoom (100%)">
+        <button class="toolbar-btn" (click)="fitToScreen()" title="Fit to Screen">
+        <button class="toolbar-btn" (click)="downloadImage()" title="Download">
+        <button class="toolbar-btn close-btn" (click)="close()" title="Close (Esc)">
+    <!-- Image Container -->
+    <div class="image-container"
+      (mousedown)="onMouseDown($event)"
+      [style.cursor]="zoomLevel > 1 ? (isDragging ? 'grabbing' : 'grab') : 'default'">
+      <img [src]="imageUrl"
+        [alt]="alt"
+        class="viewer-image"
+        [style.transform]="imageTransform"
+        draggable="false">
+    <!-- Instructions -->
+    <div class="viewer-instructions">
+      <span>Scroll to zoom</span>
+      <span>Drag to pan when zoomed</span>
+      <span>Esc to close</span>

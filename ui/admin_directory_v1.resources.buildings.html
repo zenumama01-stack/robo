@@ -1,0 +1,55 @@
+<h1><a href="admin_directory_v1.html">Admin SDK API</a> . <a href="admin_directory_v1.resources.html">resources</a> . <a href="admin_directory_v1.resources.buildings.html">buildings</a></h1>
+  <code><a href="#delete">delete(customer, buildingId, x__xgafv=None)</a></code></p>
+<p class="firstline">Deletes a building.</p>
+  <code><a href="#get">get(customer, buildingId, x__xgafv=None)</a></code></p>
+<p class="firstline">Retrieves a building.</p>
+  <code><a href="#insert">insert(customer, body=None, coordinatesSource=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Inserts a building.</p>
+  <code><a href="#list">list(customer, maxResults=None, pageToken=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Retrieves a list of buildings for an account.</p>
+  <code><a href="#patch">patch(customer, buildingId, body=None, coordinatesSource=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Patches a building.</p>
+  <code><a href="#update">update(customer, buildingId, body=None, coordinatesSource=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Updates a building.</p>
+    <code class="details" id="delete">delete(customer, buildingId, x__xgafv=None)</code>
+  <pre>Deletes a building.
+  customer: string, The unique ID for the customer&#x27;s Google Workspace account. As an account administrator, you can also use the `my_customer` alias to represent your account&#x27;s customer ID. (required)
+  buildingId: string, The id of the building to delete. (required)
+    <code class="details" id="get">get(customer, buildingId, x__xgafv=None)</code>
+  <pre>Retrieves a building.
+  buildingId: string, The unique ID of the building to retrieve. (required)
+    { # Public API: Resources.buildings
+  &quot;address&quot;: { # Public API: Resources.buildings # The postal address of the building. See [`PostalAddress`](/my-business/reference/rest/v4/PostalAddress) for details. Note that only a single address line and region code are required.
+    &quot;addressLines&quot;: [ # Unstructured address lines describing the lower levels of an address.
+    &quot;administrativeArea&quot;: &quot;A String&quot;, # Optional. Highest administrative subdivision which is used for postal addresses of a country or region.
+    &quot;languageCode&quot;: &quot;A String&quot;, # Optional. BCP-47 language code of the contents of this address (if known).
+    &quot;locality&quot;: &quot;A String&quot;, # Optional. Generally refers to the city/town portion of the address. Examples: US city, IT comune, UK post town. In regions of the world where localities are not well defined or do not fit into this structure well, leave locality empty and use addressLines.
+    &quot;postalCode&quot;: &quot;A String&quot;, # Optional. Postal code of the address.
+    &quot;regionCode&quot;: &quot;A String&quot;, # Required. CLDR region code of the country/region of the address.
+    &quot;sublocality&quot;: &quot;A String&quot;, # Optional. Sublocality of the address.
+  &quot;buildingId&quot;: &quot;A String&quot;, # Unique identifier for the building. The maximum length is 100 characters.
+  &quot;buildingName&quot;: &quot;A String&quot;, # The building name as seen by users in Calendar. Must be unique for the customer. For example, &quot;NYC-CHEL&quot;. The maximum length is 100 characters.
+  &quot;coordinates&quot;: { # Public API: Resources.buildings # The geographic coordinates of the center of the building, expressed as latitude and longitude in decimal degrees.
+    &quot;latitude&quot;: 3.14, # Latitude in decimal degrees.
+    &quot;longitude&quot;: 3.14, # Longitude in decimal degrees.
+  &quot;description&quot;: &quot;A String&quot;, # A brief description of the building. For example, &quot;Chelsea Market&quot;.
+  &quot;etags&quot;: &quot;A String&quot;, # ETag of the resource.
+  &quot;floorNames&quot;: [ # The display names for all floors in this building. The floors are expected to be sorted in ascending order, from lowest floor to highest floor. For example, [&quot;B2&quot;, &quot;B1&quot;, &quot;L&quot;, &quot;1&quot;, &quot;2&quot;, &quot;2M&quot;, &quot;3&quot;, &quot;PH&quot;] Must contain at least one entry.
+  &quot;kind&quot;: &quot;admin#directory#resources#buildings#Building&quot;, # Kind of resource this is.
+    <code class="details" id="insert">insert(customer, body=None, coordinatesSource=None, x__xgafv=None)</code>
+  <pre>Inserts a building.
+  coordinatesSource: string, Source from which Building.coordinates are derived.
+      CLIENT_SPECIFIED - Building.coordinates are set to the coordinates included in the request.
+      RESOLVED_FROM_ADDRESS - Building.coordinates are automatically populated based on the postal address.
+      SOURCE_UNSPECIFIED - Defaults to `RESOLVED_FROM_ADDRESS` if postal address is provided. Otherwise, defaults to `CLIENT_SPECIFIED` if coordinates are provided.
+    <code class="details" id="list">list(customer, maxResults=None, pageToken=None, x__xgafv=None)</code>
+  <pre>Retrieves a list of buildings for an account.
+  maxResults: integer, Maximum number of results to return.
+  &quot;buildings&quot;: [ # The Buildings in this page of results.
+  &quot;kind&quot;: &quot;admin#directory#resources#buildings#buildingsList&quot;, # Kind of resource this is.
+  &quot;nextPageToken&quot;: &quot;A String&quot;, # The continuation token, used to page through large result sets. Provide this value in a subsequent request to return the next page of results.
+    <code class="details" id="patch">patch(customer, buildingId, body=None, coordinatesSource=None, x__xgafv=None)</code>
+  <pre>Patches a building.
+  buildingId: string, The id of the building to update. (required)
+    <code class="details" id="update">update(customer, buildingId, body=None, coordinatesSource=None, x__xgafv=None)</code>
+  <pre>Updates a building.

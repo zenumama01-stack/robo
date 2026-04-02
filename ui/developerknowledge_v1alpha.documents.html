@@ -1,0 +1,32 @@
+<h1><a href="developerknowledge_v1alpha.html">Developer Knowledge API</a> . <a href="developerknowledge_v1alpha.documents.html">documents</a></h1>
+  <code><a href="#batchGet">batchGet(names=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Retrieves multiple documents, each with its full Markdown content.</p>
+<p class="firstline">Retrieves a single document with its full Markdown content.</p>
+  <code><a href="#searchDocumentChunks">searchDocumentChunks(pageSize=None, pageToken=None, query=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Searches for developer knowledge across Google's developer documentation. This method returns document chunks based on the user's query. There can be many chunks of the same Document. To retrieve full documents, use DeveloperKnowledge.GetDocument or DeveloperKnowledge.BatchGetDocuments with the DocumentChunk.parent returned in the SearchDocumentChunksResponse.results.</p>
+  <code><a href="#searchDocumentChunks_next">searchDocumentChunks_next()</a></code></p>
+    <code class="details" id="batchGet">batchGet(names=None, x__xgafv=None)</code>
+  <pre>Retrieves multiple documents, each with its full Markdown content.
+  names: string, Required. The names of the documents to retrieve. A maximum of 20 documents can be retrieved in a batch. The documents are returned in the same order as the `names` in the request. Format: `documents/{uri_without_scheme}` Example: `documents/docs.cloud.google.com/storage/docs/creating-buckets` (repeated)
+    { # Response message for DeveloperKnowledge.BatchGetDocuments.
+  &quot;documents&quot;: [ # Documents requested.
+    { # A Document represents a piece of content from the Developer Knowledge corpus.
+      &quot;content&quot;: &quot;A String&quot;, # Output only. The full content of the document in Markdown format.
+      &quot;description&quot;: &quot;A String&quot;, # Output only. A description of the document.
+      &quot;name&quot;: &quot;A String&quot;, # Identifier. The resource name of the document. Format: `documents/{uri_without_scheme}` Example: `documents/docs.cloud.google.com/storage/docs/creating-buckets`
+      &quot;uri&quot;: &quot;A String&quot;, # Output only. The URI of the content, such as `docs.cloud.google.com/storage/docs/creating-buckets`.
+  <pre>Retrieves a single document with its full Markdown content.
+  name: string, Required. The name of the document to retrieve. Format: `documents/{uri_without_scheme}` Example: `documents/docs.cloud.google.com/storage/docs/creating-buckets` (required)
+    <code class="details" id="searchDocumentChunks">searchDocumentChunks(pageSize=None, pageToken=None, query=None, x__xgafv=None)</code>
+  <pre>Searches for developer knowledge across Google&#x27;s developer documentation. This method returns document chunks based on the user&#x27;s query. There can be many chunks of the same Document. To retrieve full documents, use DeveloperKnowledge.GetDocument or DeveloperKnowledge.BatchGetDocuments with the DocumentChunk.parent returned in the SearchDocumentChunksResponse.results.
+  pageSize: integer, Optional. The maximum number of results to return. The service may return fewer than this value. If unspecified, at most 5 results will be returned. The maximum value is 20; values above 20 will result in an INVALID_ARGUMENT error.
+  pageToken: string, Optional. A page token, received from a previous `SearchDocumentChunks` call. Provide this to retrieve the subsequent page.
+  query: string, Required. The raw query string provided by the user, such as &quot;How to create a Cloud Storage bucket?&quot;.
+    { # Response message for DeveloperKnowledge.SearchDocumentChunks.
+  &quot;nextPageToken&quot;: &quot;A String&quot;, # Optional. A token that can be sent as `page_token` to retrieve the next page. If this field is omitted, there are no subsequent pages.
+  &quot;results&quot;: [ # The search results for the given query. Each DocumentChunk in this list contains a snippet of content relevant to the search query. Use the DocumentChunk.parent field of each result with DeveloperKnowledge.GetDocument or DeveloperKnowledge.BatchGetDocuments to retrieve the full document content.
+    { # A DocumentChunk represents a piece of content from a Document in the DeveloperKnowledge corpus. To fetch the entire document content, pass the `parent` to DeveloperKnowledge.GetDocument or DeveloperKnowledge.BatchGetDocuments.
+      &quot;content&quot;: &quot;A String&quot;, # Output only. The content of the document chunk.
+      &quot;id&quot;: &quot;A String&quot;, # Output only. The ID of this chunk within the document. The chunk ID is unique within a document, but not globally unique across documents. The chunk ID is not stable and may change over time.
+      &quot;parent&quot;: &quot;A String&quot;, # Output only. The resource name of the document this chunk is from. Format: `documents/{uri_without_scheme}` Example: `documents/docs.cloud.google.com/storage/docs/creating-buckets`
+    <code class="details" id="searchDocumentChunks_next">searchDocumentChunks_next()</code>

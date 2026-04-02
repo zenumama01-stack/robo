@@ -1,0 +1,51 @@
+<h1><a href="developerconnect_v1.html">Developer Connect API</a> . <a href="developerconnect_v1.projects.html">projects</a> . <a href="developerconnect_v1.projects.locations.html">locations</a> . <a href="developerconnect_v1.projects.locations.accountConnectors.html">accountConnectors</a> . <a href="developerconnect_v1.projects.locations.accountConnectors.users.html">users</a></h1>
+  <code><a href="#deleteSelf">deleteSelf(name, x__xgafv=None)</a></code></p>
+<p class="firstline">Delete the User based on the user credentials.</p>
+  <code><a href="#fetchAccessToken">fetchAccessToken(accountConnector, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Fetches OAuth access token based on end user credentials.</p>
+  <code><a href="#fetchSelf">fetchSelf(name, x__xgafv=None)</a></code></p>
+<p class="firstline">Fetch the User based on the user credentials.</p>
+  <code><a href="#finishOAuthFlow">finishOAuthFlow(accountConnector, googleOauthParams_scopes=None, googleOauthParams_ticket=None, googleOauthParams_versionInfo=None, oauthParams_code=None, oauthParams_ticket=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Finishes OAuth flow for an account connector.</p>
+<p class="firstline">Lists Users in a given project, location, and account_connector.</p>
+  <code><a href="#startOAuthFlow">startOAuthFlow(accountConnector, x__xgafv=None)</a></code></p>
+<p class="firstline">Starts OAuth flow for an account connector.</p>
+    <code class="details" id="deleteSelf">deleteSelf(name, x__xgafv=None)</code>
+  <pre>Delete the User based on the user credentials.
+  name: string, Required. Name of the AccountConnector resource (required)
+    <code class="details" id="fetchAccessToken">fetchAccessToken(accountConnector, body=None, x__xgafv=None)</code>
+  <pre>Fetches OAuth access token based on end user credentials.
+  accountConnector: string, Required. The resource name of the AccountConnector in the format `projects/*/locations/*/accountConnectors/*`. (required)
+{ # Message for fetching an OAuth access token.
+    { # Message for responding to getting an OAuth access token.
+  &quot;exchangeError&quot;: { # Message for representing an error from exchanging OAuth tokens. # The error resulted from exchanging OAuth tokens from the service provider.
+    &quot;code&quot;: &quot;A String&quot;, # https://datatracker.ietf.org/doc/html/rfc6749#section-5.2 - error
+    &quot;description&quot;: &quot;A String&quot;, # https://datatracker.ietf.org/doc/html/rfc6749#section-5.2 - error_description
+  &quot;scopes&quot;: [ # The scopes of the access token.
+    <code class="details" id="fetchSelf">fetchSelf(name, x__xgafv=None)</code>
+  <pre>Fetch the User based on the user credentials.
+    { # User represents a user connected to the service providers through a AccountConnector.
+  &quot;createTime&quot;: &quot;A String&quot;, # Output only. The timestamp when the user was created.
+  &quot;displayName&quot;: &quot;A String&quot;, # Output only. Developer Connect automatically converts user identity to some human readable description, e.g., email address.
+  &quot;lastTokenRequestTime&quot;: &quot;A String&quot;, # Output only. The timestamp when the token was last requested.
+  &quot;name&quot;: &quot;A String&quot;, # Identifier. Resource name of the user, in the format `projects/*/locations/*/accountConnectors/*/users/*`.
+    <code class="details" id="finishOAuthFlow">finishOAuthFlow(accountConnector, googleOauthParams_scopes=None, googleOauthParams_ticket=None, googleOauthParams_versionInfo=None, oauthParams_code=None, oauthParams_ticket=None, x__xgafv=None)</code>
+  <pre>Finishes OAuth flow for an account connector.
+  googleOauthParams_scopes: string, Required. The scopes returned by Google OAuth flow. (repeated)
+  googleOauthParams_ticket: string, Required. The ticket to be used for post processing the callback from Google OAuth flow.
+  googleOauthParams_versionInfo: string, Optional. The version info returned by Google OAuth flow.
+  oauthParams_code: string, Required. The code to be used for getting the token from SCM provider.
+  oauthParams_ticket: string, Required. The ticket to be used for post processing the callback from SCM provider.
+    { # Message for responding to finishing an OAuth flow.
+  <pre>Lists Users in a given project, location, and account_connector.
+  &quot;users&quot;: [ # The list of Users
+    <code class="details" id="startOAuthFlow">startOAuthFlow(accountConnector, x__xgafv=None)</code>
+  <pre>Starts OAuth flow for an account connector.
+    { # Message for responding to starting an OAuth flow.
+  &quot;authUri&quot;: &quot;A String&quot;, # The authorization server URL to the OAuth flow of the service provider.
+  &quot;clientId&quot;: &quot;A String&quot;, # The client ID to the OAuth App of the service provider.
+  &quot;codeChallenge&quot;: &quot;A String&quot;, # Please refer to https://datatracker.ietf.org/doc/html/rfc7636#section-4.1
+  &quot;codeChallengeMethod&quot;: &quot;A String&quot;, # Please refer to https://datatracker.ietf.org/doc/html/rfc7636#section-4.2
+  &quot;scopes&quot;: [ # The list of scopes requested by the application.
+  &quot;systemProviderId&quot;: &quot;A String&quot;, # The ID of the system provider.
+  &quot;ticket&quot;: &quot;A String&quot;, # The ticket to be used for post processing the callback from the service provider.

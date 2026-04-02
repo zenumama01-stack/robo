@@ -1,0 +1,30 @@
+<h1><a href="apihub_v1.html">API hub API</a> . <a href="apihub_v1.projects.html">projects</a> . <a href="apihub_v1.projects.locations.html">locations</a> . <a href="apihub_v1.projects.locations.externalApis.html">externalApis</a></h1>
+  <code><a href="#create">create(parent, body=None, externalApiId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Create an External API resource in the API hub.</p>
+<p class="firstline">Delete an External API resource in the API hub.</p>
+<p class="firstline">Get details about an External API resource in the API hub.</p>
+<p class="firstline">List External API resources in the API hub.</p>
+<p class="firstline">Update an External API resource in the API hub. The following fields can be updated: * display_name * description * documentation * endpoints * paths The update_mask should be used to specify the fields being updated.</p>
+    <code class="details" id="create">create(parent, body=None, externalApiId=None, x__xgafv=None)</code>
+  <pre>Create an External API resource in the API hub.
+  parent: string, Required. The parent resource for the External API resource. Format: `projects/{project}/locations/{location}` (required)
+{ # An external API represents an API being provided by external sources. This can be used to model third-party APIs and can be used to define dependencies.
+  &quot;description&quot;: &quot;A String&quot;, # Optional. Description of the external API. Max length is 2000 characters (Unicode Code Points).
+  &quot;displayName&quot;: &quot;A String&quot;, # Required. Display name of the external API. Max length is 63 characters (Unicode Code Points).
+  &quot;documentation&quot;: { # Documentation details. # Optional. Documentation of the external API.
+  &quot;endpoints&quot;: [ # Optional. List of endpoints on which this API is accessible.
+  &quot;name&quot;: &quot;A String&quot;, # Identifier. Format: `projects/{project}/locations/{location}/externalApi/{externalApi}`.
+  &quot;paths&quot;: [ # Optional. List of paths served by this API.
+  externalApiId: string, Optional. The ID to use for the External API resource, which will become the final component of the External API&#x27;s resource name. This field is optional. * If provided, the same will be used. The service will throw an error if the specified id is already used by another External API resource in the API hub. * If not provided, a system generated id will be used. This value should be 4-500 characters, and valid characters are /a-z[0-9]-_/.
+  <pre>Delete an External API resource in the API hub.
+  name: string, Required. The name of the External API resource to delete. Format: `projects/{project}/locations/{location}/externalApis/{externalApi}` (required)
+  <pre>Get details about an External API resource in the API hub.
+  name: string, Required. The name of the External API resource to retrieve. Format: `projects/{project}/locations/{location}/externalApis/{externalApi}` (required)
+  <pre>List External API resources in the API hub.
+  parent: string, Required. The parent, which owns this collection of External API resources. Format: `projects/{project}/locations/{location}` (required)
+  pageSize: integer, Optional. The maximum number of External API resources to return. The service may return fewer than this value. If unspecified, at most 50 ExternalApis will be returned. The maximum value is 1000; values above 1000 will be coerced to 1000.
+  pageToken: string, Optional. A page token, received from a previous `ListExternalApis` call. Provide this to retrieve the subsequent page. When paginating, all other parameters (except page_size) provided to `ListExternalApis` must match the call that provided the page token.
+    { # The ListExternalApis method&#x27;s response.
+  &quot;externalApis&quot;: [ # The External API resources present in the API hub.
+  <pre>Update an External API resource in the API hub. The following fields can be updated: * display_name * description * documentation * endpoints * paths The update_mask should be used to specify the fields being updated.
+  name: string, Identifier. Format: `projects/{project}/locations/{location}/externalApi/{externalApi}`. (required)

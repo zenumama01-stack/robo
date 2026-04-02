@@ -1,0 +1,22 @@
+<h1><a href="config_v1.html">Infrastructure Manager API</a> . <a href="config_v1.projects.html">projects</a> . <a href="config_v1.projects.locations.html">locations</a> . <a href="config_v1.projects.locations.previews.html">previews</a> . <a href="config_v1.projects.locations.previews.resourceDrifts.html">resourceDrifts</a></h1>
+<p class="firstline">Get a ResourceDrift for a given preview.</p>
+<p class="firstline">List ResourceDrifts for a given preview.</p>
+  <pre>Get a ResourceDrift for a given preview.
+  name: string, Required. The name of the resource drift to retrieve. Format: &#x27;projects/{project_id}/locations/{location}/previews/{preview}/resourceDrifts/{resource_drift}&#x27;. (required)
+    { # A resource drift represents a drift to a resource in the state file.
+  &quot;name&quot;: &quot;A String&quot;, # Identifier. The name of the resource drift. Format: &#x27;projects/{project_id}/locations/{location}/previews/{preview}/resourceDrifts/{resource_drift}&#x27;.
+  &quot;propertyDrifts&quot;: [ # Output only. The property drifts of the resource drift.
+    { # A property drift represents a drift to a property in the state file.
+      &quot;path&quot;: &quot;A String&quot;, # Output only. The path of the property drift.
+  &quot;terraformInfo&quot;: { # Terraform info of a ResourceChange. # Output only. Terraform info of the resource drift.
+    &quot;address&quot;: &quot;A String&quot;, # Output only. The address of the drifted resource.
+    &quot;provider&quot;: &quot;A String&quot;, # Output only. The provider of the drifted resource.
+    &quot;type&quot;: &quot;A String&quot;, # Output only. The type of the drifted resource.
+  <pre>List ResourceDrifts for a given preview.
+  parent: string, Required. The parent in whose context the ResourceDrifts are listed. The parent value is in the format: &#x27;projects/{project_id}/locations/{location}/previews/{preview}&#x27;. (required)
+  filter: string, Optional. Lists the resource drifts that match the filter expression. A filter expression filters the resource drifts listed in the response. The expression must be of the form &#x27;{field} {operator} {value}&#x27; where operators: &#x27;&lt;&#x27;, &#x27;&gt;&#x27;, &#x27;&lt;=&#x27;, &#x27;&gt;=&#x27;, &#x27;!=&#x27;, &#x27;=&#x27;, &#x27;:&#x27; are supported (colon &#x27;:&#x27; represents a HAS operator which is roughly synonymous with equality). {field} can refer to a proto or JSON field, or a synthetic field. Field names can be camelCase or snake_case. Examples: - Filter by name: name = &quot;projects/foo/locations/us-central1/previews/dep/resourceDrifts/baz
+  pageSize: integer, Optional. When requesting a page of resource drifts, &#x27;page_size&#x27; specifies number of resource drifts to return. If unspecified, at most 500 will be returned. The maximum value is 1000.
+  pageToken: string, Optional. Token returned by previous call to &#x27;ListResourceDrifts&#x27; which specifies the position in the list from where to continue listing the resource drifts.
+    { # A response to a &#x27;ListResourceDrifts&#x27; call. Contains a list of ResourceDrifts.
+  &quot;nextPageToken&quot;: &quot;A String&quot;, # A token to request the next page of resources from the &#x27;ListResourceDrifts&#x27; method. The value of an empty string means that there are no more resources to return.
+  &quot;resourceDrifts&quot;: [ # List of ResourceDrifts.

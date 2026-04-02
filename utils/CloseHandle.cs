@@ -1,0 +1,2 @@
+        [LibraryImport("api-ms-win-core-handle-l1-1-0.dll")]
+        internal static partial bool CloseHandle(nint hObject);

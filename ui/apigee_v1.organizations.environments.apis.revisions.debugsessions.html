@@ -1,0 +1,30 @@
+<h1><a href="apigee_v1.html">Apigee API</a> . <a href="apigee_v1.organizations.html">organizations</a> . <a href="apigee_v1.organizations.environments.html">environments</a> . <a href="apigee_v1.organizations.environments.apis.html">apis</a> . <a href="apigee_v1.organizations.environments.apis.revisions.html">revisions</a> . <a href="apigee_v1.organizations.environments.apis.revisions.debugsessions.html">debugsessions</a></h1>
+  <code><a href="apigee_v1.organizations.environments.apis.revisions.debugsessions.data.html">data()</a></code>
+  <code><a href="#create">create(parent, body=None, timeout=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Creates a debug session for a deployed API Proxy revision.</p>
+  <code><a href="#deleteData">deleteData(name, x__xgafv=None)</a></code></p>
+<p class="firstline">Deletes the data from a debug session. This does not cancel the debug session or prevent further data from being collected if the session is still active in runtime pods.</p>
+<p class="firstline">Retrieves a debug session.</p>
+<p class="firstline">Lists debug sessions that are currently active in the given API Proxy revision.</p>
+    <code class="details" id="create">create(parent, body=None, timeout=None, x__xgafv=None)</code>
+  <pre>Creates a debug session for a deployed API Proxy revision.
+  parent: string, Required. The resource name of the API Proxy revision deployment for which to create the DebugSession. Must be of the form `organizations/{organization}/environments/{environment}/apis/{api}/revisions/{revision}`. If the API proxy resource has the `space` attribute set, IAM permissions are checked differently . To learn more, read the [Apigee Spaces Overview](https://cloud.google.com/apigee/docs/api-platform/system-administration/spaces/apigee-spaces-overview). (required)
+  &quot;count&quot;: 42, # Optional. The number of request to be traced. Min = 1, Max = 15, Default = 10.
+  &quot;createTime&quot;: &quot;A String&quot;, # Output only. The first transaction creation timestamp, recorded by UAP.
+  &quot;filter&quot;: &quot;A String&quot;, # Optional. A conditional statement which is evaluated against the request message to determine if it should be traced. Syntax matches that of on API Proxy bundle flow Condition.
+  &quot;name&quot;: &quot;A String&quot;, # A unique ID for this DebugSession.
+  &quot;timeout&quot;: &quot;A String&quot;, # Optional. The time in seconds after which this DebugSession should end. This value will override the value in query param, if both are provided.
+  &quot;tracesize&quot;: 42, # Optional. The maximum number of bytes captured from the response payload. Min = 0, Max = 5120, Default = 5120.
+  &quot;validity&quot;: 42, # Optional. The length of time, in seconds, that this debug session is valid, starting from when it&#x27;s received in the control plane. Min = 1, Max = 15, Default = 10.
+  timeout: string, Optional. The time in seconds after which this DebugSession should end. A timeout specified in DebugSession will overwrite this value.
+    <code class="details" id="deleteData">deleteData(name, x__xgafv=None)</code>
+  <pre>Deletes the data from a debug session. This does not cancel the debug session or prevent further data from being collected if the session is still active in runtime pods.
+  name: string, Required. The name of the debug session to delete. Must be of the form: `organizations/{organization}/environments/{environment}/apis/{api}/revisions/{revision}/debugsessions/{debugsession}`. If the API proxy resource has the `space` attribute set, IAM permissions are checked differently . To learn more, read the [Apigee Spaces Overview](https://cloud.google.com/apigee/docs/api-platform/system-administration/spaces/apigee-spaces-overview). (required)
+  <pre>Retrieves a debug session.
+  name: string, Required. The name of the debug session to retrieve. Must be of the form: `organizations/{organization}/environments/{environment}/apis/{api}/revisions/{revision}/debugsessions/{debug_session}`. If the API proxy resource has the `space` attribute set, IAM permissions are checked differently . To learn more, read the [Apigee Spaces Overview](https://cloud.google.com/apigee/docs/api-platform/system-administration/spaces/apigee-spaces-overview). (required)
+  <pre>Lists debug sessions that are currently active in the given API Proxy revision.
+  parent: string, Required. The name of the API Proxy revision deployment for which to list debug sessions. Must be of the form: `organizations/{organization}/environments/{environment}/apis/{api}/revisions/{revision}`. If the API proxy resource has the `space` attribute set, IAM permissions are checked differently . To learn more, read the [Apigee Spaces Overview](https://cloud.google.com/apigee/docs/api-platform/system-administration/spaces/apigee-spaces-overview). (required)
+  pageToken: string, Optional. Page token, returned from a previous ListDebugSessions call, that you can use to retrieve the next page.
+  &quot;nextPageToken&quot;: &quot;A String&quot;, # Page token that you can include in a ListDebugSessionsRequest to retrieve the next page. If omitted, no subsequent pages exist.
+  &quot;sessions&quot;: [ # Session info that includes debug session ID and the first transaction creation timestamp.
+      &quot;timestampMs&quot;: &quot;A String&quot;, # The first transaction creation timestamp in millisecond, recorded by UAP.

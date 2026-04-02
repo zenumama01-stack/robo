@@ -1,0 +1,98 @@
+<div class="home-dashboard" [class.sidebar-open]="sidebarOpen && hasSidebarContent">
+    <div class="home-header">
+      <div class="greeting-section">
+        <h1>{{ greeting }}, {{ currentUser?.Name }}</h1>
+        <p class="date">{{ formattedDate }}</p>
+        <mj-loading text="Loading your applications..." size="large"></mj-loading>
+    <!-- Apps Grid -->
+      <div class="apps-section">
+        <h2 class="section-title">
+          Your Applications
+        <div class="apps-grid">
+          @for (appData of appsDisplayData; track trackByApp($index, appData)) {
+              class="app-card"
+              [style.--app-color]="appData.color"
+              (click)="onAppClick(appData.app)">
+              <!-- App Icon -->
+              <div class="app-icon-wrapper">
+                  <i [class]="appData.icon"></i>
+              <!-- App Info -->
+                <h3 class="app-name">{{ appData.app.Name }}</h3>
+                @if (appData.app.Description) {
+                  <p class="app-description">{{ appData.app.Description }}</p>
+                <!-- Nav Items Preview -->
+                @if (appData.navItemsCount > 0) {
+                  <div class="nav-preview">
+                    @for (item of appData.navItemsPreview; track trackByNavItem($index, item)) {
+                      <div class="nav-item-chip">
+                        <i [class]="item.Icon"></i>
+                        <span>{{ item.Label }}</span>
+                    @if (appData.showMoreItems) {
+                      <span class="more-items">
+                        +{{ appData.moreItemsCount }} more
+              <!-- Hover Arrow -->
+              <div class="app-arrow">
+        @if (apps.length === 0) {
+            <h3>No Applications Available</h3>
+            <p>You don't have any applications configured yet.</p>
+              (click)="openConfigDialog()">
+              Configure Applications
+  <!-- Collapsible Right Sidebar -->
+  @if (hasSidebarContent) {
+    <div class="quick-access-sidebar">
+          Quick Access
+        <button class="sidebar-close-btn" (click)="toggleSidebar()" title="Close panel">
+      <div class="sidebar-content">
+        <!-- Unread Notifications Section -->
+        @if (unreadNotifications.length > 0) {
+          <div class="sidebar-section notifications-section">
+            <h4 class="sidebar-section-title">
+              <i class="fa-solid fa-bell"></i>
+              Notifications
+              <span class="section-badge">{{ unreadNotifications.length }}</span>
+            <div class="sidebar-items">
+              @for (notification of unreadNotifications; track trackByNotification($index, notification)) {
+                  class="sidebar-item notification-item"
+                  (click)="onNotificationClick(notification)">
+                  <div class="sidebar-item-icon">
+                  <div class="sidebar-item-info">
+                    <span class="sidebar-item-title">{{ notification.Title }}</span>
+                    <span class="sidebar-item-subtitle">{{ notification.Message | slice:0:40 }}{{ (notification.Message?.length || 0) > 40 ? '...' : '' }}</span>
+        @if (favorites.length > 0 || favoritesLoading) {
+          <div class="sidebar-section favorites-section">
+              Favorites
+            @if (!favoritesLoading) {
+                @for (favorite of favorites; track trackByFavorite($index, favorite)) {
+                    class="sidebar-item favorite-item"
+                    (click)="onFavoriteClick(favorite)">
+                      <span class="sidebar-item-title">{{ favorite.RecordID }}</span>
+                      <span class="sidebar-item-subtitle">{{ favorite.Entity }}</span>
+            @if (favoritesLoading) {
+              <div class="sidebar-loading">
+        <!-- Recents Section -->
+        @if (recentItems.length > 0 || recentsLoading) {
+          <div class="sidebar-section recents-section">
+            @if (!recentsLoading) {
+                @for (item of recentItems; track trackByRecent($index, item)) {
+                    class="sidebar-item recent-item"
+                    (click)="onRecentClick(item)">
+                      <i [class]="getResourceIcon(item.resourceType)"></i>
+                      <span class="sidebar-item-title">{{ item.recordName || item.recordId }}</span>
+                      <span class="sidebar-item-subtitle">{{ item.entityName }} · {{ formatDate(item.latestAt) }}</span>
+            @if (recentsLoading) {
+        <!-- Empty sidebar state -->
+        @if (!favoritesLoading && !recentsLoading && unreadNotifications.length === 0 && favorites.length === 0 && recentItems.length === 0) {
+          <div class="sidebar-empty">
+            <p>No quick access items</p>
+  <!-- Quick Access FAB Toggle (Fixed Button) -->
+  @if (hasSidebarContent && !sidebarOpen) {
+    <button class="sidebar-fab-toggle"
+      (click)="toggleSidebar()"
+      title="Quick Access">
+        <span class="fab-badge">{{ unreadNotifications.length }}</span>
+  <!-- App Configuration Dialog -->
+  <mj-user-app-config
+    #appConfigDialog
+    [(showDialog)]="showConfigDialog"
+    (configSaved)="onConfigSaved()">
+  </mj-user-app-config>

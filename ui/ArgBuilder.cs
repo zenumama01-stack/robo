@@ -1,0 +1,14 @@
+// Licensed to the .NET Foundation under one or more agreements.
+// The .NET Foundation licenses this file to you under the MIT license.
+    /// ArgBuilder provides an argument value used by the MethodBinder.  One ArgBuilder exists for each
+    /// physical parameter defined on a method.
+    /// Contrast this with ParameterWrapper which represents the logical argument passed to the method.
+    internal abstract class ArgBuilder
+        /// Provides the Expression which provides the value to be passed to the argument.
+        internal abstract Expression Marshal(Expression parameter);
+        /// This method is called when result is intended to be used ByRef.
+        internal virtual Expression MarshalToRef(Expression parameter)
+            return Marshal(parameter);
+        /// Provides an Expression which will update the provided value after a call to the method.
+        /// May return null if no update is required.
+        internal virtual Expression UnmarshalFromRef(Expression newValue)

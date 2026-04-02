@@ -1,0 +1,44 @@
+<h1><a href="displayvideo_v4.html">Display & Video 360 API</a> . <a href="displayvideo_v4.advertisers.html">advertisers</a> . <a href="displayvideo_v4.advertisers.adAssets.html">adAssets</a></h1>
+  <code><a href="#bulkCreate">bulkCreate(advertiserId, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Creates multiple ad assets in a single request. Returns the newly-created ad assets if successful. Only supports the creation of assets of AdAssetType `AD_ASSET_TYPE_YOUTUBE_VIDEO`.</p>
+<p class="firstline">Creates an ad asset. Returns the newly-created ad asset if successful. Only supports the creation of assets of AdAssetType `AD_ASSET_TYPE_YOUTUBE_VIDEO`.</p>
+  <code><a href="#get">get(advertiserId, adAssetId, x__xgafv=None)</a></code></p>
+<p class="firstline">Gets an ad asset. Only supports the retrieval of assets of AdAssetType `AD_ASSET_TYPE_YOUTUBE_VIDEO`.</p>
+<p class="firstline">Lists ad assets under an advertiser ID. Only supports the retrieval of assets of AdAssetType `AD_ASSET_TYPE_YOUTUBE_VIDEO`.</p>
+<p class="firstline">Uploads and creates an ad asset. Returns the ID of the newly-created ad asset if successful. Only supports the uploading of assets with the AdAssetType `AD_ASSET_TYPE_IMAGE`.</p>
+    <code class="details" id="bulkCreate">bulkCreate(advertiserId, body=None, x__xgafv=None)</code>
+  <pre>Creates multiple ad assets in a single request. Returns the newly-created ad assets if successful. Only supports the creation of assets of AdAssetType `AD_ASSET_TYPE_YOUTUBE_VIDEO`.
+  advertiserId: string, Required. The ID of the advertiser these ad assets belong to. (required)
+{ # A request message for BulkCreateAdAssets.
+  &quot;adAssets&quot;: [ # Required. Ad assets to create. Only supports assets of AdAssetType `AD_ASSET_TYPE_YOUTUBE_VIDEO`.
+    { # A single ad asset.
+      &quot;adAssetId&quot;: &quot;A String&quot;, # Output only. The ID of the ad asset. Referred to as the asset ID when assigned to an ad.
+      &quot;adAssetType&quot;: &quot;A String&quot;, # Required. The type of the ad asset.
+      &quot;entityStatus&quot;: &quot;A String&quot;, # Output only. The entity status of the ad asset.
+      &quot;name&quot;: &quot;A String&quot;, # Identifier. The resource name of the ad asset.
+      &quot;youtubeVideoAsset&quot;: { # Data for a YouTube video ad asset. # Youtube video asset data.
+        &quot;youtubeVideoId&quot;: &quot;A String&quot;, # Required. The YouTube video id of the asset. This is the 11 char string value used in the YouTube video URL.
+    { # A response message for BulkCreateAdAssets.
+  &quot;adAssets&quot;: [ # The created ad assets.
+  <pre>Creates an ad asset. Returns the newly-created ad asset if successful. Only supports the creation of assets of AdAssetType `AD_ASSET_TYPE_YOUTUBE_VIDEO`.
+  advertiserId: string, Required. The ID of the advertiser this ad asset belongs to. (required)
+{ # A request message for CreateAdAsset.
+  &quot;adAsset&quot;: { # A single ad asset. # Required. The ad asset to create. Only supports assets of AdAssetType `AD_ASSET_TYPE_YOUTUBE_VIDEO`.
+    <code class="details" id="get">get(advertiserId, adAssetId, x__xgafv=None)</code>
+  <pre>Gets an ad asset. Only supports the retrieval of assets of AdAssetType `AD_ASSET_TYPE_YOUTUBE_VIDEO`.
+  adAssetId: string, Required. The ID of the ad asset to fetch. Only supports assets of AdAssetType `AD_ASSET_TYPE_YOUTUBE_VIDEO` (required)
+  <pre>Lists ad assets under an advertiser ID. Only supports the retrieval of assets of AdAssetType `AD_ASSET_TYPE_YOUTUBE_VIDEO`.
+  advertiserId: string, Required. The ID of the advertiser the ad assets belong to. (required)
+  filter: string, Optional. Allows filtering of the results by ad asset fields. Supported syntax: * A restriction has the form of `{field} {operator} {value}`. * All fields must use the `EQUALS (=)` operator. Supported fields: * `youtubeVideoAsset.youtubeVideoId` * `entityStatus` Examples: * All active YouTube video ad assets under an advertiser: `entityStatus=ENTITY_STATUS_ACTIVE`
+  orderBy: string, Optional. Field by which to sort the list. Acceptable values are: * `entityStatus` * `youtubeVideoAsset.youtubeVideoId` * `adAssetId` (default) The default sorting order is ascending. To specify descending order for a field, a suffix &quot;desc&quot; should be added to the field name. Example: `adAssetId desc`.
+  pageSize: integer, Optional. Requested page size. Must be between `1` and `5000`. If unspecified will default to `5000`. Returns error code `INVALID_ARGUMENT` if an invalid value is specified.
+  pageToken: string, Optional. A token identifying a page of results the server should return. Typically, this is the value of next_page_token returned from the previous call to `ListAdAssets` method. If not specified, the first page of results will be returned.
+    { # A response message for ListAdAssets.
+  &quot;adAssets&quot;: [ # The list of ad assets. The list will only contain assets of AdAssetType `AD_ASSET_TYPE_YOUTUBE_VIDEO`. This list will be absent if empty.
+  &quot;nextPageToken&quot;: &quot;A String&quot;, # A token to retrieve the next page of results. Pass this value in the page_token field in the subsequent call to `ListAdAssets` method to retrieve the next page of results.
+  <pre>Uploads and creates an ad asset. Returns the ID of the newly-created ad asset if successful. Only supports the uploading of assets with the AdAssetType `AD_ASSET_TYPE_IMAGE`.
+{ # A request message for UploadAdAsset.
+  &quot;adAssetType&quot;: &quot;A String&quot;, # Required. The type of the ad asset. Only `AD_ASSET_TYPE_IMAGE` is supported.
+  &quot;filename&quot;: &quot;A String&quot;, # Required. The filename of the ad asset, including the file extension. The filename must be UTF-8 encoded with a maximum size of 240 bytes.
+    { # A response message for UploadAdAsset.
+  &quot;adAsset&quot;: { # A single ad asset. # The created ad asset.

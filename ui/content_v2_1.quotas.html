@@ -1,0 +1,12 @@
+<h1><a href="content_v2_1.html">Content API for Shopping</a> . <a href="content_v2_1.quotas.html">quotas</a></h1>
+<p class="firstline">Lists the daily call quota and usage per method for your Merchant Center account.</p>
+  <pre>Lists the daily call quota and usage per method for your Merchant Center account.
+  merchantId: string, Required. The ID of the account that has quota. This account must be an admin. (required)
+  pageSize: integer, The maximum number of quotas to return in the response, used for paging. Defaults to 500; values above 1000 will be coerced to 1000.
+    { # Response message for the ListMethodQuotas method.
+  &quot;methodQuotas&quot;: [ # The current quota usage and limits per each method.
+    { # The quota information per method in the Content API.
+      &quot;method&quot;: &quot;A String&quot;, # Output only. The method name, for example `products.list`. Method name does not contain version because quota can be shared between different API versions of the same method.
+      &quot;quotaLimit&quot;: &quot;A String&quot;, # Output only. The maximum number of calls allowed per day for the method.
+      &quot;quotaMinuteLimit&quot;: &quot;A String&quot;, # Output only. The maximum number of calls allowed per minute for the method.
+      &quot;quotaUsage&quot;: &quot;A String&quot;, # Output only. The current quota usage, meaning the number of calls already made to the method per day. Usage is reset every day at 12 PM midday UTC.

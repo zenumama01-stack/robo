@@ -1,0 +1,21 @@
+<div class="list-detail-grid-container">
+  <!-- Loading state while list is being loaded -->
+      <mj-loading text="Loading list..."></mj-loading>
+  <!-- Empty state when no list is selected -->
+  @if (!isLoading && !listLoaded && !listId && !listEntity) {
+      <span class="fa-solid fa-rectangle-list empty-icon"></span>
+      <p>Select a list to view its records</p>
+  <!-- Grid display when list is loaded -->
+  @if (listLoaded && gridParams) {
+    <mj-entity-data-grid
+      #entityDataGrid
+      [Params]="gridParams"
+      [Height]="height"
+      [ShowToolbar]="showToolbar"
+      [ToolbarConfig]="effectiveToolbarConfig"
+      [SelectionMode]="selectionMode"
+      (AfterRowClick)="onRowClick($event)"
+      (AfterRowDoubleClick)="onRowDoubleClick($event)"
+      (AfterDataLoad)="onDataLoaded($event)"
+      (SelectionChange)="onSelectionChange($event)">
+    </mj-entity-data-grid>

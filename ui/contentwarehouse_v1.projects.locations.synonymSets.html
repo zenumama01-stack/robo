@@ -1,0 +1,25 @@
+<h1><a href="contentwarehouse_v1.html">Document AI Warehouse API</a> . <a href="contentwarehouse_v1.projects.html">projects</a> . <a href="contentwarehouse_v1.projects.locations.html">locations</a> . <a href="contentwarehouse_v1.projects.locations.synonymSets.html">synonymSets</a></h1>
+<p class="firstline">Creates a SynonymSet for a single context. Throws an ALREADY_EXISTS exception if a synonymset already exists for the context.</p>
+<p class="firstline">Deletes a SynonymSet for a given context. Throws a NOT_FOUND exception if the SynonymSet is not found.</p>
+<p class="firstline">Gets a SynonymSet for a particular context. Throws a NOT_FOUND exception if the Synonymset does not exist</p>
+<p class="firstline">Returns all SynonymSets (for all contexts) for the specified location.</p>
+<p class="firstline">Remove the existing SynonymSet for the context and replaces it with a new one. Throws a NOT_FOUND exception if the SynonymSet is not found.</p>
+  <pre>Creates a SynonymSet for a single context. Throws an ALREADY_EXISTS exception if a synonymset already exists for the context.
+{ # Represents a list of synonyms for a given context. For example a context &quot;sales&quot; could contain: Synonym 1: sale, invoice, bill, order Synonym 2: money, credit, finance, payment Synonym 3: shipping, freight, transport Each SynonymSets should be disjoint
+  &quot;context&quot;: &quot;A String&quot;, # This is a freeform field. Example contexts can be &quot;sales,&quot; &quot;engineering,&quot; &quot;real estate,&quot; &quot;accounting,&quot; etc. The context can be supplied during search requests.
+  &quot;name&quot;: &quot;A String&quot;, # The resource name of the SynonymSet This is mandatory for google.api.resource. Format: projects/{project_number}/locations/{location}/synonymSets/{context}.
+  &quot;synonyms&quot;: [ # List of Synonyms for the context.
+    { # Represents a list of words given by the customer All these words are synonyms of each other.
+      &quot;words&quot;: [ # For example: sale, invoice, bill, order
+  <pre>Deletes a SynonymSet for a given context. Throws a NOT_FOUND exception if the SynonymSet is not found.
+  name: string, Required. The name of the synonymSet to delete Format: projects/{project_number}/locations/{location}/synonymSets/{context}. (required)
+  <pre>Gets a SynonymSet for a particular context. Throws a NOT_FOUND exception if the Synonymset does not exist
+  name: string, Required. The name of the synonymSet to retrieve Format: projects/{project_number}/locations/{location}/synonymSets/{context}. (required)
+  <pre>Returns all SynonymSets (for all contexts) for the specified location.
+  pageSize: integer, The maximum number of synonymSets to return. The service may return fewer than this value. If unspecified, at most 50 rule sets will be returned. The maximum value is 1000; values above 1000 will be coerced to 1000.
+  pageToken: string, A page token, received from a previous `ListSynonymSets` call. Provide this to retrieve the subsequent page. When paginating, all other parameters provided to `ListSynonymSets` must match the call that provided the page token.
+    { # Response message for SynonymSetService.ListSynonymSets.
+  &quot;nextPageToken&quot;: &quot;A String&quot;, # A page token, received from a previous `ListSynonymSets` call. Provide this to retrieve the subsequent page.
+  &quot;synonymSets&quot;: [ # The synonymSets from the specified parent.
+  <pre>Remove the existing SynonymSet for the context and replaces it with a new one. Throws a NOT_FOUND exception if the SynonymSet is not found.
+  name: string, Required. The name of the synonymSet to update Format: projects/{project_number}/locations/{location}/synonymSets/{context}. (required)

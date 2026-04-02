@@ -1,0 +1,75 @@
+<!-- Tree Dropdown Component Template -->
+<div class="tree-dropdown" [class.tree-dropdown--disabled]="Disabled">
+  <!-- Trigger Button -->
+    #triggerElement
+    [ngClass]="getTriggerClasses()"
+    [class]="StyleConfig.SearchInputClass || ''"
+    role="combobox"
+    [attr.aria-expanded]="IsOpen"
+    [attr.aria-haspopup]="'tree'"
+    [attr.aria-disabled]="Disabled"
+    (click)="onTriggerClick()"
+    (keydown)="onTriggerKeyDown($event)">
+    <!-- Selected Value Display -->
+    <div class="tree-dropdown-trigger__content">
+      @if (getDisplayIcon()) {
+          class="tree-dropdown-trigger__icon"
+          [style.color]="getDisplayColor()">
+          <i [class]="getDisplayIcon()"></i>
+      <!-- Text -->
+        class="tree-dropdown-trigger__text"
+        [class.tree-dropdown-trigger__text--placeholder]="!hasSelection()">
+        {{ hasSelection() ? getDisplayText() : Placeholder }}
+      <!-- Loading Spinner -->
+      @if (IsLoading && ShowLoadingInTrigger) {
+        <span class="tree-dropdown-trigger__loading">
+    <div class="tree-dropdown-trigger__actions">
+      <!-- Clear Button -->
+      @if (Clearable && hasSelection() && !Disabled) {
+          class="tree-dropdown-trigger__clear"
+          (click)="Clear($event)"
+          title="Clear selection"
+          tabindex="-1">
+      <span class="tree-dropdown-trigger__chevron">
+          class="fa-solid"
+          [ngClass]="IsOpen ? 'fa-chevron-up' : 'fa-chevron-down'">
+  <!-- Dropdown Panel (rendered in place, will be moved to portal when open) -->
+      #dropdownPanel
+      class="tree-dropdown-panel"
+      [class.tree-dropdown-panel--open]="IsOpen"
+      [class.tree-dropdown-panel--above]="Position?.renderAbove"
+      [class.tree-dropdown-panel--below]="!Position?.renderAbove"
+      [class]="StyleConfig.DropdownClass || ''"
+      [ngStyle]="IsOpen ? getDropdownStyles() : {}"
+      role="tree">
+      @if (EnableSearch) {
+        <div class="tree-dropdown-search">
+          <div class="tree-dropdown-search__input-wrapper">
+            <i class="fa-solid fa-search tree-dropdown-search__icon"></i>
+              class="tree-dropdown-search__input"
+              [placeholder]="SearchConfig.Placeholder || 'Type to search...'"
+              [value]="SearchText"
+              (keydown)="onSearchKeyDown($event)"
+              spellcheck="false">
+                class="tree-dropdown-search__clear"
+                (click)="onClearSearch()"
+      <!-- Tree -->
+      <div class="tree-dropdown-tree">
+        <mj-tree
+          #treeComponent
+          [BranchConfig]="BranchConfig"
+          [LeafConfig]="LeafConfig"
+          [SelectableTypes]="SelectableTypes"
+          [SelectedIDs]="getSelectedIDsArray()"
+          [AutoLoad]="AutoLoad"
+          [ShowIcons]="true"
+          [ShowExpandCollapseAll]="false"
+          [AnimateExpandCollapse]="true"
+          [EmptyMessage]="SearchText ? 'No matches found' : 'No items available'"
+          [EmptyIcon]="SearchText ? 'fa-solid fa-search' : 'fa-solid fa-folder-open'"
+          (SelectionChange)="onTreeSelectionChange($event)"
+          (BeforeNodeSelect)="onTreeBeforeNodeSelect($event)"
+          (AfterNodeSelect)="onTreeAfterNodeSelect($event)"
+          (BeforeDataLoad)="onTreeBeforeDataLoad($event)"
+          (AfterDataLoad)="onTreeAfterDataLoad($event)">
+        </mj-tree>

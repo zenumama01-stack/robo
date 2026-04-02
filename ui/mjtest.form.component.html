@@ -1,0 +1,23 @@
+    <!-- Test Definition Section -->
+        SectionKey="testDefinition"
+        SectionName="Test Definition"
+    <!-- Test Logic Section -->
+        SectionKey="testLogic"
+        SectionName="Test Logic"
+            FieldName="InputDefinition"
+            FieldName="ExpectedOutcomes"
+            FieldName="Variables"
+            FieldName="Tags"
+            FieldName="EstimatedDurationSeconds"
+            FieldName="EstimatedCostUSD"
+            FieldName="RepeatCount"
+            FieldName="MaxExecutionTimeMS"
+                [Params]="BuildRelationshipViewParamsByEntityName('MJ: Test Runs','TestID')"
+    <!-- MJ: Test Suite Tests Section -->
+        SectionKey="mJTestSuiteTests"
+        SectionName="MJ: Test Suite Tests"
+        [BadgeCount]="GetSectionRowCount('mJTestSuiteTests')"
+                [Params]="BuildRelationshipViewParamsByEntityName('MJ: Test Suite Tests','TestID')"
+                [NewRecordValues]="NewRecordValues('MJ: Test Suite Tests')"
+                [AllowLoad]="IsSectionExpanded('mJTestSuiteTests')"
+                (AfterDataLoad)="SetSectionRowCount('mJTestSuiteTests', $event.totalRowCount)"

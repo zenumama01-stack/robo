@@ -1,0 +1,26 @@
+<h1><a href="translate_v3.html">Cloud Translation API</a> . <a href="translate_v3.projects.html">projects</a> . <a href="translate_v3.projects.locations.html">locations</a> . <a href="translate_v3.projects.locations.models.html">models</a></h1>
+<p class="firstline">Creates a Model.</p>
+<p class="firstline">Deletes a model.</p>
+<p class="firstline">Lists models.</p>
+  <pre>Creates a Model.
+  parent: string, Required. The project name, in form of `projects/{project}/locations/{location}` (required)
+{ # A trained translation model.
+  &quot;createTime&quot;: &quot;A String&quot;, # Output only. Timestamp when the model resource was created, which is also when the training started.
+  &quot;dataset&quot;: &quot;A String&quot;, # Required. The dataset from which the model is trained, in form of `projects/{project-number-or-id}/locations/{location_id}/datasets/{dataset_id}`
+  &quot;displayName&quot;: &quot;A String&quot;, # The name of the model to show in the interface. The name can be up to 32 characters long and can consist only of ASCII Latin letters A-Z and a-z, underscores (_), and ASCII digits 0-9.
+  &quot;name&quot;: &quot;A String&quot;, # The resource name of the model, in form of `projects/{project-number-or-id}/locations/{location_id}/models/{model_id}`
+  &quot;sourceLanguageCode&quot;: &quot;A String&quot;, # Output only. The BCP-47 language code of the source language.
+  &quot;targetLanguageCode&quot;: &quot;A String&quot;, # Output only. The BCP-47 language code of the target language.
+  &quot;testExampleCount&quot;: 42, # Output only. Number of examples (sentence pairs) used to test the model.
+  &quot;trainExampleCount&quot;: 42, # Output only. Number of examples (sentence pairs) used to train the model.
+  &quot;updateTime&quot;: &quot;A String&quot;, # Output only. Timestamp when this model was last updated.
+  &quot;validateExampleCount&quot;: 42, # Output only. Number of examples (sentence pairs) used to validate the model.
+  <pre>Deletes a model.
+  name: string, Required. The name of the model to delete. (required)
+  name: string, Required. The resource name of the model to retrieve. (required)
+  <pre>Lists models.
+  filter: string, Optional. An expression for filtering the models that will be returned. Supported filter: `dataset_id=${dataset_id}`
+  pageToken: string, Optional. A token identifying a page of results for the server to return. Typically obtained from next_page_token field in the response of a ListModels call.
+    { # Response message for ListModels.
+  &quot;models&quot;: [ # The models read.
+  &quot;nextPageToken&quot;: &quot;A String&quot;, # A token to retrieve next page of results. Pass this token to the page_token field in the ListModelsRequest to obtain the corresponding page.

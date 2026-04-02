@@ -1,0 +1,26 @@
+<h1><a href="apigee_v1.html">Apigee API</a> . <a href="apigee_v1.organizations.html">organizations</a> . <a href="apigee_v1.organizations.instances.html">instances</a> . <a href="apigee_v1.organizations.instances.natAddresses.html">natAddresses</a></h1>
+  <code><a href="#activate">activate(name, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Activates the NAT address. The Apigee instance can now use this for Internet egress traffic. **Note:** Not supported for Apigee hybrid.</p>
+<p class="firstline">Creates a NAT address. The address is created in the RESERVED state and a static external IP address will be provisioned. At this time, the instance will not use this IP address for Internet egress traffic. The address can be activated for use once any required firewall IP whitelisting has been completed. **Note:** Not supported for Apigee hybrid.</p>
+<p class="firstline">Deletes the NAT address. Connections that are actively using the address are drained before it is removed. **Note:** Not supported for Apigee hybrid.</p>
+<p class="firstline">Gets the details of a NAT address. **Note:** Not supported for Apigee hybrid.</p>
+<p class="firstline">Lists the NAT addresses for an Apigee instance. **Note:** Not supported for Apigee hybrid.</p>
+    <code class="details" id="activate">activate(name, body=None, x__xgafv=None)</code>
+  <pre>Activates the NAT address. The Apigee instance can now use this for Internet egress traffic. **Note:** Not supported for Apigee hybrid.
+  name: string, Required. Name of the nat address. Use the following structure in your request: `organizations/{org}/instances/{instances}/natAddresses/{nataddress}`` (required)
+{ # Request for ActivateNatAddressRequest. Activate the nat address request.
+  <pre>Creates a NAT address. The address is created in the RESERVED state and a static external IP address will be provisioned. At this time, the instance will not use this IP address for Internet egress traffic. The address can be activated for use once any required firewall IP whitelisting has been completed. **Note:** Not supported for Apigee hybrid.
+  parent: string, Required. Name of the instance. Use the following structure in your request: `organizations/{org}/instances/{instance}` (required)
+{ # Apigee NAT(network address translation) address. A NAT address is a static external IP address used for Internet egress traffic.
+  &quot;ipAddress&quot;: &quot;A String&quot;, # Output only. The static IPV4 address.
+  &quot;name&quot;: &quot;A String&quot;, # Required. Resource ID of the NAT address.
+  &quot;state&quot;: &quot;A String&quot;, # Output only. State of the nat address.
+  <pre>Deletes the NAT address. Connections that are actively using the address are drained before it is removed. **Note:** Not supported for Apigee hybrid.
+  <pre>Gets the details of a NAT address. **Note:** Not supported for Apigee hybrid.
+  name: string, Required. Name of the nat address. Use the following structure in your request: `organizations/{org}/instances/{instances}/natAddresses/{nataddress}` (required)
+  <pre>Lists the NAT addresses for an Apigee instance. **Note:** Not supported for Apigee hybrid.
+  pageSize: integer, Maximum number of natAddresses to return. Defaults to 25.
+  pageToken: string, Page token, returned from a previous ListNatAddresses call, that you can use to retrieve the next page of content.
+    { # Response for ListNatAddresses.
+  &quot;natAddresses&quot;: [ # List of NAT Addresses for the instance.
+  &quot;nextPageToken&quot;: &quot;A String&quot;, # Page token that you can include in a ListNatAddresses request to retrieve the next page of content. If omitted, no subsequent pages exist.

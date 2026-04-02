@@ -1,0 +1,35 @@
+<h1><a href="aiplatform_v1beta1.html">Vertex AI API</a> . <a href="aiplatform_v1beta1.projects.html">projects</a> . <a href="aiplatform_v1beta1.projects.locations.html">locations</a> . <a href="aiplatform_v1beta1.projects.locations.featureGroups.html">featureGroups</a> . <a href="aiplatform_v1beta1.projects.locations.featureGroups.featureMonitors.html">featureMonitors</a></h1>
+  <code><a href="aiplatform_v1beta1.projects.locations.featureGroups.featureMonitors.featureMonitorJobs.html">featureMonitorJobs()</a></code>
+<p class="firstline">Returns the featureMonitorJobs Resource.</p>
+  <code><a href="aiplatform_v1beta1.projects.locations.featureGroups.featureMonitors.operations.html">operations()</a></code>
+  <code><a href="#create">create(parent, body=None, featureMonitorId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Creates a new FeatureMonitor in a given project, location and FeatureGroup.</p>
+<p class="firstline">Deletes a single FeatureMonitor.</p>
+<p class="firstline">Gets details of a single FeatureMonitor.</p>
+<p class="firstline">Updates the parameters of a single FeatureMonitor.</p>
+    <code class="details" id="create">create(parent, body=None, featureMonitorId=None, x__xgafv=None)</code>
+  <pre>Creates a new FeatureMonitor in a given project, location and FeatureGroup.
+  parent: string, Required. The resource name of FeatureGroup to create FeatureMonitor. Format: `projects/{project}/locations/{location}/featureGroups/{featuregroup}` (required)
+{ # Vertex AI Feature Monitor.
+  &quot;createTime&quot;: &quot;A String&quot;, # Output only. Timestamp when this FeatureMonitor was created.
+  &quot;featureSelectionConfig&quot;: { # Feature selection configuration for the FeatureMonitor. # Required. Feature selection config for the FeatureMonitor.
+  &quot;labels&quot;: { # Optional. The labels with user-defined metadata to organize your FeatureMonitor. Label keys and values can be no longer than 64 characters (Unicode codepoints), can only contain lowercase letters, numeric characters, underscores and dashes. International characters are allowed. See https://goo.gl/xmQnxf for more information on and examples of labels. No more than 64 user labels can be associated with one FeatureMonitor(System labels are excluded).&quot; System reserved label keys are prefixed with &quot;aiplatform.googleapis.com/&quot; and are immutable.
+  &quot;name&quot;: &quot;A String&quot;, # Identifier. Name of the FeatureMonitor. Format: `projects/{project}/locations/{location}/featureGroups/{featureGroup}/featureMonitors/{featureMonitor}`
+  &quot;scheduleConfig&quot;: { # Schedule configuration for the FeatureMonitor. # Required. Schedule config for the FeatureMonitor.
+  &quot;updateTime&quot;: &quot;A String&quot;, # Output only. Timestamp when this FeatureMonitor was last updated.
+  featureMonitorId: string, Required. The ID to use for this FeatureMonitor, which will become the final component of the FeatureGroup&#x27;s resource name. This value may be up to 60 characters, and valid characters are `[a-z0-9_]`. The first character cannot be a number. The value must be unique within the FeatureGroup.
+  <pre>Deletes a single FeatureMonitor.
+  name: string, Required. The name of the FeatureMonitor to be deleted. Format: `projects/{project}/locations/{location}/featureGroups/{feature_group}/featureMonitors/{feature_monitor}` (required)
+  <pre>Gets details of a single FeatureMonitor.
+  name: string, Required. The name of the FeatureMonitor resource. (required)
+  parent: string, Required. The resource name of the FeatureGroup to list FeatureMonitors. Format: `projects/{project}/locations/{location}/featureGroups/{featureGroup}` (required)
+  filter: string, Optional. Lists the FeatureMonitors that match the filter expression. The following fields are supported: * `create_time`: Supports `=`, `!=`, `&lt;`, `&gt;`, `&lt;=`, and `&gt;=` comparisons. Values must be in RFC 3339 format. * `update_time`: Supports `=`, `!=`, `&lt;`, `&gt;`, `&lt;=`, and `&gt;=` comparisons. Values must be in RFC 3339 format. * `labels`: Supports key-value equality and key presence. Examples: * `create_time &gt; &quot;2020-01-01&quot; OR update_time &gt; &quot;2020-01-01&quot;` FeatureMonitors created or updated after 2020-01-01. * `labels.env = &quot;prod&quot;` FeatureGroups with label &quot;env&quot; set to &quot;prod&quot;.
+  orderBy: string, Optional. A comma-separated list of fields to order by, sorted in ascending order. Use &quot;desc&quot; after a field name for descending. Supported Fields: * `create_time` * `update_time`
+  pageSize: integer, Optional. The maximum number of FeatureGroups to return. The service may return fewer than this value. If unspecified, at most 100 FeatureMonitors will be returned. The maximum value is 100; any value greater than 100 will be coerced to 100.
+  pageToken: string, Optional. A page token, received from a previous FeatureRegistryService.ListFeatureMonitors call. Provide this to retrieve the subsequent page. When paginating, all other parameters provided to FeatureRegistryService.ListFeatureMonitors must match the call that provided the page token.
+    { # Response message for FeatureRegistryService.ListFeatureMonitors.
+  &quot;featureMonitors&quot;: [ # The FeatureMonitors matching the request.
+  &quot;nextPageToken&quot;: &quot;A String&quot;, # A token, which can be sent as ListFeatureMonitorsRequest.page_token to retrieve the next page. If this field is omitted, there are no subsequent pages.
+  <pre>Updates the parameters of a single FeatureMonitor.
+  name: string, Identifier. Name of the FeatureMonitor. Format: `projects/{project}/locations/{location}/featureGroups/{featureGroup}/featureMonitors/{featureMonitor}` (required)
+  updateMask: string, Optional. Field mask is used to specify the fields to be overwritten in the FeatureMonitor resource by the update. The fields specified in the update_mask are relative to the resource, not the full request. A field will be overwritten if it is in the mask. If the user does not provide a mask then only the non-empty fields present in the request will be overwritten. Set the update_mask to `*` to override all fields. Updatable fields: * `labels` * `description` * `schedule_config` * `feature_selection_config`

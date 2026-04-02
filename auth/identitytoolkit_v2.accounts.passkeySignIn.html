@@ -1,0 +1,20 @@
+<h1><a href="identitytoolkit_v2.html">Identity Toolkit API</a> . <a href="identitytoolkit_v2.accounts.html">accounts</a> . <a href="identitytoolkit_v2.accounts.passkeySignIn.html">passkeySignIn</a></h1>
+<p class="firstline">Verifies the passkey assertion and signs the user in.</p>
+<p class="firstline">Creates and returns the passkey challenge</p>
+  <pre>Verifies the passkey assertion and signs the user in.
+{ # Request to finalize a passkey sign-in.
+  &quot;authenticatorAuthenticationResponse&quot;: { # Authenticator response to authenticate the user with an existing FIDO key. # Required. The authentication response object from the authenticator.
+    &quot;authenticatorAssertionResponse&quot;: { # Authentication response from a FIDO authenticator. # Authentication assertion from the authenticator.
+      &quot;authenticatorData&quot;: &quot;A String&quot;, # The AuthenticatorData from the authenticator.
+      &quot;signature&quot;: &quot;A String&quot;, # The signature from the authenticator.
+      &quot;userHandle&quot;: &quot;A String&quot;, # The user handle.
+    &quot;credentialId&quot;: &quot;A String&quot;, # Identifier for the authentication credential.
+  &quot;sessionId&quot;: &quot;A String&quot;, # Optional. The session ID that was passed into StartPasskeySignIn, if any.
+    { # Response for FinalizePasskeySignIn.
+  <pre>Creates and returns the passkey challenge
+{ # Starts passkey sign-in by returning the FIDO challenge.
+  &quot;sessionId&quot;: &quot;A String&quot;, # Optional. The developer can bind their own concept of a user session to this flow.
+    { # Response for StartPasskeySignIn.
+  &quot;credentialRequestOptions&quot;: { # Parameters for signing a challenge with a FIDO key. # Parameters specified for the authenticator to sign a challenge.
+    &quot;rpId&quot;: &quot;A String&quot;, # The relying party identifier.
+    &quot;userVerification&quot;: &quot;A String&quot;, # The requirements regarding user verification.

@@ -1,0 +1,58 @@
+            {{ isEditMode ? 'Edit User' : 'Create New User' }}
+            {{ isEditMode ? 'Update user information and role assignments' : 'Add a new user to the system' }}
+        <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
+                <p class="section-description">Enter the user's personal and contact details</p>
+                  <label class="field-label required" for="name">Username/Email</label>
+                    placeholder="john@company.com"
+                    [class.error]="userForm.get('name')?.invalid && userForm.get('name')?.touched"
+                  @if (userForm.get('name')?.invalid && userForm.get('name')?.touched) {
+                      @if (userForm.get('name')?.errors?.['required']) {
+                        Username/Email is required
+                      @if (userForm.get('name')?.errors?.['email']) {
+                        Please enter a valid email address
+                    <label class="field-label" for="firstName">First Name</label>
+                      id="firstName"
+                      formControlName="firstName"
+                      placeholder="John"
+                    <label class="field-label" for="lastName">Last Name</label>
+                      id="lastName"
+                      formControlName="lastName"
+                      placeholder="Doe"
+                  <label class="field-label required" for="email">Email Address</label>
+                    formControlName="email"
+                    [class.error]="userForm.get('email')?.invalid && userForm.get('email')?.touched"
+                  @if (userForm.get('email')?.invalid && userForm.get('email')?.touched) {
+                      @if (userForm.get('email')?.errors?.['required']) {
+                        Email address is required
+                      @if (userForm.get('email')?.errors?.['email']) {
+                  <label class="field-label" for="title">Job Title</label>
+                    placeholder="Software Engineer"
+          <!-- User Settings Section -->
+                  User Settings
+                <p class="section-description">Configure user type and account status</p>
+                    <label class="field-label" for="type">User Type</label>
+                    <select id="type" class="field-select" formControlName="type">
+                      <option value="User">Standard User</option>
+                      <option value="Owner">System Owner</option>
+                    <div class="checkbox-field">
+                        class="checkbox-input"
+                        formControlName="isActive"
+                      <label class="checkbox-label" for="isActive">
+                          <strong>Active Account</strong>
+                          <div style="font-size: 12px; color: var(--md-on-surface-variant); margin-top: 2px;">
+                            User can log in and access the system
+                  Role Assignment
+                <p class="section-description">Select the roles to assign to this user</p>
+                @for (role of data?.availableRoles; track role.ID) {
+                  <div class="role-card"
+                    [class.selected]="selectedRoleIds.has(role.ID)"
+                    (click)="toggleRole(role.ID)">
+                          [id]="'role-' + role.ID"
+                          [checked]="selectedRoleIds.has(role.ID)"
+                          (change)="onRoleToggle(role.ID, $event)"
+                        <label class="checkbox-label" [for]="'role-' + role.ID">
+                        <h4 class="role-name">{{ role.Name }}</h4>
+                        @if (role.Description) {
+                          <p class="role-description">{{ role.Description }}</p>
+              [disabled]="userForm.invalid || isLoading"
+                {{ isEditMode ? 'Update User' : 'Create User' }}

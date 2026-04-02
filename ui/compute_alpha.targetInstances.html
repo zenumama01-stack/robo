@@ -1,0 +1,48 @@
+<h1><a href="compute_alpha.html">Compute Engine API</a> . <a href="compute_alpha.targetInstances.html">targetInstances</a></h1>
+<p class="firstline">Retrieves an aggregated list of target instances.</p>
+  <code><a href="#delete">delete(project, zone, targetInstance, requestId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Deletes the specified TargetInstance resource.</p>
+  <code><a href="#get">get(project, zone, targetInstance, x__xgafv=None)</a></code></p>
+<p class="firstline">Returns the specified TargetInstance resource.</p>
+<p class="firstline">Creates a TargetInstance resource in the specified project and zone using</p>
+<p class="firstline">Retrieves a list of TargetInstance resources available to the specified</p>
+  <code><a href="#setSecurityPolicy">setSecurityPolicy(project, zone, targetInstance, body=None, requestId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Sets the Google Cloud Armor security policy for the specified target</p>
+  <pre>Retrieves an aggregated list of target instances.
+  &quot;items&quot;: { # A list of TargetInstance resources.
+    &quot;a_key&quot;: { # Name of the scope containing this set of target instances.
+      &quot;targetInstances&quot;: [ # A list of target instances contained in this scope.
+        { # Represents a Target Instance resource.
+            # You can use a target instance to handle traffic for one or more forwarding
+            # rules, which is ideal for forwarding protocol traffic that is managed by a
+            # single source. For example, ESP, AH, TCP, or UDP.
+            # For more information, readTarget
+          &quot;instance&quot;: &quot;A String&quot;, # A URL to the virtual machine instance that handles traffic for this target
+              # instance. When creating a target instance, you can provide the
+              # fully-qualified URL or a valid partial URL to the desired virtual machine.
+          &quot;kind&quot;: &quot;compute#targetInstance&quot;, # Output only. [Output Only] The type of the resource. Alwayscompute#targetInstance for target instances.
+          &quot;natPolicy&quot;: &quot;A String&quot;, # Must have a value of NO_NAT.
+              # Protocol forwarding delivers packets while preserving the destination IP
+              # address of the forwarding rule referencing the target instance.
+          &quot;network&quot;: &quot;A String&quot;, # The URL of the network this target instance uses to forward traffic.
+              # If not specified, the traffic will be forwarded to the network that
+              # the default network interface belongs to.
+              # target instance.
+          &quot;zone&quot;: &quot;A String&quot;, # Output only. [Output Only] URL of the zone where the target instance resides.
+  &quot;kind&quot;: &quot;compute#targetInstanceAggregatedList&quot;, # Output only. Type of resource.
+    <code class="details" id="delete">delete(project, zone, targetInstance, requestId=None, x__xgafv=None)</code>
+  <pre>Deletes the specified TargetInstance resource.
+  targetInstance: string, Name of the TargetInstance resource to delete. (required)
+    <code class="details" id="get">get(project, zone, targetInstance, x__xgafv=None)</code>
+  <pre>Returns the specified TargetInstance resource.
+  targetInstance: string, Name of the TargetInstance resource to return. (required)
+  <pre>Creates a TargetInstance resource in the specified project and zone using
+  <pre>Retrieves a list of TargetInstance resources available to the specified
+project and zone.
+    { # Contains a list of TargetInstance resources.
+  &quot;items&quot;: [ # A list of TargetInstance resources.
+  &quot;kind&quot;: &quot;compute#targetInstanceList&quot;, # Output only. Type of resource.
+    <code class="details" id="setSecurityPolicy">setSecurityPolicy(project, zone, targetInstance, body=None, requestId=None, x__xgafv=None)</code>
+  <pre>Sets the Google Cloud Armor security policy for the specified target
+instance. For more information, seeGoogle
+  targetInstance: string, Name of the TargetInstance resource to which the security policy should be

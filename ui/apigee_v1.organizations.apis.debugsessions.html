@@ -1,0 +1,14 @@
+<h1><a href="apigee_v1.html">Apigee API</a> . <a href="apigee_v1.organizations.html">organizations</a> . <a href="apigee_v1.organizations.apis.html">apis</a> . <a href="apigee_v1.organizations.apis.debugsessions.html">debugsessions</a></h1>
+<p class="firstline">Lists debug sessions that are currently active in the given API Proxy.</p>
+  <pre>Lists debug sessions that are currently active in the given API Proxy.
+  parent: string, Required. The name of the API Proxy for which to list debug sessions. Must be of the form: `organizations/{organization}/apis/{api}`. (required)
+  pageSize: integer, Optional. Maximum number of debug sessions to return. The page size defaults to 25.
+  pageToken: string, Optional. Page token, returned from a previous ListApiDebugSessions call, that you can use to retrieve the next page.
+    { # Response for ListApiDebugSessions.
+  &quot;nextPageToken&quot;: &quot;A String&quot;, # Page token that you can include in a ListApiDebugSessionsRequest to retrieve the next page. If omitted, no subsequent pages exist.
+  &quot;sessions&quot;: [ # Session info that includes debug session ID, environment ID, api proxy revision ID and the first transaction creation timestamp.
+    { # Session carries the debug session id and its creation time.
+      &quot;apiProxyRevisionId&quot;: &quot;A String&quot;, # The revision ID of the deployed API proxy.
+      &quot;createTime&quot;: &quot;A String&quot;, # The first transaction creation timestamp in millisecond, recorded by UAP.
+      &quot;environmentId&quot;: &quot;A String&quot;, # The environment ID of the deployed API proxy.
+      &quot;id&quot;: &quot;A String&quot;, # The debug session ID.

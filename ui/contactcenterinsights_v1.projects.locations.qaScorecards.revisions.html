@@ -1,0 +1,48 @@
+<h1><a href="contactcenterinsights_v1.html">Contact Center AI Insights API</a> . <a href="contactcenterinsights_v1.projects.html">projects</a> . <a href="contactcenterinsights_v1.projects.locations.html">locations</a> . <a href="contactcenterinsights_v1.projects.locations.qaScorecards.html">qaScorecards</a> . <a href="contactcenterinsights_v1.projects.locations.qaScorecards.revisions.html">revisions</a></h1>
+  <code><a href="contactcenterinsights_v1.projects.locations.qaScorecards.revisions.qaQuestions.html">qaQuestions()</a></code>
+<p class="firstline">Returns the qaQuestions Resource.</p>
+  <code><a href="#create">create(parent, body=None, qaScorecardRevisionId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Creates a QaScorecardRevision.</p>
+<p class="firstline">Deletes a QaScorecardRevision.</p>
+<p class="firstline">Deploy a QaScorecardRevision.</p>
+<p class="firstline">Gets a QaScorecardRevision.</p>
+  <code><a href="#list">list(parent, filter=None, pageSize=None, pageToken=None, qaScorecardSources=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Lists all revisions under the parent QaScorecard.</p>
+  <code><a href="#tuneQaScorecardRevision">tuneQaScorecardRevision(parent, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Fine tune one or more QaModels.</p>
+<p class="firstline">Undeploy a QaScorecardRevision.</p>
+    <code class="details" id="create">create(parent, body=None, qaScorecardRevisionId=None, x__xgafv=None)</code>
+  <pre>Creates a QaScorecardRevision.
+  parent: string, Required. The parent resource of the QaScorecardRevision. (required)
+{ # A revision of a QaScorecard. Modifying published scorecard fields would invalidate existing scorecard results — the questions may have changed, or the score weighting will make existing scores impossible to understand. So changes must create a new revision, rather than modifying the existing resource.
+  &quot;alternateIds&quot;: [ # Output only. Alternative IDs for this revision of the scorecard, e.g., `latest`.
+  &quot;name&quot;: &quot;A String&quot;, # Identifier. The name of the scorecard revision. Format: projects/{project}/locations/{location}/qaScorecards/{qa_scorecard}/revisions/{revision}
+  &quot;snapshot&quot;: { # A QaScorecard represents a collection of questions to be scored during analysis. # The snapshot of the scorecard at the time of this revision&#x27;s creation.
+  &quot;state&quot;: &quot;A String&quot;, # Output only. State of the scorecard revision, indicating whether it&#x27;s ready to be used in analysis.
+  qaScorecardRevisionId: string, Optional. A unique ID for the new QaScorecardRevision. This ID will become the final component of the QaScorecardRevision&#x27;s resource name. If no ID is specified, a server-generated ID will be used. This value should be 4-64 characters and must match the regular expression `^[a-z0-9-]{4,64}$`. Valid characters are `a-z-`.
+  <pre>Deletes a QaScorecardRevision.
+  name: string, Required. The name of the QaScorecardRevision to delete. (required)
+  force: boolean, Optional. If set to true, all of this QaScorecardRevision&#x27;s child resources will also be deleted. Otherwise, the request will only succeed if it has none.
+  <pre>Deploy a QaScorecardRevision.
+  name: string, Required. The name of the QaScorecardRevision to deploy. (required)
+{ # The request to deploy a QaScorecardRevision
+  <pre>Gets a QaScorecardRevision.
+  name: string, Required. The name of the QaScorecardRevision to get. (required)
+    <code class="details" id="list">list(parent, filter=None, pageSize=None, pageToken=None, qaScorecardSources=None, x__xgafv=None)</code>
+  <pre>Lists all revisions under the parent QaScorecard.
+  parent: string, Required. The parent resource of the scorecard revisions. To list all revisions of all scorecards, substitute the QaScorecard ID with a &#x27;-&#x27; character. (required)
+  filter: string, Optional. A filter to reduce results to a specific subset. Useful for querying scorecard revisions with specific properties.
+  pageSize: integer, Optional. The maximum number of scorecard revisions to return in the response. If the value is zero, the service will select a default size. A call might return fewer objects than requested. A non-empty `next_page_token` in the response indicates that more data is available.
+  pageToken: string, Optional. The value returned by the last `ListQaScorecardRevisionsResponse`. This value indicates that this is a continuation of a prior `ListQaScorecardRevisions` call and that the system should return the next page of data.
+  qaScorecardSources: string, Optional. The source of scorecards are based on how those Scorecards were created, e.g., a customer-defined scorecard, a predefined scorecard, etc. This field is used to retrieve Scorecards Revisions from Scorecards of one or more sources. (repeated)
+    { # The response from a ListQaScorecardRevisions request.
+  &quot;qaScorecardRevisions&quot;: [ # The QaScorecards under the parent.
+    <code class="details" id="tuneQaScorecardRevision">tuneQaScorecardRevision(parent, body=None, x__xgafv=None)</code>
+  <pre>Fine tune one or more QaModels.
+  parent: string, Required. The parent resource for new fine tuning job instance. (required)
+{ # Request for TuneQaScorecardRevision endpoint.
+  &quot;filter&quot;: &quot;A String&quot;, # Required. Filter for selecting the feedback labels that needs to be used for training. This filter can be used to limit the feedback labels used for tuning to a feedback labels created or updated for a specific time-window etc.
+  &quot;validateOnly&quot;: True or False, # Optional. Run in validate only mode, no fine tuning will actually run. Data quality validations like training data distributions will run. Even when set to false, the data quality validations will still run but once the validations complete we will proceed with the fine tune, if applicable.
+  <pre>Undeploy a QaScorecardRevision.
+  name: string, Required. The name of the QaScorecardRevision to undeploy. (required)
+{ # The request to undeploy a QaScorecardRevision

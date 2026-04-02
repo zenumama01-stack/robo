@@ -1,0 +1,114 @@
+<h1><a href="gkeonprem_v1.html">GKE On-Prem API</a> . <a href="gkeonprem_v1.projects.html">projects</a> . <a href="gkeonprem_v1.projects.locations.html">locations</a> . <a href="gkeonprem_v1.projects.locations.vmwareClusters.html">vmwareClusters</a></h1>
+  <code><a href="gkeonprem_v1.projects.locations.vmwareClusters.operations.html">operations()</a></code>
+  <code><a href="gkeonprem_v1.projects.locations.vmwareClusters.vmwareNodePools.html">vmwareNodePools()</a></code>
+<p class="firstline">Returns the vmwareNodePools Resource.</p>
+  <code><a href="#create">create(parent, body, allowPreflightFailure=None, skipValidations=None, validateOnly=None, vmwareClusterId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Creates a new VMware user cluster in a given project and location.</p>
+<p class="firstline">Deletes a single VMware Cluster.</p>
+<p class="firstline">Enrolls an existing VMware user cluster and its node pools to the Anthos On-Prem API within a given project and location. Through enrollment, an existing cluster will become Anthos On-Prem API managed. The corresponding GCP resources will be created and all future modifications to the cluster and/or its node pools will be expected to be performed through the API.</p>
+<p class="firstline">Gets details of a single VMware Cluster.</p>
+<p class="firstline">Lists VMware Clusters in a given project and location.</p>
+<p class="firstline">Updates the parameters of a single VMware cluster.</p>
+<p class="firstline">Queries the VMware user cluster version config.</p>
+<p class="firstline">Unenrolls an existing VMware user cluster and its node pools from the Anthos On-Prem API within a given project and location. Unenrollment removes the Cloud reference to the cluster without modifying the underlying OnPrem Resources. Clusters and node pools will continue to run; however, they will no longer be accessible through the Anthos On-Prem API or UI.</p>
+    <code class="details" id="create">create(parent, body, allowPreflightFailure=None, skipValidations=None, validateOnly=None, vmwareClusterId=None, x__xgafv=None)</code>
+  <pre>Creates a new VMware user cluster in a given project and location.
+  parent: string, Required. The parent of the project and location where this cluster is created in. Format: &quot;projects/{project}/locations/{location}&quot; (required)
+{ # Resource that represents a VMware user cluster. ##
+  &quot;adminClusterMembership&quot;: &quot;A String&quot;, # Required. The admin cluster this VMware user cluster belongs to. This is the full resource name of the admin cluster&#x27;s fleet membership. In the future, references to other resource types might be allowed if admin clusters are modeled as their own resources.
+  &quot;adminClusterName&quot;: &quot;A String&quot;, # Output only. The resource name of the VMware admin cluster hosting this user cluster.
+  &quot;annotations&quot;: { # Annotations on the VMware user cluster. This field has the same restrictions as Kubernetes annotations. The total size of all keys and values combined is limited to 256k. Key can have 2 segments: prefix (optional) and name (required), separated by a slash (/). Prefix must be a DNS subdomain. Name must be 63 characters or less, begin and end with alphanumerics, with dashes (-), underscores (_), dots (.), and alphanumerics between.
+  &quot;antiAffinityGroups&quot;: { # Specifies anti affinity group config for the VMware user cluster. # AAGConfig specifies whether to spread VMware user cluster nodes across at least three physical hosts in the datacenter.
+  &quot;authorization&quot;: { # Authorization defines the On-Prem cluster authorization configuration to bootstrap onto the admin cluster. # RBAC policy that will be applied and managed by the Anthos On-Prem API.
+  &quot;autoRepairConfig&quot;: { # Specifies config to enable/disable auto repair. The cluster-health-controller is deployed only if Enabled is true. # Configuration for auto repairing.
+  &quot;controlPlaneNode&quot;: { # Specifies control plane node config for the VMware user cluster. # VMware user cluster control plane nodes must have either 1 or 3 replicas.
+    &quot;autoResizeConfig&quot;: { # Represents auto resizing configurations for the VMware user cluster. # AutoResizeConfig provides auto resizing configurations.
+    &quot;cpus&quot;: &quot;A String&quot;, # The number of CPUs for each admin cluster node that serve as control planes for this VMware user cluster. (default: 4 CPUs)
+    &quot;memory&quot;: &quot;A String&quot;, # The megabytes of memory for each admin cluster node that serves as a control plane for this VMware user cluster (default: 8192 MB memory).
+    &quot;replicas&quot;: &quot;A String&quot;, # The number of control plane nodes for this VMware user cluster. (default: 1 replica).
+    &quot;vsphereConfig&quot;: { # Specifies control plane node config. # Vsphere-specific config.
+      &quot;datastore&quot;: &quot;A String&quot;, # The Vsphere datastore used by the control plane Node.
+      &quot;storagePolicyName&quot;: &quot;A String&quot;, # The Vsphere storage policy used by the control plane Node.
+  &quot;createTime&quot;: &quot;A String&quot;, # Output only. The time at which VMware user cluster was created.
+  &quot;dataplaneV2&quot;: { # Contains configurations for Dataplane V2, which is optimized dataplane for Kubernetes networking. For more information, see: https://cloud.google.com/kubernetes-engine/docs/concepts/dataplane-v2 # VmwareDataplaneV2Config specifies configuration for Dataplane V2.
+    &quot;advancedNetworking&quot;: True or False, # Enable advanced networking which requires dataplane_v2_enabled to be set true.
+    &quot;dataplaneV2Enabled&quot;: True or False, # Enables Dataplane V2.
+    &quot;forwardMode&quot;: &quot;A String&quot;, # Configure ForwardMode for Dataplane v2.
+    &quot;windowsDataplaneV2Enabled&quot;: True or False, # Enable Dataplane V2 for clusters with Windows nodes.
+  &quot;deleteTime&quot;: &quot;A String&quot;, # Output only. The time at which VMware user cluster was deleted.
+  &quot;description&quot;: &quot;A String&quot;, # A human readable description of this VMware user cluster.
+  &quot;disableBundledIngress&quot;: True or False, # Disable bundled ingress.
+  &quot;enableControlPlaneV2&quot;: True or False, # Enable control plane V2. Default to false.
+  &quot;endpoint&quot;: &quot;A String&quot;, # Output only. The DNS name of VMware user cluster&#x27;s API server.
+  &quot;loadBalancer&quot;: { # Specifies the locad balancer config for the VMware user cluster. # Load balancer configuration.
+    &quot;f5Config&quot;: { # Represents configuration parameters for an F5 BIG-IP load balancer. # Configuration for F5 Big IP typed load balancers.
+    &quot;manualLbConfig&quot;: { # Represents configuration parameters for an already existing manual load balancer. Given the nature of manual load balancers it is expected that said load balancer will be fully managed by users. IMPORTANT: Please note that the Anthos On-Prem API will not generate or update ManualLB configurations it can only bind a pre-existing configuration to a new VMware user cluster. # Manually configured load balancers.
+    &quot;metalLbConfig&quot;: { # Represents configuration parameters for the MetalLB load balancer. # Configuration for MetalLB typed load balancers.
+      &quot;group&quot;: &quot;A String&quot;, # Required. In general the following format should be used for the Seesaw group name: seesaw-for-[cluster_name].
+      &quot;ipBlocks&quot;: [ # Required. The IP Blocks to be used by the Seesaw load balancer
+      &quot;masterIp&quot;: &quot;A String&quot;, # Required. MasterIP is the IP announced by the master of Seesaw group.
+    &quot;vipConfig&quot;: { # Specifies the VIP config for the VMware user cluster load balancer. # The VIPs used by the load balancer.
+      &quot;controlPlaneVip&quot;: &quot;A String&quot;, # The VIP which you previously set aside for the Kubernetes API of this cluster.
+      &quot;ingressVip&quot;: &quot;A String&quot;, # The VIP which you previously set aside for ingress traffic into this cluster.
+  &quot;localName&quot;: &quot;A String&quot;, # Output only. The object name of the VMware OnPremUserCluster custom resource on the associated admin cluster. This field is used to support conflicting names when enrolling existing clusters to the API. When used as a part of cluster enrollment, this field will differ from the ID in the resource name. For new clusters, this field will match the user provided cluster name and be visible in the last component of the resource name. It is not modifiable. All users should use this name to access their cluster using gkectl or kubectl and should expect to see the local name when viewing admin cluster controller logs.
+  &quot;name&quot;: &quot;A String&quot;, # Immutable. The VMware user cluster resource name.
+  &quot;networkConfig&quot;: { # Specifies network config for the VMware user cluster. # The VMware user cluster network configuration.
+    &quot;controlPlaneV2Config&quot;: { # Specifies control plane V2 config. # Configuration for control plane V2 mode.
+      &quot;controlPlaneIpBlock&quot;: { # Represents a collection of IP addresses to assign to nodes. # Static IP addresses for the control plane nodes.
+    &quot;vcenterNetwork&quot;: &quot;A String&quot;, # vcenter_network specifies vCenter network name. Inherited from the admin cluster.
+  &quot;onPremVersion&quot;: &quot;A String&quot;, # Required. The Anthos clusters on the VMware version for your user cluster.
+  &quot;reconciling&quot;: True or False, # Output only. If set, there are currently changes in flight to the VMware user cluster.
+  &quot;state&quot;: &quot;A String&quot;, # Output only. The current state of VMware user cluster.
+  &quot;storage&quot;: { # Specifies vSphere CSI components deployment config in the VMware user cluster. # Storage configuration.
+    &quot;vsphereCsiDisabled&quot;: True or False, # Whether or not to deploy vSphere CSI components in the VMware user cluster. Enabled by default.
+  &quot;uid&quot;: &quot;A String&quot;, # Output only. The unique identifier of the VMware user cluster.
+  &quot;updateTime&quot;: &quot;A String&quot;, # Output only. The time at which VMware user cluster was last updated.
+  &quot;upgradePolicy&quot;: { # VmwareClusterUpgradePolicy defines the cluster upgrade policy. # Specifies upgrade policy for the cluster.
+    &quot;controlPlaneOnly&quot;: True or False, # Controls whether the upgrade applies to the control plane only.
+  &quot;vcenter&quot;: { # Represents configuration for the VMware VCenter for the user cluster. # VmwareVCenterConfig specifies vCenter config for the user cluster. If unspecified, it is inherited from the admin cluster.
+    &quot;address&quot;: &quot;A String&quot;, # Output only. The vCenter IP address.
+    &quot;cluster&quot;: &quot;A String&quot;, # The name of the vCenter cluster for the user cluster.
+    &quot;datacenter&quot;: &quot;A String&quot;, # The name of the vCenter datacenter for the user cluster.
+    &quot;datastore&quot;: &quot;A String&quot;, # The name of the vCenter datastore for the user cluster.
+    &quot;folder&quot;: &quot;A String&quot;, # The name of the vCenter folder for the user cluster.
+    &quot;resourcePool&quot;: &quot;A String&quot;, # The name of the vCenter resource pool for the user cluster.
+  &quot;vmTrackingEnabled&quot;: True or False, # Enable VM tracking.
+  skipValidations: string, Optional. List of validations to skip during cluster creation. (repeated)
+  vmwareClusterId: string, User provided identifier that is used as part of the resource name; This value must be up to 40 characters and follow RFC-1123 (https://tools.ietf.org/html/rfc1123) format.
+  <pre>Deletes a single VMware Cluster.
+  name: string, Required. Name of the VMware user cluster to be deleted. Format: &quot;projects/{project}/locations/{location}/vmwareClusters/{vmware_cluster}&quot; (required)
+  allowMissing: boolean, If set to true, and the VMware cluster is not found, the request will succeed but no action will be taken on the server and return a completed LRO.
+  etag: string, The current etag of the VMware cluster. If an etag is provided and does not match the current etag of the cluster, deletion will be blocked and an ABORTED error will be returned.
+  ignoreErrors: boolean, If set to true, the deletion of a VMware user cluster resource will succeed even if errors occur during deletion. This parameter can be used when you want to delete GCP&#x27;s cluster resource and the on-prem admin cluster that hosts your user cluster is disconnected / unreachable or deleted. WARNING: Using this parameter when your user cluster still exists may result in a deleted GCP user cluster but an existing on-prem user cluster.
+  <pre>Enrolls an existing VMware user cluster and its node pools to the Anthos On-Prem API within a given project and location. Through enrollment, an existing cluster will become Anthos On-Prem API managed. The corresponding GCP resources will be created and all future modifications to the cluster and/or its node pools will be expected to be performed through the API.
+  parent: string, Required. The parent of the project and location where the cluster is Enrolled in. Format: &quot;projects/{project}/locations/{location}&quot; (required)
+{ # Message for enrolling an existing VMware cluster to the Anthos On-Prem API.
+  &quot;localName&quot;: &quot;A String&quot;, # Optional. The object name of the VMware OnPremUserCluster custom resource on the associated admin cluster. This field is used to support conflicting resource names when enrolling existing clusters to the API. When not provided, this field will resolve to the vmware_cluster_id. Otherwise, it must match the object name of the VMware OnPremUserCluster custom resource. It is not modifiable outside / beyond the enrollment operation.
+  &quot;validateOnly&quot;: True or False, # Validate the request without actually doing any updates.
+  &quot;vmwareClusterId&quot;: &quot;A String&quot;, # User provided OnePlatform identifier that is used as part of the resource name. This must be unique among all GKE on-prem clusters within a project and location and will return a 409 if the cluster already exists. (https://tools.ietf.org/html/rfc1123) format.
+  <pre>Gets details of a single VMware Cluster.
+  name: string, Required. Name of the VMware user cluster to be returned. Format: &quot;projects/{project}/locations/{location}/vmwareClusters/{vmware_cluster}&quot; (required)
+  allowMissing: boolean, Optional. If true, return Vmware Cluster including the one that only exists in RMS.
+  view: string, View for VMware user cluster. When `BASIC` is specified, only the cluster resource name and admin cluster membership are returned. The default/unset value `CLUSTER_VIEW_UNSPECIFIED` is the same as `FULL&#x27;, which returns the complete cluster configuration details.
+      FULL - Includes the complete configuration for VMware cluster resource. This is the default value for GetVmwareClusterRequest method.
+  <pre>Lists VMware Clusters in a given project and location.
+  allowMissing: boolean, Optional. If true, return list of Vmware Clusters including the ones that only exists in RMS.
+  view: string, View for VMware clusters. When `BASIC` is specified, only the cluster resource name and admin cluster membership are returned. The default/unset value `CLUSTER_VIEW_UNSPECIFIED` is the same as `FULL&#x27;, which returns the complete cluster configuration details.
+      FULL - Includes the complete configuration for VMware cluster resource. This is the default value for ListVmwareClustersRequest method.
+    { # Response message for listing VMware Clusters.
+  &quot;vmwareClusters&quot;: [ # The list of VMware Cluster.
+  <pre>Updates the parameters of a single VMware cluster.
+  name: string, Immutable. The VMware user cluster resource name. (required)
+  skipValidations: string, A parameter (repeated)
+  updateMask: string, Required. Field mask is used to specify the fields to be overwritten in the VMwareCluster resource by the update. The fields specified in the update_mask are relative to the resource, not the full request. A field will be overwritten if it is in the mask. If the user does not provide a mask then all populated fields in the VmwareCluster message will be updated. Empty fields will be ignored unless a field mask is used.
+  <pre>Queries the VMware user cluster version config.
+  createConfig_adminClusterName: string, The admin cluster resource name. This is the full resource name of the admin cluster resource. Format: &quot;projects/{project}/locations/{location}/vmwareAdminClusters/{vmware_admin_cluster}&quot;
+  upgradeConfig_clusterName: string, The user cluster resource name. This is the full resource name of the user cluster resource. Format: &quot;projects/{project}/locations/{location}/vmwareClusters/{vmware_cluster}&quot;
+    { # Response message for querying VMware user cluster version config.
+    { # Contains information about a specific Anthos on VMware version.
+      &quot;hasDependencies&quot;: True or False, # If set, the cluster dependencies (e.g. the admin cluster, other user clusters managed by the same admin cluster) must be upgraded before this version can be installed or upgraded to.
+      &quot;isInstalled&quot;: True or False, # If set, the version is installed in the admin cluster. Otherwise, the version bundle must be downloaded and installed before a user cluster can be created at or upgraded to this version.
+      &quot;version&quot;: &quot;A String&quot;, # Version number e.g. 1.13.1-gke.1000.
+  <pre>Unenrolls an existing VMware user cluster and its node pools from the Anthos On-Prem API within a given project and location. Unenrollment removes the Cloud reference to the cluster without modifying the underlying OnPrem Resources. Clusters and node pools will continue to run; however, they will no longer be accessible through the Anthos On-Prem API or UI.
+  name: string, Required. Name of the VMware user cluster to be unenrolled. Format: &quot;projects/{project}/locations/{location}/vmwareClusters/{vmware_cluster}&quot; (required)
+  etag: string, The current etag of the VMware Cluster. If an etag is provided and does not match the current etag of the cluster, deletion will be blocked and an ABORTED error will be returned.

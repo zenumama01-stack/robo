@@ -1,0 +1,19 @@
+<h1><a href="chat_v1.html">Google Chat API</a> . <a href="chat_v1.media.html">media</a></h1>
+  <code><a href="#download">download(resourceName, x__xgafv=None)</a></code></p>
+<p class="firstline">Downloads media. Download is supported on the URI `/v1/media/{+name}?alt=media`.</p>
+  <code><a href="#download_media">download_media(resourceName, x__xgafv=None)</a></code></p>
+<p class="firstline">Uploads an attachment. For an example, see [Upload media as a file attachment](https://developers.google.com/workspace/chat/upload-media-attachments). Requires user [authentication](https://developers.google.com/workspace/chat/authenticate-authorize-chat-user) with one of the following [authorization scopes](https://developers.google.com/workspace/chat/authenticate-authorize#chat-api-scopes): - `https://www.googleapis.com/auth/chat.messages.create` - `https://www.googleapis.com/auth/chat.messages` - `https://www.googleapis.com/auth/chat.import` (import mode spaces only) You can upload attachments up to 200 MB. Certain file types aren't supported. For details, see [File types blocked by Google Chat](https://support.google.com/chat/answer/7651457?&co=GENIE.Platform%3DDesktop#File%20types%20blocked%20in%20Google%20Chat).</p>
+    <code class="details" id="download">download(resourceName, x__xgafv=None)</code>
+  <pre>Downloads media. Download is supported on the URI `/v1/media/{+name}?alt=media`.
+  resourceName: string, Name of the media that is being downloaded. See ReadRequest.resource_name. (required)
+    { # Media resource.
+  &quot;resourceName&quot;: &quot;A String&quot;, # Name of the media resource.
+    <code class="details" id="download_media">download_media(resourceName, x__xgafv=None)</code>
+  <pre>Uploads an attachment. For an example, see [Upload media as a file attachment](https://developers.google.com/workspace/chat/upload-media-attachments). Requires user [authentication](https://developers.google.com/workspace/chat/authenticate-authorize-chat-user) with one of the following [authorization scopes](https://developers.google.com/workspace/chat/authenticate-authorize#chat-api-scopes): - `https://www.googleapis.com/auth/chat.messages.create` - `https://www.googleapis.com/auth/chat.messages` - `https://www.googleapis.com/auth/chat.import` (import mode spaces only) You can upload attachments up to 200 MB. Certain file types aren&#x27;t supported. For details, see [File types blocked by Google Chat](https://support.google.com/chat/answer/7651457?&amp;co=GENIE.Platform%3DDesktop#File%20types%20blocked%20in%20Google%20Chat).
+  parent: string, Required. Resource name of the Chat space in which the attachment is uploaded. Format &quot;spaces/{space}&quot;. (required)
+{ # Request to upload an attachment.
+  &quot;filename&quot;: &quot;A String&quot;, # Required. The filename of the attachment, including the file extension.
+    { # Response of uploading an attachment.
+  &quot;attachmentDataRef&quot;: { # A reference to the attachment data. # Reference to the uploaded attachment.
+    &quot;attachmentUploadToken&quot;: &quot;A String&quot;, # Optional. Opaque token containing a reference to an uploaded attachment. Treated by clients as an opaque string and used to create or update Chat messages with attachments.
+    &quot;resourceName&quot;: &quot;A String&quot;, # Optional. The resource name of the attachment data. This field is used with the media API to download the attachment data.

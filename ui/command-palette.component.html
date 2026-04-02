@@ -1,0 +1,44 @@
+  <div class="command-palette-backdrop"
+    (click)="Close()"
+    role="presentation"
+<!-- Modal -->
+  <div class="command-palette-modal"
+    role="dialog"
+    aria-label="Search applications"
+    aria-modal="true">
+      <i class="fa-solid fa-search search-icon" aria-hidden="true"></i>
+        #searchInput
+        [(ngModel)]="SearchQuery"
+        (input)="OnSearchChange()"
+        placeholder="Search applications..."
+        autocomplete="off"
+        spellcheck="false"
+        aria-label="Search applications">
+    <!-- Results List -->
+    <div class="results-list" role="listbox" aria-label="Application results">
+      <!-- All Apps -->
+      @for (app of FilteredApps; track app; let i = $index) {
+          class="result-item"
+          [class.selected]="i === SelectedIndex"
+          (click)="SelectApp(app)"
+          role="option"
+          [attr.aria-selected]="i === SelectedIndex">
+          <i [class]="app.Icon"
+            [style.color]="app.GetColor()"
+            class="result-icon"
+          aria-hidden="true"></i>
+          <div class="result-info">
+            <div class="result-name">{{ app.Name }}</div>
+            @if (app.Description) {
+              <div class="result-description">{{ app.Description }}</div>
+      @if (FilteredApps.length === 0 && SearchQuery) {
+        <div class="empty-state"
+          role="status"
+          aria-live="polite">
+          <i class="fa-solid fa-search empty-icon" aria-hidden="true"></i>
+          <div class="empty-text">No applications found</div>
+          <div class="empty-subtext">Try a different search term</div>
+    <!-- Loading State Overlay -->
+    @if (IsNavigating) {
+      <div class="loading-overlay" role="status" aria-live="assertive" aria-label="Navigating to application">
+        <mj-loading size="small" [showText]="false"></mj-loading>

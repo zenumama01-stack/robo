@@ -1,0 +1,64 @@
+<h1><a href="streetviewpublish_v1.html">Street View Publish API</a> . <a href="streetviewpublish_v1.photoSequence.html">photoSequence</a></h1>
+  <code><a href="#create">create(body=None, inputType=None, x__xgafv=None)</a></code></p>
+<p class="firstline">After the client finishes uploading the PhotoSequence with the returned UploadRef, CreatePhotoSequence extracts a sequence of 360 photos from a video or Extensible Device Metadata (XDM, http://www.xdm.org/) to be published to Street View on Google Maps. `CreatePhotoSequence` returns an Operation, with the PhotoSequence Id set in the `Operation.name` field. This method returns the following error codes: * google.rpc.Code.INVALID_ARGUMENT if the request is malformed. * google.rpc.Code.NOT_FOUND if the upload reference does not exist.</p>
+  <code><a href="#delete">delete(sequenceId, x__xgafv=None)</a></code></p>
+<p class="firstline">Deletes a PhotoSequence and its metadata. This method returns the following error codes: * google.rpc.Code.PERMISSION_DENIED if the requesting user did not create the requested photo sequence. * google.rpc.Code.NOT_FOUND if the photo sequence ID does not exist. * google.rpc.Code.FAILED_PRECONDITION if the photo sequence ID is not yet finished processing.</p>
+  <code><a href="#get">get(sequenceId, filter=None, view=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Gets the metadata of the specified PhotoSequence via the Operation interface. This method returns the following three types of responses: * `Operation.done` = false, if the processing of PhotoSequence is not finished yet. * `Operation.done` = true and `Operation.error` is populated, if there was an error in processing. * `Operation.done` = true and `Operation.response` is poulated, which contains a PhotoSequence message. This method returns the following error codes: * google.rpc.Code.PERMISSION_DENIED if the requesting user did not create the requested PhotoSequence. * google.rpc.Code.NOT_FOUND if the requested PhotoSequence does not exist.</p>
+<p class="firstline">Creates an upload session to start uploading photo sequence data. The upload URL of the returned UploadRef is used to upload the data for the `photoSequence`. After the upload is complete, the UploadRef is used with CreatePhotoSequence to create the PhotoSequence object entry.</p>
+    <code class="details" id="create">create(body=None, inputType=None, x__xgafv=None)</code>
+  <pre>After the client finishes uploading the PhotoSequence with the returned UploadRef, CreatePhotoSequence extracts a sequence of 360 photos from a video or Extensible Device Metadata (XDM, http://www.xdm.org/) to be published to Street View on Google Maps. `CreatePhotoSequence` returns an Operation, with the PhotoSequence Id set in the `Operation.name` field. This method returns the following error codes: * google.rpc.Code.INVALID_ARGUMENT if the request is malformed. * google.rpc.Code.NOT_FOUND if the upload reference does not exist.
+{ # A sequence of 360 photos along with metadata.
+  &quot;captureTimeOverride&quot;: &quot;A String&quot;, # Optional. Absolute time when the photo sequence starts to be captured. If the photo sequence is a video, this is the start time of the video. If this field is populated in input, it overrides the capture time in the video or XDM file.
+  &quot;distanceMeters&quot;: 3.14, # Output only. The computed distance of the photo sequence in meters.
+  &quot;failureDetails&quot;: { # Additional details to accompany the ProcessingFailureReason enum. This message is always expected to be used in conjunction with ProcessingFailureReason, and the oneof value set in this message should match the FailureReason. # Output only. If this sequence has `failure_reason` set, this may contain additional details about the failure.
+    &quot;gpsDataGapDetails&quot;: { # Details related to ProcessingFailureReason#GPS_DATA_GAP. If there are multiple GPS data gaps, only the one with the largest duration is reported here. # See GpsDataGapFailureDetails.
+      &quot;gapDuration&quot;: &quot;A String&quot;, # The duration of the gap in GPS data that was found.
+      &quot;gapStartTime&quot;: &quot;A String&quot;, # Relative time (from the start of the video stream) when the gap started.
+    &quot;imuDataGapDetails&quot;: { # Details related to ProcessingFailureReason#IMU_DATA_GAP. If there are multiple IMU data gaps, only the one with the largest duration is reported here. # See ImuDataGapFailureDetails.
+      &quot;gapDuration&quot;: &quot;A String&quot;, # The duration of the gap in IMU data that was found.
+    &quot;insufficientGpsDetails&quot;: { # Details related to ProcessingFailureReason#INSUFFICIENT_GPS. # See InsufficientGpsFailureDetails.
+      &quot;gpsPointsFound&quot;: 42, # The number of GPS points that were found in the video.
+    &quot;noOverlapGpsDetails&quot;: { # Details related to PhotoSequenceProcessingFailureReason#NO_OVERLAP_GPS. # See NoOverlapGpsFailureDetails.
+      &quot;gpsEndTime&quot;: &quot;A String&quot;, # Time of last recorded GPS point.
+      &quot;gpsStartTime&quot;: &quot;A String&quot;, # Time of first recorded GPS point.
+      &quot;videoEndTime&quot;: &quot;A String&quot;, # End time of video.
+      &quot;videoStartTime&quot;: &quot;A String&quot;, # Start time of video.
+    &quot;notOutdoorsDetails&quot;: { # Details related to ProcessingFailureReason#NOT_OUTDOORS. If there are multiple indoor frames found, the first frame is recorded here. # See NotOutdoorsFailureDetails.
+      &quot;startTime&quot;: &quot;A String&quot;, # Relative time (from the start of the video stream) when an indoor frame was found.
+  &quot;failureReason&quot;: &quot;A String&quot;, # Output only. If this sequence has processing_state = FAILED, this will contain the reason why it failed. If the processing_state is any other value, this field will be unset.
+  &quot;filename&quot;: &quot;A String&quot;, # Output only. The filename of the upload. Does not include the directory path. Only available if the sequence was uploaded on a platform that provides the filename.
+  &quot;gpsSource&quot;: &quot;A String&quot;, # Input only. If both raw_gps_timeline and the Camera Motion Metadata Track (CAMM) contain GPS measurements, indicate which takes precedence.
+  &quot;id&quot;: &quot;A String&quot;, # Output only. Unique identifier for the photo sequence. This also acts as a long running operation ID if uploading is performed asynchronously.
+  &quot;imu&quot;: { # IMU data from the device sensors. # Input only. Three axis IMU data for the collection. If this data is too large to put in the request, then it should be put in the CAMM track for the video. This data always takes precedence over the equivalent CAMM data, if it exists.
+    &quot;accelMpsps&quot;: [ # The accelerometer measurements in meters/sec^2 with increasing timestamps from devices.
+      { # A Generic 3d measurement sample.
+        &quot;captureTime&quot;: &quot;A String&quot;, # The timestamp of the IMU measurement.
+        &quot;x&quot;: 3.14, # The sensor measurement in the x axis.
+        &quot;y&quot;: 3.14, # The sensor measurement in the y axis.
+        &quot;z&quot;: 3.14, # The sensor measurement in the z axis.
+    &quot;gyroRps&quot;: [ # The gyroscope measurements in radians/sec with increasing timestamps from devices.
+    &quot;magUt&quot;: [ # The magnetometer measurements of the magnetic field in microtesla (uT) with increasing timestamps from devices.
+  &quot;photos&quot;: [ # Output only. Photos with increasing timestamps.
+  &quot;processingState&quot;: &quot;A String&quot;, # Output only. The processing state of this sequence.
+  &quot;rawGpsTimeline&quot;: [ # Input only. Raw GPS measurements with increasing timestamps from the device that aren&#x27;t time synced with each photo. These raw measurements will be used to infer the pose of each frame. Required in input when InputType is VIDEO and raw GPS measurements are not in Camera Motion Metadata Track (CAMM). User can indicate which takes precedence using gps_source if raw GPS measurements are provided in both raw_gps_timeline and Camera Motion Metadata Track (CAMM).
+    { # Raw pose measurement for an entity.
+  &quot;sequenceBounds&quot;: { # A rectangle in geographical coordinates. # Output only. A rectangular box that encapsulates every image in this photo sequence.
+    &quot;northeast&quot;: { # An object that represents a latitude/longitude pair. This is expressed as a pair of doubles to represent degrees latitude and degrees longitude. Unless specified otherwise, this object must conform to the WGS84 standard. Values must be within normalized ranges. # The northeast corner of these bounds.
+    &quot;southwest&quot;: { # An object that represents a latitude/longitude pair. This is expressed as a pair of doubles to represent degrees latitude and degrees longitude. Unless specified otherwise, this object must conform to the WGS84 standard. Values must be within normalized ranges. # The southwest corner of these bounds.
+  &quot;uploadReference&quot;: { # Upload reference for media files. # Input only. Required when creating photo sequence. The resource name where the bytes of the photo sequence (in the form of video) are uploaded.
+  &quot;uploadTime&quot;: &quot;A String&quot;, # Output only. The time this photo sequence was created in uSV Store service.
+  &quot;viewCount&quot;: &quot;A String&quot;, # Output only. The total number of views that all the published images in this PhotoSequence have received.
+  inputType: string, Required. The input form of PhotoSequence.
+      INPUT_TYPE_UNSPECIFIED - Not specified. Server will return google.rpc.Code.INVALID_ARGUMENT.
+      VIDEO - 360 Video.
+      XDM - Extensible Device Metadata, http://www.xdm.org
+    <code class="details" id="delete">delete(sequenceId, x__xgafv=None)</code>
+  <pre>Deletes a PhotoSequence and its metadata. This method returns the following error codes: * google.rpc.Code.PERMISSION_DENIED if the requesting user did not create the requested photo sequence. * google.rpc.Code.NOT_FOUND if the photo sequence ID does not exist. * google.rpc.Code.FAILED_PRECONDITION if the photo sequence ID is not yet finished processing.
+  sequenceId: string, Required. ID of the PhotoSequence. (required)
+    <code class="details" id="get">get(sequenceId, filter=None, view=None, x__xgafv=None)</code>
+  <pre>Gets the metadata of the specified PhotoSequence via the Operation interface. This method returns the following three types of responses: * `Operation.done` = false, if the processing of PhotoSequence is not finished yet. * `Operation.done` = true and `Operation.error` is populated, if there was an error in processing. * `Operation.done` = true and `Operation.response` is poulated, which contains a PhotoSequence message. This method returns the following error codes: * google.rpc.Code.PERMISSION_DENIED if the requesting user did not create the requested PhotoSequence. * google.rpc.Code.NOT_FOUND if the requested PhotoSequence does not exist.
+  sequenceId: string, Required. ID of the photo sequence. (required)
+  filter: string, Optional. The filter expression. For example: `published_status=PUBLISHED`. The filters supported are: `published_status`. See https://google.aip.dev/160 for more information.
+  view: string, Specifies if a download URL for the photo sequence should be returned in `download_url` of individual photos in the PhotoSequence response. &gt; Note: Currently not implemented.
+  <pre>Creates an upload session to start uploading photo sequence data. The upload URL of the returned UploadRef is used to upload the data for the `photoSequence`. After the upload is complete, the UploadRef is used with CreatePhotoSequence to create the PhotoSequence object entry.

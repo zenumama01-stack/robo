@@ -1,0 +1,67 @@
+<h1><a href="alloydb_v1.html">AlloyDB API</a> . <a href="alloydb_v1.projects.html">projects</a> . <a href="alloydb_v1.projects.locations.html">locations</a> . <a href="alloydb_v1.projects.locations.backups.html">backups</a></h1>
+  <code><a href="#create">create(parent, backupId=None, body=None, requestId=None, validateOnly=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Creates a new Backup in a given project and location.</p>
+  <code><a href="#delete">delete(name, etag=None, requestId=None, validateOnly=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Deletes a single Backup.</p>
+<p class="firstline">Gets details of a single Backup.</p>
+<p class="firstline">Lists Backups in a given project and location.</p>
+  <code><a href="#patch">patch(name, allowMissing=None, body=None, requestId=None, updateMask=None, validateOnly=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Updates the parameters of a single Backup.</p>
+    <code class="details" id="create">create(parent, backupId=None, body=None, requestId=None, validateOnly=None, x__xgafv=None)</code>
+  <pre>Creates a new Backup in a given project and location.
+  parent: string, Required. Value for parent. (required)
+{ # Message describing Backup object
+  &quot;annotations&quot;: { # Annotations to allow client tools to store small amount of arbitrary data. This is distinct from labels. https://google.aip.dev/128
+  &quot;clusterName&quot;: &quot;A String&quot;, # Required. The full resource name of the backup source cluster (e.g., projects/{project}/locations/{region}/clusters/{cluster_id}).
+  &quot;clusterUid&quot;: &quot;A String&quot;, # Output only. The system-generated UID of the cluster which was used to create this resource.
+  &quot;createCompletionTime&quot;: &quot;A String&quot;, # Output only. Timestamp when the resource finished being created.
+  &quot;createTime&quot;: &quot;A String&quot;, # Output only. Create time stamp
+  &quot;databaseVersion&quot;: &quot;A String&quot;, # Output only. The database engine major version of the cluster this backup was created from. Any restored cluster created from this backup will have the same database version.
+  &quot;deleteTime&quot;: &quot;A String&quot;, # Output only. Delete time stamp
+  &quot;description&quot;: &quot;A String&quot;, # User-provided description of the backup.
+  &quot;displayName&quot;: &quot;A String&quot;, # User-settable and human-readable display name for the Backup.
+  &quot;encryptionConfig&quot;: { # EncryptionConfig describes the encryption config of a cluster or a backup that is encrypted with a CMEK (customer-managed encryption key). # Optional. The encryption config can be specified to encrypt the backup with a customer-managed encryption key (CMEK). When this field is not specified, the backup will then use default encryption scheme to protect the user data.
+    &quot;kmsKeyName&quot;: &quot;A String&quot;, # The fully-qualified resource name of the KMS key. Each Cloud KMS key is regionalized and has the following format: projects/[PROJECT]/locations/[REGION]/keyRings/[RING]/cryptoKeys/[KEY_NAME]
+  &quot;encryptionInfo&quot;: { # EncryptionInfo describes the encryption information of a cluster or a backup. # Output only. The encryption information for the backup.
+    &quot;encryptionType&quot;: &quot;A String&quot;, # Output only. Type of encryption.
+    &quot;kmsKeyVersions&quot;: [ # Output only. Cloud KMS key versions that are being used to protect the database or the backup.
+  &quot;etag&quot;: &quot;A String&quot;, # For Resource freshness validation (https://google.aip.dev/154)
+  &quot;expiryQuantity&quot;: { # A backup&#x27;s position in a quantity-based retention queue, of backups with the same source cluster and type, with length, retention, specified by the backup&#x27;s retention policy. Once the position is greater than the retention, the backup is eligible to be garbage collected. Example: 5 backups from the same source cluster and type with a quantity-based retention of 3 and denoted by backup_id (position, retention). Safe: backup_5 (1, 3), backup_4, (2, 3), backup_3 (3, 3). Awaiting garbage collection: backup_2 (4, 3), backup_1 (5, 3) # Output only. The QuantityBasedExpiry of the backup, specified by the backup&#x27;s retention policy. Once the expiry quantity is over retention, the backup is eligible to be garbage collected.
+    &quot;retentionCount&quot;: 42, # Output only. The backup&#x27;s position among its backups with the same source cluster and type, by descending chronological order create time(i.e. newest first).
+    &quot;totalRetentionCount&quot;: 42, # Output only. The length of the quantity-based queue, specified by the backup&#x27;s retention policy.
+  &quot;expiryTime&quot;: &quot;A String&quot;, # Output only. The time at which after the backup is eligible to be garbage collected. It is the duration specified by the backup&#x27;s retention policy, added to the backup&#x27;s create_time.
+  &quot;labels&quot;: { # Labels as key value pairs
+  &quot;name&quot;: &quot;A String&quot;, # Output only. The name of the backup resource with the format: * projects/{project}/locations/{region}/backups/{backup_id} where the cluster and backup ID segments should satisfy the regex expression `[a-z]([a-z0-9-]{0,61}[a-z0-9])?`, e.g. 1-63 characters of lowercase letters, numbers, and dashes, starting with a letter, and ending with a letter or number. For more details see https://google.aip.dev/122. The prefix of the backup resource name is the name of the parent resource: * projects/{project}/locations/{region}
+  &quot;reconciling&quot;: True or False, # Output only. Reconciling (https://google.aip.dev/128#reconciliation), if true, indicates that the service is actively updating the resource. This can happen due to user-triggered updates or system actions like failover or maintenance.
+  &quot;sizeBytes&quot;: &quot;A String&quot;, # Output only. The size of the backup in bytes.
+  &quot;state&quot;: &quot;A String&quot;, # Output only. The current state of the backup.
+  &quot;tags&quot;: { # Optional. Input only. Immutable. Tag keys/values directly bound to this resource. For example: ``` &quot;123/environment&quot;: &quot;production&quot;, &quot;123/costCenter&quot;: &quot;marketing&quot; ```
+  &quot;type&quot;: &quot;A String&quot;, # The backup type, which suggests the trigger for the backup.
+  &quot;uid&quot;: &quot;A String&quot;, # Output only. The system-generated UID of the resource. The UID is assigned when the resource is created, and it is retained until it is deleted.
+  &quot;updateTime&quot;: &quot;A String&quot;, # Output only. Update time stamp Users should not infer any meaning from this field. Its value is generally unrelated to the timing of the backup creation operation.
+  backupId: string, Required. ID of the requesting object.
+  requestId: string, Optional. An optional request ID to identify requests. Specify a unique request ID so that if you must retry your request, the server ignores the request if it has already been completed. The server guarantees that for at least 60 minutes since the first request. For example, consider a situation where you make an initial request and the request times out. If you make the request again with the same request ID, the server can check if the original operation with the same request ID was received, and if so, ignores the second request. This prevents clients from accidentally creating duplicate commitments. The request ID must be a valid UUID with the exception that zero UUID is not supported (00000000-0000-0000-0000-000000000000).
+  validateOnly: boolean, Optional. If set, the backend validates the request, but doesn&#x27;t actually execute it.
+    <code class="details" id="delete">delete(name, etag=None, requestId=None, validateOnly=None, x__xgafv=None)</code>
+  <pre>Deletes a single Backup.
+  name: string, Required. Name of the resource. For the required format, see the comment on the Backup.name field. (required)
+  etag: string, Optional. The current etag of the Backup. If an etag is provided and does not match the current etag of the Backup, deletion will be blocked and an ABORTED error will be returned.
+  <pre>Gets details of a single Backup.
+  view: string, Optional. The view of the backup to return.
+      BACKUP_VIEW_UNSPECIFIED - Value unspecified, equivalent to BASIC.
+      BACKUP_VIEW_BASIC - Responses include all fields that aren&#x27;t explicitly gated behind another view.
+      BACKUP_VIEW_CLUSTER_DELETED - Response include all the field from BASIC plus the field cluster_deleted, which specifies if the cluster corresponding to this backup is deleted.
+  <pre>Lists Backups in a given project and location.
+  parent: string, Required. Parent value for ListBackupsRequest (required)
+  filter: string, Filtering results
+  orderBy: string, Hint for how to order the results
+  pageSize: integer, Requested page size. Server may return fewer items than requested. If unspecified, server will pick an appropriate default.
+  pageToken: string, A token identifying a page of results the server should return.
+    { # Message for response to listing Backups
+  &quot;backups&quot;: [ # The list of Backup
+  &quot;unreachable&quot;: [ # Locations that could not be reached.
+    <code class="details" id="patch">patch(name, allowMissing=None, body=None, requestId=None, updateMask=None, validateOnly=None, x__xgafv=None)</code>
+  <pre>Updates the parameters of a single Backup.
+  name: string, Output only. The name of the backup resource with the format: * projects/{project}/locations/{region}/backups/{backup_id} where the cluster and backup ID segments should satisfy the regex expression `[a-z]([a-z0-9-]{0,61}[a-z0-9])?`, e.g. 1-63 characters of lowercase letters, numbers, and dashes, starting with a letter, and ending with a letter or number. For more details see https://google.aip.dev/122. The prefix of the backup resource name is the name of the parent resource: * projects/{project}/locations/{region} (required)
+  allowMissing: boolean, Optional. If set to true, update succeeds even if instance is not found. In that case, a new backup is created and `update_mask` is ignored.
+  updateMask: string, Optional. Field mask is used to specify the fields to be overwritten in the Backup resource by the update. The fields specified in the update_mask are relative to the resource, not the full request. A field will be overwritten if it is in the mask. If the user does not provide a mask then all fields will be overwritten.

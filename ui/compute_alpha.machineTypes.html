@@ -1,0 +1,43 @@
+<h1><a href="compute_alpha.html">Compute Engine API</a> . <a href="compute_alpha.machineTypes.html">machineTypes</a></h1>
+<p class="firstline">Retrieves an aggregated list of machine types.</p>
+  <code><a href="#get">get(project, zone, machineType, x__xgafv=None)</a></code></p>
+<p class="firstline">Returns the specified machine type.</p>
+<p class="firstline">Retrieves a list of machine types available to the specified</p>
+  <pre>Retrieves an aggregated list of machine types.
+  &quot;items&quot;: { # A list of MachineTypesScopedList resources.
+    &quot;a_key&quot;: { # [Output Only] Name of the scope containing this set of machine types.
+      &quot;machineTypes&quot;: [ # [Output Only] A list of machine types contained in this scope.
+        { # Represents a Machine Type resource.
+            # You can use specific machine types for your VM instances based on performance
+            # and pricing requirements. For more information, readMachine Types.
+          &quot;accelerators&quot;: [ # [Output Only] A list of accelerator configurations assigned to this
+              # machine type.
+              &quot;guestAcceleratorCount&quot;: 42, # Number of accelerator cards exposed to the guest.
+              &quot;guestAcceleratorType&quot;: &quot;A String&quot;, # The accelerator type resource name, not a full URL, e.g.nvidia-tesla-t4.
+          &quot;architecture&quot;: &quot;A String&quot;, # [Output Only] The architecture of the machine type.
+          &quot;bundledLocalSsds&quot;: { # [Output Only] The configuration of bundled local SSD for the machine type.
+            &quot;defaultInterface&quot;: &quot;A String&quot;, # The default disk interface if the interface is not specified.
+            &quot;partitionCount&quot;: 42, # The number of partitions.
+          &quot;deprecated&quot;: { # Deprecation status for a public resource. # [Output Only] The deprecation status associated with this machine type.
+              # Only applicable if the machine type is unavailable.
+          &quot;guestCpus&quot;: 42, # [Output Only] The number of virtual CPUs that are available to the
+          &quot;isSharedCpu&quot;: True or False, # [Output Only] Whether this machine type has a shared CPU. SeeShared-core machine
+              # types for more information.
+          &quot;kind&quot;: &quot;compute#machineType&quot;, # Output only. [Output Only] The type of the resource. Alwayscompute#machineType for machine types.
+          &quot;maximumPersistentDisks&quot;: 42, # [Output Only] Maximum persistent disks allowed.
+          &quot;maximumPersistentDisksSizeGb&quot;: &quot;A String&quot;, # [Output Only] Maximum total persistent disks size (GB) allowed.
+          &quot;memoryMb&quot;: 42, # [Output Only] The amount of physical memory available to the instance,
+              # defined in MB.
+          &quot;zone&quot;: &quot;A String&quot;, # [Output Only] The name of the zone where the machine type resides,
+      &quot;warning&quot;: { # [Output Only] An informational warning that appears when the machine types
+          # list is empty.
+  &quot;kind&quot;: &quot;compute#machineTypeAggregatedList&quot;, # Output only. [Output Only] Type of resource. Alwayscompute#machineTypeAggregatedList for aggregated lists of
+      # machine types.
+    <code class="details" id="get">get(project, zone, machineType, x__xgafv=None)</code>
+  <pre>Returns the specified machine type.
+  machineType: string, Name of the machine type to return. (required)
+  <pre>Retrieves a list of machine types available to the specified
+    { # Contains a list of machine types.
+  &quot;items&quot;: [ # A list of MachineType resources.
+  &quot;kind&quot;: &quot;compute#machineTypeList&quot;, # Output only. [Output Only] Type of resource. Always compute#machineTypeList
+      # for lists of machine types.

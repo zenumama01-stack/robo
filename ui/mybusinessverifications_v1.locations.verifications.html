@@ -1,0 +1,17 @@
+<h1><a href="mybusinessverifications_v1.html">My Business Verifications API</a> . <a href="mybusinessverifications_v1.locations.html">locations</a> . <a href="mybusinessverifications_v1.locations.verifications.html">verifications</a></h1>
+<p class="firstline">Completes a `PENDING` verification. It is only necessary for non `AUTO` verification methods. `AUTO` verification request is instantly `VERIFIED` upon creation.</p>
+<p class="firstline">List verifications of a location, ordered by create time.</p>
+  <pre>Completes a `PENDING` verification. It is only necessary for non `AUTO` verification methods. `AUTO` verification request is instantly `VERIFIED` upon creation.
+  name: string, Required. Resource name of the verification to complete. (required)
+{ # Request message for Verifications.CompleteVerificationAction.
+  &quot;pin&quot;: &quot;A String&quot;, # Required. PIN code received by the merchant to complete the verification.
+    { # Response message for Verifications.CompleteVerificationAction.
+  &quot;verification&quot;: { # A verification represents a verification attempt on a location. # The completed verification.
+  <pre>List verifications of a location, ordered by create time.
+  parent: string, Required. Resource name of the location that verification requests belong to. (required)
+  pageSize: integer, How many verification to include per page. Minimum is 1, and the default and maximum page size is 100.
+  pageToken: string, If specified, returns the next page of verifications.
+    { # Response message for Verifications.ListVerifications.
+  &quot;nextPageToken&quot;: &quot;A String&quot;, # If the number of verifications exceeded the requested page size, this field will be populated with a token to fetch the next page of verification on a subsequent call. If there are no more attributes, this field will not be present in the response.
+  &quot;verifications&quot;: [ # List of the verifications.
+    { # A verification represents a verification attempt on a location.

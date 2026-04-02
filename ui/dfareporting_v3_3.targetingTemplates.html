@@ -1,0 +1,34 @@
+<h1><a href="dfareporting_v3_3.html">Campaign Manager 360 API</a> . <a href="dfareporting_v3_3.targetingTemplates.html">targetingTemplates</a></h1>
+<p class="firstline">Gets one targeting template by ID.</p>
+<p class="firstline">Inserts a new targeting template.</p>
+  <code><a href="#list">list(profileId, advertiserId=None, ids=None, maxResults=None, pageToken=None, searchString=None, sortField=None, sortOrder=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Retrieves a list of targeting templates, optionally filtered. This method supports paging.</p>
+<p class="firstline">Updates an existing targeting template. This method supports patch semantics.</p>
+<p class="firstline">Updates an existing targeting template.</p>
+  <pre>Gets one targeting template by ID.
+  id: string, Targeting template ID. (required)
+    { # Contains properties of a targeting template. A targeting template encapsulates targeting information which can be reused across multiple ads.
+  &quot;accountId&quot;: &quot;A String&quot;, # Account ID of this targeting template. This field, if left unset, will be auto-generated on insert and is read-only after insert.
+  &quot;advertiserId&quot;: &quot;A String&quot;, # Advertiser ID of this targeting template. This is a required field on insert and is read-only after insert.
+  &quot;dayPartTargeting&quot;: { # Day Part Targeting. # Time and day targeting criteria.
+  &quot;geoTargeting&quot;: { # Geographical Targeting. # Geographical targeting criteria.
+  &quot;id&quot;: &quot;A String&quot;, # ID of this targeting template. This is a read-only, auto-generated field.
+  &quot;keyValueTargetingExpression&quot;: { # Key Value Targeting Expression. # Key-value targeting criteria.
+  &quot;kind&quot;: &quot;A String&quot;, # Identifies what kind of resource this is. Value: the fixed string &quot;dfareporting#targetingTemplate&quot;.
+  &quot;languageTargeting&quot;: { # Language Targeting. # Language targeting criteria.
+  &quot;listTargetingExpression&quot;: { # Remarketing List Targeting Expression. # Remarketing list targeting criteria.
+  &quot;name&quot;: &quot;A String&quot;, # Name of this targeting template. This field is required. It must be less than 256 characters long and unique within an advertiser.
+  &quot;subaccountId&quot;: &quot;A String&quot;, # Subaccount ID of this targeting template. This field, if left unset, will be auto-generated on insert and is read-only after insert.
+  &quot;technologyTargeting&quot;: { # Technology Targeting. # Technology platform targeting criteria.
+  <pre>Inserts a new targeting template.
+    <code class="details" id="list">list(profileId, advertiserId=None, ids=None, maxResults=None, pageToken=None, searchString=None, sortField=None, sortOrder=None, x__xgafv=None)</code>
+  <pre>Retrieves a list of targeting templates, optionally filtered. This method supports paging.
+  advertiserId: string, Select only targeting templates with this advertiser ID.
+  ids: string, Select only targeting templates with these IDs. (repeated)
+  searchString: string, Allows searching for objects by name or ID. Wildcards (*) are allowed. For example, &quot;template*2015&quot; will return objects with names like &quot;template June 2015&quot;, &quot;template April 2015&quot;, or simply &quot;template 2015&quot;. Most of the searches also add wildcards implicitly at the start and the end of the search string. For example, a search string of &quot;template&quot; will match objects with name &quot;my template&quot;, &quot;template 2015&quot;, or simply &quot;template&quot;.
+    { # Targeting Template List Response
+  &quot;kind&quot;: &quot;A String&quot;, # Identifies what kind of resource this is. Value: the fixed string &quot;dfareporting#targetingTemplatesListResponse&quot;.
+  &quot;targetingTemplates&quot;: [ # Targeting template collection.
+  <pre>Updates an existing targeting template. This method supports patch semantics.
+  id: string, TargetingTemplate ID. (required)
+  <pre>Updates an existing targeting template.

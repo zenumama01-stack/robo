@@ -1,0 +1,35 @@
+from .speech_model import SpeechModel
+__all__ = ["SpeechCreateParams", "Voice", "VoiceID"]
+class SpeechCreateParams(TypedDict, total=False):
+    input: Required[str]
+    """The text to generate audio for. The maximum length is 4096 characters."""
+    model: Required[Union[str, SpeechModel]]
+    voice: Required[Voice]
+    """The voice to use when generating the audio.
+    Supported built-in voices are `alloy`, `ash`, `ballad`, `coral`, `echo`,
+    `fable`, `onyx`, `nova`, `sage`, `shimmer`, `verse`, `marin`, and `cedar`. You
+    may also provide a custom voice object with an `id`, for example
+    `{ "id": "voice_1234" }`. Previews of the voices are available in the
+    instructions: str
+    """Control the voice of your generated audio with additional instructions.
+    Does not work with `tts-1` or `tts-1-hd`.
+    response_format: Literal["mp3", "opus", "aac", "flac", "wav", "pcm"]
+    """The format to audio in.
+    Supported formats are `mp3`, `opus`, `aac`, `flac`, `wav`, and `pcm`.
+    speed: float
+    """The speed of the generated audio.
+    Select a value from `0.25` to `4.0`. `1.0` is the default.
+    stream_format: Literal["sse", "audio"]
+    """The format to stream the audio in.
+    Supported formats are `sse` and `audio`. `sse` is not supported for `tts-1` or
+    `tts-1-hd`.
+class VoiceID(TypedDict, total=False):
+    """Custom voice reference."""
+    """The custom voice ID, e.g. `voice_1234`."""
+Voice: TypeAlias = Union[
+    str, Literal["alloy", "ash", "ballad", "coral", "echo", "sage", "shimmer", "verse", "marin", "cedar"], VoiceID
+__all__ = ["SpeechCreateParams"]
+    voice: Required[
+        Union[str, Literal["alloy", "ash", "ballad", "coral", "echo", "sage", "shimmer", "verse", "marin", "cedar"]]
+    `fable`, `onyx`, `nova`, `sage`, `shimmer`, `verse`, `marin`, and `cedar`.
+    Previews of the voices are available in the

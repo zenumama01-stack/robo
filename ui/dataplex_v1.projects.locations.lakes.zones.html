@@ -1,0 +1,36 @@
+<h1><a href="dataplex_v1.html">Cloud Dataplex API</a> . <a href="dataplex_v1.projects.html">projects</a> . <a href="dataplex_v1.projects.locations.html">locations</a> . <a href="dataplex_v1.projects.locations.lakes.html">lakes</a> . <a href="dataplex_v1.projects.locations.lakes.zones.html">zones</a></h1>
+  <code><a href="dataplex_v1.projects.locations.lakes.zones.actions.html">actions()</a></code>
+  <code><a href="dataplex_v1.projects.locations.lakes.zones.assets.html">assets()</a></code>
+  <code><a href="dataplex_v1.projects.locations.lakes.zones.entities.html">entities()</a></code>
+  <code><a href="#create">create(parent, body=None, validateOnly=None, x__xgafv=None, zoneId=None)</a></code></p>
+<p class="firstline">Creates a zone resource within a lake.</p>
+<p class="firstline">Deletes a zone resource. All assets within a zone must be deleted before the zone can be deleted.</p>
+<p class="firstline">Retrieves a zone resource.</p>
+<p class="firstline">Lists zone resources in a lake.</p>
+<p class="firstline">Updates a zone resource.</p>
+    <code class="details" id="create">create(parent, body=None, validateOnly=None, x__xgafv=None, zoneId=None)</code>
+  <pre>Creates a zone resource within a lake.
+{ # A zone represents a logical group of related assets within a lake. A zone can be used to map to organizational structure or represent stages of data readiness from raw to curated. It provides managing behavior that is shared or inherited by all contained assets.
+  &quot;assetStatus&quot;: { # Aggregated status of the underlying assets of a lake or zone. # Output only. Aggregated status of the underlying assets of the zone.
+  &quot;createTime&quot;: &quot;A String&quot;, # Output only. The time when the zone was created.
+  &quot;description&quot;: &quot;A String&quot;, # Optional. Description of the zone.
+  &quot;discoverySpec&quot;: { # Settings to manage the metadata discovery and publishing in a zone. # Optional. Specification of the discovery feature applied to data in this zone.
+    &quot;enabled&quot;: True or False, # Required. Whether discovery is enabled.
+  &quot;labels&quot;: { # Optional. User defined labels for the zone.
+  &quot;name&quot;: &quot;A String&quot;, # Output only. The relative resource name of the zone, of the form: projects/{project_number}/locations/{location_id}/lakes/{lake_id}/zones/{zone_id}.
+  &quot;resourceSpec&quot;: { # Settings for resources attached as assets within a zone. # Required. Specification of the resources that are referenced by the assets within this zone.
+    &quot;locationType&quot;: &quot;A String&quot;, # Required. Immutable. The location type of the resources that are allowed to be attached to the assets within this zone.
+  &quot;state&quot;: &quot;A String&quot;, # Output only. Current state of the zone.
+  &quot;type&quot;: &quot;A String&quot;, # Required. Immutable. The type of the zone.
+  &quot;uid&quot;: &quot;A String&quot;, # Output only. System generated globally unique ID for the zone. This ID will be different if the zone is deleted and re-created with the same name.
+  &quot;updateTime&quot;: &quot;A String&quot;, # Output only. The time when the zone was last updated.
+  zoneId: string, Required. Zone identifier. This ID will be used to generate names such as database and dataset names when publishing metadata to Hive Metastore and BigQuery. * Must contain only lowercase letters, numbers and hyphens. * Must start with a letter. * Must end with a number or a letter. * Must be between 1-63 characters. * Must be unique across all lakes from all locations in a project. * Must not be one of the reserved IDs (i.e. &quot;default&quot;, &quot;global-temp&quot;)
+  <pre>Deletes a zone resource. All assets within a zone must be deleted before the zone can be deleted.
+  name: string, Required. The resource name of the zone: projects/{project_number}/locations/{location_id}/lakes/{lake_id}/zones/{zone_id}. (required)
+  <pre>Retrieves a zone resource.
+  <pre>Lists zone resources in a lake.
+  pageSize: integer, Optional. Maximum number of zones to return. The service may return fewer than this value. If unspecified, at most 10 zones will be returned. The maximum value is 1000; values above 1000 will be coerced to 1000.
+    { # List zones response.
+  &quot;zones&quot;: [ # Zones under the given parent lake.
+  <pre>Updates a zone resource.
+  name: string, Output only. The relative resource name of the zone, of the form: projects/{project_number}/locations/{location_id}/lakes/{lake_id}/zones/{zone_id}. (required)

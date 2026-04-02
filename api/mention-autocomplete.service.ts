@@ -1,0 +1,109 @@
+ * Item in the autocomplete dropdown
+export interface MentionSuggestion {
+  avatarUrl?: string; // Deprecated, use imageUrl
+  imageUrl?: string; // For agent LogoURL or user avatar
+  icon?: string; // For agents (FontAwesome class)
+ * Service for autocomplete suggestions when typing @mentions
+export class MentionAutocompleteService {
+  private agentsCache: AIAgentEntityExtended[] = [];
+  private usersCache: UserInfo[] = [];
+  private isInitialized = false;
+  private initializationPromise: Promise<void> | null = null;
+   * Initialize the service by loading agents and users
+   * Prevents concurrent initialization with promise lock
+  async initialize(currentUser: UserInfo): Promise<void> {
+    // If already initialized, return immediately
+    // If initialization is in progress, wait for it
+    if (this.initializationPromise) {
+      return this.initializationPromise;
+    // Create initialization promise and store it
+    this.initializationPromise = this._initializeInternal(currentUser);
+      await this.initializationPromise;
+      this.initializationPromise = null;
+   * Internal initialization logic
+  private async _initializeInternal(currentUser: UserInfo): Promise<void> {
+      // Load agents from AIEngineBase
+      const allAgents = AIEngineBase.Instance.Agents || [];
+      // Filter by status, hierarchy, and invocation mode first
+      const candidateAgents = allAgents.filter(
+        a => !a.ParentID && a.Status === 'Active' && a.InvocationMode !== 'Sub-Agent' && !a.IsRestricted
+      // Filter by user's 'run' permission — respects open-by-default + explicit permissions
+      this.agentsCache = await this.filterAgentsByRunPermission(candidateAgents, currentUser);
+      // Load users from the system (optional - can be expanded later)
+      // For now, we'll just use the current user
+      this.usersCache = [currentUser];
+      console.error('Failed to initialize MentionAutocompleteService:', error);
+   * Filter agents to only those the current user has 'run' permission for.
+   * Agents with no permission records are open to everyone (canRun = true).
+   * Agents with explicit permission records are checked against the user.
+  private async filterAgentsByRunPermission(
+    const permitted: AIAgentEntityExtended[] = [];
+        const canRun = await AIAgentPermissionHelper.HasPermission(agent.ID, user, 'run');
+          permitted.push(agent);
+        // Fail closed — exclude agent on error
+    return permitted;
+   * Get suggestions based on search query
+   * @param query The search text after @ symbol
+   * @param includeUsers Whether to include users in suggestions
+   * @returns Filtered and ranked suggestions
+  getSuggestions(query: string, includeUsers: boolean = true): MentionSuggestion[] {
+    const suggestions: MentionSuggestion[] = [];
+    // Add agent suggestions
+    for (const agent of this.agentsCache) {
+      const score = this.calculateMatchScore(agent.Name || '', lowerQuery);
+      if (score > 0 || !lowerQuery) {
+        suggestions.push({
+          name: agent.Name || 'Unknown',
+          displayName: agent.Name || 'Unknown',
+          imageUrl: agent.LogoURL || undefined, // Agent logo/avatar image
+          icon: this.getAgentIcon(agent)
+    // Add user suggestions (if enabled)
+    if (includeUsers) {
+      for (const user of this.usersCache) {
+        const score = this.calculateMatchScore(user.Name, lowerQuery);
+            displayName: user.Name,
+            description: user.Email || undefined,
+            avatarUrl: undefined // Future: load user avatars
+    // Sort by relevance: exact match > starts with > contains
+    return suggestions.sort((a, b) => {
+      const scoreA = this.calculateMatchScore(a.name, lowerQuery);
+      const scoreB = this.calculateMatchScore(b.name, lowerQuery);
+      // If scores are equal, sort agents before users
+      if (a.type !== b.type) return a.type === 'agent' ? -1 : 1;
+      // Otherwise alphabetically
+   * Calculate match score for ranking
+   * Higher score = better match
+  private calculateMatchScore(name: string, query: string): number {
+    if (!query) return 1; // Show all if no query
+    const lowerName = name.toLowerCase();
+    if (lowerName === lowerQuery) return 100;
+    // Starts with
+    if (lowerName.startsWith(lowerQuery)) return 50;
+    // Contains
+    if (lowerName.includes(lowerQuery)) return 25;
+    // Word boundary match (e.g., "MA" matches "Marketing Agent")
+    const words = lowerName.split(/\s+/);
+      if (word.startsWith(lowerQuery)) return 40;
+   * Get icon for agent based on type/name
+  private getAgentIcon(agent: AIAgentEntityExtended): string {
+    // Use agent's icon if available, otherwise default based on type
+    if (agent.IconClass) return agent.IconClass;
+    // Default icons based on agent name patterns
+    const name = agent.Name?.toLowerCase() || '';
+    if (name.includes('marketing')) return 'fa-megaphone';
+    if (name.includes('data') || name.includes('analysis')) return 'fa-chart-line';
+    if (name.includes('code') || name.includes('developer')) return 'fa-code';
+    if (name.includes('design')) return 'fa-palette';
+    if (name.includes('conversation') || name.includes('manager')) return 'fa-comments';
+    return 'fa-robot'; // Default
+   * Get available agents for parsing
+  getAvailableAgents(): AIAgentEntityExtended[] {
+    return this.agentsCache;
+   * Get available users for parsing
+  getAvailableUsers(): UserInfo[] {
+    return this.usersCache;
+   * Refresh the caches
+   * Resets initialization state and reloads agents
+  async refresh(currentUser: UserInfo): Promise<void> {
+    this.isInitialized = false;
+    await this.initialize(currentUser);

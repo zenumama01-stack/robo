@@ -1,0 +1,27 @@
+<h1><a href="apigee_v1.html">Apigee API</a> . <a href="apigee_v1.organizations.html">organizations</a> . <a href="apigee_v1.organizations.endpointAttachments.html">endpointAttachments</a></h1>
+  <code><a href="#create">create(parent, body=None, endpointAttachmentId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Creates an endpoint attachment. **Note:** Not supported for Apigee hybrid.</p>
+<p class="firstline">Deletes an endpoint attachment.</p>
+<p class="firstline">Gets the endpoint attachment.</p>
+<p class="firstline">Lists the endpoint attachments in an organization.</p>
+    <code class="details" id="create">create(parent, body=None, endpointAttachmentId=None, x__xgafv=None)</code>
+  <pre>Creates an endpoint attachment. **Note:** Not supported for Apigee hybrid.
+  parent: string, Required. Organization the endpoint attachment will be created in. (required)
+{ # Apigee endpoint attachment. For more information, see [Southbound networking patterns] (https://cloud.google.com/apigee/docs/api-platform/architecture/southbound-networking-patterns-endpoints).
+  &quot;connectionState&quot;: &quot;A String&quot;, # Output only. State of the endpoint attachment connection to the service attachment.
+  &quot;host&quot;: &quot;A String&quot;, # Output only. Host that can be used in either the HTTP target endpoint directly or as the host in target server.
+  &quot;location&quot;: &quot;A String&quot;, # Required. Location of the endpoint attachment.
+  &quot;name&quot;: &quot;A String&quot;, # Name of the endpoint attachment. Use the following structure in your request: `organizations/{org}/endpointAttachments/{endpoint_attachment}`
+  &quot;serviceAttachment&quot;: &quot;A String&quot;, # Format: projects/*/regions/*/serviceAttachments/*
+  &quot;state&quot;: &quot;A String&quot;, # Output only. State of the endpoint attachment. Values other than `ACTIVE` mean the resource is not ready to use.
+  endpointAttachmentId: string, ID to use for the endpoint attachment. ID must start with a lowercase letter followed by up to 31 lowercase letters, numbers, or hyphens, and cannot end with a hyphen. The minimum length is 2.
+  <pre>Deletes an endpoint attachment.
+  name: string, Required. Name of the endpoint attachment. Use the following structure in your request: `organizations/{org}/endpointAttachments/{endpoint_attachment}` (required)
+  <pre>Gets the endpoint attachment.
+  <pre>Lists the endpoint attachments in an organization.
+  parent: string, Required. Name of the organization for which to list endpoint attachments. Use the following structure in your request: `organizations/{org}` (required)
+  pageSize: integer, Optional. Maximum number of endpoint attachments to return. If unspecified, at most 25 attachments will be returned.
+  pageToken: string, Optional. Page token, returned from a previous `ListEndpointAttachments` call, that you can use to retrieve the next page.
+    { # Response for ListEndpointAttachments method.
+  &quot;endpointAttachments&quot;: [ # Endpoint attachments in the specified organization.
+  &quot;nextPageToken&quot;: &quot;A String&quot;, # Page token that you can include in an `ListEndpointAttachments` request to retrieve the next page. If omitted, no subsequent pages exist.

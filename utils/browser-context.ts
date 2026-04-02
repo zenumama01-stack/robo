@@ -1,0 +1,53 @@
+import { chromium, Browser, BrowserContext, Page } from 'playwright';
+export interface BrowserContextOptions {
+  headless?: boolean;
+  viewport?: { width: number; height: number };
+  deviceScaleFactor?: number;
+  timezoneId?: string;
+export class BrowserManager {
+  private browser: Browser | null = null;
+  private context: BrowserContext | null = null;
+  private page: Page | null = null;
+  constructor(private options: BrowserContextOptions = {}) {
+      headless: true,
+      viewport: { width: 1280, height: 720 },
+    if (this.browser) {
+    this.browser = await chromium.launch({
+      headless: this.options.headless
+    this.context = await this.browser.newContext({
+      viewport: this.options.viewport,
+      userAgent: this.options.userAgent,
+      deviceScaleFactor: this.options.deviceScaleFactor,
+      locale: this.options.locale,
+      timezoneId: this.options.timezoneId
+    this.page = await this.context.newPage();
+  async getPage(): Promise<Page> {
+    if (!this.context) {
+    // Always create a fresh page for each test to ensure isolation
+    // This prevents issues with page.exposeFunction being called multiple times
+    // and ensures each test harness instance has its own clean page
+    const newPage = await this.context!.newPage();
+    return newPage;
+  async navigateTo(url: string): Promise<void> {
+    const page = await this.getPage();
+    await page.goto(url);
+  async evaluateInPage<T>(fn: (...args: any[]) => T, ...args: any[]): Promise<T> {
+    return await page.evaluate(fn, ...args);
+  async waitForSelector(selector: string, options?: { timeout?: number }): Promise<void> {
+    await page.waitForSelector(selector, options);
+  async screenshot(path?: string): Promise<Buffer> {
+    return await page.screenshot({ path });
+  async getContent(): Promise<string> {
+    return await page.content();
+  async close(): Promise<void> {
+    if (this.page) {
+      await this.page.close();
+      this.page = null;
+    if (this.context) {
+      await this.context.close();
+      await this.browser.close();
+      this.browser = null;
+  async reload(): Promise<void> {
+    await page.reload();
+  async waitForLoadState(state: 'load' | 'domcontentloaded' | 'networkidle' = 'load'): Promise<void> {
+    await page.waitForLoadState(state);

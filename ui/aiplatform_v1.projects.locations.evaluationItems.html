@@ -1,0 +1,72 @@
+<h1><a href="aiplatform_v1.html">Vertex AI API</a> . <a href="aiplatform_v1.projects.html">projects</a> . <a href="aiplatform_v1.projects.locations.html">locations</a> . <a href="aiplatform_v1.projects.locations.evaluationItems.html">evaluationItems</a></h1>
+<p class="firstline">Creates an Evaluation Item.</p>
+<p class="firstline">Deletes an Evaluation Item.</p>
+<p class="firstline">Gets an Evaluation Item.</p>
+<p class="firstline">Lists Evaluation Items.</p>
+  <pre>Creates an Evaluation Item.
+  parent: string, Required. The resource name of the Location to create the Evaluation Item in. Format: `projects/{project}/locations/{location}` (required)
+{ # EvaluationItem is a single evaluation request or result. The content of an EvaluationItem is immutable - it cannot be updated once created. EvaluationItems can be deleted when no longer needed.
+  &quot;createTime&quot;: &quot;A String&quot;, # Output only. Timestamp when this item was created.
+  &quot;displayName&quot;: &quot;A String&quot;, # Required. The display name of the EvaluationItem.
+  &quot;error&quot;: { # The `Status` type defines a logical error model that is suitable for different programming environments, including REST APIs and RPC APIs. It is used by [gRPC](https://github.com/grpc). Each `Status` message contains three pieces of data: error code, error message, and error details. You can find out more about this error model and how to work with it in the [API Design Guide](https://cloud.google.com/apis/design/errors). # Output only. Error for the evaluation item.
+  &quot;evaluationItemType&quot;: &quot;A String&quot;, # Required. The type of the EvaluationItem.
+  &quot;evaluationRequest&quot;: { # A single evaluation request supporting input for both single-turn model generation and multi-turn agent execution traces. Valid input modes: 1. Inference Mode: `prompt` is set (containing text or AgentData context). 2. Offline Eval Mode: `prompt` is unset, and `candidate_responses` contains `agent_data` (the completed execution trace). Validation Rule: Either `prompt` must be set, OR at least one of the `candidate_responses` must contain `agent_data`. # The request to evaluate.
+    &quot;candidateResponses&quot;: [ # Optional. Responses from model under test and other baseline models for comparison.
+      { # Responses from model or agent.
+        &quot;candidate&quot;: &quot;A String&quot;, # Required. The name of the candidate that produced the response.
+        &quot;error&quot;: { # The `Status` type defines a logical error model that is suitable for different programming environments, including REST APIs and RPC APIs. It is used by [gRPC](https://github.com/grpc). Each `Status` message contains three pieces of data: error code, error message, and error details. You can find out more about this error model and how to work with it in the [API Design Guide](https://cloud.google.com/apis/design/errors). # Output only. Error while scraping model or agent.
+        &quot;text&quot;: &quot;A String&quot;, # Text response.
+        &quot;value&quot;: &quot;&quot;, # Fields and values that can be used to populate the response template.
+    &quot;goldenResponse&quot;: { # Responses from model or agent. # Optional. The Ideal response or ground truth.
+    &quot;prompt&quot;: { # Prompt to be evaluated. This can represent a single-turn prompt or a multi-turn conversation for agent evaluations. # Optional. The request/prompt to evaluate.
+      &quot;promptTemplateData&quot;: { # Message to hold a prompt template and the values to populate the template. # Prompt template data.
+        &quot;values&quot;: { # The values for fields in the prompt template.
+          &quot;a_key&quot;: { # The structured data content of a message. A Content message contains a `role` field, which indicates the producer of the content, and a `parts` field, which contains the multi-part data of the message.
+      &quot;text&quot;: &quot;A String&quot;, # Text prompt.
+      &quot;value&quot;: &quot;&quot;, # Fields and values that can be used to populate the prompt template.
+    &quot;rubrics&quot;: { # Optional. Named groups of rubrics associated with this prompt. The key is a user-defined name for the rubric group.
+      &quot;a_key&quot;: { # A group of rubrics, used for grouping rubrics based on a metric or a version.
+        &quot;displayName&quot;: &quot;A String&quot;, # Human-readable name for the group. This should be unique within a given context if used for display or selection. Example: &quot;Instruction Following V1&quot;, &quot;Content Quality - Summarization Task&quot;.
+        &quot;groupId&quot;: &quot;A String&quot;, # Unique identifier for the group.
+        &quot;rubrics&quot;: [ # Rubrics that are part of this group.
+          { # Message representing a single testable criterion for evaluation. One input prompt could have multiple rubrics.
+            &quot;content&quot;: { # Content of the rubric, defining the testable criteria. # Required. The actual testable criteria for the rubric.
+              &quot;property&quot;: { # Defines criteria based on a specific property. # Evaluation criteria based on a specific property.
+                &quot;description&quot;: &quot;A String&quot;, # Description of the property being evaluated. Example: &quot;The model&#x27;s response is grammatically correct.&quot;
+            &quot;importance&quot;: &quot;A String&quot;, # Optional. The relative importance of this rubric.
+            &quot;rubricId&quot;: &quot;A String&quot;, # Unique identifier for the rubric. This ID is used to refer to this rubric, e.g., in RubricVerdict.
+            &quot;type&quot;: &quot;A String&quot;, # Optional. A type designator for the rubric, which can inform how it&#x27;s evaluated or interpreted by systems or users. It&#x27;s recommended to use consistent, well-defined, upper snake_case strings. Examples: &quot;SUMMARIZATION_QUALITY&quot;, &quot;SAFETY_HARMFUL_CONTENT&quot;, &quot;INSTRUCTION_ADHERENCE&quot;.
+  &quot;evaluationResponse&quot;: { # Evaluation result. # Output only. The response from evaluation.
+    &quot;candidateResults&quot;: [ # Optional. The results for the metric.
+      { # Result for a single candidate.
+        &quot;additionalResults&quot;: &quot;&quot;, # Optional. Additional results for the metric.
+        &quot;candidate&quot;: &quot;A String&quot;, # Required. The candidate that is being evaluated. The value is the same as the candidate name in the EvaluationRequest.
+        &quot;explanation&quot;: &quot;A String&quot;, # Optional. The explanation for the metric.
+        &quot;metric&quot;: &quot;A String&quot;, # Required. The metric that was evaluated.
+        &quot;rubricVerdicts&quot;: [ # Optional. The rubric verdicts for the metric.
+          { # Represents the verdict of an evaluation against a single rubric.
+            &quot;evaluatedRubric&quot;: { # Message representing a single testable criterion for evaluation. One input prompt could have multiple rubrics. # Required. The full rubric definition that was evaluated. Storing this ensures the verdict is self-contained and understandable, especially if the original rubric definition changes or was dynamically generated.
+            &quot;reasoning&quot;: &quot;A String&quot;, # Optional. Human-readable reasoning or explanation for the verdict. This can include specific examples or details from the evaluated content that justify the given verdict.
+            &quot;verdict&quot;: True or False, # Required. Outcome of the evaluation against the rubric, represented as a boolean. `true` indicates a &quot;Pass&quot;, `false` indicates a &quot;Fail&quot;.
+        &quot;score&quot;: 3.14, # Optional. The score for the metric.
+    &quot;evaluationRequest&quot;: &quot;A String&quot;, # Required. The request item that was evaluated. Format: projects/{project}/locations/{location}/evaluationItems/{evaluation_item}
+    &quot;evaluationRun&quot;: &quot;A String&quot;, # Required. The evaluation run that was used to generate the result. Format: projects/{project}/locations/{location}/evaluationRuns/{evaluation_run}
+    &quot;metadata&quot;: &quot;&quot;, # Optional. Metadata about the evaluation result.
+    &quot;request&quot;: { # A single evaluation request supporting input for both single-turn model generation and multi-turn agent execution traces. Valid input modes: 1. Inference Mode: `prompt` is set (containing text or AgentData context). 2. Offline Eval Mode: `prompt` is unset, and `candidate_responses` contains `agent_data` (the completed execution trace). Validation Rule: Either `prompt` must be set, OR at least one of the `candidate_responses` must contain `agent_data`. # Required. The request that was evaluated.
+  &quot;gcsUri&quot;: &quot;A String&quot;, # The Cloud Storage object where the request or response is stored.
+  &quot;labels&quot;: { # Optional. Labels for the EvaluationItem.
+  &quot;metadata&quot;: &quot;&quot;, # Optional. Metadata for the EvaluationItem.
+  &quot;name&quot;: &quot;A String&quot;, # Identifier. The resource name of the EvaluationItem. Format: `projects/{project}/locations/{location}/evaluationItems/{evaluation_item}`
+  <pre>Deletes an Evaluation Item.
+  name: string, Required. The name of the EvaluationItem resource to be deleted. Format: `projects/{project}/locations/{location}/evaluationItems/{evaluation_item}` (required)
+  <pre>Gets an Evaluation Item.
+  name: string, Required. The name of the EvaluationItem resource. Format: `projects/{project}/locations/{location}/evaluationItems/{evaluation_item}` (required)
+  <pre>Lists Evaluation Items.
+  parent: string, Required. The resource name of the Location from which to list the Evaluation Items. Format: `projects/{project}/locations/{location}` (required)
+  filter: string, Optional. Filter expression that matches a subset of the EvaluationItems to show. For field names both snake_case and camelCase are supported. For more information about filter syntax, see [AIP-160](https://google.aip.dev/160).
+  orderBy: string, Optional. A comma-separated list of fields to order by, sorted in ascending order by default. Use `desc` after a field name for descending.
+  pageSize: integer, Optional. The maximum number of Evaluation Items to return.
+  pageToken: string, Optional. A page token, received from a previous `ListEvaluationItems` call. Provide this to retrieve the subsequent page.
+    { # Response message for EvaluationManagementService.ListEvaluationItems.
+  &quot;evaluationItems&quot;: [ # List of EvaluationItems in the requested page.
+  &quot;nextPageToken&quot;: &quot;A String&quot;, # A token to retrieve the next page of results.

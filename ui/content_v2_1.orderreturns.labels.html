@@ -1,0 +1,11 @@
+<h1><a href="content_v2_1.html">Content API for Shopping</a> . <a href="content_v2_1.orderreturns.html">orderreturns</a> . <a href="content_v2_1.orderreturns.labels.html">labels</a></h1>
+  <code><a href="#create">create(merchantId, returnId, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Links a return shipping label to a return id. You can only create one return label per return id. Since the label is sent to the buyer, the linked return label cannot be updated or deleted. If you try to create multiple return shipping labels for a single return id, every create request except the first will fail.</p>
+    <code class="details" id="create">create(merchantId, returnId, body=None, x__xgafv=None)</code>
+  <pre>Links a return shipping label to a return id. You can only create one return label per return id. Since the label is sent to the buyer, the linked return label cannot be updated or deleted. If you try to create multiple return shipping labels for a single return id, every create request except the first will fail.
+  merchantId: string, Required. The merchant the Return Shipping Label belongs to. (required)
+  returnId: string, Required. Provide the Google-generated merchant order return ID. (required)
+{ # Return shipping label for a Buy on Google merchant-managed return.
+  &quot;carrier&quot;: &quot;A String&quot;, # Name of the carrier.
+  &quot;labelUri&quot;: &quot;A String&quot;, # The URL for the return shipping label in PDF format
+  &quot;trackingId&quot;: &quot;A String&quot;, # The tracking id of this return label.

@@ -1,0 +1,45 @@
+<h1><a href="vmmigration_v1.html">VM Migration API</a> . <a href="vmmigration_v1.projects.html">projects</a> . <a href="vmmigration_v1.projects.locations.html">locations</a> . <a href="vmmigration_v1.projects.locations.sources.html">sources</a> . <a href="vmmigration_v1.projects.locations.sources.utilizationReports.html">utilizationReports</a></h1>
+  <code><a href="#create">create(parent, body=None, requestId=None, utilizationReportId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Creates a new UtilizationReport.</p>
+<p class="firstline">Deletes a single Utilization Report.</p>
+<p class="firstline">Gets a single Utilization Report.</p>
+<p class="firstline">Lists Utilization Reports of the given Source.</p>
+    <code class="details" id="create">create(parent, body=None, requestId=None, utilizationReportId=None, x__xgafv=None)</code>
+  <pre>Creates a new UtilizationReport.
+  parent: string, Required. The Utilization Report&#x27;s parent. (required)
+{ # Utilization report details the utilization (CPU, memory, etc.) of selected source VMs.
+  &quot;createTime&quot;: &quot;A String&quot;, # Output only. The time the report was created (this refers to the time of the request, not the time the report creation completed).
+  &quot;displayName&quot;: &quot;A String&quot;, # The report display name, as assigned by the user.
+  &quot;error&quot;: { # The `Status` type defines a logical error model that is suitable for different programming environments, including REST APIs and RPC APIs. It is used by [gRPC](https://github.com/grpc). Each `Status` message contains three pieces of data: error code, error message, and error details. You can find out more about this error model and how to work with it in the [API Design Guide](https://cloud.google.com/apis/design/errors). # Output only. Provides details on the state of the report in case of an error.
+  &quot;frameEndTime&quot;: &quot;A String&quot;, # Output only. The point in time when the time frame ends. Notice that the time frame is counted backwards. For instance if the &quot;frame_end_time&quot; value is 2021/01/20 and the time frame is WEEK then the report covers the week between 2021/01/20 and 2021/01/14.
+  &quot;name&quot;: &quot;A String&quot;, # Output only. The report unique name.
+  &quot;state&quot;: &quot;A String&quot;, # Output only. Current state of the report.
+  &quot;timeFrame&quot;: &quot;A String&quot;, # Time frame of the report.
+  &quot;vmCount&quot;: 42, # Output only. Total number of VMs included in the report.
+  &quot;vms&quot;: [ # List of utilization information per VM. When sent as part of the request, the &quot;vm_id&quot; field is used in order to specify which VMs to include in the report. In that case all other fields are ignored.
+    { # Utilization information of a single VM.
+      &quot;utilization&quot;: { # Utilization metrics values for a single VM. # Utilization metrics for this VM.
+        &quot;cpuAveragePercent&quot;: 42, # Average CPU usage, percent.
+        &quot;cpuMaxPercent&quot;: 42, # Max CPU usage, percent.
+        &quot;diskIoRateAverageKbps&quot;: &quot;A String&quot;, # Average disk IO rate, in kilobytes per second.
+        &quot;diskIoRateMaxKbps&quot;: &quot;A String&quot;, # Max disk IO rate, in kilobytes per second.
+        &quot;memoryAveragePercent&quot;: 42, # Average memory usage, percent.
+        &quot;memoryMaxPercent&quot;: 42, # Max memory usage, percent.
+        &quot;networkThroughputAverageKbps&quot;: &quot;A String&quot;, # Average network throughput (combined transmit-rates and receive-rates), in kilobytes per second.
+        &quot;networkThroughputMaxKbps&quot;: &quot;A String&quot;, # Max network throughput (combined transmit-rates and receive-rates), in kilobytes per second.
+      &quot;vmId&quot;: &quot;A String&quot;, # The VM&#x27;s ID in the source.
+      &quot;vmwareVmDetails&quot;: { # VmwareVmDetails describes a VM in vCenter. # The description of the VM in a Source of type Vmware.
+  utilizationReportId: string, Required. The ID to use for the report, which will become the final component of the reports&#x27;s resource name. This value maximum length is 63 characters, and valid characters are /a-z-/. It must start with an english letter and must not end with a hyphen.
+  <pre>Deletes a single Utilization Report.
+  name: string, Required. The Utilization Report name. (required)
+  <pre>Gets a single Utilization Report.
+  view: string, Optional. The level of details of the report. Defaults to FULL
+      UTILIZATION_REPORT_VIEW_UNSPECIFIED - The default / unset value. The API will default to FULL on single report request and BASIC for multiple reports request.
+      BASIC - Get the report metadata, without the list of VMs and their utilization info.
+  <pre>Lists Utilization Reports of the given Source.
+  parent: string, Required. The Utilization Reports parent. (required)
+  pageSize: integer, Optional. The maximum number of reports to return. The service may return fewer than this value. If unspecified, at most 500 reports will be returned. The maximum value is 1000; values above 1000 will be coerced to 1000.
+  pageToken: string, Required. A page token, received from a previous `ListUtilizationReports` call. Provide this to retrieve the subsequent page. When paginating, all other parameters provided to `ListUtilizationReports` must match the call that provided the page token.
+  view: string, Optional. The level of details of each report. Defaults to BASIC.
+    { # Response message for &#x27;ListUtilizationReports&#x27; request.
+  &quot;utilizationReports&quot;: [ # Output only. The list of reports.

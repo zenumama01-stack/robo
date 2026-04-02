@@ -1,0 +1,138 @@
+<div class="component-browser">
+  <div class="browser-header">
+    <div class="header-top-row">
+        (click)="OnNewComponent()">
+        <i class="fa-solid fa-plus"></i> New Component
+      <div class="import-dropdown" [class.open]="ImportDropdownOpen">
+          [themeColor]="'base'"
+          (click)="ToggleImportDropdown()">
+          <i class="fa-solid fa-chevron-down dropdown-chevron"></i>
+        @if (ImportDropdownOpen) {
+            <button class="dropdown-item" (click)="OnImportFromArtifact()">
+              <i class="fa-solid fa-database"></i> From Artifact
+            <button class="dropdown-item" (click)="OnImportFromFile()">
+              <i class="fa-solid fa-file"></i> From File
+            <button class="dropdown-item" (click)="OnImportFromText()">
+              <i class="fa-solid fa-keyboard"></i> From Text
+    <div class="header-controls-row">
+        [class.active]="State.IsFilterPanelExpanded || State.GetActiveFilterCount() > 0"
+        (click)="State.ToggleFilterPanel()"
+        [title]="State.IsFilterPanelExpanded ? 'Hide filters' : 'Show filters'">
+        @if (State.GetActiveFilterCount() > 0) {
+          <span class="filter-count-badge">{{ State.GetActiveFilterCount() }}</span>
+      <span class="component-count">
+        {{ State.FilteredComponents.length }} of {{ State.AllComponents.length }}
+      [value]="State.SearchQuery"
+      (valueChange)="OnSearchChange($event)"
+      placeholder="Search components..."
+  <!-- Collapsible Filter Panel -->
+  @if (State.IsFilterPanelExpanded) {
+      <div class="filter-panel-content">
+        <!-- Quick Filters -->
+        <div class="filter-section">
+          <label class="filter-section-label">Quick Filters</label>
+                [checked]="State.ShowOnlyFavorites"
+                (change)="State.ToggleShowOnlyFavorites()">
+              <i class="fa-solid fa-star filter-icon favorites-icon"></i>
+              <span>Favorites only</span>
+                [checked]="State.ShowDeprecatedComponents"
+                (change)="State.ToggleShowDeprecatedComponents()">
+              <i class="fa-solid fa-archive filter-icon deprecated-icon"></i>
+              <span>Show deprecated
+                @if (State.GetDeprecatedCount() > 0) {
+                  <span class="deprecated-count">({{ State.GetDeprecatedCount() }})</span>
+        <!-- Category Pills -->
+        @if (State.AvailableCategories.length > 0) {
+            <label class="filter-section-label">Categories</label>
+            <div class="category-pills">
+              @for (category of State.GetVisibleCategories(); track TrackByCategoryName($index, category)) {
+                  class="category-pill"
+                  [class.active]="State.IsCategorySelected(category.name)"
+                  [style.--pill-color]="category.color"
+                  (click)="State.ToggleCategory(category.name)">
+                  <span class="pill-name">{{ category.name }}</span>
+                  <span class="pill-count">{{ category.count }}</span>
+            @if (State.AvailableCategories.length > 5) {
+                (click)="State.ToggleShowAllCategories()">
+                @if (State.ShowAllCategories) {
+                  <i class="fa-solid fa-chevron-up"></i> Show less
+                  <i class="fa-solid fa-chevron-down"></i> Show {{ State.AvailableCategories.length - 5 }} more
+        <!-- Clear All -->
+          <div class="filter-panel-footer">
+            <button class="clear-all-btn" (click)="State.ClearAllFilters()">
+              <i class="fa-solid fa-times"></i> Clear All Filters
+  <!-- Component Card List -->
+  <div class="component-list">
+    @if (State.IsLoading) {
+        <mj-loading text="Loading components..." size="small"></mj-loading>
+    } @else if (State.FilteredComponents.length === 0) {
+        @if (State.AllComponents.length === 0) {
+          <i class="fa-solid fa-puzzle-piece empty-icon"></i>
+          <p class="empty-title">No components found</p>
+          <p class="empty-subtitle">Create a new component or import one to get started.</p>
+          <i class="fa-solid fa-filter empty-icon"></i>
+          <p class="empty-title">No matching components</p>
+          <p class="empty-subtitle">Try adjusting your search or filters.</p>
+      @for (component of State.FilteredComponents; track TrackByComponentId($index, component)) {
+        <div class="component-card"
+          [class.expanded]="IsExpanded(component)"
+          [class.running]="IsComponentRunning(component)"
+          [class.file-loaded]="State.IsFileLoadedComponent(component)">
+          <!-- Card Header (always visible) -->
+          <div class="card-header" (click)="ToggleComponentExpansion(component)">
+            <div class="card-type-icon"
+              [style.color]="State.GetComponentTypeColor(State.GetComponentType(component))">
+                [ngClass]="State.GetComponentTypeIcon(State.GetComponentType(component))"></i>
+              <div class="card-title-row">
+                <span class="card-name">{{ State.GetComponentName(component) }}</span>
+                @if (State.IsFileLoadedComponent(component)) {
+                  <span class="file-badge" [title]="GetFileBadgeTooltip(component)">
+                    <i class="fa-solid" [ngClass]="GetFileBadgeIcon(component)"></i>
+                    {{ GetFileBadgeLabel(component) }}
+              <div class="card-meta-row">
+                <span class="version-badge">v{{ State.GetComponentVersion(component) }}</span>
+                <span class="status-badge" [ngClass]="GetStatusBadgeClass(component)">
+                  {{ GetStatusLabel(component) }}
+                <span class="namespace-chip"
+                  [style.background-color]="State.GetNamespaceColor(State.GetComponentNamespace(component))"
+                  [title]="State.GetComponentNamespace(component) || 'Uncategorized'">
+                  {{ State.FormatNamespace(State.GetComponentNamespace(component)) }}
+            <div class="card-end">
+              @if (!State.IsFileLoadedComponent(component)) {
+                  class="favorite-btn"
+                  [class.is-favorite]="State.IsFavorite(component)"
+                  (click)="OnToggleFavorite(component, $event)"
+                  [title]="State.IsFavorite(component) ? 'Remove from favorites' : 'Add to favorites'">
+                  @if (State.IsFavorite(component)) {
+                    <i class="fa-regular fa-star"></i>
+                  class="remove-btn"
+                  (click)="OnRemoveFileComponent($any(component), $event)"
+                  title="Remove imported component">
+              <div class="card-chevron">
+                @if (IsExpanded(component)) {
+          <!-- Card Details (expanded) -->
+            <div class="card-details">
+              @if (State.GetComponentDescription(component)) {
+                <div class="detail-description">
+                  <p>{{ State.GetComponentDescription(component) }}</p>
+              <div class="detail-info-grid">
+                  <span class="info-label">Type</span>
+                  <span class="info-value">{{ State.GetComponentType(component) || 'Unknown' }}</span>
+                  <span class="info-label">Version</span>
+                  <span class="info-value">{{ State.GetComponentVersion(component) }}</span>
+                  <span class="info-label">Status</span>
+                  <span class="info-value">{{ State.GetComponentStatus(component) || 'Draft' }}</span>
+                    <span class="info-label">Loaded</span>
+                    <span class="info-value">{{ State.GetComponentLoadedAt(component) | date:'short' }}</span>
+                } @else if (State.GetComponentUpdatedAt(component)) {
+                    <span class="info-label">Updated</span>
+                    <span class="info-value">{{ State.GetComponentUpdatedAt(component) | date:'short' }}</span>
+              <div class="detail-actions">
+                @if (IsComponentRunning(component)) {
+                    (click)="OnStopComponent($event)">
+                    <i class="fa-solid fa-stop"></i> Stop
+                } @else if (IsAnotherComponentRunning(component)) {
+                    title="Stop current component and run this one"
+                    (click)="OnSwitchComponent(component, $event)">
+                    <i class="fa-solid fa-exchange-alt"></i> Switch To This
+                    (click)="OnRunComponent(component, $event)">

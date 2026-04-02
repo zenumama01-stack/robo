@@ -1,0 +1,34 @@
+<h1><a href="workloadmanager_v1.html">Workload Manager API</a> . <a href="workloadmanager_v1.projects.html">projects</a> . <a href="workloadmanager_v1.projects.locations.html">locations</a> . <a href="workloadmanager_v1.projects.locations.deployments.html">deployments</a> . <a href="workloadmanager_v1.projects.locations.deployments.actuations.html">actuations</a></h1>
+<p class="firstline">Creates a new actuation for an existing Deployment.</p>
+<p class="firstline">Deletes a single Actuation</p>
+<p class="firstline">Gets details of a single Actuation.</p>
+<p class="firstline">Lists Actuations in a given project, location and deployment.</p>
+  <pre>Creates a new actuation for an existing Deployment.
+  parent: string, Required. The resource name of the Actuation location using the form: &#x27;projects/{project_id}/locations/{location}/deployments/{deployment}&#x27; (required)
+{ # The Actuation object represents the bootstrap state and output results of deployed infrastructure and software.
+  &quot;actuationOutput&quot;: { # Message for output of Actuation # Output only. [Output only] Actuation output
+    &quot;actuateLogs&quot;: &quot;A String&quot;, # A link to gcs file that store build logs
+    &quot;ansibleError&quot;: &quot;A String&quot;, # Output only. error message return from ansible.
+    &quot;ansibleFailedTask&quot;: [ # Output only. failed task name return from ansible.
+    &quot;blueprintId&quot;: &quot;A String&quot;, # reference to Blueprint Controller deployment and revision resource
+    &quot;cloudbuildId&quot;: &quot;A String&quot;, # Cloud Build instance UUID associated with this revision, without any suffix or prefix
+    &quot;errorCode&quot;: &quot;A String&quot;, # Output only. Code describing any errors that may have occurred. If not specified, there is no error in actuation.
+    &quot;errorLogs&quot;: &quot;A String&quot;, # A link to actuation cloud build log.
+    &quot;hasUserFacingErrorMsg&quot;: True or False, # Output only. whether the error message is user facing. If true, the error message will be shown in the UI.
+    &quot;terraformError&quot;: &quot;A String&quot;, # Output only. error message return from terraform.
+    &quot;terraformTemplate&quot;: &quot;A String&quot;, # reference to terraform template used
+  &quot;deploymentOutput&quot;: [ # Output only. [Output only] Deployment output
+    { # Message for output of deployment resource
+      &quot;name&quot;: &quot;A String&quot;, # name of the resource
+      &quot;type&quot;: &quot;A String&quot;, # type of the resource
+  &quot;endTime&quot;: &quot;A String&quot;, # Output only. [Output only] End time stamp
+  &quot;name&quot;: &quot;A String&quot;, # The name of actuation resource. The format is projects/{project}/locations/{location}/deployments/{deployment}/actuations/{actuation}
+  &quot;startTime&quot;: &quot;A String&quot;, # Output only. [Output only] Start time stamp
+  &quot;state&quot;: &quot;A String&quot;, # Output only. [Output only] Actuation state
+  <pre>Deletes a single Actuation
+  name: string, Required. The name of the book to delete. project/{project_id}/locations/{location_id}/deployments/{deployment_id}/actuations/{actuation_id} (required)
+  <pre>Gets details of a single Actuation.
+  <pre>Lists Actuations in a given project, location and deployment.
+  parent: string, Required. The resource prefix of the Actuation using the form: &#x27;projects/{project_id}/locations/{location}/deployments/{deployment}&#x27; (required)
+    { # The response object from `ListActuations`.
+  &quot;actuations&quot;: [ # The list of Actuation

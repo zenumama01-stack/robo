@@ -1,0 +1,16 @@
+<h1><a href="networksecurity_v1.html">Network Security API</a> . <a href="networksecurity_v1.projects.html">projects</a> . <a href="networksecurity_v1.projects.locations.html">locations</a> . <a href="networksecurity_v1.projects.locations.mirroringDeploymentGroups.html">mirroringDeploymentGroups</a></h1>
+  <code><a href="#create">create(parent, body=None, mirroringDeploymentGroupId=None, requestId=None, x__xgafv=None)</a></code></p>
+    <code class="details" id="create">create(parent, body=None, mirroringDeploymentGroupId=None, requestId=None, x__xgafv=None)</code>
+{ # A deployment group aggregates many zonal mirroring backends (deployments) into a single global mirroring service. Consumers can connect this service using an endpoint group.
+      &quot;name&quot;: &quot;A String&quot;, # Output only. The connected endpoint group&#x27;s resource name, for example: `projects/123456789/locations/global/mirroringEndpointGroups/my-eg`. See https://google.aip.dev/124.
+    { # Details about mirroring in a specific cloud location.
+  &quot;name&quot;: &quot;A String&quot;, # Immutable. Identifier. The resource name of this deployment group, for example: `projects/123456789/locations/global/mirroringDeploymentGroups/my-dg`. See https://google.aip.dev/122 for more details.
+  &quot;nestedDeployments&quot;: [ # Output only. The list of Mirroring Deployments that belong to this group.
+      &quot;name&quot;: &quot;A String&quot;, # Output only. The name of the Mirroring Deployment, in the format: `projects/{project}/locations/{location}/mirroringDeployments/{mirroring_deployment}`.
+  mirroringDeploymentGroupId: string, Required. The ID to use for the new deployment group, which will become the final component of the deployment group&#x27;s resource name.
+  name: string, Required. The name of the deployment group to retrieve. Format: projects/{project}/locations/{location}/mirroringDeploymentGroups/{mirroring_deployment_group} (required)
+  pageToken: string, Optional. A page token, received from a previous `ListMirroringDeploymentGroups` call. Provide this to retrieve the subsequent page. When paginating, all other parameters provided to `ListMirroringDeploymentGroups` must match the call that provided the page token. See https://google.aip.dev/158 for more details.
+    { # Response message for ListMirroringDeploymentGroups.
+  &quot;mirroringDeploymentGroups&quot;: [ # The deployment groups from the specified parent.
+  name: string, Immutable. Identifier. The resource name of this deployment group, for example: `projects/123456789/locations/global/mirroringDeploymentGroups/my-dg`. See https://google.aip.dev/122 for more details. (required)
+  updateMask: string, Optional. The list of fields to update. Fields are specified relative to the deployment group (e.g. `description`; *not* `mirroring_deployment_group.description`). See https://google.aip.dev/161 for more details.

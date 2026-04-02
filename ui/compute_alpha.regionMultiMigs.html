@@ -1,0 +1,36 @@
+<h1><a href="compute_alpha.html">Compute Engine API</a> . <a href="compute_alpha.regionMultiMigs.html">regionMultiMigs</a></h1>
+  <code><a href="#delete">delete(project, region, multiMig, requestId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Deletes a multi-MIG in the specified project.</p>
+  <code><a href="#get">get(project, region, multiMig, x__xgafv=None)</a></code></p>
+<p class="firstline">Returns all the details of a specific multi-MIG.</p>
+<p class="firstline">Creates a multi-MIG in the specified project.</p>
+<p class="firstline">Retrieves a list of multi-MIGs in a project and region.</p>
+    <code class="details" id="delete">delete(project, region, multiMig, requestId=None, x__xgafv=None)</code>
+  <pre>Deletes a multi-MIG in the specified project.
+  multiMig: string, Name of the multi-MIG to delete. (required)
+    <code class="details" id="get">get(project, region, multiMig, x__xgafv=None)</code>
+  <pre>Returns all the details of a specific multi-MIG.
+  multiMig: string, Name of the multi-MIG resource to return. (required)
+    { # Multi-MIG represents a group of managed instance groups.
+  &quot;creationTimestamp&quot;: &quot;A String&quot;, # Output only. [Output only] The creation timestamp of this multi-MIG in RFC3339
+  &quot;kind&quot;: &quot;compute#multiMig&quot;, # Output only. [Output only] Type of the resource. Alwayscompute#multiMig for multi-MIGs.
+  &quot;name&quot;: &quot;A String&quot;, # The name of the multi-MIG.
+  &quot;region&quot;: &quot;A String&quot;, # Output only. [Output only] The URL of the region where the resource resides. You must
+      # specify this field as part of the HTTP request URL. You cannot set the
+      # region as a field in the request body.
+  &quot;resourcePolicies&quot;: { # Resource policies message for a multi-MIG. Specifies the workload policy # Resource policies for this multi-MIG.
+      # configuration of the multi-MIG.
+    &quot;workloadPolicy&quot;: &quot;A String&quot;, # The URL of the workload policy for this multi-MIG.
+  &quot;status&quot;: {
+    &quot;appliedAcceleratorTopologies&quot;: [ # Output only. [Output Only] The accelerator topology applied to this multi-MIG.
+        &quot;acceleratorTopologyState&quot;: &quot;A String&quot;, # Output only. [Output Only] The state of the accelerator topology.
+        &quot;acceleratorTopologyStateLastCheck&quot;: { # Output only. [Output Only] The result of the latest accelerator topology state
+          &quot;error&quot;: { # Output only. [Output Only] Encountered errors on the last state check.
+    &quot;memberInstanceGroupManagers&quot;: [
+    &quot;membersCount&quot;: 42, # Output only. [Output Only] The number of instance group manager members in this
+        # multi-MIG.
+  <pre>Creates a multi-MIG in the specified project.
+prevents you from accidentally creating duplicate commitments.
+  <pre>Retrieves a list of multi-MIGs in a project and region.
+  &quot;items&quot;: [ # A list of multi-MIGs in the specified project and region.
+  &quot;kind&quot;: &quot;compute#multiMigList&quot;, # Output only. Type of resource.

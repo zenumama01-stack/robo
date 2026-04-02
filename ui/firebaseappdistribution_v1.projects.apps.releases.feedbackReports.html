@@ -1,0 +1,22 @@
+<h1><a href="firebaseappdistribution_v1.html">Firebase App Distribution API</a> . <a href="firebaseappdistribution_v1.projects.html">projects</a> . <a href="firebaseappdistribution_v1.projects.apps.html">apps</a> . <a href="firebaseappdistribution_v1.projects.apps.releases.html">releases</a> . <a href="firebaseappdistribution_v1.projects.apps.releases.feedbackReports.html">feedbackReports</a></h1>
+<p class="firstline">Deletes a feedback report.</p>
+<p class="firstline">Gets a feedback report.</p>
+<p class="firstline">Lists feedback reports. By default, sorts by `createTime` in descending order.</p>
+  <pre>Deletes a feedback report.
+  name: string, Required. The name of the feedback report to delete. Format: projects/{project_number}/apps/{app}/releases/{release}/feedbackReports/{feedback_report} (required)
+  <pre>Gets a feedback report.
+  name: string, Required. The name of the feedback report to retrieve. Format: projects/{project_number}/apps/{app}/releases/{release}/feedbackReports/{feedback_report} (required)
+    { # A feedback report submitted by a tester for a release.
+  &quot;createTime&quot;: &quot;A String&quot;, # Output only. The time when the feedback report was created.
+  &quot;firebaseConsoleUri&quot;: &quot;A String&quot;, # Output only. A link to the Firebase console displaying the feedback report.
+  &quot;name&quot;: &quot;A String&quot;, # The name of the feedback report resource. Format: `projects/{project_number}/apps/{app}/releases/{release}/feedbackReports/{feedback_report}`
+  &quot;screenshotUri&quot;: &quot;A String&quot;, # Output only. A signed link (which expires in one hour) that lets you directly download the screenshot.
+  &quot;tester&quot;: &quot;A String&quot;, # Output only. The resource name of the tester who submitted the feedback report.
+  &quot;text&quot;: &quot;A String&quot;, # Output only. The text of the feedback report.
+  <pre>Lists feedback reports. By default, sorts by `createTime` in descending order.
+  parent: string, Required. The name of the release resource, which is the parent of the feedback report resources. Format: `projects/{project_number}/apps/{app}/releases/{release}` (required)
+  pageSize: integer, Output only. The maximum number of feedback reports to return. The service may return fewer than this value. The valid range is [1-100]; If unspecified (0), at most 25 feedback reports are returned. Values above 100 are coerced to 100.
+  pageToken: string, Output only. A page token, received from a previous `ListFeedbackReports` call. Provide this to retrieve the subsequent page. When paginating, all other parameters provided to `ListFeedbackReports` must match the call that provided the page token.
+    { # The response message for `ListFeedbackReports`.
+  &quot;feedbackReports&quot;: [ # The feedback reports
+  &quot;nextPageToken&quot;: &quot;A String&quot;, # A short-lived token, which can be sent as `pageToken` to retrieve the next page. If this field is omitted, there are no subsequent pages.

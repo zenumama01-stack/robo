@@ -1,0 +1,19 @@
+<h1><a href="cloudasset_v1p1beta1.html">Cloud Asset API</a> . <a href="cloudasset_v1p1beta1.resources.html">resources</a></h1>
+  <code><a href="#searchAll">searchAll(scope, assetTypes=None, orderBy=None, pageSize=None, pageToken=None, query=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Searches all the resources within a given accessible Resource Manager scope (project/folder/organization). This RPC gives callers especially administrators the ability to search all the resources within a scope, even if they don't have `.get` permission of all the resources. Callers should have `cloudasset.assets.searchAllResources` permission on the requested scope, otherwise the request will be rejected.</p>
+    <code class="details" id="searchAll">searchAll(scope, assetTypes=None, orderBy=None, pageSize=None, pageToken=None, query=None, x__xgafv=None)</code>
+  <pre>Searches all the resources within a given accessible Resource Manager scope (project/folder/organization). This RPC gives callers especially administrators the ability to search all the resources within a scope, even if they don&#x27;t have `.get` permission of all the resources. Callers should have `cloudasset.assets.searchAllResources` permission on the requested scope, otherwise the request will be rejected.
+  assetTypes: string, Optional. A list of asset types that this request searches for. If empty, it will search all the supported asset types. (repeated)
+  orderBy: string, Optional. A comma separated list of fields specifying the sorting order of the results. The default order is ascending. Add ` DESC` after the field name to indicate descending order. Redundant space characters are ignored. For example, ` location DESC , name `.
+  query: string, Optional. The query statement.
+  &quot;results&quot;: [ # A list of resource that match the search query.
+    { # The standard metadata of a cloud resource.
+      &quot;additionalAttributes&quot;: [ # Additional searchable attributes of this resource. Informational only. The exact set of attributes is subject to change. For example: project id, DNS name etc.
+      &quot;assetType&quot;: &quot;A String&quot;, # The type of this resource. For example: &quot;compute.googleapis.com/Disk&quot;.
+      &quot;description&quot;: &quot;A String&quot;, # One or more paragraphs of text description of this resource. Maximum length could be up to 1M bytes.
+      &quot;displayName&quot;: &quot;A String&quot;, # The display name of this resource.
+      &quot;labels&quot;: { # Labels associated with this resource. See [Labelling and grouping Google Cloud resources](https://cloud.google.com/blog/products/gcp/labelling-and-grouping-your-google-cloud-platform-resources) for more information.
+      &quot;location&quot;: &quot;A String&quot;, # Location can be &quot;global&quot;, regional like &quot;us-east1&quot;, or zonal like &quot;us-west1-b&quot;.
+      &quot;name&quot;: &quot;A String&quot;, # The full resource name. For example: `//compute.googleapis.com/projects/my_project_123/zones/zone1/instances/instance1`. See [Resource Names](https://cloud.google.com/apis/design/resource_names#full_resource_name) for more information.
+      &quot;networkTags&quot;: [ # Network tags associated with this resource. Like labels, network tags are a type of annotations used to group Google Cloud resources. See [Labelling Google Cloud resources](lhttps://cloud.google.com/blog/products/gcp/labelling-and-grouping-your-google-cloud-platform-resources) for more information.
+      &quot;project&quot;: &quot;A String&quot;, # The project that this resource belongs to, in the form of `projects/{project_number}`.

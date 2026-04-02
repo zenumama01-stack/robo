@@ -1,0 +1,37 @@
+<h1><a href="networkservices_v1.html">Network Services API</a> . <a href="networkservices_v1.projects.html">projects</a> . <a href="networkservices_v1.projects.locations.html">locations</a> . <a href="networkservices_v1.projects.locations.serviceLbPolicies.html">serviceLbPolicies</a></h1>
+  <code><a href="#create">create(parent, body=None, serviceLbPolicyId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Creates a new ServiceLbPolicy in a given project and location.</p>
+<p class="firstline">Deletes a single ServiceLbPolicy.</p>
+<p class="firstline">Gets details of a single ServiceLbPolicy.</p>
+<p class="firstline">Lists ServiceLbPolicies in a given project and location.</p>
+<p class="firstline">Updates the parameters of a single ServiceLbPolicy.</p>
+    <code class="details" id="create">create(parent, body=None, serviceLbPolicyId=None, x__xgafv=None)</code>
+  <pre>Creates a new ServiceLbPolicy in a given project and location.
+  parent: string, Required. The parent resource of the ServiceLbPolicy. Must be in the format `projects/{project}/locations/{location}`. (required)
+{ # ServiceLbPolicy holds global load balancing and traffic distribution configuration that can be applied to a BackendService.
+  &quot;autoCapacityDrain&quot;: { # Option to specify if an unhealthy IG/NEG should be considered for global load balancing and traffic routing. # Optional. Configuration to automatically move traffic away for unhealthy IG/NEG for the associated Backend Service.
+    &quot;enable&quot;: True or False, # Optional. If set to &#x27;True&#x27;, an unhealthy IG/NEG will be set as drained. - An IG/NEG is considered unhealthy if less than 25% of the instances/endpoints in the IG/NEG are healthy. - This option will never result in draining more than 50% of the configured IGs/NEGs for the Backend Service.
+  &quot;createTime&quot;: &quot;A String&quot;, # Output only. The timestamp when this resource was created.
+  &quot;failoverConfig&quot;: { # Option to specify health based failover behavior. This is not related to Network load balancer FailoverPolicy. # Optional. Configuration related to health based failover.
+    &quot;failoverHealthThreshold&quot;: 42, # Optional. The percentage threshold that a load balancer will begin to send traffic to failover backends. If the percentage of endpoints in a MIG/NEG is smaller than this value, traffic would be sent to failover backends if possible. This field should be set to a value between 1 and 99. The default value is 50 for Global external HTTP(S) load balancer (classic) and Proxyless service mesh, and 70 for others.
+  &quot;isolationConfig&quot;: { # Configuration to provide isolation support for the associated Backend Service. # Optional. Configuration to provide isolation support for the associated Backend Service.
+    &quot;isolationGranularity&quot;: &quot;A String&quot;, # Optional. The isolation granularity of the load balancer.
+    &quot;isolationMode&quot;: &quot;A String&quot;, # Optional. The isolation mode of the load balancer.
+  &quot;labels&quot;: { # Optional. Set of label tags associated with the ServiceLbPolicy resource.
+  &quot;loadBalancingAlgorithm&quot;: &quot;A String&quot;, # Optional. The type of load balancing algorithm to be used. The default behavior is WATERFALL_BY_REGION.
+  &quot;name&quot;: &quot;A String&quot;, # Identifier. Name of the ServiceLbPolicy resource. It matches pattern `projects/{project}/locations/{location}/serviceLbPolicies/{service_lb_policy_name}`.
+  &quot;updateTime&quot;: &quot;A String&quot;, # Output only. The timestamp when this resource was last updated.
+  serviceLbPolicyId: string, Required. Short name of the ServiceLbPolicy resource to be created. E.g. for resource name `projects/{project}/locations/{location}/serviceLbPolicies/{service_lb_policy_name}`. the id is value of {service_lb_policy_name}
+  <pre>Deletes a single ServiceLbPolicy.
+  name: string, Required. A name of the ServiceLbPolicy to delete. Must be in the format `projects/{project}/locations/{location}/serviceLbPolicies/*`. (required)
+  <pre>Gets details of a single ServiceLbPolicy.
+  name: string, Required. A name of the ServiceLbPolicy to get. Must be in the format `projects/{project}/locations/{location}/serviceLbPolicies/*`. (required)
+  <pre>Lists ServiceLbPolicies in a given project and location.
+  parent: string, Required. The project and location from which the ServiceLbPolicies should be listed, specified in the format `projects/{project}/locations/{location}`. (required)
+  pageSize: integer, Maximum number of ServiceLbPolicies to return per call.
+  pageToken: string, The value returned by the last `ListServiceLbPoliciesResponse` Indicates that this is a continuation of a prior `ListRouters` call, and that the system should return the next page of data.
+    { # Response returned by the ListServiceLbPolicies method.
+  &quot;serviceLbPolicies&quot;: [ # List of ServiceLbPolicy resources.
+  <pre>Updates the parameters of a single ServiceLbPolicy.
+  name: string, Identifier. Name of the ServiceLbPolicy resource. It matches pattern `projects/{project}/locations/{location}/serviceLbPolicies/{service_lb_policy_name}`. (required)
+  updateMask: string, Optional. Field mask is used to specify the fields to be overwritten in the ServiceLbPolicy resource by the update. The fields specified in the update_mask are relative to the resource, not the full request. A field will be overwritten if it is in the mask. If the user does not provide a mask then all fields will be overwritten.

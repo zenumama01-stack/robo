@@ -1,0 +1,22 @@
+<h1><a href="content_v2_1.html">Content API for Shopping</a> . <a href="content_v2_1.collectionstatuses.html">collectionstatuses</a></h1>
+<p class="firstline">Gets the status of a collection from your Merchant Center account.</p>
+<p class="firstline">Lists the statuses of the collections in your Merchant Center account.</p>
+  <pre>Gets the status of a collection from your Merchant Center account.
+    { # The collectionstatus message.
+  &quot;collectionLevelIssuses&quot;: [ # A list of all issues associated with the collection.
+    { # Issue associated with the collection.
+      &quot;applicableCountries&quot;: [ # Country codes (ISO 3166-1 alpha-2) where issue applies to the offer.
+      &quot;servability&quot;: &quot;A String&quot;, # How this issue affects the serving of the collection.
+  &quot;creationDate&quot;: &quot;A String&quot;, # Date on which the collection has been created in [ISO 8601](http://en.wikipedia.org/wiki/ISO_8601) format: Date, time, and offset, for example &quot;2020-01-02T09:00:00+01:00&quot; or &quot;2020-01-02T09:00:00Z&quot;
+  &quot;destinationStatuses&quot;: [ # The intended destinations for the collection.
+    { # Destination status message.
+      &quot;approvedCountries&quot;: [ # Country codes (ISO 3166-1 alpha-2) where the collection is approved.
+      &quot;disapprovedCountries&quot;: [ # Country codes (ISO 3166-1 alpha-2) where the collection is disapproved.
+      &quot;pendingCountries&quot;: [ # Country codes (ISO 3166-1 alpha-2) where the collection is pending approval.
+      &quot;status&quot;: &quot;A String&quot;, # The status for the specified destination in the collections target country.
+  &quot;id&quot;: &quot;A String&quot;, # Required. The ID of the collection for which status is reported.
+  &quot;lastUpdateDate&quot;: &quot;A String&quot;, # Date on which the collection has been last updated in [ISO 8601](http://en.wikipedia.org/wiki/ISO_8601) format: Date, time, and offset, for example &quot;2020-01-02T09:00:00+01:00&quot; or &quot;2020-01-02T09:00:00Z&quot;
+  <pre>Lists the statuses of the collections in your Merchant Center account.
+  pageSize: integer, The maximum number of collection statuses to return in the response, used for paging. Defaults to 50; values above 1000 will be coerced to 1000.
+    { # Response message for the ListCollectionStatuses method.
+  &quot;resources&quot;: [ # The collectionstatuses listed.

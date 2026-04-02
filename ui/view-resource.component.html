@@ -1,0 +1,36 @@
+<div #container class="view-resource-container">
+        <div class="view-loading-state">
+            <mj-loading text="Loading view..." size="large"></mj-loading>
+    } @else if (errorMessage) {
+        <div class="view-error-state">
+            <p>{{ errorMessage }}</p>
+    } @else if (entityInfo) {
+        <!-- Header with title and action buttons -->
+        <div class="view-header">
+                <h2 class="view-title">{{ viewEntity?.Name || entityInfo.Name }}</h2>
+                @if (viewEntity?.Description) {
+                    <p class="view-description">{{ viewEntity!.Description }}</p>
+                    class="action-button create-button"
+                    title="Create new {{ entityInfo.Name }} record">
+                    <span>New Record</span>
+                    class="action-button export-button"
+                    [disabled]="isExporting"
+                    @if (isExporting) {
+                    <span>{{ isExporting ? 'Exporting...' : 'Export' }}</span>
+        <!-- Entity Viewer -->
+            [entity]="entityInfo"
+            [viewEntity]="viewEntity"
+            [gridState]="gridState"
+            (recordOpened)="onRecordOpened($any($event))"
+            (dataLoaded)="onDataLoaded()">
+        <!-- Hidden Excel Export Component -->
+        <kendo-excelexport
+            #excelExport
+            [data]="exportData"
+            [fileName]="exportFileName">
+            @for (column of exportColumns; track column.Name) {
+                <kendo-excelexport-column
+                    [field]="column.Name"
+                    [title]="column.DisplayName">
+                </kendo-excelexport-column>
+        </kendo-excelexport>

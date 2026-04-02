@@ -1,0 +1,66 @@
+<h1><a href="pubsub_v1.html">Cloud Pub/Sub API</a> . <a href="pubsub_v1.projects.html">projects</a> . <a href="pubsub_v1.projects.schemas.html">schemas</a></h1>
+<p class="firstline">Commits a new schema revision to an existing schema.</p>
+  <code><a href="#deleteRevision">deleteRevision(name, revisionId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Deletes a specific schema revision.</p>
+<p class="firstline">Lists schemas in a project.</p>
+  <code><a href="#listRevisions">listRevisions(name, pageSize=None, pageToken=None, view=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Lists all schema revisions for the named schema.</p>
+<p class="firstline">Creates a new schema revision that is a copy of the provided revision_id.</p>
+  <code><a href="#validate">validate(parent, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Validates a schema.</p>
+  <code><a href="#validateMessage">validateMessage(parent, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Validates a message against a schema.</p>
+  <pre>Commits a new schema revision to an existing schema.
+  name: string, Required. The name of the schema we are revising. Format is `projects/{project}/schemas/{schema}`. (required)
+{ # Request for CommitSchema method.
+  &quot;schema&quot;: { # A schema resource. # Required. The schema revision to commit.
+    &quot;definition&quot;: &quot;A String&quot;, # The definition of the schema. This should contain a string representing the full definition of the schema that is a valid schema definition of the type specified in `type`.
+    &quot;name&quot;: &quot;A String&quot;, # Required. Name of the schema. Format is `projects/{project}/schemas/{schema}`.
+    &quot;revisionId&quot;: &quot;A String&quot;, # Output only. Immutable. The revision ID of the schema.
+    &quot;type&quot;: &quot;A String&quot;, # The type of the schema definition.
+    { # A schema resource.
+  parent: string, Required. The name of the project in which to create the schema. Format is `projects/{project-id}`. (required)
+  schemaId: string, The ID to use for the schema, which will become the final component of the schema&#x27;s resource name. See https://cloud.google.com/pubsub/docs/pubsub-basics#resource_names for resource name constraints.
+  name: string, Required. Name of the schema to delete. Format is `projects/{project}/schemas/{schema}`. (required)
+    <code class="details" id="deleteRevision">deleteRevision(name, revisionId=None, x__xgafv=None)</code>
+  <pre>Deletes a specific schema revision.
+  name: string, Required. The name of the schema revision to be deleted, with a revision ID explicitly included. Example: `projects/123/schemas/my-schema@c7cfa2a8` (required)
+  revisionId: string, Optional. This field is deprecated and should not be used for specifying the revision ID. The revision ID should be specified via the `name` parameter.
+  name: string, Required. The name of the schema to get. Format is `projects/{project}/schemas/{schema}`. (required)
+  view: string, The set of fields to return in the response. If not set, returns a Schema with all fields filled out. Set to `BASIC` to omit the `definition`.
+      SCHEMA_VIEW_UNSPECIFIED - The default / unset value. The API will default to the BASIC view.
+      BASIC - Include the name and type of the schema, but not the definition.
+      FULL - Include all Schema object fields.
+  <pre>Lists schemas in a project.
+  parent: string, Required. The name of the project in which to list schemas. Format is `projects/{project-id}`. (required)
+  pageSize: integer, Maximum number of schemas to return.
+  pageToken: string, The value returned by the last `ListSchemasResponse`; indicates that this is a continuation of a prior `ListSchemas` call, and that the system should return the next page of data.
+  view: string, The set of Schema fields to return in the response. If not set, returns Schemas with `name` and `type`, but not `definition`. Set to `FULL` to retrieve all fields.
+    { # Response for the `ListSchemas` method.
+  &quot;nextPageToken&quot;: &quot;A String&quot;, # If not empty, indicates that there may be more schemas that match the request; this value should be passed in a new `ListSchemasRequest`.
+  &quot;schemas&quot;: [ # The resulting schemas.
+    <code class="details" id="listRevisions">listRevisions(name, pageSize=None, pageToken=None, view=None, x__xgafv=None)</code>
+  <pre>Lists all schema revisions for the named schema.
+  name: string, Required. The name of the schema to list revisions for. (required)
+  pageToken: string, The page token, received from a previous ListSchemaRevisions call. Provide this to retrieve the subsequent page.
+    { # Response for the `ListSchemaRevisions` method.
+  &quot;nextPageToken&quot;: &quot;A String&quot;, # A token that can be sent as `page_token` to retrieve the next page. If this field is empty, there are no subsequent pages.
+  &quot;schemas&quot;: [ # The revisions of the schema.
+  <pre>Creates a new schema revision that is a copy of the provided revision_id.
+  name: string, Required. The schema being rolled back with revision id. (required)
+{ # Request for the `RollbackSchema` method.
+  &quot;revisionId&quot;: &quot;A String&quot;, # Required. The revision ID to roll back to. It must be a revision of the same schema. Example: c7cfa2a8
+    <code class="details" id="validate">validate(parent, body=None, x__xgafv=None)</code>
+  <pre>Validates a schema.
+  parent: string, Required. The name of the project in which to validate schemas. Format is `projects/{project-id}`. (required)
+{ # Request for the `ValidateSchema` method.
+  &quot;schema&quot;: { # A schema resource. # Required. The schema object to validate.
+    { # Response for the `ValidateSchema` method. Empty for now.
+    <code class="details" id="validateMessage">validateMessage(parent, body=None, x__xgafv=None)</code>
+  <pre>Validates a message against a schema.
+{ # Request for the `ValidateMessage` method.
+  &quot;encoding&quot;: &quot;A String&quot;, # The encoding expected for messages
+  &quot;message&quot;: &quot;A String&quot;, # Message to validate against the provided `schema_spec`.
+  &quot;name&quot;: &quot;A String&quot;, # Name of the schema against which to validate. Format is `projects/{project}/schemas/{schema}`.
+  &quot;schema&quot;: { # A schema resource. # Ad-hoc schema against which to validate
+    { # Response for the `ValidateMessage` method. Empty for now.

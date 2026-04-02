@@ -1,0 +1,28 @@
+    <!-- Authorization Hierarchy Section -->
+        SectionKey="authorizationHierarchy"
+        SectionName="Authorization Hierarchy"
+    <!-- Authorization Core Section -->
+        SectionKey="authorizationCore"
+        SectionName="Authorization Core"
+            FieldName="UseAuditLog"
+    <!-- Action Authorizations Section -->
+        SectionKey="actionAuthorizations"
+        SectionName="Action Authorizations"
+        [BadgeCount]="GetSectionRowCount('actionAuthorizations')"
+                [Params]="BuildRelationshipViewParamsByEntityName('MJ: Action Authorizations','AuthorizationID')"
+                [AllowLoad]="IsSectionExpanded('actionAuthorizations')"
+                (AfterDataLoad)="SetSectionRowCount('actionAuthorizations', $event.totalRowCount)"
+                [Params]="BuildRelationshipViewParamsByEntityName('MJ: Audit Log Types','AuthorizationName')"
+                [Params]="BuildRelationshipViewParamsByEntityName('MJ: Audit Logs','AuthorizationName')"
+    <!-- MJ: Authorization Roles Section -->
+        SectionKey="mJAuthorizationRoles"
+        SectionName="MJ: Authorization Roles"
+        Icon="fa fa-user-shield"
+        [BadgeCount]="GetSectionRowCount('mJAuthorizationRoles')"
+                [Params]="BuildRelationshipViewParamsByEntityName('MJ: Authorization Roles','AuthorizationID')"
+                [NewRecordValues]="NewRecordValues('MJ: Authorization Roles')"
+                [AllowLoad]="IsSectionExpanded('mJAuthorizationRoles')"
+                (AfterDataLoad)="SetSectionRowCount('mJAuthorizationRoles', $event.totalRowCount)"
+        Icon="fa-solid fa-shield-halved"
+                [Params]="BuildRelationshipViewParamsByEntityName('MJ: Authorizations','ParentID')"
+                [NewRecordValues]="NewRecordValues('MJ: Authorizations')"

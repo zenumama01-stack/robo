@@ -1,0 +1,43 @@
+<h1><a href="iam_v1.html">Identity and Access Management (IAM) API</a> . <a href="iam_v1.locations.html">locations</a> . <a href="iam_v1.locations.workforcePools.html">workforcePools</a> . <a href="iam_v1.locations.workforcePools.providers.html">providers</a> . <a href="iam_v1.locations.workforcePools.providers.scimTenants.html">scimTenants</a></h1>
+  <code><a href="iam_v1.locations.workforcePools.providers.scimTenants.tokens.html">tokens()</a></code>
+  <code><a href="#create">create(parent, body=None, workforcePoolProviderScimTenantId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Gemini Enterprise only. Creates a new WorkforcePoolProviderScimTenant in a WorkforcePoolProvider. You cannot reuse the name of a deleted SCIM tenant until 30 days after deletion.</p>
+  <code><a href="#delete">delete(name, hardDelete=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Gemini Enterprise only. Deletes a WorkforcePoolProviderScimTenant. You can undelete a SCIM tenant for 30 days. After 30 days, deletion is permanent. You cannot update deleted SCIM tenants. However, you can view and list them.</p>
+<p class="firstline">Gemini Enterprise only. Gets an individual WorkforcePoolProviderScimTenant.</p>
+<p class="firstline">Gemini Enterprise only. Lists all non-deleted WorkforcePoolProviderScimTenants in a WorkforcePoolProvider. If `show_deleted` is set to `true`, then deleted SCIM tenants are also listed.</p>
+<p class="firstline">Gemini Enterprise only. Updates an existing WorkforcePoolProviderScimTenant.</p>
+<p class="firstline">Gemini Enterprise only. Undeletes a WorkforcePoolProviderScimTenant, that was deleted fewer than 30 days ago.</p>
+    <code class="details" id="create">create(parent, body=None, workforcePoolProviderScimTenantId=None, x__xgafv=None)</code>
+  <pre>Gemini Enterprise only. Creates a new WorkforcePoolProviderScimTenant in a WorkforcePoolProvider. You cannot reuse the name of a deleted SCIM tenant until 30 days after deletion.
+  parent: string, Required. Gemini Enterprise only. The parent to create SCIM tenant. Format: &#x27;locations/{location}/workforcePools/{workforce_pool}/providers/{provider}&#x27; (required)
+{ # Gemini Enterprise only. Represents a SCIM tenant. Used for provisioning and managing identity data (such as Users and Groups) in cross-domain environments.
+  &quot;baseUri&quot;: &quot;A String&quot;, # Output only. Gemini Enterprise only. Represents the base URI as defined in [RFC 7644, Section 1.3](https://datatracker.ietf.org/doc/html/rfc7644#section-1.3). Clients must use this as the root address for managing resources under the tenant. Format: https://iamscim.googleapis.com/{version}/{tenant_id}/
+  &quot;claimMapping&quot;: { # Required. Immutable. Gemini Enterprise only. Maps SCIM attributes to Google attributes. This mapping is used to associate the attributes synced via SCIM with the Google Cloud attributes used in IAM policies for Workforce Identity Federation. SCIM-managed user and group attributes are mapped to `google.subject` and `google.group` respectively. Each key must be a string specifying the Google Cloud IAM attribute to map to. The supported keys are as follows: * `google.subject`: The principal IAM is authenticating. You can reference this value in IAM bindings. This is also the subject that appears in Cloud Logging logs. This is a required field and the mapped subject cannot exceed 127 bytes. * `google.group`: Group the authenticating user belongs to. You can grant group access to resources using an IAM `principalSet` binding; access applies to all members of the group. Each value must be a [Common Expression Language] (https://opensource.google/projects/cel) expression that maps SCIM user or group attribute to the normalized attribute specified by the corresponding map key. Example: To map the SCIM user&#x27;s `externalId` to `google.subject` and the SCIM group&#x27;s `externalId` to `google.group`: ``` { &quot;google.subject&quot;: &quot;user.externalId&quot;, &quot;google.group&quot;: &quot;group.externalId&quot; } ```
+  &quot;description&quot;: &quot;A String&quot;, # Optional. Gemini Enterprise only. The description of the SCIM tenant. Cannot exceed 256 characters.
+  &quot;displayName&quot;: &quot;A String&quot;, # Optional. Gemini Enterprise only. The display name of the SCIM tenant. Cannot exceed 32 characters.
+  &quot;name&quot;: &quot;A String&quot;, # Identifier. Gemini Enterprise only. The resource name of the SCIM Tenant. Format: `locations/{location}/workforcePools/{workforce_pool}/providers/ {workforce_pool_provider}/scimTenants/{scim_tenant}`
+  &quot;purgeTime&quot;: &quot;A String&quot;, # Output only. Gemini Enterprise only. The timestamp that represents the time when the SCIM tenant is purged.
+  &quot;serviceAgent&quot;: &quot;A String&quot;, # Output only. Service Agent created by SCIM Tenant API. SCIM tokens created under this tenant will be attached to this service agent.
+  &quot;state&quot;: &quot;A String&quot;, # Output only. Gemini Enterprise only. The state of the tenant.
+  workforcePoolProviderScimTenantId: string, Required. Gemini Enterprise only. The ID to use for the SCIM tenant, which becomes the final component of the resource name. This value should be 4-32 characters, containing the characters `[a-z0-9-]`.
+    <code class="details" id="delete">delete(name, hardDelete=None, x__xgafv=None)</code>
+  <pre>Gemini Enterprise only. Deletes a WorkforcePoolProviderScimTenant. You can undelete a SCIM tenant for 30 days. After 30 days, deletion is permanent. You cannot update deleted SCIM tenants. However, you can view and list them.
+  name: string, Required. Gemini Enterprise only. The name of the SCIM tenant to delete. Format: `locations/{location}/workforcePools/{workforce_pool}/providers/{provider}/scimTenants/{scim_tenant}` (required)
+  hardDelete: boolean, Optional. Deletes the SCIM tenant immediately. This operation cannot be undone.
+  <pre>Gemini Enterprise only. Gets an individual WorkforcePoolProviderScimTenant.
+  name: string, Required. Gemini Enterprise only. The name of the SCIM tenant to retrieve. Format: `locations/{location}/workforcePools/{workforce_pool}/providers/{provider}/scimTenants/{scim_tenant}` (required)
+  <pre>Gemini Enterprise only. Lists all non-deleted WorkforcePoolProviderScimTenants in a WorkforcePoolProvider. If `show_deleted` is set to `true`, then deleted SCIM tenants are also listed.
+  parent: string, Required. Gemini Enterprise only. The parent to list SCIM tenants. Format: &#x27;locations/{location}/workforcePools/{workforce_pool}/providers/{provider}&#x27; (required)
+  pageSize: integer, Optional. Gemini Enterprise only. The maximum number of SCIM tenants to return. If unspecified, at most 50 SCIM tenants will be returned. The maximum value is 100; values above 100 are truncated to 100.
+  pageToken: string, Optional. Gemini Enterprise only. A page token, received from a previous `ListScimTenants` call. Provide this to retrieve the subsequent page.
+  showDeleted: boolean, Optional. Gemini Enterprise only. Whether to return soft-deleted SCIM tenants.
+    { # Gemini Enterprise only. Response message for ListWorkforcePoolProviderScimTenants.
+  &quot;nextPageToken&quot;: &quot;A String&quot;, # Optional. Gemini Enterprise only. A token, which can be sent as `page_token` to retrieve the next page. If this field is omitted, there are no subsequent pages.
+  &quot;workforcePoolProviderScimTenants&quot;: [ # Output only. Gemini Enterprise only. A list of SCIM tenants.
+  <pre>Gemini Enterprise only. Updates an existing WorkforcePoolProviderScimTenant.
+  name: string, Identifier. Gemini Enterprise only. The resource name of the SCIM Tenant. Format: `locations/{location}/workforcePools/{workforce_pool}/providers/ {workforce_pool_provider}/scimTenants/{scim_tenant}` (required)
+  updateMask: string, Optional. Gemini Enterprise only. The list of fields to update.
+  <pre>Gemini Enterprise only. Undeletes a WorkforcePoolProviderScimTenant, that was deleted fewer than 30 days ago.
+  name: string, Required. Gemini Enterprise only. The name of the SCIM tenant to undelete. Format: `locations/{location}/workforcePools/{workforce_pool}/providers/{provider}/scimTenants/{scim_tenant}` (required)
+{ # Gemini Enterprise only. Request message for UndeleteWorkforcePoolProviderScimTenant.

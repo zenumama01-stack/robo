@@ -1,0 +1,36 @@
+<h1><a href="assuredworkloads_v1.html">Assured Workloads API</a> . <a href="assuredworkloads_v1.organizations.html">organizations</a> . <a href="assuredworkloads_v1.organizations.locations.html">locations</a> . <a href="assuredworkloads_v1.organizations.locations.workloads.html">workloads</a> . <a href="assuredworkloads_v1.organizations.locations.workloads.updates.html">updates</a></h1>
+  <code><a href="#apply">apply(name, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">This endpoint creates a new operation to apply the given update.</p>
+<p class="firstline">This endpoint lists all updates for the given workload.</p>
+    <code class="details" id="apply">apply(name, body=None, x__xgafv=None)</code>
+  <pre>This endpoint creates a new operation to apply the given update.
+  name: string, Required. The resource name of the update. Format: organizations/{org_id}/locations/{location_id}/workloads/{workload_id}/updates/{update_id} (required)
+{ # Request to apply update to a workload.
+  &quot;action&quot;: &quot;A String&quot;, # The action to be performed on the update.
+  <pre>This endpoint lists all updates for the given workload.
+  parent: string, Required. organizations/{org_id}/locations/{location_id}/workloads/{workload_id} (required)
+  pageSize: integer, Page size. The default value is 20 and the max allowed value is 100.
+  pageToken: string, Page token returned from previous request.
+    { # Response of listing the compliance updates per workload with pagination.
+  &quot;nextPageToken&quot;: &quot;A String&quot;, # The next page token. Return empty if reached the last page.
+  &quot;workloadUpdates&quot;: [ # The list of workload updates for a given workload.
+    { # A workload update is a change to the workload&#x27;s compliance configuration.
+      &quot;createTime&quot;: &quot;A String&quot;, # The time the update was created.
+      &quot;details&quot;: { # The details of the update. # The details of the update.
+        &quot;orgPolicyUpdate&quot;: { # Represents an update for an org policy control applied on an Assured Workload resource. The inherited org policy is not considered. # Update to one org policy, e.g. gcp.resourceLocation.
+          &quot;appliedPolicy&quot;: { # This assured workload service object is used to represent the org policy attached to a resource. It servces the same purpose as the orgpolicy.v2.Policy object but with functionality that is limited to what is supported by Assured Workloads(e.g. only one rule under one OrgPolicy object, no conditions, etc). # The org policy currently applied on the assured workload resource.
+            &quot;constraint&quot;: &quot;A String&quot;, # The constraint name of the OrgPolicy. e.g. &quot;constraints/gcp.resourceLocations&quot;.
+            &quot;inherit&quot;: True or False, # If `inherit` is true, policy rules of the lowest ancestor in the resource hierarchy chain are inherited. If it is false, policy rules are not inherited.
+            &quot;reset&quot;: True or False, # Ignores policies set above this resource and restores to the `constraint_default` value. `reset` can only be true when `rules` is empty and `inherit` is false.
+            &quot;resource&quot;: &quot;A String&quot;, # Resource that the OrgPolicy attaches to. Format: folders/123&quot; projects/123&quot;.
+            &quot;rule&quot;: { # A rule used to express this policy. # The rule of the OrgPolicy.
+              &quot;allowAll&quot;: True or False, # ListPolicy only when all values are allowed.
+              &quot;denyAll&quot;: True or False, # ListPolicy only when all values are denied.
+              &quot;enforce&quot;: True or False, # BooleanPolicy only.
+              &quot;values&quot;: { # The values allowed for a ListPolicy. # ListPolicy only when custom values are specified.
+                &quot;allowedValues&quot;: [ # List of values allowed at this resource.
+                &quot;deniedValues&quot;: [ # List of values denied at this resource.
+          &quot;suggestedPolicy&quot;: { # This assured workload service object is used to represent the org policy attached to a resource. It servces the same purpose as the orgpolicy.v2.Policy object but with functionality that is limited to what is supported by Assured Workloads(e.g. only one rule under one OrgPolicy object, no conditions, etc). # The suggested org policy that replaces the applied policy.
+      &quot;name&quot;: &quot;A String&quot;, # Output only. Immutable. Identifier. Resource name of the WorkloadUpdate. Format: organizations/{organization}/locations/{location}/workloads/{workload}/updates/{update}
+      &quot;state&quot;: &quot;A String&quot;, # Output only. The state of the update.
+      &quot;updateTime&quot;: &quot;A String&quot;, # The time the update was last updated.

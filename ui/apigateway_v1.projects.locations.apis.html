@@ -1,0 +1,26 @@
+<h1><a href="apigateway_v1.html">API Gateway API</a> . <a href="apigateway_v1.projects.html">projects</a> . <a href="apigateway_v1.projects.locations.html">locations</a> . <a href="apigateway_v1.projects.locations.apis.html">apis</a></h1>
+  <code><a href="apigateway_v1.projects.locations.apis.configs.html">configs()</a></code>
+<p class="firstline">Returns the configs Resource.</p>
+  <code><a href="#create">create(parent, apiId=None, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Creates a new Api in a given project and location.</p>
+<p class="firstline">Deletes a single Api.</p>
+<p class="firstline">Gets details of a single Api.</p>
+<p class="firstline">Lists Apis in a given project and location.</p>
+<p class="firstline">Updates the parameters of a single Api.</p>
+    <code class="details" id="create">create(parent, apiId=None, body=None, x__xgafv=None)</code>
+  <pre>Creates a new Api in a given project and location.
+  parent: string, Required. Parent resource of the API, of the form: `projects/*/locations/global` (required)
+{ # An API that can be served by one or more Gateways.
+  &quot;managedService&quot;: &quot;A String&quot;, # Optional. Immutable. The name of a Google Managed Service ( https://cloud.google.com/service-infrastructure/docs/glossary#managed). If not specified, a new Service will automatically be created in the same project as this API.
+  &quot;name&quot;: &quot;A String&quot;, # Output only. Resource name of the API. Format: projects/{project}/locations/global/apis/{api}
+  &quot;state&quot;: &quot;A String&quot;, # Output only. State of the API.
+  apiId: string, Required. Identifier to assign to the API. Must be unique within scope of the parent resource.
+  <pre>Deletes a single Api.
+  name: string, Required. Resource name of the form: `projects/*/locations/global/apis/*` (required)
+  <pre>Gets details of a single Api.
+  <pre>Lists Apis in a given project and location.
+    { # Response message for ApiGatewayService.ListApis
+  &quot;apis&quot;: [ # APIs.
+  <pre>Updates the parameters of a single Api.
+  name: string, Output only. Resource name of the API. Format: projects/{project}/locations/global/apis/{api} (required)
+  updateMask: string, Field mask is used to specify the fields to be overwritten in the Api resource by the update. The fields specified in the update_mask are relative to the resource, not the full request. A field will be overwritten if it is in the mask. If the user does not provide a mask then all fields will be overwritten.

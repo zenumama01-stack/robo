@@ -1,0 +1,95 @@
+<div class="activity-container">
+  <div class="activity-toolbar">
+        <input type="text" placeholder="Search executions..."
+          (input)="OnSearchChange($any($event.target).value)" />
+      <select class="filter-select" [value]="StatusFilter" (change)="OnStatusFilterChange($any($event.target).value)">
+        @for (s of StatusOptions.slice(1); track s) {
+      <select class="filter-select" [value]="JobNameFilter" (change)="OnJobNameFilterChange($any($event.target).value)">
+        <option value="">All Jobs</option>
+        @for (name of UniqueJobNames; track name) {
+          <option [value]="name">{{name}}</option>
+      <div class="time-range-group">
+        @for (range of TimeRanges; track range) {
+            class="range-btn"
+            [class.active]="SelectedTimeRange === range.value"
+            (click)="OnTimeRangeChange(range.value)">
+            {{range.label}}
+      <button class="control-btn" (click)="Refresh()">
+      <mj-loading text="Loading activity..." size="medium"></mj-loading>
+      <!-- Job Type Summary Cards -->
+      @if (JobTypes.length > 0) {
+        <div class="type-cards-row">
+          @for (type of JobTypes; track type) {
+            <div class="type-card">
+                <i [class]="GetTypeIcon(type.typeName)"></i>
+              <div class="type-card-info">
+                <div class="type-card-name">{{type.typeName}}</div>
+                <div class="type-card-stats">
+                  <span>{{type.activeJobsCount}} active</span>
+                  <span class="dot">&middot;</span>
+                  <span>{{type.totalRuns}} runs</span>
+                  <span [style.color]="GetSuccessRateColor(type.successRate)">
+                    {{FormatPercentage(type.successRate)}}
+              <div class="type-card-bar">
+                  [style.width]="(type.successRate * 100) + '%'"
+                  [style.background]="GetSuccessRateColor(type.successRate)">
+      @if (Trends.length > 0) {
+        <div class="panel">
+              <i class="fa-solid fa-chart-bar"></i> Execution Trends
+            <span class="result-count">{{FilteredExecutions.length}} executions</span>
+          <div class="panel-body chart-container">
+            <div class="trend-chart">
+              @for (trend of Trends; track trend; let i = $index) {
+                <div class="chart-column">
+                  <div class="bars-wrapper">
+                    <div class="bar success-bar"
+                      [style.height]="GetBarHeight(trend.successes)"
+                      [title]="trend.successes + ' successful'">
+                    @if (trend.failures > 0) {
+                      <div class="bar failure-bar"
+                        [style.height]="GetBarHeight(trend.failures)"
+                        [title]="trend.failures + ' failed'">
+                  <div class="chart-label" [class.hidden-label]="!ShouldShowLabel(i)" >{{FormatChartLabel(trend.timestamp)}}</div>
+              <span class="legend-item"><span class="legend-dot success"></span> Successful</span>
+              <span class="legend-item"><span class="legend-dot failure"></span> Failed</span>
+            <i class="fa-solid fa-clock-rotate-left"></i> Execution History
+          <span class="result-count">{{FilteredExecutions.length}} of {{Executions.length}}</span>
+        <div class="panel-body table-container">
+          @if (FilteredExecutions.length === 0) {
+            <div class="empty-state-small">
+              <span>No executions found for this time range</span>
+          @if (FilteredExecutions.length > 0) {
+                  <th class="col-expand"></th>
+                  <th>Job Name</th>
+                @for (exec of FilteredExecutions; track exec) {
+                  <tr class="exec-row" [class.expanded]="IsExpanded(exec)" (click)="ToggleExpand(exec)">
+                    <td class="col-expand">
+                      <i class="fa-solid fa-chevron-right expand-icon"
+                      [class.rotated]="IsExpanded(exec)"></i>
+                      <span class="exec-status-badge" [ngClass]="GetStatusClass(exec.status)">
+                        <i [class]="GetStatusIcon(exec.status)"></i>
+                        {{exec.status}}
+                    <td class="cell-name">{{exec.jobName}}</td>
+                    <td class="cell-meta">{{FormatDateTime(exec.startedAt)}}</td>
+                    <td class="cell-meta">{{FormatDuration(exec.duration)}}</td>
+                    <td class="cell-error">{{TruncateError(exec.errorMessage)}}</td>
+                  @if (IsExpanded(exec)) {
+                    <tr class="exec-detail-row">
+                      <td [attr.colspan]="6">
+                        <div class="exec-detail-content">
+                          <div class="exec-detail-grid">
+                              <span class="detail-label">Job Name</span>
+                              <span class="detail-value">{{exec.jobName}}</span>
+                              <span class="detail-label">Started</span>
+                              <span class="detail-value">{{FormatDateTime(exec.startedAt)}}</span>
+                              <span class="detail-label">Completed</span>
+                              <span class="detail-value">{{exec.completedAt ? FormatDateTime(exec.completedAt) : '-'}}</span>
+                              <span class="detail-value">{{FormatDuration(exec.duration)}}</span>
+                            @if (exec.errorMessage) {
+                                <span class="detail-label">Error</span>
+                                <span class="detail-value error-text">{{exec.errorMessage}}</span>
+                          <div class="exec-detail-actions">
+                            <button class="detail-action-btn" (click)="OpenExecutionRecord(exec, $event)">
+                              <i class="fa-solid fa-arrow-up-right-from-square"></i> Open Run Record
+                            <button class="detail-action-btn secondary" (click)="OpenJobRecord(exec, $event)">
+                              <i class="fa-solid fa-briefcase"></i> Open Job

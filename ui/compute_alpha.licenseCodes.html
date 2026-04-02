@@ -1,0 +1,43 @@
+<h1><a href="compute_alpha.html">Compute Engine API</a> . <a href="compute_alpha.licenseCodes.html">licenseCodes</a></h1>
+  <code><a href="#get">get(project, licenseCode, x__xgafv=None)</a></code></p>
+<p class="firstline">Return a specified license code. License codes are mirrored across</p>
+    <code class="details" id="get">get(project, licenseCode, x__xgafv=None)</code>
+  <pre>Return a specified license code. License codes are mirrored across
+all projects that have permissions to read the License Code.
+ *Caution* This resource is intended
+for use only by third-party partners who are creatingCloud Marketplace
+images.
+  licenseCode: string, Number corresponding to the License code resource to return. (required)
+    { # Represents a License Code resource.
+    # A License Code is a unique identifier used to represent alicense
+    #  *Caution* This resource is intended for
+    # use only by third-party partners who are creatingCloud Marketplace
+  &quot;allowedReplacementLicenses&quot;: [ # Specifies licenseCodes of licenses that can replace this license. Note:
+      # such replacements are allowed even if removable_from_disk is false.
+  &quot;appendableToDisk&quot;: True or False, # If true, this license can be appended to an existing disk&#x27;s set of
+      # licenses.
+  &quot;description&quot;: &quot;A String&quot;, # Output only. [Output Only] Description of this License Code.
+  &quot;incompatibleLicenses&quot;: [ # Specifies licenseCodes of licenses that are incompatible with this license.
+      # If a license is incompatible with this license, it cannot be attached to
+      # the same disk or image.
+  &quot;kind&quot;: &quot;compute#licenseCode&quot;, # Output only. [Output Only] Type of resource. Always compute#licenseCode for
+  &quot;licenseAlias&quot;: [ # [Output Only] URL and description aliases of Licenses with the same
+      # License Code.
+      &quot;selfLink&quot;: &quot;A String&quot;, # Output only. [Output Only] URL of license corresponding to this License Code.
+  &quot;minimumRetention&quot;: { # A Duration represents a fixed-length span of time represented # If set, this license will be unable to be removed or replaced once attached
+      # to a disk until the minimum_retention period has passed.
+  &quot;multiTenantOnly&quot;: True or False, # If true, this license can only be used on VMs on multi tenant nodes.
+  &quot;name&quot;: &quot;A String&quot;, # Output only. [Output Only] Name of the resource. The name is 1-20 characters long and
+      # must be a valid 64 bit integer.
+  &quot;osLicense&quot;: True or False, # If true, indicates this is an OS license. Only one OS license can be
+      # attached to a disk or image at a time.
+  &quot;removableFromDisk&quot;: True or False, # If true, this license can be removed from a disk&#x27;s set of licenses, with no
+      # replacement license needed.
+  &quot;requiredCoattachedLicenses&quot;: [ # Specifies the set of permissible coattached licenseCodes of licenses that
+      # satisfy the coattachment requirement of this license. At least one license
+      # from the set must be attached to the same disk or image as this license.
+  &quot;soleTenantOnly&quot;: True or False, # If true, this license can only be used on VMs on sole tenant nodes.
+  &quot;state&quot;: &quot;A String&quot;, # Output only. [Output Only] Current state of this License Code.
+  &quot;transferable&quot;: True or False, # Output only. [Output Only] If true, the license will remain attached when creating
+      # images or snapshots from disks. Otherwise, the license is not transferred.
+  &quot;updateTimestamp&quot;: &quot;A String&quot;, # Output only. [Output Only] Last update timestamp inRFC3339

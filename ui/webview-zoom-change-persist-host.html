@@ -1,0 +1,14 @@
+  <webview nodeintegration src="app://host1" id="view" partition="webview-temp" />
+  const { ipcRenderer, webFrame } = require('electron')
+  let values = {
+    initialZoomLevel: 0,
+    switchZoomLevel: 0,
+    finalZoomLevel: 0,
+  view.addEventListener('dom-ready', async () => {
+    values.initialZoomLevel = view.getZoomLevel()
+    await view.loadURL('app://host2')
+    view.setZoomLevel(3.0)
+    values.switchZoomLevel = view.getZoomLevel()
+    await view.loadURL('app://host1')
+    values.finalZoomLevel = view.getZoomLevel()
+    ipcRenderer.send('webview-zoom-persist-level', values)

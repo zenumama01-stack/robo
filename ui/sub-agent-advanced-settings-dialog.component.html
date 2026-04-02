@@ -1,0 +1,32 @@
+<!-- Sub-Agent Advanced Settings Dialog -->
+<div class="sub-agent-advanced-settings-dialog">
+      <p>Loading sub-agent settings...</p>
+            <small class="field-hint">Order in which this sub-agent executes among siblings (0 = first). Must be unique among sibling agents.</small>
+          <!-- Execution Mode -->
+            <label for="executionMode">Execution Mode *</label>
+              formControlName="executionMode"
+              [data]="executionModeOptions"
+                <div class="execution-mode-option">
+                  <div class="option-header">
+                    <i class="fa-solid {{ dataItem.icon }}"></i>
+                    <span class="option-title">{{ dataItem.text }}</span>
+            @if (isFieldInvalid('executionMode')) {
+              <div class="field-error">{{ getFieldError('executionMode') }}</div>
+            <small class="field-hint">{{ getExecutionModeDescription(advancedForm.get('executionMode')?.value) }}</small>
+      <!-- Agent Configuration Section -->
+          Agent Configuration
+              [defaultItem]="{ Name: 'Default Type', ID: null }"
+            <small class="field-hint">Specialized agent type that defines behavior and capabilities</small>
+            <small class="field-hint">Current operational status of this sub-agent</small>
+      <!-- Capability Restrictions Section -->
+          <i class="fa-solid fa-shield-alt"></i>
+          Capability Restrictions
+          <!-- Expose As Action (Disabled for Sub-Agents) -->
+            <label class="checkbox-label disabled">
+              <kendo-checkbox 
+                formControlName="exposeAsAction"
+                [disabled]="true">
+              </kendo-checkbox>
+            <small class="field-hint disabled-hint">
+              Sub-agents cannot be exposed as actions. Only root agents (without parents) can be exposed as actions for use by other agents.
+            </small>

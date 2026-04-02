@@ -1,0 +1,29 @@
+<h1><a href="identitytoolkit_v2.html">Identity Toolkit API</a> . <a href="identitytoolkit_v2.v2.html">v2</a></h1>
+  <code><a href="#getPasswordPolicy">getPasswordPolicy(tenantId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Gets password policy config set on the project or tenant.</p>
+  <code><a href="#getRecaptchaConfig">getRecaptchaConfig(clientType=None, tenantId=None, version=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Gets parameters needed for reCAPTCHA analysis.</p>
+    <code class="details" id="getPasswordPolicy">getPasswordPolicy(tenantId=None, x__xgafv=None)</code>
+  <pre>Gets password policy config set on the project or tenant.
+  tenantId: string, The id of a tenant.
+    { # Configuration for password policy.
+  &quot;allowedNonAlphanumericCharacters&quot;: [ # Output only. Allowed characters which satisfy the non_alphanumeric requirement.
+  &quot;enforcementState&quot;: &quot;A String&quot;, # Output only. Which enforcement mode to use for the password policy.
+    <code class="details" id="getRecaptchaConfig">getRecaptchaConfig(clientType=None, tenantId=None, version=None, x__xgafv=None)</code>
+  <pre>Gets parameters needed for reCAPTCHA analysis.
+  clientType: string, reCAPTCHA Enterprise uses separate site keys for different client types. Specify the client type to get the corresponding key.
+      CLIENT_TYPE_UNSPECIFIED - Client type is not specified.
+      CLIENT_TYPE_WEB - Client type is web.
+      CLIENT_TYPE_ANDROID - Client type is android.
+      CLIENT_TYPE_IOS - Client type is ios.
+  version: string, The reCAPTCHA version.
+      RECAPTCHA_VERSION_UNSPECIFIED - The reCAPTCHA version is not specified.
+      RECAPTCHA_ENTERPRISE - The reCAPTCHA enterprise.
+    { # Configuration for reCAPTCHA
+  &quot;recaptchaEnforcementState&quot;: [ # The reCAPTCHA enforcement state for the providers that GCIP supports reCAPTCHA protection.
+    { # Enforcement states for reCAPTCHA protection.
+      &quot;enforcementState&quot;: &quot;A String&quot;, # The reCAPTCHA enforcement state for the provider.
+      &quot;provider&quot;: &quot;A String&quot;, # The provider that has reCAPTCHA protection.
+  &quot;recaptchaKey&quot;: &quot;A String&quot;, # The reCAPTCHA Enterprise key resource name, e.g. &quot;projects/{project}/keys/{key}&quot;. This will only be returned when the reCAPTCHA enforcement state is AUDIT or ENFORCE on at least one of the reCAPTCHA providers.
+  &quot;useSmsBotScore&quot;: True or False, # Whether to use the rCE bot score for reCAPTCHA phone provider.
+  &quot;useSmsTollFraudProtection&quot;: True or False, # Whether to use the rCE sms toll fraud protection risk score for reCAPTCHA phone provider.

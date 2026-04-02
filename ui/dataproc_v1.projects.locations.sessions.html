@@ -1,0 +1,46 @@
+<h1><a href="dataproc_v1.html">Cloud Dataproc API</a> . <a href="dataproc_v1.projects.html">projects</a> . <a href="dataproc_v1.projects.locations.html">locations</a> . <a href="dataproc_v1.projects.locations.sessions.html">sessions</a></h1>
+  <code><a href="dataproc_v1.projects.locations.sessions.sparkApplications.html">sparkApplications()</a></code>
+  <code><a href="#create">create(parent, body=None, requestId=None, sessionId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Create an interactive session asynchronously.</p>
+<p class="firstline">Deletes the interactive session resource. If the session is not in terminal state, it is terminated, and then deleted.</p>
+<p class="firstline">Gets the resource representation for an interactive session.</p>
+<p class="firstline">Lists interactive sessions.</p>
+<p class="firstline">Terminates the interactive session.</p>
+    <code class="details" id="create">create(parent, body=None, requestId=None, sessionId=None, x__xgafv=None)</code>
+  <pre>Create an interactive session asynchronously.
+  parent: string, Required. The parent resource where this session will be created. (required)
+{ # A representation of a session.
+  &quot;createTime&quot;: &quot;A String&quot;, # Output only. The time when the session was created.
+  &quot;creator&quot;: &quot;A String&quot;, # Output only. The email address of the user who created the session.
+  &quot;environmentConfig&quot;: { # Environment configuration for a workload. # Optional. Environment configuration for the session execution.
+  &quot;labels&quot;: { # Optional. The labels to associate with the session. Label keys must contain 1 to 63 characters, and must conform to RFC 1035 (https://www.ietf.org/rfc/rfc1035.txt). Label values may be empty, but, if present, must contain 1 to 63 characters, and must conform to RFC 1035 (https://www.ietf.org/rfc/rfc1035.txt). No more than 32 labels can be associated with a session.
+  &quot;name&quot;: &quot;A String&quot;, # Identifier. The resource name of the session.
+  &quot;runtimeConfig&quot;: { # Runtime configuration for a workload. # Optional. Runtime configuration for the session execution.
+  &quot;runtimeInfo&quot;: { # Runtime information about workload execution. # Output only. Runtime information about session execution.
+  &quot;sessionTemplate&quot;: &quot;A String&quot;, # Optional. The session template used by the session.Only resource names, including project ID and location, are valid.Example: * https://www.googleapis.com/compute/v1/projects/[project_id]/locations/[dataproc_region]/sessionTemplates/[template_id] * projects/[project_id]/locations/[dataproc_region]/sessionTemplates/[template_id]The template must be in the same project and Dataproc region as the session.
+  &quot;state&quot;: &quot;A String&quot;, # Output only. A state of the session.
+  &quot;stateHistory&quot;: [ # Output only. Historical state information for the session.
+      &quot;state&quot;: &quot;A String&quot;, # Output only. The state of the session at this point in the session history.
+      &quot;stateMessage&quot;: &quot;A String&quot;, # Output only. Details about the state at this point in the session history.
+      &quot;stateStartTime&quot;: &quot;A String&quot;, # Output only. The time when the session entered the historical state.
+  &quot;stateMessage&quot;: &quot;A String&quot;, # Output only. Session state details, such as the failure description if the state is FAILED.
+  &quot;stateTime&quot;: &quot;A String&quot;, # Output only. The time when the session entered the current state.
+  &quot;user&quot;: &quot;A String&quot;, # Optional. The email address of the user who owns the session.
+  &quot;uuid&quot;: &quot;A String&quot;, # Output only. A session UUID (Unique Universal Identifier). The service generates this value when it creates the session.
+  requestId: string, Optional. A unique ID used to identify the request. If the service receives two CreateSessionRequests (https://cloud.google.com/dataproc/docs/reference/rpc/google.cloud.dataproc.v1#google.cloud.dataproc.v1.CreateSessionRequest)s with the same ID, the second request is ignored, and the first Session is created and stored in the backend.Recommendation: Set this value to a UUID (https://en.wikipedia.org/wiki/Universally_unique_identifier).The value must contain only letters (a-z, A-Z), numbers (0-9), underscores (_), and hyphens (-). The maximum length is 40 characters.
+  sessionId: string, Required. The ID to use for the session, which becomes the final component of the session&#x27;s resource name.This value must be 4-63 characters. Valid characters are /a-z-/.
+  <pre>Deletes the interactive session resource. If the session is not in terminal state, it is terminated, and then deleted.
+  name: string, Required. The name of the session resource to delete. (required)
+  requestId: string, Optional. A unique ID used to identify the request. If the service receives two DeleteSessionRequest (https://cloud.google.com/dataproc/docs/reference/rpc/google.cloud.dataproc.v1#google.cloud.dataproc.v1.DeleteSessionRequest)s with the same ID, the second request is ignored.Recommendation: Set this value to a UUID (https://en.wikipedia.org/wiki/Universally_unique_identifier).The value must contain only letters (a-z, A-Z), numbers (0-9), underscores (_), and hyphens (-). The maximum length is 40 characters.
+  <pre>Gets the resource representation for an interactive session.
+  name: string, Required. The name of the session to retrieve. (required)
+  <pre>Lists interactive sessions.
+  parent: string, Required. The parent, which owns this collection of sessions. (required)
+  filter: string, Optional. A filter for the sessions to return in the response.A filter is a logical expression constraining the values of various fields in each session resource. Filters are case sensitive, and may contain multiple clauses combined with logical operators (AND, OR). Supported fields are session_id, session_uuid, state, create_time, and labels.Example: state = ACTIVE and create_time &lt; &quot;2023-01-01T00:00:00Z&quot; is a filter for sessions in an ACTIVE state that were created before 2023-01-01. state = ACTIVE and labels.environment=production is a filter for sessions in an ACTIVE state that have a production environment label.See https://google.aip.dev/assets/misc/ebnf-filtering.txt for a detailed description of the filter syntax and a list of supported comparators.
+    { # A list of interactive sessions.
+  &quot;nextPageToken&quot;: &quot;A String&quot;, # A token, which can be sent as page_token, to retrieve the next page. If this field is omitted, there are no subsequent pages.
+  &quot;sessions&quot;: [ # Output only. The sessions from the specified collection.
+  <pre>Terminates the interactive session.
+  name: string, Required. The name of the session resource to terminate. (required)
+{ # A request to terminate an interactive session.
+  &quot;requestId&quot;: &quot;A String&quot;, # Optional. A unique ID used to identify the request. If the service receives two TerminateSessionRequest (https://cloud.google.com/dataproc/docs/reference/rpc/google.cloud.dataproc.v1#google.cloud.dataproc.v1.TerminateSessionRequest)s with the same ID, the second request is ignored.Recommendation: Set this value to a UUID (https://en.wikipedia.org/wiki/Universally_unique_identifier).The value must contain only letters (a-z, A-Z), numbers (0-9), underscores (_), and hyphens (-). The maximum length is 40 characters.

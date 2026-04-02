@@ -1,0 +1,103 @@
+<h1><a href="androidpublisher_v3.html">Google Play Android Developer API</a> . <a href="androidpublisher_v3.monetization.html">monetization</a> . <a href="androidpublisher_v3.monetization.onetimeproducts.html">onetimeproducts</a></h1>
+  <code><a href="androidpublisher_v3.monetization.onetimeproducts.purchaseOptions.html">purchaseOptions()</a></code>
+<p class="firstline">Returns the purchaseOptions Resource.</p>
+<p class="firstline">Deletes one or more one-time products.</p>
+  <code><a href="#batchGet">batchGet(packageName, productIds=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Reads one or more one-time products.</p>
+<p class="firstline">Creates or updates one or more one-time products.</p>
+  <code><a href="#delete">delete(packageName, productId, latencyTolerance=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Deletes a one-time product.</p>
+  <code><a href="#get">get(packageName, productId, x__xgafv=None)</a></code></p>
+<p class="firstline">Reads a single one-time product.</p>
+<p class="firstline">Lists all one-time products under a given app.</p>
+  <code><a href="#patch">patch(packageName, productId, allowMissing=None, body=None, latencyTolerance=None, regionsVersion_version=None, updateMask=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Creates or updates a one-time product.</p>
+  <pre>Deletes one or more one-time products.
+  packageName: string, Required. The parent app (package name) for which the one-time products should be deleted. Must be equal to the package_name field on all the OneTimeProduct resources. (required)
+{ # Request message for BatchDeleteOneTimeProduct.
+  &quot;requests&quot;: [ # Required. A list of delete requests of up to 100 elements. All requests must delete different one-time products.
+    { # Request message for deleting a one-time product.
+      &quot;packageName&quot;: &quot;A String&quot;, # Required. The parent app (package name) of the one-time product to delete.
+      &quot;productId&quot;: &quot;A String&quot;, # Required. The one-time product ID of the one-time product to delete.
+    <code class="details" id="batchGet">batchGet(packageName, productIds=None, x__xgafv=None)</code>
+  <pre>Reads one or more one-time products.
+  packageName: string, Required. The parent app (package name) for which the products should be retrieved. Must be equal to the package_name field on all requests. (required)
+  productIds: string, Required. A list of up to 100 product IDs to retrieve. All IDs must be different. (repeated)
+    { # Response message for the BatchGetOneTimeProducts endpoint.
+  &quot;oneTimeProducts&quot;: [ # The list of requested one-time products, in the same order as the request.
+    { # A single one-time product for an app.
+      &quot;listings&quot;: [ # Required. Set of localized title and description data. Must not have duplicate entries with the same language_code.
+        { # Regional store listing for a one-time product.
+          &quot;description&quot;: &quot;A String&quot;, # Required. The description of this product in the language of this listing. The maximum length is 200 characters.
+          &quot;languageCode&quot;: &quot;A String&quot;, # Required. The language of this listing, as defined by BCP-47, e.g., &quot;en-US&quot;.
+          &quot;title&quot;: &quot;A String&quot;, # Required. The title of this product in the language of this listing. The maximum length is 55 characters.
+      &quot;offerTags&quot;: [ # Optional. List of up to 20 custom tags specified for this one-time product, and returned to the app through the billing library. Purchase options and offers for this product will also receive these tags in the billing library.
+        { # Represents a custom tag specified for a product offer.
+          &quot;tag&quot;: &quot;A String&quot;, # Must conform with RFC-1034. That is, this string can only contain lower-case letters (a-z), numbers (0-9), and hyphens (-), and be at most 20 characters.
+      &quot;packageName&quot;: &quot;A String&quot;, # Required. Immutable. Package name of the parent app.
+      &quot;productId&quot;: &quot;A String&quot;, # Required. Immutable. Unique product ID of the product. Unique within the parent app. Product IDs must start with a number or lowercase letter, and can contain numbers (0-9), lowercase letters (a-z), underscores (_), and periods (.).
+      &quot;purchaseOptions&quot;: [ # Required. The set of purchase options for this one-time product.
+        { # A single purchase option for a one-time product.
+          &quot;buyOption&quot;: { # A purchase option that can be bought. # A purchase option that can be bought.
+            &quot;legacyCompatible&quot;: True or False, # Optional. Whether this purchase option will be available in legacy PBL flows that do not support one-time products model. Up to one &quot;buy&quot; purchase option can be marked as backwards compatible.
+            &quot;multiQuantityEnabled&quot;: True or False, # Optional. Whether this purchase option allows multi-quantity. Multi-quantity allows buyer to purchase more than one item in a single checkout.
+          &quot;newRegionsConfig&quot;: { # Pricing information for any new regions Play may launch in the future. # Pricing information for any new locations Play may launch in the future. If omitted, the purchase option will not be automatically available in any new locations Play may launch in the future.
+            &quot;availability&quot;: &quot;A String&quot;, # Required. The regional availability for the new regions config. When set to AVAILABLE, the pricing information will be used for any new regions Play may launch in the future.
+            &quot;eurPrice&quot;: { # Represents an amount of money with its currency type. # Required. Price in EUR to use for any new regions Play may launch in.
+            &quot;usdPrice&quot;: { # Represents an amount of money with its currency type. # Required. Price in USD to use for any new regions Play may launch in.
+          &quot;offerTags&quot;: [ # Optional. List of up to 20 custom tags specified for this purchase option, and returned to the app through the billing library. Offers for this purchase option will also receive these tags in the billing library.
+          &quot;purchaseOptionId&quot;: &quot;A String&quot;, # Required. Immutable. The unique identifier of this purchase option. Must be unique within the one-time product. It must start with a number or lower-case letter, and can only contain lower-case letters (a-z), numbers (0-9), and hyphens (-). The maximum length is 63 characters.
+          &quot;regionalPricingAndAvailabilityConfigs&quot;: [ # Regional pricing and availability information for this purchase option.
+            { # Regional pricing and availability configuration for a purchase option.
+              &quot;availability&quot;: &quot;A String&quot;, # The availability of the purchase option.
+              &quot;price&quot;: { # Represents an amount of money with its currency type. # The price of the purchase option in the specified region. Must be set in the currency that is linked to the specified region.
+              &quot;regionCode&quot;: &quot;A String&quot;, # Required. Region code this configuration applies to, as defined by ISO 3166-2, e.g., &quot;US&quot;.
+          &quot;rentOption&quot;: { # A purchase option that can be rented. # A purchase option that can be rented.
+            &quot;expirationPeriod&quot;: &quot;A String&quot;, # Optional. The amount of time the user has after starting consuming the entitlement before it is revoked. Specified in ISO 8601 format.
+            &quot;rentalPeriod&quot;: &quot;A String&quot;, # Required. The amount of time a user has the entitlement for. Starts at purchase flow completion. Specified in ISO 8601 format.
+          &quot;state&quot;: &quot;A String&quot;, # Output only. The state of the purchase option, i.e., whether it&#x27;s active. This field cannot be changed by updating the resource. Use the dedicated endpoints instead.
+          &quot;taxAndComplianceSettings&quot;: { # Details about taxation, Google Play policy and legal compliance for one-time product purchase options. # Optional. Details about taxes and legal compliance.
+            &quot;withdrawalRightType&quot;: &quot;A String&quot;, # Optional. Digital content or service classification for products distributed to users in eligible regions. If unset, it defaults to `WITHDRAWAL_RIGHT_DIGITAL_CONTENT`. Refer to the [Help Center article](https://support.google.com/googleplay/android-developer/answer/10463498) for more information.
+      &quot;regionsVersion&quot;: { # The version of the available regions being used for the specified resource. # Output only. The version of the regions configuration that was used to generate the one-time product.
+      &quot;restrictedPaymentCountries&quot;: { # Countries where the purchase of this product is restricted to payment methods registered in the same country. If empty, no payment location restrictions are imposed. # Optional. Countries where the purchase of this one-time product is restricted to payment methods registered in the same country. If empty, no payment location restrictions are imposed.
+        &quot;regionCodes&quot;: [ # Required. Region codes to impose payment restrictions on, as defined by ISO 3166-2, e.g. &quot;US&quot;.
+      &quot;taxAndComplianceSettings&quot;: { # Details about taxation, Google Play policy and legal compliance for one-time products. # Details about taxes and legal compliance.
+        &quot;isTokenizedDigitalAsset&quot;: True or False, # Whether this one-time product is declared as a product representing a tokenized digital asset.
+        &quot;productTaxCategoryCode&quot;: &quot;A String&quot;, # Product tax category code to assign to the one-time product. Product tax category determines the transaction tax rates applied to the product. Refer to the [Help Center article](https://support.google.com/googleplay/android-developer/answer/16408159) for more information.
+        &quot;regionalTaxConfigs&quot;: [ # Regional tax configuration.
+          { # Details about taxation in a given geographical region.
+            &quot;regionCode&quot;: &quot;A String&quot;, # Required. Region code this configuration applies to, as defined by ISO 3166-2, e.g. &quot;US&quot;.
+  <pre>Creates or updates one or more one-time products.
+  packageName: string, Required. The parent app (package name) for which the one-time products should be updated. Must be equal to the package_name field on all the OneTimeProduct resources. (required)
+{ # Request message for BatchUpdateOneTimeProduct.
+  &quot;requests&quot;: [ # Required. A list of update requests of up to 100 elements. All requests must update different one-time products.
+    { # Request message for UpdateOneTimeProduct.
+      &quot;allowMissing&quot;: True or False, # Optional. If set to true, and the one-time product with the given package_name and product_id doesn&#x27;t exist, the one-time product will be created. If a new one-time product is created, update_mask is ignored.
+      &quot;latencyTolerance&quot;: &quot;A String&quot;, # Optional. The latency tolerance for the propagation of this product upsert. Defaults to latency-sensitive.
+      &quot;oneTimeProduct&quot;: { # A single one-time product for an app. # Required. The one-time product to upsert.
+      &quot;regionsVersion&quot;: { # The version of the available regions being used for the specified resource. # Required. The version of the available regions being used for the one-time product.
+      &quot;updateMask&quot;: &quot;A String&quot;, # Required. The list of fields to be updated.
+    { # Response message for BatchUpdateOneTimeProduct.
+  &quot;oneTimeProducts&quot;: [ # The list of updated one-time products list, in the same order as the request.
+    <code class="details" id="delete">delete(packageName, productId, latencyTolerance=None, x__xgafv=None)</code>
+  <pre>Deletes a one-time product.
+  packageName: string, Required. The parent app (package name) of the one-time product to delete. (required)
+  productId: string, Required. The one-time product ID of the one-time product to delete. (required)
+    <code class="details" id="get">get(packageName, productId, x__xgafv=None)</code>
+  <pre>Reads a single one-time product.
+  packageName: string, Required. The parent app (package name) of the product to retrieve. (required)
+  productId: string, Required. The product ID of the product to retrieve. (required)
+  <pre>Lists all one-time products under a given app.
+  packageName: string, Required. The parent app (package name) for which the one-time product should be read. (required)
+  pageSize: integer, Optional. The maximum number of one-time product to return. The service may return fewer than this value. If unspecified, at most 50 one-time products will be returned. The maximum value is 1000; values above 1000 will be coerced to 1000.
+  pageToken: string, Optional. A page token, received from a previous `ListOneTimeProducts` call. Provide this to retrieve the subsequent page. When paginating, all other parameters provided to `ListOneTimeProducts` must match the call that provided the page token.
+    { # Response message for ListOneTimeProducts.
+  &quot;oneTimeProducts&quot;: [ # The one-time products from the specified app.
+    <code class="details" id="patch">patch(packageName, productId, allowMissing=None, body=None, latencyTolerance=None, regionsVersion_version=None, updateMask=None, x__xgafv=None)</code>
+  <pre>Creates or updates a one-time product.
+  packageName: string, Required. Immutable. Package name of the parent app. (required)
+  productId: string, Required. Immutable. Unique product ID of the product. Unique within the parent app. Product IDs must start with a number or lowercase letter, and can contain numbers (0-9), lowercase letters (a-z), underscores (_), and periods (.). (required)
+  allowMissing: boolean, Optional. If set to true, and the one-time product with the given package_name and product_id doesn&#x27;t exist, the one-time product will be created. If a new one-time product is created, update_mask is ignored.
+  latencyTolerance: string, Optional. The latency tolerance for the propagation of this product upsert. Defaults to latency-sensitive.
+  regionsVersion_version: string, Required. A string representing the version of available regions being used for the specified resource. Regional prices and latest supported version for the resource have to be specified according to the information published in [this article](https://support.google.com/googleplay/android-developer/answer/10532353). Each time the supported locations substantially change, the version will be incremented. Using this field will ensure that creating and updating the resource with an older region&#x27;s version and set of regional prices and currencies will succeed even though a new version is available.
+  updateMask: string, Required. The list of fields to be updated.

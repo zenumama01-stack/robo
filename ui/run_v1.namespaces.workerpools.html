@@ -1,0 +1,43 @@
+<h1><a href="run_v1.html">Cloud Run Admin API</a> . <a href="run_v1.namespaces.html">namespaces</a> . <a href="run_v1.namespaces.workerpools.html">workerpools</a></h1>
+<p class="firstline">Creates a new WorkerPool. WorkerPool creation will trigger a new deployment. Use GetWorkerPool, and check worker_pool.status to determine if the WorkerPool is ready.</p>
+  <code><a href="#delete">delete(name, dryRun=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Deletes the provided worker pool. This will cause the WorkerPool to stop all instances and will delete all associated WorkerPoolRevisions.</p>
+<p class="firstline">Gets information about a worker pool.</p>
+  <code><a href="#list">list(parent, continue=None, labelSelector=None, limit=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Lists worker pools for the given project and region. Results are sorted by creation time, descending.</p>
+  <code><a href="#replaceWorkerPool">replaceWorkerPool(name, body=None, dryRun=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Replaces a worker pool. Only the spec and metadata labels and annotations are modifiable. After the Update request, Cloud Run will work to make the 'status' match the requested 'spec'. May provide metadata.resourceVersion to enforce update from last read for optimistic concurrency control.</p>
+  <pre>Creates a new WorkerPool. WorkerPool creation will trigger a new deployment. Use GetWorkerPool, and check worker_pool.status to determine if the WorkerPool is ready.
+  parent: string, Required. The resource&#x27;s parent. In Cloud Run, it may be one of the following: * `{project_id_or_number}` * `namespaces/{project_id_or_number}` * `namespaces/{project_id_or_number}/workerpools` * `projects/{project_id_or_number}/locations/{region}` * `projects/{project_id_or_number}/regions/{region}` (required)
+{ # WorkerPool acts as a top-level container that manages a set instance splits among a set of Revisions and a template for creating new Revisions.
+  &quot;apiVersion&quot;: &quot;A String&quot;, # The API version for this call. It must be &quot;run.googleapis.com/v1&quot;.
+  &quot;kind&quot;: &quot;A String&quot;, # The kind of resource. It must be &quot;WorkerPool&quot;.
+  &quot;metadata&quot;: { # google.cloud.run.meta.v1.ObjectMeta is metadata that all persisted resources must have, which includes all objects users must create. # Metadata associated with this WorkerPool, including name, namespace, labels, and annotations. In Cloud Run, annotations with &#x27;run.googleapis.com/&#x27; and &#x27;autoscaling.knative.dev&#x27; are restricted, and the accepted annotations will be different depending on the resource type. The following Cloud Run-specific annotations are accepted in WorkerPool.metadata.annotations. * `run.googleapis.com/binary-authorization-breakglass` * `run.googleapis.com/binary-authorization` * `run.googleapis.com/client-name` * `run.googleapis.com/description`
+  &quot;spec&quot;: { # WorkerPoolSpec holds the desired state of the WorkerPool&#x27;s template and instance splits. # Holds the desired state of the WorkerPool (from the client).
+    &quot;instanceSplits&quot;: [ # Specifies how to distribute instances over a collection of Revisions.
+      { # Holds a single instance split entry for the Worker. Allocations can be done to a specific Revision name, or pointing to the latest Ready Revision.
+        &quot;latestRevision&quot;: True or False, # Uses the &quot;status.latestReadyRevisionName&quot; to determine the instance split target. When it changes, workloads will automatically migrate from the prior &quot;latest ready&quot; revision to the new one.
+        &quot;percent&quot;: 42, # Optional. Specifies percent of the instance split to this Revision. This defaults to zero if unspecified.
+        &quot;revisionName&quot;: &quot;A String&quot;, # Revision to which to assign this portion of instances.
+  &quot;status&quot;: { # The current state of the WorkerPool. Output only. # Communicates the system-controlled state of the WorkerPool.
+    &quot;conditions&quot;: [ # Conditions communicate information about ongoing/complete reconciliation processes that bring the `spec` inline with the observed state of the world. * `Ready`: `True` when all underlying resources are ready.
+    &quot;instanceSplits&quot;: [ # Holds the configured workload distribution. These entries will always contain RevisionName references. When ConfigurationName appears in the spec, this will hold the LatestReadyRevisionName that we last observed.
+    &quot;latestCreatedRevisionName&quot;: &quot;A String&quot;, # Name of the last revision that was created from this WorkerPool&#x27;s template. It might not be ready yet, for that use LatestReadyRevisionName.
+    &quot;latestReadyRevisionName&quot;: &quot;A String&quot;, # Name of the latest Revision from this WorkerPool&#x27;s template that has had its `Ready` condition become `True`.
+    <code class="details" id="delete">delete(name, dryRun=None, x__xgafv=None)</code>
+  <pre>Deletes the provided worker pool. This will cause the WorkerPool to stop all instances and will delete all associated WorkerPoolRevisions.
+  name: string, Required. The fully qualified name of the worker pool to delete. It can be any of the following forms: * `namespaces/{project_id_or_number}/workerpools/{worker_pool_name}` (only when the `endpoint` is regional) * `projects/{project_id_or_number}/locations/{region}/workerpools/{worker_pool_name}` * `projects/{project_id_or_number}/regions/{region}/workerpools/{worker_pool_name}` (required)
+  <pre>Gets information about a worker pool.
+  name: string, Required. The fully qualified name of the worker pool to retrieve. It can be any of the following forms: * `namespaces/{project_id_or_number}/workerpools/{worker_pool_name}` (only when the `endpoint` is regional) * `projects/{project_id_or_number}/locations/{region}/workerpools/{worker_pool_name}` * `projects/{project_id_or_number}/regions/{region}/workerpools/{worker_pool_name}` (required)
+    <code class="details" id="list">list(parent, continue=None, labelSelector=None, limit=None, x__xgafv=None)</code>
+  <pre>Lists worker pools for the given project and region. Results are sorted by creation time, descending.
+  parent: string, Required. The parent from where the resources should be listed. In Cloud Run, it may be one of the following: * `{project_id_or_number}` * `namespaces/{project_id_or_number}` * `namespaces/{project_id_or_number}/workerpools` * `projects/{project_id_or_number}/locations/{region}` * `projects/{project_id_or_number}/regions/{region}` (required)
+  labelSelector: string, =, !=, exists, in, and notIn.
+    { # A list of WorkerPool resources.
+  &quot;apiVersion&quot;: &quot;A String&quot;, # The API version for this call; returns &quot;run.googleapis.com/v1&quot;.
+  &quot;items&quot;: [ # List of WorkerPools.
+  &quot;kind&quot;: &quot;A String&quot;, # The kind of this resource; returns &quot;WorkerPoolList&quot;.
+  &quot;metadata&quot;: { # Metadata for synthetic resources like List. In Cloud Run, all List Resources Responses will have a ListMeta instead of ObjectMeta. # Metadata associated with this WorkerPool list.
+    <code class="details" id="replaceWorkerPool">replaceWorkerPool(name, body=None, dryRun=None, x__xgafv=None)</code>
+  <pre>Replaces a worker pool. Only the spec and metadata labels and annotations are modifiable. After the Update request, Cloud Run will work to make the &#x27;status&#x27; match the requested &#x27;spec&#x27;. May provide metadata.resourceVersion to enforce update from last read for optimistic concurrency control.
+  name: string, Required. The fully qualified name of the worker pool to replace. It can be any of the following forms: * `namespaces/{project_id_or_number}/workerpools/{worker_pool_name}` (only when the `endpoint` is regional) * `projects/{project_id_or_number}/locations/{region}/workerpools/{worker_pool_name}` * `projects/{project_id_or_number}/regions/{region}/workerpools/{worker_pool_name}` (required)

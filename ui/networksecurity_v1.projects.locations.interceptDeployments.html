@@ -1,0 +1,29 @@
+<h1><a href="networksecurity_v1.html">Network Security API</a> . <a href="networksecurity_v1.projects.html">projects</a> . <a href="networksecurity_v1.projects.locations.html">locations</a> . <a href="networksecurity_v1.projects.locations.interceptDeployments.html">interceptDeployments</a></h1>
+  <code><a href="#create">create(parent, body=None, interceptDeploymentId=None, requestId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Creates a deployment in a given project and location. See https://google.aip.dev/133.</p>
+<p class="firstline">Deletes a deployment. See https://google.aip.dev/135.</p>
+<p class="firstline">Gets a specific deployment. See https://google.aip.dev/131.</p>
+<p class="firstline">Lists deployments in a given project and location. See https://google.aip.dev/132.</p>
+<p class="firstline">Updates a deployment. See https://google.aip.dev/134.</p>
+    <code class="details" id="create">create(parent, body=None, interceptDeploymentId=None, requestId=None, x__xgafv=None)</code>
+  <pre>Creates a deployment in a given project and location. See https://google.aip.dev/133.
+  parent: string, Required. The parent resource where this deployment will be created. Format: projects/{project}/locations/{location} (required)
+{ # A deployment represents a zonal intercept backend ready to accept GENEVE-encapsulated traffic, e.g. a zonal instance group fronted by an internal passthrough load balancer. Deployments are always part of a global deployment group which represents a global intercept service.
+  &quot;description&quot;: &quot;A String&quot;, # Optional. User-provided description of the deployment. Used as additional context for the deployment.
+  &quot;forwardingRule&quot;: &quot;A String&quot;, # Required. Immutable. The regional forwarding rule that fronts the interceptors, for example: `projects/123456789/regions/us-central1/forwardingRules/my-rule`. See https://google.aip.dev/124.
+  &quot;interceptDeploymentGroup&quot;: &quot;A String&quot;, # Required. Immutable. The deployment group that this deployment is a part of, for example: `projects/123456789/locations/global/interceptDeploymentGroups/my-dg`. See https://google.aip.dev/124.
+  &quot;name&quot;: &quot;A String&quot;, # Immutable. Identifier. The resource name of this deployment, for example: `projects/123456789/locations/us-central1-a/interceptDeployments/my-dep`. See https://google.aip.dev/122 for more details.
+  &quot;reconciling&quot;: True or False, # Output only. The current state of the resource does not match the user&#x27;s intended state, and the system is working to reconcile them. This part of the normal operation (e.g. linking a new association to the parent group). See https://google.aip.dev/128.
+  &quot;state&quot;: &quot;A String&quot;, # Output only. The current state of the deployment. See https://google.aip.dev/216.
+  interceptDeploymentId: string, Required. The ID to use for the new deployment, which will become the final component of the deployment&#x27;s resource name.
+  <pre>Deletes a deployment. See https://google.aip.dev/135.
+  <pre>Gets a specific deployment. See https://google.aip.dev/131.
+  name: string, Required. The name of the deployment to retrieve. Format: projects/{project}/locations/{location}/interceptDeployments/{intercept_deployment} (required)
+  <pre>Lists deployments in a given project and location. See https://google.aip.dev/132.
+  parent: string, Required. The parent, which owns this collection of deployments. Example: `projects/123456789/locations/us-central1-a`. See https://google.aip.dev/132 for more details. (required)
+  pageToken: string, Optional. A page token, received from a previous `ListInterceptDeployments` call. Provide this to retrieve the subsequent page. When paginating, all other parameters provided to `ListInterceptDeployments` must match the call that provided the page token. See https://google.aip.dev/158 for more details.
+    { # Response message for ListInterceptDeployments.
+  &quot;interceptDeployments&quot;: [ # The deployments from the specified parent.
+  <pre>Updates a deployment. See https://google.aip.dev/134.
+  name: string, Immutable. Identifier. The resource name of this deployment, for example: `projects/123456789/locations/us-central1-a/interceptDeployments/my-dep`. See https://google.aip.dev/122 for more details. (required)
+  updateMask: string, Optional. The list of fields to update. Fields are specified relative to the deployment (e.g. `description`; *not* `intercept_deployment.description`). See https://google.aip.dev/161 for more details.

@@ -1,0 +1,206 @@
+<h1><a href="compute_alpha.html">Compute Engine API</a> . <a href="compute_alpha.interconnects.html">interconnects</a></h1>
+  <code><a href="#delete">delete(project, interconnect, requestId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Deletes the specified Interconnect.</p>
+  <code><a href="#get">get(project, interconnect, x__xgafv=None)</a></code></p>
+<p class="firstline">Returns the specified Interconnect. Get a list of available Interconnects</p>
+  <code><a href="#getDiagnostics">getDiagnostics(project, interconnect, x__xgafv=None)</a></code></p>
+<p class="firstline">Returns the interconnectDiagnostics for the specified</p>
+  <code><a href="#getMacsecConfig">getMacsecConfig(project, interconnect, x__xgafv=None)</a></code></p>
+<p class="firstline">Returns the interconnectMacsecConfig for the specified</p>
+<p class="firstline">Creates an Interconnect in the specified project using</p>
+<p class="firstline">Retrieves the list of Interconnects available to the specified project.</p>
+  <code><a href="#patch">patch(project, interconnect, body=None, requestId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Updates the specified Interconnect with the data included in the request.</p>
+<p class="firstline">Sets the labels on an Interconnect. To learn more about labels,</p>
+    <code class="details" id="delete">delete(project, interconnect, requestId=None, x__xgafv=None)</code>
+  <pre>Deletes the specified Interconnect.
+  interconnect: string, Name of the interconnect to delete. (required)
+    <code class="details" id="get">get(project, interconnect, x__xgafv=None)</code>
+  <pre>Returns the specified Interconnect. Get a list of available Interconnects
+by making a list() request.
+  interconnect: string, Name of the interconnect to return. (required)
+    { # Represents an Interconnect resource.
+    # An Interconnect resource is a dedicated connection between the Google
+    # Cloud network and your on-premises network. For more information, read the
+    # Dedicated Interconnect Overview.
+  &quot;aaiEnabled&quot;: True or False, # Enable or disable the application awareness feature on this Cloud
+      # no BGP routes are exchanged over it. By default, the status is set to true.
+  &quot;applicationAwareInterconnect&quot;: { # Configuration information for application awareness on this Cloud # Configuration information for application awareness on this Cloud
+    &quot;bandwidthPercentagePolicy&quot;: {
+      &quot;bandwidthPercentages&quot;: [ # Specify bandwidth percentages for various traffic classes for queuing
+          # type Bandwidth Percent.
+        { # Specify bandwidth percentages [1-100] for various traffic classes in
+            # BandwidthPercentagePolicy. The sum of all percentages must equal 100.
+            # All traffic classes must have a percentage value specified.
+          &quot;percentage&quot;: 42, # Bandwidth percentage for a specific traffic class.
+          &quot;trafficClass&quot;: &quot;A String&quot;, # TrafficClass whose bandwidth percentage is being specified.
+    &quot;profileDescription&quot;: &quot;A String&quot;, # Description for the application awareness profile on this Cloud
+    &quot;shapeAveragePercentages&quot;: [ # Optional field to specify a list of shape average percentages to be
+        # applied in conjunction with StrictPriorityPolicy or
+        # BandwidthPercentagePolicy.
+    &quot;strictPriorityPolicy&quot;: { # Specify configuration for StrictPriorityPolicy.
+  &quot;availableFeatures&quot;: [ # [Output only] List of features available for this Interconnect connection,
+      #    - IF_MACSEC: If present, then the Interconnect connection is
+      #    provisioned on MACsec capable hardware ports. If not present, then the
+      #    Interconnect connection is provisioned on non-MACsec capable ports. Any
+      #    attempt to enable MACsec will fail.
+      #    - IF_CROSS_SITE_NETWORK: If present, then the Interconnect connection is
+      #    provisioned exclusively for Cross-Site Networking. Any attempt to configure
+      #    VLAN attachments will fail. If not present, then the Interconnect
+      #    connection is not provisioned for Cross-Site Networking. Any attempt to use
+      #    it for Cross-Site Networking will fail.
+  &quot;circuitInfos&quot;: [ # Output only. [Output Only] A list of CircuitInfo objects, that describe the individual
+      # circuits in this LAG.
+    { # Describes a single physical circuit between the Customer and Google.
+        # CircuitInfo objects are created by Google, so all fields are output only.
+      &quot;customerDemarcId&quot;: &quot;A String&quot;, # Customer-side demarc ID for this circuit.
+      &quot;googleCircuitId&quot;: &quot;A String&quot;, # Google-assigned unique ID for this circuit. Assigned at circuit turn-up.
+      &quot;googleDemarcId&quot;: &quot;A String&quot;, # Google-side demarc ID for this circuit. Assigned at circuit turn-up and
+          # provided by Google to the customer in the LOA.
+  &quot;effectiveLocation&quot;: &quot;A String&quot;, # Output only. [Output Only] URL of the InterconnectLocation object that represents where
+      # this connection is to be provisioned. By default it will be the same as the
+      # location field.
+  &quot;expectedOutages&quot;: [ # Output only. [Output Only] A list of outages expected for this Interconnect.
+    { # Description of a planned outage on this Interconnect.
+      &quot;affectedCircuits&quot;: [ # If issue_type is IT_PARTIAL_OUTAGE, a list of the Google-side circuit
+          # IDs that will be affected.
+      &quot;description&quot;: &quot;A String&quot;, # A description about the purpose of the outage.
+      &quot;endTime&quot;: &quot;A String&quot;, # Scheduled end time for the outage (milliseconds since Unix
+          # epoch).
+      &quot;issueType&quot;: &quot;A String&quot;, # Form this outage is expected to take, which can take one of the following
+          #    - OUTAGE: The Interconnect may be completely out of service for
+          #    some or all of the specified window.
+          #    - PARTIAL_OUTAGE: Some circuits comprising the Interconnect as a whole
+          #    should remain up, but with reduced bandwidth.
+          # Note that the versions of this enum prefixed with &quot;IT_&quot; have been
+          # deprecated in favor of the unprefixed values.
+      &quot;name&quot;: &quot;A String&quot;, # Unique identifier for this outage notification.
+      &quot;source&quot;: &quot;A String&quot;, # The party that generated this notification, which can take the following
+          # value:
+          #    - GOOGLE: this notification as generated by Google.
+          # Note that the value of NSRC_GOOGLE has been deprecated in favor of
+          # GOOGLE.
+      &quot;startTime&quot;: &quot;A String&quot;, # Scheduled start time for the outage (milliseconds since Unix
+      &quot;state&quot;: &quot;A String&quot;, # State of this notification, which can take one of the following values:
+          #    - ACTIVE: This outage notification is active. The event could be in
+          #    the past, present, or future. See start_time and end_time for
+          #    scheduling.
+          #    - CANCELLED: The outage associated with this notification was cancelled
+          #    before the outage was due to start.
+          #    - COMPLETED: The outage associated with this notification is complete.
+          # Note that the versions of this enum prefixed with &quot;NS_&quot; have been
+  &quot;googleIpAddress&quot;: &quot;A String&quot;, # Output only. [Output Only] IP address configured on the Google side of the Interconnect
+      # link. This can be used only for ping tests.
+  &quot;googleReferenceId&quot;: &quot;A String&quot;, # Output only. [Output Only] Google reference ID to be used when raising support tickets
+  &quot;interconnectAttachments&quot;: [ # Output only. [Output Only] A list of the URLs of all InterconnectAttachments configured
+      # to use  this Interconnect.
+  &quot;interconnectGroups&quot;: [ # Output only. [Output Only] URLs of InterconnectGroups that include this Interconnect.
+      # Order is arbitrary and items are unique.
+      #    - PARTNER: A partner-managed interconnection shared between customers
+      #    though a partner.
+      #    - DEDICATED: A dedicated physical interconnection with the
+      # Note that a value IT_PRIVATE has been deprecated in favor of DEDICATED.
+  &quot;kind&quot;: &quot;compute#interconnect&quot;, # Output only. [Output Only] Type of the resource. Alwayscompute#interconnect for interconnects.
+  &quot;labelFingerprint&quot;: &quot;A String&quot;, # A fingerprint for the labels being applied to this Interconnect, which
+      # retrieve an Interconnect.
+      #    - LINK_TYPE_ETHERNET_400G_LR4: A 400G Ethernet with LR4 optics.
+      #  Note that this field indicates the speed of each of
+      # the links in the bundle, not the speed of the entire bundle.
+  &quot;location&quot;: &quot;A String&quot;, # URL of the InterconnectLocation object that represents where this
+      # connection is to be provisioned.
+  &quot;macsec&quot;: { # Configuration information for enabling Media Access Control security # Configuration that enables Media Access Control security (MACsec) on the
+      # Cloud Interconnect connection between Google and your on-premises router.
+      # (MACsec) on this Cloud Interconnect connection between Google and your
+      # on-premises router.
+    &quot;failOpen&quot;: True or False, # If set to true, the Interconnect connection is configured with ashould-secure MACsec security policy, that allows the Google
+        # router to fallback to cleartext traffic if the MKA session cannot be
+        # established. By default, the Interconnect connection is configured with amust-secure security policy that drops all traffic if the
+        # MKA session cannot be established with your router.
+    &quot;preSharedKeys&quot;: [ # Required. A keychain placeholder describing a set of named key objects
+        # along with their start times. A MACsec CKN/CAK is generated for each
+        # key in the key chain. Google router automatically picks the key with
+        # the most recent startTime when establishing or re-establishing a MACsec
+        # secure link.
+      { # Describes a pre-shared key used to setup MACsec in static connectivity
+          # association key (CAK) mode.
+        &quot;name&quot;: &quot;A String&quot;, # Required. A name for this pre-shared key.
+            # The name must be 1-63 characters long, and comply withRFC1035. Specifically, the name must be 1-63
+            # lowercase letter, and all following characters must be a dash,
+            # lowercase letter, or digit, except the last character, which cannot be
+            # a dash.
+        &quot;startTime&quot;: &quot;A String&quot;, # A RFC3339 timestamp on or after which the key is
+            # valid. startTime can be in the future. If the keychain has a single
+            # key, startTime can be omitted. If the keychain has multiple keys,
+            # startTime is mandatory for each key. The start times of keys must be in
+            # increasing order. The start times of two consecutive keys must be
+            # at least 6 hours apart.
+  &quot;macsecEnabled&quot;: True or False, # Enable or disable MACsec on this Interconnect connection. MACsec enablement
+      # fails if the MACsec object is not specified.
+      # notifications regarding this Interconnect. If specified, this will be used
+      # for notifications in addition to all other forms described, such as
+  &quot;operationalStatus&quot;: &quot;A String&quot;, # Output only. [Output Only] The current status of this Interconnect&#x27;s functionality,
+      #    - OS_ACTIVE: A valid Interconnect, which is turned up and is ready to
+      #    use. Attachments may be provisioned on this Interconnect.
+      # - OS_UNPROVISIONED: An Interconnect that has not completed turnup. No
+      # attachments may be provisioned on this Interconnect.
+      # - OS_UNDER_MAINTENANCE: An Interconnect that is undergoing internal
+      # maintenance. No attachments may be provisioned or updated on this
+  &quot;params&quot;: { # Additional interconnect parameters. # Input only. [Input Only] Additional params passed with the request, but not persisted
+  &quot;peerIpAddress&quot;: &quot;A String&quot;, # Output only. [Output Only] IP address configured on the customer side of the
+      # Interconnect link. The customer should configure this IP address during
+      # turnup when prompted by Google NOC. This can be used only for ping tests.
+  &quot;provisionedLinkCount&quot;: 42, # Output only. [Output Only] Number of links actually provisioned in this interconnect.
+  &quot;remoteLocation&quot;: &quot;A String&quot;, # Indicates that this is a Cross-Cloud Interconnect. This field specifies the
+      # location outside of Google&#x27;s network that the interconnect is connected to.
+  &quot;requestedFeatures&quot;: [ # Optional. This parameter can be provided only with Interconnect INSERT. It
+      # isn&#x27;t valid for Interconnect PATCH. List of features requested for this
+      # Interconnect connection, which can take one of the following values:
+  &quot;state&quot;: &quot;A String&quot;, # Output only. [Output Only] The current state of Interconnect functionality, which can
+      # take one of the following values:
+      #    - ACTIVE: The Interconnect is valid, turned up and ready to use.
+      #    Attachments may be provisioned on this Interconnect.
+      #    - UNPROVISIONED: The Interconnect has not completed turnup. No
+      #    attachments may be provisioned on this Interconnect.
+      #    - UNDER_MAINTENANCE: The Interconnect is undergoing internal maintenance.
+      #    No attachments may be provisioned or updated on this
+      #    Interconnect.
+  &quot;subzone&quot;: &quot;A String&quot;, # To be deprecated.
+  &quot;wireGroups&quot;: [ # Output only. [Output Only] A list of the URLs of all CrossSiteNetwork WireGroups
+      # configured to use this Interconnect. The Interconnect cannot be deleted if
+      # this list is non-empty.
+    <code class="details" id="getDiagnostics">getDiagnostics(project, interconnect, x__xgafv=None)</code>
+  <pre>Returns the interconnectDiagnostics for the specified
+Interconnect.
+In the event of a
+global outage, do not use this API to make decisions about where to
+redirect your network traffic.
+Unlike a VLAN attachment, which is regional, a Cloud Interconnect
+connection is a global resource. A global outage can prevent this
+API from functioning properly.
+  interconnect: string, Name of the interconnect resource to query. (required)
+    { # Response for the InterconnectsGetDiagnosticsRequest.
+  &quot;result&quot;: { # Diagnostics information about the Interconnect connection, which contains
+    <code class="details" id="getMacsecConfig">getMacsecConfig(project, interconnect, x__xgafv=None)</code>
+  <pre>Returns the interconnectMacsecConfig for the specified
+    { # Response for the InterconnectsGetMacsecConfigRequest.
+  &quot;result&quot;: { # MACsec configuration information for the Interconnect connection. Contains
+      # the generated Connectivity Association Key Name (CKN) and the key (CAK) for
+      # this Interconnect connection.
+    &quot;preSharedKeys&quot;: [ # A keychain placeholder describing a set of named key objects
+        # along with their start times. A MACsec CKN/CAK is generated for each key in
+        # the key chain. Google router automatically picks the key with the most
+        # recent startTime when establishing or re-establishing a MACsec secure link.
+        &quot;cak&quot;: &quot;A String&quot;, # An auto-generated Connectivity Association Key (CAK) for this key.
+        &quot;ckn&quot;: &quot;A String&quot;, # An auto-generated Connectivity Association Key Name (CKN) for this key.
+        &quot;name&quot;: &quot;A String&quot;, # User provided name for this pre-shared key.
+        &quot;startTime&quot;: &quot;A String&quot;, # User provided timestamp on or after which this key is valid.
+  <pre>Creates an Interconnect in the specified project using
+  <pre>Retrieves the list of Interconnects available to the specified project.
+    { # Response to the list request, and contains a list of interconnects.
+  &quot;items&quot;: [ # A list of Interconnect resources.
+  &quot;kind&quot;: &quot;compute#interconnectList&quot;, # Output only. [Output Only] Type of resource. Alwayscompute#interconnectList for lists of interconnects.
+    <code class="details" id="patch">patch(project, interconnect, body=None, requestId=None, x__xgafv=None)</code>
+  <pre>Updates the specified Interconnect with the data included in the request.
+This method supportsPATCH
+  interconnect: string, Name of the interconnect to update. (required)
+  <pre>Sets the labels on an Interconnect. To learn more about labels,

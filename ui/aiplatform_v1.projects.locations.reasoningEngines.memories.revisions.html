@@ -1,0 +1,19 @@
+<h1><a href="aiplatform_v1.html">Vertex AI API</a> . <a href="aiplatform_v1.projects.html">projects</a> . <a href="aiplatform_v1.projects.locations.html">locations</a> . <a href="aiplatform_v1.projects.locations.reasoningEngines.html">reasoningEngines</a> . <a href="aiplatform_v1.projects.locations.reasoningEngines.memories.html">memories</a> . <a href="aiplatform_v1.projects.locations.reasoningEngines.memories.revisions.html">revisions</a></h1>
+<p class="firstline">Get a Memory Revision.</p>
+<p class="firstline">List Memory Revisions for a Memory.</p>
+  <pre>Get a Memory Revision.
+  name: string, Required. The resource name of the Memory Revision to retrieve. Format: `projects/{project}/locations/{location}/reasoningEngines/{reasoning_engine}/memories/{memory}/revisions/{revision}` (required)
+    { # A revision of a Memory.
+  &quot;createTime&quot;: &quot;A String&quot;, # Output only. Timestamp when this Memory Revision was created.
+  &quot;expireTime&quot;: &quot;A String&quot;, # Output only. Timestamp of when this resource is considered expired.
+  &quot;extractedMemories&quot;: [ # Output only. The extracted memories from the source content before consolidation when the memory was updated via GenerateMemories. This information was used to modify an existing Memory via Consolidation.
+    { # An extracted memory that is the intermediate result before consolidation.
+      &quot;fact&quot;: &quot;A String&quot;, # Output only. The fact of the extracted memory.
+  &quot;fact&quot;: &quot;A String&quot;, # Output only. The fact of the Memory Revision. This corresponds to the `fact` field of the parent Memory at the time of revision creation.
+  &quot;labels&quot;: { # Output only. The labels of the Memory Revision. These labels are applied to the MemoryRevision when it is created based on `GenerateMemoriesRequest.revision_labels`.
+  &quot;name&quot;: &quot;A String&quot;, # Identifier. The resource name of the Memory Revision. Format: `projects/{project}/locations/{location}/reasoningEngines/{reasoning_engine}/memories/{memory}/revisions/{memory_revision}`
+  <pre>List Memory Revisions for a Memory.
+  parent: string, Required. The resource name of the Memory to list revisions for. Format: `projects/{project}/locations/{location}/reasoningEngines/{reasoning_engine}/memories/{memory}` (required)
+  filter: string, Optional. The standard list filter. More detail in [AIP-160](https://google.aip.dev/160). Supported fields (equality match only): * `labels`
+    { # Response message for MemoryBankService.ListMemoryRevisions.
+  &quot;memoryRevisions&quot;: [ # The list of Memory Revisions in the request page.

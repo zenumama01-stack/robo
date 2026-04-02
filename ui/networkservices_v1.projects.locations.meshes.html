@@ -1,0 +1,29 @@
+<h1><a href="networkservices_v1.html">Network Services API</a> . <a href="networkservices_v1.projects.html">projects</a> . <a href="networkservices_v1.projects.locations.html">locations</a> . <a href="networkservices_v1.projects.locations.meshes.html">meshes</a></h1>
+  <code><a href="networkservices_v1.projects.locations.meshes.routeViews.html">routeViews()</a></code>
+  <code><a href="#create">create(parent, body=None, meshId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Creates a new Mesh in a given project and location.</p>
+<p class="firstline">Deletes a single Mesh.</p>
+<p class="firstline">Gets details of a single Mesh.</p>
+<p class="firstline">Lists Meshes in a given project and location.</p>
+<p class="firstline">Updates the parameters of a single Mesh.</p>
+    <code class="details" id="create">create(parent, body=None, meshId=None, x__xgafv=None)</code>
+  <pre>Creates a new Mesh in a given project and location.
+  parent: string, Required. The parent resource of the Mesh. Must be in the format `projects/*/locations/*`. (required)
+{ # Mesh represents a logical configuration grouping for workload to workload communication within a service mesh. Routes that point to mesh dictate how requests are routed within this logical mesh boundary.
+  &quot;interceptionPort&quot;: 42, # Optional. If set to a valid TCP port (1-65535), instructs the SIDECAR proxy to listen on the specified port of localhost (127.0.0.1) address. The SIDECAR proxy will expect all traffic to be redirected to this port regardless of its actual ip:port destination. If unset, a port &#x27;15001&#x27; is used as the interception port. This is applicable only for sidecar proxy deployments.
+  &quot;labels&quot;: { # Optional. Set of label tags associated with the Mesh resource.
+  &quot;name&quot;: &quot;A String&quot;, # Identifier. Name of the Mesh resource. It matches pattern `projects/*/locations/*/meshes/`.
+  meshId: string, Required. Short name of the Mesh resource to be created.
+  <pre>Deletes a single Mesh.
+  name: string, Required. A name of the Mesh to delete. Must be in the format `projects/*/locations/*/meshes/*`. (required)
+  <pre>Gets details of a single Mesh.
+  name: string, Required. A name of the Mesh to get. Must be in the format `projects/*/locations/*/meshes/*`. (required)
+  <pre>Lists Meshes in a given project and location.
+  parent: string, Required. The project and location from which the Meshes should be listed, specified in the format `projects/*/locations/*`. (required)
+  pageSize: integer, Maximum number of Meshes to return per call.
+  pageToken: string, The value returned by the last `ListMeshesResponse` Indicates that this is a continuation of a prior `ListMeshes` call, and that the system should return the next page of data.
+    { # Response returned by the ListMeshes method.
+  &quot;meshes&quot;: [ # List of Mesh resources.
+  <pre>Updates the parameters of a single Mesh.
+  name: string, Identifier. Name of the Mesh resource. It matches pattern `projects/*/locations/*/meshes/`. (required)
+  updateMask: string, Optional. Field mask is used to specify the fields to be overwritten in the Mesh resource by the update. The fields specified in the update_mask are relative to the resource, not the full request. A field will be overwritten if it is in the mask. If the user does not provide a mask then all fields will be overwritten.

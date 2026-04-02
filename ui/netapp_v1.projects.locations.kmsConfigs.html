@@ -1,0 +1,41 @@
+<h1><a href="netapp_v1.html">NetApp API</a> . <a href="netapp_v1.projects.html">projects</a> . <a href="netapp_v1.projects.locations.html">locations</a> . <a href="netapp_v1.projects.locations.kmsConfigs.html">kmsConfigs</a></h1>
+  <code><a href="#create">create(parent, body=None, kmsConfigId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Creates a new KMS config.</p>
+<p class="firstline">Warning! This operation will permanently delete the Kms config.</p>
+<p class="firstline">Encrypt the existing volumes without CMEK encryption with the desired the KMS config for the whole region.</p>
+<p class="firstline">Returns the description of the specified KMS config by kms_config_id.</p>
+<p class="firstline">Returns descriptions of all KMS configs owned by the caller.</p>
+<p class="firstline">Updates the Kms config properties with the full spec</p>
+<p class="firstline">Verifies KMS config reachability.</p>
+    <code class="details" id="create">create(parent, body=None, kmsConfigId=None, x__xgafv=None)</code>
+  <pre>Creates a new KMS config.
+{ # KmsConfig is the customer-managed encryption key(CMEK) configuration.
+  &quot;createTime&quot;: &quot;A String&quot;, # Output only. Create time of the KmsConfig.
+  &quot;cryptoKeyName&quot;: &quot;A String&quot;, # Required. Customer-managed crypto key resource full name. Format: `projects/{project}/locations/{location}/keyRings/{key_ring}/cryptoKeys/{crypto_key}`
+  &quot;description&quot;: &quot;A String&quot;, # Description of the KmsConfig.
+  &quot;instructions&quot;: &quot;A String&quot;, # Output only. Instructions to provide the access to the customer provided encryption key.
+  &quot;name&quot;: &quot;A String&quot;, # Identifier. Name of the KmsConfig. Format: `projects/{project}/locations/{location}/kmsConfigs/{kms_config}`
+  &quot;serviceAccount&quot;: &quot;A String&quot;, # Output only. The Service account which will have access to the customer provided encryption key.
+  &quot;state&quot;: &quot;A String&quot;, # Output only. State of the KmsConfig.
+  &quot;stateDetails&quot;: &quot;A String&quot;, # Output only. State details of the KmsConfig.
+  kmsConfigId: string, Required. Id of the requesting KmsConfig. Must be unique within the parent resource. Must contain only letters, numbers and hyphen, with the first character a letter, the last a letter or a number, and a 63 character maximum.
+  <pre>Warning! This operation will permanently delete the Kms config.
+  name: string, Required. Name of the KmsConfig. (required)
+  <pre>Encrypt the existing volumes without CMEK encryption with the desired the KMS config for the whole region.
+{ # EncryptVolumesRequest specifies the KMS config to encrypt existing volumes.
+  <pre>Returns the description of the specified KMS config by kms_config_id.
+  name: string, Required. Name of the KmsConfig (required)
+  <pre>Returns descriptions of all KMS configs owned by the caller.
+  parent: string, Required. Parent value (required)
+    { # ListKmsConfigsResponse is the response to a ListKmsConfigsRequest.
+  &quot;kmsConfigs&quot;: [ # The list of KmsConfigs
+  <pre>Updates the Kms config properties with the full spec
+  name: string, Identifier. Name of the KmsConfig. Format: `projects/{project}/locations/{location}/kmsConfigs/{kms_config}` (required)
+  updateMask: string, Required. Field mask is used to specify the fields to be overwritten in the KmsConfig resource by the update. The fields specified in the update_mask are relative to the resource, not the full request. A field will be overwritten if it is in the mask. If the user does not provide a mask then all fields will be overwritten.
+  <pre>Verifies KMS config reachability.
+  name: string, Required. Name of the KMS Config to be verified. (required)
+{ # VerifyKmsConfigRequest specifies the KMS config to be validated.
+    { # VerifyKmsConfigResponse contains the information if the config is correctly and error message.
+  &quot;healthError&quot;: &quot;A String&quot;, # Output only. Error message if config is not healthy.
+  &quot;healthy&quot;: True or False, # Output only. If the customer key configured correctly to the encrypt volume.
+  &quot;instructions&quot;: &quot;A String&quot;, # Output only. Instructions for the customers to provide the access to the encryption key.

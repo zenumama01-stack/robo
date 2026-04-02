@@ -1,0 +1,68 @@
+<!-- Query Browser Resource -->
+<div class="query-browser-container">
+  <!-- Left Panel: Query Tree -->
+  <div class="query-tree-panel">
+        <span>Queries</span>
+        <span class="query-count">({{ getTotalQueryCount() }})</span>
+        <button class="icon-btn" (click)="expandAll()" title="Expand all">
+        <button class="icon-btn" (click)="collapseAll()" title="Collapse all">
+        <button class="icon-btn" (click)="refresh()" title="Refresh">
+          placeholder="Search queries..."
+          (input)="onSearchChange($any($event.target).value)">
+          <button class="clear-btn" (click)="clearSearch()">
+    <!-- Tree Content -->
+          <mj-loading text="Loading queries..."></mj-loading>
+      <!-- Empty -->
+      @if (!isLoading && queries.length === 0) {
+          <p>No queries available</p>
+      <!-- No results -->
+      @if (!isLoading && searchText && filteredQueries.length === 0) {
+          <p>No queries match "{{ searchText }}"</p>
+      @if (!isLoading && queries.length > 0) {
+          @for (node of categoryTree; track trackByCategory($index, node)) {
+            <ng-container *ngTemplateOutlet="categoryNode; context: { node: node }"></ng-container>
+  <!-- Right Panel: Query Viewer -->
+  <div class="query-viewer-panel">
+    <!-- No query selected -->
+    @if (!selectedQuery) {
+        <i class="fa-solid fa-hand-pointer no-selection-icon"></i>
+        <p class="no-selection-message">Select a query from the list</p>
+        <p class="no-selection-hint">Click on a query to view and run it</p>
+    <!-- Query Viewer -->
+    @if (selectedQuery) {
+      <mj-query-viewer
+        [QueryId]="selectedQuery.ID"
+        [AutoRun]="true"
+        [SelectionMode]="'multiple'"
+        (EntityLinkClick)="onEntityLinkClick($event)"
+        (RowDoubleClick)="onRowDoubleClick($event)"
+        (OpenQueryRecord)="onOpenQueryRecord($event)">
+      </mj-query-viewer>
+<ng-template #categoryNode let-node="node">
+  @if (hasVisibleContent(node)) {
+      [class.expanded]="node.expanded"
+      [style.padding-left.px]="node.level * 16 + 8">
+      <div class="category-header" (click)="toggleExpand(node)">
+          [class.fa-chevron-down]="node.expanded"
+        [class.fa-chevron-right]="!node.expanded"></i>
+        <i class="fa-solid fa-folder category-icon"
+        [class.fa-folder-open]="node.expanded"></i>
+        <span class="category-name">{{ node.category.Name }}</span>
+        <span class="category-count">({{ getNodeQueryCount(node) }})</span>
+      <!-- Queries in this category -->
+      @if (node.expanded) {
+        <div class="category-queries">
+          @for (query of node.queries; track trackByQuery($index, query)) {
+            <div class="query-item"
+              [class.selected]="selectedQuery?.ID === query.ID"
+              [class.hidden]="!isQueryVisible(query)"
+              (click)="selectQuery(query, $event)">
+              <i class="fa-solid fa-file-code query-icon"></i>
+              <div class="query-info">
+                <span class="query-name">{{ query.Name }}</span>
+                @if (query.Description) {
+                  <span class="query-description">{{ query.Description }}</span>
+              @if (query.UsesTemplate) {
+                <i class="fa-solid fa-sliders param-icon" title="Has parameters"></i>
+        @for (child of node.children; track trackByCategory($index, child)) {
+          <ng-container *ngTemplateOutlet="categoryNode; context: { node: child }"></ng-container>

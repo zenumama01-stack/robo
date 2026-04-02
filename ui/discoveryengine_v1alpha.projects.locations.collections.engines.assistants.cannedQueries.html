@@ -1,0 +1,39 @@
+<h1><a href="discoveryengine_v1alpha.html">Discovery Engine API</a> . <a href="discoveryengine_v1alpha.projects.html">projects</a> . <a href="discoveryengine_v1alpha.projects.locations.html">locations</a> . <a href="discoveryengine_v1alpha.projects.locations.collections.html">collections</a> . <a href="discoveryengine_v1alpha.projects.locations.collections.engines.html">engines</a> . <a href="discoveryengine_v1alpha.projects.locations.collections.engines.assistants.html">assistants</a> . <a href="discoveryengine_v1alpha.projects.locations.collections.engines.assistants.cannedQueries.html">cannedQueries</a></h1>
+  <code><a href="#create">create(parent, body=None, cannedQueryId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Creates a CannedQuery.</p>
+<p class="firstline">Deletes a CannedQuery.</p>
+<p class="firstline">Gets a CannedQuery.</p>
+<p class="firstline">Lists all CannedQuerys under an Assistant.</p>
+<p class="firstline">Updates a CannedQuery.</p>
+    <code class="details" id="create">create(parent, body=None, cannedQueryId=None, x__xgafv=None)</code>
+  <pre>Creates a CannedQuery.
+{ # Canned query resource of Assistant. It represents a short-cut to a predefined conversation start.
+  &quot;defaultTexts&quot;: { # The text pieces for the canned query, which can be localized. # Required. The default (non-localized) values for the text attributes.
+    &quot;prefix&quot;: &quot;A String&quot;, # Optional. The prefix that `suggested_prompts` should start with.
+    &quot;suggestedPrompts&quot;: [ # Required. The prompts the canned query will offer to the user.
+      { # A suggested prompt for the canned query.
+        &quot;promptText&quot;: &quot;A String&quot;, # Required. The text of the suggested prompt.
+    &quot;title&quot;: &quot;A String&quot;, # Required. The title that is for the end user.
+  &quot;displayName&quot;: &quot;A String&quot;, # The display name of the canned query. It must be a UTF-8 encoded string with a length limit of 128 characters.
+  &quot;enabled&quot;: True or False, # Whether this canned query is enabled.
+  &quot;googleDefined&quot;: True or False, # Output only. Whether this is a Google-defined, read-only canned query.
+  &quot;localizedTexts&quot;: { # Optional. The translations of the text attributes. The keys should be BCP-47 language codes.
+    &quot;a_key&quot;: { # The text pieces for the canned query, which can be localized.
+  &quot;name&quot;: &quot;A String&quot;, # Immutable. Resource name of the canned query. Format: `projects/{project}/locations/{location}/collections/{collection}/engines/{engine}/assistants/{assistant}/cannedQueries/{canned_query}` It must be a UTF-8 encoded string with a length limit of 1024 characters.
+  &quot;requiredCapabilities&quot;: [ # Optional. The capabilities the Assistant needs to have to use this canned query.
+    { # Capability of an assistant needed to use this canned query.
+      &quot;actionName&quot;: &quot;A String&quot;, # The name of the action that the Assistant needs to have set up to use this canned query.
+  cannedQueryId: string, Required. The ID to use for the canned query, which will become the final component of the canned query&#x27;s resource name. This field must conform to [RFC-1034](https://tools.ietf.org/html/rfc1034) with a length limit of 63 characters.
+  <pre>Deletes a CannedQuery.
+  name: string, Required. Resource name of CannedQuery. Format: `projects/{project}/locations/{location}/collections/{collection}/engines/{engine}/assistants/{assistant}/cannedQueries/{canned_query}` If the caller does not have permission to delete the canned query, regardless of whether or not it exists, a `PERMISSION_DENIED` error is returned. If the canned query to delete does not exist, a `NOT_FOUND` error is returned. (required)
+  <pre>Gets a CannedQuery.
+  name: string, Required. Resource name of CannedQuery. Format: `projects/{project}/locations/{location}/collections/{collection}/engines/{engine}/assistants/{assistant}/cannedQueries/{canned_query}` (required)
+  <pre>Lists all CannedQuerys under an Assistant.
+  filter: string, Optional. The filter expression. Supported fields: * `enabled` * `google_defined` Examples: * `enabled=true` * `google_defined=true` * `enabled=true AND google_defined=true`
+  pageSize: integer, Maximum number of canned queries to return. If unspecified, defaults to 100. The maximum allowed value is 1000; anything above that will be coerced down to 1000.
+  pageToken: string, A page token received from a previous CannedQueryService.ListCannedQueries call. Provide this to retrieve the subsequent page. When paginating, all other parameters provided to CannedQueryService.ListCannedQueries must match the call that provided the page token.
+    { # Response message for the CannedQueryService.ListCannedQueries method.
+  &quot;cannedQueries&quot;: [ # The list of CannedQuerys matching the request.
+  &quot;nextPageToken&quot;: &quot;A String&quot;, # A token that can be sent as ListCannedQueriesRequest.page_token to retrieve the next page. If this field is omitted, there are no subsequent pages.
+  <pre>Updates a CannedQuery.
+  name: string, Immutable. Resource name of the canned query. Format: `projects/{project}/locations/{location}/collections/{collection}/engines/{engine}/assistants/{assistant}/cannedQueries/{canned_query}` It must be a UTF-8 encoded string with a length limit of 1024 characters. (required)

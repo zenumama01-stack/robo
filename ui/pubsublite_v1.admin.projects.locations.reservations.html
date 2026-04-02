@@ -1,0 +1,24 @@
+<h1><a href="pubsublite_v1.html">Pub/Sub Lite API</a> . <a href="pubsublite_v1.admin.html">admin</a> . <a href="pubsublite_v1.admin.projects.html">projects</a> . <a href="pubsublite_v1.admin.projects.locations.html">locations</a> . <a href="pubsublite_v1.admin.projects.locations.reservations.html">reservations</a></h1>
+  <code><a href="pubsublite_v1.admin.projects.locations.reservations.topics.html">topics()</a></code>
+<p class="firstline">Creates a new reservation.</p>
+<p class="firstline">Returns the reservation configuration.</p>
+<p class="firstline">Returns the list of reservations for the given project.</p>
+<p class="firstline">Updates properties of the specified reservation.</p>
+  <pre>Creates a new reservation.
+  parent: string, Required. The parent location in which to create the reservation. Structured like `projects/{project_number}/locations/{location}`. (required)
+{ # Metadata about a reservation resource.
+  &quot;name&quot;: &quot;A String&quot;, # The name of the reservation. Structured like: projects/{project_number}/locations/{location}/reservations/{reservation_id}
+  &quot;throughputCapacity&quot;: &quot;A String&quot;, # The reserved throughput capacity. Every unit of throughput capacity is equivalent to 1 MiB/s of published messages or 2 MiB/s of subscribed messages. Any topics which are declared as using capacity from a Reservation will consume resources from this reservation instead of being charged individually.
+  reservationId: string, Required. The ID to use for the reservation, which will become the final component of the reservation&#x27;s name. This value is structured like: `my-reservation-name`.
+  name: string, Required. The name of the reservation to delete. Structured like: projects/{project_number}/locations/{location}/reservations/{reservation_id} (required)
+  <pre>Returns the reservation configuration.
+  name: string, Required. The name of the reservation whose configuration to return. Structured like: projects/{project_number}/locations/{location}/reservations/{reservation_id} (required)
+  <pre>Returns the list of reservations for the given project.
+  parent: string, Required. The parent whose reservations are to be listed. Structured like `projects/{project_number}/locations/{location}`. (required)
+  pageSize: integer, The maximum number of reservations to return. The service may return fewer than this value. If unset or zero, all reservations for the parent will be returned.
+  pageToken: string, A page token, received from a previous `ListReservations` call. Provide this to retrieve the subsequent page. When paginating, all other parameters provided to `ListReservations` must match the call that provided the page token.
+    { # Response for ListReservations.
+  &quot;reservations&quot;: [ # The list of reservation in the requested parent. The order of the reservations is unspecified.
+  <pre>Updates properties of the specified reservation.
+  name: string, The name of the reservation. Structured like: projects/{project_number}/locations/{location}/reservations/{reservation_id} (required)
+  updateMask: string, Required. A mask specifying the reservation fields to change.

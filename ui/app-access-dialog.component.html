@@ -1,0 +1,21 @@
+  <div class="dialog-overlay" (click)="onDismiss()">
+    <div class="dialog-container" (click)="$event.stopPropagation()">
+      <div class="dialog-icon" [style.color]="iconColor">
+        <i class="fa-solid" [ngClass]="icon"></i>
+      <h2 class="dialog-title">{{ title }}</h2>
+      <!-- Message -->
+      <p class="dialog-message">{{ message }}</p>
+      <!-- Help message -->
+      @if (helpMessage) {
+        <p class="dialog-help">{{ helpMessage }}</p>
+        @if (showPrimaryAction) {
+            class="dialog-btn primary"
+            [disabled]="isProcessing"
+            (click)="onPrimaryAction()">
+            @if (!isProcessing) {
+              <span>{{ primaryActionText }}</span>
+              <span>Processing...</span>
+          class="dialog-btn"
+          [class.secondary]="showPrimaryAction"
+          (click)="onDismiss()">
+          {{ dismissButtonText }}

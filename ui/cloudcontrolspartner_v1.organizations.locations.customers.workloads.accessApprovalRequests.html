@@ -1,0 +1,13 @@
+<h1><a href="cloudcontrolspartner_v1.html">Cloud Controls Partner API</a> . <a href="cloudcontrolspartner_v1.organizations.html">organizations</a> . <a href="cloudcontrolspartner_v1.organizations.locations.html">locations</a> . <a href="cloudcontrolspartner_v1.organizations.locations.customers.html">customers</a> . <a href="cloudcontrolspartner_v1.organizations.locations.customers.workloads.html">workloads</a> . <a href="cloudcontrolspartner_v1.organizations.locations.customers.workloads.accessApprovalRequests.html">accessApprovalRequests</a></h1>
+<p class="firstline">Deprecated: Only returns access approval requests directly associated with an assured workload folder.</p>
+  <pre>Deprecated: Only returns access approval requests directly associated with an assured workload folder.
+  parent: string, Required. Parent resource Format: `organizations/{organization}/locations/{location}/customers/{customer}/workloads/{workload}` (required)
+  pageSize: integer, Optional. The maximum number of access requests to return. The service may return fewer than this value. If unspecified, at most 500 access requests will be returned.
+  pageToken: string, Optional. A page token, received from a previous `ListAccessApprovalRequests` call. Provide this to retrieve the subsequent page.
+    { # Response message for list access requests.
+  &quot;accessApprovalRequests&quot;: [ # List of access approval requests
+    { # Details about the Access request.
+      &quot;name&quot;: &quot;A String&quot;, # Identifier. Format: `organizations/{organization}/locations/{location}/customers/{customer}/workloads/{workload}/accessApprovalRequests/{access_approval_request}`
+      &quot;requestedExpirationTime&quot;: &quot;A String&quot;, # The requested expiration for the approval. If the request is approved, access will be granted from the time of approval until the expiration time.
+      &quot;requestedReason&quot;: { # Reason for the access. # The justification for which approval is being requested.
+        &quot;type&quot;: &quot;A String&quot;, # Type of access justification.

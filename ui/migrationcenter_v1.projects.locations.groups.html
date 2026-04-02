@@ -1,0 +1,40 @@
+<h1><a href="migrationcenter_v1.html">Migration Center API</a> . <a href="migrationcenter_v1.projects.html">projects</a> . <a href="migrationcenter_v1.projects.locations.html">locations</a> . <a href="migrationcenter_v1.projects.locations.groups.html">groups</a></h1>
+  <code><a href="#addAssets">addAssets(group, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Adds assets to a group.</p>
+  <code><a href="#create">create(parent, body=None, groupId=None, requestId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Creates a new group in a given project and location.</p>
+<p class="firstline">Gets the details of a group.</p>
+<p class="firstline">Lists all groups in a given project and location.</p>
+<p class="firstline">Updates the parameters of a group.</p>
+  <code><a href="#removeAssets">removeAssets(group, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Removes assets from a group.</p>
+    <code class="details" id="addAssets">addAssets(group, body=None, x__xgafv=None)</code>
+  <pre>Adds assets to a group.
+  group: string, Required. Group reference. (required)
+{ # A request to add assets to a group.
+  &quot;allowExisting&quot;: True or False, # Optional. When this value is set to `false` and one of the given assets is already an existing member of the group, the operation fails with an `Already Exists` error. When set to `true` this situation is silently ignored by the server. Default value is `false`.
+  &quot;assets&quot;: { # Lists the asset IDs of all assets. # Required. List of assets to be added. The maximum number of assets that can be added in a single request is 2000.
+    &quot;assetIds&quot;: [ # Required. A list of asset IDs
+    <code class="details" id="create">create(parent, body=None, groupId=None, requestId=None, x__xgafv=None)</code>
+  <pre>Creates a new group in a given project and location.
+{ # A resource that represents an asset group. The purpose of an asset group is to bundle a set of assets that have something in common, while allowing users to add annotations to the group. An asset can belong to multiple groups.
+  &quot;createTime&quot;: &quot;A String&quot;, # Output only. The timestamp when the group was created.
+  &quot;description&quot;: &quot;A String&quot;, # Optional. The description of the group.
+  &quot;displayName&quot;: &quot;A String&quot;, # Optional. User-friendly display name.
+  &quot;name&quot;: &quot;A String&quot;, # Output only. The name of the group.
+  &quot;updateTime&quot;: &quot;A String&quot;, # Output only. The timestamp when the group was last updated.
+  groupId: string, Required. User specified ID for the group. It will become the last component of the group name. The ID must be unique within the project, must conform with RFC-1034, is restricted to lower-cased letters, and has a maximum length of 63 characters. The ID must match the regular expression: `[a-z]([a-z0-9-]{0,61}[a-z0-9])?`.
+  name: string, Required. Name of the group resource. (required)
+  <pre>Gets the details of a group.
+  <pre>Lists all groups in a given project and location.
+  parent: string, Required. Parent value for `ListGroupsRequest`. (required)
+    { # A response for listing groups.
+  &quot;groups&quot;: [ # The list of Group
+  <pre>Updates the parameters of a group.
+  name: string, Output only. The name of the group. (required)
+  updateMask: string, Required. Field mask is used to specify the fields to be overwritten in the `Group` resource by the update. The values specified in the `update_mask` are relative to the resource, not the full request. A field will be overwritten if it is in the mask. A single * value in the mask lets you to overwrite all fields.
+    <code class="details" id="removeAssets">removeAssets(group, body=None, x__xgafv=None)</code>
+  <pre>Removes assets from a group.
+{ # A request to remove assets from a group.
+  &quot;allowMissing&quot;: True or False, # Optional. When this value is set to `false` and one of the given assets is not an existing member of the group, the operation fails with a `Not Found` error. When set to `true` this situation is silently ignored by the server. Default value is `false`.
+  &quot;assets&quot;: { # Lists the asset IDs of all assets. # Required. List of assets to be removed. The maximum number of assets that can be removed in a single request is 1000.

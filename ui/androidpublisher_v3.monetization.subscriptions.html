@@ -1,0 +1,52 @@
+<h1><a href="androidpublisher_v3.html">Google Play Android Developer API</a> . <a href="androidpublisher_v3.monetization.html">monetization</a> . <a href="androidpublisher_v3.monetization.subscriptions.html">subscriptions</a></h1>
+  <code><a href="androidpublisher_v3.monetization.subscriptions.basePlans.html">basePlans()</a></code>
+<p class="firstline">Returns the basePlans Resource.</p>
+  <code><a href="#archive">archive(packageName, productId, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Deprecated: subscription archiving is not supported.</p>
+<p class="firstline">Reads one or more subscriptions.</p>
+<p class="firstline">Updates a batch of subscriptions. Set the latencyTolerance field on nested requests to PRODUCT_UPDATE_LATENCY_TOLERANCE_LATENCY_TOLERANT to achieve maximum update throughput.</p>
+  <code><a href="#create">create(packageName, body=None, productId=None, regionsVersion_version=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Creates a new subscription. Newly added base plans will remain in draft state until activated.</p>
+  <code><a href="#delete">delete(packageName, productId, x__xgafv=None)</a></code></p>
+<p class="firstline">Deletes a subscription. A subscription can only be deleted if it has never had a base plan published.</p>
+<p class="firstline">Reads a single subscription.</p>
+  <code><a href="#list">list(packageName, pageSize=None, pageToken=None, showArchived=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Lists all subscriptions under a given app.</p>
+<p class="firstline">Updates an existing subscription.</p>
+    <code class="details" id="archive">archive(packageName, productId, body=None, x__xgafv=None)</code>
+  <pre>Deprecated: subscription archiving is not supported.
+  packageName: string, Required. The parent app (package name) of the app of the subscription to delete. (required)
+  productId: string, Required. The unique product ID of the subscription to delete. (required)
+{ # Deprecated: subscription archiving is not supported.
+  <pre>Reads one or more subscriptions.
+  packageName: string, Required. The parent app (package name) for which the subscriptions should be retrieved. Must be equal to the package_name field on all the requests. (required)
+  productIds: string, Required. A list of up to 100 subscription product IDs to retrieve. All the IDs must be different. (repeated)
+  &quot;subscriptions&quot;: [ # The list of requested subscriptions, in the same order as the request.
+  <pre>Updates a batch of subscriptions. Set the latencyTolerance field on nested requests to PRODUCT_UPDATE_LATENCY_TOLERANCE_LATENCY_TOLERANT to achieve maximum update throughput.
+  packageName: string, Required. The parent app (package name) for which the subscriptions should be updated. Must be equal to the package_name field on all the Subscription resources. (required)
+{ # Request message for BatchUpdateSubscription.
+    { # Request message for UpdateSubscription.
+      &quot;allowMissing&quot;: True or False, # Optional. If set to true, and the subscription with the given package_name and product_id doesn&#x27;t exist, the subscription will be created. If a new subscription is created, update_mask is ignored.
+      &quot;regionsVersion&quot;: { # The version of the available regions being used for the specified resource. # Required. The version of the available regions being used for the subscription.
+      &quot;subscription&quot;: { # A single subscription for an app. # Required. The subscription to update.
+    { # Response message for BatchUpdateSubscription.
+  &quot;subscriptions&quot;: [ # The updated subscriptions list.
+    <code class="details" id="create">create(packageName, body=None, productId=None, regionsVersion_version=None, x__xgafv=None)</code>
+  <pre>Creates a new subscription. Newly added base plans will remain in draft state until activated.
+  packageName: string, Required. The parent app (package name) for which the subscription should be created. Must be equal to the package_name field on the Subscription resource. (required)
+  productId: string, Required. The ID to use for the subscription. For the requirements on this format, see the documentation of the product_id field on the Subscription resource.
+    <code class="details" id="delete">delete(packageName, productId, x__xgafv=None)</code>
+  <pre>Deletes a subscription. A subscription can only be deleted if it has never had a base plan published.
+  <pre>Reads a single subscription.
+  packageName: string, Required. The parent app (package name) of the subscription to get. (required)
+  productId: string, Required. The unique product ID of the subscription to get. (required)
+    <code class="details" id="list">list(packageName, pageSize=None, pageToken=None, showArchived=None, x__xgafv=None)</code>
+  <pre>Lists all subscriptions under a given app.
+  pageToken: string, A page token, received from a previous `ListSubscriptions` call. Provide this to retrieve the subsequent page. When paginating, all other parameters provided to `ListSubscriptions` must match the call that provided the page token.
+  showArchived: boolean, Deprecated: subscription archiving is not supported.
+    { # Response message for ListSubscriptions.
+  &quot;subscriptions&quot;: [ # The subscriptions from the specified app.
+  <pre>Updates an existing subscription.
+  packageName: string, Immutable. Package name of the parent app. (required)
+  productId: string, Immutable. Unique product ID of the product. Unique within the parent app. Product IDs must be composed of lower-case letters (a-z), numbers (0-9), underscores (_) and dots (.). It must start with a lower-case letter or number, and be between 1 and 40 (inclusive) characters in length. (required)
+  allowMissing: boolean, Optional. If set to true, and the subscription with the given package_name and product_id doesn&#x27;t exist, the subscription will be created. If a new subscription is created, update_mask is ignored.

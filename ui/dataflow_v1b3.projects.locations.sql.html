@@ -1,0 +1,11 @@
+<h1><a href="dataflow_v1b3.html">Dataflow API</a> . <a href="dataflow_v1b3.projects.html">projects</a> . <a href="dataflow_v1b3.projects.locations.html">locations</a> . <a href="dataflow_v1b3.projects.locations.sql.html">sql</a></h1>
+  <code><a href="#validate">validate(projectId, location, query=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Validates a GoogleSQL query for Cloud Dataflow syntax. Will always confirm the given query parses correctly, and if able to look up schema information from DataCatalog, will validate that the query analyzes properly as well.</p>
+    <code class="details" id="validate">validate(projectId, location, query=None, x__xgafv=None)</code>
+  <pre>Validates a GoogleSQL query for Cloud Dataflow syntax. Will always confirm the given query parses correctly, and if able to look up schema information from DataCatalog, will validate that the query analyzes properly as well.
+  location: string, The [regional endpoint] (https://cloud.google.com/dataflow/docs/concepts/regional-endpoints) to which to direct the request. (required)
+  query: string, The sql query to validate.
+    { # Response to the validation request.
+  &quot;errorMessage&quot;: &quot;A String&quot;, # Will be empty if validation succeeds.
+  &quot;queryInfo&quot;: { # Information about a validated query. # Information about the validated query. Not defined if validation fails.
+    &quot;queryProperty&quot;: [ # Includes an entry for each satisfied QueryProperty.

@@ -1,0 +1,17 @@
+<div class="mj-flow-palette" [class.mj-flow-palette--collapsed]="Collapsed">
+  <div class="mj-flow-palette-header">
+    <i class="fa-solid fa-puzzle-piece"></i>
+    @if (!Collapsed) {
+      <span>Steps</span>
+    <div class="mj-flow-palette-content">
+      @for (category of categories; track category) {
+        <div class="mj-flow-palette-category">
+          <div class="mj-flow-palette-category-label">{{ category }}</div>
+          @for (nodeType of GetTypesForCategory(category); track nodeType) {
+              class="mj-flow-palette-item"
+              fExternalItem
+              [fData]="nodeType.Type"
+              [title]="nodeType.Label">
+              <div class="mj-flow-palette-item-icon" [style.backgroundColor]="GetBgColor(nodeType.Color, 0.08)" [style.color]="nodeType.Color">
+                <i class="fa-solid" [ngClass]="nodeType.Icon"></i>
+              <span class="mj-flow-palette-item-label">{{ nodeType.Label }}</span>

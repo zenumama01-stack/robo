@@ -1,0 +1,13 @@
+  <!-- Processing Indicator Overlay -->
+    <div class="processing-indicator">
+      <span>{{ processingMessage }}</span>
+  <!-- Message Input Box -->
+  <mj-message-input-box
+    #inputBox
+    [disabled]="disabled || isProcessing"
+    [showCharacterCount]="false"
+    [enableMentions]="true"
+    [(value)]="messageText"
+    (textSubmitted)="onTextSubmitted($event)"
+    (attachmentError)="onAttachmentError($event)">
+  </mj-message-input-box>

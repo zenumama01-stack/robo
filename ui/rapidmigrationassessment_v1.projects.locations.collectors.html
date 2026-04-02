@@ -1,0 +1,44 @@
+<h1><a href="rapidmigrationassessment_v1.html">Rapid Migration Assessment API</a> . <a href="rapidmigrationassessment_v1.projects.html">projects</a> . <a href="rapidmigrationassessment_v1.projects.locations.html">locations</a> . <a href="rapidmigrationassessment_v1.projects.locations.collectors.html">collectors</a></h1>
+  <code><a href="#create">create(parent, body=None, collectorId=None, requestId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Create a Collector to manage the on-prem appliance which collects information about Customer assets.</p>
+<p class="firstline">Deletes a single Collector - changes state of collector to "Deleting". Background jobs does final deletion through producer API.</p>
+<p class="firstline">Gets details of a single Collector.</p>
+<p class="firstline">Lists Collectors in a given project and location.</p>
+<p class="firstline">Updates the parameters of a single Collector.</p>
+<p class="firstline">Pauses the given collector.</p>
+  <code><a href="#register">register(name, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Registers the given collector.</p>
+<p class="firstline">Resumes the given collector.</p>
+    <code class="details" id="create">create(parent, body=None, collectorId=None, requestId=None, x__xgafv=None)</code>
+  <pre>Create a Collector to manage the on-prem appliance which collects information about Customer assets.
+{ # Message describing Collector object.
+  &quot;bucket&quot;: &quot;A String&quot;, # Output only. Store cloud storage bucket name (which is a guid) created with this Collector.
+  &quot;clientVersion&quot;: &quot;A String&quot;, # Output only. Client version.
+  &quot;collectionDays&quot;: 42, # How many days to collect data.
+  &quot;description&quot;: &quot;A String&quot;, # User specified description of the Collector.
+  &quot;displayName&quot;: &quot;A String&quot;, # User specified name of the Collector.
+  &quot;eulaUri&quot;: &quot;A String&quot;, # Uri for EULA (End User License Agreement) from customer.
+  &quot;expectedAssetCount&quot;: &quot;A String&quot;, # User specified expected asset count.
+  &quot;guestOsScan&quot;: { # Message describing a MC Source of type Guest OS Scan. # Output only. Reference to MC Source Guest Os Scan.
+    &quot;coreSource&quot;: &quot;A String&quot;, # reference to the corresponding Guest OS Scan in MC Source.
+  &quot;serviceAccount&quot;: &quot;A String&quot;, # Service Account email used to ingest data to this Collector.
+  &quot;state&quot;: &quot;A String&quot;, # Output only. State of the Collector.
+  &quot;vsphereScan&quot;: { # Message describing a MC Source of type VSphere Scan. # Output only. Reference to MC Source vsphere_scan.
+    &quot;coreSource&quot;: &quot;A String&quot;, # reference to the corresponding VSphere Scan in MC Source.
+  collectorId: string, Required. Id of the requesting object.
+  <pre>Deletes a single Collector - changes state of collector to &quot;Deleting&quot;. Background jobs does final deletion through producer API.
+  <pre>Gets details of a single Collector.
+  <pre>Lists Collectors in a given project and location.
+  parent: string, Required. Parent value for ListCollectorsRequest. (required)
+    { # Message for response to listing Collectors.
+  &quot;collectors&quot;: [ # The list of Collectors.
+  <pre>Updates the parameters of a single Collector.
+  name: string, name of resource. (required)
+  updateMask: string, Required. Field mask is used to specify the fields to be overwritten in the Collector resource by the update. The fields specified in the update_mask are relative to the resource, not the full request. A field will be overwritten if it is in the mask. If the user does not provide a mask then all fields will be overwritten.
+  <pre>Pauses the given collector.
+{ # Message for pausing a Collector.
+    <code class="details" id="register">register(name, body=None, x__xgafv=None)</code>
+  <pre>Registers the given collector.
+{ # Message for registering a Collector.
+  <pre>Resumes the given collector.
+{ # Message for resuming a Collector.

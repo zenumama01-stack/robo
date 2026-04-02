@@ -1,0 +1,133 @@
+  <div class="slideout-backdrop" (click)="close()"></div>
+      <span>API Key Details</span>
+      <span class="key-status" [class.active]="APIKey?.Status === 'Active'"
+        [class.revoked]="APIKey?.Status === 'Revoked'">
+        {{APIKey?.Status}}
+    <mj-loading text="Loading key details..."></mj-loading>
+  @if (!IsLoading && APIKey) {
+    <!-- Success/Error Messages -->
+      <button class="slideout-tab" [class.active]="ActiveTab === 'details'"
+        (click)="ActiveTab = 'details'">
+      <button class="slideout-tab" [class.active]="ActiveTab === 'scopes'"
+        (click)="ActiveTab = 'scopes'">
+        Permissions
+        @if (HasScopeChanges) {
+          <span class="tab-badge unsaved">!</span>
+      <button class="slideout-tab" [class.active]="ActiveTab === 'usage'"
+        (click)="ActiveTab = 'usage'">
+        Usage
+      @if (ActiveTab === 'details') {
+          <div class="key-info-card">
+            <div class="info-header">
+              <div class="info-row">
+                <span class="info-label">Key Hash</span>
+                <code class="hash-value">{{APIKey.Hash}}</code>
+                <span class="info-label">Created</span>
+                <span class="info-value">{{formatDate(APIKey.__mj_CreatedAt)}}</span>
+                <span class="info-label">Created By</span>
+                <span class="info-value">{{APIKey.CreatedByUser}}</span>
+                <span class="info-label">Owner</span>
+                <span class="info-value">{{APIKey.User}}</span>
+                <span class="info-label">Last Used</span>
+                <span class="info-value" [class.never-used]="!APIKey.LastUsedAt">
+                  {{APIKey.LastUsedAt ? formatDate(APIKey.LastUsedAt) : 'Never'}}
+          <!-- Editable Fields -->
+          <div class="edit-section">
+              <h4>Key Configuration</h4>
+              @if (APIKey.Status === 'Active') {
+                <button class="edit-toggle"
+                  (click)="toggleEdit()">
+                  <i class="fa-solid" [class.fa-pencil]="!IsEditing" [class.fa-times]="IsEditing"></i>
+                  {{IsEditing ? 'Cancel' : 'Edit'}}
+              <label>Label</label>
+              <input kendoTextBox [(ngModel)]="EditLabel"
+                [disabled]="!IsEditing"
+              <label>Expiration</label>
+              <div class="expiration-field">
+                <kendo-datepicker [(ngModel)]="EditExpiresAt"
+                  placeholder="Never expires">
+                @if (IsEditing && EditExpiresAt) {
+                  <button class="clear-btn"
+                    (click)="EditExpiresAt = null">
+                    Never expires
+            @if (IsEditing) {
+                  [disabled]="IsSaving"
+                  (click)="saveChanges()">
+          <!-- Revoke Section -->
+            <div class="danger-zone">
+              <h4>Danger Zone</h4>
+              @if (!ShowRevokeConfirm) {
+                <div class="revoke-section">
+                  <div class="revoke-info">
+                      <strong>Revoke this API key</strong>
+                      <p>Once revoked, this key will immediately stop working. This action cannot be undone.</p>
+                  <button class="revoke-btn" (click)="startRevoke()">
+                    Revoke Key
+              @if (ShowRevokeConfirm) {
+                <div class="revoke-confirm">
+                  <div class="confirm-warning">
+                    <i class="fa-solid fa-skull-crossbones"></i>
+                      <strong>Are you absolutely sure?</strong>
+                      <p>This will permanently revoke the API key. Any applications using this key will immediately lose access.</p>
+                  <div class="confirm-input">
+                    <label>Type <code>REVOKE</code> to confirm:</label>
+                    <input kendoTextBox [(ngModel)]="RevokeConfirmText"
+                      placeholder="REVOKE" />
+                  <div class="confirm-actions">
+                    <button kendoButton (click)="cancelRevoke()">Cancel</button>
+                    <button class="confirm-revoke-btn"
+                      [disabled]="RevokeConfirmText !== 'REVOKE' || IsRevoking"
+                      (click)="confirmRevoke()">
+                      @if (IsRevoking) {
+                      @if (!IsRevoking) {
+          <!-- Revoked Notice -->
+          @if (APIKey.Status === 'Revoked') {
+            <div class="revoked-notice">
+                <strong>This API key has been revoked</strong>
+                <p>It can no longer be used for authentication. Consider deleting this record if no longer needed.</p>
+      @if (ActiveTab === 'scopes') {
+              <span class="scope-count">{{getAssignedScopeCount()}} permissions assigned</span>
+            @if (HasScopeChanges && APIKey.Status === 'Active') {
+                (click)="saveScopeChanges()">
+          @if (!IsLoadingScopes && getAssignedScopeCount() === 0 && APIKey.Status === 'Active') {
+                <strong>Warning: No permissions assigned</strong>
+                <p>This API key has no assigned scopes and cannot perform any operations. All API requests using this key will be rejected until scopes are assigned.</p>
+            <mj-loading text="Loading permissions..."></mj-loading>
+                      <span class="category-count">
+                        {{getSelectedCount(category)}}/{{category.scopes.length}}
+                        <label class="category-all-toggle"
+                      <i class="fa-solid expand-icon" [class.fa-chevron-down]="!category.expanded"
+                              [disabled]="APIKey.Status === 'Revoked'"
+                              (change)="onScopeChange()" />
+      <!-- Usage Tab -->
+      @if (ActiveTab === 'usage') {
+        <div class="tab-panel usage-panel">
+          @if (IsLoadingLogs) {
+            <mj-loading text="Loading usage logs..."></mj-loading>
+          @if (!IsLoadingLogs) {
+            <div class="usage-content">
+              <div class="usage-stats">
+                  <div class="stat-value">{{UsageLogs.length}}</div>
+                  <div class="stat-label">Total Requests</div>
+                  <div class="stat-value">
+                    {{UsageLogs.length > 0 ? formatRelativeTime(UsageLogs[0].timestamp) : 'Never'}}
+                  <div class="stat-label">Last Used</div>
+              @if (UsageLogs.length > 0) {
+                <div class="usage-logs">
+                    <span class="col-time">Time</span>
+                    <span class="col-endpoint">Endpoint</span>
+                    <span class="col-duration">Duration</span>
+                  @for (log of UsageLogs; track log) {
+                    <div class="log-item">
+                      <span class="col-time">{{formatRelativeTime(log.timestamp)}}</span>
+                      <span class="col-endpoint">
+                        <span class="method-badge">{{log.method}}</span>
+                        {{log.endpoint}}
+                      <span class="col-status" [ngClass]="getStatusClass(log.statusCode)">
+                        {{log.statusCode}}
+                      <span class="col-duration">{{log.responseTime}}ms</span>
+              @if (UsageLogs.length === 0) {
+                  <i class="fa-solid fa-chart-area"></i>
+                  <span>No usage logs yet</span>
+                  <p>Usage will be recorded when this API key is used for authentication</p>
+      <button kendoButton (click)="close()">Close</button>

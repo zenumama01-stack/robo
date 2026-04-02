@@ -1,0 +1,33 @@
+<h1><a href="ces_v1beta.html">Gemini Enterprise for Customer Experience API</a> . <a href="ces_v1beta.projects.html">projects</a> . <a href="ces_v1beta.projects.locations.html">locations</a> . <a href="ces_v1beta.projects.locations.apps.html">apps</a> . <a href="ces_v1beta.projects.locations.apps.evaluationExpectations.html">evaluationExpectations</a></h1>
+  <code><a href="#create">create(parent, body=None, evaluationExpectationId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Creates an evaluation expectation.</p>
+<p class="firstline">Deletes an evaluation expectation.</p>
+<p class="firstline">Gets details of the specified evaluation expectation.</p>
+<p class="firstline">Lists all evaluation expectations in the given app.</p>
+<p class="firstline">Updates an evaluation expectation.</p>
+    <code class="details" id="create">create(parent, body=None, evaluationExpectationId=None, x__xgafv=None)</code>
+  <pre>Creates an evaluation expectation.
+  parent: string, Required. The app to create the evaluation expectation for. Format: `projects/{project}/locations/{location}/apps/{app}` (required)
+{ # An evaluation expectation represents a specific criteria to evaluate against.
+  &quot;createTime&quot;: &quot;A String&quot;, # Output only. Timestamp when the evaluation expectation was created.
+  &quot;displayName&quot;: &quot;A String&quot;, # Required. User-defined display name. Must be unique within the app.
+  &quot;llmCriteria&quot;: { # Configuration for LLM-based evaluation criteria. # Optional. Evaluation criteria based on an LLM prompt.
+    &quot;prompt&quot;: &quot;A String&quot;, # Required. The prompt/instructions provided to the LLM judge.
+  &quot;name&quot;: &quot;A String&quot;, # Identifier. The unique identifier of this evaluation expectation. Format: `projects/{project}/locations/{location}/apps/{app}/evaluationExpectations/{evaluation_expectation}`
+  &quot;tags&quot;: [ # Optional. User-defined tags for expectations. Can be used to filter expectations.
+  &quot;updateTime&quot;: &quot;A String&quot;, # Output only. Timestamp when the evaluation expectation was last updated.
+  evaluationExpectationId: string, Optional. The ID to use for the evaluation expectation, which will become the final component of the evaluation expectation&#x27;s resource name. If not provided, a unique ID will be automatically assigned for the evaluation expectation.
+  <pre>Deletes an evaluation expectation.
+  name: string, Required. The resource name of the evaluation expectation to delete. (required)
+  etag: string, Optional. The current etag of the evaluation expectation. If an etag is not provided, the deletion will overwrite any concurrent changes. If an etag is provided and does not match the current etag of the evaluation expectation, deletion will be blocked and an ABORTED error will be returned.
+  <pre>Gets details of the specified evaluation expectation.
+  name: string, Required. The resource name of the evaluation expectation to retrieve. (required)
+  <pre>Lists all evaluation expectations in the given app.
+  parent: string, Required. The resource name of the app to list evaluation expectations from. (required)
+  filter: string, Optional. Filter to be applied when listing the evaluation expectations. See https://google.aip.dev/160 for more details.
+  pageToken: string, Optional. The next_page_token value returned from a previous list EvaluationService.ListEvaluationExpectations call.
+    { # Response message for EvaluationService.ListEvaluationExpectations.
+  &quot;evaluationExpectations&quot;: [ # The list of evaluation expectations.
+  &quot;nextPageToken&quot;: &quot;A String&quot;, # A token that can be sent as ListEvaluationExpectationsRequest.page_token to retrieve the next page. Absence of this field indicates there are no subsequent pages.
+  <pre>Updates an evaluation expectation.
+  name: string, Identifier. The unique identifier of this evaluation expectation. Format: `projects/{project}/locations/{location}/apps/{app}/evaluationExpectations/{evaluation_expectation}` (required)

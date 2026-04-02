@@ -1,0 +1,38 @@
+      <!-- Modal Header with MJ Blue -->
+            {{ isEditMode ? 'Edit Role' : 'Create New Role' }}
+            {{ isEditMode ? 'Update role information and permissions' : 'Add a new role to the system' }}
+        <form [formGroup]="roleForm" (ngSubmit)="onSubmit()">
+                  Role Information
+                <p class="section-description">Define the role's basic properties and purpose</p>
+                  <label class="field-label required" for="name">Role Name</label>
+                    placeholder="Sales Manager"
+                    [class.error]="roleForm.get('name')?.invalid && roleForm.get('name')?.touched"
+                  @if (roleForm.get('name')?.invalid && roleForm.get('name')?.touched) {
+                      @if (roleForm.get('name')?.errors?.['required']) {
+                        Role name is required
+                      @if (roleForm.get('name')?.errors?.['maxlength']) {
+                        Role name cannot exceed 50 characters
+                  <label class="field-label" for="description">Description</label>
+                    placeholder="Describe the role's purpose and responsibilities..."
+                    Provide a clear description of what this role is for and what permissions it should have.
+                    <label class="field-label" for="directoryId">Directory ID</label>
+                      id="directoryId"
+                      formControlName="directoryId"
+                      placeholder="External directory identifier"
+                      External directory identifier for syncing with Active Directory or other systems.
+          <!-- Role Type Section -->
+                  Role Type
+                <p class="section-description">System or custom role classification</p>
+                @if (isSystemRole) {
+                  <div class="alert alert-warning">
+                      <strong>System Role</strong>
+                      <p>This is a system-defined role. Some properties may be limited for editing to maintain system integrity.</p>
+                  <div class="alert alert-info">
+                      <strong>Custom Role</strong>
+                      <p>This is a custom role that can be fully configured and modified.</p>
+          <!-- Permissions Preview Section -->
+                  <p class="section-description">Manage role permissions and access rights</p>
+                      <strong>Permission Management</strong>
+                      <p>Role permissions can be managed in the <strong>Permissions</strong> tab of the settings dashboard. Use that interface to configure specific access rights for this role.</p>
+              [disabled]="roleForm.invalid || isLoading"
+                {{ isEditMode ? 'Update Role' : 'Create Role' }}

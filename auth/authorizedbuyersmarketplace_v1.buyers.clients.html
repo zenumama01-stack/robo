@@ -1,0 +1,35 @@
+<h1><a href="authorizedbuyersmarketplace_v1.html">Authorized Buyers Marketplace API</a> . <a href="authorizedbuyersmarketplace_v1.buyers.html">buyers</a> . <a href="authorizedbuyersmarketplace_v1.buyers.clients.html">clients</a></h1>
+  <code><a href="authorizedbuyersmarketplace_v1.buyers.clients.users.html">users()</a></code>
+<p class="firstline">Activates an existing client. The state of the client will be updated to "ACTIVE". This method has no effect if the client is already in "ACTIVE" state.</p>
+<p class="firstline">Creates a new client.</p>
+  <code><a href="#deactivate">deactivate(name, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Deactivates an existing client. The state of the client will be updated to "INACTIVE". This method has no effect if the client is already in "INACTIVE" state.</p>
+<p class="firstline">Gets a client with a given resource name.</p>
+<p class="firstline">Lists all the clients for the current buyer.</p>
+<p class="firstline">Updates an existing client.</p>
+  <pre>Activates an existing client. The state of the client will be updated to &quot;ACTIVE&quot;. This method has no effect if the client is already in &quot;ACTIVE&quot; state.
+  name: string, Required. Format: `buyers/{buyerAccountId}/clients/{clientAccountId}` (required)
+{ # Request message for activating a client.
+    { # A client represents an agency, a brand, or an advertiser customer of the buyer. Based on the client&#x27;s role, its client users will have varying levels of restricted access to the Marketplace and certain other sections of the Authorized Buyers UI.
+  &quot;displayName&quot;: &quot;A String&quot;, # Required. Display name shown to publishers. Must be unique for clients without partnerClientId specified. Maximum length of 255 characters is allowed.
+  &quot;name&quot;: &quot;A String&quot;, # Output only. The resource name of the client. Format: `buyers/{accountId}/clients/{clientAccountId}`
+  &quot;partnerClientId&quot;: &quot;A String&quot;, # Arbitrary unique identifier provided by the buyer. This field can be used to associate a client with an identifier in the namespace of the buyer, lookup clients by that identifier and verify whether an Authorized Buyers account of the client already exists. If present, must be unique across all the clients.
+  &quot;role&quot;: &quot;A String&quot;, # Required. The role assigned to the client. Each role implies a set of permissions granted to the client.
+  &quot;sellerVisible&quot;: True or False, # Whether the client will be visible to sellers.
+  &quot;state&quot;: &quot;A String&quot;, # Output only. The state of the client.
+  <pre>Creates a new client.
+  parent: string, Required. The name of the buyer. Format: `buyers/{accountId}` (required)
+    <code class="details" id="deactivate">deactivate(name, body=None, x__xgafv=None)</code>
+  <pre>Deactivates an existing client. The state of the client will be updated to &quot;INACTIVE&quot;. This method has no effect if the client is already in &quot;INACTIVE&quot; state.
+{ # Request message for disabling a client.
+  <pre>Gets a client with a given resource name.
+  name: string, Required. Format: `buyers/{accountId}/clients/{clientAccountId}` (required)
+  <pre>Lists all the clients for the current buyer.
+  filter: string, Query string using the [Filtering Syntax](https://developers.google.com/authorized-buyers/apis/guides/list-filters) Supported fields for filtering are: * partnerClientId Use this field to filter the clients by the partnerClientId. For example, if the partnerClientId of the client is &quot;1234&quot;, the value of this field should be `partnerClientId = &quot;1234&quot;`, in order to get only the client whose partnerClientId is &quot;1234&quot; in the response.
+  pageSize: integer, Requested page size. If left blank, a default page size of 500 will be applied.
+  pageToken: string, A token identifying a page of results the server should return. Typically, this is the value of ListClientsResponse.nextPageToken returned from the previous call to the list method.
+    { # Response message for the list method.
+  &quot;nextPageToken&quot;: &quot;A String&quot;, # A token to retrieve the next page of results. Pass this value in the ListClientsRequest.pageToken field in the subsequent call to the list method to retrieve the next page of results.
+  <pre>Updates an existing client.
+  name: string, Output only. The resource name of the client. Format: `buyers/{accountId}/clients/{clientAccountId}` (required)
+  updateMask: string, List of fields to be updated. If empty or unspecified, the service will update all fields populated in the update request excluding the output only fields and primitive fields with default value. Note that explicit field mask is required in order to reset a primitive field back to its default value, for example, false for boolean fields, 0 for integer fields. A special field mask consisting of a single path &quot;*&quot; can be used to indicate full replacement(the equivalent of PUT method), updatable fields unset or unspecified in the input will be cleared or set to default value. Output only fields will be ignored regardless of the value of updateMask.

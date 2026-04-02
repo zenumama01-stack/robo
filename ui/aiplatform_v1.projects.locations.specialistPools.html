@@ -1,0 +1,32 @@
+<h1><a href="aiplatform_v1.html">Vertex AI API</a> . <a href="aiplatform_v1.projects.html">projects</a> . <a href="aiplatform_v1.projects.locations.html">locations</a> . <a href="aiplatform_v1.projects.locations.specialistPools.html">specialistPools</a></h1>
+  <code><a href="aiplatform_v1.projects.locations.specialistPools.operations.html">operations()</a></code>
+<p class="firstline">Creates a SpecialistPool.</p>
+<p class="firstline">Deletes a SpecialistPool as well as all Specialists in the pool.</p>
+<p class="firstline">Gets a SpecialistPool.</p>
+  <code><a href="#list">list(parent, pageSize=None, pageToken=None, readMask=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Lists SpecialistPools in a Location.</p>
+<p class="firstline">Updates a SpecialistPool.</p>
+  <pre>Creates a SpecialistPool.
+  parent: string, Required. The parent Project name for the new SpecialistPool. The form is `projects/{project}/locations/{location}`. (required)
+{ # SpecialistPool represents customers&#x27; own workforce to work on their data labeling jobs. It includes a group of specialist managers and workers. Managers are responsible for managing the workers in this pool as well as customers&#x27; data labeling jobs associated with this pool. Customers create specialist pool as well as start data labeling jobs on Cloud, managers and workers handle the jobs using CrowdCompute console.
+  &quot;displayName&quot;: &quot;A String&quot;, # Required. The user-defined name of the SpecialistPool. The name can be up to 128 characters long and can consist of any UTF-8 characters. This field should be unique on project-level.
+  &quot;name&quot;: &quot;A String&quot;, # Required. The resource name of the SpecialistPool.
+  &quot;pendingDataLabelingJobs&quot;: [ # Output only. The resource name of the pending data labeling jobs.
+  &quot;specialistManagerEmails&quot;: [ # The email addresses of the managers in the SpecialistPool.
+  &quot;specialistManagersCount&quot;: 42, # Output only. The number of managers in this SpecialistPool.
+  &quot;specialistWorkerEmails&quot;: [ # The email addresses of workers in the SpecialistPool.
+  <pre>Deletes a SpecialistPool as well as all Specialists in the pool.
+  name: string, Required. The resource name of the SpecialistPool to delete. Format: `projects/{project}/locations/{location}/specialistPools/{specialist_pool}` (required)
+  force: boolean, If set to true, any specialist managers in this SpecialistPool will also be deleted. (Otherwise, the request will only work if the SpecialistPool has no specialist managers.)
+  <pre>Gets a SpecialistPool.
+  name: string, Required. The name of the SpecialistPool resource. The form is `projects/{project}/locations/{location}/specialistPools/{specialist_pool}`. (required)
+    <code class="details" id="list">list(parent, pageSize=None, pageToken=None, readMask=None, x__xgafv=None)</code>
+  <pre>Lists SpecialistPools in a Location.
+  parent: string, Required. The name of the SpecialistPool&#x27;s parent resource. Format: `projects/{project}/locations/{location}` (required)
+  pageToken: string, The standard list page token. Typically obtained by ListSpecialistPoolsResponse.next_page_token of the previous SpecialistPoolService.ListSpecialistPools call. Return first page if empty.
+  readMask: string, Mask specifying which fields to read. FieldMask represents a set of
+    { # Response message for SpecialistPoolService.ListSpecialistPools.
+  &quot;specialistPools&quot;: [ # A list of SpecialistPools that matches the specified filter in the request.
+  <pre>Updates a SpecialistPool.
+  name: string, Required. The resource name of the SpecialistPool. (required)
+  updateMask: string, Required. The update mask applies to the resource.

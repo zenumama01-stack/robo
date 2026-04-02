@@ -1,0 +1,63 @@
+<h1><a href="compute_alpha.html">Compute Engine API</a> . <a href="compute_alpha.regionCompositeHealthChecks.html">regionCompositeHealthChecks</a></h1>
+<p class="firstline">Retrieves the list of all CompositeHealthCheck resources (all</p>
+  <code><a href="#delete">delete(project, region, compositeHealthCheck, requestId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Deletes the specified CompositeHealthCheck in the given region</p>
+  <code><a href="#get">get(project, region, compositeHealthCheck, x__xgafv=None)</a></code></p>
+<p class="firstline">Returns the specified CompositeHealthCheck resource in the given region.</p>
+  <code><a href="#getHealth">getHealth(project, region, compositeHealthCheck, x__xgafv=None)</a></code></p>
+<p class="firstline">Create a CompositeHealthCheck in the specified project in the given region</p>
+<p class="firstline">Lists the CompositeHealthChecks for a project in the given region.</p>
+  <code><a href="#patch">patch(project, region, compositeHealthCheck, body=None, requestId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Updates the specified regional CompositeHealthCheck resource</p>
+  <pre>Retrieves the list of all CompositeHealthCheck resources (all
+regional) available to the specified project.
+    { # Contains a list of CompositeHealthChecksScopedList.
+  &quot;items&quot;: { # A list of CompositeHealthChecksScopedList resources.
+    &quot;a_key&quot;: { # Name of the scope containing this set of CompositeHealthChecks.
+      &quot;compositeHealthChecks&quot;: [ # A list of CompositeHealthChecks contained in this scope.
+        { # Represents a composite health check.
+            # A composite health check resource specifies the health source resources and
+            # the health destination resource to which the aggregated health result from
+            # the health source resources is delivered.
+              # inserting a CompositeHealthCheck. An up-to-date fingerprint
+              # must be provided in order to patch the CompositeHealthCheck; Otherwise,
+              # the request will fail with error 412 conditionNotMet. To see
+              # the latest fingerprint, make a get() request to retrieve the
+              # CompositeHealthCheck.
+          &quot;healthDestination&quot;: &quot;A String&quot;, # URL to the destination resource. Must be set. Must be aForwardingRule. The ForwardingRule must have
+              # load balancing scheme INTERNAL orINTERNAL_MANAGED and must be regional and in the same region
+              # as the CompositeHealthCheck (cross-region deployment forINTERNAL_MANAGED is not supported). Can be mutated.
+          &quot;healthSources&quot;: [ # URLs to the HealthSource resources whose results are AND&#x27;ed.
+              # I.e. he aggregated result is is HEALTHY only if all sources
+              # are HEALTHY. Must have at least 1. Must not have more than 10.
+              # Must be regional and in the same region as theCompositeHealthCheck. Can be mutated.
+          &quot;kind&quot;: &quot;compute#compositeHealthCheck&quot;, # Output only. [Output Only] Type of the resource. Alwayscompute#compositeHealthCheck for composite health checks.
+          &quot;region&quot;: &quot;A String&quot;, # Output only. [Output Only] URL of the region where the composite health check resides.
+              # This field applies only to the regional resource. You must specify this
+      &quot;warning&quot;: { # Informational warning which replaces the list of composite health checks
+  &quot;kind&quot;: &quot;compute#compositeHealthCheckAggregatedList&quot;, # Output only. Type of resource.
+    <code class="details" id="delete">delete(project, region, compositeHealthCheck, requestId=None, x__xgafv=None)</code>
+  <pre>Deletes the specified CompositeHealthCheck in the given region
+  compositeHealthCheck: string, Name of the CompositeHealthCheck resource to delete. (required)
+    <code class="details" id="get">get(project, region, compositeHealthCheck, x__xgafv=None)</code>
+  <pre>Returns the specified CompositeHealthCheck resource in the given region.
+  compositeHealthCheck: string, Name of the CompositeHealthCheck resource to return. (required)
+    <code class="details" id="getHealth">getHealth(project, region, compositeHealthCheck, x__xgafv=None)</code>
+regional CompositeHealthCheck.
+  compositeHealthCheck: string, Name of the CompositeHealthCheck resource to get health for. (required)
+    { # Response message for RegionCompositeHealthChecks.GetHealth
+  &quot;healthSources&quot;: [ # Health sources and their corresponding health states.
+      &quot;healthState&quot;: &quot;A String&quot;, # Health state of the associated HealthSource resource.
+      &quot;source&quot;: &quot;A String&quot;, # Fully qualified URL of the associated HealthSource resource.
+  &quot;healthState&quot;: &quot;A String&quot;, # Health state of the CompositeHealthCheck.
+  &quot;kind&quot;: &quot;compute#compositeHealthCheckHealth&quot;, # Output only. [Output Only] Type of resource. Alwayscompute#compositeHealthCheckHealth for the health of
+      # composite health checks.
+  <pre>Create a CompositeHealthCheck in the specified project in the given region
+  <pre>Lists the CompositeHealthChecks for a project in the given region.
+  &quot;items&quot;: [ # A list of CompositeHealthCheck resources.
+  &quot;kind&quot;: &quot;compute#compositeHealthCheckList&quot;, # Output only. [Output Only] Type of the resource. Alwayscompute#compositeHealthCheck for composite health checks.
+    <code class="details" id="patch">patch(project, region, compositeHealthCheck, body=None, requestId=None, x__xgafv=None)</code>
+  <pre>Updates the specified regional CompositeHealthCheck resource
+with the data included in the request.  This method supportsPATCH
+  compositeHealthCheck: string, Name of the CompositeHealthCheck to update. The name
+must be 1-63 characters long, and comply with RFC1035. (required)

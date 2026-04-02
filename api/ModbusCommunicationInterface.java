@@ -1,0 +1,44 @@
+import org.openhab.core.io.transport.modbus.endpoint.ModbusSlaveEndpoint;
+ * Interface for interacting with a particular modbus slave.
+ * When no further communication is expected with the slave, close the interface so that any underlying resources can be
+ * freed.
+ * Close unregisters all the regular polls registered with registerRegularPoll. When endpoint's last
+ * communication interface is closed, the connection is closed as well, no matter the what EndpointPoolConfiguration
+ * says.
+public interface ModbusCommunicationInterface extends AutoCloseable {
+     * Get endpoint associated with this communication interface
+     * @return modbus slave endpoint
+    ModbusSlaveEndpoint getEndpoint();
+     * Submit one-time poll task. The method returns immediately, and the execution of the poll task will happen in
+     * background.
+     * @param request request to send
+     * @param resultCallback callback to call with data
+     * @param failureCallback callback to call in case of failure
+     * @return future representing the polled task
+     * @throws IllegalStateException when this communication has been closed already
+    Future<?> submitOneTimePoll(ModbusReadRequestBlueprint request, ModbusReadCallback resultCallback,
+            ModbusFailureCallback<ModbusReadRequestBlueprint> failureCallback);
+     * Register regularly polled task. The method returns immediately, and the execution of the poll task will happen in
+     * the background.
+     * One can register only one regular poll task for triplet of (endpoint, request, callback).
+     * @param pollPeriodMillis poll interval, in milliseconds
+     * @param initialDelayMillis initial delay before starting polling, in milliseconds
+     * @return poll task representing the regular poll
+    PollTask registerRegularPoll(ModbusReadRequestBlueprint request, long pollPeriodMillis, long initialDelayMillis,
+            ModbusReadCallback resultCallback, ModbusFailureCallback<ModbusReadRequestBlueprint> failureCallback);
+     * Unregister regularly polled task
+     * If this communication interface is closed already, the method returns immediately with false return value
+     * @param task poll task to unregister
+     * @return whether poll task was unregistered. Poll task is not unregistered in case of unexpected errors or
+     *         in the case where the poll task is not registered in the first place
+    boolean unregisterRegularPoll(PollTask task);
+     * Submit one-time write task. The method returns immediately, and the execution of the task will happen in
+     * @param resultCallback callback to call with response
+     * @return future representing the task
+    Future<?> submitOneTimeWrite(ModbusWriteRequestBlueprint request, ModbusWriteCallback resultCallback,
+            ModbusFailureCallback<ModbusWriteRequestBlueprint> failureCallback);
+     * Close this communication interface and try to free all resources associated with it
+     * Upon close, all polling tasks registered by this instance are unregistered. In addition, connections are closed
+     * eagerly if this was the last connection interface pointing to the endpoint.
+     * After close, the communication interface cannot be used to communicate with the device.
+    void close() throws Exception;

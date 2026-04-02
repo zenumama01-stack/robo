@@ -1,0 +1,70 @@
+<h1><a href="transcoder_v1beta1.html">Transcoder API</a> . <a href="transcoder_v1beta1.projects.html">projects</a> . <a href="transcoder_v1beta1.projects.locations.html">locations</a> . <a href="transcoder_v1beta1.projects.locations.jobTemplates.html">jobTemplates</a></h1>
+    &quot;editList&quot;: [ # List of `Edit atom`s. Defines the ultimate timeline of the resulting file or manifest.
+        &quot;inputs&quot;: [ # List of `Input.key`s identifying files that should be used in this atom. The listed `inputs` must have the same timeline.
+          &quot;channelLayout&quot;: [ # A list of channel names specifying layout of the audio channels. This only affects the metadata embedded in the container headers, if supported by the specified format. The default is `[&quot;fl&quot;, &quot;fr&quot;]`. Supported channel names: - &#x27;fl&#x27; - Front left channel - &#x27;fr&#x27; - Front right channel - &#x27;sl&#x27; - Side left channel - &#x27;sr&#x27; - Side right channel - &#x27;fc&#x27; - Front center channel - &#x27;lfe&#x27; - Low frequency
+          &quot;codec&quot;: &quot;A String&quot;, # The codec for this audio stream. The default is `&quot;aac&quot;`. Supported audio codecs: - &#x27;aac&#x27; - &#x27;aac-he&#x27; - &#x27;aac-he-v2&#x27; - &#x27;mp3&#x27; - &#x27;ac3&#x27; - &#x27;eac3&#x27;
+          &quot;mapping&quot;: [ # The mapping for the `Job.edit_list` atoms with audio `EditAtom.inputs`.
+            { # The mapping for the `Job.edit_list` atoms with audio `EditAtom.inputs`.
+              &quot;channels&quot;: [ # List of `Channel`s for this audio stream. for in-depth explanation.
+                { # The audio channel.
+                  &quot;inputs&quot;: [ # List of `Job.inputs` for this audio channel.
+                    { # Identifies which input file, track, and channel should be used.
+                      &quot;channel&quot;: 42, # Required. The zero-based index of the channel in the input file.
+                      &quot;key&quot;: &quot;A String&quot;, # Required. The `Input.key` that identifies the input file.
+                      &quot;track&quot;: 42, # Required. The zero-based index of the track in the input file.
+              &quot;key&quot;: &quot;A String&quot;, # Required. The `EditAtom.key` that references the atom with audio inputs in the `Job.edit_list`.
+          &quot;codec&quot;: &quot;A String&quot;, # The codec for this text stream. The default is `&quot;webvtt&quot;`. Supported text codecs: - &#x27;srt&#x27; - &#x27;ttml&#x27; - &#x27;cea608&#x27; - &#x27;cea708&#x27; - &#x27;webvtt&#x27;
+          &quot;languageCode&quot;: &quot;A String&quot;, # Required. The BCP-47 language code, such as `&quot;en-US&quot;` or `&quot;sr-Latn&quot;`. For more information, see https://www.unicode.org/reports/tr35/#Unicode_locale_identifier.
+          &quot;mapping&quot;: [ # The mapping for the `Job.edit_list` atoms with text `EditAtom.inputs`.
+            { # The mapping for the `Job.edit_list` atoms with text `EditAtom.inputs`.
+              &quot;inputs&quot;: [ # List of `Job.inputs` that should be embedded in this atom. Only one input is supported.
+                { # Identifies which input file and track should be used.
+              &quot;key&quot;: &quot;A String&quot;, # Required. The `EditAtom.key` that references atom with text inputs in the `Job.edit_list`.
+          &quot;bFrameCount&quot;: 42, # The number of consecutive B-frames. Must be greater than or equal to zero. Must be less than `VideoStream.gop_frame_count` if set. The default is 0.
+          &quot;bitrateBps&quot;: 42, # Required. The video bitrate in bits per second. The minimum value is 1,000. The maximum value for H264/H265 is 800,000,000. The maximum value for VP9 is 480,000,000.
+          &quot;codec&quot;: &quot;A String&quot;, # Codec type. The following codecs are supported: * `h264` (default) * `h265` * `vp9`
+          &quot;enableTwoPass&quot;: True or False, # Use two-pass encoding strategy to achieve better video quality. `VideoStream.rate_control_mode` must be `&quot;vbr&quot;`. The default is `false`.
+          &quot;entropyCoder&quot;: &quot;A String&quot;, # The entropy coder to use. The default is `&quot;cabac&quot;`. Supported entropy coders: - &#x27;cavlc&#x27; - &#x27;cabac&#x27;
+          &quot;frameRate&quot;: 3.14, # Required. The target video frame rate in frames per second (FPS). Must be less than or equal to 120. Will default to the input frame rate if larger than the input frame rate. The API will generate an output FPS that is divisible by the input FPS, and smaller or equal to the target FPS. See [Calculate frame rate](https://cloud.google.com/transcoder/docs/concepts/frame-rate) for more information.
+          &quot;gopDuration&quot;: &quot;A String&quot;, # Select the GOP size based on the specified duration. The default is `&quot;3s&quot;`. Note that `gopDuration` must be less than or equal to [`segmentDuration`](#SegmentSettings), and [`segmentDuration`](#SegmentSettings) must be divisible by `gopDuration`.
+          &quot;heightPixels&quot;: 42, # The height of the video in pixels. Must be an even integer. When not specified, the height is adjusted to match the specified width and input aspect ratio. If both are omitted, the input height is used.
+          &quot;pixelFormat&quot;: &quot;A String&quot;, # Pixel format to use. The default is `&quot;yuv420p&quot;`. Supported pixel formats: - &#x27;yuv420p&#x27; pixel format. - &#x27;yuv422p&#x27; pixel format. - &#x27;yuv444p&#x27; pixel format. - &#x27;yuv420p10&#x27; 10-bit HDR pixel format. - &#x27;yuv422p10&#x27; 10-bit HDR pixel format. - &#x27;yuv444p10&#x27; 10-bit HDR pixel format. - &#x27;yuv420p12&#x27; 12-bit HDR pixel format. - &#x27;yuv422p12&#x27; 12-bit HDR pixel format. - &#x27;yuv444p12&#x27; 12-bit HDR pixel format.
+          &quot;preset&quot;: &quot;A String&quot;, # Enforces the specified codec preset. The default is `veryfast`. The available options are FFmpeg-compatible. Note that certain values for this field may cause the transcoder to override other fields you set in the `VideoStream` message.
+          &quot;profile&quot;: &quot;A String&quot;, # Enforces the specified codec profile. The following profiles are supported: * `baseline` * `main` * `high` (default) The available options are FFmpeg-compatible. Note that certain values for this field may cause the transcoder to override other fields you set in the `VideoStream` message.
+          &quot;rateControlMode&quot;: &quot;A String&quot;, # Specify the `rate_control_mode`. The default is `&quot;vbr&quot;`. Supported rate control modes: - &#x27;vbr&#x27; - variable bitrate - &#x27;crf&#x27; - constant rate factor
+          &quot;tune&quot;: &quot;A String&quot;, # Enforces the specified codec tune. The available options are FFmpeg-compatible. Note that certain values for this field may cause the transcoder to override other fields you set in the `VideoStream` message.
+          &quot;vbvFullnessBits&quot;: 42, # Initial fullness of the Video Buffering Verifier (VBV) buffer in bits. Must be greater than zero. The default is equal to 90% of `VideoStream.vbv_size_bits`.
+          &quot;widthPixels&quot;: 42, # The width of the video in pixels. Must be an even integer. When not specified, the width is adjusted to match the specified height and input aspect ratio. If both are omitted, the input width is used.
+            &quot;highBoost&quot;: True or False, # Enable boosting high frequency components. The default is `false`.
+            &quot;lowBoost&quot;: True or False, # Enable boosting low frequency components. The default is `false`.
+          &quot;color&quot;: { # Color preprocessing configuration. # Color preprocessing configuration.
+          &quot;deblock&quot;: { # Deblock preprocessing configuration. # Deblock preprocessing configuration.
+          &quot;denoise&quot;: { # Denoise preprocessing configuration. # Denoise preprocessing configuration.
+            &quot;tune&quot;: &quot;A String&quot;, # Set the denoiser mode. The default is `&quot;standard&quot;`. Supported denoiser modes: - &#x27;standard&#x27; - &#x27;grain&#x27;
+        &quot;uri&quot;: &quot;A String&quot;, # URI of the media. Input files must be at least 5 seconds in duration and stored in Cloud Storage (for example, `gs://bucket/inputs/file.mp4`). If empty, the value will be populated from `Job.input_uri`.
+        &quot;fileName&quot;: &quot;A String&quot;, # The name of the generated file. The default is `&quot;manifest&quot;` with the extension suffix corresponding to the `Manifest.type`.
+        &quot;muxStreams&quot;: [ # Required. List of user given `MuxStream.key`s that should appear in this manifest. When `Manifest.type` is `HLS`, a media manifest with name `MuxStream.key` and `.m3u8` extension is generated for each element of the `Manifest.mux_streams`.
+        &quot;type&quot;: &quot;A String&quot;, # Required. Type of the manifest, can be &quot;HLS&quot; or &quot;DASH&quot;.
+        &quot;container&quot;: &quot;A String&quot;, # The container format. The default is `&quot;mp4&quot;` Supported container formats: - &#x27;ts&#x27; - &#x27;fmp4&#x27;- the corresponding file extension is `&quot;.m4s&quot;` - &#x27;mp4&#x27; - &#x27;vtt&#x27;
+        &quot;elementaryStreams&quot;: [ # List of `ElementaryStream.key`s multiplexed in this stream.
+        &quot;encryption&quot;: { # Encryption settings. # Encryption settings.
+            &quot;keyUri&quot;: &quot;A String&quot;, # Required. URI of the key delivery service. This URI is inserted into the M3U8 header.
+          &quot;iv&quot;: &quot;A String&quot;, # Required. 128 bit Initialization Vector (IV) represented as lowercase hexadecimal digits.
+          &quot;key&quot;: &quot;A String&quot;, # Required. 128 bit encryption key represented as lowercase hexadecimal digits.
+            &quot;keyId&quot;: &quot;A String&quot;, # Required. 128 bit Key ID represented as lowercase hexadecimal digits for use with common encryption.
+            &quot;scheme&quot;: &quot;A String&quot;, # Required. Specify the encryption scheme. Supported encryption schemes: - &#x27;cenc&#x27; - &#x27;cbcs&#x27;
+        &quot;fileName&quot;: &quot;A String&quot;, # The name of the generated file. The default is `MuxStream.key` with the extension suffix corresponding to the `MuxStream.container`. Individual segments also have an incremental 10-digit zero-padded suffix starting from 0 before the extension, such as `&quot;mux_stream0000000123.ts&quot;`.
+        &quot;key&quot;: &quot;A String&quot;, # A unique key for this multiplexed stream. HLS media manifests will be named `MuxStream.key` with the `&quot;.m3u8&quot;` extension suffix.
+        &quot;segmentSettings&quot;: { # Segment settings for `&quot;ts&quot;`, `&quot;fmp4&quot;` and `&quot;vtt&quot;`. # Segment settings for `&quot;ts&quot;`, `&quot;fmp4&quot;` and `&quot;vtt&quot;`.
+          &quot;segmentDuration&quot;: &quot;A String&quot;, # Duration of the segments in seconds. The default is `&quot;6.0s&quot;`. Note that `segmentDuration` must be greater than or equal to [`gopDuration`](#videostream), and `segmentDuration` must be divisible by [`gopDuration`](#videostream).
+      &quot;uri&quot;: &quot;A String&quot;, # URI for the output file(s). For example, `gs://my-bucket/outputs/`. If empty the value is populated from `Job.output_uri`.
+        &quot;animations&quot;: [ # List of Animations. The list should be chronological, without any time overlap.
+            &quot;animationEnd&quot;: { # End previous overlay animation from the video. Without AnimationEnd, the overlay object will keep the state of previous animation until the end of the video. # End previous animation.
+        &quot;image&quot;: { # Overlaid jpeg image. # Image overlay.
+          &quot;uri&quot;: &quot;A String&quot;, # Required. URI of the JPEG image in Cloud Storage. For example, `gs://bucket/inputs/image.jpeg`. JPEG is the only supported image type.
+    &quot;spriteSheets&quot;: [ # List of output sprite sheets.
+        &quot;filePrefix&quot;: &quot;A String&quot;, # Required. File name prefix for the generated sprite sheets. Each sprite sheet has an incremental 10-digit zero-padded suffix starting from 0 before the extension, such as `&quot;sprite_sheet0000000123.jpeg&quot;`.
+        &quot;format&quot;: &quot;A String&quot;, # Format type. The default is `&quot;jpeg&quot;`. Supported formats: - &#x27;jpeg&#x27;
+        &quot;spriteHeightPixels&quot;: 42, # Required. The height of sprite in pixels. Must be an even integer. To preserve the source aspect ratio, set the SpriteSheet.sprite_height_pixels field or the SpriteSheet.sprite_width_pixels field, but not both (the API will automatically calculate the missing field).
+        &quot;spriteWidthPixels&quot;: 42, # Required. The width of sprite in pixels. Must be an even integer. To preserve the source aspect ratio, set the SpriteSheet.sprite_width_pixels field or the SpriteSheet.sprite_height_pixels field, but not both (the API will automatically calculate the missing field).
+  &quot;name&quot;: &quot;A String&quot;, # The resource name of the job template. Format: `projects/{project}/locations/{location}/jobTemplates/{job_template}`

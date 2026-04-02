@@ -1,0 +1,29 @@
+<h1><a href="compute_alpha.html">Compute Engine API</a> . <a href="compute_alpha.organizationSnapshotRecycleBinPolicy.html">organizationSnapshotRecycleBinPolicy</a></h1>
+  <code><a href="#get">get(organization, x__xgafv=None)</a></code></p>
+<p class="firstline">Returns the specified SnapshotRecycleBinPolicy.</p>
+  <code><a href="#patch">patch(organization, body=None, requestId=None, updateMask=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Patches the SnapshotRecycleBinPolicy.</p>
+    <code class="details" id="get">get(organization, x__xgafv=None)</code>
+  <pre>Returns the specified SnapshotRecycleBinPolicy.
+  organization: string, Organization ID for this request. (required)
+    { # Represents the singleton resource Snapshot Recycle Bin Policy that
+    # configures the retention duration for snapshots in the recycle bin.
+    # You can configure the retention duration for snapshots in the recycle bin
+    # at the project or organization level. If you configure the policy at the
+    # organization level, all projects in that organization will share the same
+    # policy. If you configure the policy at the project level it will be merged
+    # with org level policy (if any) and the snapshots in that project will use
+    # that policy.
+  &quot;rules&quot;: { # The rules for the snapshot recycle bin policy. The key is either &#x27;default&#x27;
+      # or namespacedName of the TagValue which can be in the format:
+      # `{organization_id}/{tag_key_short_name}/{tag_value_short_name}` or
+      # `{project_id}/{tag_key_short_name}/{tag_value_short_name}` or
+      # `{project_number}/{tag_key_short_name}/{tag_value_short_name}`. The default
+      # rule is applied if snapshots do not have any of these tags.
+      #  The value is the rule for the key.
+    &quot;a_key&quot;: { # A rule that defines the retention policy for snapshots in the recycle bin.
+      &quot;standardSnapshots&quot;: { # The rule config for snapshots in the recycle bin. # The rule config for standard snapshots.
+        &quot;retentionDurationDays&quot;: &quot;A String&quot;, # The retention duration for snapshots in the recycle bin after which the
+            # snapshots are automatically deleted from recycle bin.
+    <code class="details" id="patch">patch(organization, body=None, requestId=None, updateMask=None, x__xgafv=None)</code>
+  <pre>Patches the SnapshotRecycleBinPolicy.

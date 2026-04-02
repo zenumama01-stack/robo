@@ -1,0 +1,22 @@
+            FieldName="StartedByUserID"
+            FieldName="SourceListID"
+    <!-- Approval Information Section -->
+        SectionKey="approvalInformation"
+        SectionName="Approval Information"
+            FieldName="ApprovalStatus"
+            FieldName="ApprovalComments"
+            FieldName="ApprovedByUserID"
+    <!-- Processing Status Section -->
+        SectionKey="processingStatus"
+        SectionName="Processing Status"
+            FieldName="ProcessingStatus"
+            FieldName="ProcessingErrorMessage"
+    <!-- Duplicate Run Details Section -->
+        SectionKey="duplicateRunDetails"
+        SectionName="Duplicate Run Details"
+        Icon="fa fa-clone"
+        [BadgeCount]="GetSectionRowCount('duplicateRunDetails')"
+                [Params]="BuildRelationshipViewParamsByEntityName('MJ: Duplicate Run Details','DuplicateRunID')"
+                [NewRecordValues]="NewRecordValues('MJ: Duplicate Run Details')"
+                [AllowLoad]="IsSectionExpanded('duplicateRunDetails')"
+                (AfterDataLoad)="SetSectionRowCount('duplicateRunDetails', $event.totalRowCount)"

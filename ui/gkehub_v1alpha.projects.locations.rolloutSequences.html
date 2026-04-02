@@ -1,0 +1,43 @@
+<h1><a href="gkehub_v1alpha.html">GKE Hub API</a> . <a href="gkehub_v1alpha.projects.html">projects</a> . <a href="gkehub_v1alpha.projects.locations.html">locations</a> . <a href="gkehub_v1alpha.projects.locations.rolloutSequences.html">rolloutSequences</a></h1>
+  <code><a href="#create">create(parent, body=None, rolloutSequenceId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Create a new rollout sequence resource.</p>
+<p class="firstline">Remove a RolloutSequence.</p>
+<p class="firstline">Retrieve a single rollout sequence.</p>
+<p class="firstline">Retrieve the list of all rollout sequences.</p>
+<p class="firstline">Update a rollout sequence.</p>
+    <code class="details" id="create">create(parent, body=None, rolloutSequenceId=None, x__xgafv=None)</code>
+  <pre>Create a new rollout sequence resource.
+  parent: string, Required. The parent resource where this rollout sequence will be created. projects/{project}/locations/{location} (required)
+{ # RolloutSequence defines the desired order of upgrades.
+  &quot;createTime&quot;: &quot;A String&quot;, # Output only. The timestamp at which the Rollout Sequence was created.
+  &quot;deleteTime&quot;: &quot;A String&quot;, # Output only. The timestamp at the Rollout Sequence was deleted.
+  &quot;displayName&quot;: &quot;A String&quot;, # Optional. Human readable display name of the Rollout Sequence.
+  &quot;etag&quot;: &quot;A String&quot;, # Output only. etag of the Rollout Sequence Ex. abc1234
+  &quot;labels&quot;: { # Optional. Labels for this Rollout Sequence.
+  &quot;name&quot;: &quot;A String&quot;, # Identifier. Name of the rollout sequence in the format of: projects/{PROJECT_ID}/locations/global/rolloutSequences/{NAME}
+  &quot;stages&quot;: [ # Required. Ordered list of stages that constitutes this Rollout.
+    { # Rollout stage.
+      &quot;clusterSelector&quot;: { # Selector for clusters. # Optional. Filter members of fleets (above) to a subset of clusters. If not specified, all clusters in the fleets are selected.
+        &quot;labelSelector&quot;: &quot;A String&quot;, # Required. A valid CEL (Common Expression Language) expression which evaluates `resource.labels`.
+      &quot;fleetProjects&quot;: [ # Required. List of Fleet projects to select the clusters from. Expected format: projects/{project}
+      &quot;soakDuration&quot;: &quot;A String&quot;, # Optional. Soak time after upgrading all the clusters in the stage.
+  &quot;state&quot;: { # State and reasons of the Rollout Sequence. # Output only. State of the Rollout Sequence as a whole.
+    &quot;lastStateChangeTime&quot;: &quot;A String&quot;, # Output only. The timestamp at which the LifecycleState was last changed. Used to track how long it has been in the current state.
+    &quot;lifecycleState&quot;: &quot;A String&quot;, # Output only. Lifecycle state of the Rollout Sequence.
+    &quot;stateReasons&quot;: [ # Output only. StateReason represents the reason for the Rollout Sequence state.
+  &quot;uid&quot;: &quot;A String&quot;, # Output only. Google-generated UUID for this resource. This is unique across all Rollout Sequence resources. If a Rollout Sequence resource is deleted and another resource with the same name is created, it gets a different uid.
+  &quot;updateTime&quot;: &quot;A String&quot;, # Output only. The timestamp at which the Rollout Sequence was last updated.
+  rolloutSequenceId: string, Required. User provided identifier that is used as part of the resource name; must conform to RFC-1034 and additionally restrict to lower-cased letters. This comes out roughly to: /^a-z+[a-z0-9]$/
+  <pre>Remove a RolloutSequence.
+  name: string, Required. The name of the rollout sequence to delete. projects/{project}/locations/{location}/rolloutSequences/{rollout_sequence} (required)
+  <pre>Retrieve a single rollout sequence.
+  name: string, Required. The name of the rollout sequence to retrieve. projects/{project}/locations/{location}/rolloutSequences/{rollout_sequence} (required)
+  <pre>Retrieve the list of all rollout sequences.
+  parent: string, Required. The parent, which owns this collection of rollout sequences. Format: projects/{project}/locations/{location} (required)
+  filter: string, Optional. Lists Rollout Sequences that match the filter expression, following the syntax outlined in https://google.aip.dev/160.
+  pageSize: integer, Optional. The maximum number of rollout sequences to return. The service may return fewer than this value. If unspecified, at most 50 rollout sequences will be returned. The maximum value is 1000; values above 1000 will be coerced to 1000.
+  pageToken: string, Optional. A page token, received from a previous `ListRolloutSequences` call. Provide this to retrieve the subsequent page. When paginating, all other parameters provided to `ListRolloutSequences` must match the call that provided the page token.
+    { # Response message for listing rollout sequences.
+  &quot;rolloutSequences&quot;: [ # The rollout sequences from the specified parent resource.
+  <pre>Update a rollout sequence.
+  name: string, Identifier. Name of the rollout sequence in the format of: projects/{PROJECT_ID}/locations/global/rolloutSequences/{NAME} (required)

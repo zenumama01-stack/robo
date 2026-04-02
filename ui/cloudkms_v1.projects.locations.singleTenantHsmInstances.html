@@ -1,0 +1,32 @@
+<h1><a href="cloudkms_v1.html">Cloud Key Management Service (KMS) API</a> . <a href="cloudkms_v1.projects.html">projects</a> . <a href="cloudkms_v1.projects.locations.html">locations</a> . <a href="cloudkms_v1.projects.locations.singleTenantHsmInstances.html">singleTenantHsmInstances</a></h1>
+  <code><a href="cloudkms_v1.projects.locations.singleTenantHsmInstances.proposals.html">proposals()</a></code>
+  <code><a href="#create">create(parent, body=None, singleTenantHsmInstanceId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Creates a new SingleTenantHsmInstance in a given Project and Location. User must create a RegisterTwoFactorAuthKeys proposal with this single-tenant HSM instance to finish setup of the instance.</p>
+<p class="firstline">Returns metadata for a given SingleTenantHsmInstance.</p>
+<p class="firstline">Lists SingleTenantHsmInstances.</p>
+    <code class="details" id="create">create(parent, body=None, singleTenantHsmInstanceId=None, x__xgafv=None)</code>
+  <pre>Creates a new SingleTenantHsmInstance in a given Project and Location. User must create a RegisterTwoFactorAuthKeys proposal with this single-tenant HSM instance to finish setup of the instance.
+  parent: string, Required. The resource name of the location associated with the SingleTenantHsmInstance, in the format `projects/*/locations/*`. (required)
+{ # A SingleTenantHsmInstance represents a single-tenant HSM instance. It can be used for creating CryptoKeys with a ProtectionLevel of HSM_SINGLE_TENANT, as well as performing cryptographic operations using keys created within the SingleTenantHsmInstance.
+  &quot;createTime&quot;: &quot;A String&quot;, # Output only. The time at which the SingleTenantHsmInstance was created.
+  &quot;deleteTime&quot;: &quot;A String&quot;, # Output only. The time at which the SingleTenantHsmInstance was deleted.
+  &quot;disableTime&quot;: &quot;A String&quot;, # Output only. The time at which the instance will be automatically disabled if not refreshed. This field is updated upon creation and after each successful refresh operation and enable. A RefreshSingleTenantHsmInstance operation must be made via a SingleTenantHsmInstanceProposal before this time otherwise the SingleTenantHsmInstance will become disabled.
+  &quot;name&quot;: &quot;A String&quot;, # Identifier. The resource name for this SingleTenantHsmInstance in the format `projects/*/locations/*/singleTenantHsmInstances/*`.
+  &quot;quorumAuth&quot;: { # Configuration for M of N quorum auth. # Required. The quorum auth configuration for the SingleTenantHsmInstance.
+    &quot;requiredApproverCount&quot;: 42, # Output only. The required numbers of approvers. The M value used for M of N quorum auth. Must be greater than or equal to 2 and less than or equal to total_approver_count - 1.
+    &quot;totalApproverCount&quot;: 42, # Required. The total number of approvers. This is the N value used for M of N quorum auth. Must be greater than or equal to 3 and less than or equal to 16.
+    &quot;twoFactorPublicKeyPems&quot;: [ # Output only. The public keys associated with the 2FA keys for M of N quorum auth.
+  &quot;state&quot;: &quot;A String&quot;, # Output only. The state of the SingleTenantHsmInstance.
+  &quot;unrefreshedDurationUntilDisable&quot;: &quot;A String&quot;, # Output only. The system-defined duration that an instance can remain unrefreshed until it is automatically disabled. This will have a value of 120 days.
+  singleTenantHsmInstanceId: string, Optional. It must be unique within a location and match the regular expression `[a-zA-Z0-9_-]{1,63}`.
+  <pre>Returns metadata for a given SingleTenantHsmInstance.
+  name: string, Required. The name of the SingleTenantHsmInstance to get. (required)
+  <pre>Lists SingleTenantHsmInstances.
+  parent: string, Required. The resource name of the location associated with the SingleTenantHsmInstances to list, in the format `projects/*/locations/*`. (required)
+  pageSize: integer, Optional. Optional limit on the number of SingleTenantHsmInstances to include in the response. Further SingleTenantHsmInstances can subsequently be obtained by including the ListSingleTenantHsmInstancesResponse.next_page_token in a subsequent request. If unspecified, the server will pick an appropriate default.
+  pageToken: string, Optional. Optional pagination token, returned earlier via ListSingleTenantHsmInstancesResponse.next_page_token.
+  showDeleted: boolean, Optional. If set to true, HsmManagement.ListSingleTenantHsmInstances will also return SingleTenantHsmInstances in DELETED state.
+    { # Response message for HsmManagement.ListSingleTenantHsmInstances.
+  &quot;nextPageToken&quot;: &quot;A String&quot;, # A token to retrieve next page of results. Pass this value in ListSingleTenantHsmInstancesRequest.page_token to retrieve the next page of results.
+  &quot;singleTenantHsmInstances&quot;: [ # The list of SingleTenantHsmInstances.
+  &quot;totalSize&quot;: 42, # The total number of SingleTenantHsmInstances that matched the query. This field is not populated if ListSingleTenantHsmInstancesRequest.filter is applied.

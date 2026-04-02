@@ -1,0 +1,95 @@
+<h1><a href="identitytoolkit_v1.html">Identity Toolkit API</a> . <a href="identitytoolkit_v1.projects.html">projects</a> . <a href="identitytoolkit_v1.projects.accounts.html">accounts</a></h1>
+  <code><a href="#batchCreate">batchCreate(targetProjectId, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Uploads multiple accounts into the Google Cloud project. If there is a problem uploading one or more of the accounts, the rest will be uploaded, and a list of the errors will be returned. To use this method requires a Google OAuth 2.0 credential with proper [permissions](https://cloud.google.com/identity-platform/docs/access-control).</p>
+  <code><a href="#batchDelete">batchDelete(targetProjectId, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Batch deletes multiple accounts. For accounts that fail to be deleted, error info is contained in the response. The method ignores accounts that do not exist or are duplicated in the request. This method requires a Google OAuth 2.0 credential with proper [permissions] (https://cloud.google.com/identity-platform/docs/access-control).</p>
+  <code><a href="#batchGet">batchGet(targetProjectId, delegatedProjectNumber=None, maxResults=None, nextPageToken=None, tenantId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Download account information for all accounts on the project in a paginated manner. To use this method requires a Google OAuth 2.0 credential with proper [permissions](https://cloud.google.com/identity-platform/docs/access-control).. Furthermore, additional permissions are needed to get password hash, password salt, and password version from accounts; otherwise these fields are redacted.</p>
+  <code><a href="#batchGet_next">batchGet_next()</a></code></p>
+  <code><a href="#delete">delete(targetProjectId, body=None, x__xgafv=None)</a></code></p>
+  <code><a href="#lookup">lookup(targetProjectId, body=None, x__xgafv=None)</a></code></p>
+  <code><a href="#query">query(targetProjectId, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Looks up user accounts within a project or a tenant based on conditions in the request.</p>
+  <code><a href="#sendOobCode">sendOobCode(targetProjectId, body=None, x__xgafv=None)</a></code></p>
+  <code><a href="#update">update(targetProjectId, body=None, x__xgafv=None)</a></code></p>
+    <code class="details" id="batchCreate">batchCreate(targetProjectId, body=None, x__xgafv=None)</code>
+  <pre>Uploads multiple accounts into the Google Cloud project. If there is a problem uploading one or more of the accounts, the rest will be uploaded, and a list of the errors will be returned. To use this method requires a Google OAuth 2.0 credential with proper [permissions](https://cloud.google.com/identity-platform/docs/access-control).
+  targetProjectId: string, The Project ID of the Identity Platform project which the account belongs to. (required)
+{ # Request message for UploadAccount.
+  &quot;allowOverwrite&quot;: True or False, # Whether to overwrite an existing account in Identity Platform with a matching `local_id` in the request. If true, the existing account will be overwritten. If false, an error will be returned.
+  &quot;argon2Parameters&quot;: { # The parameters for Argon2 hashing algorithm. # The parameters for Argon2 hashing algorithm.
+    &quot;associatedData&quot;: &quot;A String&quot;, # The additional associated data, if provided, is appended to the hash value to provide an additional layer of security. A base64-encoded string if specified via JSON.
+    &quot;hashLengthBytes&quot;: 42, # Required. The desired hash length in bytes. Minimum is 4 and maximum is 1024.
+    &quot;hashType&quot;: &quot;A String&quot;, # Required. Must not be HASH_TYPE_UNSPECIFIED.
+    &quot;iterations&quot;: 42, # Required. The number of iterations to perform. Minimum is 1, maximum is 16.
+    &quot;memoryCostKib&quot;: 42, # Required. The memory cost in kibibytes. Maximum is 32768.
+    &quot;parallelism&quot;: 42, # Required. The degree of parallelism, also called threads or lanes. Minimum is 1, maximum is 16.
+    &quot;version&quot;: &quot;A String&quot;, # The version of the Argon2 algorithm. This defaults to VERSION_13 if not specified.
+  &quot;blockSize&quot;: 42, # The block size parameter used by the STANDARD_SCRYPT hashing function. This parameter, along with parallelization and cpu_mem_cost help tune the resources needed to hash a password, and should be tuned as processor speeds and memory technologies advance.
+  &quot;cpuMemCost&quot;: 42, # The CPU memory cost parameter to be used by the STANDARD_SCRYPT hashing function. This parameter, along with block_size and cpu_mem_cost help tune the resources needed to hash a password, and should be tuned as processor speeds and memory technologies advance.
+  &quot;dkLen&quot;: 42, # The desired key length for the STANDARD_SCRYPT hashing function. Must be at least 1.
+  &quot;hashAlgorithm&quot;: &quot;A String&quot;, # Required. The hashing function used to hash the account passwords. Must be one of the following: * HMAC_SHA256 * HMAC_SHA1 * HMAC_MD5 * SCRYPT * PBKDF_SHA1 * MD5 * HMAC_SHA512 * SHA1 * BCRYPT * PBKDF2_SHA256 * SHA256 * SHA512 * STANDARD_SCRYPT * ARGON2
+  &quot;memoryCost&quot;: 42, # Memory cost for hash calculation. Only required when the hashing function is SCRYPT.
+  &quot;parallelization&quot;: 42, # The parallelization cost parameter to be used by the STANDARD_SCRYPT hashing function. This parameter, along with block_size and cpu_mem_cost help tune the resources needed to hash a password, and should be tuned as processor speeds and memory technologies advance.
+  &quot;passwordHashOrder&quot;: &quot;A String&quot;,
+  &quot;rounds&quot;: 42, # The number of rounds used for hash calculation. Only required for the following hashing functions: * MD5 * SHA1 * SHA256 * SHA512 * PBKDF_SHA1 * PBKDF2_SHA256 * SCRYPT
+  &quot;saltSeparator&quot;: &quot;A String&quot;, # One or more bytes to be inserted between the salt and plain text password. For stronger security, this should be a single non-printable character.
+  &quot;sanityCheck&quot;: True or False, # If true, the service will do the following list of checks before an account is uploaded: * Duplicate emails * Duplicate federated IDs * Federated ID provider validation If the duplication exists within the list of accounts to be uploaded, it will prevent the entire list from being uploaded. If the email or federated ID is a duplicate of a user already within the project/tenant, the account will not be uploaded, but the rest of the accounts will be unaffected. If false, these checks will be skipped.
+  &quot;signerKey&quot;: &quot;A String&quot;, # The signer key used to hash the password. Required for the following hashing functions: * SCRYPT, * HMAC_MD5, * HMAC_SHA1, * HMAC_SHA256, * HMAC_SHA512
+  &quot;tenantId&quot;: &quot;A String&quot;, # The ID of the Identity Platform tenant the account belongs to.
+  &quot;users&quot;: [ # A list of accounts to upload. `local_id` is required for each user; everything else is optional.
+    { # Response message for UploadAccount.
+  &quot;error&quot;: [ # Detailed error info for accounts that cannot be uploaded.
+    { # Error information explaining why an account cannot be uploaded. batch upload.
+      &quot;index&quot;: 42, # The index of the item, range is [0, request.size - 1]
+      &quot;message&quot;: &quot;A String&quot;, # Detailed error message
+    <code class="details" id="batchDelete">batchDelete(targetProjectId, body=None, x__xgafv=None)</code>
+  <pre>Batch deletes multiple accounts. For accounts that fail to be deleted, error info is contained in the response. The method ignores accounts that do not exist or are duplicated in the request. This method requires a Google OAuth 2.0 credential with proper [permissions] (https://cloud.google.com/identity-platform/docs/access-control).
+  targetProjectId: string, If `tenant_id` is specified, the ID of the Google Cloud project that the Identity Platform tenant belongs to. Otherwise, the ID of the Google Cloud project that accounts belong to. (required)
+{ # Request message for BatchDeleteAccounts.
+  &quot;force&quot;: True or False, # Whether to force deleting accounts that are not in disabled state. If false, only disabled accounts will be deleted, and accounts that are not disabled will be added to the `errors`.
+  &quot;localIds&quot;: [ # Required. List of user IDs to be deleted.
+  &quot;tenantId&quot;: &quot;A String&quot;, # If the accounts belong to an Identity Platform tenant, the ID of the tenant. If the accounts belong to a default Identity Platform project, the field is not needed.
+    { # Response message to BatchDeleteAccounts.
+  &quot;errors&quot;: [ # Detailed error info for accounts that cannot be deleted.
+    { # Error info for account failed to be deleted.
+      &quot;index&quot;: 42, # The index of the errored item in the original local_ids field.
+      &quot;localId&quot;: &quot;A String&quot;, # The corresponding user ID.
+      &quot;message&quot;: &quot;A String&quot;, # Detailed error message.
+    <code class="details" id="batchGet">batchGet(targetProjectId, delegatedProjectNumber=None, maxResults=None, nextPageToken=None, tenantId=None, x__xgafv=None)</code>
+  <pre>Download account information for all accounts on the project in a paginated manner. To use this method requires a Google OAuth 2.0 credential with proper [permissions](https://cloud.google.com/identity-platform/docs/access-control).. Furthermore, additional permissions are needed to get password hash, password salt, and password version from accounts; otherwise these fields are redacted.
+  targetProjectId: string, If `tenant_id` is specified, the ID of the Google Cloud project that the Identity Platform tenant belongs to. Otherwise, the ID of the Google Cloud project that the accounts belong to. (required)
+  delegatedProjectNumber: string, A parameter
+  maxResults: integer, The maximum number of results to return. Must be at least 1 and no greater than 1000. By default, it is 20.
+  nextPageToken: string, The pagination token from the response of a previous request.
+  tenantId: string, The ID of the Identity Platform tenant the accounts belongs to. If not specified, accounts on the Identity Platform project are returned.
+    { # Response message for DownloadAccount.
+  &quot;nextPageToken&quot;: &quot;A String&quot;, # If there are more accounts to be downloaded, a token that can be passed back to DownloadAccount to get more accounts. Otherwise, this is blank.
+  &quot;users&quot;: [ # All accounts belonging to the project/tenant limited by max_results in the request.
+    <code class="details" id="batchGet_next">batchGet_next()</code>
+    <code class="details" id="delete">delete(targetProjectId, body=None, x__xgafv=None)</code>
+  targetProjectId: string, The ID of the project which the account belongs to. Should only be specified in authenticated requests that specify local_id of an account. (required)
+    <code class="details" id="lookup">lookup(targetProjectId, body=None, x__xgafv=None)</code>
+  targetProjectId: string, The ID of the Google Cloud project that the account or the Identity Platform tenant specified by `tenant_id` belongs to. Should only be specified by authenticated requests bearing a Google OAuth 2.0 credential with proper [permissions](https://cloud.google.com/identity-platform/docs/access-control). (required)
+    <code class="details" id="query">query(targetProjectId, body=None, x__xgafv=None)</code>
+  <pre>Looks up user accounts within a project or a tenant based on conditions in the request.
+  targetProjectId: string, The ID of the project to which the result is scoped. (required)
+{ # Request message for QueryUserInfo.
+  &quot;expression&quot;: [
+    { # Query conditions used to filter results.
+      &quot;email&quot;: &quot;A String&quot;, # A case insensitive string that the account&#x27;s email should match. Only one of `email`, `phone_number`, or `user_id` should be specified in a SqlExpression. If more than one is specified, only the first (in that order) will be applied.
+      &quot;phoneNumber&quot;: &quot;A String&quot;, # A string that the account&#x27;s phone number should match. Only one of `email`, `phone_number`, or `user_id` should be specified in a SqlExpression. If more than one is specified, only the first (in that order) will be applied.
+      &quot;userId&quot;: &quot;A String&quot;, # A string that the account&#x27;s local ID should match. Only one of `email`, `phone_number`, or `user_id` should be specified in a SqlExpression If more than one is specified, only the first (in that order) will be applied.
+  &quot;limit&quot;: &quot;A String&quot;, # The maximum number of accounts to return with an upper limit of __500__. Defaults to _500_. Only valid when `return_user_info` is set to `true`.
+  &quot;offset&quot;: &quot;A String&quot;, # The number of accounts to skip from the beginning of matching records. Only valid when `return_user_info` is set to `true`.
+  &quot;order&quot;: &quot;A String&quot;,
+  &quot;returnUserInfo&quot;: True or False, # If `true`, this request will return the accounts matching the query. If `false`, only the __count__ of accounts matching the query will be returned. Defaults to `true`.
+  &quot;sortBy&quot;: &quot;A String&quot;,
+  &quot;tenantId&quot;: &quot;A String&quot;, # The ID of the tenant to which the result is scoped.
+    { # Response message for QueryUserInfo.
+  &quot;recordsCount&quot;: &quot;A String&quot;, # If `return_user_info` in the request is true, this is the number of returned accounts in this message. Otherwise, this is the total number of accounts matching the query.
+  &quot;userInfo&quot;: [ # If `return_user_info` in the request is true, this is the accounts matching the query.
+    <code class="details" id="sendOobCode">sendOobCode(targetProjectId, body=None, x__xgafv=None)</code>
+  targetProjectId: string, The Project ID of the Identity Platform project which the account belongs to. To specify this field, it requires a Google OAuth 2.0 credential with proper [permissions](https://cloud.google.com/identity-platform/docs/access-control). (required)
+    <code class="details" id="update">update(targetProjectId, body=None, x__xgafv=None)</code>
+  targetProjectId: string, The project ID for the project that the account belongs to. Specifying this field requires Google OAuth 2.0 credential with proper [permissions] (https://cloud.google.com/identity-platform/docs/access-control). Requests from end users should pass an Identity Platform ID token instead. (required)

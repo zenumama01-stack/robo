@@ -1,0 +1,18 @@
+<h1><a href="iam_v1.html">Identity and Access Management (IAM) API</a> . <a href="iam_v1.roles.html">roles</a></h1>
+  <code><a href="#list">list(pageSize=None, pageToken=None, parent=None, showDeleted=None, view=None, x__xgafv=None)</a></code></p>
+  <code><a href="#queryGrantableRoles">queryGrantableRoles(body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Lists roles that can be granted on a Google Cloud resource. A role is grantable if the IAM policy for the resource can contain bindings to the role.</p>
+  <code><a href="#queryGrantableRoles_next">queryGrantableRoles_next()</a></code></p>
+    <code class="details" id="list">list(pageSize=None, pageToken=None, parent=None, showDeleted=None, view=None, x__xgafv=None)</code>
+  parent: string, The `parent` parameter&#x27;s value depends on the target resource for the request, namely [roles](https://cloud.google.com/iam/docs/reference/rest/v1/roles), [projects](https://cloud.google.com/iam/docs/reference/rest/v1/projects.roles), or [organizations](https://cloud.google.com/iam/docs/reference/rest/v1/organizations.roles). Each resource type&#x27;s `parent` value format is described below: * [roles.list](https://cloud.google.com/iam/docs/reference/rest/v1/roles/list): An empty string. This method doesn&#x27;t require a resource; it simply returns all [predefined roles](https://cloud.google.com/iam/docs/understanding-roles#predefined_roles) in IAM. Example request URL: `https://iam.googleapis.com/v1/roles` * [projects.roles.list](https://cloud.google.com/iam/docs/reference/rest/v1/projects.roles/list): `projects/{PROJECT_ID}`. This method lists all project-level [custom roles](https://cloud.google.com/iam/docs/understanding-custom-roles). Example request URL: `https://iam.googleapis.com/v1/projects/{PROJECT_ID}/roles` * [organizations.roles.list](https://cloud.google.com/iam/docs/reference/rest/v1/organizations.roles/list): `organizations/{ORGANIZATION_ID}`. This method lists all organization-level [custom roles](https://cloud.google.com/iam/docs/understanding-custom-roles). Example request URL: `https://iam.googleapis.com/v1/organizations/{ORGANIZATION_ID}/roles` Note: Wildcard (*) values are invalid; you must specify a complete project ID or organization ID.
+    <code class="details" id="queryGrantableRoles">queryGrantableRoles(body=None, x__xgafv=None)</code>
+  <pre>Lists roles that can be granted on a Google Cloud resource. A role is grantable if the IAM policy for the resource can contain bindings to the role.
+{ # The grantable role query request.
+  &quot;fullResourceName&quot;: &quot;A String&quot;, # Required. Required. The full resource name to query from the list of grantable roles. The name follows the Google Cloud Platform resource format. For example, a Cloud Platform project with id `my-project` will be named `//cloudresourcemanager.googleapis.com/projects/my-project`.
+  &quot;pageSize&quot;: 42, # Optional limit on the number of roles to include in the response. The default is 300, and the maximum is 2,000.
+  &quot;pageToken&quot;: &quot;A String&quot;, # Optional pagination token returned in an earlier QueryGrantableRolesResponse.
+  &quot;view&quot;: &quot;A String&quot;,
+    { # The grantable role query response.
+  &quot;nextPageToken&quot;: &quot;A String&quot;, # To retrieve the next page of results, set `QueryGrantableRolesRequest.page_token` to this value.
+  &quot;roles&quot;: [ # The list of matching roles.
+    <code class="details" id="queryGrantableRoles_next">queryGrantableRoles_next()</code>

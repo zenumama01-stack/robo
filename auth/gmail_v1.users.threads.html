@@ -1,0 +1,33 @@
+<h1><a href="gmail_v1.html">Gmail API</a> . <a href="gmail_v1.users.html">users</a> . <a href="gmail_v1.users.threads.html">threads</a></h1>
+<p class="firstline">Immediately and permanently deletes the specified thread. Any messages that belong to the thread are also deleted. This operation cannot be undone. Prefer `threads.trash` instead.</p>
+<p class="firstline">Gets the specified thread.</p>
+<p class="firstline">Lists the threads in the user's mailbox.</p>
+<p class="firstline">Modifies the labels applied to the thread. This applies to all messages in the thread.</p>
+<p class="firstline">Moves the specified thread to the trash. Any messages that belong to the thread are also moved to the trash.</p>
+<p class="firstline">Removes the specified thread from the trash. Any messages that belong to the thread are also removed from the trash.</p>
+  <pre>Immediately and permanently deletes the specified thread. Any messages that belong to the thread are also deleted. This operation cannot be undone. Prefer `threads.trash` instead.
+  id: string, ID of the Thread to delete. (required)
+  <pre>Gets the specified thread.
+  id: string, The ID of the thread to retrieve. (required)
+  format: string, The format to return the messages in.
+      metadata - Returns only email message IDs, labels, and email headers.
+      minimal - Returns only email message IDs and labels; does not return the email headers, body, or payload.
+  metadataHeaders: string, When given and format is METADATA, only include headers specified. (repeated)
+    { # A collection of messages representing a conversation.
+  &quot;historyId&quot;: &quot;A String&quot;, # The ID of the last history record that modified this thread.
+  &quot;id&quot;: &quot;A String&quot;, # The unique ID of the thread.
+  &quot;messages&quot;: [ # The list of messages in the thread.
+  <pre>Lists the threads in the user&#x27;s mailbox.
+  includeSpamTrash: boolean, Include threads from `SPAM` and `TRASH` in the results.
+  labelIds: string, Only return threads with labels that match all of the specified label IDs. (repeated)
+  maxResults: integer, Maximum number of threads to return. This field defaults to 100. The maximum allowed value for this field is 500.
+  q: string, Only return threads matching the specified query. Supports the same query format as the Gmail search box. For example, `&quot;from:someuser@example.com rfc822msgid: is:unread&quot;`. Parameter cannot be used when accessing the api using the gmail.metadata scope.
+  &quot;threads&quot;: [ # List of threads. Note that each thread resource does not contain a list of `messages`. The list of `messages` for a given thread can be fetched using the [`threads.get`](https://developers.google.com/workspace/gmail/api/v1/reference/users/threads/get) method.
+  <pre>Modifies the labels applied to the thread. This applies to all messages in the thread.
+  id: string, The ID of the thread to modify. (required)
+  &quot;addLabelIds&quot;: [ # A list of IDs of labels to add to this thread. You can add up to 100 labels with each update.
+  &quot;removeLabelIds&quot;: [ # A list of IDs of labels to remove from this thread. You can remove up to 100 labels with each update.
+  <pre>Moves the specified thread to the trash. Any messages that belong to the thread are also moved to the trash.
+  id: string, The ID of the thread to Trash. (required)
+  <pre>Removes the specified thread from the trash. Any messages that belong to the thread are also removed from the trash.
+  id: string, The ID of the thread to remove from Trash. (required)

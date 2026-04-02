@@ -1,0 +1,26 @@
+<h1><a href="observability_v1.html">Observability API</a> . <a href="observability_v1.projects.html">projects</a> . <a href="observability_v1.projects.locations.html">locations</a> . <a href="observability_v1.projects.locations.buckets.html">buckets</a> . <a href="observability_v1.projects.locations.buckets.datasets.html">datasets</a> . <a href="observability_v1.projects.locations.buckets.datasets.links.html">links</a></h1>
+<p class="firstline">Create a new link.</p>
+<p class="firstline">Delete a link.</p>
+<p class="firstline">Get a link.</p>
+<p class="firstline">List links of a dataset.</p>
+<p class="firstline">Update a link.</p>
+  <pre>Create a new link.
+  parent: string, Required. Name of the containing dataset for this link. The format is: projects/[PROJECT_ID]/locations/[LOCATION]/buckets/[BUCKET_ID]/datasets/[DATASET_ID] (required)
+{ # A link lets a dataset be accessible to BigQuery via usage of linked datasets.
+  &quot;description&quot;: &quot;A String&quot;, # Optional. Description of the link.
+  &quot;displayName&quot;: &quot;A String&quot;, # Optional. A user friendly display name.
+  &quot;name&quot;: &quot;A String&quot;, # Identifier. Name of the link. The format is: projects/[PROJECT_ID]/locations/[LOCATION]/buckets/[BUCKET_ID]/datasets/[DATASET_ID]/links/[LINK_ID]
+  linkId: string, Required. Id of the link to create.
+  <pre>Delete a link.
+  name: string, Required. Name of the link to delete. The format is: projects/[PROJECT_ID]/locations/[LOCATION]/buckets/[BUCKET_ID]/datasets/[DATASET_ID]/links/[LINK_ID] (required)
+  <pre>Get a link.
+  name: string, Required. Name of the link to retrieve. The format is: projects/[PROJECT_ID]/locations/[LOCATION]/buckets/[BUCKET_ID]/datasets/[DATASET_ID]/links/[LINK_ID] (required)
+  <pre>List links of a dataset.
+  parent: string, Required. The parent dataset that owns this collection of links. The format is: projects/[PROJECT_ID]/locations/[LOCATION]/buckets/[BUCKET_ID]/datasets/[DATASET_ID] (required)
+  pageSize: integer, Optional. The maximum number of links to return. If unspecified, then at most 100 links are returned. The maximum value is 1000; values above 1000 are coerced to 1000.
+  pageToken: string, Optional. A page token, received from a previous `ListLinks` call. Provide this to retrieve the subsequent page.
+    { # Response for listing links.
+  &quot;links&quot;: [ # The list of links.
+  &quot;nextPageToken&quot;: &quot;A String&quot;, # Optional. A token that can be sent as `page_token` to retrieve the next page. When this field is omitted, there are no subsequent pages.
+  <pre>Update a link.
+  name: string, Identifier. Name of the link. The format is: projects/[PROJECT_ID]/locations/[LOCATION]/buckets/[BUCKET_ID]/datasets/[DATASET_ID]/links/[LINK_ID] (required)

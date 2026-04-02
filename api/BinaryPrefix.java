@@ -1,0 +1,65 @@
+package org.openhab.core.library.unit;
+import tech.units.indriya.function.MultiplyConverter;
+import tech.uom.lib.common.function.SymbolSupplier;
+import tech.uom.lib.common.function.UnitConverterSupplier;
+ * The binary prefixes used to derive units by specific powers of 2.
+public enum BinaryPrefix implements SymbolSupplier, UnitConverterSupplier {
+    YOBI("Yi", MultiplyConverter.ofRational(BigInteger.valueOf(2).pow(80), BigInteger.ONE)),
+    ZEBI("Zi", MultiplyConverter.ofRational(BigInteger.valueOf(2).pow(70), BigInteger.ONE)),
+    EXBI("Ei", MultiplyConverter.ofRational(BigInteger.valueOf(2).pow(60), BigInteger.ONE)),
+    PEBI("Pi", MultiplyConverter.ofRational(BigInteger.valueOf(2).pow(50), BigInteger.ONE)),
+    TEBI("Ti", MultiplyConverter.ofRational(BigInteger.valueOf(2).pow(40), BigInteger.ONE)),
+    GIBI("Gi", MultiplyConverter.ofRational(BigInteger.valueOf(2).pow(30), BigInteger.ONE)),
+    MEBI("Mi", MultiplyConverter.ofRational(BigInteger.valueOf(2).pow(20), BigInteger.ONE)),
+    KIBI("Ki", MultiplyConverter.ofRational(BigInteger.valueOf(2).pow(10), BigInteger.ONE));
+     * The symbol of this prefix, as returned by {@link #getSymbol}.
+     * @see #getSymbol()
+     * The <code>UnitConverter</code> of this prefix, as returned by {@link #getConverter}.
+     * @see #getConverter()
+     * @see {@link UnitConverter}
+    private final UnitConverter converter;
+     * Creates a new prefix.
+     * @param symbol the symbol of this prefix.
+     * @param converter the associated unit converter.
+    BinaryPrefix(String symbol, MultiplyConverter converter) {
+        this.converter = converter;
+     * Returns the symbol of this prefix.
+     * @return this prefix symbol, not {@code null}.
+     * Returns the corresponding unit converter.
+     * @return the unit converter.
+    public UnitConverter getConverter() {
+        return converter;
+     * Returns the specified unit multiplied by the factor <code>2<sup>80</sup></code>
+     * @param <Q> The type of the quantity measured by the unit.
+     * @param unit any unit.
+     * @return <code>unit.times(2e80)</code>.
+    public static <Q extends Quantity<Q>> Unit<Q> YOBI(Unit<Q> unit) {
+        return unit.transform(YOBI.getConverter());
+     * Returns the specified unit multiplied by the factor <code>2<sup>70</sup></code>
+     * @return <code>unit.times(2e70)</code>.
+    public static <Q extends Quantity<Q>> Unit<Q> ZEBI(Unit<Q> unit) {
+        return unit.transform(ZEBI.getConverter());
+     * Returns the specified unit multiplied by the factor <code>2<sup>60</sup></code>
+     * @return <code>unit.times(2e60)</code>.
+    public static <Q extends Quantity<Q>> Unit<Q> EXBI(Unit<Q> unit) {
+        return unit.transform(EXBI.getConverter());
+     * Returns the specified unit multiplied by the factor <code>2<sup>50</sup></code>
+     * @return <code>unit.times(2e50)</code>.
+    public static <Q extends Quantity<Q>> Unit<Q> PEBI(Unit<Q> unit) {
+        return unit.transform(PEBI.getConverter());
+     * Returns the specified unit multiplied by the factor <code>2<sup>40</sup></code>
+     * @return <code>unit.times(2e40)</code>.
+    public static <Q extends Quantity<Q>> Unit<Q> TEBI(Unit<Q> unit) {
+        return unit.transform(TEBI.getConverter());
+     * Returns the specified unit multiplied by the factor <code>2<sup>30</sup></code>
+     * @return <code>unit.times(2e30)</code>.
+    public static <Q extends Quantity<Q>> Unit<Q> GIBI(Unit<Q> unit) {
+        return unit.transform(GIBI.getConverter());
+     * Returns the specified unit multiplied by the factor <code>2<sup>20</sup></code>
+     * @return <code>unit.times(2e20)</code>.
+    public static <Q extends Quantity<Q>> Unit<Q> MEBI(Unit<Q> unit) {
+        return unit.transform(MEBI.getConverter());
+     * Returns the specified unit multiplied by the factor <code>2<sup>10</sup></code>
+     * @return <code>unit.times(2e10)</code>.
+    public static <Q extends Quantity<Q>> Unit<Q> KIBI(Unit<Q> unit) {
+        return unit.transform(KIBI.getConverter());

@@ -1,0 +1,56 @@
+<h1><a href="storage_v1.html">Cloud Storage JSON API</a> . <a href="storage_v1.folders.html">folders</a></h1>
+  <code><a href="#delete">delete(bucket, folder, ifMetagenerationMatch=None, ifMetagenerationNotMatch=None)</a></code></p>
+<p class="firstline">Permanently deletes a folder. Only applicable to buckets with hierarchical namespace enabled.</p>
+  <code><a href="#deleteRecursive">deleteRecursive(bucket, folder, ifMetagenerationMatch=None, ifMetagenerationNotMatch=None)</a></code></p>
+<p class="firstline">Deletes a folder recursively. Only applicable to buckets with hierarchical namespace enabled.</p>
+  <code><a href="#get">get(bucket, folder, ifMetagenerationMatch=None, ifMetagenerationNotMatch=None)</a></code></p>
+<p class="firstline">Returns metadata for the specified folder. Only applicable to buckets with hierarchical namespace enabled.</p>
+  <code><a href="#insert">insert(bucket, body=None, recursive=None)</a></code></p>
+<p class="firstline">Creates a new folder. Only applicable to buckets with hierarchical namespace enabled.</p>
+  <code><a href="#list">list(bucket, delimiter=None, endOffset=None, pageSize=None, pageToken=None, prefix=None, startOffset=None)</a></code></p>
+<p class="firstline">Retrieves a list of folders matching the criteria. Only applicable to buckets with hierarchical namespace enabled.</p>
+  <code><a href="#rename">rename(bucket, sourceFolder, destinationFolder, ifSourceMetagenerationMatch=None, ifSourceMetagenerationNotMatch=None)</a></code></p>
+<p class="firstline">Renames a source folder to a destination folder. Only applicable to buckets with hierarchical namespace enabled.</p>
+    <code class="details" id="delete">delete(bucket, folder, ifMetagenerationMatch=None, ifMetagenerationNotMatch=None)</code>
+  <pre>Permanently deletes a folder. Only applicable to buckets with hierarchical namespace enabled.
+  bucket: string, Name of the bucket in which the folder resides. (required)
+  folder: string, Name of a folder. (required)
+  ifMetagenerationMatch: string, If set, only deletes the folder if its metageneration matches this value.
+  ifMetagenerationNotMatch: string, If set, only deletes the folder if its metageneration does not match this value.
+    <code class="details" id="deleteRecursive">deleteRecursive(bucket, folder, ifMetagenerationMatch=None, ifMetagenerationNotMatch=None)</code>
+  <pre>Deletes a folder recursively. Only applicable to buckets with hierarchical namespace enabled.
+    <code class="details" id="get">get(bucket, folder, ifMetagenerationMatch=None, ifMetagenerationNotMatch=None)</code>
+  <pre>Returns metadata for the specified folder. Only applicable to buckets with hierarchical namespace enabled.
+  ifMetagenerationMatch: string, Makes the return of the folder metadata conditional on whether the folder&#x27;s current metageneration matches the given value.
+  ifMetagenerationNotMatch: string, Makes the return of the folder metadata conditional on whether the folder&#x27;s current metageneration does not match the given value.
+    { # A folder. Only available in buckets with hierarchical namespace enabled.
+  &quot;bucket&quot;: &quot;A String&quot;, # The name of the bucket containing this folder.
+  &quot;createTime&quot;: &quot;A String&quot;, # The creation time of the folder in RFC 3339 format.
+  &quot;id&quot;: &quot;A String&quot;, # The ID of the folder, including the bucket name, folder name.
+  &quot;kind&quot;: &quot;storage#folder&quot;, # The kind of item this is. For folders, this is always storage#folder.
+  &quot;metageneration&quot;: &quot;A String&quot;, # The version of the metadata for this folder. Used for preconditions and for detecting changes in metadata.
+  &quot;name&quot;: &quot;A String&quot;, # The name of the folder. Required if not specified by URL parameter.
+  &quot;pendingRenameInfo&quot;: { # Only present if the folder is part of an ongoing rename folder operation. Contains information which can be used to query the operation status.
+    &quot;operationId&quot;: &quot;A String&quot;, # The ID of the rename folder operation.
+  &quot;selfLink&quot;: &quot;A String&quot;, # The link to this folder.
+  &quot;updateTime&quot;: &quot;A String&quot;, # The modification time of the folder metadata in RFC 3339 format.
+    <code class="details" id="insert">insert(bucket, body=None, recursive=None)</code>
+  <pre>Creates a new folder. Only applicable to buckets with hierarchical namespace enabled.
+  recursive: boolean, If true, any parent folder which doesn&#x27;t exist will be created automatically.
+    <code class="details" id="list">list(bucket, delimiter=None, endOffset=None, pageSize=None, pageToken=None, prefix=None, startOffset=None)</code>
+  <pre>Retrieves a list of folders matching the criteria. Only applicable to buckets with hierarchical namespace enabled.
+  bucket: string, Name of the bucket in which to look for folders. (required)
+  delimiter: string, Returns results in a directory-like mode. The only supported value is &#x27;/&#x27;. If set, items will only contain folders that either exactly match the prefix, or are one level below the prefix.
+  endOffset: string, Filter results to folders whose names are lexicographically before endOffset. If startOffset is also set, the folders listed will have names between startOffset (inclusive) and endOffset (exclusive).
+  pageSize: integer, Maximum number of items to return in a single page of responses.
+  prefix: string, Filter results to folders whose paths begin with this prefix. If set, the value must either be an empty string or end with a &#x27;/&#x27;.
+  startOffset: string, Filter results to folders whose names are lexicographically equal to or after startOffset. If endOffset is also set, the folders listed will have names between startOffset (inclusive) and endOffset (exclusive).
+    { # A list of folders.
+  &quot;kind&quot;: &quot;storage#folders&quot;, # The kind of item this is. For lists of folders, this is always storage#folders.
+    <code class="details" id="rename">rename(bucket, sourceFolder, destinationFolder, ifSourceMetagenerationMatch=None, ifSourceMetagenerationNotMatch=None)</code>
+  <pre>Renames a source folder to a destination folder. Only applicable to buckets with hierarchical namespace enabled.
+  bucket: string, Name of the bucket in which the folders are in. (required)
+  sourceFolder: string, Name of the source folder. (required)
+  destinationFolder: string, Name of the destination folder. (required)
+  ifSourceMetagenerationMatch: string, Makes the operation conditional on whether the source object&#x27;s current metageneration matches the given value.
+  ifSourceMetagenerationNotMatch: string, Makes the operation conditional on whether the source object&#x27;s current metageneration does not match the given value.

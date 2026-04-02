@@ -1,0 +1,152 @@
+<h1><a href="managedidentities_v1.html">Managed Service for Microsoft Active Directory API</a> . <a href="managedidentities_v1.projects.html">projects</a> . <a href="managedidentities_v1.projects.locations.html">locations</a> . <a href="managedidentities_v1.projects.locations.global_.html">global_</a> . <a href="managedidentities_v1.projects.locations.global_.domains.html">domains</a></h1>
+  <code><a href="managedidentities_v1.projects.locations.global_.domains.backups.html">backups()</a></code>
+  <code><a href="managedidentities_v1.projects.locations.global_.domains.sqlIntegrations.html">sqlIntegrations()</a></code>
+<p class="firstline">Returns the sqlIntegrations Resource.</p>
+  <code><a href="#attachTrust">attachTrust(name, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Adds an AD trust to a domain.</p>
+  <code><a href="#checkMigrationPermission">checkMigrationPermission(domain, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">CheckMigrationPermission API gets the current state of DomainMigration</p>
+  <code><a href="#create">create(parent, body=None, domainName=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Creates a Microsoft AD domain.</p>
+<p class="firstline">Deletes a domain.</p>
+  <code><a href="#detachTrust">detachTrust(name, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Removes an AD trust.</p>
+  <code><a href="#disableMigration">disableMigration(domain, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Disable Domain Migration</p>
+  <code><a href="#domainJoinMachine">domainJoinMachine(domain, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">DomainJoinMachine API joins a Compute Engine VM to the domain</p>
+  <code><a href="#enableMigration">enableMigration(domain, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Enable Domain Migration</p>
+  <code><a href="#extendSchema">extendSchema(domain, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Extend Schema for Domain</p>
+  <code><a href="#getLdapssettings">getLdapssettings(name, x__xgafv=None)</a></code></p>
+<p class="firstline">Gets the domain ldaps settings.</p>
+<p class="firstline">Lists domains in a project.</p>
+<p class="firstline">Updates the metadata and configuration of a domain.</p>
+  <code><a href="#reconfigureTrust">reconfigureTrust(name, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Updates the DNS conditional forwarder.</p>
+  <code><a href="#resetAdminPassword">resetAdminPassword(name, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Resets a domain's administrator password.</p>
+<p class="firstline">RestoreDomain restores domain backup mentioned in the RestoreDomainRequest</p>
+  <code><a href="#updateLdapssettings">updateLdapssettings(name, body=None, updateMask=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Patches a single ldaps settings.</p>
+  <code><a href="#validateTrust">validateTrust(name, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Validates a trust state, that the target domain is reachable, and that the target domain is able to accept incoming trust requests.</p>
+    <code class="details" id="attachTrust">attachTrust(name, body=None, x__xgafv=None)</code>
+  <pre>Adds an AD trust to a domain.
+  name: string, Required. The resource domain name, project name and location using the form: `projects/{project_id}/locations/global/domains/{domain_name}` (required)
+{ # Request message for AttachTrust
+  &quot;trust&quot;: { # Represents a relationship between two domains. This allows a controller in one domain to authenticate a user in another domain. If the trust is being changed, it will be placed into the UPDATING state, which indicates that the resource is being reconciled. At this point, Get will reflect an intermediate state. # Required. The domain trust resource.
+    &quot;lastTrustHeartbeatTime&quot;: &quot;A String&quot;, # Output only. The last heartbeat time when the trust was known to be connected.
+    &quot;selectiveAuthentication&quot;: True or False, # Optional. The trust authentication type, which decides whether the trusted side has forest/domain wide access or selective access to an approved set of resources.
+    &quot;state&quot;: &quot;A String&quot;, # Output only. The current state of the trust.
+    &quot;stateDescription&quot;: &quot;A String&quot;, # Output only. Additional information about the current state of the trust, if available.
+    &quot;targetDnsIpAddresses&quot;: [ # Required. The target DNS server IP addresses which can resolve the remote domain involved in the trust.
+    &quot;targetDomainName&quot;: &quot;A String&quot;, # Required. The fully qualified target domain name which will be in trust with the current domain.
+    &quot;trustDirection&quot;: &quot;A String&quot;, # Required. The trust direction, which decides if the current domain is trusted, trusting, or both.
+    &quot;trustHandshakeSecret&quot;: &quot;A String&quot;, # Required. The trust secret used for the handshake with the target domain. This will not be stored.
+    &quot;trustType&quot;: &quot;A String&quot;, # Required. The type of trust represented by the trust resource.
+    &quot;updateTime&quot;: &quot;A String&quot;, # Output only. The last update time.
+    <code class="details" id="checkMigrationPermission">checkMigrationPermission(domain, body=None, x__xgafv=None)</code>
+  <pre>CheckMigrationPermission API gets the current state of DomainMigration
+  domain: string, Required. The domain resource name using the form: `projects/{project_id}/locations/global/domains/{domain_name}` (required)
+{ # CheckMigrationPermissionRequest is the request message for CheckMigrationPermission method.
+    { # CheckMigrationPermissionResponse is the response message for CheckMigrationPermission method.
+  &quot;onpremDomains&quot;: [ # The state of SID filtering of all the domains which has trust established.
+    { # OnPremDomainDetails is the message which contains details of on-prem domain which is trusted and needs to be migrated.
+      &quot;name&quot;: &quot;A String&quot;, # FQDN of the on-prem domain being migrated.
+      &quot;sidFilteringState&quot;: &quot;A String&quot;, # Current SID filtering state.
+  &quot;state&quot;: &quot;A String&quot;, # The state of DomainMigration.
+    <code class="details" id="create">create(parent, body=None, domainName=None, x__xgafv=None)</code>
+  <pre>Creates a Microsoft AD domain.
+  parent: string, Required. The resource project name and location using the form: `projects/{project_id}/locations/global` (required)
+{ # Represents a managed Microsoft Active Directory domain. If the domain is being changed, it will be placed into the UPDATING state, which indicates that the resource is being reconciled. At this point, Get will reflect an intermediate state.
+  &quot;admin&quot;: &quot;A String&quot;, # Optional. The name of delegated administrator account used to perform Active Directory operations. If not specified, `setupadmin` will be used.
+  &quot;auditLogsEnabled&quot;: True or False, # Optional. Configuration for audit logs. True if audit logs are enabled, else false. Default is audit logs disabled.
+  &quot;authorizedNetworks&quot;: [ # Optional. The full names of the Google Compute Engine [networks](/compute/docs/networks-and-firewalls#networks) the domain instance is connected to. Networks can be added using UpdateDomain. The domain is only available on networks listed in `authorized_networks`. If CIDR subnets overlap between networks, domain creation will fail.
+  &quot;fqdn&quot;: &quot;A String&quot;, # Output only. The fully-qualified domain name of the exposed domain used by clients to connect to the service. Similar to what would be chosen for an Active Directory set up on an internal network.
+  &quot;labels&quot;: { # Optional. Resource labels that can contain user-provided metadata.
+  &quot;locations&quot;: [ # Required. Locations where domain needs to be provisioned. The locations can be specified according to https://cloud.google.com/compute/docs/regions-zones, such as `us-west1` or `us-east4`. Each domain supports up to 4 locations, separated by commas. Each location will use a /26 block.
+  &quot;name&quot;: &quot;A String&quot;, # Required. The unique name of the domain using the form: `projects/{project_id}/locations/global/domains/{domain_name}`.
+  &quot;reservedIpRange&quot;: &quot;A String&quot;, # Required. The CIDR range of internal addresses that are reserved for this domain. Reserved networks must be /24 or larger. Ranges must be unique and non-overlapping with existing subnets in [Domain].[authorized_networks].
+  &quot;state&quot;: &quot;A String&quot;, # Output only. The current state of this domain.
+  &quot;statusMessage&quot;: &quot;A String&quot;, # Output only. Additional information about the current status of this domain, if available.
+  &quot;trusts&quot;: [ # Output only. The current trusts associated with the domain.
+    { # Represents a relationship between two domains. This allows a controller in one domain to authenticate a user in another domain. If the trust is being changed, it will be placed into the UPDATING state, which indicates that the resource is being reconciled. At this point, Get will reflect an intermediate state.
+  domainName: string, Required. The fully qualified domain name. e.g. mydomain.myorganization.com, with the following restrictions: * Must contain only lowercase letters, numbers, periods and hyphens. * Must start with a letter. * Must contain between 2-64 characters. * Must end with a number or a letter. * Must not start with period. * First segment length (mydomain for example above) shouldn&#x27;t exceed 15 chars. * The last segment cannot be fully numeric. * Must be unique within the customer project.
+  <pre>Deletes a domain.
+  name: string, Required. The domain resource name using the form: `projects/{project_id}/locations/global/domains/{domain_name}` (required)
+    <code class="details" id="detachTrust">detachTrust(name, body=None, x__xgafv=None)</code>
+  <pre>Removes an AD trust.
+  name: string, Required. The resource domain name, project name, and location using the form: `projects/{project_id}/locations/global/domains/{domain_name}` (required)
+{ # Request message for DetachTrust
+  &quot;trust&quot;: { # Represents a relationship between two domains. This allows a controller in one domain to authenticate a user in another domain. If the trust is being changed, it will be placed into the UPDATING state, which indicates that the resource is being reconciled. At this point, Get will reflect an intermediate state. # Required. The domain trust resource to removed.
+    <code class="details" id="disableMigration">disableMigration(domain, body=None, x__xgafv=None)</code>
+  <pre>Disable Domain Migration
+{ # DisableMigrationRequest is the request message for DisableMigration method.
+    <code class="details" id="domainJoinMachine">domainJoinMachine(domain, body=None, x__xgafv=None)</code>
+  <pre>DomainJoinMachine API joins a Compute Engine VM to the domain
+  domain: string, Required. The domain resource name using the form: projects/{project_id}/locations/global/domains/{domain_name} (required)
+{ # DomainJoinMachineRequest is the request message for DomainJoinMachine method
+  &quot;force&quot;: True or False, # Optional. force if True, forces domain join even if the computer account already exists.
+  &quot;ouName&quot;: &quot;A String&quot;, # Optional. OU name where the VM needs to be domain joined
+  &quot;vmIdToken&quot;: &quot;A String&quot;, # Required. Full instance id token of compute engine VM to verify instance identity. More about this: https://cloud.google.com/compute/docs/instances/verifying-instance-identity#request_signature
+    { # DomainJoinMachineResponse is the response message for DomainJoinMachine method
+  &quot;domainJoinBlob&quot;: &quot;A String&quot;, # Offline domain join blob as the response
+    <code class="details" id="enableMigration">enableMigration(domain, body=None, x__xgafv=None)</code>
+  <pre>Enable Domain Migration
+{ # EnableMigrationRequest is the request message for EnableMigration method.
+  &quot;migratingDomains&quot;: [ # Required. List of the on-prem domains to be migrated.
+      &quot;disableSidFiltering&quot;: True or False, # Optional. Option to disable SID filtering.
+      &quot;domainName&quot;: &quot;A String&quot;, # Required. FQDN of the on-prem domain being migrated.
+    <code class="details" id="extendSchema">extendSchema(domain, body=None, x__xgafv=None)</code>
+  <pre>Extend Schema for Domain
+{ # ExtendSchemaRequest is the request message for ExtendSchema method.
+  &quot;description&quot;: &quot;A String&quot;, # Required. Description for Schema Change.
+  &quot;fileContents&quot;: &quot;A String&quot;, # File uploaded as a byte stream input.
+  &quot;gcsPath&quot;: &quot;A String&quot;, # File stored in Cloud Storage bucket and represented in the form projects/{project_id}/buckets/{bucket_name}/objects/{object_name} File should be in the same project as the domain.
+    <code class="details" id="getLdapssettings">getLdapssettings(name, x__xgafv=None)</code>
+  <pre>Gets the domain ldaps settings.
+    { # LDAPSSettings represents the ldaps settings for domain resource. LDAP is the Lightweight Directory Access Protocol, defined in https://tools.ietf.org/html/rfc4511. The settings object configures LDAP over SSL/TLS, whether it is over port 636 or the StartTLS operation. If LDAPSSettings is being changed, it will be placed into the UPDATING state, which indicates that the resource is being reconciled. At this point, Get will reflect an intermediate state.
+  &quot;certificate&quot;: { # Certificate used to configure LDAPS. # Output only. The certificate used to configure LDAPS. Certificates can be chained with a maximum length of 15.
+    &quot;expireTime&quot;: &quot;A String&quot;, # The certificate expire time.
+    &quot;issuingCertificate&quot;: # Object with schema name: Certificate # The issuer of this certificate.
+    &quot;subject&quot;: &quot;A String&quot;, # The certificate subject.
+    &quot;subjectAlternativeName&quot;: [ # The additional hostnames for the domain.
+    &quot;thumbprint&quot;: &quot;A String&quot;, # The certificate thumbprint which uniquely identifies the certificate.
+  &quot;certificatePassword&quot;: &quot;A String&quot;, # Input only. The password used to encrypt the uploaded PFX certificate.
+  &quot;certificatePfx&quot;: &quot;A String&quot;, # Input only. The uploaded PKCS12-formatted certificate to configure LDAPS with. It will enable the domain controllers in this domain to accept LDAPS connections (either LDAP over SSL/TLS or the StartTLS operation). A valid certificate chain must form a valid x.509 certificate chain (or be comprised of a single self-signed certificate. It must be encrypted with either: 1) PBES2 + PBKDF2 + AES256 encryption and SHA256 PRF; or 2) pbeWithSHA1And3-KeyTripleDES-CBC Private key must be included for the leaf / single self-signed certificate. Note: For a fqdn your-example-domain.com, the wildcard fqdn is *.your-example-domain.com. Specifically the leaf certificate must have: - Either a blank subject or a subject with CN matching the wildcard fqdn. - Exactly two SANs - the fqdn and wildcard fqdn. - Encipherment and digital key signature key usages. - Server authentication extended key usage (OID=1.3.6.1.5.5.7.3.1) - Private key must be in one of the following formats: RSA, ECDSA, ED25519. - Private key must have appropriate key length: 2048 for RSA, 256 for ECDSA - Signature algorithm of the leaf certificate cannot be MD2, MD5 or SHA1.
+  &quot;name&quot;: &quot;A String&quot;, # The resource name of the LDAPS settings. Uses the form: `projects/{project}/locations/{location}/domains/{domain}`.
+  &quot;state&quot;: &quot;A String&quot;, # Output only. The current state of this LDAPS settings.
+  <pre>Lists domains in a project.
+  parent: string, Required. The resource name of the domain location using the form: `projects/{project_id}/locations/global` (required)
+  filter: string, Optional. A filter specifying constraints of a list operation. For example, `Domain.fqdn=&quot;mydomain.myorginization&quot;`.
+  pageSize: integer, Optional. The maximum number of items to return. If not specified, a default value of 1000 will be used. Regardless of the page_size value, the response may include a partial list. Callers should rely on a response&#x27;s next_page_token to determine if there are additional results to list.
+  pageToken: string, Optional. The `next_page_token` value returned from a previous ListDomainsRequest request, if any.
+    { # Response message for ListDomains
+  &quot;domains&quot;: [ # A list of Managed Identities Service domains in the project.
+  <pre>Updates the metadata and configuration of a domain.
+  name: string, Required. The unique name of the domain using the form: `projects/{project_id}/locations/global/domains/{domain_name}`. (required)
+  updateMask: string, Required. Mask of fields to update. At least one path must be supplied in this field. The elements of the repeated paths field may only include fields from Domain: * `labels` * `locations` * `authorized_networks` * `audit_logs_enabled`
+    <code class="details" id="reconfigureTrust">reconfigureTrust(name, body=None, x__xgafv=None)</code>
+  <pre>Updates the DNS conditional forwarder.
+{ # Request message for ReconfigureTrust
+  &quot;targetDnsIpAddresses&quot;: [ # Required. The target DNS server IP addresses to resolve the remote domain involved in the trust.
+  &quot;targetDomainName&quot;: &quot;A String&quot;, # Required. The fully-qualified target domain name which will be in trust with current domain.
+    <code class="details" id="resetAdminPassword">resetAdminPassword(name, body=None, x__xgafv=None)</code>
+  <pre>Resets a domain&#x27;s administrator password.
+{ # Request message for ResetAdminPassword
+    { # Response message for ResetAdminPassword
+  &quot;password&quot;: &quot;A String&quot;, # A random password. See admin for more information.
+  <pre>RestoreDomain restores domain backup mentioned in the RestoreDomainRequest
+  name: string, Required. Resource name for the domain to which the backup belongs (required)
+{ # RestoreDomainRequest is the request received by RestoreDomain rpc
+  &quot;backupId&quot;: &quot;A String&quot;, # Required. ID of the backup to be restored
+    <code class="details" id="updateLdapssettings">updateLdapssettings(name, body=None, updateMask=None, x__xgafv=None)</code>
+  <pre>Patches a single ldaps settings.
+  name: string, The resource name of the LDAPS settings. Uses the form: `projects/{project}/locations/{location}/domains/{domain}`. (required)
+  updateMask: string, Required. Mask of fields to update. At least one path must be supplied in this field. For the `FieldMask` definition, see https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#fieldmask
+    <code class="details" id="validateTrust">validateTrust(name, body=None, x__xgafv=None)</code>
+  <pre>Validates a trust state, that the target domain is reachable, and that the target domain is able to accept incoming trust requests.
+{ # Request message for ValidateTrust
+  &quot;trust&quot;: { # Represents a relationship between two domains. This allows a controller in one domain to authenticate a user in another domain. If the trust is being changed, it will be placed into the UPDATING state, which indicates that the resource is being reconciled. At this point, Get will reflect an intermediate state. # Required. The domain trust to validate trust state for.

@@ -1,0 +1,9 @@
+<!-- OAuth callback route - shown regardless of auth state, component handles waiting for auth -->
+@if (isOAuthCallback) {
+  <router-outlet></router-outlet>
+<!-- Normal authenticated view (not OAuth callback) -->
+@if ((authBase.isAuthenticated() | async) && !isOAuthCallback) {
+      <div><h1>System Error</h1><hr/>{{this.ErrorMessage}}</div>
+<!-- Login - shows when NOT authenticated AND not on OAuth callback -->
+@if (!(authBase.isAuthenticated() | async) && !isOAuthCallback) {
+        <img src="/assets/MJ_logo.svg" height="45px" class="app-logo" alt="MemberJunction Logo" />

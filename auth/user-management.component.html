@@ -1,0 +1,197 @@
+<div class="user-management-container">
+    <div class="action-buttons" role="toolbar" aria-label="User management actions">
+        aria-label="Refresh user list"
+        (click)="exportUsers()"
+        aria-label="Export users to file"
+        <i class="fa-solid fa-download" aria-hidden="true"></i>
+        <span class="btn-text">Export</span>
+        (click)="createNewUser()"
+        aria-label="Add new user"
+        <span class="btn-text">Add User</span>
+    <!-- Bulk Action Toolbar -->
+    @if (hasSelection) {
+      <div class="bulk-action-toolbar" role="toolbar" aria-label="Bulk actions">
+        <div class="bulk-selection-info">
+          <i class="fa-solid fa-check-square" aria-hidden="true"></i>
+          <span>{{ selectedCount }} user{{ selectedCount > 1 ? 's' : '' }} selected</span>
+            (click)="clearSelection()"
+            aria-label="Clear selection"
+        <div class="bulk-action-buttons">
+            class="mj-btn mj-btn-secondary mj-btn-sm"
+            (click)="confirmBulkAction('enable')"
+            aria-label="Enable selected users"
+            <i class="fa-solid fa-toggle-on" aria-hidden="true"></i>
+            <span class="btn-text">Enable</span>
+            (click)="confirmBulkAction('disable')"
+            aria-label="Disable selected users"
+            <i class="fa-solid fa-toggle-off" aria-hidden="true"></i>
+            <span class="btn-text">Disable</span>
+            (click)="openBulkRoleAssign()"
+            aria-label="Assign role to selected users"
+            <i class="fa-solid fa-user-tag" aria-hidden="true"></i>
+            <span class="btn-text">Assign Role</span>
+            class="mj-btn mj-btn-danger mj-btn-sm"
+            (click)="confirmBulkAction('delete')"
+            aria-label="Delete selected users"
+            <span class="btn-text">Delete</span>
+    <div class="mj-grid-4" role="region" aria-label="User statistics">
+          <div class="stat-value" aria-label="Total users count">{{ stats.totalUsers }}</div>
+          <div class="stat-label">Total Users</div>
+          <i class="fa-solid fa-user-check"></i>
+          <div class="stat-value" aria-label="Active users count">{{ stats.activeUsers }}</div>
+          <div class="stat-label">Active Users</div>
+        <div class="stat-icon stat-icon-inactive" aria-hidden="true">
+          <i class="fa-solid fa-user-xmark"></i>
+          <div class="stat-value" aria-label="Inactive users count">{{ stats.inactiveUsers }}</div>
+          <div class="stat-label">Inactive Users</div>
+        <div class="stat-icon stat-icon-admin" aria-hidden="true">
+          <div class="stat-value" aria-label="Owner users count">{{ stats.adminUsers }}</div>
+          <div class="stat-label">Owners</div>
+    <div class="filters-section" role="search" aria-label="Filter users">
+            placeholder="Search users by name or email..."
+            aria-label="Search users by name or email"
+        <!-- Mobile: Filter Toggle Button -->
+          class="mobile-filter-toggle"
+          (click)="showMobileFilters = !showMobileFilters"
+          [class.active]="showMobileFilters"
+          [attr.aria-expanded]="showMobileFilters"
+          aria-label="Toggle filters"
+          @if (hasActiveFilters) {
+            <span class="filter-badge">{{ activeFilterCount }}</span>
+        <!-- Desktop: Status Filter - Button group -->
+        <div class="mj-filter-group desktop-filter-group">
+        <!-- Desktop: Role Filter -->
+          <label class="mj-filter-label" for="role-filter">Role</label>
+            (change)="onRoleFilterChange($any($event.target).value)"
+            aria-label="Filter by role"
+      <!-- Mobile: Filter Dropdown Panel -->
+        <div class="mobile-filter-dropdown">
+          <div class="mobile-filter-content">
+              <label class="mj-filter-label" id="status-filter-label-mobile">Status</label>
+                [value]="filters$.value.status"
+                aria-labelledby="status-filter-label-mobile"
+                <option value="all">All Status</option>
+              <label class="mj-filter-label" for="role-filter-mobile">Role</label>
+                id="role-filter-mobile"
+            <!-- Clear Filters Button -->
+              <button class="mj-btn mj-btn-ghost mj-btn-sm clear-filters-btn" (click)="clearFilters()">
+        <mj-loading text="Loading users..." size="medium"></mj-loading>
+          <button class="retry-button" (click)="loadInitialData()" aria-label="Retry loading users">
+        <!-- Users List -->
+        <div class="users-list" role="list" aria-label="Users list">
+          <!-- List Header with Select All -->
+            <label class="select-all-label">
+                class="checkbox"
+                [checked]="isAllSelected"
+                [indeterminate]="isIndeterminate"
+                aria-label="Select all users"
+              <span class="select-all-text">Select All ({{ filteredUsers.length }})</span>
+          @for (user of filteredUsers; track user.ID) {
+              class="user-card"
+              [class.expanded]="isUserExpanded(user.ID)"
+              [class.selected]="isUserSelected(user.ID)"
+              <!-- User Card Header - Always Visible -->
+                class="user-header"
+                (click)="toggleUserExpansion(user.ID)"
+                [attr.aria-expanded]="isUserExpanded(user.ID)"
+                (keydown.enter)="toggleUserExpansion(user.ID)"
+                <div class="user-selection" (click)="$event.stopPropagation()">
+                    [checked]="isUserSelected(user.ID)"
+                    (change)="toggleUserSelection(user.ID, $event)"
+                    [attr.aria-label]="'Select ' + user.Name"
+                  <div class="user-avatar" aria-hidden="true">
+                    {{ getUserInitials(user) }}
+                  <div class="user-details">
+                    <h3 class="user-name">{{ user.Name }}</h3>
+                    <p class="user-email">{{ user.Email }}</p>
+                <!-- User Meta -->
+                <div class="user-meta">
+                  <span class="status-badge" [class]="getStatusClass(user)">
+                    <i [class]="'fa-solid ' + getStatusIcon(user)" aria-hidden="true"></i>
+                    {{ user.IsActive ? 'Active' : 'Inactive' }}
+                  <div class="user-actions desktop-only" (click)="$event.stopPropagation()">
+                      (click)="editUser(user)"
+                      [attr.aria-label]="'Edit ' + user.Name"
+                      (click)="toggleUserStatus(user)"
+                      [attr.aria-label]="(user.IsActive ? 'Deactivate ' : 'Activate ') + user.Name"
+                      [title]="user.IsActive ? 'Deactivate' : 'Activate'"
+                      <i [class]="user.IsActive ? 'fa-solid fa-toggle-on' : 'fa-solid fa-toggle-off'" aria-hidden="true"></i>
+                      (click)="confirmDeleteUser(user)"
+                      [attr.aria-label]="'Delete ' + user.Name"
+                  <button class="expand-btn" aria-label="Toggle user details">
+              <!-- User Card Content - Expanded -->
+              @if (isUserExpanded(user.ID)) {
+                <div class="user-content">
+                  <!-- Mobile Actions Bar -->
+                        <span class="btn-label">{{ user.IsActive ? 'Disable' : 'Enable' }}</span>
+                  <!-- User Stats -->
+                  <div class="user-stats">
+                      <span class="stat-label">Type:</span>
+                        <i [class]="'fa-solid ' + getUserTypeIcon(user)" aria-hidden="true"></i>
+                        {{ user.Type }}
+                      <i class="fa-solid fa-id-card" aria-hidden="true"></i>
+                      <span class="stat-label">Full Name:</span>
+                      <span class="stat-value">{{ user.FirstName }} {{ user.LastName }}</span>
+                      <span class="stat-value">{{ user.__mj_CreatedAt | date:'short' }}</span>
+                      <span class="stat-value">{{ user.__mj_UpdatedAt | date:'short' }}</span>
+                  <div class="roles-section">
+                      <i class="fa-solid fa-user-shield" aria-hidden="true"></i>
+                      Assigned Roles
+                    @if (getUserRoles(user.ID).length > 0) {
+                      <div class="roles-grid">
+                        @for (role of getUserRoles(user.ID); track role.ID) {
+                          <div class="role-item">
+                            <i class="fa-solid fa-shield" aria-hidden="true"></i>
+                      <p class="no-roles">No roles assigned to this user</p>
+          @if (filteredUsers.length === 0) {
+              <i class="fa-solid fa-users-slash empty-icon" aria-hidden="true"></i>
+              <p class="empty-text">No users found</p>
+              <p class="empty-subtext">Try adjusting your filters or add a new user</p>
+  <!-- User Create/Edit Dialog -->
+  <mj-user-dialog
+    [data]="userDialogData"
+    [visible]="showUserDialog"
+    (result)="onUserDialogResult($event)">
+  </mj-user-dialog>
+  @if (showDeleteConfirm && selectedUser) {
+          <p>Are you sure you want to delete user <strong>{{ selectedUser.Name }}</strong>?</p>
+          <p class="text-muted">This action cannot be undone.</p>
+          <button class="mj-btn mj-btn-danger" (click)="deleteUser()">
+            Delete User
+  <!-- Bulk Action Confirmation Dialog -->
+  @if (showBulkActionConfirm) {
+      (click)="cancelBulkAction()"
+      aria-labelledby="bulk-action-dialog-title"
+      aria-describedby="bulk-action-dialog-desc"
+          <h3 class="modal-title" id="bulk-action-dialog-title">
+            @if (bulkActionType === 'delete') {
+            } @else if (bulkActionType === 'enable') {
+              <i class="fa-solid fa-toggle-on text-success" aria-hidden="true"></i>
+              <i class="fa-solid fa-toggle-off text-warning" aria-hidden="true"></i>
+            {{ getBulkActionTitle() }}
+        <div class="modal-body" id="bulk-action-dialog-desc">
+          <p>{{ getBulkActionMessage() }}</p>
+            [class]="bulkActionType === 'delete' ? 'mj-btn mj-btn-danger' : 'mj-btn mj-btn-primary'"
+            (click)="executeBulkAction()"
+              {{ getBulkActionButtonText() }}
+          <button class="mj-btn mj-btn-secondary" (click)="cancelBulkAction()" [disabled]="isLoading">
+  <!-- Bulk Role Assignment Dialog -->
+  @if (showBulkRoleAssign) {
+      (click)="cancelBulkRoleAssign()"
+      aria-labelledby="bulk-role-dialog-title"
+      aria-describedby="bulk-role-dialog-desc"
+          <h3 class="modal-title" id="bulk-role-dialog-title">
+            Assign Role to {{ selectedCount }} User{{ selectedCount > 1 ? 's' : '' }}
+        <div class="modal-body" id="bulk-role-dialog-desc">
+          <p>Select a role to assign to the selected users:</p>
+            <label class="field-label" for="bulk-role-select">Role</label>
+              id="bulk-role-select"
+              class="field-select"
+              [(ngModel)]="bulkRoleId"
+              aria-label="Select role to assign"
+              <option value="">Select a role...</option>
+            (click)="executeBulkRoleAssign()"
+            [disabled]="!bulkRoleId || isLoading"
+              Assigning...
+              Assign Role
+          <button class="mj-btn mj-btn-secondary" (click)="cancelBulkRoleAssign()" [disabled]="isLoading">

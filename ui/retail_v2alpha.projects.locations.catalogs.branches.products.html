@@ -1,0 +1,12 @@
+<h1><a href="retail_v2alpha.html">Vertex AI Search for commerce API</a> . <a href="retail_v2alpha.projects.html">projects</a> . <a href="retail_v2alpha.projects.locations.html">locations</a> . <a href="retail_v2alpha.projects.locations.catalogs.html">catalogs</a> . <a href="retail_v2alpha.projects.locations.catalogs.branches.html">branches</a> . <a href="retail_v2alpha.projects.locations.catalogs.branches.products.html">products</a></h1>
+<p class="firstline">Exports multiple Products.</p>
+  <code><a href="#list">list(parent, filter=None, pageSize=None, pageToken=None, readMask=None, requireTotalSize=None, x__xgafv=None)</a></code></p>
+  force: boolean, This value only applies to the case when the target product is of type PRIMARY. When deleting a product of VARIANT/COLLECTION type, this value will be ignored. When set to true, the subsequent variant products will be deleted. When set to false, if the primary product has active variant products, an error will be returned.
+  <pre>Exports multiple Products.
+  parent: string, Required. Resource name of a Branch, and `default_branch` for branch_id component is supported. For example `projects/1234/locations/global/catalogs/default_catalog/branches/default_branch` (required)
+{ # Request message for ExportProducts method.
+  &quot;filter&quot;: &quot;A String&quot;, # Deprecated: This field is deprecated. Any filter provided will be ignored.
+  &quot;skipDefaultBranchProtection&quot;: True or False, # If true, this performs the FULL import even if it would delete a large proportion of the products in the default branch, which could potentially cause outages if you have live predict/search traffic. Only supported when ImportProductsRequest.reconciliation_mode is set to `FULL`.
+    <code class="details" id="list">list(parent, filter=None, pageSize=None, pageToken=None, readMask=None, requireTotalSize=None, x__xgafv=None)</code>
+  requireTotalSize: boolean, If true and page_token is empty, ListProductsResponse.total_size is set to the total count of matched items irrespective of pagination. Notice that setting this field to true affects the performance.
+  &quot;totalSize&quot;: 42, # The total count of matched Products irrespective of pagination. The total number of Products returned by pagination may be less than the total_size that matches. This field is ignored if ListProductsRequest.require_total_size is not set or ListProductsRequest.page_token is not empty.

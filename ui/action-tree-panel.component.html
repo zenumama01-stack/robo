@@ -1,0 +1,57 @@
+@if (!IsCollapsed) {
+  <div class="tree-panel" [style.width.px]="TreeWidth">
+        <h3><i class="fa-solid fa-folder-tree"></i> Categories</h3>
+            title="Expand All"
+            (click)="expandAll()">
+            title="Collapse All"
+            (click)="collapseAll()">
+            title="Collapse Panel"
+            (click)="toggleCollapse()">
+      <div class="tree-search">
+          [placeholder]="'Filter categories...'"
+          [value]="SearchTerm"
+          (valueChange)="onSearchChange($event)"
+          @if (SearchTerm) {
+                (click)="onSearchChange('')">
+      <!-- All Categories -->
+      <div class="tree-item root-item"
+        [class.selected]="isSelected('all')"
+        (click)="selectCategory('all')">
+        <span class="item-icon">
+        <span class="item-name">All Actions</span>
+        <span class="item-count">{{ getTotalActionCount() }}</span>
+      <!-- Uncategorized -->
+      @if (getUncategorizedCount() > 0) {
+        <div class="tree-item uncategorized-item"
+          [class.selected]="isSelected('uncategorized')"
+          (click)="selectCategory('uncategorized')">
+          <span class="item-name">Uncategorized</span>
+          <span class="item-count">{{ getUncategorizedCount() }}</span>
+      <!-- Category Tree -->
+      <div class="tree-categories">
+        <ng-container *ngTemplateOutlet="categoryTreeTemplate; context: { nodes: FilteredTree }"></ng-container>
+          <div class="tree-node" [style.--level]="node.level">
+            <div class="tree-item"
+              [class.selected]="isSelected(node.category.ID)"
+              [class.has-children]="node.children.length > 0"
+                  (click)="toggleExpanded(node.category.ID, $event)"
+                  [title]="isExpanded(node.category.ID) ? 'Collapse' : 'Expand'">
+                  <i [class]="isExpanded(node.category.ID) ? 'fa-solid fa-chevron-down' : 'fa-solid fa-chevron-right'"></i>
+                <i [class]="isExpanded(node.category.ID) ? 'fa-solid fa-folder-open' : 'fa-solid fa-folder'"></i>
+              <span class="item-name" [title]="node.category.Name">{{ node.category.Name }}</span>
+              <span class="item-count" [title]="node.totalActionCount + ' total actions'">{{ node.totalActionCount }}</span>
+                  title="Add Subcategory"
+                  (click)="onNewCategory(node.category.ID, $event)">
+            @if (node.children.length > 0 && isExpanded(node.category.ID)) {
+              <div class="tree-children">
+    <div class="tree-footer">
+        class="new-category-btn"
+        (click)="onNewCategory(null, $event)">
+        New Category
+    <div class="resize-handle"
+      (mousedown)="onResizeStart($event)"
+      title="Drag to resize">
+  <!-- Collapsed State -->
+  <div class="tree-panel-collapsed">
+      title="Expand Category Panel"
+      title="All Actions"

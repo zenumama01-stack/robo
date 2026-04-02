@@ -1,0 +1,22 @@
+<h1><a href="slides_v1.html">Google Slides API</a> . <a href="slides_v1.presentations.html">presentations</a> . <a href="slides_v1.presentations.pages.html">pages</a></h1>
+  <code><a href="#get">get(presentationId, pageObjectId, x__xgafv=None)</a></code></p>
+<p class="firstline">Gets the latest version of the specified page in the presentation.</p>
+  <code><a href="#getThumbnail">getThumbnail(presentationId, pageObjectId, thumbnailProperties_mimeType=None, thumbnailProperties_thumbnailSize=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Generates a thumbnail of the latest version of the specified page in the presentation and returns a URL to the thumbnail image. This request counts as an [expensive read request](https://developers.google.com/workspace/slides/limits) for quota purposes.</p>
+    <code class="details" id="get">get(presentationId, pageObjectId, x__xgafv=None)</code>
+  <pre>Gets the latest version of the specified page in the presentation.
+  pageObjectId: string, The object ID of the page to retrieve. (required)
+    <code class="details" id="getThumbnail">getThumbnail(presentationId, pageObjectId, thumbnailProperties_mimeType=None, thumbnailProperties_thumbnailSize=None, x__xgafv=None)</code>
+  <pre>Generates a thumbnail of the latest version of the specified page in the presentation and returns a URL to the thumbnail image. This request counts as an [expensive read request](https://developers.google.com/workspace/slides/limits) for quota purposes.
+  pageObjectId: string, The object ID of the page whose thumbnail to retrieve. (required)
+  thumbnailProperties_mimeType: string, The optional mime type of the thumbnail image. If you don&#x27;t specify the mime type, the mime type defaults to PNG.
+      PNG - The default mime type.
+  thumbnailProperties_thumbnailSize: string, The optional thumbnail image size. If you don&#x27;t specify the size, the server chooses a default size of the image.
+      THUMBNAIL_SIZE_UNSPECIFIED - The default thumbnail image size. The unspecified thumbnail size implies that the server chooses the size of the image in a way that might vary in the future.
+      LARGE - The thumbnail image width of 1600px.
+      MEDIUM - The thumbnail image width of 800px.
+      SMALL - The thumbnail image width of 200px.
+    { # The thumbnail of a page.
+  &quot;contentUrl&quot;: &quot;A String&quot;, # The content URL of the thumbnail image. The URL to the image has a default lifetime of 30 minutes. This URL is tagged with the account of the requester. Anyone with the URL effectively accesses the image as the original requester. Access to the image may be lost if the presentation&#x27;s sharing settings change. The mime type of the thumbnail image is the same as specified in the `GetPageThumbnailRequest`.
+  &quot;height&quot;: 42, # The positive height in pixels of the thumbnail image.
+  &quot;width&quot;: 42, # The positive width in pixels of the thumbnail image.

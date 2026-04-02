@@ -1,0 +1,17 @@
+declare module 'frappe-gantt/dist/frappe-gantt.js' {
+  export interface GanttOptions {
+    view_mode?: 'Quarter Day' | 'Half Day' | 'Day' | 'Week' | 'Month' | 'Year';
+    bar_height?: number;
+    bar_corner_radius?: number;
+    arrow_curve?: number;
+    view_modes?: string[];
+    date_format?: string;
+    custom_popup_html?: (task: any) => string;
+    on_click?: (task: any) => void;
+    on_date_change?: (task: any, start: Date, end: Date) => void;
+    on_progress_change?: (task: any, progress: number) => void;
+    on_view_change?: (mode: string) => void;
+  export default class Gantt {
+    constructor(element: string | HTMLElement | SVGElement, tasks: GanttTask[], options?: GanttOptions);
+    change_view_mode(mode: string): void;
+    refresh(tasks: GanttTask[]): void;

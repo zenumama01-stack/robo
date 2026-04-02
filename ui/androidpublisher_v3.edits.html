@@ -1,0 +1,44 @@
+<h1><a href="androidpublisher_v3.html">Google Play Android Developer API</a> . <a href="androidpublisher_v3.edits.html">edits</a></h1>
+  <code><a href="androidpublisher_v3.edits.apks.html">apks()</a></code>
+<p class="firstline">Returns the apks Resource.</p>
+  <code><a href="androidpublisher_v3.edits.bundles.html">bundles()</a></code>
+<p class="firstline">Returns the bundles Resource.</p>
+  <code><a href="androidpublisher_v3.edits.countryavailability.html">countryavailability()</a></code>
+<p class="firstline">Returns the countryavailability Resource.</p>
+  <code><a href="androidpublisher_v3.edits.deobfuscationfiles.html">deobfuscationfiles()</a></code>
+<p class="firstline">Returns the deobfuscationfiles Resource.</p>
+  <code><a href="androidpublisher_v3.edits.details.html">details()</a></code>
+  <code><a href="androidpublisher_v3.edits.expansionfiles.html">expansionfiles()</a></code>
+<p class="firstline">Returns the expansionfiles Resource.</p>
+  <code><a href="androidpublisher_v3.edits.images.html">images()</a></code>
+<p class="firstline">Returns the images Resource.</p>
+  <code><a href="androidpublisher_v3.edits.listings.html">listings()</a></code>
+  <code><a href="androidpublisher_v3.edits.testers.html">testers()</a></code>
+<p class="firstline">Returns the testers Resource.</p>
+  <code><a href="androidpublisher_v3.edits.tracks.html">tracks()</a></code>
+  <code><a href="#commit">commit(packageName, editId, changesInReviewBehavior=None, changesNotSentForReview=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Commits an app edit.</p>
+  <code><a href="#delete">delete(packageName, editId, x__xgafv=None)</a></code></p>
+<p class="firstline">Deletes an app edit.</p>
+<p class="firstline">Gets an app edit.</p>
+  <code><a href="#insert">insert(packageName, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Creates a new edit for an app.</p>
+  <code><a href="#validate">validate(packageName, editId, x__xgafv=None)</a></code></p>
+<p class="firstline">Validates an app edit.</p>
+    <code class="details" id="commit">commit(packageName, editId, changesInReviewBehavior=None, changesNotSentForReview=None, x__xgafv=None)</code>
+  <pre>Commits an app edit.
+  changesInReviewBehavior: string, Optional. Specify how the API should behave if there are changes currently in review. If this value is not set, it will default to &quot;CANCEL_IN_REVIEW_AND_SUBMIT&quot;, which will cancel the changes in review and then send all the changes for publishing.
+      CHANGES_IN_REVIEW_BEHAVIOR_TYPE_UNSPECIFIED - Defaults to CANCEL_IN_REVIEW_AND_SUBMIT.
+      CANCEL_IN_REVIEW_AND_SUBMIT - If there are changes already in review, then this will cancel that review first and then send all the changes for publishing.
+      ERROR_IF_IN_REVIEW - If there are changes in review, then this will return an error. Please refer to the error message sample that is returned when this happens. Note that this won&#x27;t invalidate the edit. If there aren&#x27;t any changes in review, then this will continue and send the new changes for publishing.
+  changesNotSentForReview: boolean, When a rejection happens, the parameter will make sure that the changes in this edit won&#x27;t be reviewed until they are explicitly sent for review from within the Google Play Console UI. These changes will be added to any other changes that are not yet sent for review.
+    { # An app edit. The resource for EditsService.
+  &quot;expiryTimeSeconds&quot;: &quot;A String&quot;, # Output only. The time (as seconds since Epoch) at which the edit will expire and will be no longer valid for use.
+  &quot;id&quot;: &quot;A String&quot;, # Output only. Identifier of the edit. Can be used in subsequent API calls.
+    <code class="details" id="delete">delete(packageName, editId, x__xgafv=None)</code>
+  <pre>Deletes an app edit.
+  <pre>Gets an app edit.
+    <code class="details" id="insert">insert(packageName, body=None, x__xgafv=None)</code>
+  <pre>Creates a new edit for an app.
+    <code class="details" id="validate">validate(packageName, editId, x__xgafv=None)</code>
+  <pre>Validates an app edit.

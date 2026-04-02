@@ -1,0 +1,27 @@
+<h1><a href="documentai_v1.html">Cloud Document AI API</a> . <a href="documentai_v1.projects.html">projects</a> . <a href="documentai_v1.projects.locations.html">locations</a> . <a href="documentai_v1.projects.locations.schemas.html">schemas</a></h1>
+  <code><a href="documentai_v1.projects.locations.schemas.schemaVersions.html">schemaVersions()</a></code>
+<p class="firstline">Returns the schemaVersions Resource.</p>
+<p class="firstline">Gets a schema.</p>
+<p class="firstline">Lists Schemas.</p>
+<p class="firstline">Updates a schema. Editable fields are: - `display_name` - `labels`</p>
+  parent: string, Required. The parent (project and location) under which to create the Schema. Format: `projects/{project}/locations/{location}` (required)
+{ # NextSchema is a collection of SchemaVersions.
+  &quot;createTime&quot;: &quot;A String&quot;, # Output only. The time when the Schema was created.
+  &quot;displayName&quot;: &quot;A String&quot;, # Required. The user-defined name of the Schema.
+  &quot;labels&quot;: { # Optional. The {{gcp_name_short}} labels for the Schema.
+  &quot;name&quot;: &quot;A String&quot;, # Identifier. The resource name of the Schema. Format: `projects/{project}/locations/{location}/schemas/{schema}`
+  &quot;updateTime&quot;: &quot;A String&quot;, # Output only. The time when the Schema was last updated.
+  name: string, Required. The name of the Schema to be deleted. Format: `projects/{project}/locations/{location}/schemas/{schema}` (required)
+  force: boolean, Optional. If set to true, any child resources of this Schema will also be deleted. (Otherwise, the request will only work if the Schema has no child resources.)
+  <pre>Gets a schema.
+  name: string, Required. The name of the Schema to get. Format: `projects/{project}/locations/{location}/schemas/{schema}` (required)
+  <pre>Lists Schemas.
+  parent: string, Required. Format: `projects/{project}/locations/{location}` (required)
+  pageSize: integer, Optional. The maximum number of schema groups to return. If unspecified, at most `10` Schema will be returned. The maximum value is `20`. Values above `20` will be coerced to `20`.
+  pageToken: string, Optional. Returns the schema groups sorted by creation time. The page token will point to the next Schema.
+    { # Response message for ListSchemas.
+  &quot;nextPageToken&quot;: &quot;A String&quot;, # Points to the next Schema, otherwise empty.
+  &quot;schemas&quot;: [ # The list of Schemas.
+  <pre>Updates a schema. Editable fields are: - `display_name` - `labels`
+  name: string, Identifier. The resource name of the Schema. Format: `projects/{project}/locations/{location}/schemas/{schema}` (required)
+  updateMask: string, Optional. The update mask to apply to the resource. **Note:** Only the following fields can be updated: - `display_name` - `labels`

@@ -1,0 +1,25 @@
+<h1><a href="mybusinessaccountmanagement_v1.html">My Business Account Management API</a> . <a href="mybusinessaccountmanagement_v1.accounts.html">accounts</a> . <a href="mybusinessaccountmanagement_v1.accounts.invitations.html">invitations</a></h1>
+<p class="firstline">Accepts the specified invitation.</p>
+  <code><a href="#decline">decline(name, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Declines the specified invitation.</p>
+<p class="firstline">Lists pending invitations for the specified account.</p>
+  <pre>Accepts the specified invitation.
+  name: string, Required. The name of the invitation that is being accepted. `accounts/{account_id}/invitations/{invitation_id}` (required)
+{ # Request message for AccessControl.AcceptInvitation.
+    <code class="details" id="decline">decline(name, body=None, x__xgafv=None)</code>
+  <pre>Declines the specified invitation.
+  name: string, Required. The name of the account invitation that is being declined. `accounts/{account_id}/invitations/{invitation_id}` (required)
+{ # Request message for AccessControl.DeclineInvitation.
+  <pre>Lists pending invitations for the specified account.
+  parent: string, Required. The name of the account from which the list of invitations is being retrieved. `accounts/{account_id}/invitations` (required)
+  filter: string, Optional. Filtering the response is supported via the Invitation.target_type field.
+    { # Response message for AccessControl.ListInvitations.
+  &quot;invitations&quot;: [ # A collection of invitations that are pending for the account. The number of invitations listed here cannot exceed 1000.
+    { # Represents a pending invitation.
+      &quot;name&quot;: &quot;A String&quot;, # Required. The resource name for the invitation. `accounts/{account_id}/invitations/{invitation_id}`.
+      &quot;role&quot;: &quot;A String&quot;, # Output only. The invited role on the account.
+      &quot;targetAccount&quot;: { # An account is a container for your location. If you are the only user who manages locations for your business, you can use your personal Google Account. To share management of locations with multiple users, [create a business account] (https://support.google.com/business/answer/6085339?ref_topic=6085325). # The sparsely populated account this invitation is for.
+      &quot;targetLocation&quot;: { # Represents a target location for a pending invitation. # The target location this invitation is for.
+        &quot;address&quot;: &quot;A String&quot;, # The address of the location to which the user is invited.
+        &quot;locationName&quot;: &quot;A String&quot;, # The name of the location to which the user is invited.
+      &quot;targetType&quot;: &quot;A String&quot;, # Output only. Specifies which target types should appear in the response.

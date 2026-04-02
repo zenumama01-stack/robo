@@ -1,0 +1,35 @@
+It goes through an example of requesting a starting scope,
+and requesting more throughout the process
+APP_SECRET = ""
+auth_flow = DropboxOAuth2FlowNoRedirect(APP_KEY,
+                                        consumer_secret=APP_SECRET,
+                                        token_access_type='offline',
+                                        scope=['files.metadata.read'])
+    # authorization has files.metadata.read scope only
+    assert oauth_result.scope == 'files.metadata.read'
+# If an application needs write scopes now we can request the new scope with the auth flow
+auth_flow2 = DropboxOAuth2FlowNoRedirect(APP_KEY,
+                                         scope=['account_info.read'])
+authorize_url = auth_flow2.start()
+    oauth_result = auth_flow2.finish(auth_code)
+    # authorization has account_info.read scope only
+    assert oauth_result.scope == 'account_info.read'
+# If an application needs a new scope but wants to keep the existing scopes,
+# you can add include_granted_scopes parameter
+auth_flow3 = DropboxOAuth2FlowNoRedirect(APP_KEY,
+                                         scope=['files.content.read', 'files.content.write'],
+                                         include_granted_scopes='user')
+authorize_url = auth_flow3.start()
+    oauth_result = auth_flow3.finish(auth_code)
+    print(oauth_result)
+    # authorization has all granted user scopes
+    assert 'account_info.read' in oauth_result.scope
+    assert 'files.metadata.read' in oauth_result.scope
+    assert 'files.content.read' in oauth_result.scope
+    assert 'files.content.write' in oauth_result.scope
+    print(oauth_result.scope)  # Printing for example
+with dropbox.Dropbox(oauth2_access_token=oauth_result.access_token,
+                     oauth2_access_token_expiration=oauth_result.expires_at,
+                     oauth2_refresh_token=oauth_result.refresh_token,
+                     app_key=APP_KEY,
+                     app_secret=APP_SECRET) as dbx:

@@ -1,0 +1,107 @@
+      <button class="control-btn" [class.active]="AutoRefreshEnabled" (click)="ToggleAutoRefresh()">
+        <i class="fa-solid fa-rotate"></i>
+        Auto-Refresh: {{AutoRefreshEnabled ? 'ON' : 'OFF'}}
+      <mj-loading text="Loading dashboard..." size="medium"></mj-loading>
+  @if (!IsLoading && Kpis) {
+    <div class="overview-content">
+      <!-- Health Banner -->
+      <div class="health-banner" [style.border-color]="GetHealthColor()">
+        <div class="health-ring">
+          <svg viewBox="0 0 80 80" class="health-svg">
+            <circle cx="40" cy="40" r="36" fill="none" stroke="#e5e7eb" stroke-width="6"/>
+            <circle cx="40" cy="40" r="36" fill="none"
+              [attr.stroke]="GetHealthColor()"
+              stroke-width="6"
+              [attr.stroke-dasharray]="GetHealthStrokeDasharray()"
+              transform="rotate(-90 40 40)"/>
+          <div class="health-score" [style.color]="GetHealthColor()">{{GetHealthScore()}}</div>
+          <div class="health-title">System Health</div>
+          <div class="health-stats">
+            <span><i class="fa-solid fa-check-circle" style="color:#10b981"></i> {{Kpis.totalActiveJobs}} active</span>
+            <span><i class="fa-solid fa-lock" style="color:#f59e0b"></i> {{Kpis.lockedJobs}} locked</span>
+            <span><i class="fa-solid fa-xmark-circle" style="color:#ef4444"></i> {{Kpis.totalFailures7d}} failures (7d)</span>
+          <div class="kpi-icon blue">
+            <div class="kpi-value">{{Kpis.totalActiveJobs}}</div>
+            <div class="kpi-label">Active Jobs</div>
+          <div class="kpi-icon amber">
+            <div class="kpi-value">{{Kpis.jobsDueInNextHour}}</div>
+            <div class="kpi-label">Due Next Hour</div>
+          <div class="kpi-icon purple">
+            <div class="kpi-value">{{Kpis.recentExecutions24h}}</div>
+            <div class="kpi-label">Runs (24h)</div>
+            <div class="kpi-sub" [style.color]="GetSuccessRateColor(Kpis.successRate24h)">
+              {{FormatPercentage(Kpis.successRate24h)}} success
+          <div class="kpi-icon green">
+            <div class="kpi-value">{{Kpis.currentlyRunning}}</div>
+            <div class="kpi-label">Running Now</div>
+      <!-- Two-Column Layout: Live Executions + Alerts/Upcoming -->
+      <div class="panels-grid">
+        <!-- Live Executions -->
+              <i class="fa-solid fa-bolt"></i> Live Executions
+            <span class="panel-badge">{{LiveExecutions.length}}</span>
+            @if (LiveExecutions.length === 0) {
+                <span>No recent executions</span>
+            @for (exec of LiveExecutions; track exec) {
+              <div class="execution-item">
+                <div class="exec-status">
+                  <i [class]="GetStatusIcon(exec.status)" [ngClass]="GetStatusClass(exec.status)"></i>
+                <div class="exec-details">
+                  <div class="exec-name">{{exec.jobName}}</div>
+                  <div class="exec-meta">{{FormatTimeAgo(exec.startedAt)}} &middot; {{FormatDuration(exec.duration)}}</div>
+                <div class="exec-status-badge" [ngClass]="GetStatusClass(exec.status)">
+        <!-- Right Column: Alerts + Upcoming -->
+        <div class="right-column">
+          <!-- Alerts -->
+            <div class="panel-header" [ngClass]="Alerts.length > 0 ? 'alert-header' : 'clear-header'">
+                <i [class]="Alerts.length > 0 ? 'fa-solid fa-triangle-exclamation' : 'fa-solid fa-shield-check'"></i>
+                {{Alerts.length > 0 ? 'Alerts' : 'All Clear'}}
+              @if (Alerts.length > 0) {
+                <span class="panel-badge error">{{Alerts.length}}</span>
+              @if (Alerts.length === 0) {
+                <span class="panel-badge clear">0</span>
+                <div class="empty-state-small all-clear">
+                  <span>No active alerts</span>
+              @for (alert of Alerts; track alert) {
+                <div class="alert-item" [ngClass]="'alert-' + alert.severity">
+                  <i [class]="GetAlertIcon(alert.severity)" class="alert-icon"></i>
+                  <div class="alert-content">
+                    <div class="alert-title">{{alert.title}}</div>
+                    <div class="alert-message">{{alert.message}}</div>
+                  @if (alert.type === 'stale-lock' && alert.jobId) {
+                      class="alert-action-btn"
+                      (click)="ReleaseLock(alert.jobId!)">
+                      Release
+          <!-- Upcoming -->
+                <i class="fa-solid fa-calendar-day"></i> Upcoming (24h)
+              <span class="panel-badge">{{UpcomingExecutions.length}}</span>
+              @if (UpcomingExecutions.length === 0) {
+                  <span>No upcoming executions</span>
+              @for (upcoming of UpcomingExecutions; track upcoming) {
+                <div class="upcoming-item">
+                  <div class="upcoming-info">
+                    <div class="upcoming-name">{{upcoming.jobName}}</div>
+                    <div class="upcoming-meta">
+                      {{FormatDateTime(upcoming.nextRunAt)}}
+                      <span class="upcoming-type">{{upcoming.jobType}}</span>
+                  <div class="upcoming-countdown" [class.soon]="FormatTimeUntil(upcoming.nextRunAt).includes('m') && !FormatTimeUntil(upcoming.nextRunAt).includes('h')">
+                    {{FormatTimeUntil(upcoming.nextRunAt)}}
+      <!-- Locks Section -->
+      @if (Locks.length > 0) {
+        <div class="panel" style="margin-top: 20px;">
+              <i class="fa-solid fa-lock"></i> Active Locks
+            <span class="panel-badge">{{Locks.length}}</span>
+                  <th>Job</th>
+                  <th>Locked By</th>
+                  <th>Locked At</th>
+                  <th>Expected Completion</th>
+                @for (lock of Locks; track lock) {
+                  <tr [class.stale-row]="lock.isStale">
+                    <td class="cell-name">{{lock.jobName}}</td>
+                    <td class="cell-meta">{{lock.lockedBy}}</td>
+                    <td class="cell-meta">{{FormatTimeAgo(lock.lockedAt)}}</td>
+                    <td class="cell-meta">{{FormatDateTime(lock.expectedCompletion)}}</td>
+                      <span class="lock-status-badge" [class.stale]="lock.isStale">
+                        {{lock.isStale ? 'Stale' : 'Active'}}
+                      @if (lock.isStale) {
+                        <button class="release-btn" (click)="ReleaseLock(lock.jobId)">
+                          <i class="fa-solid fa-lock-open"></i> Release

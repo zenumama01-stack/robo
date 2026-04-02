@@ -1,0 +1,99 @@
+<h1><a href="compute_alpha.html">Compute Engine API</a> . <a href="compute_alpha.globalPublicDelegatedPrefixes.html">globalPublicDelegatedPrefixes</a></h1>
+  <code><a href="#delete">delete(project, publicDelegatedPrefix, requestId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Deletes the specified global PublicDelegatedPrefix.</p>
+  <code><a href="#get">get(project, publicDelegatedPrefix, x__xgafv=None)</a></code></p>
+<p class="firstline">Returns the specified global PublicDelegatedPrefix resource.</p>
+<p class="firstline">Creates a global PublicDelegatedPrefix in the specified project using the</p>
+<p class="firstline">Lists the global PublicDelegatedPrefixes for a project.</p>
+  <code><a href="#patch">patch(project, publicDelegatedPrefix, body=None, requestId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Patches the specified global PublicDelegatedPrefix resource with the data</p>
+    <code class="details" id="delete">delete(project, publicDelegatedPrefix, requestId=None, x__xgafv=None)</code>
+  <pre>Deletes the specified global PublicDelegatedPrefix.
+  publicDelegatedPrefix: string, Name of the PublicDelegatedPrefix resource to delete. (required)
+    <code class="details" id="get">get(project, publicDelegatedPrefix, x__xgafv=None)</code>
+  <pre>Returns the specified global PublicDelegatedPrefix resource.
+  publicDelegatedPrefix: string, Name of the PublicDelegatedPrefix resource to return. (required)
+    { # A PublicDelegatedPrefix resource represents an IP block within a
+    # PublicAdvertisedPrefix that is configured within a single cloud scope
+    # (global or region). IPs in the block can be allocated to resources within
+    # that scope. Public delegated prefixes may be further broken up into
+    # smaller IP blocks in the same scope as the parent block.
+  &quot;allocatablePrefixLength&quot;: 42, # The allocatable prefix length supported by this public delegated prefix.
+      # This field is optional and cannot be set for prefixes in DELEGATION mode.
+      # It cannot be set for IPv4 prefixes either, and it always defaults to 32.
+  &quot;byoipApiVersion&quot;: &quot;A String&quot;, # Output only. [Output Only] The version of BYOIP API.
+  &quot;enableEnhancedIpv4Allocation&quot;: True or False, # Output only. [Output Only] Whether this PDP supports enhanced IPv4 allocations.
+      # Applicable for IPv4 PDPs only.
+      # inserting a new PublicDelegatedPrefix. An up-to-date
+      # fingerprint must be provided in order to update thePublicDelegatedPrefix, otherwise the request will fail with
+      # error 412 conditionNotMet.
+      # retrieve a PublicDelegatedPrefix.
+  &quot;ipCidrRange&quot;: &quot;A String&quot;, # The IP address range, in CIDR format, represented by this public
+      # delegated prefix.
+  &quot;ipv6AccessType&quot;: &quot;A String&quot;, # Output only. [Output Only] The internet access type for IPv6 Public Delegated Prefixes.
+      # Inherited from parent prefix.
+  &quot;isLiveMigration&quot;: True or False, # If true, the prefix will be live migrated.
+  &quot;kind&quot;: &quot;compute#publicDelegatedPrefix&quot;, # Output only. [Output Only] Type of the resource. Alwayscompute#publicDelegatedPrefix for public delegated prefixes.
+  &quot;mode&quot;: &quot;A String&quot;, # The public delegated prefix mode for IPv6 only.
+  &quot;networkTier&quot;: &quot;A String&quot;, # Network tier of the public delegated prefix. If populated, it must match
+      # the network tier of the parent public advertised prefix. If not populated,
+      # it defaults to the network tier of the parent public advertised prefix.
+  &quot;parentPrefix&quot;: &quot;A String&quot;, # The URL of parent prefix. Either PublicAdvertisedPrefix or
+      # PublicDelegatedPrefix.
+  &quot;publicDelegatedSubPrefixs&quot;: [ # The list of sub public delegated prefixes that exist for this public
+    { # Represents a sub PublicDelegatedPrefix.
+      &quot;allocatablePrefixLength&quot;: 42, # The allocatable prefix length supported by this PublicDelegatedSubPrefix.
+      &quot;delegateeProject&quot;: &quot;A String&quot;, # Name of the project scoping this PublicDelegatedSubPrefix.
+      &quot;ipCidrRange&quot;: &quot;A String&quot;, # The IP address range, in CIDR format, represented by this sub public
+      &quot;ipv6AccessType&quot;: &quot;A String&quot;, # Output only. [Output Only] The internet access type for IPv6 Public Delegated Sub
+          # Prefixes. Inherited from parent prefix.
+      &quot;isAddress&quot;: True or False, # Whether the sub prefix is delegated to create Address resources in the
+          # delegatee project.
+      &quot;mode&quot;: &quot;A String&quot;, # The PublicDelegatedSubPrefix mode for IPv6 only.
+      &quot;name&quot;: &quot;A String&quot;, # The name of the sub public delegated prefix.
+      &quot;purpose&quot;: &quot;A String&quot;, # Output only. [Output Only] The purpose of the sub public delegated prefix. Inherited
+          # from parent prefix.
+      &quot;region&quot;: &quot;A String&quot;, # Output only. [Output Only] The region of the sub public delegated prefix if it is
+          # regional. If absent, the sub prefix is global.
+      &quot;status&quot;: &quot;A String&quot;, # Output only. [Output Only] The status of the sub public delegated prefix.
+  &quot;purpose&quot;: &quot;A String&quot;, # The purpose of the public delegated prefix.
+      # This field can only be set for the top-level global public delegated
+      # prefix. It is an output-only field for the sub-delegates that inherit the
+      # value from the top-level global public delegated prefix. Once the value is
+      # set, it cannot be changed.
+      # The field cannot be set for regional public delegated prefixes.
+      # The supported values are:
+      #      - APPLICATION_AND_PROXY_LOAD_BALANCERS: The global public
+      #      delegated prefix can only be used by Global External Application and
+      #      Proxy Load Balancers to allocate addresses for forwarding rules. This is
+      #      the default value.
+      #      - PASSTHROUGH_LOAD_BALANCER_AVAILABILITY_GROUP0: The
+      #      global public delegated prefix can only be used by Global External
+      #      Passthrough Network Load Balancers to allocate Availability Group 0
+      #      addresses for forwarding rules.
+      #      - PASSTHROUGH_LOAD_BALANCER_AVAILABILITY_GROUP1: The
+      #      Passthrough Network Load Balancers to allocate Availability Group 1
+  &quot;region&quot;: &quot;A String&quot;, # Output only. [Output Only] URL of the region where the public delegated prefix resides.
+      # This field applies only to the region resource. You must specify this
+      # field as part of the HTTP request URL. It is not settable as a field in
+      # the request body.
+  &quot;selfLinkWithId&quot;: &quot;A String&quot;, # Output only. [Output Only] Server-defined URL with id for the resource.
+  &quot;status&quot;: &quot;A String&quot;, # [Output Only] The status of the public delegated prefix, which can be one
+      # of following values:
+      #      - `INITIALIZING` The public delegated prefix is being initialized and
+      #      addresses cannot be created yet.
+      #      - `READY_TO_ANNOUNCE` The public delegated prefix is a live migration
+      #      prefix and is active.
+      #      - `ANNOUNCED` The public delegated prefix is announced and ready to
+      #      use.
+      #      - `DELETING` The public delegated prefix is being deprovsioned.
+      #      - `ACTIVE` The public delegated prefix is ready to use.
+  <pre>Creates a global PublicDelegatedPrefix in the specified project using the
+  <pre>Lists the global PublicDelegatedPrefixes for a project.
+  &quot;items&quot;: [ # A list of PublicDelegatedPrefix resources.
+  &quot;kind&quot;: &quot;compute#publicDelegatedPrefixList&quot;, # Output only. [Output Only] Type of the resource. Alwayscompute#publicDelegatedPrefixList for public delegated
+      # prefixes.
+    <code class="details" id="patch">patch(project, publicDelegatedPrefix, body=None, requestId=None, x__xgafv=None)</code>
+  <pre>Patches the specified global PublicDelegatedPrefix resource with the data
+semantics and usesJSON merge
+  publicDelegatedPrefix: string, Name of the PublicDelegatedPrefix resource to patch. (required)

@@ -1,0 +1,30 @@
+<div class="testing-dashboard-container" kendoDialogContainer>
+      <mj-loading text="Loading Testing Dashboard..." size="large"></mj-loading>
+    <div class="dashboard-content-wrapper">
+      <div class="testing-dashboard-nav">
+        @for (navItem of navigationConfig; track $index) {
+            [class.active]="navItem.selected"
+            (click)="onTabChange(navigationItems[$index])"
+            <i [class]="navItem.icon"></i>
+            <span>{{ navItem.text }}</span>
+        <div class="nav-spacer"></div>
+        @if (activeTab === 'dashboard' && hasVisited('dashboard')) {
+          <app-testing-dashboard-tab
+            [initialState]="dashboardState"
+            (stateChange)="onDashboardStateChange($event)"
+          ></app-testing-dashboard-tab>
+        @if (activeTab === 'runs' && hasVisited('runs')) {
+          <app-testing-runs
+            [initialState]="runsState"
+            (stateChange)="onRunsStateChange($event)"
+          ></app-testing-runs>
+        @if (activeTab === 'analytics' && hasVisited('analytics')) {
+          <app-testing-analytics
+            [initialState]="analyticsState"
+            (stateChange)="onAnalyticsStateChange($event)"
+          ></app-testing-analytics>
+        @if (activeTab === 'review' && hasVisited('review')) {
+          <app-testing-review
+            [initialState]="reviewState"
+            (stateChange)="onReviewStateChange($event)"
+          ></app-testing-review>

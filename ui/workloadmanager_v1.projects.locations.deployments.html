@@ -1,0 +1,117 @@
+<h1><a href="workloadmanager_v1.html">Workload Manager API</a> . <a href="workloadmanager_v1.projects.html">projects</a> . <a href="workloadmanager_v1.projects.locations.html">locations</a> . <a href="workloadmanager_v1.projects.locations.deployments.html">deployments</a></h1>
+  <code><a href="workloadmanager_v1.projects.locations.deployments.actuations.html">actuations()</a></code>
+<p class="firstline">Returns the actuations Resource.</p>
+<p class="firstline">Creates a new Deployment in a given project and location.</p>
+<p class="firstline">Deletes a single Deployment.</p>
+<p class="firstline">Gets details of a single Deployment.</p>
+  <pre>Creates a new Deployment in a given project and location.
+  parent: string, Required. The resource prefix of the Deployment using the form: `projects/{project_id}/locations/{location_id}` (required)
+{ # The Deployment object represents user intent for deploying a specific type of workload.
+  &quot;description&quot;: &quot;A String&quot;, # Description of the Deployment
+  &quot;name&quot;: &quot;A String&quot;, # The name of deployment resource. The format will be &#x27;projects/{project_id}/locations/{location_id}/deployments/{deployment_id}&#x27;
+  &quot;sapSystemS4Config&quot;: { # Message for sap system workload # SAP system workload input
+    &quot;allowStoppingForUpdate&quot;: True or False,
+    &quot;ansibleRunnerServiceAccount&quot;: &quot;A String&quot;, # Ansible runner service account - let custoemrs bring their own SA for Ansible runner
+    &quot;app&quot;: { # Message for sap instant details # instance details
+      &quot;appInstanceId&quot;: &quot;A String&quot;, # Optional. instance id for app
+      &quot;appServiceAccount&quot;: &quot;A String&quot;, # Application service account - let custoemrs bring their own SA for application
+      &quot;appVmNames&quot;: [ # Optional. Customized vm names
+      &quot;ascsImage&quot;: &quot;A String&quot;, # Required. image for ascs server
+      &quot;ascsInstanceId&quot;: &quot;A String&quot;, # Optional. instance id for ascs
+      &quot;ascsMachineType&quot;: &quot;A String&quot;, # Required. ascs_machine_type
+      &quot;ascsServiceAccount&quot;: &quot;A String&quot;, # ASCS service account - let custoemrs bring their own SA for ASCS
+      &quot;ascsVm&quot;: &quot;A String&quot;, # Optional. ASCS vm name
+      &quot;ersInstanceId&quot;: &quot;A String&quot;, # Optional. instance id for ers
+      &quot;ersVm&quot;: &quot;A String&quot;, # Optional. ERS vm name
+      &quot;image&quot;: &quot;A String&quot;, # Required. image for app server and ascs server
+      &quot;machineType&quot;: &quot;A String&quot;, # Required. machine type
+      &quot;secretManagerSecret&quot;: &quot;A String&quot;, # Required. secret_manager_secret
+      &quot;sharedStorage&quot;: &quot;A String&quot;, # Optional. Storage location
+      &quot;sid&quot;: &quot;A String&quot;, # Required. The SAP SID is a three-digit server-specific unique identification code.
+      &quot;vmsMultiplier&quot;: 42, # Required. vms_multiplier
+    &quot;database&quot;: { # Message for sap instant details # database details
+      &quot;databaseServiceAccount&quot;: &quot;A String&quot;, # Database service account - let custoemrs bring their own SA for database
+      &quot;diskType&quot;: &quot;A String&quot;, # Required. disk_type
+      &quot;image&quot;: &quot;A String&quot;, # Required. image for database server
+      &quot;instanceId&quot;: &quot;A String&quot;, # Optional. instance id
+      &quot;primaryDbVm&quot;: &quot;A String&quot;, # Optional. primary db vm name
+      &quot;secondaryDbVm&quot;: &quot;A String&quot;, # Optional. secondary db vm name
+      &quot;sid&quot;: &quot;A String&quot;, # Required. The SID is a three-digit server-specific unique identification code.
+    &quot;deploymentModel&quot;: &quot;A String&quot;, # Required. two model non-HA and HA supported
+    &quot;environmentType&quot;: &quot;A String&quot;, # Required. deployment environment
+    &quot;gcpProjectId&quot;: &quot;A String&quot;, # the project that infrastructure deployed, current only support the same project where the deployment resource exist.
+    &quot;location&quot;: { # Message for sap instant details # database details
+      &quot;createCommsFirewall&quot;: True or False, # Optional. create firewall, if true, create firewall for the deployment. This field provides an option to not always create firewall for the deployment.
+      &quot;customTags&quot;: [ # Optional. network tags
+      &quot;deploymentDnsEnabled&quot;: True or False, # Optional. when user skip DNS configuration from UI, deployment_dns_enabled=false otherwise deployment_dns_enabled=true
+      &quot;dnsZone&quot;: &quot;A String&quot;, # Optional. dns zone name
+      &quot;dnsZoneNameSuffix&quot;: &quot;A String&quot;, # Optional. dns_zone_name_suffix
+      &quot;internetAccess&quot;: &quot;A String&quot;,
+      &quot;networkProject&quot;: &quot;A String&quot;, # Optional. network project
+      &quot;regionName&quot;: &quot;A String&quot;, # Required. region_name
+      &quot;subnetName&quot;: &quot;A String&quot;, # Required. subnet_name
+      &quot;vpcName&quot;: &quot;A String&quot;, # Required. vpc_name
+      &quot;zone1Name&quot;: &quot;A String&quot;, # Required. zone1_name
+      &quot;zone2Name&quot;: &quot;A String&quot;, # Optional. zone2_name
+    &quot;mediaBucketName&quot;: &quot;A String&quot;, # Required. media_bucket_name
+    &quot;sapBootDiskImage&quot;: &quot;A String&quot;, # Optional. sap_boot_disk_image
+    &quot;scalingMethod&quot;: &quot;A String&quot;, # Required. support scale up and scale out
+    &quot;version&quot;: &quot;A String&quot;, # Required. sap hana version
+    &quot;vmPrefix&quot;: &quot;A String&quot;, # vm_prefix
+  &quot;serviceAccount&quot;: &quot;A String&quot;, # User-specified Service Account (SA) credentials to be used for cloud build Format: `projects/{projectID}/serviceAccounts/{serviceAccount}` The default Cloud Build SA will be used initially if this field is not set during deployment creation
+  &quot;sqlServerWorkload&quot;: { # Message for MS SQL workload # MS SQL workload input
+    &quot;activeDirectory&quot;: { # Active directory details # Required. active directory details
+      &quot;dnsAddress&quot;: &quot;A String&quot;, # Optional. DNS IP address
+      &quot;domain&quot;: &quot;A String&quot;, # Optional. human readable form of a domain such as “google.com”.
+      &quot;domainUsername&quot;: &quot;A String&quot;, # Optional. domain username
+      &quot;type&quot;: &quot;A String&quot;, # Required. active directory type
+    &quot;computeEngineServiceAccount&quot;: &quot;A String&quot;, # Compute engine service account - let customers bring their own SA for Compute engine
+    &quot;database&quot;: { # Database details # Required. database details
+      &quot;floatingIpAddress&quot;: &quot;A String&quot;, # Optional. only useful for Linux High Availability setup
+      &quot;secondarySoleTenantNode&quot;: &quot;A String&quot;, # Optional. the name of a secondary-sole-tenant node/node group
+      &quot;secondarySoleTenantNodeType&quot;: &quot;A String&quot;, # Optional. the type of a secondary-sole-tenant node/node group e.g. compute.googleapis.com/node-name
+      &quot;smt&quot;: True or False, # Required. whether simultaneous multithreading is enabled or not
+      &quot;soleTenantNode&quot;: &quot;A String&quot;, # Optional. the name of a primary sole-tenant node/node group
+      &quot;soleTenantNodeType&quot;: &quot;A String&quot;, # Optional. the type of a primary sole-tenant node/node group e.g. compute.googleapis.com/node-name
+      &quot;tempdbOnSsd&quot;: True or False, # Required. whether to have TempDB on local SSD
+      &quot;tenancyModel&quot;: &quot;A String&quot;, # Required. SHARED or SOLE_TENANT
+    &quot;deploymentModel&quot;: &quot;A String&quot;, # Required. HIGH_AVAILABILITY or SINGLE_INSTANCE
+    &quot;fciType&quot;: &quot;A String&quot;, # Optional. SHARED_DISK or S2D
+    &quot;haType&quot;: &quot;A String&quot;, # Optional. AOAG or FCI, it is only needed for High Availability deployment mode
+    &quot;isSqlPayg&quot;: True or False, # Required. SQL licensing type
+    &quot;location&quot;: { # Location and networking details for configuring SQL server workload # Required. location details
+      &quot;dnsZone&quot;: &quot;A String&quot;, # Optional. create a new DNS Zone when the field is empty, Only show for `Using an existing DNS` List of existing DNS Zones tf variable name: existing_dns_zone_name
+      &quot;gcpProjectId&quot;: &quot;A String&quot;, # Required. the project that infrastructure deployed, currently only supports the same project where the deployment resource exists.
+      &quot;internetAccess&quot;: &quot;A String&quot;, # Required. Internet Access
+      &quot;network&quot;: &quot;A String&quot;, # Required. network name
+      &quot;primaryZone&quot;: &quot;A String&quot;, # Required. primary zone
+      &quot;region&quot;: &quot;A String&quot;, # Required. region name
+      &quot;secondaryZone&quot;: &quot;A String&quot;, # Optional. secondary zone can&#x27;t be same as primary_zone and is only for High Availability deployment mode
+      &quot;subnetwork&quot;: &quot;A String&quot;, # Required. subnetwork name
+      &quot;tertiaryZone&quot;: &quot;A String&quot;, # Optional. teriary zone can&#x27;t be same as primary_zone and secondary zone, and it is only for High Availability deployment mode
+    &quot;mediaBucket&quot;: &quot;A String&quot;, # Required. name of the media storing SQL server installation files
+    &quot;operatingSystemType&quot;: &quot;A String&quot;, # Required. type of the operating system the SQL server is going to run on top of
+    &quot;osImage&quot;: &quot;A String&quot;, # Required. the image of the operating system
+    &quot;osImageType&quot;: &quot;A String&quot;, # Optional. OS image type, it&#x27;s used to create boot disks for VM instances When either Windows licensing type or SQL licensing type is BYOL, this option is disabled and default to custom image
+    &quot;pacemaker&quot;: { # pacemaker configuration # Optional. pacemaker configuration, only applicable for Linux HA deployments
+      &quot;bucketNameNodeCertificates&quot;: &quot;A String&quot;, # Required. bucket location for node certificates
+      &quot;pacemakerCluster&quot;: &quot;A String&quot;, # Required. pacemaker cluster name
+      &quot;pacemakerClusterSecret&quot;: &quot;A String&quot;, # Required. pacemaker cluster secret name
+      &quot;pacemakerClusterUsername&quot;: &quot;A String&quot;, # Required. pacemaker cluster username
+      &quot;sqlPacemakerSecret&quot;: &quot;A String&quot;, # Required. sql pacemaker secret name
+      &quot;sqlPacemakerUsername&quot;: &quot;A String&quot;, # Required. sql pacemaker username
+    &quot;sqlServerEdition&quot;: &quot;A String&quot;, # Optional. SQL Server Edition type, only applicable when Operating System is Linux
+    &quot;sqlServerVersion&quot;: &quot;A String&quot;, # Optional. 2017 or 2019 or 2022
+    &quot;vmPrefix&quot;: &quot;A String&quot;, # Required. should be unique in the project
+  &quot;terraformVariables&quot;: { # Optional. terraform_variables represents all the Terraform variables for the deployment workload. The key is the name of the Terraform variable, and the value is the TerraformVariable. For example: { &quot;project_id&quot;: { &quot;input_value&quot;: { &quot;string_value&quot;: &quot;my-project-id&quot; } }, &quot;zone&quot;: { &quot;input_value&quot;: { &quot;string_value&quot;: &quot;us-central1-a&quot; } } }
+    &quot;a_key&quot;: { # In order to align with Infra Manager dependency, we create the same TerraformVariable message to represent a Terraform input variable, by following Infra Manager&#x27;s API documentation: https://cloud.google.com/infrastructure-manager/docs/reference/rest A Terraform input variable.
+  &quot;workloadType&quot;: &quot;A String&quot;, # Optional. Workload type of the deployment
+  deploymentId: string, Required. Id of the deployment
+  <pre>Deletes a single Deployment.
+  force: boolean, Optional. If set to true, any actuation will also be deleted. Followed the best practice from https://aip.dev/135#cascading-delete
+  <pre>Gets details of a single Deployment.
+  name: string, Required. Name of the resource. The format will be &#x27;projects/{project_id}/locations/{location_id}/deployments/{deployment_id}&#x27; (required)
+  filter: string, Optional. Filter resource follow https://google.aip.dev/160
+  pageSize: integer, Optional. Requested page size. Server may return fewer items than requested. The maximum value is 1000; values above 1000 will be coerced to 1000.
+    { # Message for response to listing Deployments
+  &quot;deployments&quot;: [ # The list of Deployment

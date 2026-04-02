@@ -1,0 +1,78 @@
+<div class="filter-rule" [class.disabled]="disabled">
+  <!-- Field Selector - Custom Dropdown -->
+  <div class="custom-dropdown field-dropdown" [class.open]="fieldDropdownOpen" [class.disabled]="disabled">
+      #fieldDropdownBtn
+      class="dropdown-trigger"
+      (click)="toggleFieldDropdown()"
+      (keydown)="onFieldKeydown($event)"
+      <span class="dropdown-value">{{ getSelectedFieldDisplayName() }}</span>
+      <i class="fa-solid fa-chevron-down dropdown-arrow"></i>
+    @if (fieldDropdownOpen) {
+        @for (field of fields; track field.name; let i = $index) {
+            [class.selected]="field.name === filter.field"
+            [class.highlighted]="i === fieldHighlightIndex"
+            (click)="selectField(field.name)">
+            {{ field.displayName }}
+        @if (fields.length === 0) {
+          <div class="dropdown-empty">No fields available</div>
+  <!-- Operator Selector - Custom Dropdown -->
+  <div class="custom-dropdown operator-dropdown" [class.open]="operatorDropdownOpen" [class.disabled]="disabled || !selectedField">
+      #operatorDropdownBtn
+      (click)="toggleOperatorDropdown()"
+      (keydown)="onOperatorKeydown($event)"
+      [disabled]="disabled || !selectedField">
+      <span class="dropdown-value">{{ getSelectedOperatorLabel() }}</span>
+    @if (operatorDropdownOpen) {
+        @for (op of availableOperators; track op.value; let i = $index) {
+            [class.selected]="op.value === filter.operator"
+            [class.highlighted]="i === operatorHighlightIndex"
+            (click)="selectOperator(op.value)">
+            {{ op.label }}
+  <!-- Value Editor - varies by field type -->
+  @if (requiresValue && selectedField) {
+    <!-- String with value list (custom dropdown) -->
+    @if (selectedField.type === 'string' && hasValueList()) {
+      <div class="custom-dropdown value-dropdown" [class.open]="valueDropdownOpen" [class.disabled]="disabled">
+          #valueDropdownBtn
+          (click)="toggleValueDropdown()"
+          (keydown)="onValueKeydown($event)"
+          <span class="dropdown-value">{{ getSelectedValueLabel() }}</span>
+        @if (valueDropdownOpen) {
+              [class.selected]="!filter.value"
+              [class.highlighted]="0 === valueHighlightIndex"
+              (click)="selectValue('')">
+              Select...
+            @for (option of selectedField.valueList; track option.value; let i = $index) {
+                [class.selected]="option.value === filter.value"
+                [class.highlighted]="(i + 1) === valueHighlightIndex"
+                (click)="selectValueFromOption(option.value)">
+    <!-- String (text input) -->
+    @else if (selectedField.type === 'string') {
+        class="value-input"
+        [value]="filter.value || ''"
+        placeholder="Enter value...">
+    <!-- Number -->
+    @else if (selectedField.type === 'number') {
+        [value]="filter.value"
+        (input)="onValueChange($any($event.target).valueAsNumber)"
+        placeholder="Enter number...">
+    @else if (selectedField.type === 'boolean') {
+          class="toggle-btn true"
+          [class.active]="filter.value === true"
+          (click)="onBooleanChange(true)"
+          True
+          class="toggle-btn false"
+          [class.active]="filter.value === false"
+          (click)="onBooleanChange(false)"
+          False
+    <!-- Date -->
+    @else if (selectedField.type === 'date') {
+        class="value-input value-date"
+        [value]="getDateInputValue()"
+        (change)="onDateChange($event)"
+    <!-- Lookup (for now, simple text input - can be enhanced with record selector) -->
+    @else if (selectedField.type === 'lookup') {
+        placeholder="Enter ID...">
+    @if (showDelete) {
+        class="action-btn delete"
+        title="Remove filter">

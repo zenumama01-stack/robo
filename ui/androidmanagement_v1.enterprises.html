@@ -1,0 +1,81 @@
+<h1><a href="androidmanagement_v1.html">Android Management API</a> . <a href="androidmanagement_v1.enterprises.html">enterprises</a></h1>
+  <code><a href="androidmanagement_v1.enterprises.applications.html">applications()</a></code>
+  <code><a href="androidmanagement_v1.enterprises.devices.html">devices()</a></code>
+  <code><a href="androidmanagement_v1.enterprises.enrollmentTokens.html">enrollmentTokens()</a></code>
+  <code><a href="androidmanagement_v1.enterprises.migrationTokens.html">migrationTokens()</a></code>
+<p class="firstline">Returns the migrationTokens Resource.</p>
+  <code><a href="androidmanagement_v1.enterprises.policies.html">policies()</a></code>
+<p class="firstline">Returns the policies Resource.</p>
+  <code><a href="androidmanagement_v1.enterprises.webApps.html">webApps()</a></code>
+<p class="firstline">Returns the webApps Resource.</p>
+  <code><a href="androidmanagement_v1.enterprises.webTokens.html">webTokens()</a></code>
+<p class="firstline">Returns the webTokens Resource.</p>
+  <code><a href="#create">create(agreementAccepted=None, body=None, enterpriseToken=None, projectId=None, signupUrlName=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Creates an enterprise. This is the last step in the enterprise signup flow. See also: SigninDetail</p>
+<p class="firstline">Permanently deletes an enterprise and all accounts and data associated with it. Warning: this will result in a cascaded deletion of all AM API devices associated with the deleted enterprise. Only available for EMM-managed enterprises.</p>
+  <code><a href="#generateEnterpriseUpgradeUrl">generateEnterpriseUpgradeUrl(name, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Generates an enterprise upgrade URL to upgrade an existing managed Google Play Accounts enterprise to a managed Google domain. See the guide (https://developers.google.com/android/management/upgrade-an-enterprise) for more details.</p>
+<p class="firstline">Gets an enterprise.</p>
+  <code><a href="#list">list(pageSize=None, pageToken=None, projectId=None, view=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Lists EMM-managed enterprises. Only BASIC fields are returned.</p>
+<p class="firstline">Updates an enterprise. See also: SigninDetail</p>
+    <code class="details" id="create">create(agreementAccepted=None, body=None, enterpriseToken=None, projectId=None, signupUrlName=None, x__xgafv=None)</code>
+  <pre>Creates an enterprise. This is the last step in the enterprise signup flow. See also: SigninDetail
+{ # The configuration applied to an enterprise.
+  &quot;appAutoApprovalEnabled&quot;: True or False, # Deprecated and unused.
+  &quot;contactInfo&quot;: { # Contact details for managed Google Play enterprises. # The enterprise contact info of an EMM-managed enterprise.
+    &quot;contactEmail&quot;: &quot;A String&quot;, # Email address for a point of contact, which will be used to send important announcements related to managed Google Play.
+    &quot;dataProtectionOfficerEmail&quot;: &quot;A String&quot;, # The email of the data protection officer. The email is validated but not verified.
+    &quot;dataProtectionOfficerName&quot;: &quot;A String&quot;, # The name of the data protection officer.
+    &quot;dataProtectionOfficerPhone&quot;: &quot;A String&quot;, # The phone number of the data protection officer The phone number is validated but not verified.
+    &quot;euRepresentativeEmail&quot;: &quot;A String&quot;, # The email of the EU representative. The email is validated but not verified.
+    &quot;euRepresentativeName&quot;: &quot;A String&quot;, # The name of the EU representative.
+    &quot;euRepresentativePhone&quot;: &quot;A String&quot;, # The phone number of the EU representative. The phone number is validated but not verified.
+  &quot;enabledNotificationTypes&quot;: [ # The types of Google Pub/Sub notifications enabled for the enterprise.
+  &quot;enterpriseDisplayName&quot;: &quot;A String&quot;, # The name of the enterprise displayed to users. This field has a maximum length of 100 characters.
+  &quot;enterpriseType&quot;: &quot;A String&quot;, # Output only. The type of the enterprise.
+  &quot;googleAuthenticationSettings&quot;: { # Contains settings for Google-provided user authentication. # Settings for Google-provided user authentication.
+    &quot;googleAuthenticationRequired&quot;: &quot;A String&quot;, # Output only. Whether users need to be authenticated by Google during the enrollment process. IT admin can specify if Google authentication is enabled for the enterprise for knowledge worker devices. This value can be set only via the Google Admin Console. Google authentication can be used with signin_url In the case where Google authentication is required and a signin_url is specified, Google authentication will be launched before signin_url. This value is overridden by EnrollmentToken.googleAuthenticationOptions and SigninDetail.googleAuthenticationOptions, if they are set.
+  &quot;logo&quot;: { # Data hosted at an external location. The data is to be downloaded by Android Device Policy and verified against the hash. # An image displayed as a logo during device provisioning. Supported types are: image/bmp, image/gif, image/x-ico, image/jpeg, image/png, image/webp, image/vnd.wap.wbmp, image/x-adobe-dng.
+    &quot;sha256Hash&quot;: &quot;A String&quot;, # The base-64 encoded SHA-256 hash of the content hosted at url. If the content doesn&#x27;t match this hash, Android Device Policy won&#x27;t use the data.
+    &quot;url&quot;: &quot;A String&quot;, # The absolute URL to the data, which must use either the http or https scheme. Android Device Policy doesn&#x27;t provide any credentials in the GET request, so the URL must be publicly accessible. Including a long, random component in the URL may be used to prevent attackers from discovering the URL.
+  &quot;managedGoogleDomainType&quot;: &quot;A String&quot;, # Output only. The type of managed Google domain.
+  &quot;managedGooglePlayAccountsEnterpriseType&quot;: &quot;A String&quot;, # Output only. The type of a managed Google Play Accounts enterprise.
+  &quot;name&quot;: &quot;A String&quot;, # The name of the enterprise which is generated by the server during creation, in the form enterprises/{enterpriseId}.
+  &quot;primaryColor&quot;: 42, # A color in RGB format that indicates the predominant color to display in the device management app UI. The color components are stored as follows: (red &lt;&lt; 16) | (green &lt;&lt; 8) | blue, where the value of each component is between 0 and 255, inclusive.
+  &quot;pubsubTopic&quot;: &quot;A String&quot;, # The topic which Pub/Sub notifications are published to, in the form projects/{project}/topics/{topic}. This field is only required if Pub/Sub notifications are enabled.
+  &quot;signinDetails&quot;: [ # Sign-in details of the enterprise.
+    { # A resource containing sign in details for an enterprise. Use enterprises to manage SigninDetails for a given enterprise.For an enterprise, we can have any number of SigninDetails that is uniquely identified by combination of the following three fields (signin_url, allow_personal_usage, token_tag). One cannot create two SigninDetails with the same (signin_url, allow_personal_usage, token_tag). (token_tag is an optional field).Patch: The operation updates the current list of SigninDetails with the new list of SigninDetails. If the stored SigninDetail configuration is passed, it returns the same signin_enrollment_token and qr_code. If we pass multiple identical SigninDetail configurations that are not stored, it will store the first one amongst those SigninDetail configurations. if the configuration already exists we cannot request it more than once in a particular patch API call, otherwise it will give a duplicate key error and the whole operation will fail. If we remove certain SigninDetail configuration from the request then it will get removed from the storage. We can then request another signin_enrollment_token and qr_code for the same SigninDetail configuration.
+      &quot;defaultStatus&quot;: &quot;A String&quot;, # Optional. Whether the sign-in URL should be used by default for the enterprise. The SigninDetail with defaultStatus set to SIGNIN_DETAIL_IS_DEFAULT is used for Google account enrollment method. Only one of an enterprise&#x27;s signinDetails can have defaultStatus set to SIGNIN_DETAIL_IS_DEFAULT. If an Enterprise has at least one signinDetails and none of them have defaultStatus set to SIGNIN_DETAIL_IS_DEFAULT then the first one from the list is selected and has set defaultStatus to SIGNIN_DETAIL_IS_DEFAULT. If no signinDetails specified for the Enterprise then the Google Account device enrollment will fail.
+      &quot;qrCode&quot;: &quot;A String&quot;, # A JSON string whose UTF-8 representation can be used to generate a QR code to enroll a device with this enrollment token. To enroll a device using NFC, the NFC record must contain a serialized java.util.Properties representation of the properties in the JSON. This is a read-only field generated by the server.
+      &quot;signinEnrollmentToken&quot;: &quot;A String&quot;, # An enterprise wide enrollment token used to trigger custom sign-in flow. This is a read-only field generated by the server.
+      &quot;signinUrl&quot;: &quot;A String&quot;, # Sign-in URL for authentication when device is provisioned with a sign-in enrollment token. The sign-in endpoint should finish authentication flow with a URL in the form of https://enterprise.google.com/android/enroll?et= for a successful login, or https://enterprise.google.com/android/enroll/invalid for a failed login.
+      &quot;tokenTag&quot;: &quot;A String&quot;, # An EMM-specified metadata to distinguish between instances of SigninDetail.
+  &quot;termsAndConditions&quot;: [ # Terms and conditions that must be accepted when provisioning a device for this enterprise. A page of terms is generated for each value in this list.
+    { # A terms and conditions page to be accepted during provisioning.
+      &quot;content&quot;: { # Provides a user-facing message with locale info. The maximum message length is 4096 characters. # A well-formatted HTML string. It will be parsed on the client with android.text.Html#fromHtml.
+      &quot;header&quot;: { # Provides a user-facing message with locale info. The maximum message length is 4096 characters. # A short header which appears above the HTML content.
+  agreementAccepted: boolean, Whether the enterprise admin has seen and agreed to the managed Google Play Agreement (https://www.android.com/enterprise/terms/). Do not set this field for any customer-managed enterprise (https://developers.google.com/android/management/create-enterprise#customer-managed_enterprises). Set this to field to true for all EMM-managed enterprises (https://developers.google.com/android/management/create-enterprise#emm-managed_enterprises).
+  enterpriseToken: string, The enterprise token appended to the callback URL. Set this when creating a customer-managed enterprise (https://developers.google.com/android/management/create-enterprise#customer-managed_enterprises) and not when creating a deprecated EMM-managed enterprise (https://developers.google.com/android/management/create-enterprise#emm-managed_enterprises).
+  projectId: string, The ID of the Google Cloud Platform project which will own the enterprise.
+  signupUrlName: string, The name of the SignupUrl used to sign up for the enterprise. Set this when creating a customer-managed enterprise (https://developers.google.com/android/management/create-enterprise#customer-managed_enterprises) and not when creating a deprecated EMM-managed enterprise (https://developers.google.com/android/management/create-enterprise#emm-managed_enterprises).
+  <pre>Permanently deletes an enterprise and all accounts and data associated with it. Warning: this will result in a cascaded deletion of all AM API devices associated with the deleted enterprise. Only available for EMM-managed enterprises.
+  name: string, The name of the enterprise in the form enterprises/{enterpriseId}. (required)
+    <code class="details" id="generateEnterpriseUpgradeUrl">generateEnterpriseUpgradeUrl(name, body=None, x__xgafv=None)</code>
+  <pre>Generates an enterprise upgrade URL to upgrade an existing managed Google Play Accounts enterprise to a managed Google domain. See the guide (https://developers.google.com/android/management/upgrade-an-enterprise) for more details.
+  name: string, Required. The name of the enterprise to be upgraded in the form enterprises/{enterpriseId}. (required)
+{ # Request message for generating a URL to upgrade an existing managed Google Play Accounts enterprise to a managed Google domain.Note: This feature is not generally available.
+  &quot;adminEmail&quot;: &quot;A String&quot;, # Optional. Email address used to prefill the admin field of the enterprise signup form as part of the upgrade process. This value is a hint only and can be altered by the user. Personal email addresses are not allowed. If allowedDomains is non-empty then this must belong to one of the allowedDomains.
+  &quot;allowedDomains&quot;: [ # Optional. A list of domains that are permitted for the admin email. The IT admin cannot enter an email address with a domain name that is not in this list. Subdomains of domains in this list are not allowed but can be allowed by adding a second entry which has *. prefixed to the domain name (e.g. *.example.com). If the field is not present or is an empty list then the IT admin is free to use any valid domain name. Personal email domains are not allowed.
+    { # Response message for generating a URL to upgrade an existing managed Google Play Accounts enterprise to a managed Google domain.Note: This feature is not generally available.
+  <pre>Gets an enterprise.
+    <code class="details" id="list">list(pageSize=None, pageToken=None, projectId=None, view=None, x__xgafv=None)</code>
+  <pre>Lists EMM-managed enterprises. Only BASIC fields are returned.
+  pageSize: integer, The requested page size. The actual page size may be fixed to a min or max value.
+  projectId: string, Required. The Cloud project ID of the EMM managing the enterprises.
+  view: string, Specifies which Enterprise fields to return. This method only supports BASIC.
+      ENTERPRISE_VIEW_UNSPECIFIED - The API will default to the BASIC view for the List method.
+      BASIC - Includes name and enterprise_display_name fields.
+    { # Response to a request to list enterprises.
+  &quot;enterprises&quot;: [ # The list of enterprises.
+  <pre>Updates an enterprise. See also: SigninDetail

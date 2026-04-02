@@ -1,0 +1,17 @@
+<h1><a href="netapp_v1.html">NetApp API</a> . <a href="netapp_v1.projects.html">projects</a> . <a href="netapp_v1.projects.locations.html">locations</a> . <a href="netapp_v1.projects.locations.volumes.html">volumes</a> . <a href="netapp_v1.projects.locations.volumes.snapshots.html">snapshots</a></h1>
+<p class="firstline">Create a new snapshot for a volume.</p>
+<p class="firstline">Describe a snapshot for a volume.</p>
+<p class="firstline">Returns descriptions of all snapshots for a volume.</p>
+  <pre>Create a new snapshot for a volume.
+  parent: string, Required. The NetApp volume to create the snapshots of, in the format `projects/{project_id}/locations/{location}/volumes/{volume_id}` (required)
+{ # Snapshot is a point-in-time version of a Volume&#x27;s content.
+  &quot;name&quot;: &quot;A String&quot;, # Identifier. The resource name of the snapshot. Format: `projects/{project_id}/locations/{location}/volumes/{volume_id}/snapshots/{snapshot_id}`.
+  &quot;usedBytes&quot;: 3.14, # Output only. Current storage usage for the snapshot in bytes.
+  snapshotId: string, Required. ID of the snapshot to create. Must be unique within the parent resource. Must contain only letters, numbers and hyphen, with the first character a letter, the last a letter or a number, and a 63 character maximum.
+  name: string, Required. The snapshot resource name, in the format `projects/*/locations/*/volumes/*/snapshots/{snapshot_id}` (required)
+  <pre>Describe a snapshot for a volume.
+  name: string, Required. The snapshot resource name, in the format `projects/{project_id}/locations/{location}/volumes/{volume_id}/snapshots/{snapshot_id}` (required)
+  <pre>Returns descriptions of all snapshots for a volume.
+  parent: string, Required. The volume for which to retrieve snapshot information, in the format `projects/{project_id}/locations/{location}/volumes/{volume_id}`. (required)
+  &quot;snapshots&quot;: [ # A list of snapshots in the project for the specified volume.
+  name: string, Identifier. The resource name of the snapshot. Format: `projects/{project_id}/locations/{location}/volumes/{volume_id}/snapshots/{snapshot_id}`. (required)

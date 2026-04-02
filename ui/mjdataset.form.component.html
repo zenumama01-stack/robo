@@ -1,0 +1,11 @@
+    <!-- Dataset Core Section -->
+        SectionKey="datasetCore"
+        SectionName="Dataset Core"
+    <!-- Dataset Items Section -->
+        SectionKey="datasetItems"
+        SectionName="Dataset Items"
+        [BadgeCount]="GetSectionRowCount('datasetItems')"
+                [Params]="BuildRelationshipViewParamsByEntityName('MJ: Dataset Items','DatasetName')"
+                [NewRecordValues]="NewRecordValues('MJ: Dataset Items')"
+                [AllowLoad]="IsSectionExpanded('datasetItems')"
+                (AfterDataLoad)="SetSectionRowCount('datasetItems', $event.totalRowCount)"

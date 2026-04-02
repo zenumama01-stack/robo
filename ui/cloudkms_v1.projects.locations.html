@@ -1,0 +1,38 @@
+<h1><a href="cloudkms_v1.html">Cloud Key Management Service (KMS) API</a> . <a href="cloudkms_v1.projects.html">projects</a> . <a href="cloudkms_v1.projects.locations.html">locations</a></h1>
+  <code><a href="cloudkms_v1.projects.locations.ekmConfig.html">ekmConfig()</a></code>
+<p class="firstline">Returns the ekmConfig Resource.</p>
+  <code><a href="cloudkms_v1.projects.locations.ekmConnections.html">ekmConnections()</a></code>
+<p class="firstline">Returns the ekmConnections Resource.</p>
+  <code><a href="cloudkms_v1.projects.locations.keyHandles.html">keyHandles()</a></code>
+<p class="firstline">Returns the keyHandles Resource.</p>
+  <code><a href="cloudkms_v1.projects.locations.keyRings.html">keyRings()</a></code>
+<p class="firstline">Returns the keyRings Resource.</p>
+  <code><a href="cloudkms_v1.projects.locations.operations.html">operations()</a></code>
+  <code><a href="cloudkms_v1.projects.locations.retiredResources.html">retiredResources()</a></code>
+<p class="firstline">Returns the retiredResources Resource.</p>
+  <code><a href="cloudkms_v1.projects.locations.singleTenantHsmInstances.html">singleTenantHsmInstances()</a></code>
+<p class="firstline">Returns the singleTenantHsmInstances Resource.</p>
+  <code><a href="#generateRandomBytes">generateRandomBytes(location, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Generate random bytes using the Cloud KMS randomness source in the provided location.</p>
+  <code><a href="#getEkmConfig">getEkmConfig(name, x__xgafv=None)</a></code></p>
+<p class="firstline">Returns the EkmConfig singleton resource for a given project and location.</p>
+  <code><a href="#updateEkmConfig">updateEkmConfig(name, body=None, updateMask=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Updates the EkmConfig singleton resource for a given project and location.</p>
+    <code class="details" id="generateRandomBytes">generateRandomBytes(location, body=None, x__xgafv=None)</code>
+  <pre>Generate random bytes using the Cloud KMS randomness source in the provided location.
+  location: string, The project-specific location in which to generate random bytes. For example, &quot;projects/my-project/locations/us-central1&quot;. (required)
+{ # Request message for KeyManagementService.GenerateRandomBytes.
+  &quot;lengthBytes&quot;: 42, # The length in bytes of the amount of randomness to retrieve. Minimum 8 bytes, maximum 1024 bytes.
+  &quot;protectionLevel&quot;: &quot;A String&quot;, # The ProtectionLevel to use when generating the random data. Currently, only HSM protection level is supported.
+    { # Response message for KeyManagementService.GenerateRandomBytes.
+  &quot;data&quot;: &quot;A String&quot;, # The generated data.
+  &quot;dataCrc32c&quot;: &quot;A String&quot;, # Integrity verification field. A CRC32C checksum of the returned GenerateRandomBytesResponse.data. An integrity check of GenerateRandomBytesResponse.data can be performed by computing the CRC32C checksum of GenerateRandomBytesResponse.data and comparing your results to this field. Discard the response in case of non-matching checksum values, and perform a limited number of retries. A persistent mismatch may indicate an issue in your computation of the CRC32C checksum. Note: This field is defined as int64 for reasons of compatibility across different languages. However, it is a non-negative integer, which will never exceed 2^32-1, and can be safely downconverted to uint32 in languages that support this type.
+    <code class="details" id="getEkmConfig">getEkmConfig(name, x__xgafv=None)</code>
+  <pre>Returns the EkmConfig singleton resource for a given project and location.
+  name: string, Required. The name of the EkmConfig to get. (required)
+    { # An EkmConfig is a singleton resource that represents configuration parameters that apply to all CryptoKeys and CryptoKeyVersions with a ProtectionLevel of EXTERNAL_VPC in a given project and location.
+  &quot;defaultEkmConnection&quot;: &quot;A String&quot;, # Optional. Resource name of the default EkmConnection. Setting this field to the empty string removes the default.
+  &quot;name&quot;: &quot;A String&quot;, # Output only. The resource name for the EkmConfig in the format `projects/*/locations/*/ekmConfig`.
+    <code class="details" id="updateEkmConfig">updateEkmConfig(name, body=None, updateMask=None, x__xgafv=None)</code>
+  <pre>Updates the EkmConfig singleton resource for a given project and location.
+  name: string, Output only. The resource name for the EkmConfig in the format `projects/*/locations/*/ekmConfig`. (required)

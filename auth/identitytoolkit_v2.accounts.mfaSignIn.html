@@ -1,0 +1,18 @@
+<h1><a href="identitytoolkit_v2.html">Identity Toolkit API</a> . <a href="identitytoolkit_v2.accounts.html">accounts</a> . <a href="identitytoolkit_v2.accounts.mfaSignIn.html">mfaSignIn</a></h1>
+<p class="firstline">Verifies the MFA challenge and performs sign-in</p>
+<p class="firstline">Sends the MFA challenge</p>
+  <pre>Verifies the MFA challenge and performs sign-in
+{ # Finalizes sign-in by verifying MFA challenge.
+  &quot;mfaEnrollmentId&quot;: &quot;A String&quot;, # The MFA enrollment ID from the user&#x27;s list of current MFA enrollments.
+  &quot;mfaPendingCredential&quot;: &quot;A String&quot;, # Required. Pending credential from first factor sign-in.
+  &quot;phoneVerificationInfo&quot;: { # Phone Verification info for a FinalizeMfa request. # Proof of completion of the SMS based MFA challenge.
+  &quot;totpVerificationInfo&quot;: { # TOTP verification info for FinalizeMfaSignInRequest. # Proof of completion of the TOTP based MFA challenge.
+    { # FinalizeMfaSignIn response.
+  &quot;idToken&quot;: &quot;A String&quot;, # ID token for the authenticated user.
+  &quot;phoneAuthInfo&quot;: { # Phone Verification info for a FinalizeMfa response. # Extra phone auth info, including android verification proof.
+  <pre>Sends the MFA challenge
+{ # Starts multi-factor sign-in by sending the multi-factor auth challenge.
+  &quot;mfaEnrollmentId&quot;: &quot;A String&quot;, # Required. MFA enrollment id from the user&#x27;s list of current MFA enrollments.
+  &quot;phoneSignInInfo&quot;: { # App Verification info for a StartMfa request. # Verification info to authorize sending an SMS for phone verification.
+    { # StartMfaSignIn response.
+  &quot;phoneResponseInfo&quot;: { # Phone Verification info for a StartMfa response. # MultiFactor sign-in session information specific to SMS-type second factors. Along with the one-time code retrieved from the sent SMS, the contents of this session information should be passed to FinalizeMfaSignIn to complete the sign in.

@@ -1,0 +1,33 @@
+  <title>googleapiclient.schema</title>
+        Module&nbsp;schema
+            >]&nbsp;|&nbsp;<a href="googleapiclient.schema-module.html"
+<h1 class="epydoc">Module schema</h1><p class="nomargin-top"><span class="codelink"><a href="googleapiclient.schema-pysrc.html">source&nbsp;code</a></span></p>
+Schema processing for discovery based APIs
+Schemas holds an APIs discovery schemas. It can return those schema as
+deserialized JSON objects, or pretty print them as prototype objects that
+conform to the schema.
+For example, given the schema:
+ schema = &quot;&quot;&quot;{
+   &quot;Foo&quot;: {
+    &quot;type&quot;: &quot;object&quot;,
+     &quot;etag&quot;: {
+      &quot;type&quot;: &quot;string&quot;,
+      &quot;description&quot;: &quot;ETag of the collection.&quot;
+     &quot;kind&quot;: {
+      &quot;description&quot;: &quot;Type of the collection ('calendar#acl').&quot;,
+      &quot;default&quot;: &quot;calendar#acl&quot;
+     &quot;nextPageToken&quot;: {
+      &quot;description&quot;: &quot;Token used to access the next
+         page of this result. Omitted if no further results are available.&quot;
+ }&quot;&quot;&quot;
+ s = Schemas(schema)
+ print s.prettyPrintByName('Foo')
+ Produces the following output:
+   &quot;nextPageToken&quot;: &quot;A String&quot;, # Token used to access the
+       # next page of this result. Omitted if no further results are available.
+   &quot;kind&quot;: &quot;A String&quot;, # Type of the collection ('calendar#acl').
+The constructor takes a discovery document in which to look up named schema.
+        <a href="googleapiclient.schema.Schemas-class.html" class="summary-name">Schemas</a><br />
+      Schemas for an API.
+        <a href="googleapiclient.schema._SchemaToStruct-class.html" class="summary-name" onclick="show_private();">_SchemaToStruct</a><br />
+      Convert schema to a prototype object.

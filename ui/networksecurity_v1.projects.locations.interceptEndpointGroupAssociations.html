@@ -1,0 +1,32 @@
+<h1><a href="networksecurity_v1.html">Network Security API</a> . <a href="networksecurity_v1.projects.html">projects</a> . <a href="networksecurity_v1.projects.locations.html">locations</a> . <a href="networksecurity_v1.projects.locations.interceptEndpointGroupAssociations.html">interceptEndpointGroupAssociations</a></h1>
+  <code><a href="#create">create(parent, body=None, interceptEndpointGroupAssociationId=None, requestId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Creates an association in a given project and location. See https://google.aip.dev/133.</p>
+<p class="firstline">Deletes an association. See https://google.aip.dev/135.</p>
+<p class="firstline">Gets a specific association. See https://google.aip.dev/131.</p>
+<p class="firstline">Lists associations in a given project and location. See https://google.aip.dev/132.</p>
+<p class="firstline">Updates an association. See https://google.aip.dev/134.</p>
+    <code class="details" id="create">create(parent, body=None, interceptEndpointGroupAssociationId=None, requestId=None, x__xgafv=None)</code>
+  <pre>Creates an association in a given project and location. See https://google.aip.dev/133.
+  parent: string, Required. The parent resource where this association will be created. Format: projects/{project}/locations/{location} (required)
+{ # An endpoint group association represents a link between a network and an endpoint group in the organization. Creating an association creates the networking infrastructure linking the network to the endpoint group, but does not enable intercept by itself. To enable intercept, the user must also create a network firewall policy containing intercept rules and associate it with the network.
+  &quot;interceptEndpointGroup&quot;: &quot;A String&quot;, # Required. Immutable. The endpoint group that this association is connected to, for example: `projects/123456789/locations/global/interceptEndpointGroups/my-eg`. See https://google.aip.dev/124.
+  &quot;locations&quot;: [ # Output only. The list of locations where the association is configured. This information is retrieved from the linked endpoint group.
+  &quot;locationsDetails&quot;: [ # Output only. The list of locations where the association is present. This information is retrieved from the linked endpoint group, and not configured as part of the association itself.
+    { # Contains details about the state of an association in a specific cloud location.
+  &quot;name&quot;: &quot;A String&quot;, # Immutable. Identifier. The resource name of this endpoint group association, for example: `projects/123456789/locations/global/interceptEndpointGroupAssociations/my-eg-association`. See https://google.aip.dev/122 for more details.
+  &quot;network&quot;: &quot;A String&quot;, # Required. Immutable. The VPC network that is associated. for example: `projects/123456789/global/networks/my-network`. See https://google.aip.dev/124.
+  &quot;reconciling&quot;: True or False, # Output only. The current state of the resource does not match the user&#x27;s intended state, and the system is working to reconcile them. This part of the normal operation (e.g. adding a new location to the target deployment group). See https://google.aip.dev/128.
+  &quot;state&quot;: &quot;A String&quot;, # Output only. Current state of the endpoint group association.
+  interceptEndpointGroupAssociationId: string, Optional. The ID to use for the new association, which will become the final component of the endpoint group&#x27;s resource name. If not provided, the server will generate a unique ID.
+  <pre>Deletes an association. See https://google.aip.dev/135.
+  name: string, Required. The association to delete. (required)
+  <pre>Gets a specific association. See https://google.aip.dev/131.
+  name: string, Required. The name of the association to retrieve. Format: projects/{project}/locations/{location}/interceptEndpointGroupAssociations/{intercept_endpoint_group_association} (required)
+  <pre>Lists associations in a given project and location. See https://google.aip.dev/132.
+  parent: string, Required. The parent, which owns this collection of associations. Example: `projects/123456789/locations/global`. See https://google.aip.dev/132 for more details. (required)
+  pageToken: string, Optional. A page token, received from a previous `ListInterceptEndpointGroups` call. Provide this to retrieve the subsequent page. When paginating, all other parameters provided to `ListInterceptEndpointGroups` must match the call that provided the page token. See https://google.aip.dev/158 for more details.
+    { # Response message for ListInterceptEndpointGroupAssociations.
+  &quot;interceptEndpointGroupAssociations&quot;: [ # The associations from the specified parent.
+  <pre>Updates an association. See https://google.aip.dev/134.
+  name: string, Immutable. Identifier. The resource name of this endpoint group association, for example: `projects/123456789/locations/global/interceptEndpointGroupAssociations/my-eg-association`. See https://google.aip.dev/122 for more details. (required)
+  updateMask: string, Optional. The list of fields to update. Fields are specified relative to the association (e.g. `description`; *not* `intercept_endpoint_group_association.description`). See https://google.aip.dev/161 for more details.

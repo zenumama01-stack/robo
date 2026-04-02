@@ -1,0 +1,53 @@
+<h1><a href="vmwareengine_v1.html">VMware Engine API</a> . <a href="vmwareengine_v1.projects.html">projects</a> . <a href="vmwareengine_v1.projects.locations.html">locations</a> . <a href="vmwareengine_v1.projects.locations.privateClouds.html">privateClouds</a> . <a href="vmwareengine_v1.projects.locations.privateClouds.upgrades.html">upgrades</a></h1>
+<p class="firstline">Retrieves a private cloud `Upgrade` resource by its resource name.</p>
+<p class="firstline">Lists past, ongoing and upcoming `Upgrades` for the given private cloud.</p>
+<p class="firstline">Update the private cloud `Upgrade` resource. Only `schedule` field can updated. The schedule can only be updated when the upgrade has not started and schedule edit window is open. Only fields specified in `update_mask` are considered.</p>
+  <pre>Retrieves a private cloud `Upgrade` resource by its resource name.
+  name: string, Required. The name of the `Upgrade` resource to be retrieved. Resource names are schemeless URIs that follow the conventions in https://cloud.google.com/apis/design/resource_names. For example: `projects/my-project/locations/us-west1-a/privateClouds/my-cloud/upgrades/my-upgrade` (required)
+    { # Describes Private cloud Upgrade.
+  &quot;componentUpgrades&quot;: [ # Output only. Output Only. The list of component upgrades.
+    { # Per component upgrade resource
+      &quot;componentType&quot;: &quot;A String&quot;, # Output only. Type of component
+      &quot;state&quot;: &quot;A String&quot;, # Output only. Component&#x27;s upgrade state.
+  &quot;createTime&quot;: &quot;A String&quot;, # Output only. Output Only. Creation time of this resource.
+  &quot;description&quot;: &quot;A String&quot;, # Output only. Output Only. The description of the upgrade. This is used to provide additional information about the private cloud upgrade, such as the upgrade&#x27;s purpose, the changes included in the upgrade, or any other relevant information about the upgrade.
+  &quot;endTime&quot;: &quot;A String&quot;, # Output only. Output Only. End time of the upgrade.
+  &quot;estimatedDuration&quot;: &quot;A String&quot;, # Output only. Output Only. The estimated total duration of the upgrade. This information can be used to plan or schedule upgrades to minimize disruptions. Please note that the estimated duration is only an estimate. The actual upgrade duration may vary.
+  &quot;etag&quot;: &quot;A String&quot;, # The etag for the upgrade resource. If this is provided on update, it must match the server&#x27;s etag.
+  &quot;name&quot;: &quot;A String&quot;, # Output only. Identifier. The resource name of the private cloud `Upgrade`. Resource names are schemeless URIs that follow the conventions in https://cloud.google.com/apis/design/resource_names. For example: `projects/my-project/locations/us-west1-a/privateClouds/my-cloud/upgrades/my-upgrade`
+  &quot;schedule&quot;: { # Schedule for the upgrade. # Schedule details for the upgrade.
+    &quot;constraints&quot;: { # Constraints to be applied while editing a schedule. These constraints ensure that `Upgrade` specific requirements are met. # Output only. Output Only. Constraints applied to the schedule. These constraints should be applicable at the time of any rescheduling.
+      &quot;disallowedIntervals&quot;: [ # Output only. Output Only. A list of intervals in which maintenance windows are not allowed. Any time window that overlaps with any of these intervals will be considered invalid.
+        { # Represents a time interval, spanning across days of the week. Until local timezones are supported, this interval is in UTC.
+          &quot;endDay&quot;: &quot;A String&quot;, # Output only. The day on which the interval ends. Can be same as start day.
+          &quot;endTime&quot;: { # Represents a time of day. The date and time zone are either not significant or are specified elsewhere. An API may choose to allow leap seconds. Related types are google.type.Date and `google.protobuf.Timestamp`. # Output only. The time on the end day at which the interval ends.
+          &quot;startDay&quot;: &quot;A String&quot;, # Output only. The day on which the interval starts.
+          &quot;startTime&quot;: { # Represents a time of day. The date and time zone are either not significant or are specified elsewhere. An API may choose to allow leap seconds. Related types are google.type.Date and `google.protobuf.Timestamp`. # Output only. The time on the start day at which the interval starts.
+      &quot;minHoursDay&quot;: 42, # Output only. Minimum number of hours must be allotted for the upgrade activities for each selected day. This is a minimum; the upgrade schedule can allot more hours for the given day.
+      &quot;minHoursWeek&quot;: 42, # Output only. The minimum number of weekly hours must be allotted for the upgrade activities. This is just a minimum; the schedule can assign more weekly hours.
+      &quot;rescheduleDateRange&quot;: { # Represents a time interval, encoded as a Timestamp start (inclusive) and a Timestamp end (exclusive). The start must be less than or equal to the end. When the start equals the end, the interval is empty (matches no time). When both start and end are unspecified, the interval matches any time. # Output only. Output Only. The user can only reschedule an upgrade that starts within this range.
+    &quot;editWindow&quot;: { # Represents a time interval, encoded as a Timestamp start (inclusive) and a Timestamp end (exclusive). The start must be less than or equal to the end. When the start equals the end, the interval is empty (matches no time). When both start and end are unspecified, the interval matches any time. # Output only. Output Only. The schedule is open for edits during this time interval or window.
+    &quot;lastEditor&quot;: &quot;A String&quot;, # Output only. Output Only. Indicates who most recently edited the upgrade schedule. The value is updated whenever the upgrade is rescheduled.
+    &quot;startTime&quot;: &quot;A String&quot;, # Required. The scheduled start time for the upgrade.
+    &quot;weeklyWindows&quot;: [ # Required. Weekly time windows for upgrade activities. The server performs upgrade activities during these time windows to minimize disruptions.
+      { # Represents the time window to perform upgrade activities.
+        &quot;dayOfWeek&quot;: &quot;A String&quot;, # Required. Day of the week for this window.
+        &quot;duration&quot;: &quot;A String&quot;, # Required. The duration of the window. The max allowed duration for any window is 24 hours.
+        &quot;startTime&quot;: { # Represents a time of day. The date and time zone are either not significant or are specified elsewhere. An API may choose to allow leap seconds. Related types are google.type.Date and `google.protobuf.Timestamp`. # Required. Time in UTC when the window starts.
+  &quot;startVersion&quot;: &quot;A String&quot;, # Output only. Output Only. The start version
+  &quot;state&quot;: &quot;A String&quot;, # Output only. The current state of the upgrade.
+  &quot;targetVersion&quot;: &quot;A String&quot;, # Output only. Output Only. The target version
+  &quot;type&quot;: &quot;A String&quot;, # Output only. Output Only. The type of upgrade.
+  &quot;updateTime&quot;: &quot;A String&quot;, # Output only. Output Only. Last update time of this resource.
+  &quot;version&quot;: &quot;A String&quot;, # Output only.
+  <pre>Lists past, ongoing and upcoming `Upgrades` for the given private cloud.
+  parent: string, Required. Query a list of `Upgrades` for the given private cloud resource name. Resource names are schemeless URIs that follow the conventions in https://cloud.google.com/apis/design/resource_names. For example: `projects/my-project/locations/us-west1-a/privateClouds/my-cloud` (required)
+  filter: string, A filter expression that matches resources returned in the response. The expression must specify the field name, a comparison operator, and the value that you want to use for filtering. The value must be a string, a number, or a boolean. The comparison operator must be `=`, `!=`, `&gt;`, or `&lt;`. For example, if you are filtering a list of upgrades, you can exclude the ones named `example-upgrade1` by specifying `name != &quot;example-upgrade1&quot;`. You can also filter nested fields. To filter on multiple expressions, provide each separate expression within parentheses. For example: ``` (name = &quot;example-upgrade&quot;) (createTime &gt; &quot;2021-04-12T08:15:10.40Z&quot;) ``` By default, each expression is an `AND` expression. However, you can include `AND` and `OR` expressions explicitly. For example: ``` (name = &quot;upgrade-1&quot;) AND (createTime &gt; &quot;2021-04-12T08:15:10.40Z&quot;) OR (name = &quot;upgrade-2&quot;) ```
+  pageSize: integer, The maximum number of `Upgrades` to return in one page. The service may return fewer resources than this value. The maximum value is coerced to 1000. The default value of this field is 500.
+  pageToken: string, A page token, received from a previous `ListUpgrades` call. Provide this to retrieve the subsequent page. When paginating, all other parameters provided to `ListUpgrades` must match the call that provided the page token.
+    { # Response message for VmwareEngine.ListUpgrades.
+  &quot;unreachable&quot;: [ # List of unreachable resources.
+  &quot;upgrades&quot;: [ # A list of `Upgrades`.
+  <pre>Update the private cloud `Upgrade` resource. Only `schedule` field can updated. The schedule can only be updated when the upgrade has not started and schedule edit window is open. Only fields specified in `update_mask` are considered.
+  name: string, Output only. Identifier. The resource name of the private cloud `Upgrade`. Resource names are schemeless URIs that follow the conventions in https://cloud.google.com/apis/design/resource_names. For example: `projects/my-project/locations/us-west1-a/privateClouds/my-cloud/upgrades/my-upgrade` (required)
+  updateMask: string, Required. Field mask is used to specify the fields to be overwritten in the `Upgrade` resource by the update. The fields specified in the `update_mask` are relative to the resource, not the full request. A field will be overwritten if it is in the mask. If the user does not provide a mask then all fields will be overwritten.

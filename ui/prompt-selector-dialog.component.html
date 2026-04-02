@@ -1,0 +1,60 @@
+<!-- Prompt Selector Dialog -->
+<div class="prompt-selector-dialog">
+      <p>Loading prompts...</p>
+    <!-- Search and Controls Header -->
+        <div class="search-box">
+          <i class="fa-solid fa-search search-icon"></i>
+            placeholder="Search prompts by name or description..."
+            class="search-input">
+        <div class="view-controls">
+                  [class.active]="viewMode === 'list'"
+                  title="Toggle between list and grid view">
+            <i class="fa-solid" [class.fa-list]="viewMode === 'grid'" [class.fa-th]="viewMode === 'list'"></i>
+    <!-- Results Summary -->
+    <div class="results-summary">
+      <span class="results-count">
+        {{ (filteredPrompts$ | async)?.length || 0 }} prompt(s)
+      @if (config.multiSelect && selectedPrompts.size > 0) {
+        <span class="selected-count">
+          {{ selectedPrompts.size }} selected
+    <!-- Prompts List/Grid -->
+    <div class="prompts-container" [class.grid-view]="viewMode === 'grid'" [class.list-view]="viewMode === 'list'">
+      @if ((filteredPrompts$ | async)?.length === 0) {
+        <div class="no-results">
+          <i class="fa-solid fa-search fa-2x"></i>
+          <h4>No prompts found</h4>
+          <p>Try adjusting your search criteria or check that prompts are properly configured.</p>
+        @for (prompt of filteredPrompts$ | async; track prompt.ID) {
+          <div class="prompt-card" 
+               [class.selected]="isPromptSelected(prompt)"
+               [class.linked]="isPromptLinked(prompt)"
+               (click)="togglePromptSelection(prompt)">
+            <!-- Selection indicator -->
+              @if (isPromptLinked(prompt)) {
+                <i class="fa-solid fa-link linked-icon" title="Already linked to this agent"></i>
+              } @else if (isPromptSelected(prompt)) {
+                <i class="fa-solid fa-check-circle selected-icon"></i>
+                <i class="fa-regular fa-circle unselected-icon"></i>
+            <!-- Prompt Content -->
+            <div class="prompt-content">
+              <div class="prompt-header">
+                <h4 class="prompt-name">{{ prompt.Name }}</h4>
+                <div class="prompt-badges">
+                    <span class="linked-badge">
+                      Linked
+                  <span class="status-badge" 
+                        [style.background-color]="getPromptStatusColor(prompt)">
+                    {{ getPromptStatusText(prompt) }}
+                <p class="prompt-description">{{ prompt.Description }}</p>
+              <!-- Prompt Metadata -->
+              <div class="prompt-metadata">
+                @if (prompt.__mj_CreatedAt) {
+                  <span class="metadata-item">
+                    Created {{ prompt.__mj_CreatedAt | date:'short' }}
+      @if (config.showCreateNew) {
+                (click)="createNew()">
+              (click)="selectPrompts()"
+              [disabled]="selectedPrompts.size === 0">
+        @if (config.multiSelect) {
+          Add {{ selectedPrompts.size }} Prompt{{ selectedPrompts.size === 1 ? '' : 's' }}
+          Select Prompt

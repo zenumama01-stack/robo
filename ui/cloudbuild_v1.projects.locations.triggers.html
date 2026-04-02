@@ -1,0 +1,123 @@
+<h1><a href="cloudbuild_v1.html">Cloud Build API</a> . <a href="cloudbuild_v1.projects.html">projects</a> . <a href="cloudbuild_v1.projects.locations.html">locations</a> . <a href="cloudbuild_v1.projects.locations.triggers.html">triggers</a></h1>
+  <code><a href="#create">create(parent, body, projectId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Creates a new `BuildTrigger`.</p>
+  <code><a href="#delete">delete(name, projectId=None, triggerId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Deletes a `BuildTrigger` by its project ID and trigger ID.</p>
+  <code><a href="#get">get(name, projectId=None, triggerId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Returns information about a `BuildTrigger`.</p>
+  <code><a href="#list">list(parent, pageSize=None, pageToken=None, projectId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Lists existing `BuildTrigger`s.</p>
+  <code><a href="#patch">patch(resourceName, body, projectId=None, triggerId=None, updateMask=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Updates a `BuildTrigger` by its project ID and trigger ID.</p>
+  <code><a href="#run">run(name, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Runs a `BuildTrigger` at a particular source revision. To run a regional or global trigger, use the POST request that includes the location endpoint in the path (ex. v1/projects/{projectId}/locations/{region}/triggers/{triggerId}:run). The POST request that does not include the location endpoint in the path can only be used when running global triggers.</p>
+  <code><a href="#webhook">webhook(name, body=None, projectId=None, secret=None, trigger=None, x__xgafv=None)</a></code></p>
+<p class="firstline">ReceiveTriggerWebhook [Experimental] is called when the API receives a webhook request targeted at a specific trigger.</p>
+    <code class="details" id="create">create(parent, body, projectId=None, x__xgafv=None)</code>
+  <pre>Creates a new `BuildTrigger`.
+  parent: string, The parent resource where this trigger will be created. Format: `projects/{project}/locations/{location}` (required)
+{ # Configuration for an automated build in response to source repository changes.
+  &quot;approvalConfig&quot;: { # ApprovalConfig describes configuration for manual approval of a build. # Configuration for manual approval to start a build invocation of this BuildTrigger.
+  &quot;autodetect&quot;: True or False, # Autodetect build configuration. The following precedence is used (case insensitive): 1. cloudbuild.yaml 2. cloudbuild.yml 3. cloudbuild.json 4. Dockerfile Currently only available for GitHub App Triggers.
+  &quot;bitbucketServerTriggerConfig&quot;: { # BitbucketServerTriggerConfig describes the configuration of a trigger that creates a build whenever a Bitbucket Server event is received. # BitbucketServerTriggerConfig describes the configuration of a trigger that creates a build whenever a Bitbucket Server event is received.
+    &quot;bitbucketServerConfig&quot;: { # BitbucketServerConfig represents the configuration for a Bitbucket Server. # Output only. The BitbucketServerConfig specified in the bitbucket_server_config_resource field.
+    &quot;bitbucketServerConfigResource&quot;: &quot;A String&quot;, # Required. The Bitbucket server config resource that this trigger config maps to.
+    &quot;projectKey&quot;: &quot;A String&quot;, # Required. Key of the project that the repo is in. For example: The key for https://mybitbucket.server/projects/TEST/repos/test-repo is &quot;TEST&quot;.
+    &quot;pullRequest&quot;: { # PullRequestFilter contains filter properties for matching GitHub Pull Requests. # Filter to match changes in pull requests.
+      &quot;branch&quot;: &quot;A String&quot;, # Regex of branches to match. The syntax of the regular expressions accepted is the syntax accepted by RE2 and described at https://github.com/google/re2/wiki/Syntax
+      &quot;commentControl&quot;: &quot;A String&quot;, # If CommentControl is enabled, depending on the setting, builds may not fire until a repository writer comments `/gcbrun` on a pull request or `/gcbrun` is in the pull request description. Only PR comments that contain `/gcbrun` will trigger builds. If CommentControl is set to disabled, comments with `/gcbrun` from a user with repository write permission or above will still trigger builds to run.
+      &quot;invertRegex&quot;: True or False, # If true, branches that do NOT match the git_ref will trigger a build.
+    &quot;push&quot;: { # Push contains filter properties for matching GitHub git pushes. # Filter to match changes in refs like branches, tags.
+      &quot;branch&quot;: &quot;A String&quot;, # Regexes matching branches to build. The syntax of the regular expressions accepted is the syntax accepted by RE2 and described at https://github.com/google/re2/wiki/Syntax
+      &quot;invertRegex&quot;: True or False, # When true, only trigger a build if the revision regex does NOT match the git_ref regex.
+      &quot;tag&quot;: &quot;A String&quot;, # Regexes matching tags to build. The syntax of the regular expressions accepted is the syntax accepted by RE2 and described at https://github.com/google/re2/wiki/Syntax
+    &quot;repoSlug&quot;: &quot;A String&quot;, # Required. Slug of the repository. A repository slug is a URL-friendly version of a repository name, automatically generated by Bitbucket for use in the URL. For example, if the repository name is &#x27;test repo&#x27;, in the URL it would become &#x27;test-repo&#x27; as in https://mybitbucket.server/projects/TEST/repos/test-repo.
+  &quot;build&quot;: { # A build resource in the Cloud Build API. At a high level, a `Build` describes where to find source code, how to build it (for example, the builder image to run on the source), and where to store the built artifacts. Fields can include the following variables, which will be expanded when the build is created: - $PROJECT_ID: the project ID of the build. - $PROJECT_NUMBER: the project number of the build. - $LOCATION: the location/region of the build. - $BUILD_ID: the autogenerated ID of the build. - $REPO_NAME: the source repository name specified by RepoSource. - $BRANCH_NAME: the branch name specified by RepoSource. - $TAG_NAME: the tag name specified by RepoSource. - $REVISION_ID or $COMMIT_SHA: the commit SHA specified by RepoSource or resolved from the specified branch or tag. - $SHORT_SHA: first 7 characters of $REVISION_ID or $COMMIT_SHA. # Contents of the build template.
+  &quot;createTime&quot;: &quot;A String&quot;, # Output only. Time when the trigger was created.
+  &quot;description&quot;: &quot;A String&quot;, # Human-readable description of this trigger.
+  &quot;developerConnectEventConfig&quot;: { # The configuration of a trigger that creates a build whenever an event from the DeveloperConnect API is received. # Optional. The configuration of a trigger that creates a build whenever an event from the DeveloperConnect API is received.
+    &quot;gitRepositoryLinkType&quot;: &quot;A String&quot;, # Output only. The type of DeveloperConnect GitRepositoryLink.
+    &quot;push&quot;: { # Push contains filter properties for matching GitHub git pushes. # Filter to match changes in refs like branches and tags.
+  &quot;disabled&quot;: True or False, # If true, the trigger will never automatically execute a build.
+  &quot;eventType&quot;: &quot;A String&quot;, # EventType allows the user to explicitly set the type of event to which this BuildTrigger should respond. This field will be validated against the rest of the configuration if it is set.
+  &quot;filename&quot;: &quot;A String&quot;, # Path, from the source root, to the build configuration file (i.e. cloudbuild.yaml).
+  &quot;filter&quot;: &quot;A String&quot;, # A Common Expression Language string.
+  &quot;gitFileSource&quot;: { # GitFileSource describes a file within a (possibly remote) code repository. # The file source describing the local or remote Build template.
+    &quot;bitbucketServerConfig&quot;: &quot;A String&quot;, # The full resource name of the bitbucket server config. Format: `projects/{project}/locations/{location}/bitbucketServerConfigs/{id}`.
+    &quot;githubEnterpriseConfig&quot;: &quot;A String&quot;, # The full resource name of the github enterprise config. Format: `projects/{project}/locations/{location}/githubEnterpriseConfigs/{id}`. `projects/{project}/githubEnterpriseConfigs/{id}`.
+    &quot;path&quot;: &quot;A String&quot;, # The path of the file, with the repo root as the root of the path.
+    &quot;repoType&quot;: &quot;A String&quot;, # See RepoType above.
+    &quot;repository&quot;: &quot;A String&quot;, # The fully qualified resource name of the Repos API repository. Either URI or repository can be specified. If unspecified, the repo from which the trigger invocation originated is assumed to be the repo from which to read the specified path.
+    &quot;revision&quot;: &quot;A String&quot;, # The branch, tag, arbitrary ref, or SHA version of the repo to use when resolving the filename (optional). This field respects the same syntax/resolution as described here: https://git-scm.com/docs/gitrevisions If unspecified, the revision from which the trigger invocation originated is assumed to be the revision from which to read the specified path.
+    &quot;uri&quot;: &quot;A String&quot;, # The URI of the repo. Either uri or repository can be specified. If unspecified, the repo from which the trigger invocation originated is assumed to be the repo from which to read the specified path.
+  &quot;github&quot;: { # GitHubEventsConfig describes the configuration of a trigger that creates a build whenever a GitHub event is received. # GitHubEventsConfig describes the configuration of a trigger that creates a build whenever a GitHub event is received. Mutually exclusive with `trigger_template`.
+    &quot;enterpriseConfigResourceName&quot;: &quot;A String&quot;, # The resource name of the github enterprise config that should be applied to this installation. For example: &quot;projects/{$project_id}/locations/{$location_id}/githubEnterpriseConfigs/{$config_id}&quot;
+    &quot;installationId&quot;: &quot;A String&quot;, # The installationID that emits the GitHub event.
+    &quot;name&quot;: &quot;A String&quot;, # Name of the repository. For example: The name for https://github.com/googlecloudplatform/cloud-builders is &quot;cloud-builders&quot;.
+    &quot;owner&quot;: &quot;A String&quot;, # Owner of the repository. For example: The owner for https://github.com/googlecloudplatform/cloud-builders is &quot;googlecloudplatform&quot;.
+    &quot;pullRequest&quot;: { # PullRequestFilter contains filter properties for matching GitHub Pull Requests. # filter to match changes in pull requests.
+    &quot;push&quot;: { # Push contains filter properties for matching GitHub git pushes. # filter to match changes in refs like branches, tags.
+  &quot;gitlabEnterpriseEventsConfig&quot;: { # GitLabEventsConfig describes the configuration of a trigger that creates a build whenever a GitLab event is received. # GitLabEnterpriseEventsConfig describes the configuration of a trigger that creates a build whenever a GitLab Enterprise event is received.
+    &quot;gitlabConfig&quot;: { # GitLabConfig represents the configuration for a GitLab integration. # Output only. The GitLabConfig specified in the gitlab_config_resource field.
+    &quot;gitlabConfigResource&quot;: &quot;A String&quot;, # The GitLab config resource that this trigger config maps to.
+    &quot;projectNamespace&quot;: &quot;A String&quot;, # Namespace of the GitLab project.
+  &quot;id&quot;: &quot;A String&quot;, # Output only. Unique identifier of the trigger.
+  &quot;ignoredFiles&quot;: [ # ignored_files and included_files are file glob matches using https://golang.org/pkg/path/filepath/#Match extended with support for &quot;**&quot;. If ignored_files and changed files are both empty, then they are not used to determine whether or not to trigger a build. If ignored_files is not empty, then we ignore any files that match any of the ignored_file globs. If the change has no files that are outside of the ignored_files globs, then we do not trigger a build.
+  &quot;includeBuildLogs&quot;: &quot;A String&quot;, # If set to INCLUDE_BUILD_LOGS_WITH_STATUS, log url will be shown on GitHub page when build status is final. Setting this field to INCLUDE_BUILD_LOGS_WITH_STATUS for non GitHub triggers results in INVALID_ARGUMENT error.
+  &quot;includedFiles&quot;: [ # If any of the files altered in the commit pass the ignored_files filter and included_files is empty, then as far as this filter is concerned, we should trigger the build. If any of the files altered in the commit pass the ignored_files filter and included_files is not empty, then we make sure that at least one of those files matches a included_files glob. If not, then we do not trigger a build.
+  &quot;name&quot;: &quot;A String&quot;, # User-assigned name of the trigger. Must be unique within the project. Trigger names must meet the following requirements: + They must contain only alphanumeric characters and dashes. + They can be 1-64 characters long. + They must begin and end with an alphanumeric character.
+  &quot;pubsubConfig&quot;: { # PubsubConfig describes the configuration of a trigger that creates a build whenever a Pub/Sub message is published. # PubsubConfig describes the configuration of a trigger that creates a build whenever a Pub/Sub message is published.
+    &quot;serviceAccountEmail&quot;: &quot;A String&quot;, # Service account that will make the push request.
+    &quot;state&quot;: &quot;A String&quot;, # Potential issues with the underlying Pub/Sub subscription configuration. Only populated on get requests.
+    &quot;subscription&quot;: &quot;A String&quot;, # Output only. Name of the subscription. Format is `projects/{project}/subscriptions/{subscription}`.
+    &quot;topic&quot;: &quot;A String&quot;, # Optional. The name of the topic from which this subscription is receiving messages. Format is `projects/{project}/topics/{topic}`.
+  &quot;repositoryEventConfig&quot;: { # The configuration of a trigger that creates a build whenever an event from Repo API is received. # The configuration of a trigger that creates a build whenever an event from Repo API is received.
+    &quot;repository&quot;: &quot;A String&quot;, # The resource name of the Repo API resource.
+    &quot;repositoryType&quot;: &quot;A String&quot;, # Output only. The type of the SCM vendor the repository points to.
+  &quot;resourceName&quot;: &quot;A String&quot;, # The `Trigger` name with format: `projects/{project}/locations/{location}/triggers/{trigger}`, where {trigger} is a unique identifier generated by the service.
+  &quot;serviceAccount&quot;: &quot;A String&quot;, # The service account used for all user-controlled operations including UpdateBuildTrigger, RunBuildTrigger, CreateBuild, and CancelBuild. If no service account is set and the legacy Cloud Build service account ([PROJECT_NUM]@cloudbuild.gserviceaccount.com) is the default for the project then it will be used instead. Format: `projects/{PROJECT_ID}/serviceAccounts/{ACCOUNT_ID_OR_EMAIL}`
+  &quot;sourceToBuild&quot;: { # GitRepoSource describes a repo and ref of a code repository. # The repo and ref of the repository from which to build. This field is used only for those triggers that do not respond to SCM events. Triggers that respond to such events build source at whatever commit caused the event. This field is currently only used by Webhook, Pub/Sub, Manual, and Cron triggers.
+    &quot;ref&quot;: &quot;A String&quot;, # The branch or tag to use. Must start with &quot;refs/&quot; (required).
+    &quot;repoType&quot;: &quot;A String&quot;, # See RepoType below.
+    &quot;repository&quot;: &quot;A String&quot;, # The connected repository resource name, in the format `projects/*/locations/*/connections/*/repositories/*`. Either `uri` or `repository` can be specified and is required.
+    &quot;uri&quot;: &quot;A String&quot;, # The URI of the repo (e.g. https://github.com/user/repo.git). Either `uri` or `repository` can be specified and is required.
+  &quot;substitutions&quot;: { # Substitutions for Build resource. The keys must match the following regular expression: `^_[A-Z0-9_]+$`.
+  &quot;tags&quot;: [ # Tags for annotation of a `BuildTrigger`
+  &quot;triggerTemplate&quot;: { # Location of the source in a Google Cloud Source Repository. # Template describing the types of source changes to trigger a build. Branch and tag names in trigger templates are interpreted as regular expressions. Any branch or tag change that matches that regular expression will trigger a build. Mutually exclusive with `github`.
+  &quot;webhookConfig&quot;: { # WebhookConfig describes the configuration of a trigger that creates a build whenever a webhook is sent to a trigger&#x27;s webhook URL. # WebhookConfig describes the configuration of a trigger that creates a build whenever a webhook is sent to a trigger&#x27;s webhook URL.
+    &quot;secret&quot;: &quot;A String&quot;, # Required. Resource name for the secret required as a URL parameter.
+  projectId: string, Required. ID of the project for which to configure automatic builds.
+    <code class="details" id="delete">delete(name, projectId=None, triggerId=None, x__xgafv=None)</code>
+  <pre>Deletes a `BuildTrigger` by its project ID and trigger ID.
+  name: string, The name of the `Trigger` to delete. Format: `projects/{project}/locations/{location}/triggers/{trigger}` (required)
+  projectId: string, Required. ID of the project that owns the trigger.
+  triggerId: string, Required. ID of the `BuildTrigger` to delete.
+    <code class="details" id="get">get(name, projectId=None, triggerId=None, x__xgafv=None)</code>
+  <pre>Returns information about a `BuildTrigger`.
+  name: string, The name of the `Trigger` to retrieve. Format: `projects/{project}/locations/{location}/triggers/{trigger}` (required)
+  triggerId: string, Required. Identifier (`id` or `name`) of the `BuildTrigger` to get.
+    <code class="details" id="list">list(parent, pageSize=None, pageToken=None, projectId=None, x__xgafv=None)</code>
+  <pre>Lists existing `BuildTrigger`s.
+  parent: string, The parent of the collection of `Triggers`. Format: `projects/{project}/locations/{location}` (required)
+  pageToken: string, Token to provide to skip to a particular spot in the list.
+  projectId: string, Required. ID of the project for which to list BuildTriggers.
+    { # Response containing existing `BuildTriggers`.
+  &quot;nextPageToken&quot;: &quot;A String&quot;, # Token to receive the next page of results.
+  &quot;triggers&quot;: [ # `BuildTriggers` for the project, sorted by `create_time` descending.
+    <code class="details" id="patch">patch(resourceName, body, projectId=None, triggerId=None, updateMask=None, x__xgafv=None)</code>
+  <pre>Updates a `BuildTrigger` by its project ID and trigger ID.
+  resourceName: string, The `Trigger` name with format: `projects/{project}/locations/{location}/triggers/{trigger}`, where {trigger} is a unique identifier generated by the service. (required)
+  triggerId: string, Required. ID of the `BuildTrigger` to update.
+    <code class="details" id="run">run(name, body=None, x__xgafv=None)</code>
+  <pre>Runs a `BuildTrigger` at a particular source revision. To run a regional or global trigger, use the POST request that includes the location endpoint in the path (ex. v1/projects/{projectId}/locations/{region}/triggers/{triggerId}:run). The POST request that does not include the location endpoint in the path can only be used when running global triggers.
+  name: string, The name of the `Trigger` to run. Format: `projects/{project}/locations/{location}/triggers/{trigger}` (required)
+{ # Specifies a build trigger to run and the source to use.
+  &quot;source&quot;: { # Location of the source in a Google Cloud Source Repository. # Source to build against this trigger. Branch and tag names cannot consist of regular expressions.
+  &quot;triggerId&quot;: &quot;A String&quot;, # Required. ID of the trigger.
+    <code class="details" id="webhook">webhook(name, body=None, projectId=None, secret=None, trigger=None, x__xgafv=None)</code>
+  <pre>ReceiveTriggerWebhook [Experimental] is called when the API receives a webhook request targeted at a specific trigger.
+  name: string, The name of the `ReceiveTriggerWebhook` to retrieve. Format: `projects/{project}/locations/{location}/triggers/{trigger}` (required)
+  projectId: string, Project in which the specified trigger lives
+  secret: string, Secret token used for authorization if an OAuth token isn&#x27;t provided.
+  trigger: string, Name of the trigger to run the payload against
+    { # ReceiveTriggerWebhookResponse [Experimental] is the response object for the ReceiveTriggerWebhook method.

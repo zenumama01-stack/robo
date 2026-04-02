@@ -1,0 +1,69 @@
+<h1><a href="gkeonprem_v1.html">GKE On-Prem API</a> . <a href="gkeonprem_v1.projects.html">projects</a> . <a href="gkeonprem_v1.projects.locations.html">locations</a> . <a href="gkeonprem_v1.projects.locations.bareMetalClusters.html">bareMetalClusters</a> . <a href="gkeonprem_v1.projects.locations.bareMetalClusters.bareMetalNodePools.html">bareMetalNodePools</a></h1>
+  <code><a href="gkeonprem_v1.projects.locations.bareMetalClusters.bareMetalNodePools.operations.html">operations()</a></code>
+  <code><a href="#create">create(parent, body, bareMetalNodePoolId=None, validateOnly=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Creates a new bare metal node pool in a given project, location and Bare Metal cluster.</p>
+  <code><a href="#delete">delete(name, allowMissing=None, etag=None, ignoreErrors=None, validateOnly=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Deletes a single bare metal node pool.</p>
+<p class="firstline">Enrolls an existing bare metal node pool to the Anthos On-Prem API within a given project and location. Through enrollment, an existing node pool will become Anthos On-Prem API managed. The corresponding GCP resources will be created.</p>
+<p class="firstline">Gets details of a single bare metal node pool.</p>
+<p class="firstline">Lists bare metal node pools in a given project, location and bare metal cluster.</p>
+  <code><a href="#patch">patch(name, body, allowMissing=None, updateMask=None, validateOnly=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Updates the parameters of a single bare metal node pool.</p>
+  <code><a href="#unenroll">unenroll(name, allowMissing=None, etag=None, validateOnly=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Unenrolls a bare metal node pool from Anthos On-Prem API.</p>
+    <code class="details" id="create">create(parent, body, bareMetalNodePoolId=None, validateOnly=None, x__xgafv=None)</code>
+  <pre>Creates a new bare metal node pool in a given project, location and Bare Metal cluster.
+  parent: string, Required. The parent resource where this node pool will be created. projects/{project}/locations/{location}/bareMetalClusters/{cluster} (required)
+{ # Resource that represents a bare metal node pool.
+  &quot;annotations&quot;: { # Annotations on the bare metal node pool. This field has the same restrictions as Kubernetes annotations. The total size of all keys and values combined is limited to 256k. Key can have 2 segments: prefix (optional) and name (required), separated by a slash (/). Prefix must be a DNS subdomain. Name must be 63 characters or less, begin and end with alphanumerics, with dashes (-), underscores (_), dots (.), and alphanumerics between.
+  &quot;createTime&quot;: &quot;A String&quot;, # Output only. The time at which this bare metal node pool was created.
+  &quot;deleteTime&quot;: &quot;A String&quot;, # Output only. The time at which this bare metal node pool was deleted. If the resource is not deleted, this must be empty
+  &quot;displayName&quot;: &quot;A String&quot;, # The display name for the bare metal node pool.
+  &quot;name&quot;: &quot;A String&quot;, # Immutable. The bare metal node pool resource name.
+  &quot;nodePoolConfig&quot;: { # BareMetalNodePoolConfig describes the configuration of all nodes within a given bare metal node pool. # Required. Node pool configuration.
+  &quot;reconciling&quot;: True or False, # Output only. If set, there are currently changes in flight to the bare metal node pool.
+  &quot;state&quot;: &quot;A String&quot;, # Output only. The current state of the bare metal node pool.
+  &quot;status&quot;: { # ResourceStatus describes why a cluster or node pool has a certain status. (e.g., ERROR or DEGRADED). # Output only. ResourceStatus representing the detailed node pool status.
+  &quot;uid&quot;: &quot;A String&quot;, # Output only. The unique identifier of the bare metal node pool.
+  &quot;updateTime&quot;: &quot;A String&quot;, # Output only. The time at which this bare metal node pool was last updated.
+  &quot;upgradePolicy&quot;: { # BareMetalNodePoolUpgradePolicy defines the node pool upgrade policy. # The worker node pool upgrade policy.
+    &quot;parallelUpgradeConfig&quot;: { # BareMetalParallelUpgradeConfig defines the parallel upgrade settings for worker node pools. # The parallel upgrade settings for worker node pools.
+      &quot;concurrentNodes&quot;: 42, # The maximum number of nodes that can be upgraded at once.
+      &quot;minimumAvailableNodes&quot;: 42, # The minimum number of nodes that should be healthy and available during an upgrade. If set to the default value of 0, it is possible that none of the nodes will be available during an upgrade.
+  bareMetalNodePoolId: string, The ID to use for the node pool, which will become the final component of the node pool&#x27;s resource name. This value must be up to 63 characters, and valid characters are /a-z-/. The value must not be permitted to be a UUID (or UUID-like: anything matching /^[0-9a-f]{8}(-[0-9a-f]{4}){3}-[0-9a-f]{12}$/i).
+  validateOnly: boolean, If set, only validate the request, but do not actually create the node pool.
+    <code class="details" id="delete">delete(name, allowMissing=None, etag=None, ignoreErrors=None, validateOnly=None, x__xgafv=None)</code>
+  <pre>Deletes a single bare metal node pool.
+  name: string, Required. The name of the node pool to delete. Format: projects/{project}/locations/{location}/bareMetalClusters/{cluster}/bareMetalNodePools/{nodepool} (required)
+  allowMissing: boolean, If set to true, and the bare metal node pool is not found, the request will succeed but no action will be taken on the server and return a completed LRO.
+  etag: string, The current etag of the BareMetalNodePool. If an etag is provided and does not match the current etag of the node pool, deletion will be blocked and an ABORTED error will be returned.
+  ignoreErrors: boolean, If set to true, the deletion of a bare metal node pool resource will succeed even if errors occur during deletion. This parameter can be used when you want to delete GCP&#x27;s node pool resource and you&#x27;ve already deleted the on-prem admin cluster that hosted your node pool. WARNING: Using this parameter when your user cluster still exists may result in a deleted GCP node pool but an existing on-prem node pool.
+  validateOnly: boolean, If set, only validate the request, but do not actually delete the node pool.
+  <pre>Enrolls an existing bare metal node pool to the Anthos On-Prem API within a given project and location. Through enrollment, an existing node pool will become Anthos On-Prem API managed. The corresponding GCP resources will be created.
+{ # Message for enrolling an existing bare metal node pool to the GKE on-prem API.
+  &quot;bareMetalNodePoolId&quot;: &quot;A String&quot;, # User provided OnePlatform identifier that is used as part of the resource name. (https://tools.ietf.org/html/rfc1123) format.
+  &quot;validateOnly&quot;: True or False, # If set, only validate the request, but do not actually enroll the node pool.
+  <pre>Gets details of a single bare metal node pool.
+  name: string, Required. The name of the node pool to retrieve. projects/{project}/locations/{location}/bareMetalClusters/{cluster}/bareMetalNodePools/{nodepool} (required)
+  view: string, View for bare metal node pool. When `BASIC` is specified, only the node pool resource name is returned. The default/unset value `NODE_POOL_VIEW_UNSPECIFIED` is the same as `FULL&#x27;, which returns the complete node pool configuration details.
+      NODE_POOL_VIEW_UNSPECIFIED - If the value is not set, the default `FULL` view is used.
+      BASIC - Includes basic information of a node pool resource including node pool resource name.
+      FULL - Includes the complete configuration for bare metal node pool resource. This is the default value for GetBareMetalNodePoolRequest method.
+  <pre>Lists bare metal node pools in a given project, location and bare metal cluster.
+  parent: string, Required. The parent, which owns this collection of node pools. Format: projects/{project}/locations/{location}/bareMetalClusters/{bareMetalCluster} (required)
+  pageSize: integer, The maximum number of node pools to return. The service may return fewer than this value. If unspecified, at most 50 node pools will be returned. The maximum value is 1000; values above 1000 will be coerced to 1000.
+  pageToken: string, A page token, received from a previous `ListBareMetalNodePools` call. Provide this to retrieve the subsequent page. When paginating, all other parameters provided to `ListBareMetalNodePools` must match the call that provided the page token.
+  view: string, View for bare metal node pools. When `BASIC` is specified, only the node pool resource name is returned. The default/unset value `NODE_POOL_VIEW_UNSPECIFIED` is the same as `FULL&#x27;, which returns the complete node pool configuration details.
+      FULL - Includes the complete configuration for bare metal node pool resource. This is the default value for ListBareMetalNodePoolsRequest method.
+    { # Response message for listing bare metal node pools.
+  &quot;bareMetalNodePools&quot;: [ # The node pools from the specified parent resource.
+    <code class="details" id="patch">patch(name, body, allowMissing=None, updateMask=None, validateOnly=None, x__xgafv=None)</code>
+  <pre>Updates the parameters of a single bare metal node pool.
+  name: string, Immutable. The bare metal node pool resource name. (required)
+  allowMissing: boolean, If set to true, and the bare metal node pool is not found, the request will create a new bare metal node pool with the provided configuration. The user must have both create and update permission to call Update with allow_missing set to true.
+  updateMask: string, Required. Field mask is used to specify the fields to be overwritten in the BareMetalNodePool resource by the update. The fields specified in the update_mask are relative to the resource, not the full request. A field will be overwritten if it is in the mask. If the user does not provide a mask then all populated fields in the BareMetalNodePool message will be updated. Empty fields will be ignored unless a field mask is used.
+    <code class="details" id="unenroll">unenroll(name, allowMissing=None, etag=None, validateOnly=None, x__xgafv=None)</code>
+  <pre>Unenrolls a bare metal node pool from Anthos On-Prem API.
+  name: string, Required. The name of the node pool to unenroll. Format: projects/{project}/locations/{location}/bareMetalClusters/{cluster}/bareMetalNodePools/{nodepool} (required)
+  etag: string, The current etag of the bare metal node pool. If an etag is provided and does not match the current etag of node pool, deletion will be blocked and an ABORTED error will be returned.
+  validateOnly: boolean, If set, only validate the request, but do not actually unenroll the node pool.

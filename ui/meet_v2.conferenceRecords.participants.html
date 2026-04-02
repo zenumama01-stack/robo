@@ -1,0 +1,27 @@
+<h1><a href="meet_v2.html">Google Meet API</a> . <a href="meet_v2.conferenceRecords.html">conferenceRecords</a> . <a href="meet_v2.conferenceRecords.participants.html">participants</a></h1>
+  <code><a href="meet_v2.conferenceRecords.participants.participantSessions.html">participantSessions()</a></code>
+<p class="firstline">Returns the participantSessions Resource.</p>
+<p class="firstline">Gets a participant by participant ID.</p>
+<p class="firstline">Lists the participants in a conference record. By default, ordered by join time and in descending order. This API supports `fields` as standard parameters like every other API. However, when the `fields` request parameter is omitted, this API defaults to `'participants/*, next_page_token'`.</p>
+  <pre>Gets a participant by participant ID.
+  name: string, Required. Resource name of the participant. (required)
+    { # User who attended or is attending a conference.
+  &quot;anonymousUser&quot;: { # User who joins anonymously (meaning not signed into a Google Account). # Anonymous user.
+    &quot;displayName&quot;: &quot;A String&quot;, # Output only. User provided name when they join a conference anonymously.
+  &quot;earliestStartTime&quot;: &quot;A String&quot;, # Output only. Time when the participant first joined the meeting.
+  &quot;latestEndTime&quot;: &quot;A String&quot;, # Output only. Time when the participant left the meeting for the last time. This can be null if it&#x27;s an active meeting.
+  &quot;name&quot;: &quot;A String&quot;, # Output only. Resource name of the participant. Format: `conferenceRecords/{conference_record}/participants/{participant}`
+  &quot;phoneUser&quot;: { # User dialing in from a phone where the user&#x27;s identity is unknown because they haven&#x27;t signed in with a Google Account. # User calling from their phone.
+    &quot;displayName&quot;: &quot;A String&quot;, # Output only. Partially redacted user&#x27;s phone number when calling.
+  &quot;signedinUser&quot;: { # A signed-in user can be: a) An individual joining from a personal computer, mobile device, or through companion mode. b) A robot account used by conference room devices. # Signed-in user.
+    &quot;displayName&quot;: &quot;A String&quot;, # Output only. For a personal device, it&#x27;s the user&#x27;s first name and last name. For a robot account, it&#x27;s the administrator-specified device name. For example, &quot;Altostrat Room&quot;.
+    &quot;user&quot;: &quot;A String&quot;, # Output only. Unique ID for the user. Interoperable with Admin SDK API and People API. Format: `users/{user}`
+  <pre>Lists the participants in a conference record. By default, ordered by join time and in descending order. This API supports `fields` as standard parameters like every other API. However, when the `fields` request parameter is omitted, this API defaults to `&#x27;participants/*, next_page_token&#x27;`.
+  parent: string, Required. Format: `conferenceRecords/{conference_record}` (required)
+  filter: string, Optional. User specified filtering condition in [EBNF format](https://en.wikipedia.org/wiki/Extended_Backus%E2%80%93Naur_form). The following are the filterable fields: * `earliest_start_time` * `latest_end_time` For example, `latest_end_time IS NULL` returns active participants in the conference.
+  pageSize: integer, Maximum number of participants to return. The service might return fewer than this value. If unspecified, at most 100 participants are returned. The maximum value is 250; values above 250 are coerced to 250. Maximum might change in the future.
+  pageToken: string, Page token returned from previous List Call.
+    { # Response of ListParticipants method.
+  &quot;nextPageToken&quot;: &quot;A String&quot;, # Token to be circulated back for further List call if current List doesn&#x27;t include all the participants. Unset if all participants are returned.
+  &quot;participants&quot;: [ # List of participants in one page.
+  &quot;totalSize&quot;: 42, # Total, exact number of `participants`. By default, this field isn&#x27;t included in the response. Set the field mask in [SystemParameterContext](https://cloud.google.com/apis/docs/system-parameters) to receive this field in the response.

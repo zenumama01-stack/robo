@@ -1,0 +1,31 @@
+<h1><a href="content_v2_1.html">Content API for Shopping</a> . <a href="content_v2_1.csses.html">csses</a></h1>
+  <code><a href="#get">get(cssGroupId, cssDomainId, x__xgafv=None)</a></code></p>
+<p class="firstline">Retrieves a single CSS domain by ID.</p>
+  <code><a href="#list">list(cssGroupId, pageSize=None, pageToken=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Lists CSS domains affiliated with a CSS group.</p>
+  <code><a href="#updatelabels">updatelabels(cssGroupId, cssDomainId, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Updates labels that are assigned to a CSS domain by its CSS group.</p>
+    <code class="details" id="get">get(cssGroupId, cssDomainId, x__xgafv=None)</code>
+  <pre>Retrieves a single CSS domain by ID.
+  cssGroupId: string, Required. The ID of the managing account. If this parameter is not the same as [cssDomainId](#cssDomainId), then this ID must be a CSS group ID and `cssDomainId` must be the ID of a CSS domain affiliated with this group. (required)
+  cssDomainId: string, Required. The ID of the CSS domain to return. (required)
+    { # Information about CSS domain.
+  &quot;cssDomainId&quot;: &quot;A String&quot;, # Output only. Immutable. The CSS domain ID.
+  &quot;cssGroupId&quot;: &quot;A String&quot;, # Output only. Immutable. The ID of the CSS group this CSS domain is affiliated with. Only populated for CSS group users.
+  &quot;displayName&quot;: &quot;A String&quot;, # Output only. Immutable. The CSS domain&#x27;s display name, used when space is constrained.
+  &quot;fullName&quot;: &quot;A String&quot;, # Output only. Immutable. The CSS domain&#x27;s full name.
+  &quot;homepageUri&quot;: &quot;A String&quot;, # Output only. Immutable. The CSS domain&#x27;s homepage.
+  &quot;labelIds&quot;: [ # A list of label IDs that are assigned to this CSS domain by its CSS group. Only populated for CSS group users.
+    <code class="details" id="list">list(cssGroupId, pageSize=None, pageToken=None, x__xgafv=None)</code>
+  <pre>Lists CSS domains affiliated with a CSS group.
+  cssGroupId: string, Required. The CSS group ID of CSS domains to be listed. (required)
+  pageSize: integer, The maximum number of CSS domains to return. The service may return fewer than this value. If unspecified, at most 50 CSS domains will be returned. The maximum value is 1000; values above 1000 will be coerced to 1000.
+  pageToken: string, A page token, received from a previous `ListCsses` call. Provide this to retrieve the subsequent page. When paginating, all other parameters provided to `ListCsses` must match the call that provided the page token.
+    { # The response message for the `ListCsses` method
+  &quot;csses&quot;: [ # The CSS domains affiliated with the specified CSS group.
+    <code class="details" id="updatelabels">updatelabels(cssGroupId, cssDomainId, body=None, x__xgafv=None)</code>
+  <pre>Updates labels that are assigned to a CSS domain by its CSS group.
+  cssGroupId: string, Required. The CSS group ID of the updated CSS domain. (required)
+  cssDomainId: string, Required. The ID of the updated CSS domain. (required)
+{ # The IDs of labels that should be assigned to the CSS domain.
+  &quot;labelIds&quot;: [ # The list of label IDs.

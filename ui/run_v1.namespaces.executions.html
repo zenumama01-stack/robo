@@ -1,0 +1,55 @@
+<h1><a href="run_v1.html">Cloud Run Admin API</a> . <a href="run_v1.namespaces.html">namespaces</a> . <a href="run_v1.namespaces.executions.html">executions</a></h1>
+<p class="firstline">Cancel an execution.</p>
+  <code><a href="#delete">delete(name, apiVersion=None, kind=None, propagationPolicy=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Delete an execution.</p>
+<p class="firstline">Get information about an execution.</p>
+<p class="firstline">List executions. Results are sorted by creation time, descending.</p>
+  <pre>Cancel an execution.
+  name: string, Required. The name of the execution to cancel. Replace {namespace} with the project ID or number. It takes the form namespaces/{namespace}. For example: namespaces/PROJECT_ID (required)
+{ # Request message for cancelling an execution.
+    { # Execution represents the configuration of a single execution. An execution is an immutable resource that references a container image which is run to completion.
+  &quot;apiVersion&quot;: &quot;A String&quot;, # Optional. APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values.
+  &quot;kind&quot;: &quot;A String&quot;, # Optional. Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase.
+  &quot;metadata&quot;: { # google.cloud.run.meta.v1.ObjectMeta is metadata that all persisted resources must have, which includes all objects users must create. # Optional. Standard object&#x27;s metadata.
+  &quot;spec&quot;: { # ExecutionSpec describes how the execution will look. # Optional. Specification of the desired behavior of an execution.
+    &quot;parallelism&quot;: 42, # Optional. Specifies the maximum desired number of tasks the execution should run at given time. When the job is run, if this field is 0 or unset, the maximum possible value will be used for that execution. The actual number of tasks running in steady state will be less than this number when there are fewer tasks waiting to be completed, i.e. when the work left to do is less than max parallelism.
+    &quot;taskCount&quot;: 42, # Optional. Specifies the desired number of tasks the execution should run. Setting to 1 means that parallelism is limited to 1 and the success of that task signals the success of the execution. Defaults to 1.
+    &quot;template&quot;: { # TaskTemplateSpec describes the data a task should have when created from a template. # Optional. The template used to create tasks for this execution.
+      &quot;spec&quot;: { # TaskSpec is a description of a task. # Optional. Specification of the desired behavior of the task.
+        &quot;containers&quot;: [ # Optional. List of containers belonging to the task. We disallow a number of fields on this Container.
+        &quot;maxRetries&quot;: 42, # Optional. Number of retries allowed per task, before marking this job failed. Defaults to 3.
+        &quot;serviceAccountName&quot;: &quot;A String&quot;, # Optional. Email address of the IAM service account associated with the task of a job execution. The service account represents the identity of the running task, and determines what permissions the task has. If not provided, the task will use the project&#x27;s default service account.
+        &quot;timeoutSeconds&quot;: &quot;A String&quot;, # Optional. Duration in seconds the task may be active before the system will actively try to mark it failed and kill associated containers. This applies per attempt of a task, meaning each retry can run for the full timeout. Defaults to 600 seconds.
+        &quot;volumes&quot;: [ # Optional. List of volumes that can be mounted by containers belonging to the task.
+  &quot;status&quot;: { # ExecutionStatus represents the current state of an Execution. # Output only. Current status of an execution.
+    &quot;cancelledCount&quot;: 42, # Optional. The number of tasks which reached phase Cancelled.
+    &quot;completionTime&quot;: &quot;A String&quot;, # Optional. Represents the time that the execution was completed. It is not guaranteed to be set in happens-before order across separate operations. It is represented in RFC3339 form and is in UTC. +optional
+    &quot;conditions&quot;: [ # Optional. Conditions communicate information about ongoing/complete reconciliation processes that bring the &quot;spec&quot; inline with the observed state of the world. Execution-specific conditions include: * `ResourcesAvailable`: `True` when underlying resources have been provisioned. * `Started`: `True` when the execution has started to execute. * `Completed`: `True` when the execution has succeeded. `False` when the execution has failed.
+    &quot;failedCount&quot;: 42, # Optional. The number of tasks which reached phase Failed.
+    &quot;logUri&quot;: &quot;A String&quot;, # Optional. URI where logs for this execution can be found in Cloud Console.
+    &quot;observedGeneration&quot;: 42, # Optional. The &#x27;generation&#x27; of the execution that was last processed by the controller.
+    &quot;retriedCount&quot;: 42, # Optional. The number of tasks which have retried at least once.
+    &quot;runningCount&quot;: 42, # Optional. The number of actively running tasks.
+    &quot;startTime&quot;: &quot;A String&quot;, # Optional. Represents the time that the execution started to run. It is not guaranteed to be set in happens-before order across separate operations. It is represented in RFC3339 form and is in UTC.
+    &quot;succeededCount&quot;: 42, # Optional. The number of tasks which reached phase Succeeded.
+    <code class="details" id="delete">delete(name, apiVersion=None, kind=None, propagationPolicy=None, x__xgafv=None)</code>
+  <pre>Delete an execution.
+  name: string, Required. The name of the execution to delete. Replace {namespace} with the project ID or number. It takes the form namespaces/{namespace}. For example: namespaces/PROJECT_ID (required)
+  apiVersion: string, Optional. Cloud Run currently ignores this parameter.
+  kind: string, Optional. Cloud Run currently ignores this parameter.
+  propagationPolicy: string, Optional. Specifies the propagation policy of delete. Cloud Run currently ignores this setting.
+  <pre>Get information about an execution.
+  name: string, Required. The name of the execution to retrieve. Replace {namespace} with the project ID or number. It takes the form namespaces/{namespace}. For example: namespaces/PROJECT_ID (required)
+  <pre>List executions. Results are sorted by creation time, descending.
+  parent: string, Required. The namespace from which the executions should be listed. Replace {namespace} with the project ID or number. It takes the form namespaces/{namespace}. For example: namespaces/PROJECT_ID (required)
+  continue: string, Optional. Optional encoded string to continue paging.
+  fieldSelector: string, Optional. Not supported by Cloud Run.
+  includeUninitialized: boolean, Optional. Not supported by Cloud Run.
+  labelSelector: string, Optional. Allows to filter resources based on a label. Supported operations are =, !=, exists, in, and notIn.
+  resourceVersion: string, Optional. Not supported by Cloud Run.
+  watch: boolean, Optional. Not supported by Cloud Run.
+    { # ListExecutionsResponse is a list of Executions resources.
+  &quot;apiVersion&quot;: &quot;A String&quot;, # The API version for this call such as &quot;run.googleapis.com/v1&quot;.
+  &quot;items&quot;: [ # List of Executions.
+  &quot;kind&quot;: &quot;A String&quot;, # The kind of this resource, in this case &quot;ExecutionsList&quot;.
+  &quot;metadata&quot;: { # Metadata for synthetic resources like List. In Cloud Run, all List Resources Responses will have a ListMeta instead of ObjectMeta. # Metadata associated with this executions list.

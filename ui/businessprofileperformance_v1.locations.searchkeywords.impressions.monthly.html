@@ -1,0 +1,22 @@
+<h1><a href="businessprofileperformance_v1.html">Business Profile Performance API</a> . <a href="businessprofileperformance_v1.locations.html">locations</a> . <a href="businessprofileperformance_v1.locations.searchkeywords.html">searchkeywords</a> . <a href="businessprofileperformance_v1.locations.searchkeywords.impressions.html">impressions</a> . <a href="businessprofileperformance_v1.locations.searchkeywords.impressions.monthly.html">monthly</a></h1>
+  <code><a href="#list">list(parent, monthlyRange_endMonth_day=None, monthlyRange_endMonth_month=None, monthlyRange_endMonth_year=None, monthlyRange_startMonth_day=None, monthlyRange_startMonth_month=None, monthlyRange_startMonth_year=None, pageSize=None, pageToken=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Returns the search keywords used to find a business in search or maps. Each search keyword is accompanied by impressions which are aggregated on a monthly basis. Example request: `GET https://businessprofileperformance.googleapis.com/v1/locations/12345/searchkeywords/impressions/monthly?monthly_range.start_month.year=2022&monthly_range.start_month.month=1&monthly_range.end_month.year=2022&monthly_range.end_month.month=3`</p>
+    <code class="details" id="list">list(parent, monthlyRange_endMonth_day=None, monthlyRange_endMonth_month=None, monthlyRange_endMonth_year=None, monthlyRange_startMonth_day=None, monthlyRange_startMonth_month=None, monthlyRange_startMonth_year=None, pageSize=None, pageToken=None, x__xgafv=None)</code>
+  <pre>Returns the search keywords used to find a business in search or maps. Each search keyword is accompanied by impressions which are aggregated on a monthly basis. Example request: `GET https://businessprofileperformance.googleapis.com/v1/locations/12345/searchkeywords/impressions/monthly?monthly_range.start_month.year=2022&amp;monthly_range.start_month.month=1&amp;monthly_range.end_month.year=2022&amp;monthly_range.end_month.month=3`
+  parent: string, Required. The location for which the time series should be fetched. Format: locations/{location_id} where location_id is an unobfuscated listing id. (required)
+  monthlyRange_endMonth_day: integer, Day of a month. Must be from 1 to 31 and valid for the year and month, or 0 to specify a year by itself or a year and month where the day isn&#x27;t significant.
+  monthlyRange_endMonth_month: integer, Month of a year. Must be from 1 to 12, or 0 to specify a year without a month and day.
+  monthlyRange_endMonth_year: integer, Year of the date. Must be from 1 to 9999, or 0 to specify a date without a year.
+  monthlyRange_startMonth_day: integer, Day of a month. Must be from 1 to 31 and valid for the year and month, or 0 to specify a year by itself or a year and month where the day isn&#x27;t significant.
+  monthlyRange_startMonth_month: integer, Month of a year. Must be from 1 to 12, or 0 to specify a year without a month and day.
+  monthlyRange_startMonth_year: integer, Year of the date. Must be from 1 to 9999, or 0 to specify a date without a year.
+  pageSize: integer, Optional. The number of results requested. The default page size is 100. Page size can be set to a maximum of 100.
+  pageToken: string, Optional. A token indicating the next paginated result to be returned.
+    { # Represents the response for ListSearchKeywordImpressionsMonthly.
+  &quot;nextPageToken&quot;: &quot;A String&quot;, # A token indicating the last paginated result returned. This can be used by succeeding requests to get the next &quot;page&quot; of keywords. It will only be present when there are more results to be returned.
+  &quot;searchKeywordsCounts&quot;: [ # Search terms which have been used to find a business.
+    { # Represents a single search keyword and its value.
+      &quot;insightsValue&quot;: { # Represents an insights value. # One of either: 1) The sum of the number of unique users that used the keyword in a month, aggregated for each month requested. 2) A threshold that indicates that the actual value is below this threshold.
+        &quot;threshold&quot;: &quot;A String&quot;, # Represents the threshold below which the actual value falls.
+        &quot;value&quot;: &quot;A String&quot;, # Represents the actual value.
+      &quot;searchKeyword&quot;: &quot;A String&quot;, # The lower-cased string that the user entered.

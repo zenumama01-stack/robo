@@ -1,0 +1,33 @@
+<h1><a href="discoveryengine_v1alpha.html">Discovery Engine API</a> . <a href="discoveryengine_v1alpha.projects.html">projects</a> . <a href="discoveryengine_v1alpha.projects.locations.html">locations</a> . <a href="discoveryengine_v1alpha.projects.locations.authorizations.html">authorizations</a></h1>
+  <code><a href="#create">create(parent, authorizationId=None, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Creates an Authorization.</p>
+<p class="firstline">Deletes an Authorization.</p>
+<p class="firstline">Gets an Authorization.</p>
+<p class="firstline">Lists all Authorizations under an Engine.</p>
+<p class="firstline">Updates an Authorization</p>
+    <code class="details" id="create">create(parent, authorizationId=None, body=None, x__xgafv=None)</code>
+  <pre>Creates an Authorization.
+  parent: string, Required. The parent resource name. Format: `projects/{project}/locations/{location}` (required)
+{ # Discovery Engine Authorization resource.
+  &quot;displayName&quot;: &quot;A String&quot;, # Required. The display name of the authorization. It must be a UTF-8 encoded string with a length limit of 128 characters.
+  &quot;name&quot;: &quot;A String&quot;, # Identifier. Resource name of the authorization. Format: `projects/{project}/locations/{location}/authorizations/{authorization}` It must be a UTF-8 encoded string with a length limit of 1024 characters.
+  &quot;serverSideOauth2&quot;: { # OAuth2 configuration. # Server-side OAuth2 configuration.
+    &quot;authorizationUri&quot;: &quot;A String&quot;, # Required. The URI the user is directed to when they need to authorize. Should include everything required for a successful authorization: OAuth ID, extra flags, etc. Example: `https://accounts.google.com/o/oauth2/v2/auth?client_id=OAUTH_ID&amp;scope=https://www.googleapis.com/auth/calendar.events&amp;response_type=code&amp;access_type=offline&amp;prompt=consent` The `redirect_uri` parameter will be overwritten by the Vertex AI Search frontend.
+    &quot;clientId&quot;: &quot;A String&quot;, # Required. The OAuth2 client ID.
+    &quot;clientSecret&quot;: &quot;A String&quot;, # Required. The OAuth2 client secret. Encrypted at rest.
+    &quot;pkceVerificationEnabled&quot;: True or False, # Optional. Whether to enable PKCE verification. https://datatracker.ietf.org/doc/html/rfc7636#section-3.1/
+    &quot;scopes&quot;: [ # Optional. The scopes to request. Example: `https://www.googleapis.com/auth/calendar.events` If omitted, no additional scopes are requested beyond those required by the authorization uri. If set, it will overwrite the scopes in the authorization uri when acquiring user authorization.
+    &quot;tokenUri&quot;: &quot;A String&quot;, # Required. The HTTP endpoint that exchanges a client authorization for an access token.
+  authorizationId: string, Required. The ID to use for the authorization, which will become the final component of the resource name. This field must conform to [RFC-1034](https://tools.ietf.org/html/rfc1034) with a length limit of 63 characters.
+  <pre>Deletes an Authorization.
+  name: string, Required. Resource name of Authorization. Format: `projects/{project}/locations/{location}/authorizations/{authorization}` If the caller does not have permission to delete the authorization, regardless of whether or not it exists, a `PERMISSION_DENIED` error is returned. If the authorization to delete does not exist, a `NOT_FOUND` error is returned. (required)
+  <pre>Gets an Authorization.
+  name: string, Required. Resource name of Authorization. Format: `projects/{project}/locations/{location}/authorizations/{authorization}` (required)
+  <pre>Lists all Authorizations under an Engine.
+  pageSize: integer, Maximum number of Authorizations to return. If unspecified, defaults to 100. The maximum allowed value is 1000; anything above that will be coerced down to 1000.
+  pageToken: string, A page token ListAuthorizationsResponse.next_page_token, received from a previous AuthorizationService.ListAuthorizations call. Provide this to retrieve the subsequent page. When paginating, all other parameters provided to ListAuthorizations must match the call that provided the page token.
+    { # Response message for the AuthorizationService.ListAuthorizations method.
+  &quot;authorizations&quot;: [ # All the customer&#x27;s Authorizations.
+  &quot;nextPageToken&quot;: &quot;A String&quot;, # A token that can be sent as ListAuthorizationsRequest.page_token to retrieve the next page. If this field is omitted, there are no subsequent pages.
+  <pre>Updates an Authorization
+  name: string, Identifier. Resource name of the authorization. Format: `projects/{project}/locations/{location}/authorizations/{authorization}` It must be a UTF-8 encoded string with a length limit of 1024 characters. (required)

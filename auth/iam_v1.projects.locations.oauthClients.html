@@ -1,0 +1,41 @@
+<h1><a href="iam_v1.html">Identity and Access Management (IAM) API</a> . <a href="iam_v1.projects.html">projects</a> . <a href="iam_v1.projects.locations.html">locations</a> . <a href="iam_v1.projects.locations.oauthClients.html">oauthClients</a></h1>
+  <code><a href="iam_v1.projects.locations.oauthClients.credentials.html">credentials()</a></code>
+  <code><a href="#create">create(parent, body=None, oauthClientId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Creates a new OauthClient. You cannot reuse the name of a deleted OauthClient until 30 days after deletion.</p>
+<p class="firstline">Deletes an OauthClient. You cannot use a deleted OauthClient. However, deletion does not revoke access tokens that have already been issued. They continue to grant access. Deletion does revoke refresh tokens that have already been issued. They cannot be used to renew an access token. If the OauthClient is undeleted, and the refresh tokens are not expired, they are valid for token exchange again. You can undelete an OauthClient for 30 days. After 30 days, deletion is permanent. You cannot update deleted OauthClients. However, you can view and list them.</p>
+<p class="firstline">Gets an individual OauthClient.</p>
+<p class="firstline">Lists all non-deleted OauthClients in a project. If `show_deleted` is set to `true`, then deleted OauthClients are also listed.</p>
+<p class="firstline">Updates an existing OauthClient.</p>
+<p class="firstline">Undeletes an OauthClient, as long as it was deleted fewer than 30 days ago.</p>
+    <code class="details" id="create">create(parent, body=None, oauthClientId=None, x__xgafv=None)</code>
+  <pre>Creates a new OauthClient. You cannot reuse the name of a deleted OauthClient until 30 days after deletion.
+  parent: string, Required. The parent resource to create the OauthClient in. The only supported location is `global`. (required)
+{ # Represents an OauthClient. Used to access Google Cloud resources on behalf of a Workforce Identity Federation user by using OAuth 2.0 Protocol to obtain an access token from Google Cloud.
+  &quot;allowedGrantTypes&quot;: [ # Required. The list of OAuth grant types is allowed for the OauthClient.
+  &quot;allowedRedirectUris&quot;: [ # Required. The list of redirect uris that is allowed to redirect back when authorization process is completed.
+  &quot;allowedScopes&quot;: [ # Required. The list of scopes that the OauthClient is allowed to request during OAuth flows. The following scopes are supported: * `https://www.googleapis.com/auth/cloud-platform`: See, edit, configure, and delete your Google Cloud data and see the email address for your Google Account.
+  &quot;clientId&quot;: &quot;A String&quot;, # Output only. The system-generated OauthClient id.
+  &quot;clientType&quot;: &quot;A String&quot;, # Immutable. The type of OauthClient. Either public or private. For private clients, the client secret can be managed using the dedicated OauthClientCredential resource.
+  &quot;description&quot;: &quot;A String&quot;, # Optional. A user-specified description of the OauthClient. Cannot exceed 256 characters.
+  &quot;disabled&quot;: True or False, # Optional. Whether the OauthClient is disabled. You cannot use a disabled OAuth client.
+  &quot;displayName&quot;: &quot;A String&quot;, # Optional. A user-specified display name of the OauthClient. Cannot exceed 32 characters.
+  &quot;expireTime&quot;: &quot;A String&quot;, # Output only. Time after which the OauthClient will be permanently purged and cannot be recovered.
+  &quot;name&quot;: &quot;A String&quot;, # Immutable. Identifier. The resource name of the OauthClient. Format:`projects/{project}/locations/{location}/oauthClients/{oauth_client}`.
+  &quot;state&quot;: &quot;A String&quot;, # Output only. The state of the OauthClient.
+  oauthClientId: string, Required. The ID to use for the OauthClient, which becomes the final component of the resource name. This value should be a string of 6 to 63 lowercase letters, digits, or hyphens. It must start with a letter, and cannot have a trailing hyphen. The prefix `gcp-` is reserved for use by Google, and may not be specified.
+  <pre>Deletes an OauthClient. You cannot use a deleted OauthClient. However, deletion does not revoke access tokens that have already been issued. They continue to grant access. Deletion does revoke refresh tokens that have already been issued. They cannot be used to renew an access token. If the OauthClient is undeleted, and the refresh tokens are not expired, they are valid for token exchange again. You can undelete an OauthClient for 30 days. After 30 days, deletion is permanent. You cannot update deleted OauthClients. However, you can view and list them.
+  name: string, Required. The name of the OauthClient to delete. Format: `projects/{project}/locations/{location}/oauthClients/{oauth_client}`. (required)
+  <pre>Gets an individual OauthClient.
+  name: string, Required. The name of the OauthClient to retrieve. Format: `projects/{project}/locations/{location}/oauthClients/{oauth_client}`. (required)
+  <pre>Lists all non-deleted OauthClients in a project. If `show_deleted` is set to `true`, then deleted OauthClients are also listed.
+  parent: string, Required. The parent to list OauthClients for. (required)
+  pageSize: integer, Optional. The maximum number of OauthClients to return. If unspecified, at most 50 OauthClients will be returned. The maximum value is 100; values above 100 are truncated to 100.
+  pageToken: string, Optional. A page token, received from a previous `ListOauthClients` call. Provide this to retrieve the subsequent page.
+  showDeleted: boolean, Optional. Whether to return soft-deleted OauthClients.
+    { # Response message for ListOauthClients.
+  &quot;oauthClients&quot;: [ # A list of OauthClients.
+  <pre>Updates an existing OauthClient.
+  name: string, Immutable. Identifier. The resource name of the OauthClient. Format:`projects/{project}/locations/{location}/oauthClients/{oauth_client}`. (required)
+  <pre>Undeletes an OauthClient, as long as it was deleted fewer than 30 days ago.
+  name: string, Required. The name of the OauthClient to undelete. Format: `projects/{project}/locations/{location}/oauthClients/{oauth_client}`. (required)
+{ # Request message for UndeleteOauthClient.

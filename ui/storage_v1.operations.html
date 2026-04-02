@@ -1,0 +1,27 @@
+<h1><a href="storage_v1.html">Cloud Storage JSON API</a> . <a href="storage_v1.operations.html">operations</a></h1>
+  <code><a href="#advanceRelocateBucket">advanceRelocateBucket(bucket, operationId, body=None)</a></code></p>
+<p class="firstline">Starts asynchronous advancement of the relocate bucket operation in the case of required write downtime, to allow it to lock the bucket at the source location, and proceed with the bucket location swap. The server makes a best effort to advance the relocate bucket operation, but success is not guaranteed.</p>
+  <code><a href="#cancel">cancel(bucket, operationId)</a></code></p>
+<p class="firstline">Starts asynchronous cancellation on a long-running operation. The server makes a best effort to cancel the operation, but success is not guaranteed.</p>
+  <code><a href="#get">get(bucket, operationId)</a></code></p>
+<p class="firstline">Gets the latest state of a long-running operation.</p>
+  <code><a href="#list">list(bucket, filter=None, pageSize=None, pageToken=None)</a></code></p>
+    <code class="details" id="advanceRelocateBucket">advanceRelocateBucket(bucket, operationId, body=None)</code>
+  <pre>Starts asynchronous advancement of the relocate bucket operation in the case of required write downtime, to allow it to lock the bucket at the source location, and proceed with the bucket location swap. The server makes a best effort to advance the relocate bucket operation, but success is not guaranteed.
+  bucket: string, Name of the bucket to advance the relocate for. (required)
+  operationId: string, ID of the operation resource. (required)
+{ # An AdvanceRelocateBucketOperation request.
+  &quot;expireTime&quot;: &quot;A String&quot;, # Specifies the time when the relocation will revert to the sync stage if the relocation hasn&#x27;t succeeded.
+  &quot;ttl&quot;: &quot;A String&quot;, # Specifies the duration after which the relocation will revert to the sync stage if the relocation hasn&#x27;t succeeded. Optional, if not supplied, a default value of 12h will be used.
+    <code class="details" id="cancel">cancel(bucket, operationId)</code>
+  <pre>Starts asynchronous cancellation on a long-running operation. The server makes a best effort to cancel the operation, but success is not guaranteed.
+  bucket: string, The parent bucket of the operation resource. (required)
+  operationId: string, The ID of the operation resource. (required)
+    <code class="details" id="get">get(bucket, operationId)</code>
+  <pre>Gets the latest state of a long-running operation.
+    <code class="details" id="list">list(bucket, filter=None, pageSize=None, pageToken=None)</code>
+  bucket: string, Name of the bucket in which to look for operations. (required)
+  filter: string, A filter to narrow down results to a preferred subset. The filtering language is documented in more detail in [AIP-160](https://google.aip.dev/160).
+  pageSize: integer, Maximum number of items to return in a single page of responses. Fewer total results may be returned than requested. The service uses this parameter or 100 items, whichever is smaller.
+    { # The response message for storage.buckets.operations.list.
+  &quot;kind&quot;: &quot;storage#operations&quot;, # The kind of item this is. For lists of operations, this is always storage#operations.

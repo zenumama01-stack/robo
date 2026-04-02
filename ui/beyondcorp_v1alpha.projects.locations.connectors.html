@@ -1,0 +1,42 @@
+<h1><a href="beyondcorp_v1alpha.html">BeyondCorp API</a> . <a href="beyondcorp_v1alpha.projects.html">projects</a> . <a href="beyondcorp_v1alpha.projects.locations.html">locations</a> . <a href="beyondcorp_v1alpha.projects.locations.connectors.html">connectors</a></h1>
+  <code><a href="#create">create(parent, body=None, connectorId=None, requestId=None, validateOnly=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Creates a new Connector in a given project and location.</p>
+<p class="firstline">Deletes a single Connector.</p>
+<p class="firstline">Gets details of a single Connector.</p>
+<p class="firstline">Lists Connectors in a given project and location.</p>
+<p class="firstline">Updates the parameters of a single Connector.</p>
+  <code><a href="#reportStatus">reportStatus(connector, body=None, x__xgafv=None)</a></code></p>
+  <code><a href="#resolveInstanceConfig">resolveInstanceConfig(connector, x__xgafv=None)</a></code></p>
+<p class="firstline">Gets instance configuration for a given connector. An internal method called by a connector to get its container config.</p>
+    <code class="details" id="create">create(parent, body=None, connectorId=None, requestId=None, validateOnly=None, x__xgafv=None)</code>
+  <pre>Creates a new Connector in a given project and location.
+  parent: string, Required. The resource project name of the connector location using the form: `projects/{project_id}/locations/{location_id}` (required)
+  &quot;displayName&quot;: &quot;A String&quot;, # Optional. An arbitrary user-provided name for the connector. Cannot exceed 64 characters.
+  &quot;name&quot;: &quot;A String&quot;, # Required. Unique resource name of the connector. The name is ignored when creating a connector.
+  &quot;principalInfo&quot;: { # PrincipalInfo represents an Identity oneof. # Required. Principal information about the Identity of the connector.
+  &quot;resourceInfo&quot;: { # ResourceInfo represents the information/status of the associated resource. # Optional. Resource info of the connector.
+    &quot;resource&quot;: { # Specific details for the resource.
+      # Object with schema name: ResourceInfo
+  &quot;state&quot;: &quot;A String&quot;, # Output only. The current state of the connector.
+  connectorId: string, Optional. User-settable connector resource ID. * Must start with a letter. * Must contain between 4-63 characters from `/a-z-/`. * Must end with a number or a letter.
+  <pre>Deletes a single Connector.
+  name: string, Required. BeyondCorp Connector name using the form: `projects/{project_id}/locations/{location_id}/connectors/{connector_id}` (required)
+  <pre>Gets details of a single Connector.
+  <pre>Lists Connectors in a given project and location.
+  parent: string, Required. The resource name of the connector location using the form: `projects/{project_id}/locations/{location_id}` (required)
+  pageToken: string, Optional. The next_page_token value returned from a previous ListConnectorsRequest, if any.
+    { # Response message for BeyondCorp.ListConnectors.
+  &quot;connectors&quot;: [ # A list of BeyondCorp Connectors in the project.
+  <pre>Updates the parameters of a single Connector.
+  name: string, Required. Unique resource name of the connector. The name is ignored when creating a connector. (required)
+  updateMask: string, Required. Mask of fields to update. At least one path must be supplied in this field. The elements of the repeated paths field may only include these fields from [BeyondCorp.Connector]: * `labels` * `display_name`
+    <code class="details" id="reportStatus">reportStatus(connector, body=None, x__xgafv=None)</code>
+  connector: string, Required. BeyondCorp Connector name using the form: `projects/{project_id}/locations/{location_id}/connectors/{connector}` (required)
+  &quot;resourceInfo&quot;: { # ResourceInfo represents the information/status of the associated resource. # Required. Resource info of the connector.
+    <code class="details" id="resolveInstanceConfig">resolveInstanceConfig(connector, x__xgafv=None)</code>
+  <pre>Gets instance configuration for a given connector. An internal method called by a connector to get its container config.
+  &quot;instanceConfig&quot;: { # ConnectorInstanceConfig defines the instance config of a connector. # ConnectorInstanceConfig.
+      &quot;stableImage&quot;: &quot;A String&quot;, # The stable image that the remote agent will fallback to if the target image fails.
+      &quot;targetImage&quot;: &quot;A String&quot;, # The initial image the remote agent will attempt to run for the control plane.
+      &quot;pubsubNotification&quot;: { # The configuration for Pub/Sub messaging for the connector. # Pub/Sub topic for Connector to subscribe and receive notifications from `projects/{project}/topics/{pubsub_topic}`
+        &quot;pubsubSubscription&quot;: &quot;A String&quot;, # The Pub/Sub subscription the connector uses to receive notifications.

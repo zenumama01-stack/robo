@@ -1,0 +1,13 @@
+import { browserModuleList } from '@electron/internal/browser/api/module-list';
+import { commonModuleList } from '@electron/internal/common/api/module-list';
+import { defineProperties } from '@electron/internal/common/define-properties';
+module.exports = {};
+defineProperties(module.exports, commonModuleList);
+defineProperties(module.exports, browserModuleList);
+import { moduleList } from '@electron/internal/preload_realm/api/module-list';
+defineProperties(module.exports, moduleList);
+import { rendererModuleList } from '@electron/internal/renderer/api/module-list';
+defineProperties(module.exports, rendererModuleList);
+import { moduleList } from '@electron/internal/sandboxed_renderer/api/module-list';
+import { utilityNodeModuleList } from '@electron/internal/utility/api/module-list';
+defineProperties(module.exports, utilityNodeModuleList);

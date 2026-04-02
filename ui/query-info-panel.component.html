@@ -1,0 +1,81 @@
+<!-- Query Info Panel - Slide-in Panel -->
+@if (Visible && ShowOverlay) {
+  <div class="info-panel-overlay"
+    @fadeIn
+    (click)="OnClose()">
+  <div class="info-panel"
+    [style.width.px]="PanelWidth">
+    <div class="resize-handle" (mousedown)="OnResizeStart($event)"></div>
+        <i class="fa-solid fa-circle-info header-icon"></i>
+          <h3 class="header-title">Query Information</h3>
+          @if (QueryInfo) {
+            <span class="header-subtitle">{{ QueryInfo.Name }}</span>
+        <div class="info-section" [class.expanded]="IsSectionExpanded('overview')">
+          <div class="section-header" (click)="ToggleSection('overview')">
+            <i class="fa-solid section-icon"
+              [class.fa-chevron-down]="IsSectionExpanded('overview')"
+            [class.fa-chevron-right]="!IsSectionExpanded('overview')"></i>
+            <span class="section-title">Overview</span>
+          @if (IsSectionExpanded('overview')) {
+                <span class="info-value">{{ QueryInfo.Name }}</span>
+              @if (QueryInfo.Description) {
+                  <span class="info-label">Description</span>
+                  <span class="info-value description">{{ QueryInfo.Description }}</span>
+              @if (QueryInfo.Category) {
+                  <span class="info-label">Category</span>
+                  <span class="info-value">
+                    <i class="fa-solid fa-folder category-icon"></i>
+                    {{ QueryInfo.Category }}
+                  <span class="status-badge" [class.approved]="QueryInfo.Status === 'Approved'">
+                    {{ QueryInfo.Status }}
+              @if (QueryInfo.OriginalSQL) {
+                  <span class="info-label">Has SQL</span>
+                    <i class="fa-solid fa-check text-success"></i> Yes
+        <div class="info-section" [class.expanded]="IsSectionExpanded('fields')">
+          <div class="section-header" (click)="ToggleSection('fields')">
+              [class.fa-chevron-down]="IsSectionExpanded('fields')"
+            [class.fa-chevron-right]="!IsSectionExpanded('fields')"></i>
+            <span class="section-title">Fields</span>
+            <span class="section-count">({{ QueryInfo.Fields.length || 0 }})</span>
+          @if (IsSectionExpanded('fields')) {
+              @if (QueryInfo.Fields.length) {
+                <div class="fields-list">
+                  @for (field of QueryInfo.Fields; track TrackByField($index, field)) {
+                        <span class="field-name">{{ field.Name }}</span>
+                        <span class="field-type">{{ GetFieldTypeDisplay(field) }}</span>
+                      @if (field.Description || field.SourceEntity) {
+                            <span class="field-description">
+                              {{ field.Description }}
+                          @if (field.SourceEntity) {
+                            <span class="field-source">
+                              {{ field.SourceEntity }}.{{ field.SourceFieldName }}
+                  <span>No fields defined</span>
+        <!-- Parameters Section -->
+        <div class="info-section" [class.expanded]="IsSectionExpanded('parameters')">
+          <div class="section-header" (click)="ToggleSection('parameters')">
+              [class.fa-chevron-down]="IsSectionExpanded('parameters')"
+            [class.fa-chevron-right]="!IsSectionExpanded('parameters')"></i>
+            <span class="section-title">Parameters</span>
+            <span class="section-count">({{ QueryInfo.Parameters.length || 0 }})</span>
+          @if (IsSectionExpanded('parameters')) {
+              @if (QueryInfo.Parameters.length) {
+                  @for (param of QueryInfo.Parameters; track TrackByParam($index, param)) {
+                        <span class="param-name">
+                        <span class="param-type">{{ GetParamTypeDisplay(param) }}</span>
+                      @if (param.Description || param.DefaultValue) {
+                            <span class="param-description">
+                            <span class="param-default">
+                              Default: {{ param.DefaultValue }}
+                  <span>No parameters required</span>
+        <div class="info-section" [class.expanded]="IsSectionExpanded('sql')">
+          <div class="section-header" (click)="ToggleSection('sql')">
+              [class.fa-chevron-down]="IsSectionExpanded('sql')"
+            [class.fa-chevron-right]="!IsSectionExpanded('sql')"></i>
+            <span class="section-title">SQL Query</span>
+          @if (IsSectionExpanded('sql')) {
+              @if (QueryInfo.SQL) {
+                <div class="sql-container">
+                  <pre class="sql-code">{{ QueryInfo.SQL }}</pre>
+                  <span>SQL not available</span>
+      <button class="btn btn-primary" (click)="OnOpenRecord()">
+      <button class="btn btn-secondary" (click)="OnClose()">

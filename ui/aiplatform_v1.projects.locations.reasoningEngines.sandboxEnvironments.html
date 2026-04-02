@@ -1,0 +1,43 @@
+<h1><a href="aiplatform_v1.html">Vertex AI API</a> . <a href="aiplatform_v1.projects.html">projects</a> . <a href="aiplatform_v1.projects.locations.html">locations</a> . <a href="aiplatform_v1.projects.locations.reasoningEngines.html">reasoningEngines</a> . <a href="aiplatform_v1.projects.locations.reasoningEngines.sandboxEnvironments.html">sandboxEnvironments</a></h1>
+  <code><a href="aiplatform_v1.projects.locations.reasoningEngines.sandboxEnvironments.operations.html">operations()</a></code>
+<p class="firstline">Creates a SandboxEnvironment in a given reasoning engine.</p>
+<p class="firstline">Deletes the specific SandboxEnvironment.</p>
+  <code><a href="#execute">execute(name, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Executes using a sandbox environment.</p>
+<p class="firstline">Gets details of the specific SandboxEnvironment.</p>
+<p class="firstline">Lists SandboxEnvironments in a given reasoning engine.</p>
+  <pre>Creates a SandboxEnvironment in a given reasoning engine.
+  parent: string, Required. The resource name of the reasoning engine to create the SandboxEnvironment in. Format: `projects/{project}/locations/{location}/reasoningEngines/{reasoning_engine}`. (required)
+{ # SandboxEnvironment is a containerized environment that provides a customizable secure execution runtime for AI agents.
+  &quot;connectionInfo&quot;: { # The connection information of the SandboxEnvironment. # Output only. The connection information of the SandboxEnvironment.
+    &quot;loadBalancerHostname&quot;: &quot;A String&quot;, # Output only. The hostname of the load balancer.
+    &quot;loadBalancerIp&quot;: &quot;A String&quot;, # Output only. The IP address of the load balancer.
+    &quot;sandboxInternalIp&quot;: &quot;A String&quot;, # Output only. The internal IP address of the SandboxEnvironment.
+  &quot;createTime&quot;: &quot;A String&quot;, # Output only. The timestamp when this SandboxEnvironment was created.
+  &quot;displayName&quot;: &quot;A String&quot;, # Required. The display name of the SandboxEnvironment.
+  &quot;expireTime&quot;: &quot;A String&quot;, # Optional. Timestamp in UTC of when this SandboxEnvironment is considered expired. This is *always* provided on output, regardless of what `expiration` was sent on input.
+  &quot;name&quot;: &quot;A String&quot;, # Identifier. The name of the SandboxEnvironment.
+  &quot;spec&quot;: { # The specification of a SandboxEnvironment. # Optional. The configuration of the SandboxEnvironment.
+    &quot;codeExecutionEnvironment&quot;: { # The code execution environment with customized settings. # Optional. The code execution environment.
+      &quot;codeLanguage&quot;: &quot;A String&quot;, # The coding language supported in this environment.
+      &quot;machineConfig&quot;: &quot;A String&quot;, # The machine config of the code execution environment.
+  &quot;state&quot;: &quot;A String&quot;, # Output only. The runtime state of the SandboxEnvironment.
+  &quot;ttl&quot;: &quot;A String&quot;, # Optional. Input only. The TTL for the sandbox environment. The expiration time is computed: now + TTL.
+  &quot;updateTime&quot;: &quot;A String&quot;, # Output only. The timestamp when this SandboxEnvironment was most recently updated.
+  <pre>Deletes the specific SandboxEnvironment.
+  name: string, Required. The resource name of the SandboxEnvironment to delete. Format: `projects/{project}/locations/{location}/reasoningEngines/{reasoning_engine}/sandboxEnvironments/{sandbox_environment}` (required)
+    <code class="details" id="execute">execute(name, body=None, x__xgafv=None)</code>
+  <pre>Executes using a sandbox environment.
+  name: string, Required. The resource name of the sandbox environment to execute. Format: `projects/{project}/locations/{location}/reasoningEngines/{reasoning_engine}/sandboxEnvironments/{sandbox_environment}` (required)
+{ # Request message for SandboxEnvironmentExecutionService.Execute.
+  &quot;inputs&quot;: [ # Required. The inputs to the sandbox environment.
+    { # Response message for SandboxEnvironmentExecutionService.Execute.
+  <pre>Gets details of the specific SandboxEnvironment.
+  name: string, Required. The resource name of the sandbox environment. Format: `projects/{project}/locations/{location}/reasoningEngines/{reasoning_engine}/sandboxEnvironments/{sandbox_environment}` (required)
+  <pre>Lists SandboxEnvironments in a given reasoning engine.
+  parent: string, Required. The resource name of the reasoning engine to list sandbox environments from. Format: `projects/{project}/locations/{location}/reasoningEngines/{reasoning_engine}` (required)
+  pageSize: integer, Optional. The maximum number of SandboxEnvironments to return. The service may return fewer than this value. If unspecified, at most 100 SandboxEnvironments will be returned.
+  pageToken: string, Optional. The standard list page token, received from a previous `ListSandboxEnvironments` call. Provide this to retrieve the subsequent page.
+    { # Response message for SandboxEnvironmentService.ListSandboxEnvironments.
+  &quot;nextPageToken&quot;: &quot;A String&quot;, # A token, which can be sent as ListSandboxEnvironmentsRequest.page_token to retrieve the next page. Absence of this field indicates there are no subsequent pages.
+  &quot;sandboxEnvironments&quot;: [ # The SandboxEnvironments matching the request.

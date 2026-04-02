@@ -1,0 +1,39 @@
+<h1><a href="aiplatform_v1.html">Vertex AI API</a> . <a href="aiplatform_v1.projects.html">projects</a> . <a href="aiplatform_v1.projects.locations.html">locations</a> . <a href="aiplatform_v1.projects.locations.cachedContents.html">cachedContents</a></h1>
+<p class="firstline">Creates cached content, this call will initialize the cached content in the data storage, and users need to pay for the cache data storage.</p>
+<p class="firstline">Deletes cached content</p>
+<p class="firstline">Gets cached content configurations</p>
+<p class="firstline">Lists cached contents in a project</p>
+<p class="firstline">Updates cached content configurations</p>
+  <pre>Creates cached content, this call will initialize the cached content in the data storage, and users need to pay for the cache data storage.
+  parent: string, Required. The parent resource where the cached content will be created (required)
+{ # A resource used in LLM queries for users to explicitly specify what to cache and how to cache.
+  &quot;contents&quot;: [ # Optional. Input only. Immutable. The content to cache
+  &quot;createTime&quot;: &quot;A String&quot;, # Output only. Creation time of the cache entry.
+  &quot;displayName&quot;: &quot;A String&quot;, # Optional. Immutable. The user-generated meaningful display name of the cached content.
+  &quot;encryptionSpec&quot;: { # Represents a customer-managed encryption key specification that can be applied to a Vertex AI resource. # Input only. Immutable. Customer-managed encryption key spec for a `CachedContent`. If set, this `CachedContent` and all its sub-resources will be secured by this key.
+  &quot;expireTime&quot;: &quot;A String&quot;, # Timestamp of when this resource is considered expired. This is *always* provided on output, regardless of what was sent on input.
+  &quot;model&quot;: &quot;A String&quot;, # Immutable. The name of the `Model` to use for cached content. Currently, only the published Gemini base models are supported, in form of projects/{PROJECT}/locations/{LOCATION}/publishers/google/models/{MODEL}
+  &quot;name&quot;: &quot;A String&quot;, # Immutable. Identifier. The server-generated resource name of the cached content Format: projects/{project}/locations/{location}/cachedContents/{cached_content}
+  &quot;systemInstruction&quot;: { # The structured data content of a message. A Content message contains a `role` field, which indicates the producer of the content, and a `parts` field, which contains the multi-part data of the message. # Optional. Input only. Immutable. Developer set system instruction. Currently, text only
+  &quot;toolConfig&quot;: { # Tool config. This config is shared for all tools provided in the request. # Optional. Input only. Immutable. Tool config. This config is shared for all tools
+  &quot;tools&quot;: [ # Optional. Input only. Immutable. A list of `Tools` the model may use to generate the next response
+  &quot;ttl&quot;: &quot;A String&quot;, # Input only. The TTL for this resource. The expiration time is computed: now + TTL.
+  &quot;updateTime&quot;: &quot;A String&quot;, # Output only. When the cache entry was last updated in UTC time.
+  &quot;usageMetadata&quot;: { # Metadata on the usage of the cached content. # Output only. Metadata on the usage of the cached content.
+    &quot;audioDurationSeconds&quot;: 42, # Duration of audio in seconds.
+    &quot;imageCount&quot;: 42, # Number of images.
+    &quot;textCount&quot;: 42, # Number of text characters.
+    &quot;totalTokenCount&quot;: 42, # Total number of tokens that the cached content consumes.
+    &quot;videoDurationSeconds&quot;: 42, # Duration of video in seconds.
+  <pre>Deletes cached content
+  name: string, Required. The resource name referring to the cached content (required)
+  <pre>Gets cached content configurations
+  <pre>Lists cached contents in a project
+  parent: string, Required. The parent, which owns this collection of cached contents. (required)
+  pageSize: integer, Optional. The maximum number of cached contents to return. The service may return fewer than this value. If unspecified, some default (under maximum) number of items will be returned. The maximum value is 1000; values above 1000 will be coerced to 1000.
+  pageToken: string, Optional. A page token, received from a previous `ListCachedContents` call. Provide this to retrieve the subsequent page. When paginating, all other parameters provided to `ListCachedContents` must match the call that provided the page token.
+    { # Response with a list of CachedContents.
+  &quot;cachedContents&quot;: [ # List of cached contents.
+  <pre>Updates cached content configurations
+  name: string, Immutable. Identifier. The server-generated resource name of the cached content Format: projects/{project}/locations/{location}/cachedContents/{cached_content} (required)
+  updateMask: string, Required. The list of fields to update.

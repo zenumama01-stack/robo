@@ -1,0 +1,68 @@
+<h1><a href="privateca_v1.html">Certificate Authority API</a> . <a href="privateca_v1.projects.html">projects</a> . <a href="privateca_v1.projects.locations.html">locations</a> . <a href="privateca_v1.projects.locations.caPools.html">caPools</a></h1>
+  <code><a href="privateca_v1.projects.locations.caPools.certificateAuthorities.html">certificateAuthorities()</a></code>
+<p class="firstline">Returns the certificateAuthorities Resource.</p>
+  <code><a href="privateca_v1.projects.locations.caPools.certificates.html">certificates()</a></code>
+  <code><a href="#create">create(parent, body=None, caPoolId=None, requestId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Create a CaPool.</p>
+  <code><a href="#delete">delete(name, ignoreDependentResources=None, requestId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Delete a CaPool.</p>
+  <code><a href="#fetchCaCerts">fetchCaCerts(caPool, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">FetchCaCerts returns the current trust anchor for the CaPool. This will include CA certificate chains for all certificate authorities in the ENABLED, DISABLED, or STAGED states.</p>
+<p class="firstline">Returns a CaPool.</p>
+<p class="firstline">Lists CaPools.</p>
+<p class="firstline">Update a CaPool.</p>
+    <code class="details" id="create">create(parent, body=None, caPoolId=None, requestId=None, x__xgafv=None)</code>
+  <pre>Create a CaPool.
+  parent: string, Required. The resource name of the location associated with the CaPool, in the format `projects/*/locations/*`. (required)
+{ # A CaPool represents a group of CertificateAuthorities that form a trust anchor. A CaPool can be used to manage issuance policies for one or more CertificateAuthority resources and to rotate CA certificates in and out of the trust anchor.
+  &quot;encryptionSpec&quot;: { # The configuration used for encrypting data at rest. # Optional. When EncryptionSpec is provided, the Subject, SubjectAltNames, and the PEM-encoded certificate fields will be encrypted at rest.
+    &quot;cloudKmsKey&quot;: &quot;A String&quot;, # The resource name for a Cloud KMS key in the format `projects/*/locations/*/keyRings/*/cryptoKeys/*`.
+  &quot;issuancePolicy&quot;: { # Defines controls over all certificate issuance within a CaPool. # Optional. The IssuancePolicy to control how Certificates will be issued from this CaPool.
+    &quot;allowedIssuanceModes&quot;: { # IssuanceModes specifies the allowed ways in which Certificates may be requested from this CaPool. # Optional. If specified, then only methods allowed in the IssuanceModes may be used to issue Certificates.
+      &quot;allowConfigBasedIssuance&quot;: True or False, # Optional. When true, allows callers to create Certificates by specifying a CertificateConfig.
+      &quot;allowCsrBasedIssuance&quot;: True or False, # Optional. When true, allows callers to create Certificates by specifying a CSR.
+    &quot;allowedKeyTypes&quot;: [ # Optional. If any AllowedKeyType is specified, then the certificate request&#x27;s public key must match one of the key types listed here. Otherwise, any key may be used.
+      { # Describes a &quot;type&quot; of key that may be used in a Certificate issued from a CaPool. Note that a single AllowedKeyType may refer to either a fully-qualified key algorithm, such as RSA 4096, or a family of key algorithms, such as any RSA key.
+        &quot;ellipticCurve&quot;: { # Describes an Elliptic Curve key that may be used in a Certificate issued from a CaPool. # Represents an allowed Elliptic Curve key type.
+          &quot;signatureAlgorithm&quot;: &quot;A String&quot;, # Optional. A signature algorithm that must be used. If this is omitted, any EC-based signature algorithm will be allowed.
+        &quot;rsa&quot;: { # Describes an RSA key that may be used in a Certificate issued from a CaPool. # Represents an allowed RSA key type.
+          &quot;maxModulusSize&quot;: &quot;A String&quot;, # Optional. The maximum allowed RSA modulus size (inclusive), in bits. If this is not set, or if set to zero, the service will not enforce an explicit upper bound on RSA modulus sizes.
+          &quot;minModulusSize&quot;: &quot;A String&quot;, # Optional. The minimum allowed RSA modulus size (inclusive), in bits. If this is not set, or if set to zero, the service-level min RSA modulus size will continue to apply.
+    &quot;backdateDuration&quot;: &quot;A String&quot;, # Optional. If set, all certificates issued from this CaPool will be backdated by this duration. The &#x27;not_before_time&#x27; will be the issuance time minus this backdate_duration, and the &#x27;not_after_time&#x27; will be adjusted to preserve the requested lifetime. The maximum duration that a certificate can be backdated with these options is 48 hours in the past. This option cannot be set if allow_requester_specified_not_before_time is set.
+    &quot;baselineValues&quot;: { # An X509Parameters is used to describe certain fields of an X.509 certificate, such as the key usage fields, fields specific to CA certificates, certificate policy extensions and custom extensions. # Optional. A set of X.509 values that will be applied to all certificates issued through this CaPool. If a certificate request includes conflicting values for the same properties, they will be overwritten by the values defined here. If a certificate request uses a CertificateTemplate that defines conflicting predefined_values for the same properties, the certificate issuance request will fail.
+    &quot;identityConstraints&quot;: { # Describes constraints on a Certificate&#x27;s Subject and SubjectAltNames. # Optional. Describes constraints on identities that may appear in Certificates issued through this CaPool. If this is omitted, then this CaPool will not add restrictions on a certificate&#x27;s identity.
+      &quot;allowSubjectAltNamesPassthrough&quot;: True or False, # Required. If this is true, the SubjectAltNames extension may be copied from a certificate request into the signed certificate. Otherwise, the requested SubjectAltNames will be discarded.
+      &quot;allowSubjectPassthrough&quot;: True or False, # Required. If this is true, the Subject field may be copied from a certificate request into the signed certificate. Otherwise, the requested Subject will be discarded.
+      &quot;celExpression&quot;: { # Represents a textual expression in the Common Expression Language (CEL) syntax. CEL is a C-like expression language. The syntax and semantics of CEL are documented at https://github.com/google/cel-spec. Example (Comparison): title: &quot;Summary size limit&quot; description: &quot;Determines if a summary is less than 100 chars&quot; expression: &quot;document.summary.size() &lt; 100&quot; Example (Equality): title: &quot;Requestor is owner&quot; description: &quot;Determines if requestor is the document owner&quot; expression: &quot;document.owner == request.auth.claims.email&quot; Example (Logic): title: &quot;Public documents&quot; description: &quot;Determine whether the document should be publicly visible&quot; expression: &quot;document.type != &#x27;private&#x27; &amp;&amp; document.type != &#x27;internal&#x27;&quot; Example (Data Manipulation): title: &quot;Notification string&quot; description: &quot;Create a notification string with a timestamp.&quot; expression: &quot;&#x27;New message received at &#x27; + string(document.create_time)&quot; The exact variables and functions that may be referenced within an expression are determined by the service that evaluates it. See the service documentation for additional information. # Optional. A CEL expression that may be used to validate the resolved X.509 Subject and/or Subject Alternative Name before a certificate is signed. To see the full allowed syntax and some examples, see https://cloud.google.com/certificate-authority-service/docs/using-cel
+    &quot;maximumLifetime&quot;: &quot;A String&quot;, # Optional. The maximum lifetime allowed for issued Certificates. Note that if the issuing CertificateAuthority expires before a Certificate resource&#x27;s requested maximum_lifetime, the effective lifetime will be explicitly truncated to match it.
+    &quot;passthroughExtensions&quot;: { # Describes a set of X.509 extensions that may be part of some certificate issuance controls. # Optional. Describes the set of X.509 extensions that may appear in a Certificate issued through this CaPool. If a certificate request sets extensions that don&#x27;t appear in the passthrough_extensions, those extensions will be dropped. If a certificate request uses a CertificateTemplate with predefined_values that don&#x27;t appear here, the certificate issuance request will fail. If this is omitted, then this CaPool will not add restrictions on a certificate&#x27;s X.509 extensions. These constraints do not apply to X.509 extensions set in this CaPool&#x27;s baseline_values.
+      &quot;additionalExtensions&quot;: [ # Optional. A set of ObjectIds identifying custom X.509 extensions. Will be combined with known_extensions to determine the full set of X.509 extensions.
+      &quot;knownExtensions&quot;: [ # Optional. A set of named X.509 extensions. Will be combined with additional_extensions to determine the full set of X.509 extensions.
+  &quot;name&quot;: &quot;A String&quot;, # Identifier. The resource name for this CaPool in the format `projects/*/locations/*/caPools/*`.
+  &quot;publishingOptions&quot;: { # Options relating to the publication of each CertificateAuthority&#x27;s CA certificate and CRLs and their inclusion as extensions in issued Certificates. The options set here apply to certificates issued by any CertificateAuthority in the CaPool. # Optional. The PublishingOptions to follow when issuing Certificates from any CertificateAuthority in this CaPool.
+    &quot;encodingFormat&quot;: &quot;A String&quot;, # Optional. Specifies the encoding format of each CertificateAuthority resource&#x27;s CA certificate and CRLs. If this is omitted, CA certificates and CRLs will be published in PEM.
+    &quot;publishCaCert&quot;: True or False, # Optional. When true, publishes each CertificateAuthority&#x27;s CA certificate and includes its URL in the &quot;Authority Information Access&quot; X.509 extension in all issued Certificates. If this is false, the CA certificate will not be published and the corresponding X.509 extension will not be written in issued certificates.
+    &quot;publishCrl&quot;: True or False, # Optional. When true, publishes each CertificateAuthority&#x27;s CRL and includes its URL in the &quot;CRL Distribution Points&quot; X.509 extension in all issued Certificates. If this is false, CRLs will not be published and the corresponding X.509 extension will not be written in issued certificates. CRLs will expire 7 days from their creation. However, we will rebuild daily. CRLs are also rebuilt shortly after a certificate is revoked.
+  &quot;tier&quot;: &quot;A String&quot;, # Required. Immutable. The Tier of this CaPool.
+  caPoolId: string, Required. It must be unique within a location and match the regular expression `[a-zA-Z0-9_-]{1,63}`
+    <code class="details" id="delete">delete(name, ignoreDependentResources=None, requestId=None, x__xgafv=None)</code>
+  <pre>Delete a CaPool.
+  name: string, Required. The resource name for this CaPool in the format `projects/*/locations/*/caPools/*`. (required)
+  ignoreDependentResources: boolean, Optional. This field allows this pool to be deleted even if it&#x27;s being depended on by another resource. However, doing so may result in unintended and unrecoverable effects on any dependent resources since the pool will no longer be able to issue certificates.
+    <code class="details" id="fetchCaCerts">fetchCaCerts(caPool, body=None, x__xgafv=None)</code>
+  <pre>FetchCaCerts returns the current trust anchor for the CaPool. This will include CA certificate chains for all certificate authorities in the ENABLED, DISABLED, or STAGED states.
+  caPool: string, Required. The resource name for the CaPool in the format `projects/*/locations/*/caPools/*`. (required)
+{ # Request message for CertificateAuthorityService.FetchCaCerts.
+    { # Response message for CertificateAuthorityService.FetchCaCerts.
+  &quot;caCerts&quot;: [ # The PEM encoded CA certificate chains of all certificate authorities in this CaPool in the ENABLED, DISABLED, or STAGED states.
+      &quot;certificates&quot;: [ # The certificates that form the CA chain, from leaf to root order.
+  <pre>Returns a CaPool.
+  name: string, Required. The name of the CaPool to get. (required)
+  <pre>Lists CaPools.
+  parent: string, Required. The resource name of the location associated with the CaPools, in the format `projects/*/locations/*`. (required)
+  pageSize: integer, Optional. Limit on the number of CaPools to include in the response. Further CaPools can subsequently be obtained by including the ListCaPoolsResponse.next_page_token in a subsequent request. If unspecified, the server will pick an appropriate default.
+  pageToken: string, Optional. Pagination token, returned earlier via ListCaPoolsResponse.next_page_token.
+    { # Response message for CertificateAuthorityService.ListCaPools.
+  &quot;caPools&quot;: [ # The list of CaPools.
+  <pre>Update a CaPool.
+  name: string, Identifier. The resource name for this CaPool in the format `projects/*/locations/*/caPools/*`. (required)

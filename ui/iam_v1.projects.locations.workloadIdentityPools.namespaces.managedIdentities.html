@@ -1,0 +1,71 @@
+<h1><a href="iam_v1.html">Identity and Access Management (IAM) API</a> . <a href="iam_v1.projects.html">projects</a> . <a href="iam_v1.projects.locations.html">locations</a> . <a href="iam_v1.projects.locations.workloadIdentityPools.html">workloadIdentityPools</a> . <a href="iam_v1.projects.locations.workloadIdentityPools.namespaces.html">namespaces</a> . <a href="iam_v1.projects.locations.workloadIdentityPools.namespaces.managedIdentities.html">managedIdentities</a></h1>
+  <code><a href="iam_v1.projects.locations.workloadIdentityPools.namespaces.managedIdentities.operations.html">operations()</a></code>
+  <code><a href="iam_v1.projects.locations.workloadIdentityPools.namespaces.managedIdentities.workloadSources.html">workloadSources()</a></code>
+<p class="firstline">Returns the workloadSources Resource.</p>
+  <code><a href="#addAttestationRule">addAttestationRule(resource, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Add an AttestationRule on a WorkloadIdentityPoolManagedIdentity. The total attestation rules after addition must not exceed 50.</p>
+  <code><a href="#create">create(parent, body=None, workloadIdentityPoolManagedIdentityId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Creates a new WorkloadIdentityPoolManagedIdentity in a WorkloadIdentityPoolNamespace.</p>
+<p class="firstline">Deletes a WorkloadIdentityPoolManagedIdentity. You can undelete a managed identity for 30 days. After 30 days, deletion is permanent.</p>
+<p class="firstline">Gets an individual WorkloadIdentityPoolManagedIdentity.</p>
+<p class="firstline">Lists all non-deleted WorkloadIdentityPoolManagedIdentitys in a namespace. If `show_deleted` is set to `true`, then deleted managed identities are also listed.</p>
+  <code><a href="#listAttestationRules">listAttestationRules(resource, filter=None, pageSize=None, pageToken=None, x__xgafv=None)</a></code></p>
+<p class="firstline">List all AttestationRule on a WorkloadIdentityPoolManagedIdentity.</p>
+  <code><a href="#listAttestationRules_next">listAttestationRules_next()</a></code></p>
+<p class="firstline">Updates an existing WorkloadIdentityPoolManagedIdentity in a WorkloadIdentityPoolNamespace.</p>
+  <code><a href="#removeAttestationRule">removeAttestationRule(resource, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Remove an AttestationRule on a WorkloadIdentityPoolManagedIdentity.</p>
+  <code><a href="#setAttestationRules">setAttestationRules(resource, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Set all AttestationRule on a WorkloadIdentityPoolManagedIdentity. A maximum of 50 AttestationRules can be set.</p>
+<p class="firstline">Undeletes a WorkloadIdentityPoolManagedIdentity, as long as it was deleted fewer than 30 days ago.</p>
+    <code class="details" id="addAttestationRule">addAttestationRule(resource, body=None, x__xgafv=None)</code>
+  <pre>Add an AttestationRule on a WorkloadIdentityPoolManagedIdentity. The total attestation rules after addition must not exceed 50.
+  resource: string, Required. The resource name of the managed identity or namespace resource to add an attestation rule to. (required)
+{ # Request message for AddAttestationRule.
+  &quot;attestationRule&quot;: { # Defines which workloads can receive an identity within a pool. When an AttestationRule is defined under a managed identity, matching workloads may receive that identity. # Required. The attestation rule to be added.
+    &quot;googleCloudResource&quot;: &quot;A String&quot;, # Optional. A single workload operating on Google Cloud. For example: `//compute.googleapis.com/projects/123/uid/zones/us-central1-a/instances/12345`.
+    <code class="details" id="create">create(parent, body=None, workloadIdentityPoolManagedIdentityId=None, x__xgafv=None)</code>
+  <pre>Creates a new WorkloadIdentityPoolManagedIdentity in a WorkloadIdentityPoolNamespace.
+  parent: string, Required. The parent resource to create the manage identity in. The only supported location is `global`. (required)
+{ # Represents a managed identity for a workload identity pool namespace.
+  &quot;description&quot;: &quot;A String&quot;, # Optional. A description of the managed identity. Cannot exceed 256 characters.
+  &quot;disabled&quot;: True or False, # Optional. Whether the managed identity is disabled. If disabled, credentials may no longer be issued for the identity, however existing credentials will still be accepted until they expire.
+  &quot;expireTime&quot;: &quot;A String&quot;, # Output only. Time after which the managed identity will be permanently purged and cannot be recovered.
+  &quot;name&quot;: &quot;A String&quot;, # Identifier. The resource name of the managed identity.
+  &quot;state&quot;: &quot;A String&quot;, # Output only. The state of the managed identity.
+  workloadIdentityPoolManagedIdentityId: string, Required. The ID to use for the managed identity. This value must: * contain at most 63 characters * contain only lowercase alphanumeric characters or `-` * start with an alphanumeric character * end with an alphanumeric character The prefix &quot;gcp-&quot; will be reserved for future uses.
+  <pre>Deletes a WorkloadIdentityPoolManagedIdentity. You can undelete a managed identity for 30 days. After 30 days, deletion is permanent.
+  name: string, Required. The name of the managed identity to delete. (required)
+  <pre>Gets an individual WorkloadIdentityPoolManagedIdentity.
+  name: string, Required. The name of the managed identity to retrieve. (required)
+  <pre>Lists all non-deleted WorkloadIdentityPoolManagedIdentitys in a namespace. If `show_deleted` is set to `true`, then deleted managed identities are also listed.
+  parent: string, Required. The parent resource to list managed identities for. (required)
+  pageSize: integer, The maximum number of managed identities to return. If unspecified, at most 50 managed identities are returned. The maximum value is 1000; values above are 1000 truncated to 1000.
+  pageToken: string, A page token, received from a previous `ListWorkloadIdentityPoolManagedIdentities` call. Provide this to retrieve the subsequent page.
+  showDeleted: boolean, Whether to return soft-deleted managed identities.
+    { # Response message for ListWorkloadIdentityPoolManagedIdentities.
+  &quot;workloadIdentityPoolManagedIdentities&quot;: [ # A list of managed identities.
+    <code class="details" id="listAttestationRules">listAttestationRules(resource, filter=None, pageSize=None, pageToken=None, x__xgafv=None)</code>
+  <pre>List all AttestationRule on a WorkloadIdentityPoolManagedIdentity.
+  resource: string, Required. The resource name of the managed identity or namespace resource to list attestation rules of. (required)
+  filter: string, Optional. A query filter. Supports the following function: * `container_ids()`: Returns only the AttestationRules under the specific container ids. The function expects a comma-delimited list with only project numbers and must use the format `projects/`. For example: `container_ids(projects/, projects/,...)`.
+  pageSize: integer, Optional. The maximum number of AttestationRules to return. If unspecified, at most 50 AttestationRules are returned. The maximum value is 100; values above 100 are truncated to 100.
+  pageToken: string, Optional. A page token, received from a previous `ListWorkloadIdentityPoolProviderKeys` call. Provide this to retrieve the subsequent page.
+    { # Response message for ListAttestationRules.
+  &quot;attestationRules&quot;: [ # A list of AttestationRules.
+    { # Defines which workloads can receive an identity within a pool. When an AttestationRule is defined under a managed identity, matching workloads may receive that identity.
+    <code class="details" id="listAttestationRules_next">listAttestationRules_next()</code>
+  <pre>Updates an existing WorkloadIdentityPoolManagedIdentity in a WorkloadIdentityPoolNamespace.
+  name: string, Identifier. The resource name of the managed identity. (required)
+    <code class="details" id="removeAttestationRule">removeAttestationRule(resource, body=None, x__xgafv=None)</code>
+  <pre>Remove an AttestationRule on a WorkloadIdentityPoolManagedIdentity.
+  resource: string, Required. The resource name of the managed identity or namespace resource to remove an attestation rule from. (required)
+{ # Request message for RemoveAttestationRule.
+  &quot;attestationRule&quot;: { # Defines which workloads can receive an identity within a pool. When an AttestationRule is defined under a managed identity, matching workloads may receive that identity. # Required. The attestation rule to be removed.
+    <code class="details" id="setAttestationRules">setAttestationRules(resource, body=None, x__xgafv=None)</code>
+  <pre>Set all AttestationRule on a WorkloadIdentityPoolManagedIdentity. A maximum of 50 AttestationRules can be set.
+{ # Request message for SetAttestationRules.
+  &quot;attestationRules&quot;: [ # Required. The attestation rules to be set. At most 50 attestation rules can be set.
+  <pre>Undeletes a WorkloadIdentityPoolManagedIdentity, as long as it was deleted fewer than 30 days ago.
+  name: string, Required. The name of the managed identity to undelete. (required)
+{ # Request message for UndeleteWorkloadIdentityPoolManagedIdentity.

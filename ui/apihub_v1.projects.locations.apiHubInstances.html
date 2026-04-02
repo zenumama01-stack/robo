@@ -1,0 +1,36 @@
+<h1><a href="apihub_v1.html">API hub API</a> . <a href="apihub_v1.projects.html">projects</a> . <a href="apihub_v1.projects.locations.html">locations</a> . <a href="apihub_v1.projects.locations.apiHubInstances.html">apiHubInstances</a></h1>
+  <code><a href="#create">create(parent, apiHubInstanceId=None, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Provisions instance resources for the API Hub.</p>
+<p class="firstline">Deletes the API hub instance. Deleting the API hub instance will also result in the removal of all associated runtime project attachments and the host project registration.</p>
+<p class="firstline">Gets details of a single API Hub instance.</p>
+  <code><a href="#lookup">lookup(parent, x__xgafv=None)</a></code></p>
+<p class="firstline">Looks up an Api Hub instance in a given Google Cloud project. There will always be only one Api Hub instance for a Google Cloud project across all locations.</p>
+<p class="firstline">Update an Api Hub instance. The following fields in the ApiHubInstance can be updated: * disable_search * vertex_location * agent_registry_sync_config The update_mask should be used to specify the fields being updated.</p>
+    <code class="details" id="create">create(parent, apiHubInstanceId=None, body=None, x__xgafv=None)</code>
+  <pre>Provisions instance resources for the API Hub.
+  parent: string, Required. The parent resource for the Api Hub instance resource. Format: `projects/{project}/locations/{location}` (required)
+{ # An ApiHubInstance represents the instance resources of the API Hub. Currently, only one ApiHub instance is allowed for each project.
+  &quot;config&quot;: { # Available configurations to provision an ApiHub Instance. # Required. Config of the ApiHub instance.
+    &quot;agentRegistrySyncConfig&quot;: { # The configuration for Agent Registry sync. # Optional. The configuration for syncing MCP data in the API Hub instance to the Agent Registry.
+      &quot;disabled&quot;: True or False, # Optional. If true, the MCP data sync to the Agent Registry will be disabled. The default value is false.
+    &quot;cmekKeyName&quot;: &quot;A String&quot;, # Optional. The Customer Managed Encryption Key (CMEK) used for data encryption. The CMEK name should follow the format of `projects/([^/]+)/locations/([^/]+)/keyRings/([^/]+)/cryptoKeys/([^/]+)`, where the location must match the instance location. If the CMEK is not provided, a GMEK will be created for the instance.
+    &quot;disableSearch&quot;: True or False, # Optional. If true, the search will be disabled for the instance. The default value is false.
+    &quot;encryptionType&quot;: &quot;A String&quot;, # Optional. Encryption type for the region. If the encryption type is CMEK, the cmek_key_name must be provided. If no encryption type is provided, GMEK will be used.
+    &quot;vertexLocation&quot;: &quot;A String&quot;, # Optional. The name of the Vertex AI location where the data store is stored.
+  &quot;description&quot;: &quot;A String&quot;, # Optional. Description of the ApiHub instance.
+  &quot;labels&quot;: { # Optional. Instance labels to represent user-provided metadata. Refer to cloud documentation on labels for more details. https://cloud.google.com/compute/docs/labeling-resources
+  &quot;name&quot;: &quot;A String&quot;, # Identifier. Format: `projects/{project}/locations/{location}/apiHubInstances/{apiHubInstance}`.
+  &quot;state&quot;: &quot;A String&quot;, # Output only. The current state of the ApiHub instance.
+  &quot;stateMessage&quot;: &quot;A String&quot;, # Output only. Extra information about ApiHub instance state. Currently the message would be populated when state is `FAILED`.
+  apiHubInstanceId: string, Optional. Identifier to assign to the Api Hub instance. Must be unique within scope of the parent resource. If the field is not provided, system generated id will be used. This value should be 4-40 characters, and valid characters are `/a-z[0-9]-_/`.
+  <pre>Deletes the API hub instance. Deleting the API hub instance will also result in the removal of all associated runtime project attachments and the host project registration.
+  name: string, Required. The name of the Api Hub instance to delete. Format: `projects/{project}/locations/{location}/apiHubInstances/{apiHubInstance}`. (required)
+  <pre>Gets details of a single API Hub instance.
+  name: string, Required. The name of the Api Hub instance to retrieve. Format: `projects/{project}/locations/{location}/apiHubInstances/{apiHubInstance}`. (required)
+    <code class="details" id="lookup">lookup(parent, x__xgafv=None)</code>
+  <pre>Looks up an Api Hub instance in a given Google Cloud project. There will always be only one Api Hub instance for a Google Cloud project across all locations.
+  parent: string, Required. There will always be only one Api Hub instance for a Google Cloud project across all locations. The parent resource for the Api Hub instance resource. Format: `projects/{project}/locations/{location}` (required)
+    { # The LookupApiHubInstance method&#x27;s response.`
+  &quot;apiHubInstance&quot;: { # An ApiHubInstance represents the instance resources of the API Hub. Currently, only one ApiHub instance is allowed for each project. # API Hub instance for a project if it exists, empty otherwise.
+  <pre>Update an Api Hub instance. The following fields in the ApiHubInstance can be updated: * disable_search * vertex_location * agent_registry_sync_config The update_mask should be used to specify the fields being updated.
+  name: string, Identifier. Format: `projects/{project}/locations/{location}/apiHubInstances/{apiHubInstance}`. (required)

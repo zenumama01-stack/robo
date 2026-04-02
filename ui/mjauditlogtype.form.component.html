@@ -1,0 +1,20 @@
+    <!-- Log Type Definition Section -->
+        SectionKey="logTypeDefinition"
+        SectionName="Log Type Definition"
+    <!-- Audit Log Types Section -->
+        SectionKey="auditLogTypes"
+        SectionName="Audit Log Types"
+        [BadgeCount]="GetSectionRowCount('auditLogTypes')"
+                [Params]="BuildRelationshipViewParamsByEntityName('MJ: Audit Log Types','ParentID')"
+                [NewRecordValues]="NewRecordValues('MJ: Audit Log Types')"
+                [AllowLoad]="IsSectionExpanded('auditLogTypes')"
+                (AfterDataLoad)="SetSectionRowCount('auditLogTypes', $event.totalRowCount)"
+    <!-- Audit Logs Section -->
+        SectionKey="auditLogs"
+        SectionName="Audit Logs"
+        Icon="fa-solid fa-fingerprint"
+        [BadgeCount]="GetSectionRowCount('auditLogs')"
+                [Params]="BuildRelationshipViewParamsByEntityName('MJ: Audit Logs','AuditLogTypeName')"
+                [NewRecordValues]="NewRecordValues('MJ: Audit Logs')"
+                [AllowLoad]="IsSectionExpanded('auditLogs')"
+                (AfterDataLoad)="SetSectionRowCount('auditLogs', $event.totalRowCount)"

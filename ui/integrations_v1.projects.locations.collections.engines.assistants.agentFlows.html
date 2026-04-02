@@ -1,0 +1,52 @@
+<h1><a href="integrations_v1.html">Application Integration API</a> . <a href="integrations_v1.projects.html">projects</a> . <a href="integrations_v1.projects.locations.html">locations</a> . <a href="integrations_v1.projects.locations.collections.html">collections</a> . <a href="integrations_v1.projects.locations.collections.engines.html">engines</a> . <a href="integrations_v1.projects.locations.collections.engines.assistants.html">assistants</a> . <a href="integrations_v1.projects.locations.collections.engines.assistants.agentFlows.html">agentFlows</a></h1>
+<p class="firstline">Request to create a new AgentFlow with user-provided flow configuration.</p>
+<p class="firstline">Deletes an existing AgentFlow.</p>
+<p class="firstline">Uses Natural Language (NL) to generate an AgentFlow configuration and create a new AgentFlow.</p>
+  <code><a href="#generateAndUpdate">generateAndUpdate(name, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Uses Natural Language (NL) to generate an AgentFlow configuration and update an existing AgentFlow.</p>
+<p class="firstline">Gets an existing AgentFlow.</p>
+<p class="firstline">Lists all AgentFlows.</p>
+<p class="firstline">Updates an existing AgentFlow.</p>
+  <pre>Request to create a new AgentFlow with user-provided flow configuration.
+  parent: string, Required. Parent resource name where this AgentFlow will be created. (required)
+{ # AgentFlow configurations.
+  &quot;createTime&quot;: &quot;A String&quot;, # Output only. The timestamp when the agent flow was created.
+  &quot;creator&quot;: &quot;A String&quot;, # Output only. The user who created the agent flow.
+  &quot;description&quot;: &quot;A String&quot;, # Optional. Description of the agent flow.
+  &quot;displayName&quot;: &quot;A String&quot;, # Optional. Display name of the agent flow.
+  &quot;flowConfig&quot;: &quot;A String&quot;, # Required. The flow configuration, represented as a string.
+  &quot;name&quot;: &quot;A String&quot;, # Required. Resource name of the agent flow.
+  &quot;noCodeAgent&quot;: &quot;A String&quot;, # Optional. Name of the NoCodeAgent.
+  &quot;updateTime&quot;: &quot;A String&quot;, # Output only. The timestamp when the agent flow was last updated.
+  <pre>Deletes an existing AgentFlow.
+  name: string, Required. The resource name of the AgentFlow to delete. (required)
+  <pre>Uses Natural Language (NL) to generate an AgentFlow configuration and create a new AgentFlow.
+{ # Request message for GenerateAgentFlow.
+  &quot;creator&quot;: &quot;A String&quot;, # Optional. The creator id;
+  &quot;description&quot;: &quot;A String&quot;, # Optional. The description of the AgentFlow to be generated.
+  &quot;displayName&quot;: &quot;A String&quot;, # Optional. The display name of the AgentFlow to be generated.
+  &quot;intent&quot;: &quot;A String&quot;, # Required. The intent, described in natural language, for the AgentFlow to generate.
+    { # Response message for GenerateAgentFlow.
+  &quot;agentFlow&quot;: { # AgentFlow configurations. # Output only. AgentFlow that gets generated.
+    <code class="details" id="generateAndUpdate">generateAndUpdate(name, body=None, x__xgafv=None)</code>
+  <pre>Uses Natural Language (NL) to generate an AgentFlow configuration and update an existing AgentFlow.
+  name: string, Required. The resource name of the AgentFlow to update. (required)
+{ # Request message for GenerateAndUpdateAgentFlow.
+  &quot;intent&quot;: &quot;A String&quot;, # Required. The intent, described in natural language, for the AgentFlow to update.
+  &quot;updater&quot;: &quot;A String&quot;, # Optional. The updater id;
+    { # Response message for GenerateAndUpdateAgentFlow.
+  &quot;agentFlow&quot;: { # AgentFlow configurations. # Output only. AgentFlow that gets updated.
+  <pre>Gets an existing AgentFlow.
+  name: string, Required. The resource name of the AgentFlow to get. (required)
+  <pre>Lists all AgentFlows.
+  parent: string, Required. The parent resource where this AgentFlow was created. (required)
+  filter: string, Optional. Standard filter field. Filtering as supported in https://developers.google.com/authorized-buyers/apis/guides/list-filters.
+  orderBy: string, Optional. The results would be returned in order specified here. Currently supported sort keys are: Descending sort order for &quot;create_time&quot;, &quot;update_time&quot;. Ascending sort order for &quot;agent_flow_id&quot;, &quot;display_name&quot;.
+  pageSize: integer, Optional. The maximum number of AgentFlows to return. The service may return fewer than this value. If unspecified, at most 100 AgentFlows will be returned.
+  pageToken: string, Optional. A page token, received from a previous `ListAgentFlows` call. Provide this to retrieve the subsequent page. When paginating, all other parameters provided to `ListAgentFlows` must match the call that provided the page token.
+  readMask: string, Optional. The mask which specifies fields that need to be returned in the AgentFlow&#x27;s response.
+    { # Response for ListAgentFlows.
+  &quot;agentFlows&quot;: [ # Output only. The AgentFlows from the specified collection.
+  <pre>Updates an existing AgentFlow.
+  name: string, Required. Resource name of the agent flow. (required)
+  updateMask: string, Optional. Field mask specifying the fields in the above AgentFlow that have been modified and need to be updated.

@@ -1,0 +1,43 @@
+<h1><a href="beyondcorp_v1alpha.html">BeyondCorp API</a> . <a href="beyondcorp_v1alpha.projects.html">projects</a> . <a href="beyondcorp_v1alpha.projects.locations.html">locations</a> . <a href="beyondcorp_v1alpha.projects.locations.connections.html">connections</a></h1>
+  <code><a href="#create">create(parent, body=None, connectionId=None, requestId=None, validateOnly=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Creates a new Connection in a given project and location.</p>
+<p class="firstline">Deletes a single Connection.</p>
+<p class="firstline">Gets details of a single Connection.</p>
+<p class="firstline">Lists Connections in a given project and location.</p>
+<p class="firstline">Updates the parameters of a single Connection.</p>
+  <code><a href="#resolve">resolve(parent, connectorId=None, pageSize=None, pageToken=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Resolves connections details for a given connector. An internal method called by a connector to find connections to connect to.</p>
+    <code class="details" id="create">create(parent, body=None, connectionId=None, requestId=None, validateOnly=None, x__xgafv=None)</code>
+  <pre>Creates a new Connection in a given project and location.
+  parent: string, Required. The resource project name of the connection location using the form: `projects/{project_id}/locations/{location_id}` (required)
+{ # A BeyondCorp Connection resource represents a BeyondCorp protected connection to a remote application. It creates all the necessary GCP components needed for creating a BeyondCorp protected connection. Multiple connectors can be authorised for a single Connection.
+  &quot;applicationEndpoint&quot;: { # ApplicationEndpoint represents a remote application endpoint. # Required. Address of the remote application endpoint for the BeyondCorp Connection.
+  &quot;connectors&quot;: [ # Optional. List of [google.cloud.beyondcorp.v1main.Connector.name] that are authorised to be associated with this Connection.
+  &quot;displayName&quot;: &quot;A String&quot;, # Optional. An arbitrary user-provided name for the connection. Cannot exceed 64 characters.
+  &quot;gateway&quot;: { # Gateway represents a user facing component that serves as an entrance to enable connectivity. # Optional. Gateway used by the connection.
+    &quot;userPort&quot;: 42, # Output only. User port reserved on the gateways for this connection, if not specified or zero, the default port is 19443.
+  &quot;name&quot;: &quot;A String&quot;, # Required. Unique resource name of the connection. The name is ignored when creating a connection.
+  &quot;state&quot;: &quot;A String&quot;, # Output only. The current state of the connection.
+  &quot;type&quot;: &quot;A String&quot;, # Required. The type of network connectivity used by the connection.
+  connectionId: string, Optional. User-settable connection resource ID. * Must start with a letter. * Must contain between 4-63 characters from `/a-z-/`. * Must end with a number or a letter.
+  <pre>Deletes a single Connection.
+  name: string, Required. BeyondCorp Connector name using the form: `projects/{project_id}/locations/{location_id}/connections/{connection_id}` (required)
+  <pre>Gets details of a single Connection.
+  name: string, Required. BeyondCorp Connection name using the form: `projects/{project_id}/locations/{location_id}/connections/{connection_id}` (required)
+  <pre>Lists Connections in a given project and location.
+  parent: string, Required. The resource name of the connection location using the form: `projects/{project_id}/locations/{location_id}` (required)
+  pageToken: string, Optional. The next_page_token value returned from a previous ListConnectionsRequest, if any.
+    { # Response message for BeyondCorp.ListConnections.
+  &quot;connections&quot;: [ # A list of BeyondCorp Connections in the project.
+  <pre>Updates the parameters of a single Connection.
+  name: string, Required. Unique resource name of the connection. The name is ignored when creating a connection. (required)
+  updateMask: string, Required. Mask of fields to update. At least one path must be supplied in this field. The elements of the repeated paths field may only include these fields from [BeyondCorp.Connection]: * `labels` * `display_name` * `application_endpoint` * `connectors`
+    <code class="details" id="resolve">resolve(parent, connectorId=None, pageSize=None, pageToken=None, x__xgafv=None)</code>
+  <pre>Resolves connections details for a given connector. An internal method called by a connector to find connections to connect to.
+  connectorId: string, Required. BeyondCorp Connector name of the connector associated with those connections using the form: `projects/{project_id}/locations/{location_id}/connectors/{connector_id}`
+  pageToken: string, Optional. The next_page_token value returned from a previous ResolveConnectionsResponse, if any.
+    { # Response message for BeyondCorp.ResolveConnections.
+  &quot;connectionDetails&quot;: [ # A list of BeyondCorp Connections with details in the project.
+    { # Details of the Connection.
+      &quot;connection&quot;: { # A BeyondCorp Connection resource represents a BeyondCorp protected connection to a remote application. It creates all the necessary GCP components needed for creating a BeyondCorp protected connection. Multiple connectors can be authorised for a single Connection. # A BeyondCorp Connection in the project.
+      &quot;recentMigVms&quot;: [ # If type=GCP_REGIONAL_MIG, contains most recent VM instances, like &quot;https://www.googleapis.com/compute/v1/projects/{project_id}/zones/{zone_id}/instances/{instance_id}&quot;.

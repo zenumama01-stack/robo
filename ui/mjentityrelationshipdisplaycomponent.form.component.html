@@ -1,0 +1,11 @@
+    <!-- Component Definition Section -->
+        SectionKey="componentDefinition"
+        SectionName="Component Definition"
+            FieldName="RelationshipType"
+    <!-- Entity Relationships Section -->
+        SectionKey="entityRelationships"
+        SectionName="Entity Relationships"
+        [BadgeCount]="GetSectionRowCount('entityRelationships')"
+                [Params]="BuildRelationshipViewParamsByEntityName('MJ: Entity Relationships','DisplayComponentID')"
+                [AllowLoad]="IsSectionExpanded('entityRelationships')"
+                (AfterDataLoad)="SetSectionRowCount('entityRelationships', $event.totalRowCount)"

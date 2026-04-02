@@ -1,0 +1,39 @@
+<h1><a href="dataplex_v1.html">Cloud Dataplex API</a> . <a href="dataplex_v1.projects.html">projects</a> . <a href="dataplex_v1.projects.locations.html">locations</a> . <a href="dataplex_v1.projects.locations.dataTaxonomies.html">dataTaxonomies</a> . <a href="dataplex_v1.projects.locations.dataTaxonomies.attributes.html">attributes</a></h1>
+  <code><a href="#create">create(parent, body=None, dataAttributeId=None, validateOnly=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Create a DataAttribute resource.</p>
+<p class="firstline">Deletes a Data Attribute resource.</p>
+<p class="firstline">Retrieves a Data Attribute resource.</p>
+<p class="firstline">Lists Data Attribute resources in a DataTaxonomy.</p>
+<p class="firstline">Updates a DataAttribute resource.</p>
+    <code class="details" id="create">create(parent, body=None, dataAttributeId=None, validateOnly=None, x__xgafv=None)</code>
+  <pre>Create a DataAttribute resource.
+  parent: string, Required. The resource name of the parent data taxonomy projects/{project_number}/locations/{location_id}/dataTaxonomies/{data_taxonomy_id} (required)
+{ # Denotes one dataAttribute in a dataTaxonomy, for example, PII. DataAttribute resources can be defined in a hierarchy. A single dataAttribute resource can contain specs of multiple types PII - ResourceAccessSpec : - readers :foo@bar.com - DataAccessSpec : - readers :bar@foo.com
+  &quot;attributeCount&quot;: 42, # Output only. The number of child attributes present for this attribute.
+  &quot;createTime&quot;: &quot;A String&quot;, # Output only. The time when the DataAttribute was created.
+  &quot;dataAccessSpec&quot;: { # DataAccessSpec holds the access control configuration to be enforced on data stored within resources (eg: rows, columns in BigQuery Tables). When associated with data, the data is only accessible to principals explicitly granted access through the DataAccessSpec. Principals with access to the containing resource are not implicitly granted access. # Optional. Specified when applied to data stored on the resource (eg: rows, columns in BigQuery Tables).
+    &quot;readers&quot;: [ # Optional. The format of strings follows the pattern followed by IAM in the bindings. user:{email}, serviceAccount:{email} group:{email}. The set of principals to be granted reader role on data stored within resources.
+  &quot;description&quot;: &quot;A String&quot;, # Optional. Description of the DataAttribute.
+  &quot;labels&quot;: { # Optional. User-defined labels for the DataAttribute.
+  &quot;name&quot;: &quot;A String&quot;, # Output only. The relative resource name of the dataAttribute, of the form: projects/{project_number}/locations/{location_id}/dataTaxonomies/{dataTaxonomy}/attributes/{data_attribute_id}.
+  &quot;parentId&quot;: &quot;A String&quot;, # Optional. The ID of the parent DataAttribute resource, should belong to the same data taxonomy. Circular dependency in parent chain is not valid. Maximum depth of the hierarchy allowed is 4. a -&gt; b -&gt; c -&gt; d -&gt; e, depth = 4
+  &quot;resourceAccessSpec&quot;: { # ResourceAccessSpec holds the access control configuration to be enforced on the resources, for example, Cloud Storage bucket, BigQuery dataset, BigQuery table. # Optional. Specified when applied to a resource (eg: Cloud Storage bucket, BigQuery dataset, BigQuery table).
+    &quot;owners&quot;: [ # Optional. The set of principals to be granted owner role on the resource.
+    &quot;readers&quot;: [ # Optional. The format of strings follows the pattern followed by IAM in the bindings. user:{email}, serviceAccount:{email} group:{email}. The set of principals to be granted reader role on the resource.
+    &quot;writers&quot;: [ # Optional. The set of principals to be granted writer role on the resource.
+  &quot;uid&quot;: &quot;A String&quot;, # Output only. System generated globally unique ID for the DataAttribute. This ID will be different if the DataAttribute is deleted and re-created with the same name.
+  &quot;updateTime&quot;: &quot;A String&quot;, # Output only. The time when the DataAttribute was last updated.
+  dataAttributeId: string, Required. DataAttribute identifier. * Must contain only lowercase letters, numbers and hyphens. * Must start with a letter. * Must be between 1-63 characters. * Must end with a number or a letter. * Must be unique within the DataTaxonomy.
+  <pre>Deletes a Data Attribute resource.
+  name: string, Required. The resource name of the DataAttribute: projects/{project_number}/locations/{location_id}/dataTaxonomies/{dataTaxonomy}/attributes/{data_attribute_id} (required)
+  etag: string, Optional. If the client provided etag value does not match the current etag value, the DeleteDataAttribute method returns an ABORTED error response.
+  <pre>Retrieves a Data Attribute resource.
+  name: string, Required. The resource name of the dataAttribute: projects/{project_number}/locations/{location_id}/dataTaxonomies/{dataTaxonomy}/attributes/{data_attribute_id} (required)
+  <pre>Lists Data Attribute resources in a DataTaxonomy.
+  parent: string, Required. The resource name of the DataTaxonomy: projects/{project_number}/locations/{location_id}/dataTaxonomies/{data_taxonomy_id} (required)
+  pageSize: integer, Optional. Maximum number of DataAttributes to return. The service may return fewer than this value. If unspecified, at most 10 dataAttributes will be returned. The maximum value is 1000; values above 1000 will be coerced to 1000.
+  pageToken: string, Optional. Page token received from a previous ListDataAttributes call. Provide this to retrieve the subsequent page. When paginating, all other parameters provided to ListDataAttributes must match the call that provided the page token.
+    { # List DataAttributes response.
+  &quot;dataAttributes&quot;: [ # DataAttributes under the given parent DataTaxonomy.
+  <pre>Updates a DataAttribute resource.
+  name: string, Output only. The relative resource name of the dataAttribute, of the form: projects/{project_number}/locations/{location_id}/dataTaxonomies/{dataTaxonomy}/attributes/{data_attribute_id}. (required)

@@ -1,0 +1,15 @@
+    <!-- Category Hierarchy Section -->
+        SectionKey="categoryHierarchy"
+        SectionName="Category Hierarchy"
+    <!-- Ownership & Audit Section -->
+        SectionKey="ownershipAudit"
+        SectionName="Ownership & Audit"
+    <!-- List Categories Section -->
+        SectionKey="listCategories"
+        SectionName="List Categories"
+        [BadgeCount]="GetSectionRowCount('listCategories')"
+                [Params]="BuildRelationshipViewParamsByEntityName('MJ: List Categories','ParentID')"
+                [NewRecordValues]="NewRecordValues('MJ: List Categories')"
+                [AllowLoad]="IsSectionExpanded('listCategories')"
+                (AfterDataLoad)="SetSectionRowCount('listCategories', $event.totalRowCount)"
+                [Params]="BuildRelationshipViewParamsByEntityName('MJ: Lists','CategoryID')"

@@ -1,0 +1,28 @@
+<h1><a href="aiplatform_v1.html">Vertex AI API</a> . <a href="aiplatform_v1.projects.html">projects</a> . <a href="aiplatform_v1.projects.locations.html">locations</a> . <a href="aiplatform_v1.projects.locations.evaluationSets.html">evaluationSets</a></h1>
+<p class="firstline">Creates an Evaluation Set.</p>
+<p class="firstline">Deletes an Evaluation Set.</p>
+<p class="firstline">Gets an Evaluation Set.</p>
+<p class="firstline">Lists Evaluation Sets.</p>
+<p class="firstline">Updates an Evaluation Set.</p>
+  <pre>Creates an Evaluation Set.
+  parent: string, Required. The resource name of the Location to create the Evaluation Set in. Format: `projects/{project}/locations/{location}` (required)
+{ # EvaluationSet is a collection of related EvaluationItems that are evaluated together.
+  &quot;displayName&quot;: &quot;A String&quot;, # Required. The display name of the EvaluationSet.
+  &quot;evaluationItems&quot;: [ # Required. The EvaluationItems that are part of this dataset.
+  &quot;metadata&quot;: &quot;&quot;, # Optional. Metadata for the EvaluationSet.
+  &quot;name&quot;: &quot;A String&quot;, # Identifier. The resource name of the EvaluationSet. Format: `projects/{project}/locations/{location}/evaluationSets/{evaluation_set}`
+  &quot;updateTime&quot;: &quot;A String&quot;, # Output only. Timestamp when this item was last updated.
+  <pre>Deletes an Evaluation Set.
+  name: string, Required. The name of the EvaluationSet resource to be deleted. Format: `projects/{project}/locations/{location}/evaluationSets/{evaluation_set}` (required)
+  <pre>Gets an Evaluation Set.
+  name: string, Required. The name of the EvaluationSet resource. Format: `projects/{project}/locations/{location}/evaluationSets/{evaluation_set}` (required)
+  <pre>Lists Evaluation Sets.
+  parent: string, Required. The resource name of the Location from which to list the Evaluation Sets. Format: `projects/{project}/locations/{location}` (required)
+  filter: string, Optional. Filter expression that matches a subset of the EvaluationSets to show. For field names both snake_case and camelCase are supported. For more information about filter syntax, see [AIP-160](https://google.aip.dev/160).
+  pageSize: integer, Optional. The maximum number of Evaluation Sets to return.
+  pageToken: string, Optional. A page token, received from a previous `ListEvaluationSets` call. Provide this to retrieve the subsequent page.
+    { # Response message for EvaluationManagementService.ListEvaluationSets.
+  &quot;evaluationSets&quot;: [ # List of EvaluationSets in the requested page.
+  <pre>Updates an Evaluation Set.
+  name: string, Identifier. The resource name of the EvaluationSet. Format: `projects/{project}/locations/{location}/evaluationSets/{evaluation_set}` (required)
+  updateMask: string, Optional. The update mask applies to the resource. For the `FieldMask` definition, see google.protobuf.FieldMask.

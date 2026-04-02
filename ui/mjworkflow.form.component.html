@@ -1,0 +1,22 @@
+    <!-- Core Workflow Details Section -->
+        SectionKey="coreWorkflowDetails"
+        SectionName="Core Workflow Details"
+            FieldName="WorkflowEngineID"
+    <!-- Scheduling Settings Section -->
+        SectionKey="schedulingSettings"
+        SectionName="Scheduling Settings"
+            FieldName="AutoRunEnabled"
+            FieldName="AutoRunIntervalUnits"
+            FieldName="AutoRunInterval"
+            FieldName="AutoRunIntervalMinutes"
+            FieldName="SubclassName"
+                [Params]="BuildRelationshipViewParamsByEntityName('MJ: Reports','OutputWorkflowID')"
+    <!-- Workflow Runs Section -->
+        SectionKey="workflowRuns"
+        SectionName="Workflow Runs"
+        Icon="fa fa-running"
+        [BadgeCount]="GetSectionRowCount('workflowRuns')"
+                [Params]="BuildRelationshipViewParamsByEntityName('MJ: Workflow Runs','WorkflowName')"
+                [NewRecordValues]="NewRecordValues('MJ: Workflow Runs')"
+                [AllowLoad]="IsSectionExpanded('workflowRuns')"
+                (AfterDataLoad)="SetSectionRowCount('workflowRuns', $event.totalRowCount)"

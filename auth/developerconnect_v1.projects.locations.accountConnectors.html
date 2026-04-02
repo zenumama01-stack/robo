@@ -1,0 +1,63 @@
+<h1><a href="developerconnect_v1.html">Developer Connect API</a> . <a href="developerconnect_v1.projects.html">projects</a> . <a href="developerconnect_v1.projects.locations.html">locations</a> . <a href="developerconnect_v1.projects.locations.accountConnectors.html">accountConnectors</a></h1>
+  <code><a href="developerconnect_v1.projects.locations.accountConnectors.users.html">users()</a></code>
+  <code><a href="#create">create(parent, accountConnectorId=None, body=None, requestId=None, validateOnly=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Creates a new AccountConnector in a given project and location.</p>
+<p class="firstline">Deletes a single AccountConnector.</p>
+  <code><a href="#fetchUserRepositories">fetchUserRepositories(accountConnector, pageSize=None, pageToken=None, repository=None, x__xgafv=None)</a></code></p>
+<p class="firstline">FetchUserRepositories returns a list of UserRepos that are available for an account connector resource.</p>
+  <code><a href="#fetchUserRepositories_next">fetchUserRepositories_next()</a></code></p>
+<p class="firstline">Gets details of a single AccountConnector.</p>
+<p class="firstline">Lists AccountConnectors in a given project and location.</p>
+<p class="firstline">Updates the parameters of a single AccountConnector.</p>
+    <code class="details" id="create">create(parent, accountConnectorId=None, body=None, requestId=None, validateOnly=None, x__xgafv=None)</code>
+  <pre>Creates a new AccountConnector in a given project and location.
+  parent: string, Required. Location resource name as the account_connector’s parent. (required)
+{ # AccountConnector encapsulates what a platform administrator needs to configure for users to connect to the service providers, which includes, among other fields, the OAuth client ID, client secret, and authorization and token endpoints.
+  &quot;annotations&quot;: { # Optional. Allows users to store small amounts of arbitrary data.
+  &quot;createTime&quot;: &quot;A String&quot;, # Output only. The timestamp when the accountConnector was created.
+  &quot;customOauthConfig&quot;: { # Message for a customized OAuth config. # Custom OAuth config.
+    &quot;authUri&quot;: &quot;A String&quot;, # Required. Immutable. The OAuth2 authorization server URL.
+    &quot;clientId&quot;: &quot;A String&quot;, # Required. The client ID of the OAuth application.
+    &quot;clientSecret&quot;: &quot;A String&quot;, # Required. Input only. The client secret of the OAuth application. It will be provided as plain text, but encrypted and stored in developer connect. As INPUT_ONLY field, it will not be included in the output.
+    &quot;hostUri&quot;: &quot;A String&quot;, # Required. The host URI of the OAuth application.
+    &quot;pkceDisabled&quot;: True or False, # Optional. Disable PKCE for this OAuth config. PKCE is enabled by default.
+    &quot;scmProvider&quot;: &quot;A String&quot;, # Required. The type of the SCM provider.
+    &quot;scopes&quot;: [ # Required. The scopes to be requested during OAuth.
+    &quot;serverVersion&quot;: &quot;A String&quot;, # Output only. SCM server version installed at the host URI.
+    &quot;serviceDirectoryConfig&quot;: { # ServiceDirectoryConfig represents Service Directory configuration for a connection. # Optional. Configuration for using Service Directory to connect to a private service.
+    &quot;sslCaCertificate&quot;: &quot;A String&quot;, # Optional. SSL certificate to use for requests to a private service.
+    &quot;tokenUri&quot;: &quot;A String&quot;, # Required. Immutable. The OAuth2 token request URL.
+  &quot;labels&quot;: { # Optional. Labels as key value pairs
+  &quot;name&quot;: &quot;A String&quot;, # Identifier. The resource name of the accountConnector, in the format `projects/{project}/locations/{location}/accountConnectors/{account_connector_id}`.
+  &quot;oauthStartUri&quot;: &quot;A String&quot;, # Output only. Start OAuth flow by clicking on this URL.
+  &quot;providerOauthConfig&quot;: { # ProviderOAuthConfig is the OAuth config for a provider. # Optional. Provider OAuth config.
+    &quot;scopes&quot;: [ # Required. User selected scopes to apply to the Oauth config In the event of changing scopes, user records under AccountConnector will be deleted and users will re-auth again.
+    &quot;systemProviderId&quot;: &quot;A String&quot;, # Optional. Immutable. Developer Connect provided OAuth.
+  &quot;proxyConfig&quot;: { # The proxy configuration. # Optional. Configuration for the http and git proxy features.
+    &quot;enabled&quot;: True or False, # Optional. Setting this to true allows the git and http proxies to perform actions on behalf of the user configured under the account connector.
+  &quot;updateTime&quot;: &quot;A String&quot;, # Output only. The timestamp when the accountConnector was updated.
+  accountConnectorId: string, Required. The ID to use for the AccountConnector, which will become the final component of the AccountConnector&#x27;s resource name. Its format should adhere to https://google.aip.dev/122#resource-id-segments Names must be unique per-project per-location.
+  validateOnly: boolean, Optional. If set, validate the request, but do not actually post it.
+  <pre>Deletes a single AccountConnector.
+  etag: string, Optional. The current etag of the AccountConnectorn. If an etag is provided and does not match the current etag of the AccountConnector, deletion will be blocked and an ABORTED error will be returned.
+  force: boolean, Optional. If set to true, any Users from this AccountConnector will also be deleted. (Otherwise, the request will only work if the AccountConnector has no Users.)
+    <code class="details" id="fetchUserRepositories">fetchUserRepositories(accountConnector, pageSize=None, pageToken=None, repository=None, x__xgafv=None)</code>
+  <pre>FetchUserRepositories returns a list of UserRepos that are available for an account connector resource.
+  accountConnector: string, Required. The name of the Account Connector resource in the format: `projects/*/locations/*/accountConnectors/*`. (required)
+  pageSize: integer, Optional. Number of results to return in the list. Defaults to 20.
+  repository: string, Optional. The name of the repository. When specified, only the UserRepository with this name will be returned if the repository is accessible under this Account Connector for the calling user.
+    { # Response message for FetchUserRepositories.
+  &quot;userRepos&quot;: [ # The repositories that the user can access with this account connector.
+    { # A user repository that can be linked to the account connector. Consists of the repo name and the git proxy URL to forward requests to this repo.
+      &quot;cloneUri&quot;: &quot;A String&quot;, # Output only. The git clone URL of the repo. For example: https://github.com/myuser/myrepo.git
+      &quot;displayName&quot;: &quot;A String&quot;, # Output only. The user friendly repo name (e.g., myuser/myrepo)
+      &quot;gitProxyUri&quot;: &quot;A String&quot;, # Output only. The Git proxy URL for this repo. For example: https://us-west1-git.developerconnect.dev/a/my-proj/my-ac/myuser/myrepo.git. Populated only when `proxy_config.enabled` is set to `true` in the Account Connector. This URL is used by other Google services that integrate with Developer Connect.
+    <code class="details" id="fetchUserRepositories_next">fetchUserRepositories_next()</code>
+  <pre>Gets details of a single AccountConnector.
+  <pre>Lists AccountConnectors in a given project and location.
+  parent: string, Required. Parent value for ListAccountConnectorsRequest (required)
+    { # Message for response to listing AccountConnectors
+  &quot;accountConnectors&quot;: [ # The list of AccountConnectors
+  <pre>Updates the parameters of a single AccountConnector.
+  name: string, Identifier. The resource name of the accountConnector, in the format `projects/{project}/locations/{location}/accountConnectors/{account_connector_id}`. (required)
+  allowMissing: boolean, Optional. If set to true, and the accountConnector is not found a new accountConnector will be created. In this situation `update_mask` is ignored. The creation will succeed only if the input accountConnector has all the necessary

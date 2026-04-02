@@ -1,0 +1,28 @@
+<h1><a href="content_v2_1.html">Content API for Shopping</a> . <a href="content_v2_1.localinventory.html">localinventory</a></h1>
+<p class="firstline">Updates local inventory for multiple products or stores in a single request.</p>
+  <code><a href="#insert">insert(merchantId, productId, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Updates the local inventory of a product in your Merchant Center account.</p>
+  <pre>Updates local inventory for multiple products or stores in a single request.
+    { # Batch entry encoding a single local inventory update request.
+      &quot;localInventory&quot;: { # Local inventory resource. For accepted attribute values, see the local product inventory feed specification. # Local inventory of the product.
+        &quot;availability&quot;: &quot;A String&quot;, # The availability of the product. For accepted attribute values, see the local product inventory feed specification.
+        &quot;customAttributes&quot;: [ # A list of custom (merchant-provided) attributes. Can also be used to submit any attribute of the feed specification in its generic form, for example, `{ &quot;name&quot;: &quot;size type&quot;, &quot;value&quot;: &quot;regular&quot; }`.
+          { # A message that represents custom attributes. Exactly one of `value` or `groupValues` must be provided. Maximum allowed number of characters for each custom attribute is 10240 (represents sum of characters for name and value). Maximum 2500 custom attributes can be set per merchant, with total size of 102.4kB.
+            &quot;groupValues&quot;: [ # Subattributes within this attribute group. Exactly one of value or groupValues must be provided.
+              # Object with schema name: CustomAttribute
+        &quot;instoreProductLocation&quot;: &quot;A String&quot;, # The in-store product location.
+        &quot;kind&quot;: &quot;A String&quot;, # Identifies what kind of resource this is. Value: the fixed string &quot;`content#localInventory`&quot;
+        &quot;pickupMethod&quot;: &quot;A String&quot;, # The supported pickup method for this offer. Unless the value is &quot;not supported&quot;, this field must be submitted together with `pickupSla`. For accepted attribute values, see the local product inventory feed specification.
+        &quot;pickupSla&quot;: &quot;A String&quot;, # The expected date that an order will be ready for pickup relative to the order date. Must be submitted together with `pickupMethod`. For accepted attribute values, see the local product inventory feed specification.
+        &quot;quantity&quot;: 42, # The quantity of the product. Must be nonnegative.
+        &quot;salePriceEffectiveDate&quot;: &quot;A String&quot;, # A date range represented by a pair of ISO 8601 dates separated by a space, comma, or slash. Both dates may be specified as &#x27;null&#x27; if undecided.
+        &quot;storeCode&quot;: &quot;A String&quot;, # Required. The store code of this local inventory resource.
+      &quot;method&quot;: &quot;A String&quot;, # Method of the batch request entry. Acceptable values are: - &quot;`insert`&quot;
+      &quot;productId&quot;: &quot;A String&quot;, # The ID of the product for which to update local inventory.
+    { # Batch entry encoding a single local inventory update response.
+      &quot;kind&quot;: &quot;A String&quot;, # Identifies what kind of resource this is. Value: the fixed string &quot;`content#localinventoryCustomBatchResponseEntry`&quot;
+  &quot;kind&quot;: &quot;A String&quot;, # Identifies what kind of resource this is. Value: the fixed string &quot;`content#localinventoryCustomBatchResponse`&quot;.
+    <code class="details" id="insert">insert(merchantId, productId, body=None, x__xgafv=None)</code>
+  <pre>Updates the local inventory of a product in your Merchant Center account.
+  productId: string, The REST ID of the product for which to update local inventory. (required)
+{ # Local inventory resource. For accepted attribute values, see the local product inventory feed specification.

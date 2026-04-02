@@ -1,0 +1,68 @@
+ * Base class for all Scheduled Job-related actions.
+ * Provides common functionality for job operations including validation,
+ * filtering, and entity loading.
+@RegisterClass(BaseAction, 'Base Job Action')
+export abstract class BaseJobAction extends BaseAction {
+     * Validate cron expression format
+     * @param cronExpression - The cron expression to validate
+     * @returns Object with valid flag and optional error message
+    protected validateCronExpression(cronExpression: string): { valid: boolean; error?: string } {
+        if (!cronExpression || cronExpression.trim().length === 0) {
+                error: 'Cron expression cannot be empty'
+            cronParser.parseExpression(cronExpression);
+                error: `Invalid cron expression: ${error instanceof Error ? error.message : String(error)}`
+     * Load a scheduled job entity by ID with error handling
+     * @param jobId - The ID of the job to load
+     * @returns Object with either the loaded job or an error result
+    protected async loadJob(
+        jobId: string,
+    ): Promise<{ job?: MJScheduledJobEntity; error?: ActionResultSimple }> {
+        if (!jobId) {
+                    Message: 'JobID parameter is required'
+        const job = await md.GetEntityObject<MJScheduledJobEntity>('MJ: Scheduled Jobs', contextUser);
+        const loadResult = await job.Load(jobId);
+                    Message: `Scheduled job with ID ${jobId} not found`
+        return { job };
+     * Validate job status value
+     * @param status - The status value to validate
+     * @returns True if the status is valid
+    protected isValidStatus(status: string): boolean {
+        const validStatuses = ['Active', 'Disabled', 'Expired', 'Paused', 'Pending'];
+        return validStatuses.includes(status);
+     * Build filter expression for job queries
+     * @param filters - Object containing optional filter criteria
+     * @returns SQL WHERE clause string
+    protected buildJobFilter(filters: {
+        jobTypeId?: string;
+        isActive?: boolean;
+        createdAfter?: Date;
+        createdBefore?: Date;
+        if (filters.status) {
+            conditions.push(`Status = '${filters.status}'`);
+        if (filters.jobTypeId) {
+            conditions.push(`JobTypeID = '${filters.jobTypeId}'`);
+        if (filters.createdAfter) {
+            conditions.push(`__mj_CreatedAt >= '${filters.createdAfter.toISOString()}'`);
+        if (filters.createdBefore) {
+            conditions.push(`__mj_CreatedAt <= '${filters.createdBefore.toISOString()}'`);
+        return conditions.join(' AND ');
+     * @param name - Parameter name to find
+     * @returns The parameter value or undefined
+    protected getParamValue(params: RunActionParams, name: string): string | undefined {
+     * Get numeric parameter with default value
+     * @param defaultValue - Default value if parameter is missing or invalid
+     * @returns The numeric parameter value or default
+    protected getNumericParam(params: RunActionParams, name: string, defaultValue: number): number {
+     * Get boolean parameter with default value
+     * @param defaultValue - Default value if parameter is missing
+     * @returns The boolean parameter value or default
+    protected getBooleanParam(params: RunActionParams, name: string, defaultValue: boolean): boolean {
+        const strValue = String(value).toLowerCase();
+        return strValue === 'true' || strValue === '1' || strValue === 'yes';
+     * Get date parameter
+     * @returns The date value or undefined
+    protected getDateParam(params: RunActionParams, name: string): Date | undefined {
+        return isNaN(date.getTime()) ? undefined : date;
+     * Add an output parameter to the result
+     * @param name - Output parameter name
+     * @param value - Output parameter value

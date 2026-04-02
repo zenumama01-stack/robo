@@ -1,0 +1,56 @@
+<h1><a href="analyticsadmin_v1alpha.html">Google Analytics Admin API</a> . <a href="analyticsadmin_v1alpha.properties.html">properties</a> . <a href="analyticsadmin_v1alpha.properties.dataStreams.html">dataStreams</a></h1>
+  <code><a href="analyticsadmin_v1alpha.properties.dataStreams.eventCreateRules.html">eventCreateRules()</a></code>
+<p class="firstline">Returns the eventCreateRules Resource.</p>
+  <code><a href="analyticsadmin_v1alpha.properties.dataStreams.eventEditRules.html">eventEditRules()</a></code>
+<p class="firstline">Returns the eventEditRules Resource.</p>
+  <code><a href="analyticsadmin_v1alpha.properties.dataStreams.measurementProtocolSecrets.html">measurementProtocolSecrets()</a></code>
+<p class="firstline">Returns the measurementProtocolSecrets Resource.</p>
+  <code><a href="analyticsadmin_v1alpha.properties.dataStreams.sKAdNetworkConversionValueSchema.html">sKAdNetworkConversionValueSchema()</a></code>
+<p class="firstline">Returns the sKAdNetworkConversionValueSchema Resource.</p>
+<p class="firstline">Creates a DataStream.</p>
+<p class="firstline">Deletes a DataStream on a property.</p>
+<p class="firstline">Lookup for a single DataStream.</p>
+  <code><a href="#getDataRedactionSettings">getDataRedactionSettings(name, x__xgafv=None)</a></code></p>
+<p class="firstline">Lookup for a single DataRedactionSettings.</p>
+  <code><a href="#getEnhancedMeasurementSettings">getEnhancedMeasurementSettings(name, x__xgafv=None)</a></code></p>
+<p class="firstline">Returns the enhanced measurement settings for this data stream. Note that the stream must enable enhanced measurement for these settings to take effect.</p>
+  <code><a href="#getGlobalSiteTag">getGlobalSiteTag(name, x__xgafv=None)</a></code></p>
+<p class="firstline">Returns the Site Tag for the specified web stream. Site Tags are immutable singletons.</p>
+<p class="firstline">Lists DataStreams on a property.</p>
+<p class="firstline">Updates a DataStream on a property.</p>
+  <code><a href="#updateDataRedactionSettings">updateDataRedactionSettings(name, body=None, updateMask=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Updates a DataRedactionSettings on a property.</p>
+  <code><a href="#updateEnhancedMeasurementSettings">updateEnhancedMeasurementSettings(name, body=None, updateMask=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Updates the enhanced measurement settings for this data stream. Note that the stream must enable enhanced measurement for these settings to take effect.</p>
+  <pre>Creates a DataStream.
+{ # A resource message representing a data stream.
+  <pre>Deletes a DataStream on a property.
+  name: string, Required. The name of the DataStream to delete. Example format: properties/1234/dataStreams/5678 (required)
+  <pre>Lookup for a single DataStream.
+  name: string, Required. The name of the DataStream to get. Example format: properties/1234/dataStreams/5678 (required)
+    <code class="details" id="getDataRedactionSettings">getDataRedactionSettings(name, x__xgafv=None)</code>
+  <pre>Lookup for a single DataRedactionSettings.
+  name: string, Required. The name of the settings to lookup. Format: properties/{property}/dataStreams/{data_stream}/dataRedactionSettings Example: &quot;properties/1000/dataStreams/2000/dataRedactionSettings&quot; (required)
+    { # Settings for client-side data redaction. Singleton resource under a Web Stream.
+    <code class="details" id="getEnhancedMeasurementSettings">getEnhancedMeasurementSettings(name, x__xgafv=None)</code>
+  <pre>Returns the enhanced measurement settings for this data stream. Note that the stream must enable enhanced measurement for these settings to take effect.
+  name: string, Required. The name of the settings to lookup. Format: properties/{property}/dataStreams/{data_stream}/enhancedMeasurementSettings Example: &quot;properties/1000/dataStreams/2000/enhancedMeasurementSettings&quot; (required)
+    { # Singleton resource under a web DataStream, configuring measurement of additional site interactions and content.
+    <code class="details" id="getGlobalSiteTag">getGlobalSiteTag(name, x__xgafv=None)</code>
+  <pre>Returns the Site Tag for the specified web stream. Site Tags are immutable singletons.
+  name: string, Required. The name of the site tag to lookup. Note that site tags are singletons and do not have unique IDs. Format: properties/{property_id}/dataStreams/{stream_id}/globalSiteTag Example: `properties/123/dataStreams/456/globalSiteTag` (required)
+    { # Read-only resource with the tag for sending data from a website to a DataStream. Only present for web DataStream resources.
+  &quot;name&quot;: &quot;A String&quot;, # Output only. Resource name for this GlobalSiteTag resource. Format: properties/{property_id}/dataStreams/{stream_id}/globalSiteTag Example: &quot;properties/123/dataStreams/456/globalSiteTag&quot;
+  &quot;snippet&quot;: &quot;A String&quot;, # Immutable. JavaScript code snippet to be pasted as the first item into the head tag of every webpage to measure.
+  <pre>Lists DataStreams on a property.
+  pageToken: string, A page token, received from a previous `ListDataStreams` call. Provide this to retrieve the subsequent page. When paginating, all other parameters provided to `ListDataStreams` must match the call that provided the page token.
+    { # Response message for ListDataStreams RPC.
+  &quot;dataStreams&quot;: [ # List of DataStreams.
+  <pre>Updates a DataStream on a property.
+  name: string, Output only. Resource name of this Data Stream. Format: properties/{property_id}/dataStreams/{stream_id} Example: &quot;properties/1000/dataStreams/2000&quot; (required)
+    <code class="details" id="updateDataRedactionSettings">updateDataRedactionSettings(name, body=None, updateMask=None, x__xgafv=None)</code>
+  <pre>Updates a DataRedactionSettings on a property.
+  name: string, Output only. Name of this Data Redaction Settings resource. Format: properties/{property_id}/dataStreams/{data_stream}/dataRedactionSettings Example: &quot;properties/1000/dataStreams/2000/dataRedactionSettings&quot; (required)
+    <code class="details" id="updateEnhancedMeasurementSettings">updateEnhancedMeasurementSettings(name, body=None, updateMask=None, x__xgafv=None)</code>
+  <pre>Updates the enhanced measurement settings for this data stream. Note that the stream must enable enhanced measurement for these settings to take effect.
+  name: string, Output only. Resource name of the Enhanced Measurement Settings. Format: properties/{property_id}/dataStreams/{data_stream}/enhancedMeasurementSettings Example: &quot;properties/1000/dataStreams/2000/enhancedMeasurementSettings&quot; (required)

@@ -1,0 +1,54 @@
+<h1><a href="networkconnectivity_v1.html">Network Connectivity API</a> . <a href="networkconnectivity_v1.projects.html">projects</a> . <a href="networkconnectivity_v1.projects.locations.html">locations</a> . <a href="networkconnectivity_v1.projects.locations.automatedDnsRecords.html">automatedDnsRecords</a></h1>
+  <code><a href="#create">create(parent, automatedDnsRecordId=None, body=None, insertMode=None, requestId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Creates a new AutomatedDnsRecord in a given project and location.</p>
+  <code><a href="#delete">delete(name, deleteMode=None, etag=None, requestId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Deletes a single AutomatedDnsRecord.</p>
+<p class="firstline">Gets details of a single AutomatedDnsRecord.</p>
+<p class="firstline">Lists AutomatedDnsRecords in a given project and location.</p>
+    <code class="details" id="create">create(parent, automatedDnsRecordId=None, body=None, insertMode=None, requestId=None, x__xgafv=None)</code>
+  <pre>Creates a new AutomatedDnsRecord in a given project and location.
+  parent: string, Required. The parent resource&#x27;s name of the AutomatedDnsRecord. ex. projects/123/locations/us-east1 (required)
+{ # Represents a DNS record managed by the AutomatedDnsRecord API.
+  &quot;consumerNetwork&quot;: &quot;A String&quot;, # Required. Immutable. The full resource path of the consumer network this AutomatedDnsRecord is visible to. Example: &quot;projects/{projectNumOrId}/global/networks/{networkName}&quot;.
+  &quot;createTime&quot;: &quot;A String&quot;, # Output only. The timestamp of when the record was created.
+  &quot;creationMode&quot;: &quot;A String&quot;, # Required. Immutable. The creation mode of the AutomatedDnsRecord. This field is immutable.
+  &quot;currentConfig&quot;: { # Defines the configuration of a DNS record. # Output only. The current settings for this record as identified by (`hostname`, `dns_suffix`, `type`) in Cloud DNS. The `current_config` field reflects the actual settings of the DNS record in Cloud DNS based on the `hostname`, `dns_suffix`, and `type`. * **Absence:** If `current_config` is unset, it means a DNS record with the specified `hostname`, `dns_suffix`, and `type` does not currently exist in Cloud DNS. This could be because the `AutomatedDnsRecord` has never been successfully programmed, has been deleted, or there was an error during provisioning. * **Presence:** If `current_config` is present: * It can be different from the `original_config`. This can happen due to several reasons: * Out-of-band changes: A consumer might have directly modified the DNS record in Cloud DNS. * `OVERWRITE` operations from other `AutomatedDnsRecord` resources: Another `AutomatedDnsRecord` with the same identifying attributes (`hostname`, `dns_suffix`, `type`) but a different configuration might have overwritten the record using `insert_mode: OVERWRITE`. Therefore, the presence of `current_config` indicates that a corresponding DNS record exists, but its values (TTL and RRData) might not always align with the `original_config` of the AutomatedDnsRecord.
+    &quot;rrdatas&quot;: [ # Required. The list of resource record data strings. The content and format of these strings depend on the AutomatedDnsRecord.type. For many common record types, this list may contain multiple strings. As defined in RFC 1035 (section 5) and RFC 1034 (section 3.6.1) -- see examples. Examples: A record: [&quot;192.0.2.1&quot;] or [&quot;192.0.2.1&quot;, &quot;192.0.2.2&quot;] TXT record: [&quot;This is a text record&quot;] CNAME record: [&quot;target.example.com.&quot;] AAAA record: [&quot;::1&quot;] or [&quot;2001:0db8:85a3:0000:0000:8a2e:0370:7334&quot;, &quot;2001:0db8:85a3:0000:0000:8a2e:0370:7335&quot;]
+    &quot;ttl&quot;: &quot;A String&quot;, # Required. Number of seconds that this DNS record can be cached by resolvers.
+  &quot;description&quot;: &quot;A String&quot;, # A human-readable description of the record.
+  &quot;dnsSuffix&quot;: &quot;A String&quot;, # Required. Immutable. The dns suffix for this record to use in longest-suffix matching. Requires a trailing dot. Example: &quot;example.com.&quot;
+  &quot;dnsZone&quot;: &quot;A String&quot;, # Output only. DnsZone is the DNS zone managed by automation. Format: projects/{project}/managedZones/{managedZone}
+  &quot;etag&quot;: &quot;A String&quot;, # Optional. The etag is computed by the server, and may be sent on update and delete requests to ensure the client has an up-to-date value before proceeding.
+  &quot;fqdn&quot;: &quot;A String&quot;, # Output only. The FQDN created by combining the hostname and dns suffix. Should include a trailing dot.
+  &quot;hostname&quot;: &quot;A String&quot;, # Required. Immutable. The hostname for the DNS record. This value will be prepended to the `dns_suffix` to create the full domain name (FQDN) for the record. For example, if `hostname` is &quot;corp.db&quot; and `dns_suffix` is &quot;example.com.&quot;, the resulting record will be &quot;corp.db.example.com.&quot;. Should not include a trailing dot.
+  &quot;name&quot;: &quot;A String&quot;, # Immutable. Identifier. The name of an AutomatedDnsRecord. Format: projects/{project}/locations/{location}/automatedDnsRecords/{automated_dns_record} See: https://google.aip.dev/122#fields-representing-resource-names
+  &quot;originalConfig&quot;: { # Defines the configuration of a DNS record. # Required. Immutable. The configuration settings used to create this DNS record. These settings define the desired state of the record as specified by the producer.
+  &quot;recordType&quot;: &quot;A String&quot;, # Required. Immutable. The identifier of a supported record type.
+  &quot;serviceClass&quot;: &quot;A String&quot;, # Required. Immutable. The service class identifier which authorizes this AutomatedDnsRecord. Any API calls targeting this AutomatedDnsRecord must have `networkconnectivity.serviceclasses.use` IAM permission for the provided service class.
+  &quot;state&quot;: &quot;A String&quot;, # Output only. The current operational state of this AutomatedDnsRecord as managed by Service Connectivity Automation.
+  &quot;stateDetails&quot;: &quot;A String&quot;, # Output only. A human-readable message providing more context about the current state, such as an error description if the state is `FAILED_DEPROGRAMMING`.
+  &quot;updateTime&quot;: &quot;A String&quot;, # Output only. The timestamp of when the record was updated.
+  automatedDnsRecordId: string, Optional. Resource ID (i.e. &#x27;foo&#x27; in &#x27;[...]/projects/p/locations/l/automatedDnsRecords/foo&#x27;) See https://google.aip.dev/122#resource-id-segments Unique per location. If one is not provided, one will be generated.
+  insertMode: string, Optional. The insert mode when creating AutomatedDnsRecord.
+      INSERT_MODE_UNSPECIFIED - An invalid insert mode as the default case.
+      FAIL_IF_EXISTS - Fail the request if the record already exists in cloud DNS.
+      OVERWRITE - Overwrite the existing record in cloud DNS.
+    <code class="details" id="delete">delete(name, deleteMode=None, etag=None, requestId=None, x__xgafv=None)</code>
+  <pre>Deletes a single AutomatedDnsRecord.
+  name: string, Required. The name of the AutomatedDnsRecord to delete. (required)
+  deleteMode: string, Optional. Delete mode when deleting AutomatedDnsRecord. If set to DEPROGRAM, the record will be deprogrammed in Cloud DNS. If set to SKIP_DEPROGRAMMING, the record will not be deprogrammed in Cloud DNS.
+      DELETE_MODE_UNSPECIFIED - An invalid delete mode as the default case.
+      DEPROGRAM - Deprogram the record in Cloud DNS.
+      SKIP_DEPROGRAMMING - Skip deprogramming the record in Cloud DNS.
+  etag: string, Optional. The etag is computed by the server, and may be sent on update and delete requests to ensure the client has an up-to-date value before proceeding.
+  <pre>Gets details of a single AutomatedDnsRecord.
+  name: string, Required. Name of the AutomatedDnsRecord to get. Format: projects/{project}/locations/{location}/automatedDnsRecords/{automated_dns_record} (required)
+  <pre>Lists AutomatedDnsRecords in a given project and location.
+  parent: string, Required. The parent resource&#x27;s name. ex. projects/123/locations/us-east1 (required)
+  filter: string, A filter expression that filters the results listed in the response.
+  orderBy: string, Sort the results by a certain order.
+  pageSize: integer, The maximum number of results per page that should be returned.
+  pageToken: string, The page token.
+    { # Response for ListAutomatedDnsRecords.
+  &quot;automatedDnsRecords&quot;: [ # AutomatedDnsRecords to be returned.
+  &quot;nextPageToken&quot;: &quot;A String&quot;, # The next pagination token in the List response. It should be used as page_token for the following request. An empty value means no more result.

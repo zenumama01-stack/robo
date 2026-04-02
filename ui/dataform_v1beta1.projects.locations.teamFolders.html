@@ -1,0 +1,44 @@
+<h1><a href="dataform_v1beta1.html">Dataform API</a> . <a href="dataform_v1beta1.projects.html">projects</a> . <a href="dataform_v1beta1.projects.locations.html">locations</a> . <a href="dataform_v1beta1.projects.locations.teamFolders.html">teamFolders</a></h1>
+  <code><a href="#create">create(parent, body=None, teamFolderId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Creates a new TeamFolder in a given project and location.</p>
+<p class="firstline">Deletes a single TeamFolder.</p>
+<p class="firstline">Fetches a single TeamFolder.</p>
+<p class="firstline">Updates a single TeamFolder.</p>
+  <code><a href="#queryContents">queryContents(teamFolder, filter=None, orderBy=None, pageSize=None, pageToken=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Returns the contents of a given TeamFolder.</p>
+  <code><a href="#queryContents_next">queryContents_next()</a></code></p>
+  <code><a href="#search">search(location, filter=None, orderBy=None, pageSize=None, pageToken=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Returns all TeamFolders in a given location that the caller has access to and match the provided filter.</p>
+    <code class="details" id="create">create(parent, body=None, teamFolderId=None, x__xgafv=None)</code>
+  <pre>Creates a new TeamFolder in a given project and location.
+  parent: string, Required. The location in which to create the TeamFolder. Must be in the format `projects/*/locations/*`. (required)
+{ # Represents a Dataform TeamFolder. This is a resource that sits at the project level and is used to organize Repositories and Folders with hierarchical access controls. They provide a team context and stricter access controls.
+  &quot;createTime&quot;: &quot;A String&quot;, # Output only. The timestamp of when the TeamFolder was created.
+  &quot;creatorIamPrincipal&quot;: &quot;A String&quot;, # Output only. The IAM principal identifier of the creator of the TeamFolder.
+  &quot;displayName&quot;: &quot;A String&quot;, # Required. The TeamFolder&#x27;s user-friendly name.
+  &quot;name&quot;: &quot;A String&quot;, # Identifier. The TeamFolder&#x27;s name.
+  &quot;updateTime&quot;: &quot;A String&quot;, # Output only. The timestamp of when the TeamFolder was last updated.
+  teamFolderId: string, The ID to use for the TeamFolder, which will become the final component of the TeamFolder&#x27;s resource name.
+  <pre>Deletes a single TeamFolder.
+  name: string, Required. The TeamFolder&#x27;s name. (required)
+  <pre>Fetches a single TeamFolder.
+  <pre>Updates a single TeamFolder.
+  name: string, Identifier. The TeamFolder&#x27;s name. (required)
+  updateMask: string, Optional. Specifies the fields to be updated in the Folder. If left unset, all fields will be updated.
+    <code class="details" id="queryContents">queryContents(teamFolder, filter=None, orderBy=None, pageSize=None, pageToken=None, x__xgafv=None)</code>
+  <pre>Returns the contents of a given TeamFolder.
+  teamFolder: string, Required. Name of the team_folder whose contents to list. Format: `projects/*/locations/*/teamFolders/*`. (required)
+  orderBy: string, Optional. Field to additionally sort results by. Will order Folders before Repositories, and then by `order_by` in ascending order. Supported keywords: `display_name` (default), `create_time`, last_modified_time. Examples: - `orderBy=&quot;display_name&quot;` - `orderBy=&quot;display_name desc&quot;`
+  pageToken: string, Optional. Page token received from a previous `QueryTeamFolderContents` call. Provide this to retrieve the subsequent page. When paginating, all other parameters provided to `QueryTeamFolderContents`, with the exception of `page_size`, must match the call that provided the page token.
+    { # `QueryTeamFolderContents` response message.
+  &quot;entries&quot;: [ # List of entries in the TeamFolder.
+    <code class="details" id="queryContents_next">queryContents_next()</code>
+    <code class="details" id="search">search(location, filter=None, orderBy=None, pageSize=None, pageToken=None, x__xgafv=None)</code>
+  <pre>Returns all TeamFolders in a given location that the caller has access to and match the provided filter.
+  location: string, Required. Location in which to query TeamFolders. Format: `projects/*/locations/*`. (required)
+  orderBy: string, Optional. Field to additionally sort results by. Supported keywords: `display_name` (default), `create_time`, `last_modified_time`. Examples: - `orderBy=&quot;display_name&quot;` - `orderBy=&quot;display_name desc&quot;`
+  pageSize: integer, Optional. Maximum number of TeamFolders to return. The server may return fewer items than requested. If unspecified, the server will pick an appropriate default.
+  pageToken: string, Optional. Page token received from a previous `SearchTeamFolders` call. Provide this to retrieve the subsequent page. When paginating, all other parameters provided to `SearchTeamFolders`, with the exception of `page_size`, must match the call that provided the page token.
+    { # `SearchTeamFolders` response message.
+  &quot;results&quot;: [ # List of TeamFolders that match the search query.
+      &quot;teamFolder&quot;: { # Represents a Dataform TeamFolder. This is a resource that sits at the project level and is used to organize Repositories and Folders with hierarchical access controls. They provide a team context and stricter access controls. # A TeamFolder resource that is in the project / location.

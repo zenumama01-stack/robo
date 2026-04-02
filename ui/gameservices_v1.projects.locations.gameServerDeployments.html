@@ -1,0 +1,32 @@
+<h1><a href="gameservices_v1.html">Game Services API</a> . <a href="gameservices_v1.projects.html">projects</a> . <a href="gameservices_v1.projects.locations.html">locations</a> . <a href="gameservices_v1.projects.locations.gameServerDeployments.html">gameServerDeployments</a></h1>
+          &quot;ignoreChildExemptions&quot;: True or False,
+      &quot;bindingId&quot;: &quot;A String&quot;,
+  &quot;rules&quot;: [ # If more than one rule is specified, the rules are applied in the following manner: - All matching LOG rules are always applied. - If any DENY/DENY_WITH_LOG rule matches, permission is denied. Logging will be applied if one or more matching rule requires logging. - Otherwise, if any ALLOW/ALLOW_WITH_LOG rule matches, permission is granted. Logging will be applied if one or more matching rule requires logging. - Otherwise, if no rule applies, permission is denied.
+    { # A rule to be applied in a Policy.
+      &quot;action&quot;: &quot;A String&quot;, # Required
+      &quot;conditions&quot;: [ # Additional restrictions that must be met. All conditions must pass for the rule to match.
+        { # A condition to be met.
+          &quot;iam&quot;: &quot;A String&quot;, # Trusted attributes supplied by the IAM system.
+          &quot;op&quot;: &quot;A String&quot;, # An operator to apply the subject with.
+          &quot;svc&quot;: &quot;A String&quot;, # Trusted attributes discharged by the service.
+          &quot;sys&quot;: &quot;A String&quot;, # Trusted attributes supplied by any service that owns resources and uses the IAM system for access control.
+          &quot;values&quot;: [ # The objects of the condition.
+      &quot;description&quot;: &quot;A String&quot;, # Human-readable description of the rule.
+      &quot;in&quot;: [ # If one or more &#x27;in&#x27; clauses are specified, the rule matches if the PRINCIPAL/AUTHORITY_SELECTOR is in at least one of these entries.
+      &quot;logConfig&quot;: [ # The config returned to callers of CheckPolicy for any entries that match the LOG action.
+        { # Specifies what kind of log the caller must write
+          &quot;cloudAudit&quot;: { # Write a Cloud Audit log # Cloud audit options.
+            &quot;authorizationLoggingOptions&quot;: { # Authorization-related information used by Cloud Audit Logging. # Information used by the Cloud Audit Logging pipeline.
+              &quot;permissionType&quot;: &quot;A String&quot;, # The type of the permission that was checked.
+            &quot;logName&quot;: &quot;A String&quot;, # The log_name to populate in the Cloud Audit Record.
+          &quot;counter&quot;: { # Increment a streamz counter with the specified metric and field names. Metric names should start with a &#x27;/&#x27;, generally be lowercase-only, and end in &quot;_count&quot;. Field names should not contain an initial slash. The actual exported metric names will have &quot;/iam/policy&quot; prepended. Field names correspond to IAM request parameters and field values are their respective values. Supported field names: - &quot;authority&quot;, which is &quot;[token]&quot; if IAMContext.token is present, otherwise the value of IAMContext.authority_selector if present, and otherwise a representation of IAMContext.principal; or - &quot;iam_principal&quot;, a representation of IAMContext.principal even if a token or authority selector is present; or - &quot;&quot; (empty string), resulting in a counter with no fields. Examples: counter { metric: &quot;/debug_access_count&quot; field: &quot;iam_principal&quot; } ==&gt; increment counter /iam/policy/debug_access_count {iam_principal=[value of IAMContext.principal]} # Counter options.
+            &quot;customFields&quot;: [ # Custom fields.
+              { # Custom fields. These can be used to create a counter with arbitrary field/value pairs. See: go/rpcsp-custom-fields.
+                &quot;name&quot;: &quot;A String&quot;, # Name is the field name.
+                &quot;value&quot;: &quot;A String&quot;, # Value is the field value. It is important that in contrast to the CounterOptions.field, the value here is a constant that is not derived from the IAMContext.
+            &quot;field&quot;: &quot;A String&quot;, # The field value to attribute.
+            &quot;metric&quot;: &quot;A String&quot;, # The metric to update.
+          &quot;dataAccess&quot;: { # Write a Data Access (Gin) log # Data access options.
+            &quot;logMode&quot;: &quot;A String&quot;,
+      &quot;notIn&quot;: [ # If one or more &#x27;not_in&#x27; clauses are specified, the rule matches if the PRINCIPAL/AUTHORITY_SELECTOR is in none of the entries. The format for in and not_in entries can be found at in the Local IAM documentation (see go/local-iam#features).
+      &quot;permissions&quot;: [ # A permission is a string of form &#x27;..&#x27; (e.g., &#x27;storage.buckets.list&#x27;). A value of &#x27;*&#x27; matches all permissions, and a verb part of &#x27;*&#x27; (e.g., &#x27;storage.buckets.*&#x27;) matches all verbs.

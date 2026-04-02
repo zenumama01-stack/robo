@@ -1,0 +1,12 @@
+            FieldName="NodeCryptoName"
+            FieldName="KeyLengthBits"
+            FieldName="IVLengthBytes"
+            FieldName="IsAEAD"
+    <!-- MJ: Encryption Keys Section -->
+        SectionKey="mJEncryptionKeys"
+        SectionName="MJ: Encryption Keys"
+        [BadgeCount]="GetSectionRowCount('mJEncryptionKeys')"
+                [Params]="BuildRelationshipViewParamsByEntityName('MJ: Encryption Keys','EncryptionAlgorithmID')"
+                [NewRecordValues]="NewRecordValues('MJ: Encryption Keys')"
+                [AllowLoad]="IsSectionExpanded('mJEncryptionKeys')"
+                (AfterDataLoad)="SetSectionRowCount('mJEncryptionKeys', $event.totalRowCount)"

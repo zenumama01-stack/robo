@@ -1,0 +1,22 @@
+<h1><a href="apigee_v1.html">Apigee API</a> . <a href="apigee_v1.organizations.html">organizations</a> . <a href="apigee_v1.organizations.instances.html">instances</a> . <a href="apigee_v1.organizations.instances.attachments.html">attachments</a></h1>
+<p class="firstline">Creates a new attachment of an environment to an instance. **Note:** Not supported for Apigee hybrid.</p>
+<p class="firstline">Deletes an attachment. **Note:** Not supported for Apigee hybrid.</p>
+<p class="firstline">Gets an attachment. **Note:** Not supported for Apigee hybrid.</p>
+<p class="firstline">Lists all attachments to an instance. **Note:** Not supported for Apigee hybrid.</p>
+  <pre>Creates a new attachment of an environment to an instance. **Note:** Not supported for Apigee hybrid.
+  parent: string, Required. Name of the instance. Use the following structure in your request: `organizations/{org}/instances/{instance}`. (required)
+{ # InstanceAttachment represents the installation of an environment onto an instance.
+  &quot;createdAt&quot;: &quot;A String&quot;, # Output only. Time the attachment was created in milliseconds since epoch.
+  &quot;environment&quot;: &quot;A String&quot;, # ID of the attached environment.
+  &quot;name&quot;: &quot;A String&quot;, # Output only. ID of the attachment.
+  <pre>Deletes an attachment. **Note:** Not supported for Apigee hybrid.
+  name: string, Required. Name of the attachment. Use the following structure in your request: `organizations/{org}/instances/{instance}/attachments/{attachment}`. (required)
+  <pre>Gets an attachment. **Note:** Not supported for Apigee hybrid.
+  name: string, Required. Name of the attachment. Use the following structure in your request: `organizations/{org}/instances/{instance}/attachments/{attachment}` (required)
+  <pre>Lists all attachments to an instance. **Note:** Not supported for Apigee hybrid.
+  parent: string, Required. Name of the organization. Use the following structure in your request: `organizations/{org}/instances/{instance}` (required)
+  pageSize: integer, Maximum number of instance attachments to return. Defaults to 25.
+  pageToken: string, Page token, returned by a previous ListInstanceAttachments call, that you can use to retrieve the next page of content.
+    { # Response for ListInstanceAttachments.
+  &quot;attachments&quot;: [ # Attachments for the instance.
+  &quot;nextPageToken&quot;: &quot;A String&quot;, # Page token that you can include in a ListInstanceAttachments request to retrieve the next page of content. If omitted, no subsequent pages exist.

@@ -1,0 +1,59 @@
+<h1><a href="aiplatform_v1.html">Vertex AI API</a> . <a href="aiplatform_v1.projects.html">projects</a> . <a href="aiplatform_v1.projects.locations.html">locations</a> . <a href="aiplatform_v1.projects.locations.migratableResources.html">migratableResources</a></h1>
+  <code><a href="aiplatform_v1.projects.locations.migratableResources.operations.html">operations()</a></code>
+  <code><a href="#batchMigrate">batchMigrate(parent, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Batch migrates resources from ml.googleapis.com, automl.googleapis.com, and datalabeling.googleapis.com to Vertex AI.</p>
+  <code><a href="#search">search(parent, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Searches all of the resources in automl.googleapis.com, datalabeling.googleapis.com and ml.googleapis.com that can be migrated to Vertex AI's given location.</p>
+  <code><a href="#search_next">search_next()</a></code></p>
+    <code class="details" id="batchMigrate">batchMigrate(parent, body=None, x__xgafv=None)</code>
+  <pre>Batch migrates resources from ml.googleapis.com, automl.googleapis.com, and datalabeling.googleapis.com to Vertex AI.
+  parent: string, Required. The location of the migrated resource will live in. Format: `projects/{project}/locations/{location}` (required)
+{ # Request message for MigrationService.BatchMigrateResources.
+  &quot;migrateResourceRequests&quot;: [ # Required. The request messages specifying the resources to migrate. They must be in the same location as the destination. Up to 50 resources can be migrated in one batch.
+    { # Config of migrating one resource from automl.googleapis.com, datalabeling.googleapis.com and ml.googleapis.com to Vertex AI.
+      &quot;migrateAutomlDatasetConfig&quot;: { # Config for migrating Dataset in automl.googleapis.com to Vertex AI&#x27;s Dataset. # Config for migrating Dataset in automl.googleapis.com to Vertex AI&#x27;s Dataset.
+        &quot;dataset&quot;: &quot;A String&quot;, # Required. Full resource name of automl Dataset. Format: `projects/{project}/locations/{location}/datasets/{dataset}`.
+        &quot;datasetDisplayName&quot;: &quot;A String&quot;, # Required. Display name of the Dataset in Vertex AI. System will pick a display name if unspecified.
+      &quot;migrateAutomlModelConfig&quot;: { # Config for migrating Model in automl.googleapis.com to Vertex AI&#x27;s Model. # Config for migrating Model in automl.googleapis.com to Vertex AI&#x27;s Model.
+        &quot;model&quot;: &quot;A String&quot;, # Required. Full resource name of automl Model. Format: `projects/{project}/locations/{location}/models/{model}`.
+        &quot;modelDisplayName&quot;: &quot;A String&quot;, # Optional. Display name of the model in Vertex AI. System will pick a display name if unspecified.
+      &quot;migrateDataLabelingDatasetConfig&quot;: { # Config for migrating Dataset in datalabeling.googleapis.com to Vertex AI&#x27;s Dataset. # Deprecated: Data labeling service is shut down. Config for migrating Dataset in datalabeling.googleapis.com to Vertex AI&#x27;s Dataset.
+        &quot;dataset&quot;: &quot;A String&quot;, # Required. Full resource name of data labeling Dataset. Format: `projects/{project}/datasets/{dataset}`.
+        &quot;datasetDisplayName&quot;: &quot;A String&quot;, # Optional. Display name of the Dataset in Vertex AI. System will pick a display name if unspecified.
+        &quot;migrateDataLabelingAnnotatedDatasetConfigs&quot;: [ # Optional. Configs for migrating AnnotatedDataset in datalabeling.googleapis.com to Vertex AI&#x27;s SavedQuery. The specified AnnotatedDatasets have to belong to the datalabeling Dataset.
+          { # Config for migrating AnnotatedDataset in datalabeling.googleapis.com to Vertex AI&#x27;s SavedQuery.
+            &quot;annotatedDataset&quot;: &quot;A String&quot;, # Required. Full resource name of data labeling AnnotatedDataset. Format: `projects/{project}/datasets/{dataset}/annotatedDatasets/{annotated_dataset}`.
+      &quot;migrateMlEngineModelVersionConfig&quot;: { # Config for migrating version in ml.googleapis.com to Vertex AI&#x27;s Model. # Config for migrating Version in ml.googleapis.com to Vertex AI&#x27;s Model.
+        &quot;endpoint&quot;: &quot;A String&quot;, # Required. The ml.googleapis.com endpoint that this model version should be migrated from. Example values: * ml.googleapis.com * us-centrall-ml.googleapis.com * europe-west4-ml.googleapis.com * asia-east1-ml.googleapis.com
+        &quot;modelDisplayName&quot;: &quot;A String&quot;, # Required. Display name of the model in Vertex AI. System will pick a display name if unspecified.
+        &quot;modelVersion&quot;: &quot;A String&quot;, # Required. Full resource name of ml engine model version. Format: `projects/{project}/models/{model}/versions/{version}`.
+    <code class="details" id="search">search(parent, body=None, x__xgafv=None)</code>
+  <pre>Searches all of the resources in automl.googleapis.com, datalabeling.googleapis.com and ml.googleapis.com that can be migrated to Vertex AI&#x27;s given location.
+  parent: string, Required. The location that the migratable resources should be searched from. It&#x27;s the Vertex AI location that the resources can be migrated to, not the resources&#x27; original location. Format: `projects/{project}/locations/{location}` (required)
+{ # Request message for MigrationService.SearchMigratableResources.
+  &quot;filter&quot;: &quot;A String&quot;, # A filter for your search. You can use the following types of filters: * Resource type filters. The following strings filter for a specific type of MigratableResource: * `ml_engine_model_version:*` * `automl_model:*` * `automl_dataset:*` * `data_labeling_dataset:*` * &quot;Migrated or not&quot; filters. The following strings filter for resources that either have or have not already been migrated: * `last_migrate_time:*` filters for migrated resources. * `NOT last_migrate_time:*` filters for not yet migrated resources.
+  &quot;pageSize&quot;: 42, # The standard page size. The default and maximum value is 100.
+  &quot;pageToken&quot;: &quot;A String&quot;, # The standard page token.
+    { # Response message for MigrationService.SearchMigratableResources.
+  &quot;migratableResources&quot;: [ # All migratable resources that can be migrated to the location specified in the request.
+    { # Represents one resource that exists in automl.googleapis.com, datalabeling.googleapis.com or ml.googleapis.com.
+      &quot;automlDataset&quot;: { # Represents one Dataset in automl.googleapis.com. # Output only. Represents one Dataset in automl.googleapis.com.
+        &quot;dataset&quot;: &quot;A String&quot;, # Full resource name of automl Dataset. Format: `projects/{project}/locations/{location}/datasets/{dataset}`.
+        &quot;datasetDisplayName&quot;: &quot;A String&quot;, # The Dataset&#x27;s display name in automl.googleapis.com.
+      &quot;automlModel&quot;: { # Represents one Model in automl.googleapis.com. # Output only. Represents one Model in automl.googleapis.com.
+        &quot;model&quot;: &quot;A String&quot;, # Full resource name of automl Model. Format: `projects/{project}/locations/{location}/models/{model}`.
+        &quot;modelDisplayName&quot;: &quot;A String&quot;, # The Model&#x27;s display name in automl.googleapis.com.
+      &quot;dataLabelingDataset&quot;: { # Represents one Dataset in datalabeling.googleapis.com. # Output only. Represents one Dataset in datalabeling.googleapis.com.
+        &quot;dataLabelingAnnotatedDatasets&quot;: [ # The migratable AnnotatedDataset in datalabeling.googleapis.com belongs to the data labeling Dataset.
+          { # Represents one AnnotatedDataset in datalabeling.googleapis.com.
+            &quot;annotatedDataset&quot;: &quot;A String&quot;, # Full resource name of data labeling AnnotatedDataset. Format: `projects/{project}/datasets/{dataset}/annotatedDatasets/{annotated_dataset}`.
+            &quot;annotatedDatasetDisplayName&quot;: &quot;A String&quot;, # The AnnotatedDataset&#x27;s display name in datalabeling.googleapis.com.
+        &quot;dataset&quot;: &quot;A String&quot;, # Full resource name of data labeling Dataset. Format: `projects/{project}/datasets/{dataset}`.
+        &quot;datasetDisplayName&quot;: &quot;A String&quot;, # The Dataset&#x27;s display name in datalabeling.googleapis.com.
+      &quot;lastMigrateTime&quot;: &quot;A String&quot;, # Output only. Timestamp when the last migration attempt on this MigratableResource started. Will not be set if there&#x27;s no migration attempt on this MigratableResource.
+      &quot;lastUpdateTime&quot;: &quot;A String&quot;, # Output only. Timestamp when this MigratableResource was last updated.
+      &quot;mlEngineModelVersion&quot;: { # Represents one model Version in ml.googleapis.com. # Output only. Represents one Version in ml.googleapis.com.
+        &quot;endpoint&quot;: &quot;A String&quot;, # The ml.googleapis.com endpoint that this model Version currently lives in. Example values: * ml.googleapis.com * us-centrall-ml.googleapis.com * europe-west4-ml.googleapis.com * asia-east1-ml.googleapis.com
+        &quot;version&quot;: &quot;A String&quot;, # Full resource name of ml engine model Version. Format: `projects/{project}/models/{model}/versions/{version}`.
+  &quot;nextPageToken&quot;: &quot;A String&quot;, # The standard next-page token. The migratable_resources may not fill page_size in SearchMigratableResourcesRequest even when there are subsequent pages.
+    <code class="details" id="search_next">search_next()</code>

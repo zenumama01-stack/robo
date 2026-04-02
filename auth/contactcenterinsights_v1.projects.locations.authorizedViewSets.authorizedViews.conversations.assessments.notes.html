@@ -1,0 +1,30 @@
+<h1><a href="contactcenterinsights_v1.html">Contact Center AI Insights API</a> . <a href="contactcenterinsights_v1.projects.html">projects</a> . <a href="contactcenterinsights_v1.projects.locations.html">locations</a> . <a href="contactcenterinsights_v1.projects.locations.authorizedViewSets.html">authorizedViewSets</a> . <a href="contactcenterinsights_v1.projects.locations.authorizedViewSets.authorizedViews.html">authorizedViews</a> . <a href="contactcenterinsights_v1.projects.locations.authorizedViewSets.authorizedViews.conversations.html">conversations</a> . <a href="contactcenterinsights_v1.projects.locations.authorizedViewSets.authorizedViews.conversations.assessments.html">assessments</a> . <a href="contactcenterinsights_v1.projects.locations.authorizedViewSets.authorizedViews.conversations.assessments.notes.html">notes</a></h1>
+<p class="firstline">Create Note.</p>
+<p class="firstline">Deletes a Note.</p>
+<p class="firstline">List Notes.</p>
+<p class="firstline">Update Note.</p>
+  <pre>Create Note.
+  parent: string, Required. The parent resource of the note. (required)
+{ # The conversation assessment note resource.
+  &quot;assessmentNote&quot;: { # A note about the entire parent assessment. # The note is associated to the entire parent assessment.
+  &quot;content&quot;: &quot;A String&quot;, # The note content.
+  &quot;conversationTurnNote&quot;: { # A note about a conversation turn. # The note is associated with a conversation turn.
+    &quot;turnIndex&quot;: 42, # The conversation turn index that the note is associated with.
+  &quot;createTime&quot;: &quot;A String&quot;, # Output only. The time at which the note was created.
+  &quot;name&quot;: &quot;A String&quot;, # Identifier. The resource name of the note. Format: projects/{project}/locations/{location}/conversations/{conversation}/assessments/{assessment}/notes/{note}
+  &quot;noteCreator&quot;: { # Information about a user. # Output only. The user that created the note.
+    &quot;username&quot;: &quot;A String&quot;, # The user&#x27;s username.
+  &quot;qaQuestionNote&quot;: { # A note about a QA question. # The note is associated with a QA question in one of the conversation&#x27;s scorecard results.
+    &quot;qaQuestion&quot;: &quot;A String&quot;, # The question resource that the note is associated with.
+  &quot;updateTime&quot;: &quot;A String&quot;, # Output only. The time at which the note was last updated.
+  <pre>Deletes a Note.
+  name: string, Required. The name of the note to delete. (required)
+  <pre>List Notes.
+  parent: string, Required. The parent resource of the notes. (required)
+  pageSize: integer, Optional. The maximum number of notes to return in the response. If zero the service will select a default size. A call might return fewer objects than requested. A non-empty `next_page_token` in the response indicates that more data is available.
+  pageToken: string, Optional. The value returned by the last `ListNotesResponse`. This value indicates that this is a continuation of a prior `ListNotes` call and that the system should return the next page of data.
+    { # The response of listing notes.
+  &quot;notes&quot;: [ # The notes that match the request.
+  <pre>Update Note.
+  name: string, Identifier. The resource name of the note. Format: projects/{project}/locations/{location}/conversations/{conversation}/assessments/{assessment}/notes/{note} (required)
+  updateMask: string, Optional. The list of fields to be updated. If the update_mask is empty, all updateable fields will be updated. Acceptable fields include: * `content`

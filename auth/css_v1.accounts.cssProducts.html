@@ -1,0 +1,30 @@
+<h1><a href="css_v1.html">CSS API</a> . <a href="css_v1.accounts.html">accounts</a> . <a href="css_v1.accounts.cssProducts.html">cssProducts</a></h1>
+<p class="firstline">Retrieves the processed CSS Product from your CSS Center account. After inserting, updating, or deleting a product input, it may take several minutes before the updated final product can be retrieved.</p>
+<p class="firstline">Lists the processed CSS Products in your CSS Center account. The response might contain fewer items than specified by pageSize. Rely on pageToken to determine if there are more items to be requested. After inserting, updating, or deleting a CSS product input, it may take several minutes before the updated processed CSS product can be retrieved.</p>
+  <pre>Retrieves the processed CSS Product from your CSS Center account. After inserting, updating, or deleting a product input, it may take several minutes before the updated final product can be retrieved.
+  name: string, Required. The name of the CSS product to retrieve. Format: `accounts/{account}/cssProducts/{css_product}` (required)
+    { # The processed CSS Product.
+  &quot;attributes&quot;: { # Attributes for CSS Product. # Output only. A list of product attributes.
+  &quot;contentLanguage&quot;: &quot;A String&quot;, # Output only. The two-letter [ISO 639-1](http://en.wikipedia.org/wiki/ISO_639-1) language code for the product.
+  &quot;cssProductStatus&quot;: { # The status of the Css Product, data validation issues, that is, information about the Css Product computed asynchronously. # Output only. The status of a product, data validation issues, that is, information about a product computed asynchronously.
+    &quot;creationDate&quot;: &quot;A String&quot;, # Date on which the item has been created, in [ISO 8601](http://en.wikipedia.org/wiki/ISO_8601) format.
+      { # The destination status of the product status.
+        &quot;approvedCountries&quot;: [ # List of country codes (ISO 3166-1 alpha-2) where the CSS Product is approved.
+        &quot;disapprovedCountries&quot;: [ # List of country codes (ISO 3166-1 alpha-2) where the CSS Product is disapproved.
+        &quot;pendingCountries&quot;: [ # List of country codes (ISO 3166-1 alpha-2) where the CSS Product is pending approval.
+    &quot;googleExpirationDate&quot;: &quot;A String&quot;, # Date on which the item expires, in [ISO 8601](http://en.wikipedia.org/wiki/ISO_8601) format.
+      { # The ItemLevelIssue of the product status.
+        &quot;applicableCountries&quot;: [ # List of country codes (ISO 3166-1 alpha-2) where issue applies to the CSS Product.
+        &quot;attribute&quot;: &quot;A String&quot;, # The attribute&#x27;s name, if the issue is caused by a single attribute.
+        &quot;servability&quot;: &quot;A String&quot;, # How this issue affects serving of the CSS Product.
+    &quot;lastUpdateDate&quot;: &quot;A String&quot;, # Date on which the item has been last updated, in [ISO 8601](http://en.wikipedia.org/wiki/ISO_8601) format.
+  &quot;customAttributes&quot;: [ # Output only. A list of custom (CSS-provided) attributes. It can also be used to submit any attribute of the feed specification in its generic form (for example, `{ &quot;name&quot;: &quot;size type&quot;, &quot;value&quot;: &quot;regular&quot; }`). This is useful for submitting attributes not explicitly exposed by the API, such as additional attributes used for Buy on Google.
+  &quot;feedLabel&quot;: &quot;A String&quot;, # Output only. The feed label for the product.
+  &quot;name&quot;: &quot;A String&quot;, # The name of the CSS Product. Format: `&quot;accounts/{account}/cssProducts/{css_product}&quot;`
+  &quot;rawProvidedId&quot;: &quot;A String&quot;, # Output only. Your unique raw identifier for the product.
+  <pre>Lists the processed CSS Products in your CSS Center account. The response might contain fewer items than specified by pageSize. Rely on pageToken to determine if there are more items to be requested. After inserting, updating, or deleting a CSS product input, it may take several minutes before the updated processed CSS product can be retrieved.
+  parent: string, Required. The account/domain to list processed CSS Products for. Format: accounts/{account} (required)
+  pageSize: integer, The maximum number of CSS Products to return. The service may return fewer than this value. The maximum value is 1000; values above 1000 will be coerced to 1000. If unspecified, the maximum number of CSS products will be returned.
+  pageToken: string, A page token, received from a previous `ListCssProducts` call. Provide this to retrieve the subsequent page. When paginating, all other parameters provided to `ListCssProducts` must match the call that provided the page token.
+    { # Response message for the ListCssProducts method.
+  &quot;cssProducts&quot;: [ # The processed CSS products from the specified account. These are your processed CSS products after applying rules and supplemental feeds.

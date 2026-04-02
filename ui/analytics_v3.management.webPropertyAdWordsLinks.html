@@ -1,0 +1,49 @@
+<h1><a href="analytics_v3.html">Google Analytics API</a> . <a href="analytics_v3.management.html">management</a> . <a href="analytics_v3.management.webPropertyAdWordsLinks.html">webPropertyAdWordsLinks</a></h1>
+  <code><a href="#delete">delete(accountId, webPropertyId, webPropertyAdWordsLinkId)</a></code></p>
+<p class="firstline">Deletes a web property-Google Ads link.</p>
+  <code><a href="#get">get(accountId, webPropertyId, webPropertyAdWordsLinkId)</a></code></p>
+<p class="firstline">Returns a web property-Google Ads link to which the user has access.</p>
+<p class="firstline">Creates a webProperty-Google Ads link.</p>
+<p class="firstline">Lists webProperty-Google Ads links for a given web property.</p>
+  <code><a href="#patch">patch(accountId, webPropertyId, webPropertyAdWordsLinkId, body=None)</a></code></p>
+<p class="firstline">Updates an existing webProperty-Google Ads link. This method supports patch semantics.</p>
+  <code><a href="#update">update(accountId, webPropertyId, webPropertyAdWordsLinkId, body=None)</a></code></p>
+<p class="firstline">Updates an existing webProperty-Google Ads link.</p>
+    <code class="details" id="delete">delete(accountId, webPropertyId, webPropertyAdWordsLinkId)</code>
+  <pre>Deletes a web property-Google Ads link.
+  accountId: string, ID of the account which the given web property belongs to. (required)
+  webPropertyId: string, Web property ID to delete the Google Ads link for. (required)
+  webPropertyAdWordsLinkId: string, Web property Google Ads link ID. (required)
+    <code class="details" id="get">get(accountId, webPropertyId, webPropertyAdWordsLinkId)</code>
+  <pre>Returns a web property-Google Ads link to which the user has access.
+  webPropertyId: string, Web property ID to retrieve the Google Ads link for. (required)
+  webPropertyAdWordsLinkId: string, Web property-Google Ads link ID. (required)
+    { # JSON template for Analytics Entity Google Ads Link.
+  &quot;adWordsAccounts&quot;: [ # A list of Google Ads client accounts. These cannot be MCC accounts. This field is required when creating a Google Ads link. It cannot be empty.
+    { # JSON template for an Google Ads account.
+      &quot;autoTaggingEnabled&quot;: True or False, # True if auto-tagging is enabled on the Google Ads account. Read-only after the insert operation.
+      &quot;customerId&quot;: &quot;A String&quot;, # Customer ID. This field is required when creating a Google Ads link.
+      &quot;kind&quot;: &quot;analytics#adWordsAccount&quot;, # Resource type for Google Ads account.
+  &quot;entity&quot;: { # Web property being linked.
+    &quot;webPropertyRef&quot;: { # JSON template for a web property reference.
+  &quot;id&quot;: &quot;A String&quot;, # Entity Google Ads link ID
+  &quot;kind&quot;: &quot;analytics#entityAdWordsLink&quot;, # Resource type for entity Google Ads link.
+  &quot;name&quot;: &quot;A String&quot;, # Name of the link. This field is required when creating a Google Ads link.
+  &quot;profileIds&quot;: [ # IDs of linked Views (Profiles) represented as strings.
+  &quot;selfLink&quot;: &quot;A String&quot;, # URL link for this Google Analytics - Google Ads link.
+  <pre>Creates a webProperty-Google Ads link.
+  accountId: string, ID of the Google Analytics account to create the link for. (required)
+  webPropertyId: string, Web property ID to create the link for. (required)
+  <pre>Lists webProperty-Google Ads links for a given web property.
+  webPropertyId: string, Web property ID to retrieve the Google Ads links for. (required)
+  max_results: integer, The maximum number of webProperty-Google Ads links to include in this response.
+  start_index: integer, An index of the first webProperty-Google Ads link to retrieve. Use this parameter as a pagination mechanism along with the max-results parameter.
+    { # An entity Google Ads link collection provides a list of GA-Google Ads links Each resource in this collection corresponds to a single link.
+  &quot;items&quot;: [ # A list of entity Google Ads links.
+  &quot;kind&quot;: &quot;analytics#entityAdWordsLinks&quot;, # Collection type.
+  &quot;nextLink&quot;: &quot;A String&quot;, # Next link for this Google Ads link collection.
+  &quot;previousLink&quot;: &quot;A String&quot;, # Previous link for this Google Ads link collection.
+    <code class="details" id="patch">patch(accountId, webPropertyId, webPropertyAdWordsLinkId, body=None)</code>
+  <pre>Updates an existing webProperty-Google Ads link. This method supports patch semantics.
+    <code class="details" id="update">update(accountId, webPropertyId, webPropertyAdWordsLinkId, body=None)</code>
+  <pre>Updates an existing webProperty-Google Ads link.

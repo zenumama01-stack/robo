@@ -1,0 +1,24 @@
+<h1><a href="vmwareengine_v1.html">VMware Engine API</a> . <a href="vmwareengine_v1.projects.html">projects</a> . <a href="vmwareengine_v1.projects.locations.html">locations</a> . <a href="vmwareengine_v1.projects.locations.nodeTypes.html">nodeTypes</a></h1>
+<p class="firstline">Gets details of a single `NodeType`.</p>
+<p class="firstline">Lists node types</p>
+  <pre>Gets details of a single `NodeType`.
+  name: string, Required. The resource name of the node type to retrieve. Resource names are schemeless URIs that follow the conventions in https://cloud.google.com/apis/design/resource_names. For example: `projects/my-proj/locations/us-central1-a/nodeTypes/standard-72` (required)
+    { # Describes node type.
+  &quot;availableCustomCoreCounts&quot;: [ # Output only. List of possible values of custom core count.
+  &quot;capabilities&quot;: [ # Output only. Capabilities of this node type.
+  &quot;diskSizeGb&quot;: 42, # Output only. The amount of storage available, defined in GB.
+  &quot;displayName&quot;: &quot;A String&quot;, # Output only. The friendly name for this node type. For example: ve1-standard-72
+  &quot;families&quot;: [ # Output only. Families of the node type. For node types to be in the same cluster they must share at least one element in the `families`.
+  &quot;kind&quot;: &quot;A String&quot;, # Output only. The type of the resource.
+  &quot;memoryGb&quot;: 42, # Output only. The amount of physical memory available, defined in GB.
+  &quot;name&quot;: &quot;A String&quot;, # Output only. The resource name of this node type. Resource names are schemeless URIs that follow the conventions in https://cloud.google.com/apis/design/resource_names. For example: `projects/my-proj/locations/us-central1-a/nodeTypes/standard-72`
+  &quot;nodeTypeId&quot;: &quot;A String&quot;, # Output only. The canonical identifier of the node type (corresponds to the `NodeType`). For example: standard-72.
+  &quot;totalCoreCount&quot;: 42, # Output only. The total number of CPU cores in a single node.
+  &quot;virtualCpuCount&quot;: 42, # Output only. The total number of virtual CPUs in a single node.
+  <pre>Lists node types
+  parent: string, Required. The resource name of the location to be queried for node types. Resource names are schemeless URIs that follow the conventions in https://cloud.google.com/apis/design/resource_names. For example: `projects/my-project/locations/us-central1-a` (required)
+  filter: string, A filter expression that matches resources returned in the response. The expression must specify the field name, a comparison operator, and the value that you want to use for filtering. The value must be a string, a number, or a boolean. The comparison operator must be `=`, `!=`, `&gt;`, or `&lt;`. For example, if you are filtering a list of node types, you can exclude the ones named `standard-72` by specifying `name != &quot;standard-72&quot;`. To filter on multiple expressions, provide each separate expression within parentheses. For example: ``` (name = &quot;standard-72&quot;) (virtual_cpu_count &gt; 2) ``` By default, each expression is an `AND` expression. However, you can include `AND` and `OR` expressions explicitly. For example: ``` (name = &quot;standard-96&quot;) AND (virtual_cpu_count &gt; 2) OR (name = &quot;standard-72&quot;) ```
+  pageSize: integer, The maximum number of node types to return in one page. The service may return fewer than this value. The maximum value is coerced to 1000. The default value of this field is 500.
+  pageToken: string, A page token, received from a previous `ListNodeTypes` call. Provide this to retrieve the subsequent page. When paginating, all other parameters provided to `ListNodeTypes` must match the call that provided the page token.
+    { # Response message for VmwareEngine.ListNodeTypes
+  &quot;nodeTypes&quot;: [ # A list of Node Types.

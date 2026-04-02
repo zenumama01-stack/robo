@@ -1,0 +1,20 @@
+<h1><a href="managedidentities_v1beta1.html">Managed Service for Microsoft Active Directory API</a> . <a href="managedidentities_v1beta1.projects.html">projects</a> . <a href="managedidentities_v1beta1.projects.locations.html">locations</a> . <a href="managedidentities_v1beta1.projects.locations.global_.html">global_</a> . <a href="managedidentities_v1beta1.projects.locations.global_.domains.html">domains</a></h1>
+  <code><a href="managedidentities_v1beta1.projects.locations.global_.domains.backups.html">backups()</a></code>
+  <code><a href="managedidentities_v1beta1.projects.locations.global_.domains.sqlIntegrations.html">sqlIntegrations()</a></code>
+<p class="firstline">RestoreBackup restores domain mentioned in the RestoreBackupRequest</p>
+  &quot;trust&quot;: { # Represents a relationship between two domains. This allows a controller in one domain to authenticate a user in another domain. # Required. The domain trust resource.
+    &quot;selectiveAuthentication&quot;: True or False, # The trust authentication type, which decides whether the trusted side has forest/domain wide access or selective access to an approved set of resources.
+    &quot;targetDnsIpAddresses&quot;: [ # The target DNS server IP addresses which can resolve the remote domain involved in the trust.
+    &quot;targetDomainName&quot;: &quot;A String&quot;, # The fully qualified target domain name which will be in trust with the current domain.
+    &quot;trustDirection&quot;: &quot;A String&quot;, # The trust direction, which decides if the current domain is trusted, trusting, or both.
+    &quot;trustHandshakeSecret&quot;: &quot;A String&quot;, # Input only. The trust secret used for the handshake with the target domain. It will not be stored.
+  &quot;name&quot;: &quot;A String&quot;, # Output only. The unique name of the domain using the form: `projects/{project_id}/locations/global/domains/{domain_name}`.
+    { # Represents a relationship between two domains. This allows a controller in one domain to authenticate a user in another domain.
+  domainName: string, Required. A domain name, e.g. mydomain.myorg.com, with the following restrictions: * Must contain only lowercase letters, numbers, periods and hyphens. * Must start with a letter. * Must contain between 2-64 characters. * Must end with a number or a letter. * Must not start with period. * First segment length (mydomain form example above) shouldn&#x27;t exceed 15 chars. * The last segment cannot be fully numeric. * Must be unique within the customer project.
+  &quot;trust&quot;: { # Represents a relationship between two domains. This allows a controller in one domain to authenticate a user in another domain. # Required. The domain trust resource to removed.
+  &quot;ouName&quot;: &quot;A String&quot;, # Optional. OU name to which the VM needs to be domain joined. If the field is not provided, the VM is joined to the default OU which is created. The default OU for the domain join api is created as GCE Instances under the Cloud OU. Example - OU=GCE Instances,OU=Cloud,DC=ad,DC=test,DC=com If the field is provided, then the custom OU is searched for under GCE Instances OU. Example - if ou_name=test_ou then the VM is domain joined to the following OU: OU=test_ou,OU=GCE Instances,OU=Cloud,DC=ad,DC=test,DC=com if present. If OU is not present under GCE Instances, then error is returned.
+  &quot;domainJoinBlob&quot;: &quot;A String&quot;, # The response is the offline domain join blob that is returned after running the djoin command. To correctly use the response of the API, please refer to the sample usage.
+  pageToken: string, The `next_page_token` value returned from a previous ListDomainsRequest request, if any.
+  name: string, Output only. The unique name of the domain using the form: `projects/{project_id}/locations/global/domains/{domain_name}`. (required)
+  <pre>RestoreBackup restores domain mentioned in the RestoreBackupRequest
+  &quot;trust&quot;: { # Represents a relationship between two domains. This allows a controller in one domain to authenticate a user in another domain. # Required. The domain trust to validate trust state for.

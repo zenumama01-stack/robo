@@ -1,0 +1,35 @@
+<h1><a href="gmailpostmastertools_v2.html">Gmail Postmaster Tools API</a> . <a href="gmailpostmastertools_v2.domains.html">domains</a></h1>
+  <code><a href="gmailpostmastertools_v2.domains.domainStats.html">domainStats()</a></code>
+<p class="firstline">Returns the domainStats Resource.</p>
+<p class="firstline">Retrieves detailed information about a domain registered by you. Returns NOT_FOUND if the domain is not registered by you. Domain represents the metadata of a domain that has been registered within the system and linked to a user.</p>
+  <code><a href="#getComplianceStatus">getComplianceStatus(name, x__xgafv=None)</a></code></p>
+<p class="firstline">Retrieves the compliance status for a given domain. Returns PERMISSION_DENIED if you don't have permission to access compliance status for the domain.</p>
+<p class="firstline">Retrieves a list of all domains registered by you, along with their corresponding metadata. The order of domains in the response is unspecified and non-deterministic. Newly registered domains will not necessarily be added to the end of this list.</p>
+  <pre>Retrieves detailed information about a domain registered by you. Returns NOT_FOUND if the domain is not registered by you. Domain represents the metadata of a domain that has been registered within the system and linked to a user.
+  name: string, Required. The resource name of the domain. Format: `domains/{domain_name}`, where domain_name is the fully qualified domain name (i.e., mymail.mydomain.com). (required)
+    { # Information about a domain registered by the user.
+  &quot;createTime&quot;: &quot;A String&quot;, # Output only. Immutable. The timestamp at which the domain was added to the user&#x27;s account.
+  &quot;lastVerifyTime&quot;: &quot;A String&quot;, # The timestamp at which the domain was last verified by the user.
+  &quot;name&quot;: &quot;A String&quot;, # Identifier. The resource name of the domain. Format: `domains/{domain_name}`, where domain_name is the fully qualified domain name (i.e., mymail.mydomain.com).
+  &quot;permission&quot;: &quot;A String&quot;, # Output only. User&#x27;s permission of this domain.
+  &quot;verificationState&quot;: &quot;A String&quot;, # Output only. Information about a user&#x27;s verification history and properties for the domain.
+    <code class="details" id="getComplianceStatus">getComplianceStatus(name, x__xgafv=None)</code>
+  <pre>Retrieves the compliance status for a given domain. Returns PERMISSION_DENIED if you don&#x27;t have permission to access compliance status for the domain.
+  name: string, Required. The resource name of the domain&#x27;s compliance status to retrieve. Format: `domains/{domain_id}/complianceStatus`. (required)
+    { # Compliance status for a domain.
+  &quot;complianceData&quot;: { # Compliance data for a given domain. # Compliance data for the registrable domain part of the domain in `name`. For example, if `name` is `domains/example.com/complianceStatus`, this field contains compliance data for `example.com`.
+    &quot;domainId&quot;: &quot;A String&quot;, # Domain that this data is for.
+    &quot;honorUnsubscribeVerdict&quot;: { # Compliance verdict for whether a sender meets the unsubscribe honoring compliance requirement. # Unsubscribe honoring compliance verdict.
+      &quot;reason&quot;: &quot;A String&quot;, # The specific reason for the compliance verdict. Must be empty if the status is compliant.
+      &quot;status&quot;: { # The status of a sender compliance requirement. # The compliance status.
+        &quot;status&quot;: &quot;A String&quot;, # Output only. The compliance status.
+    &quot;oneClickUnsubscribeVerdict&quot;: { # Compliance verdict for whether a sender meets the one-click unsubscribe compliance requirement. # One-click unsubscribe compliance verdict.
+    &quot;rowData&quot;: [ # Data for each of the rows of the table. Each message contains all the data that backs a single row.
+      { # Data for a single row of the compliance status table.
+        &quot;requirement&quot;: &quot;A String&quot;, # The compliance requirement.
+        &quot;status&quot;: { # The status of a sender compliance requirement. # The compliance status for the requirement.
+  &quot;name&quot;: &quot;A String&quot;, # Identifier. The resource name of the domain&#x27;s compliance status. Format: `domains/{domain_id}/complianceStatus`.
+  &quot;subdomainComplianceData&quot;: { # Compliance data for a given domain. # Compliance data calculated specifically for the subdomain in `name`. This field is only populated if the domain in `name` is a subdomain that differs from its registrable domain (e.g., `sub.example.com`), and if compliance data is available for that specific subdomain.
+  <pre>Retrieves a list of all domains registered by you, along with their corresponding metadata. The order of domains in the response is unspecified and non-deterministic. Newly registered domains will not necessarily be added to the end of this list.
+  pageSize: integer, Optional. Requested page size. Server may return fewer domains than requested. If unspecified, the default value for this field is 10. The maximum value for this field is 200.
+  &quot;domains&quot;: [ # The domains that have been registered by the user.

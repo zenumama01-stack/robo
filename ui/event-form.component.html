@@ -1,0 +1,158 @@
+<div class="record-form-container">
+  <form *ngIf="isRecordReady" class="record-form" #form="ngForm">
+    <mj-form-toolbar [form]="this"></mj-form-toolbar>
+    <!-- Header Card -->
+    <div class="form-card">
+      <div class="form-header">
+          <h3>{{ record.Name || 'New Event' }}</h3>
+          <p class="header-subtitle">{{ record.Location || 'Event Details' }}</p>
+          <button type="button" class="btn-dashboard" (click)="goToDashboard()">
+            <i class="fa fa-th-large"></i>
+            Dashboard
+          <div class="header-meta" *ngIf="record.ID">
+            <span class="status-badge" [ngClass]="statusBadgeClass">{{ record.Status }}</span>
+            <span class="event-dates" *ngIf="record.StartDate">
+              {{ record.StartDate | date:'MMM d, y' }} - {{ record.EndDate | date:'MMM d, y' }}
+    <!-- Basic Information Section - Collapsible -->
+    <div class="form-card collapsible-card">
+      <div class="collapsible-header" (click)="toggleSection('basicInfo')" role="button" tabindex="0">
+        <div class="collapsible-title">
+          <h3>Basic Information</h3>
+        <div class="collapse-icon">
+          <i [class]="sectionsExpanded.basicInfo ? 'fa fa-chevron-up' : 'fa fa-chevron-down'"></i>
+      <div class="collapsible-body" [class.collapsed]="!sectionsExpanded.basicInfo">
+        <div class="form-body">
+          <div class="form-section">
+            <div class="form-group">
+              <label for="name" class="form-label required">Event Name</label>
+              <input
+                type="text"
+                id="name"
+                name="name"
+                class="form-control"
+                [(ngModel)]="record.Name"
+                [disabled]="!EditMode"
+                placeholder="Enter event name"
+                maxlength="200"
+                required>
+              <label for="description" class="form-label">Description</label>
+              <textarea
+                id="description"
+                name="description"
+                class="form-control textarea-large"
+                [(ngModel)]="record.Description"
+                placeholder="Describe the event"
+                rows="4"></textarea>
+              <label for="venue" class="form-label">Location</label>
+                id="venue"
+                name="venue"
+                [(ngModel)]="record.Location"
+                placeholder="Event venue or location"
+                maxlength="200">
+    <!-- Dates & Deadlines Section - Collapsible -->
+      <div class="collapsible-header" (click)="toggleSection('dates')" role="button" tabindex="0">
+          <h3>Dates & Deadlines</h3>
+          <i [class]="sectionsExpanded.dates ? 'fa fa-chevron-up' : 'fa fa-chevron-down'"></i>
+      <div class="collapsible-body" [class.collapsed]="!sectionsExpanded.dates">
+          <div class="form-row">
+              <label for="startDate" class="form-label required">Start Date</label>
+                type="date"
+                id="startDate"
+                name="startDate"
+                [ngModel]="record.StartDate | date:'yyyy-MM-dd'"
+                (ngModelChange)="onStartDateChange($event)"
+              <label for="endDate" class="form-label required">End Date</label>
+                id="endDate"
+                name="endDate"
+                [ngModel]="record.EndDate | date:'yyyy-MM-dd'"
+                (ngModelChange)="onEndDateChange($event)"
+            <label for="submissionDeadline" class="form-label">Submission Deadline</label>
+              type="datetime-local"
+              id="submissionDeadline"
+              name="submissionDeadline"
+              [ngModel]="record.SubmissionDeadline | date:'yyyy-MM-ddTHH:mm'"
+              (ngModelChange)="onSubmissionDeadlineChange($event)"
+              [disabled]="!EditMode">
+    <!-- Details Section - Collapsible -->
+      <div class="collapsible-header" (click)="toggleSection('details')" role="button" tabindex="0">
+          <i class="fa fa-info-circle"></i>
+          <h3>Details</h3>
+          <i [class]="sectionsExpanded.details ? 'fa fa-chevron-up' : 'fa fa-chevron-down'"></i>
+      <div class="collapsible-body" [class.collapsed]="!sectionsExpanded.details">
+              <label for="status" class="form-label required">Status</label>
+              <select
+                id="status"
+                name="status"
+                [(ngModel)]="record.Status"
+                <option [value]="null" disabled>Select status...</option>
+                <option *ngFor="let status of statusOptions" [value]="status">
+                  {{ status }}
+                </option>
+              </select>
+    <!-- Submissions Section - Collapsible -->
+    <div class="form-card collapsible-card submissions-card" *ngIf="record.ID">
+      <div class="collapsible-header" (click)="toggleSection('submissions')" role="button" tabindex="0">
+          <h3>Submissions</h3>
+        <div class="submissions-count-badge" *ngIf="!loadingSubmissions">
+          {{ submissions.length }} total
+          <i [class]="sectionsExpanded.submissions ? 'fa fa-chevron-up' : 'fa fa-chevron-down'"></i>
+      <div class="collapsible-body" [class.collapsed]="!sectionsExpanded.submissions">
+          <!-- Stats Bar -->
+          <div class="submissions-stats" *ngIf="submissions.length > 0">
+            <div class="stat-item">
+              <span class="stat-number">{{ submissionsStats.total }}</span>
+              <span class="stat-label">Total</span>
+            <div class="stat-item stat-success">
+              <span class="stat-number">{{ submissionsStats.accepted }}</span>
+              <span class="stat-label">Accepted</span>
+            <div class="stat-item stat-danger">
+              <span class="stat-number">{{ submissionsStats.rejected }}</span>
+              <span class="stat-label">Rejected</span>
+            <div class="stat-item stat-warning">
+              <span class="stat-number">{{ submissionsStats.underReview }}</span>
+              <span class="stat-label">Under Review</span>
+            <div class="stat-item stat-info">
+              <span class="stat-number">{{ submissionsStats.passedInitial }}</span>
+              <span class="stat-label">Passed Initial</span>
+          <div *ngIf="loadingSubmissions" class="submissions-loading">
+            <div class="loading-spinner-small"></div>
+            <p>Loading submissions...</p>
+          <div *ngIf="!loadingSubmissions && submissions.length === 0" class="submissions-empty">
+            <p>No submissions yet for this event</p>
+          <!-- Submissions List -->
+          <div *ngIf="!loadingSubmissions && submissions.length > 0" class="submissions-list">
+            <div *ngFor="let submission of submissions"
+                 class="submission-card"
+                 (click)="openSubmissionRecord(submission.ID)">
+              <div class="submission-header">
+                <div class="submission-title">
+                  <span>{{ submission.SubmissionTitle }}</span>
+                <span class="status-badge" [ngClass]="getSubmissionStatusClass(submission.Status)">
+                  {{ submission.Status }}
+              <div class="submission-details">
+                <div class="submission-meta">
+                    {{ submission.SubmittedAt | date:'MMM d, y' }}
+                  <span class="meta-item" *ngIf="submission.SessionFormat">
+                    <i class="fa fa-presentation"></i>
+                    {{ submission.SessionFormat }}
+                  <span class="meta-item" *ngIf="submission.AIEvaluationScore != null">
+                    <i class="fa fa-star"></i>
+                    Score: {{ submission.AIEvaluationScore }}
+              <div class="submission-abstract" *ngIf="submission.SubmissionAbstract">
+                {{ submission.SubmissionAbstract | slice:0:150 }}{{ submission.SubmissionAbstract.length > 150 ? '...' : '' }}
+    <!-- Metadata Section - Collapsible -->
+    <div class="form-card collapsible-card metadata-card" *ngIf="record.ID">
+      <div class="collapsible-header" (click)="toggleSection('metadata')" role="button" tabindex="0">
+          <i class="fa fa-database"></i>
+          <h3>Metadata</h3>
+          <i [class]="sectionsExpanded.metadata ? 'fa fa-chevron-up' : 'fa fa-chevron-down'"></i>
+      <div class="collapsible-body" [class.collapsed]="!sectionsExpanded.metadata">
+          <div class="metadata-grid">
+            <div class="metadata-item">
+              <span class="metadata-label">Created:</span>
+              <span class="metadata-value">{{ record.__mj_CreatedAt | date:'medium' }}</span>
+              <span class="metadata-label">Updated:</span>
+              <span class="metadata-value">{{ record.__mj_UpdatedAt | date:'medium' }}</span>
+  </form>
+  <div *ngIf="!isRecordReady" class="loading-container">
+    <p>Loading event data...</p>

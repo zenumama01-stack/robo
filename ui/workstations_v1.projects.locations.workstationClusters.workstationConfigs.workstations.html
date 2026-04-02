@@ -1,0 +1,68 @@
+<h1><a href="workstations_v1.html">Cloud Workstations API</a> . <a href="workstations_v1.projects.html">projects</a> . <a href="workstations_v1.projects.locations.html">locations</a> . <a href="workstations_v1.projects.locations.workstationClusters.html">workstationClusters</a> . <a href="workstations_v1.projects.locations.workstationClusters.workstationConfigs.html">workstationConfigs</a> . <a href="workstations_v1.projects.locations.workstationClusters.workstationConfigs.workstations.html">workstations</a></h1>
+  <code><a href="#create">create(parent, body=None, validateOnly=None, workstationId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Creates a new workstation.</p>
+<p class="firstline">Deletes the specified workstation.</p>
+  <code><a href="#generateAccessToken">generateAccessToken(workstation, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Returns a short-lived credential that can be used to send authenticated and authorized traffic to a workstation. Once generated this token cannot be revoked and is good for the lifetime of the token.</p>
+<p class="firstline">Returns the requested workstation.</p>
+<p class="firstline">Returns all Workstations using the specified workstation configuration.</p>
+<p class="firstline">Returns all workstations using the specified workstation configuration on which the caller has the "workstations.workstations.use" permission.</p>
+<p class="firstline">Updates an existing workstation.</p>
+<p class="firstline">Starts running a workstation so that users can connect to it.</p>
+<p class="firstline">Stops running a workstation, reducing costs.</p>
+    <code class="details" id="create">create(parent, body=None, validateOnly=None, workstationId=None, x__xgafv=None)</code>
+  <pre>Creates a new workstation.
+{ # A single instance of a developer workstation with its own persistent storage.
+  &quot;createTime&quot;: &quot;A String&quot;, # Output only. Time when this workstation was created.
+  &quot;deleteTime&quot;: &quot;A String&quot;, # Output only. Time when this workstation was soft-deleted.
+  &quot;displayName&quot;: &quot;A String&quot;, # Optional. Human-readable name for this workstation.
+  &quot;env&quot;: { # Optional. Environment variables passed to the workstation container&#x27;s entrypoint.
+  &quot;host&quot;: &quot;A String&quot;, # Output only. Host to which clients can send HTTPS traffic that will be received by the workstation. Authorized traffic will be received to the workstation as HTTP on port 80. To send traffic to a different port, clients may prefix the host with the destination port in the format `{port}-{host}`.
+  &quot;kmsKey&quot;: &quot;A String&quot;, # Output only. The name of the Google Cloud KMS encryption key used to encrypt this workstation. The KMS key can only be configured in the WorkstationConfig. The expected format is `projects/*/locations/*/keyRings/*/cryptoKeys/*`.
+  &quot;labels&quot;: { # Optional. [Labels](https://cloud.google.com/workstations/docs/label-resources) that are applied to the workstation and that are also propagated to the underlying Compute Engine resources.
+  &quot;name&quot;: &quot;A String&quot;, # Identifier. Full name of this workstation.
+  &quot;reconciling&quot;: True or False, # Output only. Indicates whether this workstation is currently being updated to match its intended state.
+  &quot;runtimeHost&quot;: { # Runtime host for the workstation. # Optional. Output only. Runtime host for the workstation when in STATE_RUNNING.
+    &quot;gceInstanceHost&quot;: { # The Compute Engine instance host. # Specifies a Compute Engine instance as the host.
+      &quot;id&quot;: &quot;A String&quot;, # Optional. Output only. The ID of the Compute Engine instance.
+      &quot;name&quot;: &quot;A String&quot;, # Optional. Output only. The name of the Compute Engine instance.
+      &quot;zone&quot;: &quot;A String&quot;, # Optional. Output only. The zone of the Compute Engine instance.
+  &quot;sourceWorkstation&quot;: &quot;A String&quot;, # Optional. The source workstation from which this workstation&#x27;s persistent directories were cloned on creation.
+  &quot;startTime&quot;: &quot;A String&quot;, # Output only. Time when this workstation was most recently successfully started, regardless of the workstation&#x27;s initial state.
+  &quot;state&quot;: &quot;A String&quot;, # Output only. Current state of the workstation.
+  &quot;uid&quot;: &quot;A String&quot;, # Output only. A system-assigned unique identifier for this workstation.
+  &quot;updateTime&quot;: &quot;A String&quot;, # Output only. Time when this workstation was most recently updated.
+  workstationId: string, Required. ID to use for the workstation.
+  <pre>Deletes the specified workstation.
+  name: string, Required. Name of the workstation to delete. (required)
+  etag: string, Optional. If set, the request will be rejected if the latest version of the workstation on the server does not have this ETag.
+    <code class="details" id="generateAccessToken">generateAccessToken(workstation, body=None, x__xgafv=None)</code>
+  <pre>Returns a short-lived credential that can be used to send authenticated and authorized traffic to a workstation. Once generated this token cannot be revoked and is good for the lifetime of the token.
+  workstation: string, Required. Name of the workstation for which the access token should be generated. (required)
+{ # Request message for GenerateAccessToken.
+  &quot;expireTime&quot;: &quot;A String&quot;, # Desired expiration time of the access token. This value must be at most 24 hours in the future. If a value is not specified, the token&#x27;s expiration time will be set to a default value of 1 hour in the future.
+  &quot;port&quot;: 42, # Optional. Port for which the access token should be generated. If specified, the generated access token grants access only to the specified port of the workstation. If specified, values must be within the range [1 - 65535]. If not specified, the generated access token grants access to all ports of the workstation.
+  &quot;ttl&quot;: &quot;A String&quot;, # Desired lifetime duration of the access token. This value must be at most 24 hours. If a value is not specified, the token&#x27;s lifetime will be set to a default value of 1 hour.
+  &quot;accessToken&quot;: &quot;A String&quot;, # The generated bearer access token. To use this token, include it in an Authorization header of an HTTP request sent to the associated workstation&#x27;s hostname—for example, `Authorization: Bearer `.
+  &quot;expireTime&quot;: &quot;A String&quot;, # Time at which the generated token will expire.
+  <pre>Returns the requested workstation.
+  <pre>Returns all Workstations using the specified workstation configuration.
+  filter: string, Optional. Filter the Workstations to be listed. Possible filters are described in https://google.aip.dev/160.
+    { # Response message for ListWorkstations.
+  &quot;nextPageToken&quot;: &quot;A String&quot;, # Optional. Token to retrieve the next page of results, or empty if there are no more results in the list.
+  &quot;unreachable&quot;: [ # Optional. Unreachable resources.
+  &quot;workstations&quot;: [ # The requested workstations.
+  <pre>Returns all workstations using the specified workstation configuration on which the caller has the &quot;workstations.workstations.use&quot; permission.
+    { # Response message for ListUsableWorkstations.
+  <pre>Updates an existing workstation.
+  name: string, Identifier. Full name of this workstation. (required)
+  allowMissing: boolean, Optional. If set and the workstation configuration is not found, a new workstation configuration is created. In this situation, update_mask is ignored.
+  <pre>Starts running a workstation so that users can connect to it.
+  name: string, Required. Name of the workstation to start. (required)
+{ # Request message for StartWorkstation.
+  &quot;boostConfig&quot;: &quot;A String&quot;, # Optional. If set, the workstation starts using the boost configuration with the specified ID.
+  &quot;etag&quot;: &quot;A String&quot;, # Optional. If set, the request will be rejected if the latest version of the workstation on the server does not have this ETag.
+  &quot;validateOnly&quot;: True or False, # Optional. If set, validate the request and preview the review, but do not actually apply it.
+  <pre>Stops running a workstation, reducing costs.
+  name: string, Required. Name of the workstation to stop. (required)
+{ # Request message for StopWorkstation.

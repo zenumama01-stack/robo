@@ -1,0 +1,80 @@
+<h1><a href="chromemanagement_v1.html">Chrome Management API</a> . <a href="chromemanagement_v1.customers.html">customers</a> . <a href="chromemanagement_v1.customers.profiles.html">profiles</a></h1>
+  <code><a href="chromemanagement_v1.customers.profiles.commands.html">commands()</a></code>
+<p class="firstline">Deletes the data collected from a Chrome browser profile.</p>
+<p class="firstline">Gets a Chrome browser profile with customer ID and profile permanent ID.</p>
+<p class="firstline">Lists Chrome browser profiles of a customer based on the given search and sorting criteria.</p>
+  <pre>Deletes the data collected from a Chrome browser profile.
+  name: string, Required. Format: customers/{customer_id}/profiles/{profile_permanent_id} (required)
+  <pre>Gets a Chrome browser profile with customer ID and profile permanent ID.
+    { # A representation of a Chrome browser profile.
+  &quot;affiliationState&quot;: &quot;A String&quot;, # Output only. The specific affiliation state of the profile.
+  &quot;annotatedLocation&quot;: &quot;A String&quot;, # Optional. Location of the profile annotated by the admin.
+  &quot;annotatedUser&quot;: &quot;A String&quot;, # Optional. User of the profile annotated by the admin.
+  &quot;attestationCredential&quot;: { # Information of public key associated with a Chrome browser profile. # Output only. Attestation credential information of the profile.
+    &quot;keyRotationTime&quot;: &quot;A String&quot;, # Output only. Latest rotation timestamp of the public key rotation.
+    &quot;keyTrustLevel&quot;: &quot;A String&quot;, # Output only. Trust level of the public key.
+    &quot;keyType&quot;: &quot;A String&quot;, # Output only. Type of the public key.
+    &quot;publicKey&quot;: &quot;A String&quot;, # Output only. Value of the public key.
+  &quot;browserChannel&quot;: &quot;A String&quot;, # Output only. Channel of the browser on which the profile exists.
+  &quot;browserVersion&quot;: &quot;A String&quot;, # Output only. Version of the browser on which the profile exists.
+  &quot;deviceInfo&quot;: { # Information of a device that runs a Chrome browser profile. # Output only. Basic information of the device on which the profile exists. This information is only available for the affiliated profiles.
+    &quot;affiliatedDeviceId&quot;: &quot;A String&quot;, # Output only. Device ID that identifies the affiliated device on which the profile exists. If the device type is CHROME_BROWSER, then this represents a unique Directory API ID of the device that can be used in Admin SDK Browsers API.
+    &quot;deviceType&quot;: &quot;A String&quot;, # Output only. Type of the device on which the profile exists.
+    &quot;hostname&quot;: &quot;A String&quot;, # Output only. Hostname of the device on which the profile exists.
+    &quot;machine&quot;: &quot;A String&quot;, # Output only. Machine name of the device on which the profile exists. On platforms which do not report the machine name (currently iOS and Android) this is instead set to the browser&#x27;s device_id - but note that this is a different device_id than the |affiliated_device_id|.
+  &quot;displayName&quot;: &quot;A String&quot;, # Output only. Profile display name set by client.
+  &quot;etag&quot;: &quot;A String&quot;, # Output only. Etag of this ChromeBrowserProfile resource. This etag can be used with UPDATE operation to ensure consistency.
+  &quot;extensionCount&quot;: &quot;A String&quot;, # Output only. Number of extensions installed on the profile.
+  &quot;firstEnrollmentTime&quot;: &quot;A String&quot;, # Output only. Timestamp of the first enrollment of the profile.
+  &quot;identityProvider&quot;: &quot;A String&quot;, # Output only. Identify provider of the profile.
+  &quot;lastActivityTime&quot;: &quot;A String&quot;, # Output only. Timestamp of the latest activity by the profile.
+  &quot;lastPolicyFetchTime&quot;: &quot;A String&quot;, # Output only. Timestamp of the latest policy fetch by the profile.
+  &quot;lastPolicySyncTime&quot;: &quot;A String&quot;, # Output only. Timestamp of the latest policy sync by the profile.
+  &quot;lastStatusReportTime&quot;: &quot;A String&quot;, # Output only. Timestamp of the latest status report by the profile.
+  &quot;name&quot;: &quot;A String&quot;, # Identifier. Format: customers/{customer_id}/profiles/{profile_permanent_id}
+  &quot;osPlatformType&quot;: &quot;A String&quot;, # Output only. OS platform of the device on which the profile exists.
+  &quot;osPlatformVersion&quot;: &quot;A String&quot;, # Output only. Major OS platform version of the device on which the profile exists, from profile reporting.
+  &quot;osVersion&quot;: &quot;A String&quot;, # Output only. OS version of the device on which the profile exists.
+  &quot;policyCount&quot;: &quot;A String&quot;, # Output only. Number of policies applied on the profile.
+  &quot;profileId&quot;: &quot;A String&quot;, # Output only. Chrome client side profile ID.
+  &quot;profilePermanentId&quot;: &quot;A String&quot;, # Output only. Profile permanent ID is the unique identifier of a profile within one customer.
+  &quot;reportingData&quot;: { # Reporting data of a Chrome browser profile. # Output only. Detailed reporting data of the profile. This information is only available when the profile reporting policy is enabled.
+    &quot;browserExecutablePath&quot;: &quot;A String&quot;, # Output only. Executable path of the installed Chrome browser. A valid path is included only in affiliated profiles.
+    &quot;extensionData&quot;: [ # Output only. Information of the extensions installed on the profile.
+      { # Information of an extension installed on a Chrome browser profile.
+        &quot;description&quot;: &quot;A String&quot;, # Output only. Description of the extension.
+        &quot;extensionId&quot;: &quot;A String&quot;, # Output only. ID of the extension.
+        &quot;extensionType&quot;: &quot;A String&quot;, # Output only. Type of the extension.
+        &quot;homepageUri&quot;: &quot;A String&quot;, # Output only. The URL of the homepage of the extension.
+        &quot;installationType&quot;: &quot;A String&quot;, # Output only. Installation type of the extension.
+        &quot;isDisabled&quot;: True or False, # Output only. Represents whether the user disabled the extension.
+        &quot;isWebstoreExtension&quot;: True or False, # Output only. Represents whether the extension is from the webstore.
+        &quot;manifestVersion&quot;: 42, # Output only. Manifest version of the extension.
+        &quot;name&quot;: &quot;A String&quot;, # Output only. Name of the extension.
+        &quot;permissions&quot;: [ # Output only. Permissions requested by the extension.
+        &quot;version&quot;: &quot;A String&quot;, # Output only. Version of the extension.
+    &quot;extensionPolicyData&quot;: [ # Output only. Information of the policies applied on the extensions.
+      { # Information of the policies applied on an extension.
+        &quot;extensionName&quot;: &quot;A String&quot;, # Output only. Name of the extension.
+        &quot;policyData&quot;: [ # Output only. Information of the policies applied on the extension.
+          { # Information of a policy applied on a Chrome browser profile.
+            &quot;conflicts&quot;: [ # Output only. Conflicting policy information.
+              { # Information of conflicting policy applied on a Chrome browser profile.
+                &quot;source&quot;: &quot;A String&quot;, # Output only. Source of the policy.
+            &quot;error&quot;: &quot;A String&quot;, # Output only. Error message of the policy, if any.
+            &quot;name&quot;: &quot;A String&quot;, # Output only. Name of the policy.
+            &quot;value&quot;: &quot;A String&quot;, # Output only. Value of the policy.
+    &quot;installedBrowserVersion&quot;: &quot;A String&quot;, # Output only. Updated version of a browser, if it is different from the active browser version.
+    &quot;policyData&quot;: [ # Output only. Information of the policies applied on the profile.
+    &quot;profilePath&quot;: &quot;A String&quot;, # Output only. Path of the profile. A valid path is included only in affiliated profiles.
+  &quot;supportsFcmNotifications&quot;: True or False, # Output only. Whether the profile supports FCM notifications.
+  &quot;userEmail&quot;: &quot;A String&quot;, # Output only. Email address of the user to which the profile belongs.
+  &quot;userId&quot;: &quot;A String&quot;, # Output only. Unique Directory API ID of the user that can be used in Admin SDK Users API.
+  <pre>Lists Chrome browser profiles of a customer based on the given search and sorting criteria.
+  parent: string, Required. Format: customers/{customer_id} (required)
+  filter: string, Optional. The filter used to filter profiles. The following fields can be used in the filter: - profile_id - display_name - user_email - last_activity_time - last_policy_sync_time - last_status_report_time - first_enrollment_time - os_platform_type - os_version - browser_version - browser_channel - policy_count - extension_count - identity_provider - affiliation_state - os_platform_version - ouId Any of the above fields can be used to specify a filter, and filtering by multiple fields is supported with AND operator. String type fields and enum type fields support &#x27;=&#x27; and &#x27;!=&#x27; operators. The integer type and the timestamp type fields support &#x27;=&#x27;, &#x27;!=&#x27;, &#x27;&lt;&#x27;, &#x27;&gt;&#x27;, &#x27;&lt;=&#x27; and &#x27;&gt;=&#x27; operators. Timestamps expect an RFC-3339 formatted string (e.g. 2012-04-21T11:30:00-04:00). Wildcard &#x27;*&#x27; can be used with a string type field filter. In addition, string literal filtering is also supported, for example, &#x27;ABC&#x27; as a filter maps to a filter that checks if any of the filterable string type fields contains &#x27;ABC&#x27;. Organization unit number can be used as a filtering criteria here by specifying &#x27;ouId = ${your_org_unit_id}&#x27;, please note that only single OU ID matching is supported.
+  orderBy: string, Optional. The fields used to specify the ordering of the results. The supported fields are: - profile_id - display_name - user_email - last_activity_time - last_policy_sync_time - last_status_report_time - first_enrollment_time - os_platform_type - os_version - browser_version - browser_channel - policy_count - extension_count - identity_provider - affiliation_state - os_platform_version By default, sorting is in ascending order, to specify descending order for a field, a suffix &quot; desc&quot; should be added to the field name. The default ordering is the descending order of last_status_report_time.
+  pageSize: integer, Optional. The maximum number of profiles to return. The default page size is 100 if page_size is unspecified, and the maximum page size allowed is 200.
+    { # Response to ListChromeBrowserProfiles method.
+  &quot;chromeBrowserProfiles&quot;: [ # The list of profiles returned.
+  &quot;totalSize&quot;: &quot;A String&quot;, # Total size represents an estimated number of resources returned. Not guaranteed to be accurate above 10k profiles.

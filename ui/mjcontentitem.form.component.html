@@ -1,0 +1,28 @@
+            FieldName="ContentSourceID"
+            FieldName="ContentTypeID"
+            FieldName="ContentSourceTypeID"
+            FieldName="ContentFileTypeID"
+            FieldName="Checksum"
+            FieldName="Text"
+    <!-- Source Information Section -->
+        SectionKey="sourceInformation"
+        SectionName="Source Information"
+    <!-- Content Details Section -->
+        SectionKey="contentDetails"
+        SectionName="Content Details"
+    <!-- Content Item Attributes Section -->
+        SectionKey="contentItemAttributes"
+        SectionName="Content Item Attributes"
+        [BadgeCount]="GetSectionRowCount('contentItemAttributes')"
+                [Params]="BuildRelationshipViewParamsByEntityName('MJ: Content Item Attributes','ContentItemID')"
+                [NewRecordValues]="NewRecordValues('MJ: Content Item Attributes')"
+                [AllowLoad]="IsSectionExpanded('contentItemAttributes')"
+                (AfterDataLoad)="SetSectionRowCount('contentItemAttributes', $event.totalRowCount)"
+    <!-- Content Item Tags Section -->
+        SectionKey="contentItemTags"
+        SectionName="Content Item Tags"
+        [BadgeCount]="GetSectionRowCount('contentItemTags')"
+                [Params]="BuildRelationshipViewParamsByEntityName('MJ: Content Item Tags','ItemID')"
+                [NewRecordValues]="NewRecordValues('MJ: Content Item Tags')"
+                [AllowLoad]="IsSectionExpanded('contentItemTags')"
+                (AfterDataLoad)="SetSectionRowCount('contentItemTags', $event.totalRowCount)"

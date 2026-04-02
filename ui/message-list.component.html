@@ -1,0 +1,14 @@
+<div class="message-list-container" #scrollContainer>
+  <!-- Sticky Date Header (only show for long conversations spanning multiple days) -->
+  @if (shouldShowDateFilter && messages.length > 0) {
+    <div class="sticky-date-header">
+        <button class="sticky-date-button" (click)="toggleDateNav()">
+          <span>{{ currentDateDisplay }}</span>
+        <div class="date-nav-dropdown" [class.show]="showDateNav">
+          <div class="date-nav-option" (click)="jumpToDate('today')">Today</div>
+          <div class="date-nav-option" (click)="jumpToDate('yesterday')">Yesterday</div>
+          <div class="date-nav-option" (click)="jumpToDate('last-week')">Last week</div>
+          <div class="date-nav-option" (click)="jumpToDate('last-month')">Last month</div>
+  <ng-container #messageContainer></ng-container>
+  @if (messages.length === 0) {
+      <p>No messages yet. Start a conversation!</p>

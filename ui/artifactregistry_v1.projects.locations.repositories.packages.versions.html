@@ -1,0 +1,36 @@
+<h1><a href="artifactregistry_v1.html">Artifact Registry API</a> . <a href="artifactregistry_v1.projects.html">projects</a> . <a href="artifactregistry_v1.projects.locations.html">locations</a> . <a href="artifactregistry_v1.projects.locations.repositories.html">repositories</a> . <a href="artifactregistry_v1.projects.locations.repositories.packages.html">packages</a> . <a href="artifactregistry_v1.projects.locations.repositories.packages.versions.html">versions</a></h1>
+<p class="firstline">Deletes multiple versions across a repository. The returned operation will complete once the versions have been deleted.</p>
+<p class="firstline">Deletes a version and all of its content. The returned operation will complete once the version has been deleted.</p>
+<p class="firstline">Gets a version</p>
+<p class="firstline">Lists versions.</p>
+<p class="firstline">Updates a version.</p>
+  <pre>Deletes multiple versions across a repository. The returned operation will complete once the versions have been deleted.
+  parent: string, The name of the repository holding all requested versions. (required)
+{ # The request to delete multiple versions across a repository.
+  &quot;names&quot;: [ # Required. The names of the versions to delete. The maximum number of versions deleted per batch is determined by the service and is dependent on the available resources in the region.
+  &quot;validateOnly&quot;: True or False, # If true, the request is performed without deleting data, following AIP-163.
+  <pre>Deletes a version and all of its content. The returned operation will complete once the version has been deleted.
+  name: string, The name of the version to delete. (required)
+  force: boolean, By default, a version that is tagged may not be deleted. If force=true, the version and any tags pointing to the version are deleted.
+  <pre>Gets a version
+  name: string, The name of the version to retrieve. (required)
+  view: string, The view that should be returned in the response.
+      VERSION_VIEW_UNSPECIFIED - The default / unset value. The API will default to the BASIC view.
+      BASIC - Includes basic information about the version, but not any related tags.
+    { # The body of a version resource. A version resource represents a collection of components, such as files and other data. This may correspond to a version in many package management schemes.
+  &quot;createTime&quot;: &quot;A String&quot;, # The time when the version was created.
+  &quot;description&quot;: &quot;A String&quot;, # Optional. Description of the version, as specified in its metadata.
+  &quot;fingerprints&quot;: [ # Output only. Immutable reference for the version, calculated based on the version&#x27;s content. Currently we only support dirsum_sha256 hash algorithm. Additional hash algorithms may be added in the future.
+  &quot;metadata&quot;: { # Output only. Repository-specific Metadata stored against this version. The fields returned are defined by the underlying repository-specific resource. Currently, the resources could be: DockerImage MavenArtifact
+  &quot;name&quot;: &quot;A String&quot;, # The name of the version, for example: `projects/p1/locations/us-central1/repositories/repo1/packages/pkg1/versions/art1`. If the package or version ID parts contain slashes, the slashes are escaped.
+  &quot;relatedTags&quot;: [ # Output only. A list of related tags. Will contain up to 100 tags that reference this version.
+  &quot;updateTime&quot;: &quot;A String&quot;, # The time when the version was last updated.
+  <pre>Lists versions.
+  parent: string, The name of the parent resource whose versions will be listed. (required)
+  filter: string, Optional. An expression for filtering the results of the request. Filter rules are case insensitive. The fields eligible for filtering are: * `name` * `annotations` Examples of using a filter: To filter the results of your request to versions with the name `my-version` in project `my-project` in the `us-central` region, in repository `my-repo`, append the following filter expression to your request: * `name=&quot;projects/my-project/locations/us-central1/repositories/my-repo/packages/my-package/versions/my-version&quot;` You can also use wildcards to match any number of characters before or after the value: * `name=&quot;projects/my-project/locations/us-central1/repositories/my-repo/packages/my-package/versions/*version&quot;` * `name=&quot;projects/my-project/locations/us-central1/repositories/my-repo/packages/my-package/versions/my*&quot;` * `name=&quot;projects/my-project/locations/us-central1/repositories/my-repo/packages/my-package/versions/*version*&quot;` To filter the results of your request to versions with the annotation key-value pair [`external_link`: `external_link_value`], append the following filter expression to your request: * `&quot;annotations.external_link:external_link_value&quot;` To filter just for a specific annotation key `external_link`, append the following filter expression to your request: * `&quot;annotations.external_link&quot;` If the annotation key or value contains special characters, you can escape them by surrounding the value with backticks. For example, to filter the results of your request to versions with the annotation key-value pair [`external.link`:`https://example.com/my-version`], append the following filter expression to your request: * `` &quot;annotations.`external.link`:`https://example.com/my-version`&quot; `` You can also filter with annotations with a wildcard to match any number of characters before or after the value: * `` &quot;annotations.*_link:`*example.com*`&quot; ``
+  pageSize: integer, The maximum number of versions to return. Maximum page size is 1,000.
+    { # The response from listing versions.
+  &quot;nextPageToken&quot;: &quot;A String&quot;, # The token to retrieve the next page of versions, or empty if there are no more versions to return.
+  &quot;versions&quot;: [ # The versions returned.
+  <pre>Updates a version.
+  name: string, The name of the version, for example: `projects/p1/locations/us-central1/repositories/repo1/packages/pkg1/versions/art1`. If the package or version ID parts contain slashes, the slashes are escaped. (required)

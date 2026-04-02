@@ -1,0 +1,52 @@
+<h1><a href="bigtableadmin_v2.html">Cloud Bigtable Admin API</a> . <a href="bigtableadmin_v2.projects.html">projects</a> . <a href="bigtableadmin_v2.projects.instances.html">instances</a></h1>
+  <code><a href="bigtableadmin_v2.projects.instances.appProfiles.html">appProfiles()</a></code>
+<p class="firstline">Returns the appProfiles Resource.</p>
+  <code><a href="bigtableadmin_v2.projects.instances.clusters.html">clusters()</a></code>
+  <code><a href="bigtableadmin_v2.projects.instances.logicalViews.html">logicalViews()</a></code>
+<p class="firstline">Returns the logicalViews Resource.</p>
+  <code><a href="bigtableadmin_v2.projects.instances.materializedViews.html">materializedViews()</a></code>
+<p class="firstline">Returns the materializedViews Resource.</p>
+  <code><a href="bigtableadmin_v2.projects.instances.tables.html">tables()</a></code>
+<p class="firstline">Create an instance within a project. Note that exactly one of Cluster.serve_nodes and Cluster.cluster_config.cluster_autoscaling_config can be set. If serve_nodes is set to non-zero, then the cluster is manually scaled. If cluster_config.cluster_autoscaling_config is non-empty, then autoscaling is enabled.</p>
+<p class="firstline">Delete an instance from a project.</p>
+<p class="firstline">Gets information about an instance.</p>
+<p class="firstline">Gets the access control policy for an instance resource. Returns an empty policy if an instance exists but does not have a policy set.</p>
+<p class="firstline">Lists information about instances in a project.</p>
+  <code><a href="#partialUpdateInstance">partialUpdateInstance(name, body=None, updateMask=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Partially updates an instance within a project. This method can modify all fields of an Instance and is the preferred way to update an Instance.</p>
+<p class="firstline">Sets the access control policy on an instance resource. Replaces any existing policy.</p>
+<p class="firstline">Returns permissions that the caller has on the specified instance resource.</p>
+<p class="firstline">Updates an instance within a project. This method updates only the display name and type for an Instance. To update other Instance properties, such as labels, use PartialUpdateInstance.</p>
+  <pre>Create an instance within a project. Note that exactly one of Cluster.serve_nodes and Cluster.cluster_config.cluster_autoscaling_config can be set. If serve_nodes is set to non-zero, then the cluster is manually scaled. If cluster_config.cluster_autoscaling_config is non-empty, then autoscaling is enabled.
+  parent: string, Required. The unique name of the project in which to create the new instance. Values are of the form `projects/{project}`. (required)
+{ # Request message for BigtableInstanceAdmin.CreateInstance.
+  &quot;clusters&quot;: { # Required. The clusters to be created within the instance, mapped by desired cluster ID, e.g., just `mycluster` rather than `projects/myproject/instances/myinstance/clusters/mycluster`. Fields marked `OutputOnly` must be left blank.
+    &quot;a_key&quot;: { # A resizable group of nodes in a particular cloud location, capable of serving all Tables in the parent Instance.
+  &quot;instance&quot;: { # A collection of Bigtable Tables and the resources that serve them. All tables in an instance are served from all Clusters in the instance. # Required. The instance to create. Fields marked `OutputOnly` must be left blank.
+    &quot;createTime&quot;: &quot;A String&quot;, # Output only. A commit timestamp representing when this Instance was created. For instances created before this field was added (August 2021), this value is `seconds: 0, nanos: 1`.
+    &quot;displayName&quot;: &quot;A String&quot;, # Required. The descriptive name for this instance as it appears in UIs. Can be changed at any time, but should be kept globally unique to avoid confusion.
+    &quot;labels&quot;: { # Labels are a flexible and lightweight mechanism for organizing cloud resources into groups that reflect a customer&#x27;s organizational needs and deployment strategies. They can be used to filter resources and aggregate metrics. * Label keys must be between 1 and 63 characters long and must conform to the regular expression: `\p{Ll}\p{Lo}{0,62}`. * Label values must be between 0 and 63 characters long and must conform to the regular expression: `[\p{Ll}\p{Lo}\p{N}_-]{0,63}`. * No more than 64 labels can be associated with a given resource. * Keys and values must both be under 128 bytes.
+    &quot;name&quot;: &quot;A String&quot;, # The unique name of the instance. Values are of the form `projects/{project}/instances/a-z+[a-z0-9]`.
+    &quot;state&quot;: &quot;A String&quot;, # Output only. The current state of the instance.
+    &quot;tags&quot;: { # Optional. Input only. Immutable. Tag keys/values directly bound to this resource. For example: - &quot;123/environment&quot;: &quot;production&quot;, - &quot;123/costCenter&quot;: &quot;marketing&quot; Tags and Labels (above) are both used to bind metadata to resources, with different use-cases. See https://cloud.google.com/resource-manager/docs/tags/tags-overview for an in-depth overview on the difference between tags and labels.
+    &quot;type&quot;: &quot;A String&quot;, # The type of the instance. Defaults to `PRODUCTION`.
+  &quot;instanceId&quot;: &quot;A String&quot;, # Required. The ID to be used when referring to the new instance within its project, e.g., just `myinstance` rather than `projects/myproject/instances/myinstance`.
+  &quot;parent&quot;: &quot;A String&quot;, # Required. The unique name of the project in which to create the new instance. Values are of the form `projects/{project}`.
+  <pre>Delete an instance from a project.
+  name: string, Required. The unique name of the instance to be deleted. Values are of the form `projects/{project}/instances/{instance}`. (required)
+  <pre>Gets information about an instance.
+  name: string, Required. The unique name of the requested instance. Values are of the form `projects/{project}/instances/{instance}`. (required)
+    { # A collection of Bigtable Tables and the resources that serve them. All tables in an instance are served from all Clusters in the instance.
+  <pre>Gets the access control policy for an instance resource. Returns an empty policy if an instance exists but does not have a policy set.
+  <pre>Lists information about instances in a project.
+  parent: string, Required. The unique name of the project for which a list of instances is requested. Values are of the form `projects/{project}`. (required)
+    { # Response message for BigtableInstanceAdmin.ListInstances.
+  &quot;failedLocations&quot;: [ # Locations from which Instance information could not be retrieved, due to an outage or some other transient condition. Instances whose Clusters are all in one of the failed locations may be missing from `instances`, and Instances with at least one Cluster in a failed location may only have partial information returned. Values are of the form `projects//locations/`
+  &quot;instances&quot;: [ # The list of requested instances.
+    <code class="details" id="partialUpdateInstance">partialUpdateInstance(name, body=None, updateMask=None, x__xgafv=None)</code>
+  <pre>Partially updates an instance within a project. This method can modify all fields of an Instance and is the preferred way to update an Instance.
+  name: string, The unique name of the instance. Values are of the form `projects/{project}/instances/a-z+[a-z0-9]`. (required)
+  updateMask: string, Required. The subset of Instance fields which should be replaced. Must be explicitly set.
+  <pre>Sets the access control policy on an instance resource. Replaces any existing policy.
+  <pre>Returns permissions that the caller has on the specified instance resource.
+  <pre>Updates an instance within a project. This method updates only the display name and type for an Instance. To update other Instance properties, such as labels, use PartialUpdateInstance.

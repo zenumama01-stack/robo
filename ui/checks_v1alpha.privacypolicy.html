@@ -1,0 +1,33 @@
+<h1><a href="checks_v1alpha.html">Checks API</a> . <a href="checks_v1alpha.privacypolicy.html">privacypolicy</a></h1>
+  <code><a href="#analyze">analyze(body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Performs a synchronous analysis of a privacy policy, where the policy content is mapped to privacy categories, data types, and purposes.</p>
+    <code class="details" id="analyze">analyze(body=None, x__xgafv=None)</code>
+  <pre>Performs a synchronous analysis of a privacy policy, where the policy content is mapped to privacy categories, data types, and purposes.
+{ # Request for the AnalyzePrivacyPolicy method.
+  &quot;privacyPolicyPageContent&quot;: &quot;A String&quot;, # The HTML content of the privacy policy. This is useful if you&#x27;d like to manage the crawling and rendering of the privacy policy.
+  &quot;privacyPolicyUri&quot;: &quot;A String&quot;, # The URI that points to the web page for the privacy policy.
+    { # Response containing the analyzed privacy policy for the AnalyzePrivacyPolicy method.
+  &quot;dataPurposeAnnotations&quot;: [ # A list of detected purposes in the privacy policy.
+      &quot;endOffset&quot;: &quot;A String&quot;, # Byte offsets for the end of the purpose of use sentence inside the full text.
+      &quot;purposeOfUse&quot;: &quot;A String&quot;, # Purpose of use mentioned in the policy.
+      &quot;score&quot;: 3.14, # Score given by the model representing how confident it was regarding this `text_content` being of `purpose_of_use`.
+      &quot;startOffset&quot;: &quot;A String&quot;, # Byte offsets for the start of the purpose of use sentence inside the full text.
+      &quot;textContent&quot;: &quot;A String&quot;, # The bytes of actual text content in the sentence that mentions the purpose of use. This makes it much easier to consume the information.
+  &quot;dataTypeAnnotations&quot;: [ # A list of detected data types in the privacy policy.
+      &quot;dataType&quot;: &quot;A String&quot;, # Type of the data mentioned in the policy.
+      &quot;endOffset&quot;: &quot;A String&quot;, # Byte offsets for the end of the data type sentence inside the full text.
+      &quot;score&quot;: 3.14, # Score given by the model representing how confident it was regarding this `text_content` being of `data_type`.
+      &quot;startOffset&quot;: &quot;A String&quot;, # Byte offsets for the start of the data type sentence inside the full text.
+      &quot;textContent&quot;: &quot;A String&quot;, # Actual text content in the section. This makes it much easier to consume the information. NOTE: This field might contain HTML and does not guarantee a SafeHtml security contract go/safehtmltypecontracts#safehtml.
+  &quot;htmlContent&quot;: &quot;A String&quot;, # HTML content for the privacy policy page. The byte offsets in each annotated section will match this content.
+  &quot;lastUpdatedDateInfo&quot;: { # Information about the date when the privacy policy was last updated. # Information about the date when the privacy policy was last updated.
+    &quot;endOffset&quot;: &quot;A String&quot;, # Byte offsets for the end of the date text inside the full text.
+    &quot;lastUpdatedDate&quot;: { # Represents a whole or partial calendar date, such as a birthday. The time of day and time zone are either specified elsewhere or are insignificant. The date is relative to the Gregorian Calendar. This can represent one of the following: * A full date, with non-zero year, month, and day values. * A month and day, with a zero year (for example, an anniversary). * A year on its own, with a zero month and a zero day. * A year and month, with a zero day (for example, a credit card expiration date). Related types: * google.type.TimeOfDay * google.type.DateTime * google.protobuf.Timestamp # Date when the privacy policy was last updated.
+    &quot;startOffset&quot;: &quot;A String&quot;, # Byte offsets for the start of the date text inside the full text.
+    &quot;textContent&quot;: &quot;A String&quot;, # The bytes of actual text content in the section. Note: - This will correspond to the whole sentence that includes the date. - This field might contain HTML and it is not sanitized.
+  &quot;sectionAnnotations&quot;: [ # A list of detected topics in the privacy policy.
+      &quot;endOffset&quot;: &quot;A String&quot;, # Byte offsets for the end of the section inside the full text.
+      &quot;score&quot;: 3.14, # Score given by the model representing how confident it was regarding this `text_content` being of `section_type`.
+      &quot;sectionType&quot;: &quot;A String&quot;, # Detected type of the high-level topic in the policy.
+      &quot;startOffset&quot;: &quot;A String&quot;, # Byte offsets for the start of the section inside the full text.
+      &quot;textContent&quot;: &quot;A String&quot;, # Actual text content in the section.

@@ -1,0 +1,11 @@
+<nav class="nav-list" [style.--app-color]="appColor">
+  @for (item of navItems; track trackByNavItem($index, item)) {
+      [class.active]="isActive(item)"
+      [class.dynamic]="isDynamic(item)"
+      [class.no-icon]="!item.Icon"
+      (click)="onNavClick(item, $event)">
+      @if (item.Icon) {
+      @if (item.Badge) {
+        <span class="badge">{{ item.Badge }}</span>
+      @if (isDynamic(item)) {
+        <button class="dismiss-btn" title="Remove" (click)="onDismiss(item, $event)">

@@ -1,0 +1,51 @@
+    <div class="dialog-backdrop" (click)="OnBackdropClick($event)">
+        <div class="dialog-container">
+                <span class="dialog-title">
+                    {{ IsNew ? 'Add Parameter' : (EditMode ? 'Edit Parameter' : 'Parameter Details') }}
+                <button class="dialog-close-btn" (click)="OnCancel()" title="Close">
+                <form class="param-form">
+                            Parameter Name
+                                [(ngModel)]="ParamName"
+                                name="paramName"
+                            <div class="readonly-value">{{ ParamName || 'N/A' }}</div>
+                    <!-- Parameter Type -->
+                                [(ngModel)]="ParamType"
+                                name="paramType"
+                                class="form-select">
+                                @for (pt of ParamTypes; track pt.Value) {
+                                    <option [value]="pt.Value">{{ pt.Text }}</option>
+                            <div class="readonly-value">
+                                <span class="type-badge" [class]="GetTypeClass(ParamType)">
+                                    {{ ParamType }}
+                    <!-- Value Type -->
+                            Value Type
+                                [(ngModel)]="ValueType"
+                                name="valueType"
+                                @for (vt of ValueTypes; track vt.Value) {
+                                    <option [value]="vt.Value">{{ vt.Text }}</option>
+                            <div class="readonly-value">{{ ValueType }}</div>
+                            <div class="readonly-value description">{{ Description || 'No description provided' }}</div>
+                    <!-- Default Value -->
+                        <label>Default Value</label>
+                                [(ngModel)]="DefaultValue"
+                                name="defaultValue"
+                                @if (DefaultValue) {
+                                    <code>{{ DefaultValue }}</code>
+                                    <span class="no-value">No default value</span>
+                    <!-- Checkboxes -->
+                    <div class="form-field-row">
+                                        [(ngModel)]="IsRequired"
+                                        name="isRequired"
+                                        class="checkbox-input">
+                                    <span class="checkbox-custom"></span>
+                                    <i class="fa-solid" [class.fa-check-circle]="IsRequired" [class.fa-times-circle]="!IsRequired"
+                                       [style.color]="IsRequired ? '#28a745' : '#6c757d'"></i>
+                                <span class="checkbox-text">Required Parameter</span>
+                                        [(ngModel)]="IsArray"
+                                        name="isArray"
+                                    <i class="fa-solid" [class.fa-check-circle]="IsArray" [class.fa-times-circle]="!IsArray"
+                                       [style.color]="IsArray ? '#28a745' : '#6c757d'"></i>
+                                <span class="checkbox-text">Array Type</span>
+                    <button class="btn btn-outline" (click)="OnCancel()">Cancel</button>
+                    <button class="btn btn-primary" (click)="OnSave()">Save</button>
+                    <button class="btn btn-primary" (click)="OnCancel()">Close</button>

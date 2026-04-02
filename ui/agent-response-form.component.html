@@ -1,0 +1,43 @@
+  <div class="agent-response-form">
+    <!-- Simple Choice Mode (single question, no title, buttongroup/radio) -->
+    @if (isSimpleChoice) {
+      <div class="simple-choice-buttons">
+        @for (option of getOptions(responseForm.questions[0]); track trackByValue($index, option)) {
+            [disabled]="disabled || isSubmitting"
+            (click)="onSimpleChoiceClick(option.value)"
+            class="choice-button"
+            @if (hasIcon(option)) {
+              <i class="fa {{ option.icon }}" aria-hidden="true"></i>
+    <!-- Full Form Mode (complex forms) -->
+    @if (!isSimpleChoice) {
+      <form [formGroup]="formGroup" (ngSubmit)="onSubmit()" class="response-form">
+        <!-- Form Title -->
+        @if (responseForm.title) {
+          <h3 class="form-title">{{ responseForm.title }}</h3>
+        <!-- Form Description -->
+        @if (responseForm.description) {
+          <p class="form-description">{{ responseForm.description }}</p>
+        <!-- Questions (excludes footer choice question) -->
+        @if (mainQuestions.length > 0) {
+          <div class="form-questions">
+            @for (question of mainQuestions; track trackByQuestionId($index, question)) {
+              <mj-form-question
+                [question]="question"
+                [control]="getControl(question.id)"
+                [formControlName]="question.id"
+              ></mj-form-question>
+        <!-- Footer Actions -->
+          <!-- Footer Choice Buttons (replaces Submit when present) -->
+          @if (footerChoiceQuestion) {
+            @for (option of getOptions(footerChoiceQuestion); track trackByValue($index, option)) {
+                (click)="onFooterChoiceClick(option.value)"
+                class="footer-choice-button"
+                @if (!isSubmitting) {
+                    <span class="k-icon k-i-loading"></span>
+          <!-- Standard Submit Button (when no footer choice) -->
+          @if (showSubmitButton) {
+              [disabled]="disabled || isSubmitting || formGroup.invalid"
+              class="submit-button"
+                  <i class="fa fa-check" aria-hidden="true"></i>
+                  {{ submitLabel }}
+                  Submitting...

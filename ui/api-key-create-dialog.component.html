@@ -1,0 +1,126 @@
+@if (Visible) {
+  <div class="slideout-backdrop" (click)="Step !== 'success' ? close() : null"></div>
+<!-- Slide-out Panel -->
+<div class="slideout-panel" [class.open]="Visible">
+      <span>Generate New API Key</span>
+    @if (Step !== 'success') {
+      <button class="slideout-close" (click)="close()" title="Close (Esc)">
+  <!-- Step Indicator -->
+    <div class="step-indicator">
+      <div class="step" [class.active]="Step === 'configure'" [class.completed]="Step === 'scopes'">
+        <div class="step-number">1</div>
+        <div class="step-label">Configure</div>
+      <div class="step-connector" [class.active]="Step === 'scopes'"></div>
+      <div class="step" [class.active]="Step === 'scopes'">
+        <div class="step-number">2</div>
+        <div class="step-label">Permissions</div>
+    <!-- Configure Step -->
+    @if (Step === 'configure') {
+      <div class="step-panel">
+          <label class="form-label required">Key Label</label>
+          <input kendoTextBox [(ngModel)]="Label"
+            placeholder="e.g., ElevenLabs Integration, CI/CD Pipeline"
+          <div class="form-hint">A memorable name to identify this key's purpose</div>
+          <label class="form-label">Description</label>
+          <textarea kendoTextArea [(ngModel)]="Description"
+            placeholder="Optional notes about how this key will be used..."
+          <label class="form-label">Expiration</label>
+          <div class="expiration-options">
+                [(ngModel)]="NeverExpires"
+                (change)="onNeverExpiresChange()" />
+              <span>Never expires</span>
+            @if (!NeverExpires) {
+              <div class="preset-buttons">
+                @for (preset of ExpirationPresets; track preset) {
+                    class="preset-btn"
+                    [class.active]="SelectedPreset === preset"
+                    (click)="onPresetSelect(preset)">
+                    {{preset.label}}
+            @if (!NeverExpires && SelectedPreset?.days === -1) {
+              <div class="custom-date">
+                <kendo-datepicker [(ngModel)]="ExpiresAt"
+                  [min]="getMinDate()"
+                  format="MMM d, yyyy"
+                  placeholder="Select expiration date">
+                </kendo-datepicker>
+            @if (!NeverExpires && ExpiresAt) {
+              <div class="expiration-preview">
+                <i class="fa-solid fa-calendar-check"></i>
+                <span>Key will expire on {{ExpiresAt | date:'MMMM d, yyyy'}}</span>
+        @if (Error) {
+            {{Error}}
+    <!-- Scopes Step -->
+    @if (Step === 'scopes') {
+      <div class="step-panel scopes-step">
+        <div class="scopes-header">
+          <div class="scopes-info">
+            <h4>Select Permission Scopes</h4>
+            <p>Choose what this API key can access. You can always modify this later.</p>
+          @if (getSelectedScopeCount() > 0) {
+            <div class="scopes-count">
+              <span class="count">{{getSelectedScopeCount()}}</span> selected
+        @if (IsLoadingScopes) {
+          <mj-loading text="Loading scopes..."></mj-loading>
+        @if (!IsLoadingScopes) {
+          <div class="scope-categories">
+              <div class="scope-category">
+                <div class="category-header" (click)="toggleCategory(category)">
+                    <span class="category-badge">{{category.scopes.length}}</span>
+                    <label class="select-all-label" (click)="$event.stopPropagation()">
+                    <i class="fa-solid" [class.fa-chevron-down]="!category.expanded"
+                  <div class="category-scopes">
+                    @for (item of category.scopes; track item) {
+                      <div class="scope-item">
+                        <label class="scope-label">
+                            [(ngModel)]="item.selected"
+                          <div class="scope-info">
+                            <span class="scope-name">{{item.scope.Name}}</span>
+                            @if (item.scope.Description) {
+                              <span class="scope-desc">
+                                {{item.scope.Description}}
+        <div class="scope-tip">
+          <span>Tip: Use wildcards like <code>entities:*</code> for broad access within a category</span>
+        <!-- No Scopes Warning -->
+        @if (!IsLoadingScopes && getSelectedScopeCount() === 0) {
+          <div class="no-scopes-warning">
+            <i class="fa-solid fa-triangle-exclamation"></i>
+              <strong>Warning: No permissions selected</strong>
+              <p>API keys without any assigned scopes will have <strong>no permissions</strong> and cannot perform any operations. This key will be rejected by all API endpoints until scopes are assigned.</p>
+    <!-- Success Step -->
+    @if (Step === 'success') {
+      <div class="step-panel success-step">
+        <div class="success-icon">
+        <h3 class="success-title">API Key Created Successfully!</h3>
+        <div class="key-display">
+          <div class="key-warning">
+            <span>Copy this key now. It won't be shown again!</span>
+          <div class="key-value">
+            <code>{{RawApiKey}}</code>
+            <button class="copy-btn" (click)="copyKey()" [class.copied]="KeyCopied">
+              <i class="fa-solid" [class.fa-copy]="!KeyCopied" [class.fa-check]="KeyCopied"></i>
+              <span>{{KeyCopied ? 'Copied!' : 'Copy'}}</span>
+        <div class="key-details">
+            <span class="detail-label">Label:</span>
+            <span class="detail-value">{{Label}}</span>
+          @if (Description) {
+              <span class="detail-value">{{Description}}</span>
+            <span class="detail-label">Expires:</span>
+              {{NeverExpires ? 'Never' : (ExpiresAt | date:'MMMM d, yyyy')}}
+            <span class="detail-label">Scopes:</span>
+            <span class="detail-value">{{getSelectedScopeCount()}} permissions</span>
+        <div class="security-note">
+            <strong>Security Note:</strong>
+            Store this key securely. We only store a hash - the original key cannot be recovered.
+  <!-- Footer -->
+      <button kendoButton [themeColor]="'primary'" (click)="goToScopes()">
+        Next: Permissions
+      <button kendoButton (click)="close()">Cancel</button>
+        [disabled]="IsCreating"
+        (click)="createKey()">
+        @if (IsCreating) {
+        @if (!IsCreating) {
+            Generate Key
+      <button kendoButton (click)="goBack()">
+        Back
+      <button kendoButton [themeColor]="'primary'" (click)="close()">
+        Done

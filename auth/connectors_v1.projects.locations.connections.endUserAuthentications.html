@@ -1,0 +1,96 @@
+<h1><a href="connectors_v1.html">Connectors API</a> . <a href="connectors_v1.projects.html">projects</a> . <a href="connectors_v1.projects.locations.html">locations</a> . <a href="connectors_v1.projects.locations.connections.html">connections</a> . <a href="connectors_v1.projects.locations.connections.endUserAuthentications.html">endUserAuthentications</a></h1>
+  <code><a href="#create">create(parent, body=None, endUserAuthenticationId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Creates a new EndUserAuthentication in a given project,location and connection.</p>
+<p class="firstline">Deletes a single EndUserAuthentication.</p>
+<p class="firstline">Gets details of a single EndUserAuthentication.</p>
+<p class="firstline">List EndUserAuthentications in a given project,location and connection.</p>
+<p class="firstline">Updates the parameters of a single EndUserAuthentication.</p>
+    <code class="details" id="create">create(parent, body=None, endUserAuthenticationId=None, x__xgafv=None)</code>
+  <pre>Creates a new EndUserAuthentication in a given project,location and connection.
+  parent: string, Required. Parent resource of the EndUserAuthentication, of the form: `projects/*/locations/*/connections/*` (required)
+{ # AuthConfig defines details of a authentication type.
+  &quot;configVariables&quot;: [ # Optional. Config variables for the EndUserAuthentication.
+    { # EndUserAuthenticationConfigVariable represents a configuration variable present in a EndUserAuthentication.
+      &quot;boolValue&quot;: True or False, # Value is a bool.
+      &quot;intValue&quot;: &quot;A String&quot;, # Value is an integer
+      &quot;key&quot;: &quot;A String&quot;, # Required. Key of the config variable.
+      &quot;secretValue&quot;: { # EUASecret provides a reference to entries in Secret Manager. # Value is a secret
+        &quot;secretValue&quot;: &quot;A String&quot;, # Optional. The plain string value of the secret.
+        &quot;secretVersion&quot;: &quot;A String&quot;, # Optional. The resource name of the secret version in the format, format as: `projects/*/secrets/*/versions/*`.
+      &quot;stringValue&quot;: &quot;A String&quot;, # Value is a string.
+  &quot;destinationConfigs&quot;: [ # Optional. Destination configs for the EndUserAuthentication.
+    { # Define the Connectors target endpoint.
+      &quot;destinations&quot;: [ # Optional. The destinations for the key.
+          &quot;host&quot;: &quot;A String&quot;, # For publicly routable host.
+          &quot;port&quot;: 42, # Optional. The port is the target port number that is accepted by the destination.
+          &quot;serviceAttachment&quot;: &quot;A String&quot;, # PSC service attachments. Format: projects/*/regions/*/serviceAttachments/*
+      &quot;key&quot;: &quot;A String&quot;, # Optional. The key is the destination identifier that is supported by the Connector.
+  &quot;endUserAuthenticationConfig&quot;: { # EndUserAuthenticationConfig defines details of a authentication configuration for EUC # Optional. The EndUserAuthenticationConfig for the EndUserAuthentication.
+    &quot;additionalVariables&quot;: [ # Optional. List containing additional auth configs.
+    &quot;authKey&quot;: &quot;A String&quot;, # Identifier key for auth config
+    &quot;authType&quot;: &quot;A String&quot;, # The type of authentication configured.
+    &quot;oauth2AuthCodeFlow&quot;: { # Parameters to support Oauth 2.0 Auth Code Grant Authentication. See https://www.rfc-editor.org/rfc/rfc6749#section-1.3.1 for more details. # Oauth2AuthCodeFlow.
+      &quot;authCode&quot;: &quot;A String&quot;, # Optional. Authorization code to be exchanged for access and refresh tokens.
+      &quot;authUri&quot;: &quot;A String&quot;, # Optional. Auth URL for Authorization Code Flow
+      &quot;clientId&quot;: &quot;A String&quot;, # Optional. Client ID for user-provided OAuth app.
+      &quot;clientSecret&quot;: { # EUASecret provides a reference to entries in Secret Manager. # Optional. Client secret for user-provided OAuth app.
+      &quot;enablePkce&quot;: True or False, # Optional. Whether to enable PKCE when the user performs the auth code flow.
+      &quot;oauthTokenData&quot;: { # pass only at create and not update using updateMask Auth Code Data # Optional. Auth Code Data
+        &quot;accessToken&quot;: { # EUASecret provides a reference to entries in Secret Manager. # Optional. Access token for the connection.
+        &quot;createTime&quot;: &quot;A String&quot;, # Optional. Timestamp when the access token was created.
+        &quot;expiry&quot;: &quot;A String&quot;, # Optional. Time in seconds when the access token expires.
+        &quot;refreshToken&quot;: { # EUASecret provides a reference to entries in Secret Manager. # Optional. Refresh token for the connection.
+      &quot;pkceVerifier&quot;: &quot;A String&quot;, # Optional. PKCE verifier to be used during the auth code exchange.
+      &quot;redirectUri&quot;: &quot;A String&quot;, # Optional. Redirect URI to be provided during the auth code exchange.
+      &quot;scopes&quot;: [ # Optional. Scopes the connection will request when the user performs the auth code flow.
+    &quot;oauth2AuthCodeFlowGoogleManaged&quot;: { # Parameters to support Oauth 2.0 Auth Code Grant Authentication using Google Provided OAuth Client. See https://tools.ietf.org/html/rfc6749#section-1.3.1 for more details. # Oauth2AuthCodeFlowGoogleManaged.
+      &quot;oauthTokenData&quot;: { # pass only at create and not update using updateMask Auth Code Data # Auth Code Data
+      &quot;scopes&quot;: [ # Required. Scopes the connection will request when the user performs the auth code flow.
+    &quot;oauth2ClientCredentials&quot;: { # Parameters to support Oauth 2.0 Client Credentials Grant Authentication. See https://tools.ietf.org/html/rfc6749#section-1.3.4 for more details. # Oauth2ClientCredentials.
+      &quot;clientId&quot;: &quot;A String&quot;, # The client identifier.
+      &quot;clientSecret&quot;: { # EUASecret provides a reference to entries in Secret Manager. # Required. string value or secret version containing the client secret.
+    &quot;oauth2JwtBearer&quot;: { # Parameters to support JSON Web Token (JWT) Profile for Oauth 2.0 Authorization Grant based authentication. See https://tools.ietf.org/html/rfc7523 for more details. # Oauth2JwtBearer.
+      &quot;clientKey&quot;: { # EUASecret provides a reference to entries in Secret Manager. # Required. secret version/value reference containing a PKCS#8 PEM-encoded private key associated with the Client Certificate. This private key will be used to sign JWTs used for the jwt-bearer authorization grant. Specified in the form as: `projects/*/strings/*/versions/*`.
+      &quot;jwtClaims&quot;: { # JWT claims used for the jwt-bearer authorization grant. # JwtClaims providers fields to generate the token.
+        &quot;audience&quot;: &quot;A String&quot;, # Value for the &quot;aud&quot; claim.
+        &quot;issuer&quot;: &quot;A String&quot;, # Value for the &quot;iss&quot; claim.
+        &quot;subject&quot;: &quot;A String&quot;, # Value for the &quot;sub&quot; claim.
+    &quot;sshPublicKey&quot;: { # Parameters to support Ssh public key Authentication. # SSH Public Key.
+      &quot;certType&quot;: &quot;A String&quot;, # Format of SSH Client cert.
+      &quot;sshClientCert&quot;: { # EUASecret provides a reference to entries in Secret Manager. # Required. SSH Client Cert. It should contain both public and private key.
+      &quot;sshClientCertPass&quot;: { # EUASecret provides a reference to entries in Secret Manager. # Required. Password (passphrase) for ssh client certificate if it has one.
+      &quot;username&quot;: &quot;A String&quot;, # The user account used to authenticate.
+    &quot;userPassword&quot;: { # Parameters to support Username and Password Authentication. # UserPassword.
+      &quot;password&quot;: { # EUASecret provides a reference to entries in Secret Manager. # Required. string value or secret version reference containing the password.
+      &quot;username&quot;: &quot;A String&quot;, # Username.
+  &quot;labels&quot;: [ # Optional. Labels for the EndUserAuthentication.
+  &quot;name&quot;: &quot;A String&quot;, # Required. Identifier. Resource name of the EndUserAuthentication. Format: projects/{project}/locations/{location}/connections/{connection}/endUserAuthentications/{end_user_authentication}
+  &quot;notifyEndpointDestination&quot;: { # Message for NotifyEndpointDestination Destination to hit when the refresh token is expired. # Optional. The destination to hit when we receive an event
+    &quot;endpoint&quot;: { # Endpoint message includes details of the Destination endpoint. # Optional. OPTION 1: Hit an endpoint when the refresh token is expired.
+      &quot;endpointUri&quot;: &quot;A String&quot;, # Required. The URI of the Endpoint.
+      &quot;headers&quot;: [ # Optional. List of Header to be added to the Endpoint.
+        { # Header details for a given header to be added to Endpoint.
+          &quot;key&quot;: &quot;A String&quot;, # Required. Key of Header.
+          &quot;value&quot;: &quot;A String&quot;, # Required. Value of Header.
+    &quot;serviceAccount&quot;: &quot;A String&quot;, # Required. Service account needed for runtime plane to notify the backend.
+    &quot;type&quot;: &quot;A String&quot;, # Required. type of the destination
+  &quot;roles&quot;: [ # Optional. Roles for the EndUserAuthentication.
+  &quot;status&quot;: { # EndUserAuthentication Status denotes the status of the EndUserAuthentication resource. # Optional. Status of the EndUserAuthentication.
+    &quot;description&quot;: &quot;A String&quot;, # Output only. Description of the state.
+    &quot;state&quot;: &quot;A String&quot;, # Output only. State of Event Subscription resource.
+  &quot;userId&quot;: &quot;A String&quot;, # Optional. The user id of the user.
+  endUserAuthenticationId: string, Required. Identifier to assign to the EndUserAuthentication. Must be unique within scope of the parent resource.
+  <pre>Deletes a single EndUserAuthentication.
+  name: string, Required. Resource name of the form: `projects/*/locations/*/connections/*/endUserAuthentication/*` (required)
+  <pre>Gets details of a single EndUserAuthentication.
+  name: string, Required. Resource name of the form: `projects/*/locations/*/connections/*/EndUserAuthentications/*` (required)
+  view: string, Optional. View of the EndUserAuthentication to return.
+      END_USER_AUTHENTICATION_VIEW_UNSPECIFIED - END_USER_AUTHENTICATION_UNSPECIFIED.
+      BASIC_VIEW - Do not include secret fields.
+      FULL_VIEW - Include secret fields.
+  <pre>List EndUserAuthentications in a given project,location and connection.
+    { # Response message for ConnectorsService.ListEndUserAuthentications
+  &quot;endUserAuthentications&quot;: [ # Subscriptions.
+  <pre>Updates the parameters of a single EndUserAuthentication.
+  name: string, Required. Identifier. Resource name of the EndUserAuthentication. Format: projects/{project}/locations/{location}/connections/{connection}/endUserAuthentications/{end_user_authentication} (required)
+  updateMask: string, Required. The list of fields to update. A field will be overwritten if it is in the mask. You can modify only the fields listed below. To update the EndUserAuthentication details: * `notify_endpoint_destination`

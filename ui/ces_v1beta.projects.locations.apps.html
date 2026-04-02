@@ -1,0 +1,64 @@
+<h1><a href="ces_v1beta.html">Gemini Enterprise for Customer Experience API</a> . <a href="ces_v1beta.projects.html">projects</a> . <a href="ces_v1beta.projects.locations.html">locations</a> . <a href="ces_v1beta.projects.locations.apps.html">apps</a></h1>
+  <code><a href="ces_v1beta.projects.locations.apps.agents.html">agents()</a></code>
+  <code><a href="ces_v1beta.projects.locations.apps.changelogs.html">changelogs()</a></code>
+  <code><a href="ces_v1beta.projects.locations.apps.conversations.html">conversations()</a></code>
+  <code><a href="ces_v1beta.projects.locations.apps.deployments.html">deployments()</a></code>
+  <code><a href="ces_v1beta.projects.locations.apps.evaluationDatasets.html">evaluationDatasets()</a></code>
+<p class="firstline">Returns the evaluationDatasets Resource.</p>
+  <code><a href="ces_v1beta.projects.locations.apps.evaluationExpectations.html">evaluationExpectations()</a></code>
+<p class="firstline">Returns the evaluationExpectations Resource.</p>
+  <code><a href="ces_v1beta.projects.locations.apps.evaluationRuns.html">evaluationRuns()</a></code>
+  <code><a href="ces_v1beta.projects.locations.apps.evaluations.html">evaluations()</a></code>
+  <code><a href="ces_v1beta.projects.locations.apps.examples.html">examples()</a></code>
+  <code><a href="ces_v1beta.projects.locations.apps.guardrails.html">guardrails()</a></code>
+  <code><a href="ces_v1beta.projects.locations.apps.scheduledEvaluationRuns.html">scheduledEvaluationRuns()</a></code>
+<p class="firstline">Returns the scheduledEvaluationRuns Resource.</p>
+  <code><a href="ces_v1beta.projects.locations.apps.sessions.html">sessions()</a></code>
+  <code><a href="ces_v1beta.projects.locations.apps.tools.html">tools()</a></code>
+  <code><a href="ces_v1beta.projects.locations.apps.toolsets.html">toolsets()</a></code>
+  <code><a href="ces_v1beta.projects.locations.apps.versions.html">versions()</a></code>
+  <code><a href="#importEvaluations">importEvaluations(parent, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Imports evaluations into the app.</p>
+  <code><a href="#runEvaluation">runEvaluation(app, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Runs an evaluation of the app.</p>
+  <code><a href="#testPersonaVoice">testPersonaVoice(app, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Tests the voice of a persona. Also accepts a default persona.</p>
+  &quot;evaluationPersonas&quot;: [ # Optional. The evaluation personas for the app. This field is used to define the personas that can be used for evaluation. Maximum of 30 personas can be defined.
+    { # A persona represents an end user in an evaluation.
+  &quot;evaluationSettings&quot;: { # Settings for evaluation. # Optional. The evaluation settings for the app.
+    &quot;goldenEvaluationToolCallBehaviour&quot;: &quot;A String&quot;, # Optional. Configures the default tool call behaviour for golden evaluations.
+    &quot;goldenRunMethod&quot;: &quot;A String&quot;, # Optional. The default method used to run golden evaluations. This will be used if no golden_run_method is specified in the RunEvaluationRequest.
+    &quot;scenarioConversationInitiator&quot;: &quot;A String&quot;, # Optional. Who starts the conversation in a scenario evaluation.
+    &quot;scenarioEvaluationToolCallBehaviour&quot;: &quot;A String&quot;, # Optional. Configures the default tool call behaviour for scenario evaluations.
+    <code class="details" id="importEvaluations">importEvaluations(parent, body=None, x__xgafv=None)</code>
+  <pre>Imports evaluations into the app.
+  parent: string, Required. The app to import the evaluations into. Format: `projects/{project}/locations/{location}/apps/{app}` (required)
+{ # Request message for EvaluationService.ImportEvaluations.
+  &quot;conversationList&quot;: { # A list of conversation resource names. # The conversations to import the evaluations from.
+    &quot;conversations&quot;: [ # Optional. Conversation resource names.
+  &quot;csvContent&quot;: &quot;A String&quot;, # Raw bytes representing the csv file with the evaluations structure.
+  &quot;gcsUri&quot;: &quot;A String&quot;, # The [Google Cloud Storage](https://cloud.google.com/storage/docs/) URI from which to import evaluations. The format of this URI must be `gs:///`.
+  &quot;importOptions&quot;: { # Configuration options for the evaluation import process. These options control how the import behaves, particularly when conflicts arise with existing evaluations data. # Optional. Options governing the import process for the evaluations.
+    <code class="details" id="runEvaluation">runEvaluation(app, body=None, x__xgafv=None)</code>
+  <pre>Runs an evaluation of the app.
+  app: string, Required. The app to evaluate. Format: `projects/{project}/locations/{location}/apps/{app}` (required)
+{ # Request message for EvaluationService.RunEvaluation.
+  &quot;app&quot;: &quot;A String&quot;, # Required. The app to evaluate. Format: `projects/{project}/locations/{location}/apps/{app}`
+  &quot;appVersion&quot;: &quot;A String&quot;, # Optional. The app version to evaluate. Format: `projects/{project}/locations/{location}/apps/{app}/versions/{version}`
+  &quot;config&quot;: { # EvaluationConfig configures settings for running the evaluation. # Optional. The configuration to use for the run.
+  &quot;displayName&quot;: &quot;A String&quot;, # Optional. The display name of the evaluation run.
+  &quot;evaluationDataset&quot;: &quot;A String&quot;, # Optional. An evaluation dataset to run. Format: `projects/{project}/locations/{location}/apps/{app}/evaluationDatasets/{evaluationDataset}`
+  &quot;evaluations&quot;: [ # Optional. List of evaluations to run. Format: `projects/{project}/locations/{location}/apps/{app}/evaluations/{evaluation}`
+  &quot;generateLatencyReport&quot;: True or False, # Optional. Whether to generate a latency report for the evaluation run.
+  &quot;goldenRunMethod&quot;: &quot;A String&quot;, # Optional. The method to run the evaluation if it is a golden evaluation. If not set, default to STABLE.
+  &quot;personaRunConfigs&quot;: [ # Optional. The configuration to use for the run per persona.
+  &quot;runCount&quot;: 42, # Optional. The number of times to run the evaluation. If not set, the default value is 1 per golden, and 5 per scenario.
+  &quot;scheduledEvaluationRun&quot;: &quot;A String&quot;, # Optional. The resource name of the `ScheduledEvaluationRun` that is triggering this evaluation run. If this field is set, the `scheduled_evaluation_run` field on the created `EvaluationRun` resource will be populated from this value. Format: `projects/{project}/locations/{location}/apps/{app}/scheduledEvaluationRuns/{scheduled_evaluation_run}`
+    <code class="details" id="testPersonaVoice">testPersonaVoice(app, body=None, x__xgafv=None)</code>
+  <pre>Tests the voice of a persona. Also accepts a default persona.
+  app: string, Required. the resource name of the app to test the persona voice for. Format: `projects/{project}/locations/{location}/apps/{app}` (required)
+{ # Request message for EvaluationService.TestPersonaVoice.
+  &quot;personaId&quot;: &quot;A String&quot;, # Required. The persona ID to test the voice for. Also accepts &quot;default&quot;.
+  &quot;text&quot;: &quot;A String&quot;, # Required. The text to test the voice for.
+    { # Response message for EvaluationService.TestPersonaVoice.
+  &quot;audio&quot;: &quot;A String&quot;, # The audio data bytes of the synthesized voice.

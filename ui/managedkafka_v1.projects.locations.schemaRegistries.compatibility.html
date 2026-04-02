@@ -1,0 +1,18 @@
+<h1><a href="managedkafka_v1.html">Managed Service for Apache Kafka API</a> . <a href="managedkafka_v1.projects.html">projects</a> . <a href="managedkafka_v1.projects.locations.html">locations</a> . <a href="managedkafka_v1.projects.locations.schemaRegistries.html">schemaRegistries</a> . <a href="managedkafka_v1.projects.locations.schemaRegistries.compatibility.html">compatibility</a></h1>
+  <code><a href="#checkCompatibility">checkCompatibility(name, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Check compatibility of a schema with all versions or a specific version of a subject.</p>
+    <code class="details" id="checkCompatibility">checkCompatibility(name, body=None, x__xgafv=None)</code>
+  <pre>Check compatibility of a schema with all versions or a specific version of a subject.
+  name: string, Required. The name of the resource to check compatibility for. The format is either of following: * projects/{project}/locations/{location}/schemaRegistries/{schema_registry}/compatibility/subjects/*/versions: Check compatibility with one or more versions of the specified subject. * projects/{project}/locations/{location}/schemaRegistries/{schema_registry}/compatibility/subjects/{subject}/versions/{version}: Check compatibility with a specific version of the subject. (required)
+{ # Request for CheckCompatibility.
+  &quot;references&quot;: [ # Optional. The schema references used by the schema.
+    { # SchemaReference is a reference to a schema.
+      &quot;name&quot;: &quot;A String&quot;, # Required. The name of the reference.
+      &quot;subject&quot;: &quot;A String&quot;, # Required. The subject of the reference.
+      &quot;version&quot;: 42, # Required. The version of the reference.
+  &quot;schema&quot;: &quot;A String&quot;, # Required. The schema payload
+  &quot;schemaType&quot;: &quot;A String&quot;, # Optional. The schema type of the schema.
+  &quot;verbose&quot;: True or False, # Optional. If true, the response will contain the compatibility check result with reasons for failed checks. The default is false.
+    { # Response for CheckCompatibility.
+  &quot;is_compatible&quot;: True or False, # The compatibility check result. If true, the schema is compatible with the resource.
+  &quot;messages&quot;: [ # Failure reasons if verbose = true.

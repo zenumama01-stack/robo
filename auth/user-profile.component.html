@@ -1,0 +1,46 @@
+@if (Loading) {
+  <mj-loading text="Loading profile..."></mj-loading>
+@if (!Loading) {
+  <div class="user-profile-container">
+    <!-- User Info Card -->
+    @if (User | async; as user) {
+      <div class="profile-card">
+        <div class="profile-header">
+          <div class="avatar-container">
+            <i class="fa-solid fa-user avatar-icon"></i>
+          <div class="profile-info">
+            <h3 class="user-name">{{ user.name }}</h3>
+            <p class="user-email">{{ user.email }}</p>
+    <!-- Notification Summary Card -->
+    <div class="notification-card">
+          <i class="fa-solid fa-bell header-icon"></i>
+          <h4>Notifications</h4>
+        @if (UnreadNotificationCount > 0) {
+          <span class="unread-badge">
+            {{ UnreadNotificationCount }}
+        <p class="card-description">
+          Manage your notification preferences for all channels
+        <div class="channel-toggles">
+          <!-- In-App Toggle -->
+            class="channel-toggle"
+            [class.active]="IsChannelEnabled('InApp')"
+            [disabled]="Saving"
+            (click)="ToggleChannel('InApp')"
+            <i [class]="GetChannelIcon('InApp')"></i>
+            <span class="channel-label">{{ GetChannelLabel('InApp') }}</span>
+            <span class="toggle-indicator">
+              @if (IsChannelEnabled('InApp')) {
+          <!-- Email Toggle -->
+            [class.active]="IsChannelEnabled('Email')"
+            (click)="ToggleChannel('Email')"
+            <i [class]="GetChannelIcon('Email')"></i>
+            <span class="channel-label">{{ GetChannelLabel('Email') }}</span>
+              @if (IsChannelEnabled('Email')) {
+          <!-- SMS Toggle -->
+            [class.active]="IsChannelEnabled('SMS')"
+            (click)="ToggleChannel('SMS')"
+            <i [class]="GetChannelIcon('SMS')"></i>
+            <span class="channel-label">{{ GetChannelLabel('SMS') }}</span>
+              @if (IsChannelEnabled('SMS')) {
+          <a href="/settings" class="settings-link">
+            View all notification preferences

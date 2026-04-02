@@ -1,0 +1,27 @@
+    <!-- Action Association Section -->
+        SectionKey="actionAssociation"
+        SectionName="Action Association"
+    <!-- Parameter Definition Section -->
+        SectionKey="parameterDefinition"
+        SectionName="Parameter Definition"
+        Icon="fa fa-list-alt"
+            FieldName="DefaultValue"
+            FieldName="ValueType"
+            FieldName="IsArray"
+            FieldName="MediaModality"
+    <!-- Entity Action Params Section -->
+        SectionKey="entityActionParams"
+        SectionName="Entity Action Params"
+        [BadgeCount]="GetSectionRowCount('entityActionParams')"
+                [Params]="BuildRelationshipViewParamsByEntityName('MJ: Entity Action Params','ActionParamID')"
+                [NewRecordValues]="NewRecordValues('MJ: Entity Action Params')"
+                [AllowLoad]="IsSectionExpanded('entityActionParams')"
+                (AfterDataLoad)="SetSectionRowCount('entityActionParams', $event.totalRowCount)"
+    <!-- Scheduled Action Params Section -->
+        SectionKey="scheduledActionParams"
+        SectionName="Scheduled Action Params"
+        [BadgeCount]="GetSectionRowCount('scheduledActionParams')"
+                [Params]="BuildRelationshipViewParamsByEntityName('MJ: Scheduled Action Params','ActionParamID')"
+                [NewRecordValues]="NewRecordValues('MJ: Scheduled Action Params')"
+                [AllowLoad]="IsSectionExpanded('scheduledActionParams')"
+                (AfterDataLoad)="SetSectionRowCount('scheduledActionParams', $event.totalRowCount)"

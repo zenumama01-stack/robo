@@ -1,0 +1,15 @@
+<h1><a href="batch_v1.html">Batch API</a> . <a href="batch_v1.projects.html">projects</a> . <a href="batch_v1.projects.locations.html">locations</a> . <a href="batch_v1.projects.locations.jobs.html">jobs</a> . <a href="batch_v1.projects.locations.jobs.taskGroups.html">taskGroups</a> . <a href="batch_v1.projects.locations.jobs.taskGroups.tasks.html">tasks</a></h1>
+<p class="firstline">Return a single Task.</p>
+<p class="firstline">List Tasks associated with a job.</p>
+  <pre>Return a single Task.
+  name: string, Required. Task name. (required)
+    { # A Cloud Batch task.
+  &quot;name&quot;: &quot;A String&quot;, # Task name. The name is generated from the parent TaskGroup name and &#x27;id&#x27; field. For example: &quot;projects/123456/locations/us-west1/jobs/job01/taskGroups/group01/tasks/task01&quot;.
+  &quot;status&quot;: { # Status of a task. # Task Status.
+    &quot;state&quot;: &quot;A String&quot;, # Task state.
+    &quot;statusEvents&quot;: [ # Detailed info about why the state is reached.
+  <pre>List Tasks associated with a job.
+  parent: string, Required. Name of a TaskGroup from which Tasks are being requested. Pattern: &quot;projects/{project}/locations/{location}/jobs/{job}/taskGroups/{task_group}&quot; (required)
+  filter: string, Task filter, null filter matches all Tasks. Filter string should be of the format State=TaskStatus.State e.g. State=RUNNING
+    { # ListTasks Response.
+  &quot;tasks&quot;: [ # Tasks.

@@ -1,0 +1,15 @@
+    <!-- Skill Identification Section -->
+        SectionKey="skillIdentification"
+        SectionName="Skill Identification"
+    <!-- Skill Hierarchy Section -->
+        SectionKey="skillHierarchy"
+        SectionName="Skill Hierarchy"
+                [Params]="BuildRelationshipViewParamsByEntityName('MJ: Employee Skills','SkillID')"
+    <!-- Skills Section -->
+        SectionKey="skills"
+        SectionName="Skills"
+        [BadgeCount]="GetSectionRowCount('skills')"
+                [Params]="BuildRelationshipViewParamsByEntityName('MJ: Skills','ParentID')"
+                [NewRecordValues]="NewRecordValues('MJ: Skills')"
+                [AllowLoad]="IsSectionExpanded('skills')"
+                (AfterDataLoad)="SetSectionRowCount('skills', $event.totalRowCount)"

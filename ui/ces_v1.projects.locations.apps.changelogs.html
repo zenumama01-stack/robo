@@ -1,0 +1,25 @@
+<h1><a href="ces_v1.html">Gemini Enterprise for Customer Experience API</a> . <a href="ces_v1.projects.html">projects</a> . <a href="ces_v1.projects.locations.html">locations</a> . <a href="ces_v1.projects.locations.apps.html">apps</a> . <a href="ces_v1.projects.locations.apps.changelogs.html">changelogs</a></h1>
+<p class="firstline">Gets the specified changelog.</p>
+<p class="firstline">Lists the changelogs of the specified app.</p>
+  <pre>Gets the specified changelog.
+  name: string, Required. The resource name of the changelog to retrieve. (required)
+    { # Changelogs represent a change made to the app or to an resource within the app.
+  &quot;action&quot;: &quot;A String&quot;, # Output only. The action that was performed on the resource.
+  &quot;author&quot;: &quot;A String&quot;, # Output only. Email address of the change author.
+  &quot;createTime&quot;: &quot;A String&quot;, # Output only. The time when the change was made.
+  &quot;dependentResources&quot;: [ # Output only. The dependent resources that were changed.
+  &quot;description&quot;: &quot;A String&quot;, # Output only. Description of the change. which typically captures the changed fields in the resource.
+  &quot;displayName&quot;: &quot;A String&quot;, # Output only. Display name of the change. It typically should be the display name of the resource that was changed.
+  &quot;name&quot;: &quot;A String&quot;, # Identifier. The unique identifier of the changelog. Format: `projects/{project}/locations/{location}/apps/{app}/changelogs/{changelog}`
+  &quot;newResource&quot;: { # Output only. The new resource after the change.
+  &quot;originalResource&quot;: { # Output only. The original resource before the change.
+  &quot;resource&quot;: &quot;A String&quot;, # Output only. The resource that was changed.
+  &quot;resourceType&quot;: &quot;A String&quot;, # Output only. The type of the resource that was changed.
+  &quot;sequenceNumber&quot;: &quot;A String&quot;, # Output only. The monotonically increasing sequence number of the changelog.
+  <pre>Lists the changelogs of the specified app.
+  parent: string, Required. The resource name of the app to list changelogs from. (required)
+  filter: string, Optional. Filter to be applied when listing the changelogs. See https://google.aip.dev/160 for more details. The filter string can be used to filter by `action`, `resource_type`, `resource_name`, `author`, and `create_time`. The `:` comparator can be used for case-insensitive partial matching on string fields, while `=` performs an exact case-sensitive match. Examples: * `action:update` (case-insensitive partial match) * `action=&quot;Create&quot;` (case-sensitive exact match) * `resource_type:agent` * `resource_name:my-agent` * `author:me@example.com` * `create_time &gt; &quot;2025-01-01T00:00:00Z&quot;` * `create_time &lt;= &quot;2025-01-01T00:00:00Z&quot; AND resource_type:tool`
+  pageToken: string, Optional. The next_page_token value returned from a previous list AgentService.ListChangelogs call.
+    { # Response message for AgentService.ListChangelogs.
+  &quot;changelogs&quot;: [ # The list of changelogs.
+  &quot;nextPageToken&quot;: &quot;A String&quot;, # A token that can be sent as ListChangelogsRequest.page_token to retrieve the next page. Absence of this field indicates there are no subsequent pages.

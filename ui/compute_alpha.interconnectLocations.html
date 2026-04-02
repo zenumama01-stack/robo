@@ -1,0 +1,78 @@
+<h1><a href="compute_alpha.html">Compute Engine API</a> . <a href="compute_alpha.interconnectLocations.html">interconnectLocations</a></h1>
+  <code><a href="#get">get(project, interconnectLocation, x__xgafv=None)</a></code></p>
+<p class="firstline">Returns the details for the specified interconnect location. Gets a list of</p>
+<p class="firstline">Retrieves the list of interconnect locations available to the specified</p>
+    <code class="details" id="get">get(project, interconnectLocation, x__xgafv=None)</code>
+  <pre>Returns the details for the specified interconnect location. Gets a list of
+available interconnect locations by making a list() request.
+  interconnectLocation: string, Name of the interconnect location to return. (required)
+    { # Represents an Interconnect Attachment (VLAN) Location resource.
+    # You can use this resource to find location details about an Interconnect
+    # attachment (VLAN). For more information about interconnect attachments, read
+  &quot;address&quot;: &quot;A String&quot;, # Output only. [Output Only] The postal address of the Point of Presence, each line in
+      # the address is separated by a newline character.
+  &quot;availabilityZone&quot;: &quot;A String&quot;, # [Output Only] Availability zone for this InterconnectLocation. Within a
+      # metropolitan area (metro), maintenance will not be simultaneously scheduled
+      # in more than one availability zone.  Example: &quot;zone1&quot; or &quot;zone2&quot;.
+  &quot;availableFeatures&quot;: [ # [Output only] List of features available at this InterconnectLocation,
+      #    - IF_MACSEC
+      #    - IF_CROSS_SITE_NETWORK
+  &quot;availableLinkTypes&quot;: [ # [Output only] List of link types available at this InterconnectLocation,
+      #    - LINK_TYPE_ETHERNET_10G_LR
+      #    - LINK_TYPE_ETHERNET_100G_LR
+      #    - LINK_TYPE_ETHERNET_400G_LR4
+  &quot;city&quot;: &quot;A String&quot;, # [Output Only] Metropolitan area designator that indicates which city an
+      # interconnect is located.
+      # For example: &quot;Chicago, IL&quot;, &quot;Amsterdam, Netherlands&quot;.
+  &quot;continent&quot;: &quot;A String&quot;, # [Output Only] Continent for this location, which can take one of the
+      #    - AFRICA
+      #    - ASIA_PAC
+      #    - EUROPE
+      #    - NORTH_AMERICA
+      #    - SOUTH_AMERICA
+  &quot;crossSiteInterconnectInfos&quot;: [ # [Output Only] A list of InterconnectLocation.CrossSiteInterconnectInfo
+      # objects, that describe where Cross-Site Interconnect wires may connect to
+      # from this location and associated connection parameters. Cross-Site
+      # Interconnect isn&#x27;t allowed to locations which are not listed.
+    { # Information about Cross-Site Interconnect wires which may be created
+        # between the containing location and another remote location.
+      &quot;city&quot;: &quot;A String&quot;, # Output only. The remote location for Cross-Site Interconnect wires. This specifies an
+          # InterconnectLocation city (metropolitan area designator), which itself
+          # may match multiple InterconnectLocations.
+      &quot;maxSingleFlowGbps&quot;: 42, # Output only. The maximum gbps for a single flow to this metro.
+          # This limits the total bandwidth which may be configured per wire.
+  &quot;description&quot;: &quot;A String&quot;, # Output only. [Output Only] An optional description of the resource.
+  &quot;facilityProvider&quot;: &quot;A String&quot;, # Output only. [Output Only] The name of the provider for this facility (e.g., EQUINIX).
+  &quot;facilityProviderFacilityId&quot;: &quot;A String&quot;, # Output only. [Output Only] A provider-assigned Identifier for this facility (e.g.,
+      # Ashburn-DC1).
+  &quot;kind&quot;: &quot;compute#interconnectLocation&quot;, # Output only. [Output Only] Type of the resource. Alwayscompute#interconnectLocation for interconnect locations.
+  &quot;name&quot;: &quot;A String&quot;, # Output only. [Output Only] Name of the resource.
+  &quot;peeringdbFacilityId&quot;: &quot;A String&quot;, # Output only. [Output Only] The peeringdb identifier for this facility (corresponding
+      # with a netfac type in peeringdb).
+  &quot;regionInfos&quot;: [ # Output only. [Output Only] A list of InterconnectLocation.RegionInfo objects, that
+      # describe parameters pertaining to the relation between this
+      # InterconnectLocation and various Google Cloud regions.
+    { # Information about any potential InterconnectAttachments between an
+        # Interconnect at a specific InterconnectLocation, and a specific Cloud
+        # Region.
+      &quot;expectedRttMs&quot;: &quot;A String&quot;, # Output only. Expected round-trip time in milliseconds, from this InterconnectLocation
+          # to a VM in this region.
+      &quot;l2ForwardingEnabled&quot;: True or False, # Output only. Identifies whether L2 Interconnect Attachments can be created in this
+          # region for interconnects that are in this location.
+      &quot;locationPresence&quot;: &quot;A String&quot;, # Output only. Identifies the network presence of this location.
+      &quot;region&quot;: &quot;A String&quot;, # Output only. URL for the region of this location.
+  &quot;singleRegionProductionCriticalPeerLocations&quot;: [ # Output only. [Output Only] URLs of the other locations that can pair up with this
+      # location to support Single-Region 99.99% SLA. E.g. iad-zone1-1 and
+      # iad-zone2-5467 are Single-Region 99.99% peer locations of each other.
+  &quot;status&quot;: &quot;A String&quot;, # [Output Only] The status of this InterconnectLocation, which can take one
+      # of the following values:
+      #    - CLOSED: The InterconnectLocation is closed and is unavailable for
+      #    provisioning new Interconnects.
+      #    - AVAILABLE: The InterconnectLocation is available for provisioning new
+      #    Interconnects.
+  &quot;supportsPzs&quot;: True or False, # Output only. [Output Only] Reserved for future use.
+  <pre>Retrieves the list of interconnect locations available to the specified
+    { # Response to the list request, and contains a list of interconnect locations.
+  &quot;items&quot;: [ # A list of InterconnectLocation resources.
+  &quot;kind&quot;: &quot;compute#interconnectLocationList&quot;, # Output only. [Output Only] Type of resource. Alwayscompute#interconnectLocationList for lists of interconnect
+      # locations.

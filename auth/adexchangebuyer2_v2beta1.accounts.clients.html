@@ -1,0 +1,42 @@
+<h1><a href="adexchangebuyer2_v2beta1.html">Ad Exchange Buyer API II</a> . <a href="adexchangebuyer2_v2beta1.accounts.html">accounts</a> . <a href="adexchangebuyer2_v2beta1.accounts.clients.html">clients</a></h1>
+  <code><a href="adexchangebuyer2_v2beta1.accounts.clients.invitations.html">invitations()</a></code>
+<p class="firstline">Returns the invitations Resource.</p>
+  <code><a href="adexchangebuyer2_v2beta1.accounts.clients.users.html">users()</a></code>
+<p class="firstline">Returns the users Resource.</p>
+  <code><a href="#create">create(accountId, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Creates a new client buyer.</p>
+  <code><a href="#get">get(accountId, clientAccountId, x__xgafv=None)</a></code></p>
+<p class="firstline">Gets a client buyer with a given client account ID.</p>
+  <code><a href="#list">list(accountId, pageSize=None, pageToken=None, partnerClientId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Lists all the clients for the current sponsor buyer.</p>
+  <code><a href="#update">update(accountId, clientAccountId, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Updates an existing client buyer.</p>
+    <code class="details" id="create">create(accountId, body=None, x__xgafv=None)</code>
+  <pre>Creates a new client buyer.
+  accountId: string, Unique numerical account ID for the buyer of which the client buyer is a customer; the sponsor buyer to create a client for. (required) (required)
+{ # A client resource represents a client buyer—an agency, a brand, or an advertiser customer of the sponsor buyer. Users associated with the client buyer have restricted access to the Marketplace and certain other sections of the Authorized Buyers UI based on the role granted to the client buyer. All fields are required unless otherwise specified.
+  &quot;clientAccountId&quot;: &quot;A String&quot;, # The globally-unique numerical ID of the client. The value of this field is ignored in create and update operations.
+  &quot;clientName&quot;: &quot;A String&quot;, # Name used to represent this client to publishers. You may have multiple clients that map to the same entity, but for each client the combination of `clientName` and entity must be unique. You can specify this field as empty. Maximum length of 255 characters is allowed.
+  &quot;entityId&quot;: &quot;A String&quot;, # Numerical identifier of the client entity. The entity can be an advertiser, a brand, or an agency. This identifier is unique among all the entities with the same type. The value of this field is ignored if the entity type is not provided. A list of all known advertisers with their identifiers is available in the [advertisers.txt](https://storage.googleapis.com/adx-rtb-dictionaries/advertisers.txt) file. A list of all known brands with their identifiers is available in the [brands.txt](https://storage.googleapis.com/adx-rtb-dictionaries/brands.txt) file. A list of all known agencies with their identifiers is available in the [agencies.txt](https://storage.googleapis.com/adx-rtb-dictionaries/agencies.txt) file.
+  &quot;entityName&quot;: &quot;A String&quot;, # The name of the entity. This field is automatically fetched based on the type and ID. The value of this field is ignored in create and update operations.
+  &quot;entityType&quot;: &quot;A String&quot;, # An optional field for specifying the type of the client entity: `ADVERTISER`, `BRAND`, or `AGENCY`.
+  &quot;partnerClientId&quot;: &quot;A String&quot;, # Optional arbitrary unique identifier of this client buyer from the standpoint of its Ad Exchange sponsor buyer. This field can be used to associate a client buyer with the identifier in the namespace of its sponsor buyer, lookup client buyers by that identifier and verify whether an Ad Exchange counterpart of a given client buyer already exists. If present, must be unique among all the client buyers for its Ad Exchange sponsor buyer.
+  &quot;role&quot;: &quot;A String&quot;, # The role which is assigned to the client buyer. Each role implies a set of permissions granted to the client. Must be one of `CLIENT_DEAL_VIEWER`, `CLIENT_DEAL_NEGOTIATOR` or `CLIENT_DEAL_APPROVER`.
+  &quot;status&quot;: &quot;A String&quot;, # The status of the client buyer.
+  &quot;visibleToSeller&quot;: True or False, # Whether the client buyer will be visible to sellers.
+    <code class="details" id="get">get(accountId, clientAccountId, x__xgafv=None)</code>
+  <pre>Gets a client buyer with a given client account ID.
+  accountId: string, Numerical account ID of the client&#x27;s sponsor buyer. (required) (required)
+  clientAccountId: string, Numerical account ID of the client buyer to retrieve. (required) (required)
+    <code class="details" id="list">list(accountId, pageSize=None, pageToken=None, partnerClientId=None, x__xgafv=None)</code>
+  <pre>Lists all the clients for the current sponsor buyer.
+  accountId: string, Unique numerical account ID of the sponsor buyer to list the clients for. (required)
+  pageSize: integer, Requested page size. The server may return fewer clients than requested. If unspecified, the server will pick an appropriate default.
+  pageToken: string, A token identifying a page of results the server should return. Typically, this is the value of ListClientsResponse.nextPageToken returned from the previous call to the accounts.clients.list method.
+  partnerClientId: string, Optional unique identifier (from the standpoint of an Ad Exchange sponsor buyer partner) of the client to return. If specified, at most one client will be returned in the response.
+  &quot;clients&quot;: [ # The returned list of clients.
+  &quot;nextPageToken&quot;: &quot;A String&quot;, # A token to retrieve the next page of results. Pass this value in the ListClientsRequest.pageToken field in the subsequent call to the accounts.clients.list method to retrieve the next page of results.
+    <code class="details" id="update">update(accountId, clientAccountId, body=None, x__xgafv=None)</code>
+  <pre>Updates an existing client buyer.
+  accountId: string, Unique numerical account ID for the buyer of which the client buyer is a customer; the sponsor buyer to update a client for. (required) (required)
+  clientAccountId: string, Unique numerical account ID of the client to update. (required) (required)

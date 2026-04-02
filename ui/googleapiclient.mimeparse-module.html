@@ -1,0 +1,114 @@
+  <title>googleapiclient.mimeparse</title>
+        Module&nbsp;mimeparse
+            >]&nbsp;|&nbsp;<a href="googleapiclient.mimeparse-module.html"
+<h1 class="epydoc">Module mimeparse</h1><p class="nomargin-top"><span class="codelink"><a href="googleapiclient.mimeparse-pysrc.html">source&nbsp;code</a></span></p>
+MIME-Type Parser
+This module provides basic functions for handling mime-types. It can handle
+matching mime-types against a list of media-ranges. See section 14.1 of the
+HTTP specification [RFC 2616] for a complete explanation.
+   http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html#sec14.1
+Contents:
+ - parse_mime_type():   Parses a mime-type into its component parts.
+ - parse_media_range(): Media-ranges are mime-types with wild-cards and a 'q'
+                          quality parameter.
+ - quality():           Determines the quality ('q') of a mime-type when
+                          compared against a list of media-ranges.
+ - quality_parsed():    Just like quality() except the second parameter must be
+                          pre-parsed.
+ - best_match():        Choose the mime-type with the highest quality ('q')
+                          from a list of candidates.
+<div class="fields">      <p><strong>Version:</strong>
+        0.1.3
+      <p><strong>Author:</strong>
+        Joe Gregorio
+      <p><strong>License:</strong>
+        MIT License
+</div><!-- ==================== FUNCTIONS ==================== -->
+          <td><span class="summary-sig"><a href="googleapiclient.mimeparse-module.html#parse_mime_type" class="summary-sig-name">parse_mime_type</a>(<span class="summary-sig-arg">mime_type</span>)</span><br />
+      Parses a mime-type into its component parts.</td>
+            <span class="codelink"><a href="googleapiclient.mimeparse-pysrc.html#parse_mime_type">source&nbsp;code</a></span>
+          <td><span class="summary-sig"><a href="googleapiclient.mimeparse-module.html#parse_media_range" class="summary-sig-name">parse_media_range</a>(<span class="summary-sig-arg">range</span>)</span><br />
+      Parse a media-range into its component parts.</td>
+            <span class="codelink"><a href="googleapiclient.mimeparse-pysrc.html#parse_media_range">source&nbsp;code</a></span>
+          <td><span class="summary-sig"><a href="googleapiclient.mimeparse-module.html#fitness_and_quality_parsed" class="summary-sig-name">fitness_and_quality_parsed</a>(<span class="summary-sig-arg">mime_type</span>,
+        <span class="summary-sig-arg">parsed_ranges</span>)</span><br />
+      Find the best match for a mime-type amongst parsed media-ranges.</td>
+            <span class="codelink"><a href="googleapiclient.mimeparse-pysrc.html#fitness_and_quality_parsed">source&nbsp;code</a></span>
+          <td><span class="summary-sig"><a href="googleapiclient.mimeparse-module.html#quality_parsed" class="summary-sig-name">quality_parsed</a>(<span class="summary-sig-arg">mime_type</span>,
+            <span class="codelink"><a href="googleapiclient.mimeparse-pysrc.html#quality_parsed">source&nbsp;code</a></span>
+          <td><span class="summary-sig"><a href="googleapiclient.mimeparse-module.html#quality" class="summary-sig-name">quality</a>(<span class="summary-sig-arg">mime_type</span>,
+        <span class="summary-sig-arg">ranges</span>)</span><br />
+      Return the quality ('q') of a mime-type against a list of 
+      media-ranges.</td>
+            <span class="codelink"><a href="googleapiclient.mimeparse-pysrc.html#quality">source&nbsp;code</a></span>
+          <td><span class="summary-sig"><a href="googleapiclient.mimeparse-module.html#best_match" class="summary-sig-name">best_match</a>(<span class="summary-sig-arg">supported</span>,
+      Return mime-type with the highest quality ('q') from list of 
+      candidates.</td>
+            <span class="codelink"><a href="googleapiclient.mimeparse-pysrc.html#best_match">source&nbsp;code</a></span>
+          <td><span class="summary-sig"><a name="_filter_blank"></a><span class="summary-sig-name">_filter_blank</span>(<span class="summary-sig-arg">i</span>)</span></td>
+            <span class="codelink"><a href="googleapiclient.mimeparse-pysrc.html#_filter_blank">source&nbsp;code</a></span>
+        <a name="__email__"></a><span class="summary-name">__email__</span> = <code title="'joe@bitworking.org'"><code class="variable-quote">'</code><code class="variable-string">joe@bitworking.org</code><code class="variable-quote">'</code></code>
+        <a name="__credits__"></a><span class="summary-name">__credits__</span> = <code title="''"><code class="variable-quote">'</code><code class="variable-string"></code><code class="variable-quote">'</code></code>
+<a name="parse_mime_type"></a>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">parse_mime_type</span>(<span class="sig-arg">mime_type</span>)</span>
+    ><span class="codelink"><a href="googleapiclient.mimeparse-pysrc.html#parse_mime_type">source&nbsp;code</a></span>&nbsp;
+Parses a mime-type into its component parts.
+Carves up a mime-type and returns a tuple of the (type, subtype, params)
+where 'params' is a dictionary of all the parameters for the media range.
+For example, the media range 'application/xhtml;q=0.5' would get parsed
+into:
+   ('application', 'xhtml', {'q', '0.5'})
+<a name="parse_media_range"></a>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">parse_media_range</span>(<span class="sig-arg">range</span>)</span>
+    ><span class="codelink"><a href="googleapiclient.mimeparse-pysrc.html#parse_media_range">source&nbsp;code</a></span>&nbsp;
+Parse a media-range into its component parts.
+Carves up a media range and returns a tuple of the (type, subtype,
+params) where 'params' is a dictionary of all the parameters for the media
+range.  For example, the media range 'application/*;q=0.5' would get parsed
+   ('application', '*', {'q', '0.5'})
+In addition this function also guarantees that there is a value for 'q'
+in the params dictionary, filling it in with a proper default if
+necessary.
+<a name="fitness_and_quality_parsed"></a>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">fitness_and_quality_parsed</span>(<span class="sig-arg">mime_type</span>,
+        <span class="sig-arg">parsed_ranges</span>)</span>
+    ><span class="codelink"><a href="googleapiclient.mimeparse-pysrc.html#fitness_and_quality_parsed">source&nbsp;code</a></span>&nbsp;
+  <p>Find the best match for a mime-type amongst parsed media-ranges.</p>
+  <p>Find the best match for a given mime-type against a list of 
+  media_ranges that have already been parsed by parse_media_range(). 
+  Returns a tuple of the fitness value and the value of the 'q' quality 
+  parameter of the best match, or (-1, 0) if no match was found. Just as 
+  for quality_parsed(), 'parsed_ranges' must be a list of parsed media 
+  ranges.</p>
+<a name="quality_parsed"></a>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">quality_parsed</span>(<span class="sig-arg">mime_type</span>,
+    ><span class="codelink"><a href="googleapiclient.mimeparse-pysrc.html#quality_parsed">source&nbsp;code</a></span>&nbsp;
+  Returns the 'q' quality parameter of the best match, 0 if no match was 
+  found. This function bahaves the same as quality() except that 
+  'parsed_ranges' must be a list of parsed media ranges.</p>
+<a name="quality"></a>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">quality</span>(<span class="sig-arg">mime_type</span>,
+        <span class="sig-arg">ranges</span>)</span>
+    ><span class="codelink"><a href="googleapiclient.mimeparse-pysrc.html#quality">source&nbsp;code</a></span>&nbsp;
+  <p>Return the quality ('q') of a mime-type against a list of 
+  media-ranges.</p>
+  <p>Returns the quality 'q' of a mime-type when compared against the 
+  media-ranges in ranges. For example:</p>
+<pre class="py-doctest">
+<span class="py-prompt">&gt;&gt;&gt; </span>quality(<span class="py-string">'text/html'</span>,'text/*;q=0.3, text/html;q=0.7,
+<span class="py-output">              text/html;level=1, text/html;level=2;q=0.4, */*;q=0.5')</span>
+<span class="py-output">0.7</span></pre>
+<a name="best_match"></a>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">best_match</span>(<span class="sig-arg">supported</span>,
+    ><span class="codelink"><a href="googleapiclient.mimeparse-pysrc.html#best_match">source&nbsp;code</a></span>&nbsp;
+  <p>Return mime-type with the highest quality ('q') from list of 
+  candidates.</p>
+  <p>Takes a list of supported mime-types and finds the best match for all 
+  the media-ranges listed in header. The value of header must be a string 
+  that conforms to the format of the HTTP Accept: header. The value of 
+  'supported' is a list of mime-types. The list of supported mime-types 
+  should be sorted in order of increasing desirability, in case of a 
+  situation where there is a tie.</p>
+<span class="py-prompt">&gt;&gt;&gt; </span>best_match([<span class="py-string">'application/xbel+xml'</span>, <span class="py-string">'text/xml'</span>],
+<span class="py-output">               'text/*;q=0.5,*/*; q=0.1')</span>
+<span class="py-output">'text/xml'</span></pre>

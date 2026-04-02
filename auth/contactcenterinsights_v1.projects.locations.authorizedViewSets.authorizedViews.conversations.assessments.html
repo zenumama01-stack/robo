@@ -1,0 +1,53 @@
+<h1><a href="contactcenterinsights_v1.html">Contact Center AI Insights API</a> . <a href="contactcenterinsights_v1.projects.html">projects</a> . <a href="contactcenterinsights_v1.projects.locations.html">locations</a> . <a href="contactcenterinsights_v1.projects.locations.authorizedViewSets.html">authorizedViewSets</a> . <a href="contactcenterinsights_v1.projects.locations.authorizedViewSets.authorizedViews.html">authorizedViews</a> . <a href="contactcenterinsights_v1.projects.locations.authorizedViewSets.authorizedViews.conversations.html">conversations</a> . <a href="contactcenterinsights_v1.projects.locations.authorizedViewSets.authorizedViews.conversations.assessments.html">assessments</a></h1>
+  <code><a href="contactcenterinsights_v1.projects.locations.authorizedViewSets.authorizedViews.conversations.assessments.notes.html">notes()</a></code>
+<p class="firstline">Returns the notes Resource.</p>
+  <code><a href="#appeal">appeal(name, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Appeal an Assessment.</p>
+<p class="firstline">Create Assessment.</p>
+<p class="firstline">Delete an Assessment.</p>
+  <code><a href="#finalize">finalize(name, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Finalize an Assessment.</p>
+<p class="firstline">Get Assessment.</p>
+<p class="firstline">List Assessments.</p>
+<p class="firstline">Publish an Assessment.</p>
+    <code class="details" id="appeal">appeal(name, body=None, x__xgafv=None)</code>
+  <pre>Appeal an Assessment.
+  name: string, Required. The name of the assessment to appeal. (required)
+{ # The message to appeal an assessment.
+    { # The assessment resource.
+  &quot;agentInfo&quot;: { # Information about an agent involved in the conversation. # Information about the agent the assessment is for.
+    &quot;agentId&quot;: &quot;A String&quot;, # A user-specified string representing the agent.
+    &quot;agentType&quot;: &quot;A String&quot;, # The agent type, e.g. HUMAN_AGENT.
+    &quot;deploymentDisplayName&quot;: &quot;A String&quot;, # The agent&#x27;s deployment display name. Only applicable to automated agents.
+    &quot;deploymentId&quot;: &quot;A String&quot;, # The agent&#x27;s deployment ID. Only applicable to automated agents.
+    &quot;displayName&quot;: &quot;A String&quot;, # The agent&#x27;s name.
+    &quot;dispositionCode&quot;: &quot;A String&quot;, # A user-provided string indicating the outcome of the agent&#x27;s segment of the call.
+    &quot;location&quot;: &quot;A String&quot;, # The agent&#x27;s location.
+    &quot;team&quot;: &quot;A String&quot;, # A user-specified string representing the agent&#x27;s team. Deprecated in favor of the `teams` field.
+    &quot;teams&quot;: [ # User-specified strings representing the agent&#x27;s teams.
+    &quot;versionDisplayName&quot;: &quot;A String&quot;, # The agent&#x27;s version display name. Only applicable to automated agents.
+    &quot;versionId&quot;: &quot;A String&quot;, # The agent&#x27;s version ID. Only applicable to automated agents.
+  &quot;createTime&quot;: &quot;A String&quot;, # Output only. The time at which the assessment was created.
+  &quot;name&quot;: &quot;A String&quot;, # Identifier. The resource name of the assessment. Format: projects/{project}/locations/{location}/conversations/{conversation}/assessments/{assessment}
+  &quot;state&quot;: &quot;A String&quot;, # Output only. The state of the assessment.
+  &quot;updateTime&quot;: &quot;A String&quot;, # Output only. The time at which the assessment was last updated.
+  <pre>Create Assessment.
+  parent: string, Required. The parent resource of the assessment. (required)
+  <pre>Delete an Assessment.
+  name: string, Required. The name of the assessment to delete. (required)
+  force: boolean, Optional. If set to true, all of this assessment&#x27;s notes will also be deleted. Otherwise, the request will only succeed if it has no notes.
+    <code class="details" id="finalize">finalize(name, body=None, x__xgafv=None)</code>
+  <pre>Finalize an Assessment.
+  name: string, Required. The name of the assessment to finalize. (required)
+{ # The message to finalize an assessment. Finalizing makes an assessment and its notes immutable.
+  <pre>Get Assessment.
+  name: string, Required. The name of the assessment to get. (required)
+  <pre>List Assessments.
+  parent: string, Required. The parent resource of the assessments. To list all assessments in a location, substitute the conversation ID with a &#x27;-&#x27; character. (required)
+  filter: string, Optional. A filter to reduce results to a specific subset. Supported filters include: * `state` - The state of the assessment * `agent_info.agent_id` - The ID of the agent the assessment is for
+  pageSize: integer, The maximum number of assessments to list. If zero, the service will select a default size. A call may return fewer objects than requested. A non-empty `next_page_token` in the response indicates that more data is available.
+    { # The response of listing assessments.
+  &quot;assessments&quot;: [ # The assessments that match the request.
+  <pre>Publish an Assessment.
+  name: string, Required. The name of the assessment to publish. (required)
+{ # The message to publish an assessment. Draft and appealed assessments can be published. Publishing simply changes the state of the assessment to published, allowing the console and authorized views to filter on the state.

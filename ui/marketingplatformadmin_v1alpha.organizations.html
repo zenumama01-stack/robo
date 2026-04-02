@@ -1,0 +1,50 @@
+<h1><a href="marketingplatformadmin_v1alpha.html">Google Marketing Platform Admin API</a> . <a href="marketingplatformadmin_v1alpha.organizations.html">organizations</a></h1>
+  <code><a href="marketingplatformadmin_v1alpha.organizations.analyticsAccountLinks.html">analyticsAccountLinks()</a></code>
+<p class="firstline">Returns the analyticsAccountLinks Resource.</p>
+  <code><a href="#findSalesPartnerManagedClients">findSalesPartnerManagedClients(organization, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Returns a list of clients managed by the sales partner organization. User needs to be an OrgAdmin/BillingAdmin on the sales partner organization in order to view the end clients.</p>
+<p class="firstline">Looks up a single organization.</p>
+<p class="firstline">Returns a list of organizations that the user has access to.</p>
+  <code><a href="#reportPropertyUsage">reportPropertyUsage(organization, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Gets the usage and billing data for properties within the organization for the specified month. Per direct client org, user needs to be OrgAdmin/BillingAdmin on the organization in order to view the billing and usage data. Per sales partner client org, user needs to be OrgAdmin/BillingAdmin on the sales partner org in order to view the billing and usage data, or OrgAdmin/BillingAdmin on the sales partner client org in order to view the usage data only.</p>
+    <code class="details" id="findSalesPartnerManagedClients">findSalesPartnerManagedClients(organization, body=None, x__xgafv=None)</code>
+  <pre>Returns a list of clients managed by the sales partner organization. User needs to be an OrgAdmin/BillingAdmin on the sales partner organization in order to view the end clients.
+  organization: string, Required. The name of the sales partner organization. Format: organizations/{org_id} (required)
+{ # Request message for FindSalesPartnerManagedClients RPC.
+  &quot;isActive&quot;: True or False, # Optional. If set, only active and just ended clients will be returned.
+    { # Response message for FindSalesPartnerManagedClients RPC.
+  &quot;clientData&quot;: [ # The clients managed by the sales org.
+    { # Contains the client data.
+      &quot;endDate&quot;: { # Represents a whole or partial calendar date, such as a birthday. The time of day and time zone are either specified elsewhere or are insignificant. The date is relative to the Gregorian Calendar. This can represent one of the following: * A full date, with non-zero year, month, and day values. * A month and day, with a zero year (for example, an anniversary). * A year on its own, with a zero month and a zero day. * A year and month, with a zero day (for example, a credit card expiration date). Related types: * google.type.TimeOfDay * google.type.DateTime * google.protobuf.Timestamp # The end date of the contract between the sales org and the end client.
+      &quot;organization&quot;: { # A resource message representing a Google Marketing Platform organization. # The end client that has/had contract with the requested sales org.
+        &quot;displayName&quot;: &quot;A String&quot;, # The human-readable name for the organization.
+        &quot;name&quot;: &quot;A String&quot;, # Identifier. The resource name of the GMP organization. Format: organizations/{org_id}
+      &quot;startDate&quot;: { # Represents a whole or partial calendar date, such as a birthday. The time of day and time zone are either specified elsewhere or are insignificant. The date is relative to the Gregorian Calendar. This can represent one of the following: * A full date, with non-zero year, month, and day values. * A month and day, with a zero year (for example, an anniversary). * A year on its own, with a zero month and a zero day. * A year and month, with a zero day (for example, a credit card expiration date). Related types: * google.type.TimeOfDay * google.type.DateTime * google.protobuf.Timestamp # The start date of the contract between the sales org and the end client.
+  <pre>Looks up a single organization.
+  name: string, Required. The name of the Organization to retrieve. Format: organizations/{org_id} (required)
+    { # A resource message representing a Google Marketing Platform organization.
+  <pre>Returns a list of organizations that the user has access to.
+  pageSize: integer, Optional. The maximum number of organizations to return in one call. The service may return fewer than this value. If unspecified, at most 50 organizations will be returned. The maximum value is 1000; values above 1000 will be coerced to 1000.
+  pageToken: string, Optional. A page token, received from a previous ListOrganizations call. Provide this to retrieve the subsequent page. When paginating, all other parameters provided to `ListOrganizations` must match the call that provided the page token.
+    { # Response message for ListOrganizations RPC.
+  &quot;organizations&quot;: [ # The Organization resource that the user has access to, which includes the org id and display name.
+    <code class="details" id="reportPropertyUsage">reportPropertyUsage(organization, body=None, x__xgafv=None)</code>
+  <pre>Gets the usage and billing data for properties within the organization for the specified month. Per direct client org, user needs to be OrgAdmin/BillingAdmin on the organization in order to view the billing and usage data. Per sales partner client org, user needs to be OrgAdmin/BillingAdmin on the sales partner org in order to view the billing and usage data, or OrgAdmin/BillingAdmin on the sales partner client org in order to view the usage data only.
+  organization: string, Required. Specifies the organization whose property usage will be listed. Format: organizations/{org_id} (required)
+{ # Request message for ReportPropertyUsage RPC.
+  &quot;month&quot;: &quot;A String&quot;, # Required. The target month to list property usages. Format: YYYY-MM. For example, &quot;2025-05&quot;
+    { # Response message for ReportPropertyUsage RPC.
+  &quot;billInfo&quot;: { # Contains the bill amount. # Bill amount in the specified organization and month. Will be empty if user only has access to usage data.
+    &quot;baseFee&quot;: { # Represents an amount of money with its currency type. # The amount of the monthly base fee.
+    &quot;eventFee&quot;: { # Represents an amount of money with its currency type. # The amount of the event fee.
+    &quot;priceProtectionCredit&quot;: { # Represents an amount of money with its currency type. # The amount of the price protection credit, this is only available for eligible customers.
+    &quot;total&quot;: { # Represents an amount of money with its currency type. # The total amount of the bill.
+  &quot;propertyUsages&quot;: [ # Usage data for all properties in the specified organization and month.
+    { # Contains the count of events received by the property, along with metadata that influences the volume of `billable` events.
+      &quot;accountId&quot;: &quot;A String&quot;, # The ID of the property&#x27;s parent account.
+      &quot;billableEventCount&quot;: &quot;A String&quot;, # The number of events for which the property is billed in the requested month.
+      &quot;displayName&quot;: &quot;A String&quot;, # The display name of the property.
+      &quot;property&quot;: &quot;A String&quot;, # The name of the Google Analytics Admin API property resource. Format: analyticsadmin.googleapis.com/properties/{property_id}
+      &quot;propertyType&quot;: &quot;A String&quot;, # The subtype of the analytics property. This affects the billable event count.
+      &quot;serviceLevel&quot;: &quot;A String&quot;, # The service level of the property.
+      &quot;totalEventCount&quot;: &quot;A String&quot;, # Total event count that the property received during the requested month.

@@ -1,0 +1,116 @@
+<h1><a href="compute_alpha.html">Compute Engine API</a> . <a href="compute_alpha.machineImages.html">machineImages</a></h1>
+  <code><a href="#delete">delete(project, machineImage, requestId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Deletes the specified machine image. Deleting a machine image is permanent</p>
+  <code><a href="#get">get(project, machineImage, x__xgafv=None)</a></code></p>
+<p class="firstline">Returns the specified machine image.</p>
+  <code><a href="#insert">insert(project, body=None, requestId=None, sourceInstance=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Creates a machine image in the specified project using the</p>
+<p class="firstline">Retrieves a list of machine images that are contained within</p>
+<p class="firstline">Sets the labels on a machine image. To learn more about labels, read theLabeling</p>
+    <code class="details" id="delete">delete(project, machineImage, requestId=None, x__xgafv=None)</code>
+  <pre>Deletes the specified machine image. Deleting a machine image is permanent
+and cannot be undone.
+  machineImage: string, The name of the machine image to delete. (required)
+    <code class="details" id="get">get(project, machineImage, x__xgafv=None)</code>
+  <pre>Returns the specified machine image.
+  machineImage: string, The name of the machine image. (required)
+    { # Represents a machine image resource.
+    # A machine image is a Compute Engine resource that stores all the
+    # configuration, metadata, permissions, and data from one or more disks
+    # required to create a Virtual machine (VM) instance. For more information, seeMachine images.
+  &quot;creationTimestamp&quot;: &quot;A String&quot;, # Output only. [Output Only] The creation timestamp for this machine image inRFC3339
+  &quot;guestFlush&quot;: True or False, # [Input Only] Whether to attempt an application consistent machine image by
+  &quot;id&quot;: &quot;A String&quot;, # Output only. [Output Only] A unique identifier for this machine image. The server
+  &quot;instanceProperties&quot;: { # [Output Only] Properties of source instance
+  &quot;kind&quot;: &quot;compute#machineImage&quot;, # Output only. [Output Only] The resource type, which is alwayscompute#machineImage for machine image.
+  &quot;labelFingerprint&quot;: &quot;A String&quot;, # A fingerprint for the labels being applied to this machine image, which is
+  &quot;labels&quot;: { # Labels to apply to this machine image. These can be later modified by
+  &quot;machineImageEncryptionKey&quot;: { # Encrypts the machine image using acustomer-supplied
+      # After you encrypt a machine image using a customer-supplied key, you must
+      # provide the same key if you use the machine image later. For example, you
+      # must provide the encryption key when you create an instance from the
+      # encrypted machine image in a future request.
+      # Customer-supplied encryption keys do not protect access to metadata of the
+      # If you do not provide an encryption key when creating the machine image,
+      # then the machine image will be encrypted using an automatically generated
+      # key and you do not need to provide a key to use the machine image later.
+  &quot;params&quot;: { # Machine Image parameters # Input only. [Input Only] Additional parameters that are passed in the request, but are
+      # not persisted in the resource.
+    &quot;excludedDisks&quot;: [ # Input only. [Input Only] Specifies the list of disk device names that must be
+        # excluded from the new machine image.
+    &quot;includedDisks&quot;: [ # Input only. [Input Only] Specifies the list of disk device names that must be
+        # included with the new machine image.
+    &quot;resourceManagerTags&quot;: { # Input only. Resource manager tags to be bound to the machine image. Tag keys and values
+  &quot;savedDisks&quot;: [ # Output only. An array of Machine Image specific properties for disks attached to the
+      # source instance
+      &quot;architecture&quot;: &quot;A String&quot;, # Output only. [Output Only] The architecture of the attached disk.
+      &quot;kind&quot;: &quot;compute#savedDisk&quot;, # Output only. [Output Only] Type of the resource. Always compute#savedDisk
+          # for attached disks.
+      &quot;sourceDisk&quot;: &quot;A String&quot;, # Output only. Specifies a URL of the disk attached to the source instance.
+      &quot;storageBytes&quot;: &quot;A String&quot;, # Output only. [Output Only] Size of the individual disk snapshot used by this machine
+          # image.
+  &quot;selfLink&quot;: &quot;A String&quot;, # Output only. [Output Only] The URL for this machine image. The server defines this URL.
+  &quot;sourceDiskEncryptionKeys&quot;: [ # [Input Only] Thecustomer-supplied
+      # encryption key of the disks attached to the source instance. Required
+      # if the source disk is protected by a customer-supplied encryption key.
+      &quot;diskEncryptionKey&quot;: { # Thecustomer-supplied
+      &quot;sourceDisk&quot;: &quot;A String&quot;, # URL of the disk attached to the source instance. This can be a full or
+          # valid partial URL. For example, the following are valid values:
+  &quot;sourceInstance&quot;: &quot;A String&quot;, # The source instance used to create the machine image. You can provide this
+      # as a partial or full URL to the resource. For example, the following are
+      # valid values:
+  &quot;sourceInstanceProperties&quot;: { # DEPRECATED: Please use compute#instanceProperties instead. # Output only. [Output Only] DEPRECATED: Please use instance_properties
+      # instead for source instance related properties. New properties will not be
+      # added to this field.
+      # New properties will not be added to this field.
+    &quot;canIpForward&quot;: True or False, # Enables instances created based on this machine image to send packets with
+    &quot;deletionProtection&quot;: True or False, # Whether the instance created from this machine image should be protected
+        # against deletion.
+    &quot;description&quot;: &quot;A String&quot;, # An optional text description for the instances that are created from this
+        # from this machine image.
+      { # DEPRECATED: Please use compute#savedDisk instead.
+          # An instance-attached disk resource.
+        &quot;deviceName&quot;: &quot;A String&quot;, # Specifies the name of the disk attached to the source instance.
+        &quot;diskEncryptionKey&quot;: { # The encryption key for the disk.
+        &quot;diskSizeGb&quot;: &quot;A String&quot;, # The size of the disk in base-2 GB.
+        &quot;diskType&quot;: &quot;A String&quot;, # Output only. [Output Only] URL of the disk type resource. For example:projects/project/zones/zone/diskTypes/pd-standard or
+            # pd-ssd
+        &quot;guestOsFeatures&quot;: [ # A list of features to enable on the guest operating system. Applicable only
+            # for bootable images. Read
+        &quot;index&quot;: 42, # Output only. Specifies zero-based index of the disk that is attached to the source
+            # either SCSI or NVME.
+        &quot;kind&quot;: &quot;compute#savedAttachedDisk&quot;, # Output only. [Output Only] Type of the resource. Alwayscompute#attachedDisk for attached disks.
+        &quot;mode&quot;: &quot;A String&quot;, # The mode in which this disk is attached to the source instance, eitherREAD_WRITE or READ_ONLY.
+        &quot;source&quot;: &quot;A String&quot;, # Specifies a URL of the disk attached to the source instance.
+        &quot;storageBytes&quot;: &quot;A String&quot;, # Output only. [Output Only] A size of the storage used by the disk&#x27;s snapshot by this
+        &quot;type&quot;: &quot;A String&quot;, # Specifies the type of the attached disk, either SCRATCH orPERSISTENT.
+        # created from this machine image.
+    &quot;labels&quot;: { # Labels to apply to instances that are created from this machine image.
+    &quot;machineType&quot;: &quot;A String&quot;, # The machine type to use for instances that are created from this machine
+        # this machine image. These pairs can consist of custom metadata or
+        # predefined keys. SeeProject and
+    &quot;minCpuPlatform&quot;: &quot;A String&quot;, # Minimum cpu/platform to be used by instances created from this machine
+        # image. The instance may be scheduled on the specified or newer
+        # cpu/platform. Applicable values are the friendly names of CPU platforms,
+        # such as minCpuPlatform: &quot;Intel Haswell&quot; orminCpuPlatform: &quot;Intel Sandy Bridge&quot;. For more
+        # this machine image.
+        # service accounts are available to the instances that are created from this
+        # machine image. Use metadata queries to obtain the access tokens for these
+    &quot;tags&quot;: { # A set of instance tags. # A list of tags to apply to the instances that are created from this machine
+        # image. The tags identify valid sources or targets for network firewalls.
+        # The setTags method can modify this list of tags. Each tag within the list
+        # must comply withRFC1035.
+  &quot;status&quot;: &quot;A String&quot;, # Output only. [Output Only] The status of the machine image. One of the following values:INVALID, CREATING, READY,DELETING, and UPLOADING.
+  &quot;storageLocations&quot;: [ # The regional or multi-regional Cloud Storage bucket location where themachine image is
+      # stored.
+  &quot;totalStorageBytes&quot;: &quot;A String&quot;, # Output only. [Output Only] Total size of the storage used by the machine image.
+    <code class="details" id="insert">insert(project, body=None, requestId=None, sourceInstance=None, x__xgafv=None)</code>
+  <pre>Creates a machine image in the specified project using the
+data that is included in the request. If you are creating a new machine
+image to update an existing instance, your new machine image should use the
+  sourceInstance: string, Required. Source instance that is used to create the machine image from.
+  <pre>Retrieves a list of machine images that are contained within
+    { # A list of machine images.
+  &quot;items&quot;: [ # A list of MachineImage resources.
+  &quot;kind&quot;: &quot;compute#machineImageList&quot;, # Output only. [Output Only] The resource type, which is alwayscompute#machineImagesListResponse for machine image lists.
+  <pre>Sets the labels on a machine image. To learn more about labels, read theLabeling

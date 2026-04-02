@@ -1,0 +1,102 @@
+<div class="role-management-container">
+    <div class="action-buttons" role="toolbar" aria-label="Role management actions">
+        aria-label="Refresh role list"
+        class="mj-btn mj-btn-primary mj-btn-icon-mobile"
+        (click)="createNewRole()"
+        aria-label="Add new role"
+        <span class="btn-text">Add Role</span>
+    <div class="mj-grid-4" role="region" aria-label="Role statistics">
+          <i class="fa-solid fa-user-tag"></i>
+          <div class="stat-value" aria-label="Total roles count">{{ stats.totalRoles }}</div>
+          <div class="stat-label">Total Roles</div>
+        <div class="stat-icon stat-icon-system" aria-hidden="true">
+          <div class="stat-value" aria-label="System roles count">{{ stats.systemRoles }}</div>
+          <div class="stat-label">System Roles</div>
+        <div class="stat-icon stat-icon-custom" aria-hidden="true">
+          <div class="stat-value" aria-label="Custom roles count">{{ stats.customRoles }}</div>
+          <div class="stat-label">Custom Roles</div>
+          <div class="stat-value" aria-label="Active roles count">{{ stats.activeRoles }}</div>
+          <div class="stat-label">Active Roles</div>
+    <div class="filters-section" role="search" aria-label="Filter roles">
+              placeholder="Search roles by name or description..."
+              aria-label="Search roles by name or description"
+        <!-- Type Filter (Desktop) -->
+          <label class="mj-filter-label" id="type-filter-label">Type</label>
+          <div class="mj-filter-buttons" role="group" aria-labelledby="type-filter-label">
+              [class.mj-btn-primary]="filters$.value.type === 'all'"
+              (click)="onTypeFilterChange('all')"
+              [attr.aria-pressed]="filters$.value.type === 'all'"
+              [class.mj-btn-primary]="filters$.value.type === 'system'"
+              (click)="onTypeFilterChange('system')"
+              [attr.aria-pressed]="filters$.value.type === 'system'"
+              [class.mj-btn-primary]="filters$.value.type === 'custom'"
+              (click)="onTypeFilterChange('custom')"
+              [attr.aria-pressed]="filters$.value.type === 'custom'"
+        <mj-loading text="Loading roles..." size="medium"></mj-loading>
+          <button class="mj-btn mj-btn-primary" (click)="loadInitialData()" aria-label="Retry loading roles">
+        <div class="roles-list" role="list" aria-label="Roles list">
+          @for (role of filteredRoles; track role.ID) {
+              class="role-card"
+              [class.expanded]="isRoleExpanded(role.ID)"
+              [attr.aria-expanded]="isRoleExpanded(role.ID)"
+                class="role-header"
+                (click)="toggleRoleExpansion(role.ID)"
+                (keydown.enter)="toggleRoleExpansion(role.ID)"
+                (keydown.space)="toggleRoleExpansion(role.ID); $event.preventDefault()"
+                [attr.aria-label]="'Toggle details for ' + role.Name"
+                  <div class="role-icon-wrapper" aria-hidden="true">
+                    <i [class]="'fa-solid ' + getRoleIcon(role)"></i>
+                  <div class="role-details">
+                    <h3 class="role-name">{{ role.Name }}</h3>
+                    <p class="role-description">{{ role.Description || 'No description available' }}</p>
+                <div class="role-meta">
+                  <span class="role-type-badge" [class]="getRoleTypeClass(role)">
+                    {{ getRoleTypeLabel(role) }}
+                  <div class="role-actions" (click)="$event.stopPropagation()">
+                      (click)="editRole(role)"
+                      [attr.aria-label]="'Edit ' + role.Name"
+                      [disabled]="isSystemRole(role)"
+                      (click)="confirmDeleteRole(role)"
+                      [attr.aria-label]="'Delete ' + role.Name"
+              @if (isRoleExpanded(role.ID)) {
+                <div class="role-content">
+                  <div class="role-stats">
+                      <i class="fa-solid fa-users" aria-hidden="true"></i>
+                      <span class="stat-label">Users:</span>
+                      <span class="stat-value">0</span>
+                      <span class="stat-value">{{ role.__mj_CreatedAt | date:'short' }}</span>
+                      <span class="stat-value">{{ role.__mj_UpdatedAt | date:'short' }}</span>
+                  <div class="permissions-preview">
+                      <i class="fa-solid fa-key" aria-hidden="true"></i>
+                    <p class="permissions-note">Full permission management available in the Permissions tab</p>
+          @if (filteredRoles.length === 0) {
+              <i class="fa-solid fa-user-tag empty-icon" aria-hidden="true"></i>
+              <p class="empty-text">No roles found</p>
+              <p class="empty-subtext">Try adjusting your filters or create a new role</p>
+  <!-- Role Create/Edit Dialog -->
+  <mj-role-dialog
+    [data]="roleDialogData"
+    [visible]="showRoleDialog"
+    (result)="onRoleDialogResult($event)">
+  </mj-role-dialog>
+  @if (showDeleteConfirm && selectedRole) {
+      class="modal-backdrop"
+        aria-describedby="delete-dialog-desc"
+        <div class="modal-body" id="delete-dialog-desc">
+          <p>Are you sure you want to delete the role <strong>{{ selectedRole.Name }}</strong>?</p>
+            This will affect all users assigned to this role.
+          <button class="mj-btn mj-btn-danger" (click)="deleteRole()" [disabled]="isLoading">
+              Delete Role
+              <h4 class="filter-group-label">Type</h4>
+                  [class.selected]="filters$.value.type === 'all'"
+                    name="type"
+                    [checked]="filters$.value.type === 'all'"
+                    (change)="onTypeFilterChange('all')"
+                  [class.selected]="filters$.value.type === 'system'"
+                    [checked]="filters$.value.type === 'system'"
+                    (change)="onTypeFilterChange('system')"
+                  <span class="filter-option-label">System Roles</span>
+                  [class.selected]="filters$.value.type === 'custom'"
+                    [checked]="filters$.value.type === 'custom'"
+                    (change)="onTypeFilterChange('custom')"
+                  <span class="filter-option-label">Custom Roles</span>

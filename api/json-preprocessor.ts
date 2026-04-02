@@ -1,0 +1,153 @@
+import { METADATA_KEYWORDS, extractKeywordValue } from '../constants/metadata-keywords';
+ * Include directive configuration
+export interface IncludeDirective {
+  file: string;
+  mode?: 'spread' | 'element';
+ * Preprocesses JSON files to handle @include directives
+ * Supports including external JSON files with spreading or element insertion
+export class JsonPreprocessor {
+  private visitedPaths: Set<string> = new Set();
+   * Process a JSON file and resolve all @include directives
+   * @param filePath - Path to the JSON file to process
+   * @returns The processed JSON data with all includes resolved
+  async processFile(filePath: string): Promise<any> {
+    this.visitedPaths.clear();
+    const fileContent = await fs.readJson(filePath);
+    return this.processIncludesInternal(fileContent, filePath);
+   * Recursively process @include directives in JSON data
+   * @param data - The JSON data to process
+   * @param currentFilePath - Path of the current file for resolving relative paths
+   * @returns The processed data with includes resolved
+  private async processIncludesInternal(data: any, currentFilePath: string): Promise<any> {
+    // Process based on data type
+      return this.processArray(data, currentFilePath);
+    } else if (data && typeof data === 'object') {
+      return this.processObject(data, currentFilePath);
+   * Process an array, handling @include directives
+   * @param arr - The array to process
+   * @param currentFilePath - Current file path for resolving relative paths
+   * @returns Processed array with includes resolved
+  private async processArray(arr: any[], currentFilePath: string): Promise<any[]> {
+    for (const item of arr) {
+      // Check for string-based include in array (default element mode)
+      const includePrefix = `${METADATA_KEYWORDS.INCLUDE}:`;
+      if (typeof item === 'string' && item.startsWith(includePrefix)) {
+        // Extract path directly since @include: format isn't handled by extractKeywordValue
+        const includePath = item.substring(includePrefix.length).trim();
+        const resolvedPath = this.resolvePath(includePath, currentFilePath);
+        const includedContent = await this.loadAndProcessInclude(resolvedPath);
+        // If included content is an array, spread its elements
+        if (Array.isArray(includedContent)) {
+          result.push(...includedContent);
+          // Otherwise add as single element
+          result.push(includedContent);
+      } else if (item && typeof item === 'object') {
+        // Process nested objects/arrays
+        result.push(await this.processIncludesInternal(item, currentFilePath));
+        result.push(item);
+   * Process an object, handling @include directives
+   * @param obj - The object to process
+   * @returns Processed object with includes resolved
+  private async processObject(obj: any, currentFilePath: string): Promise<any> {
+    const includeKeys: string[] = [];
+    const includeDirectives: Map<string, IncludeDirective> = new Map();
+    // First pass: identify all @include keys (both @include and @include.*)
+      if (key === METADATA_KEYWORDS.INCLUDE || key.startsWith(`${METADATA_KEYWORDS.INCLUDE}.`)) {
+        includeKeys.push(key);
+        const includeValue = obj[key];
+        if (typeof includeValue === 'string') {
+          // Simple string include - default to spread mode in objects
+          includeDirectives.set(key, { file: includeValue, mode: 'spread' });
+        } else if (includeValue && typeof includeValue === 'object') {
+          // Explicit include configuration
+          const directive = includeValue as IncludeDirective;
+          // Default to spread mode if not specified
+          if (!directive.mode) {
+            directive.mode = 'spread';
+          includeDirectives.set(key, directive);
+    // Second pass: process all properties in order, spreading includes when encountered
+        // Process this include directive
+        const includeDirective = includeDirectives.get(key);
+        if (includeDirective) {
+          const resolvedPath = this.resolvePath(includeDirective.file, currentFilePath);
+          if (includeDirective.mode === 'spread') {
+            // Spread mode: merge included object properties at this position
+            if (includedContent && typeof includedContent === 'object' && !Array.isArray(includedContent)) {
+              Object.assign(result, includedContent);
+              throw new Error(`Cannot spread non-object content from ${includeDirective.file}. Use mode: "element" for non-object includes.`);
+          } else if (includeDirective.mode === 'element') {
+            // Element mode: directly insert the content
+            // For dot notation includes, we can't replace the whole object,
+            // so we'll add it as a property instead (though this is unusual)
+            if (key.includes('.')) {
+              // Extract the part after the dot to use as property name
+              const propName = key.split('.').slice(1).join('.');
+              result[propName] = includedContent;
+              // For plain @include with element mode, replace the entire object
+              return includedContent;
+        // Regular property - process recursively and handle @file references
+        if (typeof value === 'string' && value.startsWith(METADATA_KEYWORDS.FILE)) {
+          // Process @file reference
+          const filePath = extractKeywordValue(value) as string;
+          const resolvedPath = this.resolvePath(filePath, currentFilePath);
+          result[key] = await this.loadFileContent(resolvedPath);
+          result[key] = await this.processIncludesInternal(value, currentFilePath);
+   * Load and process an included file
+   * @param filePath - Path to the file to include
+   * @returns The processed content of the included file
+  private async loadAndProcessInclude(filePath: string): Promise<any> {
+    // Check if this file is already being processed (circular reference)
+    if (this.visitedPaths.has(absolutePath)) {
+      throw new Error(`Circular reference detected: ${absolutePath} is already being processed`);
+    if (!await fs.pathExists(filePath)) {
+      // Log error details before throwing
+      console.error(`\n❌ INCLUDE FILE NOT FOUND`);
+      console.error(`   Referenced file: ${filePath}`);
+      console.error(`   Reference type: @include`);
+      console.error(`   Tip: Check that the file path is correct relative to the including file\n`);
+      throw new Error(`Include file not found: ${filePath}`);
+    // Add to visited paths before processing
+    this.visitedPaths.add(absolutePath);
+      // Process the content (visited tracking is handled in this method)
+      return this.processIncludesInternal(content, filePath);
+      // Remove from visited paths after processing
+      this.visitedPaths.delete(absolutePath);
+   * Load file content and process it if it's JSON with @include directives
+   * @param filePath - Path to the file to load
+   * @returns The file content (processed if JSON with @includes)
+  private async loadFileContent(filePath: string): Promise<any> {
+      console.error(`\n❌ FILE NOT FOUND`);
+      console.error(`   Reference type: @file:`);
+      console.error(`   Tip: Check that the file path is correct and the file exists\n`);
+      throw new Error(`File not found: ${filePath} (referenced via @file:)`);
+      if (filePath.endsWith('.json')) {
+        // For JSON files, load and check for @include directives
+        const jsonContent = await fs.readJson(filePath);
+        const jsonString = JSON.stringify(jsonContent);
+        const hasIncludes = jsonString.includes('"@include"') || jsonString.includes('"@include.');
+        if (hasIncludes) {
+          // Process @include directives in the JSON file
+          return await this.processIncludesInternal(jsonContent, filePath);
+          // Return the JSON content as-is
+          return jsonContent;
+        // For non-JSON files, return the text content
+        return await fs.readFile(filePath, 'utf-8');
+      // Log error details before re-throwing
+      console.error(`\n❌ FILE LOAD ERROR`);
+      console.error(`   Failed to load file: ${filePath}`);
+      console.error(`   Error: ${error}`);
+      console.error(`   Tip: Check file permissions and that the file is not corrupted\n`);
+      // Re-throw with enhanced context
+      throw new Error(`Failed to load file content from ${filePath}: ${error}`);
+   * Resolve a potentially relative path to an absolute path
+   * @param includePath - The path specified in the @include
+   * @param currentFilePath - The current file's path
+   * @returns Absolute path to the included file
+  private resolvePath(includePath: string, currentFilePath: string): string {
+    const currentDir = path.dirname(currentFilePath);
+    return path.resolve(currentDir, includePath);
+   * Process JSON data that's already loaded (for integration with existing code)
+   * @param filePath - The file path (for resolving relative includes)
+   * @returns Processed data with includes resolved
+  async processJsonData(data: any, filePath: string): Promise<any> {
+    return this.processIncludesInternal(data, filePath);

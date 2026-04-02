@@ -1,0 +1,32 @@
+<h1><a href="merchantapi_lfp_v1.html">Merchant API</a> . <a href="merchantapi_lfp_v1.accounts.html">accounts</a> . <a href="merchantapi_lfp_v1.accounts.lfpStores.html">lfpStores</a></h1>
+<p class="firstline">Deletes a store for a target merchant.</p>
+<p class="firstline">Retrieves information about a store.</p>
+<p class="firstline">Inserts a store for the target merchant. If the store with the same store code already exists, it will be replaced.</p>
+  <code><a href="#list">list(parent, pageSize=None, pageToken=None, targetAccount=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Lists the stores of the target merchant, specified by the filter in `ListLfpStoresRequest`.</p>
+  <pre>Deletes a store for a target merchant.
+  name: string, Required. The name of the store to delete for the target merchant account. Format: `accounts/{account}/lfpStores/{target_merchant}~{store_code}` (required)
+  <pre>Retrieves information about a store.
+  name: string, Required. The name of the store to retrieve. Format: `accounts/{account}/lfpStores/{target_merchant}~{store_code}` (required)
+    { # A store for the merchant. This will be used to match to a store under the Google Business Profile of the target merchant. If a matching store can&#x27;t be found, the inventories or sales submitted with the store code will not be used.
+  &quot;gcidCategory&quot;: [ # Optional. [Google My Business category id](https://support.google.com/business/answer/7249669).
+  &quot;matchingState&quot;: &quot;A String&quot;, # Optional. Output only. The state of matching to a Google Business Profile. See matchingStateHint for further details if no match is found.
+  &quot;matchingStateHint&quot;: &quot;A String&quot;, # Optional. Output only. The hint of why the matching has failed. This is only set when matchingState=`STORE_MATCHING_STATE_FAILED`. Possible values are: - &quot;`linked-store-not-found`&quot;: There aren&#x27;t any Google Business Profile stores available for matching. - &quot;`store-match-not-found`&quot;: The provided `LfpStore` couldn&#x27;t be matched to any of the connected Google Business Profile stores. Merchant Center account is connected correctly and stores are available on Google Business Profile, but the `LfpStore` location address does not match with Google Business Profile stores&#x27; addresses. Update the `LfpStore` address or Google Business Profile store address to match correctly. - &quot;`store-match-unverified`&quot;: The provided `LfpStore` couldn&#x27;t be matched to any of the connected Google Business Profile stores, as the matched Google Business Profile store is unverified. Go through the Google Business Profile verification process to match correctly.
+  &quot;name&quot;: &quot;A String&quot;, # Output only. Identifier. The name of the `LfpStore` resource. Format: `accounts/{account}/lfpStores/{target_merchant}~{store_code}`
+  &quot;phoneNumber&quot;: &quot;A String&quot;, # Optional. The store phone number in [E.164](https://en.wikipedia.org/wiki/E.164) format. Example: `+15556767888`
+  &quot;placeId&quot;: &quot;A String&quot;, # Optional. The [Google Place Id](https://developers.google.com/maps/documentation/places/web-service/place-id#id-overview) of the store location.
+  &quot;storeAddress&quot;: &quot;A String&quot;, # Required. The street address of the store. Example: 1600 Amphitheatre Pkwy, Mountain View, CA 94043, USA.
+  &quot;storeCode&quot;: &quot;A String&quot;, # Required. Immutable. A store identifier that is unique for the target merchant.
+  &quot;storeName&quot;: &quot;A String&quot;, # Optional. The merchant or store name.
+  &quot;targetAccount&quot;: &quot;A String&quot;, # Required. The Merchant Center id of the merchant to submit the store for.
+  &quot;websiteUri&quot;: &quot;A String&quot;, # Optional. The website URL for the store or merchant.
+  <pre>Inserts a store for the target merchant. If the store with the same store code already exists, it will be replaced.
+  parent: string, Required. The LFP provider account Format: `accounts/{account}` (required)
+    <code class="details" id="list">list(parent, pageSize=None, pageToken=None, targetAccount=None, x__xgafv=None)</code>
+  <pre>Lists the stores of the target merchant, specified by the filter in `ListLfpStoresRequest`.
+  parent: string, Required. The LFP partner. Format: `accounts/{account}` (required)
+  pageSize: integer, Optional. The maximum number of `LfpStore` resources for the given account to return. The service returns fewer than this value if the number of stores for the given account is less than the `pageSize`. The default value is 250. The maximum value is 1000; If a value higher than the maximum is specified, then the `pageSize` will default to the maximum.
+  pageToken: string, Optional. A page token, received from a previous `ListLfpStoresRequest` call. Provide the page token to retrieve the subsequent page. When paginating, all other parameters provided to `ListLfpStoresRequest` must match the call that provided the page token. The token returned as nextPageToken in the response to the previous request.
+  targetAccount: string, Required. The Merchant Center id of the merchant to list stores for.
+    { # Response message for the ListLfpStores method.
+  &quot;lfpStores&quot;: [ # The stores from the specified merchant.

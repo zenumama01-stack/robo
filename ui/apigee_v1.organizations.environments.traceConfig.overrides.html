@@ -1,0 +1,23 @@
+<h1><a href="apigee_v1.html">Apigee API</a> . <a href="apigee_v1.organizations.html">organizations</a> . <a href="apigee_v1.organizations.environments.html">environments</a> . <a href="apigee_v1.organizations.environments.traceConfig.html">traceConfig</a> . <a href="apigee_v1.organizations.environments.traceConfig.overrides.html">overrides</a></h1>
+<p class="firstline">Creates a trace configuration override. The response contains a system-generated UUID, that can be used to view, update, or delete the configuration override. Use the List API to view the existing trace configuration overrides.</p>
+<p class="firstline">Deletes a distributed trace configuration override.</p>
+<p class="firstline">Gets a trace configuration override.</p>
+<p class="firstline">Lists all of the distributed trace configuration overrides in an environment.</p>
+<p class="firstline">Updates a distributed trace configuration override. Note that the repeated fields have replace semantics when included in the field mask and that they will be overwritten by the value of the fields in the request body.</p>
+  <pre>Creates a trace configuration override. The response contains a system-generated UUID, that can be used to view, update, or delete the configuration override. Use the List API to view the existing trace configuration overrides.
+  parent: string, Required. Parent resource of the trace configuration override. Use the following structure in your request. &quot;organizations/*/environments/*/traceConfig&quot;. (required)
+{ # A representation of a configuration override.
+  &quot;apiProxy&quot;: &quot;A String&quot;, # ID of the API proxy that will have its trace configuration overridden.
+  &quot;name&quot;: &quot;A String&quot;, # ID of the trace configuration override specified as a system-generated UUID.
+  &quot;samplingConfig&quot;: { # TraceSamplingConfig represents the detail settings of distributed tracing. Only the fields that are defined in the distributed trace configuration can be overridden using the distribute trace configuration override APIs. # Trace configuration to override.
+  <pre>Deletes a distributed trace configuration override.
+  name: string, Required. Name of the trace configuration override. Use the following structure in your request: &quot;organizations/*/environments/*/traceConfig/overrides/*&quot;. (required)
+  <pre>Gets a trace configuration override.
+  <pre>Lists all of the distributed trace configuration overrides in an environment.
+  parent: string, Required. Parent resource of the trace configuration override. Use the following structure in your request: &quot;organizations/*/environments/*/traceConfig&quot;. (required)
+  pageSize: integer, Maximum number of trace configuration overrides to return. If not specified, the maximum number returned is 25. The maximum number cannot exceed 100.
+  pageToken: string, A page token, returned from a previous `ListTraceConfigOverrides` call. Token value that can be used to retrieve the subsequent page. When paginating, all other parameters provided to `ListTraceConfigOverrides` must match those specified in the call to obtain the page token.
+    { # Response for ListTraceConfigOverrides.
+  &quot;nextPageToken&quot;: &quot;A String&quot;, # Token value that can be passed as `page_token` to retrieve the next page of content.
+  &quot;traceConfigOverrides&quot;: [ # List all trace configuration overrides in an environment.
+  <pre>Updates a distributed trace configuration override. Note that the repeated fields have replace semantics when included in the field mask and that they will be overwritten by the value of the fields in the request body.

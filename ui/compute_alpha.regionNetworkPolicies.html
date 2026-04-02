@@ -1,0 +1,97 @@
+<h1><a href="compute_alpha.html">Compute Engine API</a> . <a href="compute_alpha.regionNetworkPolicies.html">regionNetworkPolicies</a></h1>
+  <code><a href="#addAssociation">addAssociation(project, region, networkPolicy, body=None, requestId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Inserts an association for the specified network policy.</p>
+  <code><a href="#addTrafficClassificationRule">addTrafficClassificationRule(project, region, networkPolicy, body=None, requestId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Inserts a rule into a network policy.</p>
+<p class="firstline">Retrieves an aggregated list of network policies.</p>
+  <code><a href="#delete">delete(project, region, networkPolicy, requestId=None, x__xgafv=None)</a></code></p>
+  <code><a href="#get">get(project, region, networkPolicy, x__xgafv=None)</a></code></p>
+<p class="firstline">Returns the specified network policy.</p>
+  <code><a href="#getAssociation">getAssociation(project, region, networkPolicy, name=None, x__xgafv=None)</a></code></p>
+  <code><a href="#getTrafficClassificationRule">getTrafficClassificationRule(project, region, networkPolicy, priority=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Lists all the policies that have been configured for the specified project</p>
+  <code><a href="#patch">patch(project, region, networkPolicy, body=None, requestId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Patches the specified policy with the data included in the</p>
+  <code><a href="#patchTrafficClassificationRule">patchTrafficClassificationRule(project, region, networkPolicy, body=None, priority=None, requestId=None, x__xgafv=None)</a></code></p>
+  <code><a href="#removeAssociation">removeAssociation(project, region, networkPolicy, name=None, requestId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Removes an association for the specified network policy.</p>
+  <code><a href="#removeTrafficClassificationRule">removeTrafficClassificationRule(project, region, networkPolicy, priority=None, requestId=None, x__xgafv=None)</a></code></p>
+    <code class="details" id="addAssociation">addAssociation(project, region, networkPolicy, body=None, requestId=None, x__xgafv=None)</code>
+  <pre>Inserts an association for the specified network policy.
+  networkPolicy: string, Name of the network policy resource to update. (required)
+  &quot;attachmentTarget&quot;: &quot;A String&quot;, # The target that the network policy is attached to.
+    <code class="details" id="addTrafficClassificationRule">addTrafficClassificationRule(project, region, networkPolicy, body=None, requestId=None, x__xgafv=None)</code>
+  <pre>Inserts a rule into a network policy.
+{ # Represents a traffic classification rule that describes one or more match
+    # conditions along with the action to be taken when traffic matches this
+    # condition.
+  &quot;action&quot;: { # The Action to perform when the client connection triggers the rule.
+    &quot;dscpMode&quot;: &quot;A String&quot;, # DSCP mode. When set to AUTO, the DSCP value will be picked
+        # automatically based on selected trafficClass. Otherwise,dscpValue needs to be explicitly specified.
+    &quot;dscpValue&quot;: 42, # Custom DSCP value from 0-63 range.
+    &quot;trafficClass&quot;: &quot;A String&quot;, # The traffic class that should be applied to the matching packet.
+    &quot;type&quot;: &quot;A String&quot;, # Always &quot;apply_traffic_classification&quot; for traffic classification rules.
+  &quot;disabled&quot;: True or False, # Denotes whether the network policy rule is disabled. When set to true,
+      # the network policy rule is not enforced and traffic behaves as if it did
+      # not exist. If this is unspecified, the network policy rule will be
+  &quot;kind&quot;: &quot;compute#networkPolicyTrafficClassificationRule&quot;, # Output only. [Output only] Type of the resource. Alwayscompute#networkPolicyTrafficClassificationRule for network
+      # policy traffic classification rules
+  &quot;match&quot;: { # Represents a match condition that incoming traffic is evaluated against. # A match condition that outgoing traffic is evaluated against.
+            # required when creating a traffic classification rule. This value can
+            # either be one of the following well known protocol strings
+            # (tcp, udp, icmp,esp, ah, ipip,sctp), or the IP protocol number.
+            # only applicable for UDP, TCP or SCTP protocol. Each entry must be
+            # either an integer or a range. If not specified, this rule applies to
+      # must be a positive value between 1 and 2147482647.
+      # The priority values from 2147482648 to 2147483647 (1000) are reserved for
+      # system default network policy rules. Rules are evaluated from highest to
+      # lowest priority where 1 is the highest priority and 2147483647 is the
+      # lowest priority.
+  &quot;ruleTupleCount&quot;: 42, # Output only. [Output Only] Calculation of the complexity of a single network policy
+  &quot;targetSecureTags&quot;: [ # A list of secure tags that controls which instances the traffic
+      # classification rule applies to. If targetSecureTag are
+      # specified, then the traffic classification rule applies only to instances
+      # in the VPC network that have one of those EFFECTIVE secure tags, if all
+      # the targetSecureTag are in INEFFECTIVE state, then this rule
+      # will be ignored. targetSecureTag may not be set at the same
+      # time as targetServiceAccounts. If neithertargetServiceAccounts nor targetSecureTag are
+      # specified, the traffic classification rule applies to all instances on
+      # the specified network. Maximum number of target label tags allowed is
+      # 256.
+  <pre>Retrieves an aggregated list of network policies.
+  &quot;items&quot;: { # A list of NetworkPoliciesScopedList resources.
+      &quot;networkPolicies&quot;: [ # A list of network policies contained in this scope.
+        { # Represents a Network Policy resource.
+          &quot;associations&quot;: [ # Output only. [Output Only] A list of associations that belong to this network policy.
+          &quot;kind&quot;: &quot;compute#networkPolicy&quot;, # Output only. [Output only] Type of the resource. Alwayscompute#networkPolicy for network policies
+          &quot;region&quot;: &quot;A String&quot;, # Output only. [Output Only] URL of the region where the regional network policy resides.
+          &quot;ruleTupleCount&quot;: 42, # Output only. [Output Only] Total count of all network policy rule tuples. A network
+          &quot;trafficClassificationRules&quot;: [ # Output only. [Output Only] A list of traffic classification rules that belong to this
+              # policy.
+      &quot;warning&quot;: { # Informational warning which replaces the list of network policies when
+  &quot;kind&quot;: &quot;compute#networkPolicyAggregatedList&quot;, # Output only. [Output Only] Type of resource. Alwayscompute#networkPolicyAggregatedList for lists of
+      # network policies.
+    <code class="details" id="delete">delete(project, region, networkPolicy, requestId=None, x__xgafv=None)</code>
+  networkPolicy: string, Name of the network policy resource to delete. (required)
+    <code class="details" id="get">get(project, region, networkPolicy, x__xgafv=None)</code>
+  <pre>Returns the specified network policy.
+  networkPolicy: string, Name of the network policy resource to return. (required)
+    <code class="details" id="getAssociation">getAssociation(project, region, networkPolicy, name=None, x__xgafv=None)</code>
+  networkPolicy: string, Name of the network policy to which the queried association belongs. (required)
+  name: string, The name of the association to get from the network policy.
+    <code class="details" id="getTrafficClassificationRule">getTrafficClassificationRule(project, region, networkPolicy, priority=None, x__xgafv=None)</code>
+  networkPolicy: string, Name of the network policy to which the queried rule belongs. (required)
+  priority: integer, The priority of the rule to get from the network policy.
+  <pre>Lists all the policies that have been configured for the specified project
+in the given region.
+  &quot;items&quot;: [ # A list of NetworkPolicy resources.
+  &quot;kind&quot;: &quot;compute#networkPolicyList&quot;, # Output only. [Output Only] Type of resource. Alwayscompute#networkPolicyList for lists of network policies.
+    <code class="details" id="patch">patch(project, region, networkPolicy, body=None, requestId=None, x__xgafv=None)</code>
+  <pre>Patches the specified policy with the data included in the
+    <code class="details" id="patchTrafficClassificationRule">patchTrafficClassificationRule(project, region, networkPolicy, body=None, priority=None, requestId=None, x__xgafv=None)</code>
+  priority: integer, The priority of the traffic classification rule to patch. Only rules with
+a priority value between 1 and 2147482647 (inclusive) can be patched.
+    <code class="details" id="removeAssociation">removeAssociation(project, region, networkPolicy, name=None, requestId=None, x__xgafv=None)</code>
+  <pre>Removes an association for the specified network policy.
+    <code class="details" id="removeTrafficClassificationRule">removeTrafficClassificationRule(project, region, networkPolicy, priority=None, requestId=None, x__xgafv=None)</code>
+  priority: integer, The priority of the rule to remove from the network policy.

@@ -1,0 +1,92 @@
+<h1><a href="integrations_v1.html">Application Integration API</a> . <a href="integrations_v1.projects.html">projects</a> . <a href="integrations_v1.projects.locations.html">locations</a> . <a href="integrations_v1.projects.locations.integrations.html">integrations</a> . <a href="integrations_v1.projects.locations.integrations.versions.html">versions</a> . <a href="integrations_v1.projects.locations.integrations.versions.testCases.html">testCases</a></h1>
+<p class="firstline">Creates a new test case</p>
+<p class="firstline">Deletes a test case</p>
+  <code><a href="#download">download(name, fileFormat=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Downloads a test case. Retrieves the `TestCase` for a given `test_case_id` and returns the response as a string.</p>
+  <code><a href="#execute">execute(parent, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Executes all test cases in an integration version.</p>
+  <code><a href="#executeTest">executeTest(testCaseName, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Executes functional test</p>
+<p class="firstline">Get a test case</p>
+<p class="firstline">Lists all the test cases that satisfy the filters.</p>
+<p class="firstline">Updates a test case</p>
+  <code><a href="#takeoverEditLock">takeoverEditLock(name, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Clear the lock fields and assign them to current user</p>
+<p class="firstline">Uploads a test case. The content can be a previously downloaded test case. Performs the same function as CreateTestCase, but accepts input in a string format, which holds the complete representation of the TestCase content.</p>
+  <pre>Creates a new test case
+  parent: string, Required. The parent resource where this test case will be created. Format: projects/{project}/locations/{location}/integrations/{integration}/versions/{integration_version} (required)
+{ # Defines the functional test case for Application Integration. Next available id: 15
+  &quot;creatorEmail&quot;: &quot;A String&quot;, # Optional. The creator&#x27;s email address. Generated based on the End User Credentials/LOAS role of the user making the call.
+  &quot;databasePersistencePolicy&quot;: &quot;A String&quot;, # Optional. Various policies for how to persist the test execution info including execution info, execution export info, execution metadata index and execution param index..
+  &quot;description&quot;: &quot;A String&quot;, # Optional. Description of the test case.
+  &quot;displayName&quot;: &quot;A String&quot;, # Required. The display name of test case.
+  &quot;lockHolderEmail&quot;: &quot;A String&quot;, # Optional. The edit lock holder&#x27;s email address. Generated based on the End User Credentials/LOAS role of the user making the call.
+  &quot;testInputParameters&quot;: [ # Optional. Parameters that are expected to be passed to the test case when the test case is triggered. This gives the user the ability to provide default values. This should include all the output variables of the trigger as input variables.
+  &quot;testTaskConfigs&quot;: [ # Optional. However, the test case doesn&#x27;t mock or assert anything without test_task_configs.
+    { # The task mock configuration details and assertions for functional tests. Next available id: 6
+      &quot;assertions&quot;: [ # Optional. List of conditions or expressions which should be evaluated to true unless there is a bug/problem in the integration. These are evaluated one the task execution is completed as per the mock strategy in test case
+        { # An assertion which will check for a condition over task execution status or an expression for task output variables
+          &quot;assertionStrategy&quot;: &quot;A String&quot;, # Optional. The type of assertion to perform.
+          &quot;condition&quot;: &quot;A String&quot;, # Optional. Standard filter expression for ASSERT_CONDITION to succeed
+          &quot;parameter&quot;: { # This message is used for processing and persisting (when applicable) key value pair parameters for each event in the event bus. Next available id: 4 # Optional. Key-value pair for ASSERT_EQUALS, ASSERT_NOT_EQUALS, ASSERT_CONTAINS to succeed
+          &quot;retryCount&quot;: 42, # Number of times given task should be retried in case of ASSERT_FAILED_EXECUTION
+      &quot;mockConfig&quot;: { # The configuration for mocking of a task during test execution Next available id: 4 # Optional. Defines how to mock the given task during test execution
+        &quot;failedExecutions&quot;: &quot;A String&quot;, # Optional. Number of times the given task should fail for failure mock strategy
+        &quot;mockStrategy&quot;: &quot;A String&quot;, # Mockstrategy defines how the particular task should be mocked during test execution
+        &quot;parameters&quot;: [ # Optional. List of key-value pairs for specific mock strategy
+          { # This message is used for processing and persisting (when applicable) key value pair parameters for each event in the event bus. Next available id: 4
+      &quot;task&quot;: &quot;A String&quot;, # Required. This defines in the test case, the task name in integration which will be mocked by this test task config
+      &quot;taskConfig&quot;: { # The task configuration details. This is not the implementation of Task. There might be multiple TaskConfigs for the same Task. # Optional. Auto-generated.
+      &quot;taskNumber&quot;: &quot;A String&quot;, # Required. This defines in the test case, the task in integration which will be mocked by this test task config
+  &quot;triggerConfig&quot;: { # Configuration detail of a trigger. # Optional. Auto-generated.
+  &quot;triggerId&quot;: &quot;A String&quot;, # Required. This defines the trigger ID in workflow which is considered to be executed as starting point of the test case
+  &quot;updateTime&quot;: &quot;A String&quot;, # Auto-generated.
+  testCaseId: string, Required. Required
+  <pre>Deletes a test case
+  name: string, Required. ID for the test case to be deleted (required)
+    <code class="details" id="download">download(name, fileFormat=None, x__xgafv=None)</code>
+  <pre>Downloads a test case. Retrieves the `TestCase` for a given `test_case_id` and returns the response as a string.
+  name: string, Required. The test case to download. Format: projects/{project}/locations/{location}/integrations/{integration}/versions/{integration_version}/testCases/{test_case_id} (required)
+    { # Response for DownloadTestCase.
+  &quot;content&quot;: &quot;A String&quot;, # String representation of the test case.
+    <code class="details" id="execute">execute(parent, body=None, x__xgafv=None)</code>
+  <pre>Executes all test cases in an integration version.
+  parent: string, Required. The parent resource whose test cases are executed. Format: projects/{project}/locations/{location}/integrations/{integration}/versions/{integration_version} (required)
+{ # Request for ExecuteTestCases.
+    { # Response for ExecuteTestCases.
+  &quot;executeTestCaseResponses&quot;: [ # Results of each execution of test cases in an integration version.
+    { # The response for executing a functional test.
+      &quot;assertionResults&quot;: [ # Results of each assertions ran during execution of test case.
+        { # The result of an assertion.
+          &quot;assertion&quot;: { # An assertion which will check for a condition over task execution status or an expression for task output variables # Assertion that was run.
+          &quot;failureMessage&quot;: &quot;A String&quot;, # Details of the assertion failure
+          &quot;status&quot;: &quot;A String&quot;, # Status of assertion to signify if the assertion succeeded or failed
+          &quot;taskName&quot;: &quot;A String&quot;, # Task name of task where the assertion was run.
+          &quot;taskNumber&quot;: &quot;A String&quot;, # Task number of task where the assertion was run.
+      &quot;testExecutionState&quot;: &quot;A String&quot;, # State of the test case execution
+    <code class="details" id="executeTest">executeTest(testCaseName, body=None, x__xgafv=None)</code>
+  <pre>Executes functional test
+  testCaseName: string, Required. Test case resource name (required)
+{ # The request for executing a functional test.
+  &quot;inputParameters&quot;: { # Optional. Input parameters used by test case execution.
+  <pre>Get a test case
+  name: string, Required. The ID of the test case to retrieve (required)
+  <pre>Lists all the test cases that satisfy the filters.
+  parent: string, Required. The parent resource where this TestCase was created. (required)
+  orderBy: string, Optional. The results would be returned in order specified here. Currently supported sort keys are: Descending sort order for &quot;last_modified_time&quot;, &quot;created_time&quot;. Ascending sort order for &quot;name&quot;.
+  pageSize: integer, Optional. The maximum number of test cases to return. The service may return fewer than this value. If unspecified, at most 100 test cases will be returned.
+  readMask: string, Optional. The mask which specifies fields that need to be returned in the TestCases&#x27;s response.
+    { # Response for ListTestCases
+  &quot;testCases&quot;: [ # The test cases corresponding to the specified filter
+  <pre>Updates a test case
+  updateMask: string, Optional. Field mask specifying the fields in the above integration that have been modified and need to be updated.
+    <code class="details" id="takeoverEditLock">takeoverEditLock(name, body=None, x__xgafv=None)</code>
+  <pre>Clear the lock fields and assign them to current user
+  name: string, Required. The ID of test case to takeover edit lock. Format: projects/{project}/locations/{location}/integrations/{integration}/versions/{integration_version}/testCases/{test_case_id} (required)
+{ # Request for TakeoverTestCaseEditLock.
+  <pre>Uploads a test case. The content can be a previously downloaded test case. Performs the same function as CreateTestCase, but accepts input in a string format, which holds the complete representation of the TestCase content.
+  parent: string, Required. The test case to upload. Format: projects/{project}/locations/{location}/integrations/{integration}/versions/{integration_version} (required)
+{ # Request for UploadTestCase.
+  &quot;content&quot;: &quot;A String&quot;, # The textproto of the test case.
+    { # Response for UploadTestCase.
+  &quot;testCase&quot;: { # Defines the functional test case for Application Integration. Next available id: 15 # The uploaded TestCase

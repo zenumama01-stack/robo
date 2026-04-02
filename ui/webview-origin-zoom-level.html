@@ -1,0 +1,7 @@
+  const view2 = document.createElement('webview')
+    view2.src = "app://host1"
+    view2.partition = "webview-temp"
+    document.body.appendChild(view2)
+  view2.addEventListener('dom-ready', () => {
+    const zoomLevel = view2.getZoomLevel()
+    ipcRenderer.send('webview-origin-zoom-level', zoomLevel)

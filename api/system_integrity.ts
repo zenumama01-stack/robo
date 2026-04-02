@@ -1,0 +1,79 @@
+import { configInfo, mj_core_schema } from "../Config/config";
+export type IntegrityCheckResult = {
+export type RunIntegrityCheck = {
+    Enabled: boolean;
+    Run: (pool: sql.ConnectionPool) => Promise<IntegrityCheckResult>;
+ * This class has methods that can check various aspects of a MemberJunction installation's integrity. Code Gen will
+ * run the various integrity checks based on configuration options that can be set in the master configuration file.
+export class SystemIntegrityBase {
+    private static _integrityChecks: RunIntegrityCheck[] = [
+            Name: 'CheckEntityFieldSequences',
+            Enabled: configInfo.integrityChecks?.enabled && configInfo.integrityChecks.entityFieldsSequenceCheck,
+            Run: SystemIntegrityBase.CheckEntityFieldSequences
+     * Runs integrity checks on the system. If onlyEnabled is true, then only checks that are enabled in the configuration
+     * will be run. If false, all checks will be run.
+    public static async RunIntegrityChecks(pool: sql.ConnectionPool, onlyEnabled: boolean, logResults: boolean = true): Promise<IntegrityCheckResult[]> {
+        let results: IntegrityCheckResult[] = [];
+            const runPromises = [];
+            for (const check of SystemIntegrityBase._integrityChecks) {
+                if (!onlyEnabled || check.Enabled) {
+                    runPromises.push(check.Run(pool));
+            // async parallel run all the checks and then push the results into the results array
+            const runResults = await Promise.all(runPromises);
+            runResults.forEach(r => results.push(r));
+            if (logResults) {
+                // log the results to the console
+                logStatus("Integrity check results:");
+                        logStatus(`   Integrity check successful: ${result.Name}`);
+                        logError(`   Integrity check FAILED: ${result.Name} - ${result.Message}`);
+            const message = `Error running integrity checks: ${e}`;
+            logError(message);
+            results.push ({ Success: false, Message: message, Name: "_" });
+     * For a given entity, fields should be in sequence starting from 1. There should be no duplicate sequences within a given
+     * entity. Invalidation of this could cause downstream issues with the system in particular with execution of Create/Update operations.
+    public static async CheckEntityFieldSequences(pool: sql.ConnectionPool): Promise<IntegrityCheckResult> {
+        return SystemIntegrityBase.CheckEntityFieldSequencesInternal(pool, "");
+     * Checks the sequence of fields for a single entity. This is useful when you want to check a single entity at a time.
+    public static async CheckSinleEntityFieldSequences(pool: sql.ConnectionPool, entityName: string): Promise<IntegrityCheckResult> {
+        return SystemIntegrityBase.CheckEntityFieldSequencesInternal(pool, `WHERE Entity='${entityName}'`);
+    protected static async CheckEntityFieldSequencesInternal(pool: sql.ConnectionPool, filter: string): Promise<IntegrityCheckResult> {
+            const sSQL = `SELECT ID, Entity, SchemaName, BaseView, EntityID, Name, Sequence FROM [${mj_core_schema()}].[vwEntityFields] ${filter} ORDER BY Entity, Sequence`;
+                throw new Error("No entity fields found");
+                // getting here means we check one entity at a time and build a message
+                let success: boolean = true;
+                let message: string = "";
+                let lastEntity: string = "";
+                // loop through all the fields. Each time the entity changes, check to see if there are any duplicate fields
+                // that has the same sequence number and flag that as an error.
+                for (const row of result) {
+                    if (lastEntity !== row.Entity) {
+                        // we have a new entity, check all the fields in this entity
+                        const fields = result.filter((f: any) => f.Entity === row.Entity);
+                        // check for duplicate sequences, and build a list of duplicate sequences to include the field name in the message along with the sequence
+                        const duplicates = fields.filter((f: any) => fields.filter((f2: any) => f2.Sequence === f.Sequence).length > 1);
+                        if (duplicates.length > 0) {
+                            message += `Entity ${row.Entity} has duplicate Entity Field sequences:\n`;
+                            message += duplicates.map((d: any) => `      * ${d.Name} (${d.Sequence})`).join("\n");
+                            message += "\n";
+                            // no duplicates, so now check to see if all of the sequences are in order, starting with 1
+                            let sequence = 1;
+                                if (field.Sequence !== sequence) {
+                                    message += `Entity ${row.Entity} has a missing sequence number. Expected ${sequence}, but found ${field.Sequence} for field ${field.Name}\n`;
+                                sequence++;
+                                // finally, check to see if the metadata sequence numbers match the physical order of the columns in the
+                                // underlying base view. This is critical for calling the spUpdate/spCreate procs correctly.
+                                // we will do this by SELECT TOP 1 * from the base view
+                                const entity = row.Entity;
+                                const sampleSQL = `SELECT TOP 1 * FROM [${row.SchemaName}].[${row.BaseView}]`;
+                                const sampleResultResult = await pool.request().query(sampleSQL);
+      const sampleResult = sampleResultResult.recordset;
+                                // now check the order of the columns in the result set relative to the
+                                // fields array
+                                if (sampleResult && sampleResult.length > 0) {
+                                    const columns = Object.keys(sampleResult[0]);
+                                        if (columns[i] !== field.Name) {
+                                            message += `Entity ${entity} has a mismatch between the metadata sequence and the physical column order in the base view [${row.SchemaName}].[${row.BaseView}] for position ${i+1}. Expected ${field.Name} but found ${columns[i]}\n`;
+                        lastEntity = row.Entity;
+                return { Success: success, Message: message, Name: 'entityFieldsSequenceCheck' };
+            const message = `Error checking entity field sequences: ${e}`;
+            return { Success: false, Message: message, Name: 'entityFieldsSequenceCheck' };

@@ -1,0 +1,32 @@
+<h1><a href="run_v1alpha1.html">Cloud Run Admin API</a> . <a href="run_v1alpha1.namespaces.html">namespaces</a> . <a href="run_v1alpha1.namespaces.triggers.html">triggers</a></h1>
+<p class="firstline">Creates a new trigger.</p>
+<p class="firstline">Rpc to delete a trigger.</p>
+<p class="firstline">Rpc to get information about a trigger.</p>
+<p class="firstline">Rpc to list triggers.</p>
+  <pre>Creates a new trigger.
+  parent: string, The project ID or project number in which this trigger should be created. (required)
+  &quot;apiVersion&quot;: &quot;A String&quot;, # The API version for this call such as &quot;eventing.knative.dev/v1alpha1&quot;.
+  &quot;kind&quot;: &quot;A String&quot;, # The kind of resource, in this case &quot;Trigger&quot;.
+  &quot;metadata&quot;: { # ObjectMeta is metadata that all persisted resources must have, which includes all objects users must create. # Metadata associated with this Trigger.
+  &quot;spec&quot;: { # The desired state of the Trigger. # Spec defines the desired state of the Trigger.
+    &quot;broker&quot;: &quot;A String&quot;, # Broker is the broker that this trigger receives events from. If not specified, will default to &#x27;default&#x27;. Not currently supported by Cloud Run.
+    &quot;filter&quot;: { # Optional. Filter is the filter to apply against all events from the Broker. Only events that pass this filter will be sent to the Subscriber. Note that filter is optional in knative and is only required in fully managed due to different broker implementation.
+      &quot;attributes&quot;: { # Optional. Attributes filters events by exact match on event context attributes. Each key in the map is compared with the equivalent key in the event context. An event passes the filter if all values are equal to the specified values. Nested context attributes are not supported as keys. Only string values are supported. Note that this field is optional in knative. In fully managed, &#x27;type&#x27; attribute is required due to different broker implementation.
+    &quot;subscriber&quot;: { # Sink is the addressable that will receive events.
+  &quot;status&quot;: { # TriggerStatus represents the current state of a Trigger. # Optional. Status represents the current state of the Trigger. This data may be out of date.
+    &quot;conditions&quot;: [ # Array of observed TriggerConditions, indicating the current state of the Trigger.
+      { # TriggerCondition contains state information for an Trigger.
+        &quot;reason&quot;: &quot;A String&quot;, # Optional. One-word CamelCase reason for the condition&#x27;s current status.
+        &quot;type&quot;: &quot;A String&quot;, # Type of Trigger condition.
+    &quot;observedGeneration&quot;: 42, # ObservedGeneration is the &#x27;Generation&#x27; of the Trigger that was last processed by the controller.
+    &quot;subscriberUri&quot;: &quot;A String&quot;, # SubscriberURI is the resolved URI of the receiver for this Trigger.
+  <pre>Rpc to delete a trigger.
+  name: string, The name of the trigger being deleted. If needed, replace {namespace_id} with the project ID. (required)
+  <pre>Rpc to get information about a trigger.
+  name: string, The name of the trigger being retrieved. If needed, replace {namespace_id} with the project ID. (required)
+  <pre>Rpc to list triggers.
+  parent: string, The project ID or project number from which the triggers should be listed. (required)
+    { # ListTriggersResponse is a list of Trigger resources.
+  &quot;items&quot;: [ # List of Triggers.
+  &quot;kind&quot;: &quot;A String&quot;, # The kind of this resource, in this case &quot;TriggerList&quot;.
+  &quot;metadata&quot;: { # ListMeta describes metadata that synthetic resources must have, including lists and various status objects. A resource may have only one of {ObjectMeta, ListMeta}. # Metadata associated with this Trigger list.

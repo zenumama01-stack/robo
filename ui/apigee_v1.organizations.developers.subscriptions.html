@@ -1,0 +1,19 @@
+<h1><a href="apigee_v1.html">Apigee API</a> . <a href="apigee_v1.organizations.html">organizations</a> . <a href="apigee_v1.organizations.developers.html">developers</a> . <a href="apigee_v1.organizations.developers.subscriptions.html">subscriptions</a></h1>
+<p class="firstline">Gets details for an API product subscription.</p>
+  <code><a href="#list">list(parent, count=None, startKey=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Lists all API product subscriptions for a developer.</p>
+  parent: string, Required. Email address of the developer that is purchasing a subscription to the API product. Use the following structure in your request: `organizations/{org}/developers/{developer_email}` (required)
+{ # Structure of a DeveloperSubscription.
+  &quot;apiproduct&quot;: &quot;A String&quot;, # Name of the API product for which the developer is purchasing a subscription.
+  &quot;endTime&quot;: &quot;A String&quot;, # Time when the API product subscription ends in milliseconds since epoch.
+  &quot;startTime&quot;: &quot;A String&quot;, # Time when the API product subscription starts in milliseconds since epoch.
+  name: string, Required. Name of the API product subscription. Use the following structure in your request: `organizations/{org}/developers/{developer_email}/subscriptions/{subscription}` (required)
+{ # Request for ExpireDeveloperSubscription.
+  <pre>Gets details for an API product subscription.
+    <code class="details" id="list">list(parent, count=None, startKey=None, x__xgafv=None)</code>
+  <pre>Lists all API product subscriptions for a developer.
+  parent: string, Required. Email address of the developer. Use the following structure in your request: `organizations/{org}/developers/{developer_email}` (required)
+  count: integer, Number of API product subscriptions to return in the API call. Use with `startKey` to provide more targeted filtering. Defaults to 100. The maximum limit is 1000.
+  startKey: string, Name of the API product subscription from which to start displaying the list of subscriptions. If omitted, the list starts from the first item. For example, to view the API product subscriptions from 51-150, set the value of `startKey` to the name of the 51st subscription and set the value of `count` to 100.
+    { # Response for ListDeveloperSubscriptions.
+  &quot;developerSubscriptions&quot;: [ # List of all subscriptions.

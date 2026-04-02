@@ -1,0 +1,65 @@
+<h1><a href="authorizedbuyersmarketplace_v1.html">Authorized Buyers Marketplace API</a> . <a href="authorizedbuyersmarketplace_v1.buyers.html">buyers</a> . <a href="authorizedbuyersmarketplace_v1.buyers.proposals.html">proposals</a></h1>
+  <code><a href="authorizedbuyersmarketplace_v1.buyers.proposals.deals.html">deals()</a></code>
+<p class="firstline">Returns the deals Resource.</p>
+  <code><a href="#accept">accept(name, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Accepts the proposal at the given revision number. If the revision number in the request is behind the latest from the server, an error message will be returned. This call updates the Proposal.state from `BUYER_ACCEPTANCE_REQUESTED` to `FINALIZED`; it has no side effect if the Proposal.state is already `FINALIZED` and throws exception if the Proposal.state is not either `BUYER_ACCEPTANCE_REQUESTED` or `FINALIZED`. Accepting a proposal means the buyer understands and accepts the Proposal.terms_and_conditions proposed by the seller.</p>
+  <code><a href="#addNote">addNote(proposal, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Creates a note for this proposal and sends to the seller. This method is not supported for proposals with DealType set to 'PRIVATE_AUCTION'.</p>
+  <code><a href="#cancelNegotiation">cancelNegotiation(proposal, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Cancels an ongoing negotiation on a proposal. This does not cancel or end serving for the deals if the proposal has been finalized. If the proposal has not been finalized before, calling this method will set the Proposal.state to `TERMINATED` and increment the Proposal.proposal_revision. If the proposal has been finalized before and is under renegotiation now, calling this method will reset the Proposal.state to `FINALIZED` and increment the Proposal.proposal_revision. This method does not support private auction proposals whose Proposal.deal_type is 'PRIVATE_AUCTION'.</p>
+<p class="firstline">Gets a proposal using its resource name. The proposal is returned at the latest revision.</p>
+<p class="firstline">Lists proposals. A filter expression using [Cloud API list filtering syntax](https://developers.google.com/authorized-buyers/apis/guides/list-filters) may be specified to filter the results.</p>
+<p class="firstline">Updates the proposal at the given revision number. If the revision number in the request is behind the latest one kept in the server, an error message will be returned. See FieldMask for how to use FieldMask. Only fields specified in the UpdateProposalRequest.update_mask will be updated; Fields noted as 'Immutable' or 'Output only' yet specified in the UpdateProposalRequest.update_mask will be ignored and left unchanged. Updating a private auction proposal is only allowed for buyer private data, all other fields are immutable.</p>
+  <code><a href="#sendRfp">sendRfp(buyer, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Sends a request for proposal (RFP) to a publisher to initiate the negotiation regarding certain inventory. In the RFP, buyers can specify the deal type, deal terms, start and end dates, targeting, and a message to the publisher. Once the RFP is sent, a proposal in `SELLER_REVIEW_REQUESTED` state will be created and returned in the response. The publisher may review your request and respond with detailed deals in the proposal.</p>
+    <code class="details" id="accept">accept(name, body=None, x__xgafv=None)</code>
+  <pre>Accepts the proposal at the given revision number. If the revision number in the request is behind the latest from the server, an error message will be returned. This call updates the Proposal.state from `BUYER_ACCEPTANCE_REQUESTED` to `FINALIZED`; it has no side effect if the Proposal.state is already `FINALIZED` and throws exception if the Proposal.state is not either `BUYER_ACCEPTANCE_REQUESTED` or `FINALIZED`. Accepting a proposal means the buyer understands and accepts the Proposal.terms_and_conditions proposed by the seller.
+  name: string, Name of the proposal. Format: `buyers/{accountId}/proposals/{proposalId}` (required)
+{ # Request to accept a proposal. Accepting a proposal implies acceptance of the publisher terms_and_conditions, if any.
+    { # Represents a proposal in the Marketplace. A proposal is the unit of negotiation between a seller and a buyer.
+  &quot;billedBuyer&quot;: &quot;A String&quot;, # Output only. When the client field is populated, this field refers to the buyer who creates and manages the client buyer and gets billed on behalf of the client buyer; when the buyer field is populated, this field is the same value as buyer. Format : `buyers/{buyerAccountId}`
+  &quot;buyer&quot;: &quot;A String&quot;, # Output only. Refers to a buyer in The Realtime-bidding API. Format: `buyers/{buyerAccountId}`
+      &quot;displayName&quot;: &quot;A String&quot;, # The display_name of the contact.
+  &quot;buyerPrivateData&quot;: { # Buyers are allowed to store certain types of private data in a proposal. # Buyer private data (hidden from seller).
+    &quot;referenceId&quot;: &quot;A String&quot;, # A buyer specified reference ID. This can be queried in the list operations (max-length: 1024 unicode code units).
+  &quot;dealType&quot;: &quot;A String&quot;, # Output only. Type of deal the proposal contains.
+  &quot;displayName&quot;: &quot;A String&quot;, # Output only. The descriptive name for the proposal. Maximum length of 255 unicode characters is allowed. Control characters are not allowed. Buyers cannot update this field. Note: Not to be confused with name, which is a unique identifier of the proposal.
+  &quot;isRenegotiating&quot;: True or False, # Output only. True if the proposal was previously finalized and is now being renegotiated.
+  &quot;name&quot;: &quot;A String&quot;, # Immutable. The name of the proposal serving as a unique identifier. Format: buyers/{accountId}/proposals/{proposalId}
+  &quot;notes&quot;: [ # A list of notes from the buyer and the seller attached to this proposal.
+    { # A text note attached to the proposal to facilitate the communication between buyers and sellers.
+      &quot;createTime&quot;: &quot;A String&quot;, # Output only. When this note was created.
+      &quot;creatorRole&quot;: &quot;A String&quot;, # Output only. The role who created the note.
+      &quot;note&quot;: &quot;A String&quot;, # The text of the note. Maximum length is 1024 characters.
+  &quot;pausingConsented&quot;: True or False, # Whether pausing is allowed for the proposal. This is a negotiable term between buyers and publishers.
+  &quot;proposalRevision&quot;: &quot;A String&quot;, # Output only. The revision number for the proposal. Each update to the proposal or deal causes the proposal revision number to auto-increment. The buyer keeps track of the last revision number they know of and pass it in when making an update. If the head revision number on the server has since incremented, then an ABORTED error is returned during the update operation to let the buyer know that a subsequent update was made.
+  &quot;publisherProfile&quot;: &quot;A String&quot;, # Immutable. Reference to the seller on the proposal. Format: `buyers/{buyerAccountId}/publisherProfiles/{publisherProfileId}` Note: This field may be set only when creating the resource. Modifying this field while updating the resource will result in an error.
+  &quot;state&quot;: &quot;A String&quot;, # Output only. Indicates the state of the proposal.
+  &quot;termsAndConditions&quot;: &quot;A String&quot;, # Output only. The terms and conditions associated with this proposal. Accepting a proposal implies acceptance of this field. This is created by the seller, the buyer can only view it.
+    <code class="details" id="addNote">addNote(proposal, body=None, x__xgafv=None)</code>
+  <pre>Creates a note for this proposal and sends to the seller. This method is not supported for proposals with DealType set to &#x27;PRIVATE_AUCTION&#x27;.
+  proposal: string, Name of the proposal. Format: `buyers/{accountId}/proposals/{proposalId}` (required)
+{ # Request to add a note.
+  &quot;note&quot;: { # A text note attached to the proposal to facilitate the communication between buyers and sellers. # The note to add.
+    <code class="details" id="cancelNegotiation">cancelNegotiation(proposal, body=None, x__xgafv=None)</code>
+  <pre>Cancels an ongoing negotiation on a proposal. This does not cancel or end serving for the deals if the proposal has been finalized. If the proposal has not been finalized before, calling this method will set the Proposal.state to `TERMINATED` and increment the Proposal.proposal_revision. If the proposal has been finalized before and is under renegotiation now, calling this method will reset the Proposal.state to `FINALIZED` and increment the Proposal.proposal_revision. This method does not support private auction proposals whose Proposal.deal_type is &#x27;PRIVATE_AUCTION&#x27;.
+  <pre>Gets a proposal using its resource name. The proposal is returned at the latest revision.
+  name: string, Required. Name of the proposal. Format: `buyers/{accountId}/proposals/{proposalId}` (required)
+  <pre>Lists proposals. A filter expression using [Cloud API list filtering syntax](https://developers.google.com/authorized-buyers/apis/guides/list-filters) may be specified to filter the results.
+  parent: string, Required. Parent that owns the collection of proposals Format: `buyers/{accountId}` (required)
+  filter: string, Optional query string using the [Cloud API list filtering syntax](https://developers.google.com/authorized-buyers/apis/guides/list-filters) Supported columns for filtering are: * displayName * dealType * updateTime * state
+  pageSize: integer, Requested page size. The server may return fewer results than requested. If unspecified, the server will put a size of 500.
+  <pre>Updates the proposal at the given revision number. If the revision number in the request is behind the latest one kept in the server, an error message will be returned. See FieldMask for how to use FieldMask. Only fields specified in the UpdateProposalRequest.update_mask will be updated; Fields noted as &#x27;Immutable&#x27; or &#x27;Output only&#x27; yet specified in the UpdateProposalRequest.update_mask will be ignored and left unchanged. Updating a private auction proposal is only allowed for buyer private data, all other fields are immutable.
+  name: string, Immutable. The name of the proposal serving as a unique identifier. Format: buyers/{accountId}/proposals/{proposalId} (required)
+    <code class="details" id="sendRfp">sendRfp(buyer, body=None, x__xgafv=None)</code>
+  <pre>Sends a request for proposal (RFP) to a publisher to initiate the negotiation regarding certain inventory. In the RFP, buyers can specify the deal type, deal terms, start and end dates, targeting, and a message to the publisher. Once the RFP is sent, a proposal in `SELLER_REVIEW_REQUESTED` state will be created and returned in the response. The publisher may review your request and respond with detailed deals in the proposal.
+  buyer: string, Required. The current buyer who is sending the RFP in the format: `buyers/{accountId}`. (required)
+{ # Request to send an RFP. All fields in this request are proposed to publisher and subject to changes by publisher during later negotiation.
+  &quot;client&quot;: &quot;A String&quot;, # If the current buyer is sending the RFP on behalf of its client, use this field to specify the name of the client in the format: `buyers/{accountId}/clients/{clientAccountid}`.
+  &quot;displayName&quot;: &quot;A String&quot;, # Required. The display name of the proposal being created by this RFP.
+  &quot;flightEndTime&quot;: &quot;A String&quot;, # Required. Proposed flight end time of the RFP. A timestamp in RFC3339 UTC &quot;Zulu&quot; format. Note that the specified value will be truncated to a granularity of one second.
+  &quot;flightStartTime&quot;: &quot;A String&quot;, # Required. Proposed flight start time of the RFP. A timestamp in RFC3339 UTC &quot;Zulu&quot; format. Note that the specified value will be truncated to a granularity of one second.
+  &quot;geoTargeting&quot;: { # Generic targeting used for targeting dimensions that contains a list of included and excluded numeric IDs. This cannot be filtered using list filter syntax. # Geo criteria IDs to be targeted. Refer to Geo tables.
+  &quot;inventorySizeTargeting&quot;: { # Represents the size of an ad unit that can be targeted on a bid request. # Inventory sizes to be targeted. Only PIXEL inventory size type is supported.
+  &quot;note&quot;: &quot;A String&quot;, # A message that is sent to the publisher. Maximum length is 1024 characters.
+  &quot;publisherProfile&quot;: &quot;A String&quot;, # Required. The profile of the publisher who will receive this RFP in the format: `buyers/{accountId}/publisherProfiles/{publisherProfileId}`.

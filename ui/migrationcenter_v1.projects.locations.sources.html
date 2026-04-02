@@ -1,0 +1,32 @@
+<h1><a href="migrationcenter_v1.html">Migration Center API</a> . <a href="migrationcenter_v1.projects.html">projects</a> . <a href="migrationcenter_v1.projects.locations.html">locations</a> . <a href="migrationcenter_v1.projects.locations.sources.html">sources</a></h1>
+  <code><a href="migrationcenter_v1.projects.locations.sources.errorFrames.html">errorFrames()</a></code>
+<p class="firstline">Returns the errorFrames Resource.</p>
+  <code><a href="#create">create(parent, body=None, requestId=None, sourceId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Creates a new source in a given project and location.</p>
+<p class="firstline">Deletes a source.</p>
+<p class="firstline">Gets the details of a source.</p>
+<p class="firstline">Lists all the sources in a given project and location.</p>
+<p class="firstline">Updates the parameters of a source.</p>
+    <code class="details" id="create">create(parent, body=None, requestId=None, sourceId=None, x__xgafv=None)</code>
+  <pre>Creates a new source in a given project and location.
+{ # Source represents an object from which asset information is streamed to Migration Center.
+  &quot;createTime&quot;: &quot;A String&quot;, # Output only. The timestamp when the source was created.
+  &quot;displayName&quot;: &quot;A String&quot;, # User-friendly display name.
+  &quot;errorFrameCount&quot;: 42, # Output only. The number of frames that were reported by the source and contained errors.
+  &quot;managed&quot;: True or False, # If `true`, the source is managed by other service(s).
+  &quot;name&quot;: &quot;A String&quot;, # Output only. The full name of the source.
+  &quot;pendingFrameCount&quot;: 42, # Output only. Number of frames that are still being processed.
+  &quot;priority&quot;: 42, # The information confidence of the source. The higher the value, the higher the confidence.
+  &quot;state&quot;: &quot;A String&quot;, # Output only. The state of the source.
+  &quot;type&quot;: &quot;A String&quot;, # Data source type.
+  &quot;updateTime&quot;: &quot;A String&quot;, # Output only. The timestamp when the source was last updated.
+  sourceId: string, Required. User specified ID for the source. It will become the last component of the source name. The ID must be unique within the project, must conform with RFC-1034, is restricted to lower-cased letters, and has a maximum length of 63 characters. The ID must match the regular expression: `[a-z]([a-z0-9-]{0,61}[a-z0-9])?`.
+  <pre>Deletes a source.
+  <pre>Gets the details of a source.
+  <pre>Lists all the sources in a given project and location.
+  parent: string, Required. Parent value for `ListSourcesRequest`. (required)
+    { # Response message for listing sources.
+  &quot;sources&quot;: [ # The list of sources.
+  <pre>Updates the parameters of a source.
+  name: string, Output only. The full name of the source. (required)
+  updateMask: string, Required. Field mask is used to specify the fields to be overwritten in the `Source` resource by the update. The values specified in the `update_mask` field are relative to the resource, not the full request. A field will be overwritten if it is in the mask. A single * value in the mask lets you to overwrite all fields.

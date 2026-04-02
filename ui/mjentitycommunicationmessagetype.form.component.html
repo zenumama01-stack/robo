@@ -1,0 +1,15 @@
+    <!-- Mapping Keys Section -->
+        SectionKey="mappingKeys"
+        SectionName="Mapping Keys"
+            FieldName="BaseMessageTypeID"
+    <!-- Message Attributes Section -->
+        SectionKey="messageAttributes"
+        SectionName="Message Attributes"
+    <!-- Entity Communication Fields Section -->
+        SectionKey="entityCommunicationFields"
+        SectionName="Entity Communication Fields"
+        [BadgeCount]="GetSectionRowCount('entityCommunicationFields')"
+                [Params]="BuildRelationshipViewParamsByEntityName('MJ: Entity Communication Fields','EntityCommunicationMessageTypeID')"
+                [NewRecordValues]="NewRecordValues('MJ: Entity Communication Fields')"
+                [AllowLoad]="IsSectionExpanded('entityCommunicationFields')"
+                (AfterDataLoad)="SetSectionRowCount('entityCommunicationFields', $event.totalRowCount)"

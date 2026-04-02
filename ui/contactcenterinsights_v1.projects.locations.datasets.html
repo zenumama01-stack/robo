@@ -1,0 +1,73 @@
+<h1><a href="contactcenterinsights_v1.html">Contact Center AI Insights API</a> . <a href="contactcenterinsights_v1.projects.html">projects</a> . <a href="contactcenterinsights_v1.projects.locations.html">locations</a> . <a href="contactcenterinsights_v1.projects.locations.datasets.html">datasets</a></h1>
+  <code><a href="contactcenterinsights_v1.projects.locations.datasets.conversations.html">conversations()</a></code>
+  <code><a href="contactcenterinsights_v1.projects.locations.datasets.insightsdata.html">insightsdata()</a></code>
+<p class="firstline">Returns the insightsdata Resource.</p>
+  <code><a href="#bulkDeleteFeedbackLabels">bulkDeleteFeedbackLabels(parent, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Delete feedback labels in bulk using a filter.</p>
+  <code><a href="#bulkDownloadFeedbackLabels">bulkDownloadFeedbackLabels(parent, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Download feedback labels in bulk from an external source. Currently supports exporting Quality AI example conversations with transcripts and question bodies.</p>
+  <code><a href="#bulkUploadFeedbackLabels">bulkUploadFeedbackLabels(parent, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Upload feedback labels from an external source in bulk. Currently supports labeling Quality AI example conversations.</p>
+  <code><a href="#create">create(parent, body=None, datasetId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Creates a dataset.</p>
+<p class="firstline">Delete a dataset.</p>
+<p class="firstline">Gets a dataset.</p>
+<p class="firstline">List datasets matching the input.</p>
+  <code><a href="#listAllFeedbackLabels">listAllFeedbackLabels(parent, filter=None, pageSize=None, pageToken=None, x__xgafv=None)</a></code></p>
+<p class="firstline">List all feedback labels by project number.</p>
+  <code><a href="#listAllFeedbackLabels_next">listAllFeedbackLabels_next()</a></code></p>
+<p class="firstline">Updates a dataset.</p>
+    <code class="details" id="bulkDeleteFeedbackLabels">bulkDeleteFeedbackLabels(parent, body=None, x__xgafv=None)</code>
+  <pre>Delete feedback labels in bulk using a filter.
+  parent: string, Required. The parent resource for new feedback labels. (required)
+{ # Request for the BulkDeleteFeedbackLabels endpoint.
+  &quot;filter&quot;: &quot;A String&quot;, # Optional. A filter to reduce results to a specific subset. Supports disjunctions (OR) and conjunctions (AND). Supported fields: * `issue_model_id` * `qa_question_id` * `qa_scorecard_id` * `min_create_time` * `max_create_time` * `min_update_time` * `max_update_time` * `feedback_label_type`: QUALITY_AI, TOPIC_MODELING
+  &quot;parent&quot;: &quot;A String&quot;, # Required. The parent resource for new feedback labels.
+    <code class="details" id="bulkDownloadFeedbackLabels">bulkDownloadFeedbackLabels(parent, body=None, x__xgafv=None)</code>
+  <pre>Download feedback labels in bulk from an external source. Currently supports exporting Quality AI example conversations with transcripts and question bodies.
+{ # Request for the BulkDownloadFeedbackLabel endpoint.
+  &quot;conversationFilter&quot;: &quot;A String&quot;, # Optional. Filter parent conversations to download feedback labels for. When specified, the feedback labels will be downloaded for the conversations that match the filter. If `template_qa_scorecard_id` is set, all the conversations that match the filter will be paired with the questions under the scorecard for labeling.
+  &quot;feedbackLabelType&quot;: &quot;A String&quot;, # Optional. The type of feedback labels that will be downloaded.
+  &quot;gcsDestination&quot;: { # Google Cloud Storage Object details to write the feedback labels to. # A cloud storage bucket destination.
+    &quot;addWhitespace&quot;: True or False, # Optional. Add whitespace to the JSON file. Makes easier to read, but increases file size. Only applicable for JSON format.
+    &quot;alwaysPrintEmptyFields&quot;: True or False, # Optional. Always print fields with no presence. This is useful for printing fields that are not set, like implicit 0 value or empty lists/maps. Only applicable for JSON format.
+    &quot;format&quot;: &quot;A String&quot;, # Required. File format in which the labels will be exported.
+    &quot;objectUri&quot;: &quot;A String&quot;, # Required. The Google Cloud Storage URI to write the feedback labels to. The file name will be used as a prefix for the files written to the bucket if the output needs to be split across multiple files, otherwise it will be used as is. The file extension will be appended to the file name based on the format selected. E.g. `gs://bucket_name/object_uri_prefix`
+    &quot;recordsPerFileCount&quot;: &quot;A String&quot;, # Optional. The number of records per file. Applicable for either format.
+  &quot;maxDownloadCount&quot;: 42, # Optional. Limits the maximum number of feedback labels that will be downloaded. The first `N` feedback labels will be downloaded.
+  &quot;sheetsDestination&quot;: { # Google Sheets document details to write the feedback labels to. # A sheets document destination.
+    &quot;sheetTitle&quot;: &quot;A String&quot;, # Optional. The title of the new sheet to write the feedback labels to.
+    &quot;spreadsheetUri&quot;: &quot;A String&quot;, # Required. The Google Sheets document to write the feedback labels to. Retrieved from Google Sheets URI. E.g. `https://docs.google.com/spreadsheets/d/1234567890` The spreadsheet must be shared with the Insights P4SA. The spreadsheet ID written to will be returned as `file_names` in the BulkDownloadFeedbackLabelsMetadata.
+  &quot;templateQaScorecardId&quot;: [ # Optional. If set, a template for labeling conversations and scorecard questions will be created from the conversation_filter and the questions under the scorecard(s). The feedback label `filter` will be ignored.
+    <code class="details" id="bulkUploadFeedbackLabels">bulkUploadFeedbackLabels(parent, body=None, x__xgafv=None)</code>
+  <pre>Upload feedback labels from an external source in bulk. Currently supports labeling Quality AI example conversations.
+{ # The request for bulk uploading feedback labels.
+  &quot;gcsSource&quot;: { # Google Cloud Storage Object details to get the feedback label file from. # A cloud storage bucket source.
+    &quot;format&quot;: &quot;A String&quot;, # Required. File format which will be ingested.
+    &quot;objectUri&quot;: &quot;A String&quot;, # Required. The Google Cloud Storage URI of the file to import. Format: `gs://bucket_name/object_name`
+  &quot;sheetsSource&quot;: { # Google Sheets document details to get the feedback label file from. # A sheets document source.
+    &quot;spreadsheetUri&quot;: &quot;A String&quot;, # Required. The Google Sheets document to write the feedback labels to. Retrieved from Google Sheets URI. E.g. `https://docs.google.com/spreadsheets/d/1234567890` The spreadsheet must be shared with the Insights P4SA.
+  &quot;validateOnly&quot;: True or False, # Optional. If set, upload will not happen and the labels will be validated. If not set, then default behavior will be to upload the labels after validation is complete.
+    <code class="details" id="create">create(parent, body=None, datasetId=None, x__xgafv=None)</code>
+  <pre>Creates a dataset.
+{ # Dataset resource represents a collection of conversations that may be bounded (Static Dataset, e.g. golden dataset for training), or unbounded (Dynamic Dataset, e.g. live traffic, or agent training traffic)
+  datasetId: string, Optional. The ID to use for the dataset.
+  <pre>Delete a dataset.
+  name: string, Required. The name of the dataset to delete. (required)
+  <pre>Gets a dataset.
+  name: string, Required. The name of the dataset to get. (required)
+  <pre>List datasets matching the input.
+  filter: string, Optional. A filter to reduce results to a specific subset. Useful for querying datasets with specific properties. Supported fields include, for Q2 though we only support list by project: - `type` - `description` - `project_number`
+  pageSize: integer, Optional. The maximum number of datasets to return in the response. If this value is zero, the service will select a default size. A call might return fewer objects than requested. A non-empty `next_page_token` in the response indicates that more data is available.
+  pageToken: string, Optional. The value returned by the last `ListDatasetsResponse`; indicates that this is a continuation of a prior `ListDatasets` call and the system should return the next page of data.
+    { # The response to list datasets.
+  &quot;datasets&quot;: [ # The datasets that match the request.
+    <code class="details" id="listAllFeedbackLabels">listAllFeedbackLabels(parent, filter=None, pageSize=None, pageToken=None, x__xgafv=None)</code>
+  <pre>List all feedback labels by project number.
+  parent: string, Required. The parent resource of all feedback labels per project. (required)
+  filter: string, Optional. A filter to reduce results to a specific subset in the entire project. Supports disjunctions (OR) and conjunctions (AND). Supported fields: * `issue_model_id` * `qa_question_id` * `min_create_time` * `max_create_time` * `min_update_time` * `max_update_time` * `feedback_label_type`: QUALITY_AI, TOPIC_MODELING
+  pageToken: string, Optional. The value returned by the last `ListAllFeedbackLabelsResponse`. This value indicates that this is a continuation of a prior `ListAllFeedbackLabels` call and that the system should return the next page of data.
+    { # The response for listing all feedback labels.
+    <code class="details" id="listAllFeedbackLabels_next">listAllFeedbackLabels_next()</code>
+  <pre>Updates a dataset.
+  name: string, Immutable. Identifier. Resource name of the dataset. Format: projects/{project}/locations/{location}/datasets/{dataset} (required)

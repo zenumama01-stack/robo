@@ -1,0 +1,15 @@
+<h1><a href="backupdr_v1.html">Backup and DR Service API</a> . <a href="backupdr_v1.projects.html">projects</a> . <a href="backupdr_v1.projects.locations.html">locations</a> . <a href="backupdr_v1.projects.locations.backupPlans.html">backupPlans</a> . <a href="backupdr_v1.projects.locations.backupPlans.revisions.html">revisions</a></h1>
+<p class="firstline">Gets details of a single BackupPlanRevision.</p>
+<p class="firstline">Lists BackupPlanRevisions in a given project and location.</p>
+  <pre>Gets details of a single BackupPlanRevision.
+  name: string, Required. The resource name of the `BackupPlanRevision` to retrieve. Format: `projects/{project}/locations/{location}/backupPlans/{backup_plan}/revisions/{revision}` (required)
+    { # `BackupPlanRevision` represents a snapshot of a `BackupPlan` at a point in time.
+  &quot;backupPlanSnapshot&quot;: { # A `BackupPlan` specifies some common fields, such as `description` as well as one or more `BackupRule` messages. Each `BackupRule` has a retention policy and defines a schedule by which the system is to perform backup workloads. # The Backup Plan being encompassed by this revision.
+  &quot;createTime&quot;: &quot;A String&quot;, # Output only. The timestamp that the revision was created.
+  &quot;name&quot;: &quot;A String&quot;, # Output only. Identifier. The resource name of the `BackupPlanRevision`. Format: `projects/{project}/locations/{location}/backupPlans/{backup_plan}/revisions/{revision}`
+  &quot;state&quot;: &quot;A String&quot;, # Output only. Resource State
+  <pre>Lists BackupPlanRevisions in a given project and location.
+  parent: string, Required. The project and location for which to retrieve `BackupPlanRevisions` information. Format: `projects/{project}/locations/{location}/backupPlans/{backup_plan}`. In Google Cloud Backup and DR, locations map to Google Cloud regions, for example **us-central1**. (required)
+    { # The response message for getting a list of `BackupPlanRevision`.
+  &quot;backupPlanRevisions&quot;: [ # The list of `BackupPlanRevisions` in the project for the specified location. If the `{location}` value in the request is &quot;-&quot;, the response contains a list of resources from all locations. In case any location is unreachable, the response will only return backup plans in reachable locations and the &#x27;unreachable&#x27; field will be populated with a list of unreachable locations.
+  &quot;nextPageToken&quot;: &quot;A String&quot;, # A token which may be sent as page_token in a subsequent `ListBackupPlanRevisions` call to retrieve the next page of results. If this field is omitted or empty, then there are no more results to return.

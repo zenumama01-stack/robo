@@ -1,0 +1,266 @@
+package org.openhab.core.model.item.internal;
+import static org.openhab.core.model.core.ModelCoreConstants.isIsolatedModel;
+import org.eclipse.emf.common.util.EList;
+import org.openhab.core.items.ActiveItem;
+import org.openhab.core.items.GroupFunction;
+import org.openhab.core.model.item.BindingConfigParseException;
+import org.openhab.core.model.item.BindingConfigReader;
+import org.openhab.core.model.items.ItemModel;
+import org.openhab.core.model.items.ModelBinding;
+import org.openhab.core.model.items.ModelItem;
+import org.openhab.core.types.StateDescriptionFragment;
+import org.openhab.core.types.StateDescriptionFragmentProvider;
+ * ItemProvider implementation which computes *.items file based item configurations.
+ * @author Laurent Garnier - Add method getAllFromModel + do not notify the item registry for isolated models
+@Component(service = { ItemProvider.class, GenericItemProvider.class,
+        StateDescriptionFragmentProvider.class }, immediate = true)
+public class GenericItemProvider extends AbstractProvider<Item>
+        implements ModelRepositoryChangeListener, ItemProvider, StateDescriptionFragmentProvider {
+    private final Logger logger = LoggerFactory.getLogger(GenericItemProvider.class);
+    /** to keep track of all binding config readers */
+    private final Map<String, BindingConfigReader> bindingConfigReaders = new HashMap<>();
+    private final GenericMetadataProvider genericMetaDataProvider;
+    private final Map<String, Collection<Item>> itemsMap = new ConcurrentHashMap<>();
+    private final Collection<ItemFactory> itemFactorys = new ArrayList<>();
+    private final Map<String, Map<String, String>> stateFormattersMap = new ConcurrentHashMap<>();
+    private final Map<String, StateDescriptionFragment> stateDescriptionFragments = new ConcurrentHashMap<>();
+    private Integer rank;
+    public GenericItemProvider(final @Reference ModelRepository modelRepository,
+            final @Reference GenericMetadataProvider genericMetadataProvider, Map<String, Object> properties) {
+        this.modelRepository = modelRepository;
+        this.genericMetaDataProvider = genericMetadataProvider;
+        Object serviceRanking = properties.get(Constants.SERVICE_RANKING);
+        if (serviceRanking instanceof Integer integerValue) {
+            rank = integerValue;
+            rank = 0;
+        itemFactorys.forEach(itemFactory -> dispatchBindingsPerItemType(itemFactory.getSupportedItemTypes()));
+        // process models which are already parsed by modelRepository:
+        for (String modelName : modelRepository.getAllModelNamesOfType("items")) {
+            modelChanged(modelName, EventType.ADDED);
+        modelRepository.addModelRepositoryChangeListener(this);
+        modelRepository.removeModelRepositoryChangeListener(this);
+    public Integer getRank() {
+     * Add another instance of an {@link ItemFactory}. Used by Declarative Services.
+     * @param factory The {@link ItemFactory} to add.
+    public void addItemFactory(ItemFactory factory) {
+        itemFactorys.add(factory);
+        dispatchBindingsPerItemType(factory.getSupportedItemTypes());
+     * Removes the given {@link ItemFactory}. Used by Declarative Services.
+     * @param factory The {@link ItemFactory} to remove.
+    public void removeItemFactory(ItemFactory factory) {
+        itemFactorys.remove(factory);
+    public void addBindingConfigReader(BindingConfigReader reader) {
+        if (!bindingConfigReaders.containsKey(reader.getBindingType())) {
+            bindingConfigReaders.put(reader.getBindingType(), reader);
+            genericMetaDataProvider.removeMetadataByNamespace(reader.getBindingType());
+            dispatchBindingsPerType(reader, new String[] { reader.getBindingType() });
+            logger.warn("Attempted to register a second BindingConfigReader of type '{}'."
+                    + " The previous reader will remain active!", reader.getBindingType());
+    public void removeBindingConfigReader(BindingConfigReader reader) {
+        if (bindingConfigReaders.get(reader.getBindingType()).equals(reader)) {
+            bindingConfigReaders.remove(reader.getBindingType());
+        stateDescriptionFragments.clear();
+        for (String name : modelRepository.getAllModelNamesOfType("items")) {
+            items.addAll(getItemsFromModel(name));
+    public Collection<Item> getAllFromModel(String modelName) {
+        return itemsMap.getOrDefault(modelName, List.of());
+    public Map<String, String> getStateFormattersFromModel(String modelName) {
+        return stateFormattersMap.getOrDefault(modelName, Map.of());
+    private Collection<Item> getItemsFromModel(String modelName) {
+        logger.debug("Read items from model '{}'", modelName);
+        ItemModel model = (ItemModel) modelRepository.getModel(modelName);
+        if (model != null) {
+            for (ModelItem modelItem : model.getItems()) {
+                Item item = createItemFromModelItem(modelItem, modelName);
+                    for (String groupName : modelItem.getGroups()) {
+                        ((GenericItem) item).addGroupName(groupName);
+    private void processBindingConfigsFromModel(String modelName, EventType type) {
+        logger.debug("Processing binding configs for items from model '{}'", modelName);
+        if (model == null) {
+        // start binding configuration processing
+        for (BindingConfigReader reader : bindingConfigReaders.values()) {
+            reader.startConfigurationUpdate(modelName);
+        // create items and read new binding configuration
+        if (!EventType.REMOVED.equals(type)) {
+                genericMetaDataProvider.removeMetadataByItemName(modelName, modelItem.getName());
+                    internalDispatchBindings(modelName, item, modelItem.getBindings());
+        // end binding configuration processing
+            reader.stopConfigurationUpdate(modelName);
+    private @Nullable Item createItemFromModelItem(ModelItem modelItem, String modelName) {
+        String itemType = modelItem.getType();
+        if (itemType == null || itemType.isBlank()) {
+            logger.warn("Item '{}' has no type defined, ignoring it.", modelItem.getName());
+            String[] itemTypeSegments = itemType.split(ItemUtil.EXTENSION_SEPARATOR);
+            String mainItemType = itemTypeSegments[0];
+            Item item = switch (mainItemType) {
+                case "Group" -> createGroupItem(modelItem, itemTypeSegments);
+                default -> createItemOfType(itemType, modelItem.getName());
+            if (item instanceof ActiveItem activeItem) {
+                String label = modelItem.getLabel();
+                String format = extractFormat(label);
+                    label = label.substring(0, label.indexOf("[")).trim();
+                    Map<String, String> formatters = Objects
+                            .requireNonNull(stateFormattersMap.computeIfAbsent(modelName, k -> new HashMap<>()));
+                    formatters.put(modelItem.getName(), format);
+                    if (!isIsolatedModel(modelName)) {
+                        stateDescriptionFragments.put(modelItem.getName(),
+                                StateDescriptionFragmentBuilder.create().withPattern(format).build());
+                    Map<String, String> formatters = stateFormattersMap.get(modelName);
+                    if (formatters != null) {
+                        formatters.remove(modelItem.getName());
+                        if (formatters.isEmpty()) {
+                            stateFormattersMap.remove(modelName);
+                        stateDescriptionFragments.remove(modelItem.getName());
+                activeItem.setLabel(label);
+                activeItem.setCategory(modelItem.getIcon());
+                assignTags(modelItem, activeItem);
+            logger.debug("Error creating item '{}', item will be ignored: {}", modelItem.getName(), e.getMessage());
+    private @Nullable String extractFormat(@Nullable String label) {
+        String format = null;
+        if (label.contains("[") && label.contains("]")) {
+            format = label.substring(label.indexOf("[") + 1, label.lastIndexOf("]"));
+    private void assignTags(ModelItem modelItem, ActiveItem item) {
+        List<String> tags = modelItem.getTags();
+            item.addTag(tag);
+    private GroupItem applyGroupFunction(Item baseItem, ModelItem modelItem, String function) {
+        GroupFunctionDTO dto = new GroupFunctionDTO();
+        dto.name = function;
+        dto.params = modelItem.getArgs().toArray(new String[0]);
+        GroupFunction groupFunction = ItemDTOMapper.mapFunction(baseItem, dto);
+        return new GroupItem(modelItem.getName(), baseItem, groupFunction);
+    private void dispatchBindingsPerItemType(String[] itemTypes) {
+                    for (String itemType : itemTypes) {
+                        String type = modelItem.getType();
+                        if (type != null && itemType.equals(ItemUtil.getMainItemType(type))) {
+                                internalDispatchBindings(null, modelName, item, modelItem.getBindings());
+                logger.debug("Model repository returned NULL for model named '{}'", modelName);
+    private void dispatchBindingsPerType(BindingConfigReader reader, String[] bindingTypes) {
+                    for (ModelBinding modelBinding : modelItem.getBindings()) {
+                        for (String bindingType : bindingTypes) {
+                            if (bindingType.equals(modelBinding.getType())) {
+                                    internalDispatchBindings(reader, modelName, item, modelItem.getBindings());
+    private void internalDispatchBindings(String modelName, Item item, EList<ModelBinding> bindings) {
+        internalDispatchBindings(null, modelName, item, bindings);
+    private void internalDispatchBindings(@Nullable BindingConfigReader reader, String modelName, Item item,
+            EList<ModelBinding> bindings) {
+        for (ModelBinding binding : bindings) {
+            String bindingType = binding.getType();
+            String config = binding.getConfiguration();
+            binding.getProperties().forEach(p -> {
+                Object value = p.getValue();
+                // Single valued lists get unwrapped to just their one value for
+                // backwards compatibility
+                if (value instanceof List listValue && listValue.size() == 1) {
+                    value = listValue.getFirst();
+                configuration.put(p.getKey(), value);
+            BindingConfigReader localReader = reader;
+            if (reader == null) {
+                logger.trace("Given binding config reader is null > query cache to find appropriate reader!");
+                localReader = bindingConfigReaders.get(bindingType);
+                if (!localReader.getBindingType().equals(binding.getType())) {
+                            "The Readers' binding type '{}' and the Bindings' type '{}' doesn't match > continue processing next binding.",
+                            localReader.getBindingType(), binding.getType());
+                    logger.debug("Start processing binding configuration of Item '{}' with '{}' reader.", item,
+                            localReader.getClass().getSimpleName());
+            if (localReader != null) {
+                    localReader.validateItemType(item.getType(), config);
+                    localReader.processBindingConfiguration(modelName, item.getType(), item.getName(), config,
+                } catch (BindingConfigParseException e) {
+                    logger.error("Binding configuration of type '{}' of item '{}' could not be parsed correctly.",
+                            bindingType, item.getName(), e);
+                    // Catch badly behaving binding exceptions and continue processing
+                genericMetaDataProvider.addMetadata(modelName, bindingType, item.getName(), config,
+                        configuration.getProperties());
+    public void modelChanged(String modelName, EventType type) {
+        if (modelName.endsWith("items")) {
+                case MODIFIED:
+                    Map<String, Item> oldItems = toItemMap(itemsMap.get(modelName));
+                    Map<String, Item> newItems = toItemMap(getItemsFromModel(modelName));
+                    itemsMap.put(modelName, newItems.values());
+                        for (Item newItem : newItems.values()) {
+                            Item oldItem = oldItems.get(newItem.getName());
+                                if (hasItemChanged(oldItem, newItem)) {
+                                    notifyListenersAboutUpdatedElement(oldItem, newItem);
+                                notifyListenersAboutAddedElement(newItem);
+                    processBindingConfigsFromModel(modelName, type);
+                    for (Item oldItem : oldItems.values()) {
+                        if (!newItems.containsKey(oldItem.getName())) {
+                            notifyAndCleanup(modelName, oldItem);
+                    Collection<Item> itemsFromModel = getItemsFromModel(modelName);
+                    itemsMap.remove(modelName);
+                    for (Item item : itemsFromModel) {
+                        notifyAndCleanup(modelName, item);
+    private void notifyAndCleanup(String modelName, Item oldItem) {
+            notifyListenersAboutRemovedElement(oldItem);
+            this.stateDescriptionFragments.remove(oldItem.getName());
+        genericMetaDataProvider.removeMetadataByItemName(modelName, oldItem.getName());
+    protected boolean hasItemChanged(Item item1, Item item2) {
+        return !Objects.equals(item1.getClass(), item2.getClass()) || //
+                !Objects.equals(item1.getName(), item2.getName()) || //
+                !Objects.equals(item1.getCategory(), item2.getCategory()) || //
+                !Objects.equals(item1.getGroupNames(), item2.getGroupNames()) || //
+                !Objects.equals(item1.getLabel(), item2.getLabel()) || //
+                !Objects.equals(item1.getTags(), item2.getTags()) || //
+                !Objects.equals(item1.getType(), item2.getType()) || //
+                hasGroupItemChanged(item1, item2);
+    private boolean hasGroupItemChanged(Item item1, Item item2) {
+        GroupItem gItem1 = null;
+        GroupItem gItem2 = null;
+        if (item1 instanceof GroupItem item) {
+            gItem1 = item;
+        if (item2 instanceof GroupItem item) {
+            gItem2 = item;
+        if (gItem1 == null && gItem2 == null) {
+        if (gItem1 == null || gItem2 == null) {
+        boolean sameBaseItemClass = Objects.equals(gItem1.getBaseItem(), gItem2.getBaseItem());
+        boolean sameFunction = false;
+        GroupFunction gf1 = gItem1.getFunction();
+        GroupFunction gf2 = gItem2.getFunction();
+        if (gf1 != null && gf2 != null) {
+            if (Objects.equals(gf1.getClass(), gf2.getClass())) {
+                sameFunction = Arrays.equals(gf1.getParameters(), gf2.getParameters());
+        } else if (gf1 == null && gf2 == null) {
+            sameFunction = true;
+        return !(sameBaseItemClass && sameFunction);
+    private Map<String, Item> toItemMap(@Nullable Collection<Item> items) {
+        if (items == null || items.isEmpty()) {
+        Map<String, Item> ret = new LinkedHashMap<>();
+            ret.put(item.getName(), item);
+     * Creates a new GroupItem based on the given ModelItem and item type segments.
+     * @param modelItem The ModelItem to create the GroupItem from.
+     * @param itemTypeSegments The segments of the item type.
+     * @return A new GroupItem or null if the item type is invalid.
+    private @Nullable GroupItem createGroupItem(ModelItem modelItem, String[] itemTypeSegments) {
+        if (itemTypeSegments.length == 1) {
+            // Just plain "Group" with no base type
+            return new GroupItem(modelItem.getName());
+        String function = GroupFunction.DEFAULT;
+        String baseItemType = switch (itemTypeSegments.length) {
+            case 2 -> itemTypeSegments[1];
+            case 3 -> {
+                // 3 segments could either be Group:Type:Function, or Group:Number:Dimension -> Find out which one it is
+                if (!modelItem.getArgs().isEmpty() || GroupFunction.VALID_FUNCTIONS.contains(itemTypeSegments[2])) {
+                    // It's Group:Type:Function because there are arguments or the third segment is a valid function
+                    function = itemTypeSegments[2];
+                    yield itemTypeSegments[1];
+                    // Otherwise, it must be Group:Number:Dimension
+                    yield itemTypeSegments[1] + ItemUtil.EXTENSION_SEPARATOR + itemTypeSegments[2];
+            case 4 -> {
+                // 4 segments: "Group:Number:Dimension:Function"
+                function = itemTypeSegments[3];
+            default -> throw new IllegalArgumentException("Invalid group item type: " + modelItem.getType()
+                    + ". Expected formats are 'Group', 'Group:Type', 'Group:Type:Function', or 'Group:Number:Dimension:Function' with a maximum of 4 segments.");
+        Item baseItem = createItemOfType(baseItemType, modelItem.getName());
+        if (baseItem != null) {
+            return applyGroupFunction(baseItem, modelItem, function);
+     * Creates a new item of type {@code itemType} by utilizing an appropriate {@link ItemFactory}.
+     * @param itemType The type to find the appropriate {@link ItemFactory} for.
+     * @param itemName The name of the {@link Item} to create.
+     * @return An Item instance of type {@code itemType} or null if no item factory for it was found.
+    private @Nullable Item createItemOfType(@Nullable String itemType, String itemName) {
+        for (ItemFactory factory : itemFactorys) {
+            Item item = factory.createItem(itemType, itemName);
+                logger.trace("Created item '{}' of type '{}'", itemName, itemType);
+        logger.debug("Couldn't find ItemFactory for item '{}' of type '{}'", itemName, itemType);
+    public @Nullable StateDescriptionFragment getStateDescriptionFragment(String itemName, @Nullable Locale locale) {
+        return stateDescriptionFragments.get(itemName);

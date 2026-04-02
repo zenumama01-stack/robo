@@ -1,0 +1,32 @@
+<h1><a href="aiplatform_v1beta1.html">Vertex AI API</a> . <a href="aiplatform_v1beta1.projects.html">projects</a> . <a href="aiplatform_v1beta1.projects.locations.html">locations</a> . <a href="aiplatform_v1beta1.projects.locations.datasets.html">datasets</a></h1>
+  <code><a href="aiplatform_v1beta1.projects.locations.datasets.annotationSpecs.html">annotationSpecs()</a></code>
+  <code><a href="aiplatform_v1beta1.projects.locations.datasets.dataItems.html">dataItems()</a></code>
+  <code><a href="aiplatform_v1beta1.projects.locations.datasets.datasetVersions.html">datasetVersions()</a></code>
+  <code><a href="aiplatform_v1beta1.projects.locations.datasets.operations.html">operations()</a></code>
+  <code><a href="aiplatform_v1beta1.projects.locations.datasets.savedQueries.html">savedQueries()</a></code>
+  <code><a href="#assemble">assemble(name, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Assembles each row of a multimodal dataset and writes the result into a BigQuery table.</p>
+  <code><a href="#assess">assess(name, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Assesses the state or validity of the dataset with respect to a given use case.</p>
+    <code class="details" id="assemble">assemble(name, body=None, x__xgafv=None)</code>
+  <pre>Assembles each row of a multimodal dataset and writes the result into a BigQuery table.
+  name: string, Required. The name of the Dataset resource (used only for MULTIMODAL datasets). Format: `projects/{project}/locations/{location}/datasets/{dataset}` (required)
+{ # Request message for DatasetService.AssembleData. Used only for MULTIMODAL datasets.
+  &quot;geminiRequestReadConfig&quot;: { # Configuration for how to read Gemini requests from a multimodal dataset. # Optional. The read config for the dataset.
+    &quot;assembledRequestColumnName&quot;: &quot;A String&quot;, # Optional. Column name in the dataset table that contains already fully assembled Gemini requests.
+    &quot;templateConfig&quot;: { # Template configuration to create Gemini examples from a multimodal dataset. # Gemini request template with placeholders.
+      &quot;fieldMapping&quot;: { # Required. Map of template parameters to the columns in the dataset table.
+      &quot;geminiExample&quot;: { # Format for Gemini examples used for Vertex Multimodal datasets. # Required. The template that will be used for assembling the request to use for downstream applications.
+        &quot;model&quot;: &quot;A String&quot;, # Optional. The fully qualified name of the publisher model or tuned model endpoint to use. Publisher model format: `projects/{project}/locations/{location}/publishers/*/models/*` Tuned model endpoint format: `projects/{project}/locations/{location}/endpoints/{endpoint}`
+    <code class="details" id="assess">assess(name, body=None, x__xgafv=None)</code>
+  <pre>Assesses the state or validity of the dataset with respect to a given use case.
+  name: string, Required. The name of the Dataset resource. Used only for MULTIMODAL datasets. Format: `projects/{project}/locations/{location}/datasets/{dataset}` (required)
+{ # Request message for DatasetService.AssessData. Used only for MULTIMODAL datasets.
+  &quot;batchPredictionResourceUsageAssessmentConfig&quot;: { # Configuration for the batch prediction resource usage assessment. # Optional. Configuration for the batch prediction resource usage assessment.
+    &quot;modelName&quot;: &quot;A String&quot;, # Required. The name of the model used for batch prediction.
+  &quot;batchPredictionValidationAssessmentConfig&quot;: { # Configuration for the batch prediction validation assessment. # Optional. Configuration for the batch prediction validation assessment.
+  &quot;geminiRequestReadConfig&quot;: { # Configuration for how to read Gemini requests from a multimodal dataset. # Optional. The Gemini request read config for the dataset.
+  &quot;tuningResourceUsageAssessmentConfig&quot;: { # Configuration for the tuning resource usage assessment. # Optional. Configuration for the tuning resource usage assessment.
+    &quot;modelName&quot;: &quot;A String&quot;, # Required. The name of the model used for tuning.
+  &quot;tuningValidationAssessmentConfig&quot;: { # Configuration for the tuning validation assessment. # Optional. Configuration for the tuning validation assessment.
+    &quot;datasetUsage&quot;: &quot;A String&quot;, # Required. The dataset usage (e.g. training/validation).

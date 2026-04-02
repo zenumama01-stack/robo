@@ -1,0 +1,29 @@
+<h1><a href="contactcenterinsights_v1.html">Contact Center AI Insights API</a> . <a href="contactcenterinsights_v1.projects.html">projects</a> . <a href="contactcenterinsights_v1.projects.locations.html">locations</a> . <a href="contactcenterinsights_v1.projects.locations.qaQuestionTags.html">qaQuestionTags</a></h1>
+  <code><a href="#create">create(parent, body=None, qaQuestionTagId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Creates a QaQuestionTag.</p>
+<p class="firstline">Deletes a QaQuestionTag.</p>
+<p class="firstline">Gets a QaQuestionTag.</p>
+<p class="firstline">Lists the question tags.</p>
+<p class="firstline">Updates a QaQuestionTag.</p>
+    <code class="details" id="create">create(parent, body=None, qaQuestionTagId=None, x__xgafv=None)</code>
+  <pre>Creates a QaQuestionTag.
+  parent: string, Required. The parent resource of the QaQuestionTag. (required)
+{ # A tag is a resource which aims to categorize a set of questions across multiple scorecards, e.g., &quot;Customer Satisfaction&quot;,&quot;Billing&quot;, etc.
+  &quot;createTime&quot;: &quot;A String&quot;, # Output only. The time at which the question tag was created.
+  &quot;displayName&quot;: &quot;A String&quot;, # Required. A user-specified display name for the tag.
+  &quot;name&quot;: &quot;A String&quot;, # Identifier. Resource name for the QaQuestionTag Format projects/{project}/locations/{location}/qaQuestionTags/{qa_question_tag} In the above format, the last segment, i.e., qa_question_tag, is a server-generated ID corresponding to the tag resource.
+  &quot;qaQuestionIds&quot;: [ # Optional. The list of Scorecard Question IDs that the tag applies to. Each QaQuestionId is represented as a full resource name containing the Question ID. Lastly, Since a tag may not necessarily be referenced by any Scorecard Questions, we treat this field as optional.
+  &quot;updateTime&quot;: &quot;A String&quot;, # Output only. The most recent time at which the question tag was updated.
+  qaQuestionTagId: string, Optional. A unique ID for the new QaQuestionTag. This ID will become the final component of the QaQuestionTag&#x27;s resource name. If no ID is specified, a server-generated ID will be used. This value should be 4-64 characters and must match the regular expression `^[a-z0-9-]{4,64}$`. Valid characters are `a-z-`.
+  <pre>Deletes a QaQuestionTag.
+  name: string, Required. The name of the QaQuestionTag to delete. (required)
+  <pre>Gets a QaQuestionTag.
+  name: string, Required. The name of the QaQuestionTag to get. (required)
+  <pre>Lists the question tags.
+  parent: string, Required. The parent resource of the QaQuestionTags. (required)
+  filter: string, Optional. A filter to reduce results to a specific subset. Supports conjunctions (ie. AND operators). Supported fields include the following: * `project_id` - id of the project to list tags for * `qa_scorecard_id` - id of the scorecard to list tags for * `revision_id` - id of the scorecard revision to list tags for` * `qa_question_id - id of the question to list tags for`
+    { # The response from a ListQaQuestionTags request.
+  &quot;qaQuestionTags&quot;: [ # The parent resource of the questions.
+  <pre>Updates a QaQuestionTag.
+  name: string, Identifier. Resource name for the QaQuestionTag Format projects/{project}/locations/{location}/qaQuestionTags/{qa_question_tag} In the above format, the last segment, i.e., qa_question_tag, is a server-generated ID corresponding to the tag resource. (required)
+  updateMask: string, Optional. The list of fields to be updated. All possible fields can be updated by passing `*`, or a subset of the following updateable fields can be provided: * `qa_question_tag_name` - the name of the tag * `qa_question_ids` - the list of questions the tag applies to

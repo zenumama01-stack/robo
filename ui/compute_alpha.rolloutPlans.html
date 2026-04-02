@@ -1,0 +1,73 @@
+<h1><a href="compute_alpha.html">Compute Engine API</a> . <a href="compute_alpha.rolloutPlans.html">rolloutPlans</a></h1>
+  <code><a href="#delete">delete(project, rolloutPlan, requestId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Deletes a RolloutPlan.</p>
+  <code><a href="#get">get(project, rolloutPlan, x__xgafv=None)</a></code></p>
+<p class="firstline">Gets details of a single project-scoped RolloutPlan.</p>
+<p class="firstline">Creates a new RolloutPlan in a given project and location.</p>
+<p class="firstline">Lists RolloutPlans in a given project and location.</p>
+    <code class="details" id="delete">delete(project, rolloutPlan, requestId=None, x__xgafv=None)</code>
+  <pre>Deletes a RolloutPlan.
+  rolloutPlan: string, Name of the RolloutPlan resource to delete. (required)
+    <code class="details" id="get">get(project, rolloutPlan, x__xgafv=None)</code>
+  <pre>Gets details of a single project-scoped RolloutPlan.
+  rolloutPlan: string, Name of the persistent rollout plan to return. (required)
+    { # RolloutPlan resource.
+    # A RolloutPlan is the customer-defined strategy to divide a large-scale change
+    # into smaller increments, referred to as &quot;waves&quot;. Each wave targets a specific
+    # portion of the overall affected area and defines criteria that must be met
+    # before progressing to the subsequent wave.
+  &quot;kind&quot;: &quot;compute#rolloutPlan&quot;, # Output only. [Output Only] Type of the resource. Always compute#rolloutPlan
+      # for rolloutPlans.
+  &quot;locationScope&quot;: &quot;A String&quot;, # The location scope of the rollout plan. If not specified, the location
+      # scope is considered as ZONAL.
+  &quot;waves&quot;: [ # Required. The waves included in this rollout plan.
+    { # A single wave in a rollout plan.
+      &quot;displayName&quot;: &quot;A String&quot;, # Optional. The display name of this wave of the rollout plan.
+      &quot;number&quot;: &quot;A String&quot;, # Output only. The wave number.
+      &quot;orchestrationOptions&quot;: { # Options to control the pace of orchestration of a wave. These options are # Optional. The orchestration options for this wave.
+          # required only if the resource being rolled out follows the Orchestrated
+          # pattern.
+        &quot;delays&quot;: [ # Optional. Delays, if any, to be added between batches of projects. We allow
+            # multiple Delays to be specified, letting users set separate delays
+            # between batches of projects corresponding to different locations and
+            # batches of projects corresponding to the same location.
+          { # Options to control the delay, if any, between batches of projects.
+            &quot;delimiter&quot;: &quot;A String&quot;, # Optional. Controls whether the delay should only be added between batches of
+                # projects corresponding to different locations, or also between
+                # Must be set to DELIMITER_UNSPECIFIED if no delay is to be added.
+            &quot;duration&quot;: &quot;A String&quot;, # Optional. The duration of the delay, if any, to be added between batches of
+                # projects. A zero duration corresponds to no delay.
+            &quot;type&quot;: &quot;A String&quot;, # Optional. Controls whether the specified duration is to be added at the end of
+                # each batch, or if the total processing time for each batch will be
+                # padded if needed to meet the specified duration.
+                # Must be set to TYPE_UNSPECIFIED if no delay is to be added.
+        &quot;maxConcurrentLocations&quot;: &quot;A String&quot;, # Optional. Maximum number of locations to be orchestrated in parallel.
+        &quot;maxConcurrentResourcesPerLocation&quot;: &quot;A String&quot;, # Optional. Maximum number of resources to be orchestrated per location in
+            # parallel.
+      &quot;selectors&quot;: [ # Required. The selectors for this wave. There is a logical AND between each selector
+          # defined in a wave, so a resource must satisfy the criteria of *all* the
+          # specified selectors to be in scope for the wave.
+        { # A selector which specifies what resource(s) are included in a given wave.
+          &quot;locationSelector&quot;: { # Roll out to resources by location. # Optional. Roll out to resources by Cloud locations.
+            &quot;includedLocations&quot;: [ # Optional. Example: &quot;us-central1-a&quot;
+          &quot;resourceHierarchySelector&quot;: { # Roll out to resources by Cloud Resource Manager resource hierarchy # Optional. Roll out to resources by Cloud Resource Manager resource hierarchy.
+              # nodes such as projects, folders, orgs.
+            &quot;includedFolders&quot;: [ # Optional. Format: &quot;folders/{folder_id}&quot;
+            &quot;includedOrganizations&quot;: [ # Optional. Format: &quot;organizations/{organization_id}&quot;
+            &quot;includedProjects&quot;: [ # Optional. Format: &quot;projects/{project_id}&quot;
+      &quot;validation&quot;: { # The validation to be performed before progressing to the next wave. # Required. The validation to be performed at the end of this wave.
+        &quot;timeBasedValidationMetadata&quot;: { # Metadata required if type = &quot;time&quot;. # Optional. Metadata required if type = &quot;time&quot;.
+          &quot;waitDuration&quot;: &quot;A String&quot;, # Optional. The duration that the system waits in between waves. This wait starts
+              # after all changes in the wave are rolled out.
+        &quot;type&quot;: &quot;A String&quot;, # Required. The type of the validation. If a type of validation is associated with
+            # a metadata object, the appropriate metadata field mapping to the
+            # validation type must be provided in the validation message. Possible
+            # values are in quotes below alongside an explanation:
+            #   &quot;manual&quot;: The system waits for an end-user approval API before
+            #     progressing to the next wave.
+            #   &quot;time&quot;: The system waits for a user specified duration before
+            #     progressing to the next wave. TimeBasedValidation must be provided.
+  <pre>Creates a new RolloutPlan in a given project and location.
+  <pre>Lists RolloutPlans in a given project and location.
+    { # Contains a list of RolloutPlan resources.
+  &quot;items&quot;: [ # A list of RolloutPlan resources.

@@ -1,0 +1,14 @@
+<h1><a href="networksecurity_v1.html">Network Security API</a> . <a href="networksecurity_v1.projects.html">projects</a> . <a href="networksecurity_v1.projects.locations.html">locations</a> . <a href="networksecurity_v1.projects.locations.mirroringDeployments.html">mirroringDeployments</a></h1>
+  <code><a href="#create">create(parent, body=None, mirroringDeploymentId=None, requestId=None, x__xgafv=None)</a></code></p>
+    <code class="details" id="create">create(parent, body=None, mirroringDeploymentId=None, requestId=None, x__xgafv=None)</code>
+{ # A deployment represents a zonal mirroring backend ready to accept GENEVE-encapsulated replica traffic, e.g. a zonal instance group fronted by an internal passthrough load balancer. Deployments are always part of a global deployment group which represents a global mirroring service.
+  &quot;forwardingRule&quot;: &quot;A String&quot;, # Required. Immutable. The regional forwarding rule that fronts the mirroring collectors, for example: `projects/123456789/regions/us-central1/forwardingRules/my-rule`. See https://google.aip.dev/124.
+  &quot;mirroringDeploymentGroup&quot;: &quot;A String&quot;, # Required. Immutable. The deployment group that this deployment is a part of, for example: `projects/123456789/locations/global/mirroringDeploymentGroups/my-dg`. See https://google.aip.dev/124.
+  &quot;name&quot;: &quot;A String&quot;, # Immutable. Identifier. The resource name of this deployment, for example: `projects/123456789/locations/us-central1-a/mirroringDeployments/my-dep`. See https://google.aip.dev/122 for more details.
+  mirroringDeploymentId: string, Required. The ID to use for the new deployment, which will become the final component of the deployment&#x27;s resource name.
+  name: string, Required. The name of the deployment to retrieve. Format: projects/{project}/locations/{location}/mirroringDeployments/{mirroring_deployment} (required)
+  pageToken: string, Optional. A page token, received from a previous `ListMirroringDeployments` call. Provide this to retrieve the subsequent page. When paginating, all other parameters provided to `ListMirroringDeployments` must match the call that provided the page token. See https://google.aip.dev/158 for more details.
+    { # Response message for ListMirroringDeployments.
+  &quot;mirroringDeployments&quot;: [ # The deployments from the specified parent.
+  name: string, Immutable. Identifier. The resource name of this deployment, for example: `projects/123456789/locations/us-central1-a/mirroringDeployments/my-dep`. See https://google.aip.dev/122 for more details. (required)
+  updateMask: string, Optional. The list of fields to update. Fields are specified relative to the deployment (e.g. `description`; *not* `mirroring_deployment.description`). See https://google.aip.dev/161 for more details.

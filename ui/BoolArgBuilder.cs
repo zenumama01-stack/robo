@@ -1,0 +1,14 @@
+    internal sealed class BoolArgBuilder : SimpleArgBuilder
+        internal BoolArgBuilder(Type parameterType)
+            : base(parameterType)
+            Debug.Assert(parameterType == typeof(bool));
+        internal override Expression MarshalToRef(Expression parameter)
+            // parameter  ? -1 : 0
+            return Expression.Condition(
+                Marshal(parameter),
+                Expression.Constant((short)(-1)),
+                Expression.Constant((short)0)
+        internal override Expression UnmarshalFromRef(Expression value)
+            //parameter = temp != 0
+            return base.UnmarshalFromRef(
+                Expression.NotEqual(

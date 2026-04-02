@@ -1,0 +1,83 @@
+<div class="graph-container">
+    <mj-loading text="Loading dependency graph..."></mj-loading>
+        <h2 class="page-title">Entity Dependency Graph</h2>
+        <p class="page-subtitle">Explore entity relationships used by the version history system</p>
+        <button class="btn-icon" (click)="Refresh()" title="Refresh">
+      <div class="stat-badge">
+        <span>{{TotalEntities}} Entities</span>
+        <span>{{EntitiesWithDependents}} with Dependents</span>
+        <span>{{TotalRelationships}} Relationships</span>
+    <!-- Main Layout: Entity List + Detail -->
+    <div class="graph-layout">
+      <div class="entity-list-panel">
+          <h3 class="panel-title">Entities</h3>
+            placeholder="Filter entities..."
+            [ngModel]="SearchText"
+            (ngModelChange)="OnSearchChange($event)" />
+        <!-- Schema Filter Chips -->
+        @if (AvailableSchemas.length > 1) {
+          <div class="schema-chips">
+            @for (schema of AvailableSchemas; track schema) {
+              <button class="schema-chip"
+                [class.active]="SchemaFilter === schema"
+                (click)="OnSchemaFilterChange(schema)">
+                {{schema}}
+                <span class="schema-chip-count">{{GetSchemaEntityCount(schema)}}</span>
+        <div class="entity-scroll-list">
+          @for (entity of FilteredEntities; track entity) {
+            <div class="entity-list-item"
+              [class.selected]="entity.IsSelected"
+              (click)="SelectEntity(entity)">
+              <div class="entity-list-name">{{entity.Name}}</div>
+              <div class="entity-list-badges">
+                @if (entity.ReferencedByCount > 0) {
+                  <span class="dep-badge"
+                    [ngClass]="GetDependencyLevel(entity.ReferencedByCount)"
+                    title="Referenced by (entities with FKs to this)">
+                    {{entity.ReferencedByCount}} <i class="fa-solid fa-arrow-down"></i>
+                @if (entity.DependsOnCount > 0) {
+                  <span class="dep-badge level-depends-on"
+                    title="Depends on (entities this has FKs to)">
+                    {{entity.DependsOnCount}} <i class="fa-solid fa-arrow-up"></i>
+          @if (FilteredEntities.length === 0) {
+            <div class="empty-list">
+              <p>No entities match your search.</p>
+      <div class="entity-detail-panel">
+        @if (SelectedEntity) {
+            <i class="fa-solid fa-table detail-icon"></i>
+            <div class="detail-header-text">
+              <h3 class="detail-title">{{SelectedEntity.Name}}</h3>
+              <span class="detail-schema">{{SelectedEntity.SchemaName}}</span>
+          <!-- Referenced By (entities that have FKs pointing to this entity) -->
+          <div class="relationship-section">
+              <i class="fa-solid fa-arrow-down section-icon referenced-by-icon"></i>
+              <h4>Referenced By</h4>
+              <span class="section-count">{{ReferencedByEntities.length}}</span>
+            <p class="section-hint">Entities that have foreign keys pointing to <strong>{{SelectedEntity.Name}}</strong></p>
+            @if (ReferencedByEntities.length > 0) {
+              <div class="relationship-list">
+                @for (rel of ReferencedByEntities; track rel) {
+                  <div class="relationship-item">
+                    <div class="rel-main"
+                      (click)="NavigateToEntity(rel.ToEntity)">
+                      <i class="fa-solid fa-table rel-icon"></i>
+                      <span class="rel-entity-name">{{rel.ToEntity}}</span>
+                      <span class="rel-join-field">
+                        {{rel.RelatedEntityJoinField}}
+            @if (ReferencedByEntities.length === 0) {
+              <div class="empty-relationships">
+                <p>No entities reference this entity.</p>
+          <!-- Depends On (entities this entity has FKs to) -->
+              <i class="fa-solid fa-arrow-up section-icon depends-on-icon"></i>
+              <h4>Depends On</h4>
+              <span class="section-count">{{DependsOnEntities.length}}</span>
+            <p class="section-hint"><strong>{{SelectedEntity.Name}}</strong> has foreign keys pointing to these entities</p>
+            @if (DependsOnEntities.length > 0) {
+                @for (rel of DependsOnEntities; track rel) {
+                      (click)="NavigateToEntity(rel.FromEntity)">
+                      <span class="rel-entity-name">{{rel.FromEntity}}</span>
+            @if (DependsOnEntities.length === 0) {
+                <p>This entity has no foreign key dependencies.</p>
+            <i class="fa-solid fa-diagram-project no-selection-icon"></i>
+            <h3>Select an Entity</h3>
+            <p>Choose an entity from the list to explore its dependency relationships.</p>

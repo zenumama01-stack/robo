@@ -1,0 +1,43 @@
+<h1><a href="cloudresourcemanager_v3.html">Cloud Resource Manager API</a> . <a href="cloudresourcemanager_v3.tagValues.html">tagValues</a></h1>
+  <code><a href="cloudresourcemanager_v3.tagValues.tagHolds.html">tagHolds()</a></code>
+<p class="firstline">Returns the tagHolds Resource.</p>
+<p class="firstline">Creates a TagValue as a child of the specified TagKey. If a another request with the same parameters is sent while the original request is in process the second request will receive an error. A maximum of 1000 TagValues can exist under a TagKey at any given time.</p>
+<p class="firstline">Deletes a TagValue. The TagValue cannot have any bindings when it is deleted.</p>
+<p class="firstline">Retrieves a TagValue. This method will return `PERMISSION_DENIED` if the value does not exist or the user does not have permission to view it.</p>
+<p class="firstline">Gets the access control policy for a TagValue. The returned policy may be empty if no such policy or resource exists. The `resource` field should be the TagValue's resource name. For example: `tagValues/1234`. The caller must have the `cloudresourcemanager.googleapis.com/tagValues.getIamPolicy` permission on the identified TagValue to get the access control policy.</p>
+<p class="firstline">Retrieves a TagValue by its namespaced name. This method will return `PERMISSION_DENIED` if the value does not exist or the user does not have permission to view it.</p>
+<p class="firstline">Lists all TagValues for a specific TagKey.</p>
+<p class="firstline">Updates the attributes of the TagValue resource.</p>
+<p class="firstline">Sets the access control policy on a TagValue, replacing any existing policy. The `resource` field should be the TagValue's resource name. For example: `tagValues/1234`. The caller must have `resourcemanager.tagValues.setIamPolicy` permission on the identified tagValue.</p>
+<p class="firstline">Returns permissions that a caller has on the specified TagValue. The `resource` field should be the TagValue's resource name. For example: `tagValues/1234`. There are no permissions required for making this API call.</p>
+  <pre>Creates a TagValue as a child of the specified TagKey. If a another request with the same parameters is sent while the original request is in process the second request will receive an error. A maximum of 1000 TagValues can exist under a TagKey at any given time.
+{ # A TagValue is a child of a particular TagKey. This is used to group cloud resources for the purpose of controlling them using policies.
+  &quot;description&quot;: &quot;A String&quot;, # Optional. User-assigned description of the TagValue. Must not exceed 256 characters. Read-write.
+  &quot;etag&quot;: &quot;A String&quot;, # Optional. Entity tag which users can pass to prevent race conditions. This field is always set in server responses. See UpdateTagValueRequest for details.
+  &quot;name&quot;: &quot;A String&quot;, # Immutable. Resource name for TagValue in the format `tagValues/456`.
+  &quot;namespacedName&quot;: &quot;A String&quot;, # Output only. The namespaced name of the TagValue. Can be in the form `{organization_id}/{tag_key_short_name}/{tag_value_short_name}` or `{project_id}/{tag_key_short_name}/{tag_value_short_name}` or `{project_number}/{tag_key_short_name}/{tag_value_short_name}`.
+  &quot;parent&quot;: &quot;A String&quot;, # Immutable. The resource name of the new TagValue&#x27;s parent TagKey. Must be of the form `tagKeys/{tag_key_id}`.
+  &quot;shortName&quot;: &quot;A String&quot;, # Required. Immutable. User-assigned short name for TagValue. The short name should be unique for TagValues within the same parent TagKey. The short name must be 256 characters or less, beginning and ending with an alphanumeric character ([a-z0-9A-Z]) with dashes (-), underscores (_), dots (.), and alphanumerics between.
+  validateOnly: boolean, Optional. Set as true to perform the validations necessary for creating the resource, but not actually perform the action.
+  <pre>Deletes a TagValue. The TagValue cannot have any bindings when it is deleted.
+  name: string, Required. Resource name for TagValue to be deleted in the format tagValues/456. (required)
+  etag: string, Optional. The etag known to the client for the expected state of the TagValue. This is to be used for optimistic concurrency.
+  validateOnly: boolean, Optional. Set as true to perform the validations necessary for deletion, but not actually perform the action.
+  <pre>Retrieves a TagValue. This method will return `PERMISSION_DENIED` if the value does not exist or the user does not have permission to view it.
+  name: string, Required. Resource name for TagValue to be fetched in the format `tagValues/456`. (required)
+  <pre>Gets the access control policy for a TagValue. The returned policy may be empty if no such policy or resource exists. The `resource` field should be the TagValue&#x27;s resource name. For example: `tagValues/1234`. The caller must have the `cloudresourcemanager.googleapis.com/tagValues.getIamPolicy` permission on the identified TagValue to get the access control policy.
+  <pre>Retrieves a TagValue by its namespaced name. This method will return `PERMISSION_DENIED` if the value does not exist or the user does not have permission to view it.
+  name: string, Required. A namespaced tag value name in the following format: `{parentId}/{tagKeyShort}/{tagValueShort}` Examples: - `42/foo/abc` for a value with short name &quot;abc&quot; under the key with short name &quot;foo&quot; under the organization with ID 42 - `r2-d2/bar/xyz` for a value with short name &quot;xyz&quot; under the key with short name &quot;bar&quot; under the project with ID &quot;r2-d2&quot;
+  <pre>Lists all TagValues for a specific TagKey.
+  pageSize: integer, Optional. The maximum number of TagValues to return in the response. The server allows a maximum of 300 TagValues to return. If unspecified, the server will use 100 as the default.
+  pageToken: string, Optional. A pagination token returned from a previous call to `ListTagValues` that indicates where this listing should continue from.
+  parent: string, Required. Resource name for the parent of the TagValues to be listed, in the format `tagKeys/123` or `tagValues/123`.
+    { # The ListTagValues response.
+  &quot;nextPageToken&quot;: &quot;A String&quot;, # A pagination token returned from a previous call to `ListTagValues` that indicates from where listing should continue.
+  &quot;tagValues&quot;: [ # A possibly paginated list of TagValues that are direct descendants of the specified parent TagKey.
+  <pre>Updates the attributes of the TagValue resource.
+  name: string, Immutable. Resource name for TagValue in the format `tagValues/456`. (required)
+  updateMask: string, Optional. Fields to be updated.
+  validateOnly: boolean, Optional. True to perform validations necessary for updating the resource, but not actually perform the action.
+  <pre>Sets the access control policy on a TagValue, replacing any existing policy. The `resource` field should be the TagValue&#x27;s resource name. For example: `tagValues/1234`. The caller must have `resourcemanager.tagValues.setIamPolicy` permission on the identified tagValue.
+  <pre>Returns permissions that a caller has on the specified TagValue. The `resource` field should be the TagValue&#x27;s resource name. For example: `tagValues/1234`. There are no permissions required for making this API call.

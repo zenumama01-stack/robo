@@ -1,0 +1,41 @@
+<h1><a href="certificatemanager_v1.html">Certificate Manager API</a> . <a href="certificatemanager_v1.projects.html">projects</a> . <a href="certificatemanager_v1.projects.locations.html">locations</a> . <a href="certificatemanager_v1.projects.locations.certificateMaps.html">certificateMaps</a></h1>
+  <code><a href="certificatemanager_v1.projects.locations.certificateMaps.certificateMapEntries.html">certificateMapEntries()</a></code>
+<p class="firstline">Returns the certificateMapEntries Resource.</p>
+  <code><a href="#create">create(parent, body=None, certificateMapId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Creates a new CertificateMap in a given project and location.</p>
+<p class="firstline">Deletes a single CertificateMap. A Certificate Map can't be deleted if it contains Certificate Map Entries. Remove all the entries from the map before calling this method.</p>
+<p class="firstline">Gets details of a single CertificateMap.</p>
+<p class="firstline">Lists CertificateMaps in a given project and location.</p>
+<p class="firstline">Updates a CertificateMap.</p>
+    <code class="details" id="create">create(parent, body=None, certificateMapId=None, x__xgafv=None)</code>
+  <pre>Creates a new CertificateMap in a given project and location.
+  parent: string, Required. The parent resource of the certificate map. Must be in the format `projects/*/locations/*`. (required)
+{ # Defines a collection of certificate configurations.
+  &quot;createTime&quot;: &quot;A String&quot;, # Output only. The creation timestamp of a Certificate Map.
+  &quot;description&quot;: &quot;A String&quot;, # Optional. One or more paragraphs of text description of a certificate map.
+  &quot;gclbTargets&quot;: [ # Output only. A list of GCLB targets that use this Certificate Map. A Target Proxy is only present on this list if it&#x27;s attached to a Forwarding Rule.
+    { # Describes a Target Proxy that uses this Certificate Map.
+      &quot;ipConfigs&quot;: [ # Output only. IP configurations for this Target Proxy where the Certificate Map is serving.
+        { # Defines IP configuration where this Certificate Map is serving.
+          &quot;ipAddress&quot;: &quot;A String&quot;, # Output only. An external IP address.
+          &quot;ports&quot;: [ # Output only. Ports.
+      &quot;targetHttpsProxy&quot;: &quot;A String&quot;, # Output only. This field returns the resource name in the following format: `//compute.googleapis.com/projects/*/global/targetHttpsProxies/*`.
+      &quot;targetSslProxy&quot;: &quot;A String&quot;, # Output only. This field returns the resource name in the following format: `//compute.googleapis.com/projects/*/global/targetSslProxies/*`.
+  &quot;labels&quot;: { # Optional. Set of labels associated with a Certificate Map.
+  &quot;name&quot;: &quot;A String&quot;, # Identifier. A user-defined name of the Certificate Map. Certificate Map names must be unique globally and match pattern `projects/*/locations/*/certificateMaps/*`.
+  &quot;updateTime&quot;: &quot;A String&quot;, # Output only. The update timestamp of a Certificate Map.
+  certificateMapId: string, Required. A user-provided name of the certificate map.
+  <pre>Deletes a single CertificateMap. A Certificate Map can&#x27;t be deleted if it contains Certificate Map Entries. Remove all the entries from the map before calling this method.
+  name: string, Required. A name of the certificate map to delete. Must be in the format `projects/*/locations/*/certificateMaps/*`. (required)
+  <pre>Gets details of a single CertificateMap.
+  name: string, Required. A name of the certificate map to describe. Must be in the format `projects/*/locations/*/certificateMaps/*`. (required)
+  <pre>Lists CertificateMaps in a given project and location.
+  parent: string, Required. The project and location from which the certificate maps should be listed, specified in the format `projects/*/locations/*`. (required)
+  filter: string, Optional. Filter expression to restrict the Certificates Maps returned.
+  orderBy: string, Optional. A list of Certificate Map field names used to specify the order of the returned results. The default sorting order is ascending. To specify descending order for a field, add a suffix `&quot; desc&quot;`.
+  pageSize: integer, Optional. Maximum number of certificate maps to return per call.
+  pageToken: string, Optional. The value returned by the last `ListCertificateMapsResponse`. Indicates that this is a continuation of a prior `ListCertificateMaps` call, and that the system should return the next page of data.
+    { # Response for the `ListCertificateMaps` method.
+  &quot;certificateMaps&quot;: [ # A list of certificate maps for the parent resource.
+  <pre>Updates a CertificateMap.
+  name: string, Identifier. A user-defined name of the Certificate Map. Certificate Map names must be unique globally and match pattern `projects/*/locations/*/certificateMaps/*`. (required)

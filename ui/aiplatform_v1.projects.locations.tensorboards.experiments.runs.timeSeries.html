@@ -1,0 +1,59 @@
+<h1><a href="aiplatform_v1.html">Vertex AI API</a> . <a href="aiplatform_v1.projects.html">projects</a> . <a href="aiplatform_v1.projects.locations.html">locations</a> . <a href="aiplatform_v1.projects.locations.tensorboards.html">tensorboards</a> . <a href="aiplatform_v1.projects.locations.tensorboards.experiments.html">experiments</a> . <a href="aiplatform_v1.projects.locations.tensorboards.experiments.runs.html">runs</a> . <a href="aiplatform_v1.projects.locations.tensorboards.experiments.runs.timeSeries.html">timeSeries</a></h1>
+  <code><a href="aiplatform_v1.projects.locations.tensorboards.experiments.runs.timeSeries.operations.html">operations()</a></code>
+  <code><a href="#create">create(parent, body=None, tensorboardTimeSeriesId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Creates a TensorboardTimeSeries.</p>
+<p class="firstline">Deletes a TensorboardTimeSeries.</p>
+  <code><a href="#exportTensorboardTimeSeries">exportTensorboardTimeSeries(tensorboardTimeSeries, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Exports a TensorboardTimeSeries' data. Data is returned in paginated responses.</p>
+  <code><a href="#exportTensorboardTimeSeries_next">exportTensorboardTimeSeries_next()</a></code></p>
+<p class="firstline">Gets a TensorboardTimeSeries.</p>
+<p class="firstline">Lists TensorboardTimeSeries in a Location.</p>
+<p class="firstline">Updates a TensorboardTimeSeries.</p>
+  <code><a href="#read">read(tensorboardTimeSeries, filter=None, maxDataPoints=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Reads a TensorboardTimeSeries' data. By default, if the number of data points stored is less than 1000, all data is returned. Otherwise, 1000 data points is randomly selected from this time series and returned. This value can be changed by changing max_data_points, which can't be greater than 10k.</p>
+  <code><a href="#readBlobData">readBlobData(timeSeries, blobIds=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Gets bytes of TensorboardBlobs. This is to allow reading blob data stored in consumer project's Cloud Storage bucket without users having to obtain Cloud Storage access permission.</p>
+    <code class="details" id="create">create(parent, body=None, tensorboardTimeSeriesId=None, x__xgafv=None)</code>
+  <pre>Creates a TensorboardTimeSeries.
+  parent: string, Required. The resource name of the TensorboardRun to create the TensorboardTimeSeries in. Format: `projects/{project}/locations/{location}/tensorboards/{tensorboard}/experiments/{experiment}/runs/{run}` (required)
+  tensorboardTimeSeriesId: string, Optional. The user specified unique ID to use for the TensorboardTimeSeries, which becomes the final component of the TensorboardTimeSeries&#x27;s resource name. This value should match &quot;a-z0-9{0, 127}&quot;
+  <pre>Deletes a TensorboardTimeSeries.
+  name: string, Required. The name of the TensorboardTimeSeries to be deleted. Format: `projects/{project}/locations/{location}/tensorboards/{tensorboard}/experiments/{experiment}/runs/{run}/timeSeries/{time_series}` (required)
+    <code class="details" id="exportTensorboardTimeSeries">exportTensorboardTimeSeries(tensorboardTimeSeries, body=None, x__xgafv=None)</code>
+  <pre>Exports a TensorboardTimeSeries&#x27; data. Data is returned in paginated responses.
+  tensorboardTimeSeries: string, Required. The resource name of the TensorboardTimeSeries to export data from. Format: `projects/{project}/locations/{location}/tensorboards/{tensorboard}/experiments/{experiment}/runs/{run}/timeSeries/{time_series}` (required)
+{ # Request message for TensorboardService.ExportTensorboardTimeSeriesData.
+  &quot;filter&quot;: &quot;A String&quot;, # Exports the TensorboardTimeSeries&#x27; data that match the filter expression.
+  &quot;orderBy&quot;: &quot;A String&quot;, # Field to use to sort the TensorboardTimeSeries&#x27; data. By default, TensorboardTimeSeries&#x27; data is returned in a pseudo random order.
+  &quot;pageSize&quot;: 42, # The maximum number of data points to return per page. The default page_size is 1000. Values must be between 1 and 10000. Values above 10000 are coerced to 10000.
+  &quot;pageToken&quot;: &quot;A String&quot;, # A page token, received from a previous ExportTensorboardTimeSeriesData call. Provide this to retrieve the subsequent page. When paginating, all other parameters provided to ExportTensorboardTimeSeriesData must match the call that provided the page token.
+    { # Response message for TensorboardService.ExportTensorboardTimeSeriesData.
+  &quot;nextPageToken&quot;: &quot;A String&quot;, # A token, which can be sent as page_token to retrieve the next page. If this field is omitted, there are no subsequent pages.
+  &quot;timeSeriesDataPoints&quot;: [ # The returned time series data points.
+    <code class="details" id="exportTensorboardTimeSeries_next">exportTensorboardTimeSeries_next()</code>
+  <pre>Gets a TensorboardTimeSeries.
+  name: string, Required. The name of the TensorboardTimeSeries resource. Format: `projects/{project}/locations/{location}/tensorboards/{tensorboard}/experiments/{experiment}/runs/{run}/timeSeries/{time_series}` (required)
+  <pre>Lists TensorboardTimeSeries in a Location.
+  parent: string, Required. The resource name of the TensorboardRun to list TensorboardTimeSeries. Format: `projects/{project}/locations/{location}/tensorboards/{tensorboard}/experiments/{experiment}/runs/{run}` (required)
+  filter: string, Lists the TensorboardTimeSeries that match the filter expression.
+  pageSize: integer, The maximum number of TensorboardTimeSeries to return. The service may return fewer than this value. If unspecified, at most 50 TensorboardTimeSeries are returned. The maximum value is 1000; values above 1000 are coerced to 1000.
+  pageToken: string, A page token, received from a previous TensorboardService.ListTensorboardTimeSeries call. Provide this to retrieve the subsequent page. When paginating, all other parameters provided to TensorboardService.ListTensorboardTimeSeries must match the call that provided the page token.
+    { # Response message for TensorboardService.ListTensorboardTimeSeries.
+  &quot;nextPageToken&quot;: &quot;A String&quot;, # A token, which can be sent as ListTensorboardTimeSeriesRequest.page_token to retrieve the next page. If this field is omitted, there are no subsequent pages.
+  &quot;tensorboardTimeSeries&quot;: [ # The TensorboardTimeSeries mathching the request.
+  <pre>Updates a TensorboardTimeSeries.
+  name: string, Output only. Name of the TensorboardTimeSeries. (required)
+  updateMask: string, Required. Field mask is used to specify the fields to be overwritten in the TensorboardTimeSeries resource by the update. The fields specified in the update_mask are relative to the resource, not the full request. A field is overwritten if it&#x27;s in the mask. If the user does not provide a mask then all fields are overwritten if new values are specified.
+    <code class="details" id="read">read(tensorboardTimeSeries, filter=None, maxDataPoints=None, x__xgafv=None)</code>
+  <pre>Reads a TensorboardTimeSeries&#x27; data. By default, if the number of data points stored is less than 1000, all data is returned. Otherwise, 1000 data points is randomly selected from this time series and returned. This value can be changed by changing max_data_points, which can&#x27;t be greater than 10k.
+  tensorboardTimeSeries: string, Required. The resource name of the TensorboardTimeSeries to read data from. Format: `projects/{project}/locations/{location}/tensorboards/{tensorboard}/experiments/{experiment}/runs/{run}/timeSeries/{time_series}` (required)
+  filter: string, Reads the TensorboardTimeSeries&#x27; data that match the filter expression.
+  maxDataPoints: integer, The maximum number of TensorboardTimeSeries&#x27; data to return. This value should be a positive integer. This value can be set to -1 to return all data.
+    { # Response message for TensorboardService.ReadTensorboardTimeSeriesData.
+  &quot;timeSeriesData&quot;: { # All the data stored in a TensorboardTimeSeries. # The returned time series data.
+    <code class="details" id="readBlobData">readBlobData(timeSeries, blobIds=None, x__xgafv=None)</code>
+  <pre>Gets bytes of TensorboardBlobs. This is to allow reading blob data stored in consumer project&#x27;s Cloud Storage bucket without users having to obtain Cloud Storage access permission.
+  timeSeries: string, Required. The resource name of the TensorboardTimeSeries to list Blobs. Format: `projects/{project}/locations/{location}/tensorboards/{tensorboard}/experiments/{experiment}/runs/{run}/timeSeries/{time_series}` (required)
+  blobIds: string, IDs of the blobs to read. (repeated)
+    { # Response message for TensorboardService.ReadTensorboardBlobData.
+  &quot;blobs&quot;: [ # Blob messages containing blob bytes.

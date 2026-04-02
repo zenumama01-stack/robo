@@ -1,0 +1,24 @@
+<h1><a href="container_v1beta1.html">Kubernetes Engine API</a> . <a href="container_v1beta1.projects.html">projects</a> . <a href="container_v1beta1.projects.locations.html">locations</a></h1>
+  <code><a href="container_v1beta1.projects.locations.clusters.html">clusters()</a></code>
+  <code><a href="container_v1beta1.projects.locations.operations.html">operations()</a></code>
+<p class="firstline">Fetches locations that offer Google Kubernetes Engine.</p>
+      &quot;availableVersions&quot;: [ # Deprecated. This field has been deprecated and replaced with the valid_versions field.
+        { # Deprecated.
+          &quot;reason&quot;: &quot;A String&quot;, # Reason for availability.
+          &quot;version&quot;: &quot;A String&quot;, # Kubernetes version.
+  &quot;windowsVersionMaps&quot;: { # Maps of Kubernetes version and supported Windows server versions.
+    &quot;a_key&quot;: { # Windows server versions.
+      &quot;windowsVersions&quot;: [ # List of Windows server versions.
+        { # Windows server version.
+          &quot;imageType&quot;: &quot;A String&quot;, # Windows server image type
+          &quot;osVersion&quot;: &quot;A String&quot;, # Windows server build number
+          &quot;supportEndDate&quot;: { # Represents a whole or partial calendar date, such as a birthday. The time of day and time zone are either specified elsewhere or are insignificant. The date is relative to the Gregorian Calendar. This can represent one of the following: * A full date, with non-zero year, month, and day values. * A month and day, with a zero year (for example, an anniversary). * A year on its own, with a zero month and a zero day. * A year and month, with a zero day (for example, a credit card expiration date). Related types: * google.type.TimeOfDay * google.type.DateTime * google.protobuf.Timestamp # Mainstream support end date
+  <pre>Fetches locations that offer Google Kubernetes Engine.
+  parent: string, Required. Contains the name of the resource requested. Specified in the format `projects/*`. (required)
+    { # ListLocationsResponse returns the list of all GKE locations and their recommendation state.
+  &quot;locations&quot;: [ # A full list of GKE locations.
+    { # Location returns the location name, and if the location is recommended for GKE cluster scheduling.
+      &quot;name&quot;: &quot;A String&quot;, # Contains the name of the resource requested. Specified in the format `projects/*/locations/*`.
+      &quot;recommended&quot;: True or False, # Whether the location is recommended for GKE cluster scheduling.
+      &quot;type&quot;: &quot;A String&quot;, # Contains the type of location this Location is for. Regional or Zonal.
+  &quot;nextPageToken&quot;: &quot;A String&quot;, # Only return ListLocationsResponse that occur after the page_token. This value should be populated from the ListLocationsResponse.next_page_token if that response token was set (which happens when listing more Locations than fit in a single ListLocationsResponse).

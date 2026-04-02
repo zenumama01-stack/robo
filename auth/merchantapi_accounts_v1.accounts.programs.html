@@ -1,0 +1,31 @@
+<h1><a href="merchantapi_accounts_v1.html">Merchant API</a> . <a href="merchantapi_accounts_v1.accounts.html">accounts</a> . <a href="merchantapi_accounts_v1.accounts.programs.html">programs</a></h1>
+  <code><a href="merchantapi_accounts_v1.accounts.programs.checkoutSettings.html">checkoutSettings()</a></code>
+<p class="firstline">Returns the checkoutSettings Resource.</p>
+<p class="firstline">Disable participation in the specified program for the account.</p>
+<p class="firstline">Enable participation in the specified program for the account.</p>
+<p class="firstline">Retrieves the specified program for the account.</p>
+<p class="firstline">Retrieves all programs for the account.</p>
+  <pre>Disable participation in the specified program for the account.
+  name: string, Required. The name of the program for which to disable participation for the given account. Format: `accounts/{account}/programs/{program}`. For example, `accounts/123456/programs/free-listings`. (required)
+{ # Request message for the DisableProgram method.
+    { # Defines participation in a given program for the specified account. Programs provide a mechanism for adding functionality to a Merchant Center accounts. A typical example of this is the [Free product listings](https://support.google.com/merchants/answer/13889434) program, which enables products from a business&#x27;s store to be shown across Google for free. The following list is the available set of program resource IDs accessible through the API: * `checkout` * `free-listings` * `product-ratings` * `shopping-ads` * `youtube-shopping-checkout`
+  &quot;activeRegionCodes&quot;: [ # Output only. The regions in which the account is actively participating in the program. Active regions are defined as those where all program requirements affecting the regions have been met. Region codes are defined by [CLDR](https://cldr.unicode.org/). This is either a country where the program applies specifically to that country or `001` when the program applies globally.
+  &quot;documentationUri&quot;: &quot;A String&quot;, # Output only. The URL of a Merchant Center help page describing the program.
+  &quot;name&quot;: &quot;A String&quot;, # Identifier. The resource name of the program. Format: `accounts/{account}/programs/{program}`
+  &quot;state&quot;: &quot;A String&quot;, # Output only. The participation state of the account in the program.
+  &quot;unmetRequirements&quot;: [ # Output only. The requirements that the account has not yet satisfied that are affecting participation in the program.
+    { # Defines a requirement specified for participation in the program.
+      &quot;affectedRegionCodes&quot;: [ # Output only. The regions that are currently affected by this requirement not being met. Region codes are defined by [CLDR](https://cldr.unicode.org/). This is either a country where the program applies specifically to that country or `001` when the program applies globally.
+      &quot;documentationUri&quot;: &quot;A String&quot;, # Output only. The URL of a help page describing the requirement.
+      &quot;title&quot;: &quot;A String&quot;, # Output only. Name of the requirement.
+  <pre>Enable participation in the specified program for the account.
+  name: string, Required. The name of the program for which to enable participation for the given account. Format: `accounts/{account}/programs/{program}`. For example, `accounts/123456/programs/free-listings`. (required)
+{ # Request message for the EnableProgram method.
+  <pre>Retrieves the specified program for the account.
+  name: string, Required. The name of the program to retrieve. Format: `accounts/{account}/programs/{program}`. For example, `accounts/123456/programs/free-listings`. (required)
+  <pre>Retrieves all programs for the account.
+  parent: string, Required. The name of the account for which to retrieve all programs. Format: `accounts/{account}` (required)
+  pageSize: integer, Optional. The maximum number of programs to return in a single response. If unspecified (or 0), a default size of 1000 is used. The maximum value is 1000; values above 1000 will be coerced to 1000.
+  pageToken: string, Optional. A continuation token, received from a previous `ListPrograms` call. Provide this to retrieve the next page.
+    { # Response message for the ListPrograms method.
+  &quot;programs&quot;: [ # The programs for the given account.

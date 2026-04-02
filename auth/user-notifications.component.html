@@ -1,0 +1,123 @@
+<div class="notifications-container">
+  <div class="notifications-header">
+        <div class="title-icon">
+        <h1>Notifications</h1>
+      @if (AllNotifications.length > 0) {
+          @if (UnreadNotifications.length > 0) {
+            <button class="action-btn action-btn-ghost"
+                    (click)="markAllAsRead()"
+                    aria-label="Mark all notifications as read">
+              <i class="fa-solid fa-check-double" aria-hidden="true"></i>
+              <span class="btn-text">Mark All Read</span>
+          @if (ReadNotifications.length > 0) {
+            <button class="action-btn action-btn-secondary"
+                    (click)="markAllAsUnread()"
+                    aria-label="Mark all notifications as unread">
+              <i class="fa-solid fa-envelope" aria-hidden="true"></i>
+              <span class="btn-text">Mark All Unread</span>
+    <!-- Filters Section -->
+      <div class="filters-section">
+        <!-- Horizontal Slider for Filters (Mobile) -->
+        <div class="filters-slider">
+          <div class="slider-content">
+            <!-- Stats Pills (Filter Tabs) -->
+            <div class="header-stats" role="group" aria-label="Filter notifications by read status">
+              <input #allRadio type="radio" name="UnreadStatus" value="All"
+                     (change)="onReadRadioChanged($event)" checked class="hidden-radio"
+                     id="filter-all" />
+              <button class="stat-pill"
+                      [class.active]="radioSelected === 'All'"
+                      (click)="selectReadOption('All')"
+                      [attr.aria-pressed]="radioSelected === 'All'"
+                      aria-label="Show all notifications">
+                <span class="stat-label">All</span>
+                <span class="stat-count">{{AllNotifications.length}}</span>
+              <input #unreadRadio type="radio" name="UnreadStatus" value="Unread"
+                     (change)="onReadRadioChanged($event)" class="hidden-radio"
+                     id="filter-unread" />
+              @if (UnreadNotifications.length > 0 || ReadNotifications.length === 0) {
+                        [class.active]="radioSelected === 'Unread'"
+                        [class.has-unread]="UnreadNotifications.length > 0"
+                        (click)="selectReadOption('Unread')"
+                        [attr.aria-pressed]="radioSelected === 'Unread'"
+                        aria-label="Show unread notifications">
+                  <span class="stat-label">Unread</span>
+                  <span class="stat-count" [class.unread-count]="UnreadNotifications.length > 0">
+                    {{UnreadNotifications.length}}
+              <input #readRadio type="radio" name="UnreadStatus" value="Read"
+                     id="filter-read" />
+              @if (ReadNotifications.length > 0 || UnreadNotifications.length === 0) {
+                        [class.active]="radioSelected === 'Read'"
+                        (click)="selectReadOption('Read')"
+                        [attr.aria-pressed]="radioSelected === 'Read'"
+                        aria-label="Show read notifications">
+                  <span class="stat-label">Read</span>
+                  <span class="stat-count">{{ReadNotifications.length}}</span>
+            <!-- Native Type Filter Dropdown (in slider on mobile) -->
+            @if (notificationTypes.length > 0) {
+              <div class="filter-item type-filter-slider">
+                <select class="type-select"
+                        [(ngModel)]="selectedTypeFilter"
+                        (change)="onTypeFilterChange(selectedTypeFilter)"
+                        aria-label="Filter by notification type">
+                  <option [value]="null">All Types</option>
+                  @for (type of notificationTypes; track type.ID) {
+        <!-- Search Filter (separate, full-width on mobile) -->
+            <i class="fa-solid fa-magnifying-glass search-icon" aria-hidden="true"></i>
+                   placeholder="Search notifications..."
+                   [value]="currentFilter"
+                   (input)="onFilterChanged($any($event.target).value)"
+                   aria-label="Search notifications" />
+        <!-- Filter Info Badge -->
+        @if (NotificationsToShow.length !== AllNotifications.length) {
+          <div class="filter-info">
+              <i class="fa-solid fa-filter" aria-hidden="true"></i>
+              Showing {{NotificationsToShow.length}} of {{AllNotifications.length}}
+  <!-- Notifications Content -->
+  <div class="notifications-content">
+    @if (NotificationsToShow.length === 0 && AllNotifications.length === 0) {
+          <i class="fa-solid fa-bell-slash"></i>
+        <h3>No Notifications</h3>
+        <p>You're all caught up! New notifications will appear here.</p>
+    } @else if (NotificationsToShow.length === 0) {
+        <h3>No Matching Notifications</h3>
+        <p>Try adjusting your filters to see more notifications.</p>
+      <!-- Notifications List -->
+      <div class="notifications-list">
+        @for (notification of NotificationsToShow; track notification.ID) {
+          <article class="notification-card"
+                   [class.unread]="notification.Unread"
+                   [class.clickable]="isNotificationClickable(notification)"
+                   role="article"
+                   [attr.aria-label]="notification.Title">
+            <!-- Unread Indicator Bar -->
+            <div class="card-indicator" aria-hidden="true"></div>
+            <!-- Type Icon -->
+            <div class="card-icon"
+                 [style.background-color]="getTypeColor(notification) + '15'"
+              <i [class]="'fa-solid ' + getTypeIcon(notification)"
+                 [style.color]="getTypeColor(notification)"></i>
+            <div class="card-content" (click)="notificationClicked(notification)">
+                <h3 class="card-title" [class.card-title-unread]="notification.Unread">
+                  {{notification.Title}}
+                <span class="card-time">
+                  <i class="fa-regular fa-clock" aria-hidden="true"></i>
+                  <time [attr.datetime]="notification.__mj_CreatedAt">
+                    {{notification.__mj_CreatedAt | date:'MMM d, h:mm a'}}
+                  </time>
+                <span class="card-type"
+                      [style.color]="getTypeColor(notification)">
+                  {{getTypeName(notification)}}
+              <p class="card-message">{{notification.Message}}</p>
+              @if (notification.Unread) {
+                <button class="card-action-btn"
+                        (click)="markAsRead(notification, true, null)"
+                        [attr.aria-label]="'Mark ' + notification.Title + ' as read'"
+                        title="Mark as Read">
+                  <i class="fa-solid fa-check" aria-hidden="true"></i>
+                  <span class="action-text">Read</span>
+                        (click)="markAsRead(notification, false, null)"
+                        [attr.aria-label]="'Mark ' + notification.Title + ' as unread'"
+                        title="Mark as Unread">
+                  <span class="action-text">Unread</span>
+          </article>

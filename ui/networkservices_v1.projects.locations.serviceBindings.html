@@ -1,0 +1,29 @@
+<h1><a href="networkservices_v1.html">Network Services API</a> . <a href="networkservices_v1.projects.html">projects</a> . <a href="networkservices_v1.projects.locations.html">locations</a> . <a href="networkservices_v1.projects.locations.serviceBindings.html">serviceBindings</a></h1>
+  <code><a href="#create">create(parent, body=None, serviceBindingId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Creates a new ServiceBinding in a given project and location.</p>
+<p class="firstline">Deletes a single ServiceBinding.</p>
+<p class="firstline">Gets details of a single ServiceBinding.</p>
+<p class="firstline">Lists ServiceBinding in a given project and location.</p>
+<p class="firstline">Updates the parameters of a single ServiceBinding.</p>
+    <code class="details" id="create">create(parent, body=None, serviceBindingId=None, x__xgafv=None)</code>
+  <pre>Creates a new ServiceBinding in a given project and location.
+  parent: string, Required. The parent resource of the ServiceBinding. Must be in the format `projects/*/locations/*`. (required)
+{ # ServiceBinding can be used to: - Bind a Service Directory Service to be used in a BackendService resource. This feature will be deprecated soon. - Bind a Private Service Connect producer service to be used in consumer Cloud Service Mesh or Application Load Balancers. - Bind a Cloud Run service to be used in consumer Cloud Service Mesh or Application Load Balancers.
+  &quot;labels&quot;: { # Optional. Set of label tags associated with the ServiceBinding resource.
+  &quot;name&quot;: &quot;A String&quot;, # Identifier. Name of the ServiceBinding resource. It matches pattern `projects/*/locations/*/serviceBindings/`.
+  &quot;service&quot;: &quot;A String&quot;, # Optional. The full Service Directory Service name of the format `projects/*/locations/*/namespaces/*/services/*`. This field is for Service Directory integration which will be deprecated soon.
+  &quot;serviceId&quot;: &quot;A String&quot;, # Output only. The unique identifier of the Service Directory Service against which the ServiceBinding resource is validated. This is populated when the Service Binding resource is used in another resource (like Backend Service). This is of the UUID4 format. This field is for Service Directory integration which will be deprecated soon.
+  serviceBindingId: string, Required. Short name of the ServiceBinding resource to be created.
+  <pre>Deletes a single ServiceBinding.
+  name: string, Required. A name of the ServiceBinding to delete. Must be in the format `projects/*/locations/*/serviceBindings/*`. (required)
+  <pre>Gets details of a single ServiceBinding.
+  name: string, Required. A name of the ServiceBinding to get. Must be in the format `projects/*/locations/*/serviceBindings/*`. (required)
+  <pre>Lists ServiceBinding in a given project and location.
+  parent: string, Required. The project and location from which the ServiceBindings should be listed, specified in the format `projects/*/locations/*`. (required)
+  pageSize: integer, Maximum number of ServiceBindings to return per call.
+  pageToken: string, The value returned by the last `ListServiceBindingsResponse` Indicates that this is a continuation of a prior `ListRouters` call, and that the system should return the next page of data.
+    { # Response returned by the ListServiceBindings method.
+  &quot;serviceBindings&quot;: [ # List of ServiceBinding resources.
+  <pre>Updates the parameters of a single ServiceBinding.
+  name: string, Identifier. Name of the ServiceBinding resource. It matches pattern `projects/*/locations/*/serviceBindings/`. (required)
+  updateMask: string, Optional. Field mask is used to specify the fields to be overwritten in the ServiceBinding resource by the update. The fields specified in the update_mask are relative to the resource, not the full request. A field will be overwritten if it is in the mask. If the user does not provide a mask then all fields will be overwritten.

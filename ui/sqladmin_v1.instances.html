@@ -1,0 +1,313 @@
+<h1><a href="sqladmin_v1.html">Cloud SQL Admin API</a> . <a href="sqladmin_v1.instances.html">instances</a></h1>
+  <code><a href="#ListEntraIdCertificates">ListEntraIdCertificates(project, instance, x__xgafv=None)</a></code></p>
+<p class="firstline">Lists all versions of EntraID certificates for the specified instance. There can be up to three sets of certificates listed: the certificate that is currently in use, a future that has been added but not yet used to sign a certificate, and a certificate that has been rotated out.</p>
+  <code><a href="#ListServerCertificates">ListServerCertificates(project, instance, x__xgafv=None)</a></code></p>
+<p class="firstline">Lists all versions of server certificates and certificate authorities (CAs) for the specified instance. There can be up to three sets of certs listed: the certificate that is currently in use, a future that has been added but not yet used to sign a certificate, and a certificate that has been rotated out. For instances not using Certificate Authority Service (CAS) server CA, use ListServerCas instead.</p>
+  <code><a href="#RotateEntraIdCertificate">RotateEntraIdCertificate(project, instance, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Rotates the server certificate version to one previously added with the addEntraIdCertificate method.</p>
+  <code><a href="#RotateServerCertificate">RotateServerCertificate(project, instance, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Rotates the server certificate version to one previously added with the addServerCertificate method. For instances not using Certificate Authority Service (CAS) server CA, use RotateServerCa instead.</p>
+  <code><a href="#acquireSsrsLease">acquireSsrsLease(project, instance, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Acquire a lease for the setup of SQL Server Reporting Services (SSRS).</p>
+  <code><a href="#addEntraIdCertificate">addEntraIdCertificate(project, instance, x__xgafv=None)</a></code></p>
+<p class="firstline">Adds a new Entra ID certificate for the specified instance. If an Entra ID certificate was previously added but never used in a certificate rotation, this operation replaces that version.</p>
+  <code><a href="#addServerCa">addServerCa(project, instance, x__xgafv=None)</a></code></p>
+<p class="firstline">Adds a new trusted Certificate Authority (CA) version for the specified instance. Required to prepare for a certificate rotation. If a CA version was previously added but never used in a certificate rotation, this operation replaces that version. There cannot be more than one CA version waiting to be rotated in. For instances that have enabled Certificate Authority Service (CAS) based server CA, use AddServerCertificate to add a new server certificate.</p>
+  <code><a href="#addServerCertificate">addServerCertificate(project, instance, x__xgafv=None)</a></code></p>
+<p class="firstline">Add a new trusted server certificate version for the specified instance using Certificate Authority Service (CAS) server CA. Required to prepare for a certificate rotation. If a server certificate version was previously added but never used in a certificate rotation, this operation replaces that version. There cannot be more than one certificate version waiting to be rotated in. For instances not using CAS server CA, use AddServerCa instead.</p>
+  <code><a href="#clone">clone(project, instance, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Creates a Cloud SQL instance as a clone of the source instance. Using this operation might cause your instance to restart.</p>
+  <code><a href="#delete">delete(project, instance, enableFinalBackup=None, finalBackupDescription=None, finalBackupExpiryTime=None, finalBackupTtlDays=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Deletes a Cloud SQL instance.</p>
+  <code><a href="#demote">demote(project, instance, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Demotes an existing standalone instance to be a Cloud SQL read replica for an external database server.</p>
+  <code><a href="#demoteMaster">demoteMaster(project, instance, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Demotes the stand-alone instance to be a Cloud SQL read replica for an external database server.</p>
+  <code><a href="#executeSql">executeSql(project, instance, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Execute SQL statements.</p>
+  <code><a href="#export">export(project, instance, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Exports data from a Cloud SQL instance to a Cloud Storage bucket as a SQL dump or CSV file.</p>
+  <code><a href="#failover">failover(project, instance, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Initiates a manual failover of a high availability (HA) primary instance to a standby instance, which becomes the primary instance. Users are then rerouted to the new primary. For more information, see the [Overview of high availability](https://cloud.google.com/sql/docs/mysql/high-availability) page in the Cloud SQL documentation. If using Legacy HA (MySQL only), this causes the instance to failover to its failover replica instance.</p>
+  <code><a href="#get">get(project, instance, x__xgafv=None)</a></code></p>
+<p class="firstline">Retrieves a resource containing information about a Cloud SQL instance.</p>
+  <code><a href="#import_">import_(project, instance, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Imports data into a Cloud SQL instance from a SQL dump or CSV file in Cloud Storage.</p>
+  <code><a href="#insert">insert(project, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Creates a new Cloud SQL instance.</p>
+  <code><a href="#list">list(project, filter=None, maxResults=None, pageToken=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Lists instances under a given project.</p>
+  <code><a href="#listServerCas">listServerCas(project, instance, x__xgafv=None)</a></code></p>
+<p class="firstline">Lists all of the trusted Certificate Authorities (CAs) for the specified instance. There can be up to three CAs listed: the CA that was used to sign the certificate that is currently in use, a CA that has been added but not yet used to sign a certificate, and a CA used to sign a certificate that has previously rotated out.</p>
+  <code><a href="#patch">patch(project, instance, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Partially updates settings of a Cloud SQL instance by merging the request with the current configuration. This method supports patch semantics.</p>
+  <code><a href="#pointInTimeRestore">pointInTimeRestore(parent, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Point in time restore for an instance managed by Google Cloud Backup and Disaster Recovery.</p>
+  <code><a href="#preCheckMajorVersionUpgrade">preCheckMajorVersionUpgrade(project, instance, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Execute MVU Pre-checks</p>
+  <code><a href="#promoteReplica">promoteReplica(project, instance, failover=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Promotes the read replica instance to be an independent Cloud SQL primary instance. Using this operation might cause your instance to restart.</p>
+  <code><a href="#reencrypt">reencrypt(project, instance, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Reencrypt CMEK instance with latest key version.</p>
+  <code><a href="#releaseSsrsLease">releaseSsrsLease(project, instance, x__xgafv=None)</a></code></p>
+<p class="firstline">Release a lease for the setup of SQL Server Reporting Services (SSRS).</p>
+  <code><a href="#resetSslConfig">resetSslConfig(project, instance, mode=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Deletes all client certificates and generates a new server SSL certificate for the instance.</p>
+  <code><a href="#restart">restart(project, instance, x__xgafv=None)</a></code></p>
+<p class="firstline">Restarts a Cloud SQL instance.</p>
+  <code><a href="#restoreBackup">restoreBackup(project, instance, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Restores a backup of a Cloud SQL instance. Using this operation might cause your instance to restart.</p>
+  <code><a href="#rotateServerCa">rotateServerCa(project, instance, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Rotates the server certificate to one signed by the Certificate Authority (CA) version previously added with the addServerCA method. For instances that have enabled Certificate Authority Service (CAS) based server CA, use RotateServerCertificate to rotate the server certificate.</p>
+  <code><a href="#startReplica">startReplica(project, instance, x__xgafv=None)</a></code></p>
+<p class="firstline">Starts the replication in the read replica instance.</p>
+  <code><a href="#stopReplica">stopReplica(project, instance, x__xgafv=None)</a></code></p>
+<p class="firstline">Stops the replication in the read replica instance.</p>
+  <code><a href="#switchover">switchover(project, instance, dbTimeout=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Switches over from the primary instance to the DR replica instance.</p>
+  <code><a href="#truncateLog">truncateLog(project, instance, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Truncate MySQL general and slow query log tables MySQL only.</p>
+  <code><a href="#update">update(project, instance, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Updates settings of a Cloud SQL instance. Using this operation might cause your instance to restart.</p>
+    <code class="details" id="ListEntraIdCertificates">ListEntraIdCertificates(project, instance, x__xgafv=None)</code>
+  <pre>Lists all versions of EntraID certificates for the specified instance. There can be up to three sets of certificates listed: the certificate that is currently in use, a future that has been added but not yet used to sign a certificate, and a certificate that has been rotated out.
+  project: string, Required. Project ID of the project that contains the instance. (required)
+  instance: string, Required. Cloud SQL instance ID. This does not include the project ID. (required)
+    { # Instances ListEntraIdCertificates response.
+  &quot;activeVersion&quot;: &quot;A String&quot;, # The `sha1_fingerprint` of the active certificate from `certs`.
+  &quot;certs&quot;: [ # List of Entra ID certificates for the instance.
+    { # SslCerts Resource
+  &quot;kind&quot;: &quot;A String&quot;, # This is always `sql#instancesListEntraIdCertificates`.
+    <code class="details" id="ListServerCertificates">ListServerCertificates(project, instance, x__xgafv=None)</code>
+  <pre>Lists all versions of server certificates and certificate authorities (CAs) for the specified instance. There can be up to three sets of certs listed: the certificate that is currently in use, a future that has been added but not yet used to sign a certificate, and a certificate that has been rotated out. For instances not using Certificate Authority Service (CAS) server CA, use ListServerCas instead.
+    { # Instances ListServerCertificates response.
+  &quot;activeVersion&quot;: &quot;A String&quot;, # The `sha1_fingerprint` of the active certificate from `server_certs`.
+  &quot;caCerts&quot;: [ # List of server CA certificates for the instance.
+  &quot;kind&quot;: &quot;A String&quot;, # This is always `sql#instancesListServerCertificates`.
+  &quot;serverCerts&quot;: [ # List of server certificates for the instance, signed by the corresponding CA from the `ca_certs` list.
+    <code class="details" id="RotateEntraIdCertificate">RotateEntraIdCertificate(project, instance, body=None, x__xgafv=None)</code>
+  <pre>Rotates the server certificate version to one previously added with the addEntraIdCertificate method.
+{ # Rotate Entra ID certificate request.
+  &quot;rotateEntraIdCertificateContext&quot;: { # Instance rotate Entra ID certificate context. # Optional. Contains details about the rotate server certificate operation.
+    &quot;kind&quot;: &quot;A String&quot;, # Optional. This is always `sql#rotateEntraIdCertificateContext`.
+    &quot;nextVersion&quot;: &quot;A String&quot;, # Optional. The fingerprint of the next version to be rotated to. If left unspecified, will be rotated to the most recently added server certificate version.
+    <code class="details" id="RotateServerCertificate">RotateServerCertificate(project, instance, body=None, x__xgafv=None)</code>
+  <pre>Rotates the server certificate version to one previously added with the addServerCertificate method. For instances not using Certificate Authority Service (CAS) server CA, use RotateServerCa instead.
+{ # Rotate server certificate request.
+  &quot;rotateServerCertificateContext&quot;: { # Instance rotate server certificate context. # Optional. Contains details about the rotate server certificate operation.
+    &quot;kind&quot;: &quot;A String&quot;, # Optional. This is always `sql#rotateServerCertificateContext`.
+    &quot;nextVersion&quot;: &quot;A String&quot;, # The fingerprint of the next version to be rotated to. If left unspecified, will be rotated to the most recently added server certificate version.
+    <code class="details" id="acquireSsrsLease">acquireSsrsLease(project, instance, body=None, x__xgafv=None)</code>
+  <pre>Acquire a lease for the setup of SQL Server Reporting Services (SSRS).
+  project: string, Required. Project ID of the project that contains the instance (Example: project-id). (required)
+  instance: string, Required. Cloud SQL instance ID. This doesn&#x27;t include the project ID. It&#x27;s composed of lowercase letters, numbers, and hyphens, and it must start with a letter. The total length must be 98 characters or less (Example: instance-id). (required)
+{ # Request to acquire a lease for SSRS.
+  &quot;acquireSsrsLeaseContext&quot;: { # Acquire SSRS lease context. # Contains details about the acquire SSRS lease operation.
+    { # Response for the acquire SSRS lease request.
+  &quot;operationId&quot;: &quot;A String&quot;, # The unique identifier for this operation.
+    <code class="details" id="addEntraIdCertificate">addEntraIdCertificate(project, instance, x__xgafv=None)</code>
+  <pre>Adds a new Entra ID certificate for the specified instance. If an Entra ID certificate was previously added but never used in a certificate rotation, this operation replaces that version.
+    <code class="details" id="addServerCa">addServerCa(project, instance, x__xgafv=None)</code>
+  <pre>Adds a new trusted Certificate Authority (CA) version for the specified instance. Required to prepare for a certificate rotation. If a CA version was previously added but never used in a certificate rotation, this operation replaces that version. There cannot be more than one CA version waiting to be rotated in. For instances that have enabled Certificate Authority Service (CAS) based server CA, use AddServerCertificate to add a new server certificate.
+    <code class="details" id="addServerCertificate">addServerCertificate(project, instance, x__xgafv=None)</code>
+  <pre>Add a new trusted server certificate version for the specified instance using Certificate Authority Service (CAS) server CA. Required to prepare for a certificate rotation. If a server certificate version was previously added but never used in a certificate rotation, this operation replaces that version. There cannot be more than one certificate version waiting to be rotated in. For instances not using CAS server CA, use AddServerCa instead.
+    <code class="details" id="clone">clone(project, instance, body=None, x__xgafv=None)</code>
+  <pre>Creates a Cloud SQL instance as a clone of the source instance. Using this operation might cause your instance to restart.
+  project: string, Required. Project ID of the source as well as the clone Cloud SQL instance. (required)
+  instance: string, Required. The ID of the Cloud SQL instance to be cloned (source). This does not include the project ID. (required)
+{ # Database instance clone request.
+  &quot;cloneContext&quot;: { # Database instance clone context. # Required. Contains details about the clone operation.
+    &quot;allocatedIpRange&quot;: &quot;A String&quot;, # The name of the allocated ip range for the private ip Cloud SQL instance. For example: &quot;google-managed-services-default&quot;. If set, the cloned instance ip will be created in the allocated range. The range name must comply with [RFC 1035](https://tools.ietf.org/html/rfc1035). Specifically, the name must be 1-63 characters long and match the regular expression [a-z]([-a-z0-9]*[a-z0-9])?. Reserved for future use.
+    &quot;binLogCoordinates&quot;: { # Binary log coordinates. # Binary log coordinates, if specified, identify the position up to which the source instance is cloned. If not specified, the source instance is cloned up to the most recent binary log coordinates.
+      &quot;binLogFileName&quot;: &quot;A String&quot;, # Name of the binary log file for a Cloud SQL instance.
+      &quot;binLogPosition&quot;: &quot;A String&quot;, # Position (offset) within the binary log file.
+      &quot;kind&quot;: &quot;A String&quot;, # This is always `sql#binLogCoordinates`.
+    &quot;databaseNames&quot;: [ # (SQL Server only) Clone only the specified databases from the source instance. Clone all databases if empty.
+    &quot;destinationInstanceName&quot;: &quot;A String&quot;, # Required. Name of the Cloud SQL instance to be created as a clone.
+    &quot;destinationNetwork&quot;: &quot;A String&quot;, # Optional. The fully qualified URI of the VPC network to which the cloned instance will be connected via Private Services Access for private IP. For example:`projects/my-network-project/global/networks/my-network`. This field is only required for cross-project cloning.
+    &quot;destinationProject&quot;: &quot;A String&quot;, # Optional. The project ID of the destination project where the cloned instance will be created. To perform a cross-project clone, this field is required. If not specified, the clone is created in the same project as the source instance.
+    &quot;kind&quot;: &quot;A String&quot;, # This is always `sql#cloneContext`.
+    &quot;pitrTimestampMs&quot;: &quot;A String&quot;, # Reserved for future use.
+    &quot;pointInTime&quot;: &quot;A String&quot;, # Timestamp, if specified, identifies the time to which the source instance is cloned.
+    &quot;preferredSecondaryZone&quot;: &quot;A String&quot;, # Optional. Copy clone and point-in-time recovery clone of a regional instance in the specified zones. If not specified, clone to the same secondary zone as the source instance. This value cannot be the same as the preferred_zone field. This field applies to all DB types.
+    &quot;preferredZone&quot;: &quot;A String&quot;, # Optional. Copy clone and point-in-time recovery clone of an instance to the specified zone. If no zone is specified, clone to the same primary zone as the source instance. This field applies to all DB types.
+    &quot;sourceInstanceDeletionTime&quot;: &quot;A String&quot;, # The timestamp used to identify the time when the source instance is deleted. If this instance is deleted, then you must set the timestamp.
+    <code class="details" id="delete">delete(project, instance, enableFinalBackup=None, finalBackupDescription=None, finalBackupExpiryTime=None, finalBackupTtlDays=None, x__xgafv=None)</code>
+  <pre>Deletes a Cloud SQL instance.
+  project: string, Project ID of the project that contains the instance to be deleted. (required)
+  enableFinalBackup: boolean, Flag to opt-in for final backup. By default, it is turned off.
+  finalBackupDescription: string, Optional. The description of the final backup.
+  finalBackupExpiryTime: string, Optional. Final Backup expiration time. Timestamp in UTC of when this resource is considered expired.
+  finalBackupTtlDays: string, Optional. Retention period of the final backup.
+    <code class="details" id="demote">demote(project, instance, body=None, x__xgafv=None)</code>
+  <pre>Demotes an existing standalone instance to be a Cloud SQL read replica for an external database server.
+  project: string, Required. ID of the project that contains the instance. (required)
+  instance: string, Required. Cloud SQL instance name. (required)
+{ # This request is used to demote an existing standalone instance to be a Cloud SQL read replica for an external database server.
+  &quot;demoteContext&quot;: { # This context is used to demote an existing standalone instance to be a Cloud SQL read replica for an external database server. # Required. Contains details about the demote operation.
+    &quot;kind&quot;: &quot;A String&quot;, # This is always `sql#demoteContext`.
+    &quot;sourceRepresentativeInstanceName&quot;: &quot;A String&quot;, # Required. The name of the instance which acts as the on-premises primary instance in the replication setup.
+    <code class="details" id="demoteMaster">demoteMaster(project, instance, body=None, x__xgafv=None)</code>
+  <pre>Demotes the stand-alone instance to be a Cloud SQL read replica for an external database server.
+  project: string, ID of the project that contains the instance. (required)
+  instance: string, Cloud SQL instance name. (required)
+{ # Database demote primary instance request.
+  &quot;demoteMasterContext&quot;: { # Database instance demote primary instance context. # Contains details about the demoteMaster operation.
+    &quot;kind&quot;: &quot;A String&quot;, # This is always `sql#demoteMasterContext`.
+    &quot;masterInstanceName&quot;: &quot;A String&quot;, # The name of the instance which will act as on-premises primary instance in the replication setup.
+    &quot;replicaConfiguration&quot;: { # Read-replica configuration for connecting to the on-premises primary instance. # Configuration specific to read-replicas replicating from the on-premises primary instance.
+      &quot;kind&quot;: &quot;A String&quot;, # This is always `sql#demoteMasterConfiguration`.
+        &quot;clientKey&quot;: &quot;A String&quot;, # PEM representation of the replica&#x27;s private key. The corresponding public key is encoded in the client&#x27;s certificate. The format of the replica&#x27;s private key can be either PKCS #1 or PKCS #8.
+        &quot;kind&quot;: &quot;A String&quot;, # This is always `sql#demoteMasterMysqlReplicaConfiguration`.
+    &quot;skipReplicationSetup&quot;: True or False, # Flag to skip replication setup on the instance.
+    &quot;verifyGtidConsistency&quot;: True or False, # Verify the GTID consistency for demote operation. Default value: `True`. Setting this flag to `false` enables you to bypass the GTID consistency check between on-premises primary instance and Cloud SQL instance during the demotion operation but also exposes you to the risk of future replication failures. Change the value only if you know the reason for the GTID divergence and are confident that doing so will not cause any replication issues.
+    <code class="details" id="executeSql">executeSql(project, instance, body=None, x__xgafv=None)</code>
+  <pre>Execute SQL statements.
+  instance: string, Required. Database instance ID. This does not include the project ID. (required)
+{ # The request payload used to execute SQL statements.
+  &quot;application&quot;: &quot;A String&quot;, # Optional. Specifies the name of the application that is making the request. This field is used for telemetry. Only alphanumeric characters, dashes, and underscores are allowed. The maximum length is 32 characters.
+  &quot;autoIamAuthn&quot;: True or False, # Optional. When set to true, the API caller identity associated with the request is used for database authentication. The API caller must be an IAM user in the database.
+  &quot;database&quot;: &quot;A String&quot;, # Optional. Name of the database on which the statement will be executed.
+  &quot;partialResultMode&quot;: &quot;A String&quot;, # Optional. Controls how the API should respond when the SQL execution result is incomplete due to the size limit or another error. The default mode is to throw an error.
+  &quot;rowLimit&quot;: &quot;A String&quot;, # Optional. The maximum number of rows returned per SQL statement.
+  &quot;sqlStatement&quot;: &quot;A String&quot;, # Required. SQL statements to run on the database. It can be a single statement or a sequence of statements separated by semicolons.
+  &quot;user&quot;: &quot;A String&quot;, # Optional. The name of an existing database user to connect to the database. When `auto_iam_authn` is set to true, this field is ignored and the API caller&#x27;s IAM user is used.
+    { # Execute SQL statements response.
+  &quot;messages&quot;: [ # A list of notices and warnings generated during query execution. For PostgreSQL, this includes all notices and warnings. For MySQL, this includes warnings generated by the last executed statement. To retrieve all warnings for a multi-statement query, `SHOW WARNINGS` must be executed after each statement.
+    { # Represents a notice or warning message from the database.
+      &quot;message&quot;: &quot;A String&quot;, # The full message string. For PostgreSQL, this is a formatted string that may include severity, code, and the notice/warning message. For MySQL, this contains the warning message.
+      &quot;severity&quot;: &quot;A String&quot;, # The severity of the message (e.g., &quot;NOTICE&quot; for PostgreSQL, &quot;WARNING&quot; for MySQL).
+  &quot;metadata&quot;: { # The additional metadata information regarding the execution of the SQL statements. # The additional metadata information regarding the execution of the SQL statements.
+    &quot;sqlStatementExecutionTime&quot;: &quot;A String&quot;, # The time taken to execute the SQL statements.
+  &quot;results&quot;: [ # The list of results after executing all the SQL statements.
+    { # QueryResult contains the result of executing a single SQL statement.
+      &quot;columns&quot;: [ # List of columns included in the result. This also includes the data type of the column.
+        { # Contains the name and datatype of a column.
+          &quot;name&quot;: &quot;A String&quot;, # Name of the column.
+          &quot;type&quot;: &quot;A String&quot;, # Datatype of the column.
+      &quot;message&quot;: &quot;A String&quot;, # Message related to the SQL execution result.
+      &quot;partialResult&quot;: True or False, # Set to true if the SQL execution&#x27;s result is truncated due to size limits or an error retrieving results.
+      &quot;rows&quot;: [ # Rows returned by the SQL statement.
+        { # Contains the values for a row.
+          &quot;values&quot;: [ # The values for the row.
+            { # The cell value of the table.
+              &quot;nullValue&quot;: True or False, # If cell value is null, then this flag will be set to true.
+              &quot;value&quot;: &quot;A String&quot;, # The cell value in string format.
+      &quot;status&quot;: { # The `Status` type defines a logical error model that is suitable for different programming environments, including REST APIs and RPC APIs. It is used by [gRPC](https://github.com/grpc). Each `Status` message contains three pieces of data: error code, error message, and error details. You can find out more about this error model and how to work with it in the [API Design Guide](https://cloud.google.com/apis/design/errors). # If results were truncated due to an error, details of that error.
+  &quot;status&quot;: { # The `Status` type defines a logical error model that is suitable for different programming environments, including REST APIs and RPC APIs. It is used by [gRPC](https://github.com/grpc). Each `Status` message contains three pieces of data: error code, error message, and error details. You can find out more about this error model and how to work with it in the [API Design Guide](https://cloud.google.com/apis/design/errors). # Contains the error from the database if the SQL execution failed.
+    <code class="details" id="export">export(project, instance, body=None, x__xgafv=None)</code>
+  <pre>Exports data from a Cloud SQL instance to a Cloud Storage bucket as a SQL dump or CSV file.
+  project: string, Project ID of the project that contains the instance to be exported. (required)
+{ # Database instance export request.
+  &quot;exportContext&quot;: { # Database instance export context. # Contains details about the export operation.
+    <code class="details" id="failover">failover(project, instance, body=None, x__xgafv=None)</code>
+  <pre>Initiates a manual failover of a high availability (HA) primary instance to a standby instance, which becomes the primary instance. Users are then rerouted to the new primary. For more information, see the [Overview of high availability](https://cloud.google.com/sql/docs/mysql/high-availability) page in the Cloud SQL documentation. If using Legacy HA (MySQL only), this causes the instance to failover to its failover replica instance.
+  project: string, ID of the project that contains the read replica. (required)
+{ # Instance failover request.
+  &quot;failoverContext&quot;: { # Database instance failover context. # Failover Context.
+    &quot;kind&quot;: &quot;A String&quot;, # This is always `sql#failoverContext`.
+    &quot;settingsVersion&quot;: &quot;A String&quot;, # The current settings version of this instance. Request will be rejected if this version doesn&#x27;t match the current settings version.
+    <code class="details" id="get">get(project, instance, x__xgafv=None)</code>
+  <pre>Retrieves a resource containing information about a Cloud SQL instance.
+    { # A Cloud SQL instance resource.
+    <code class="details" id="import_">import_(project, instance, body=None, x__xgafv=None)</code>
+  <pre>Imports data into a Cloud SQL instance from a SQL dump or CSV file in Cloud Storage.
+{ # Database instance import request.
+  &quot;importContext&quot;: { # Database instance import context. # Contains details about the import operation.
+    <code class="details" id="insert">insert(project, body=None, x__xgafv=None)</code>
+  <pre>Creates a new Cloud SQL instance.
+  project: string, Project ID of the project to which the newly created Cloud SQL instances should belong. (required)
+    <code class="details" id="list">list(project, filter=None, maxResults=None, pageToken=None, x__xgafv=None)</code>
+  <pre>Lists instances under a given project.
+  project: string, Project ID of the project for which to list Cloud SQL instances. (required)
+  filter: string, A filter expression that filters resources listed in the response. The expression is in the form of field:value. For example, &#x27;instanceType:CLOUD_SQL_INSTANCE&#x27;. Fields can be nested as needed as per their JSON representation, such as &#x27;settings.userLabels.auto_start:true&#x27;. Multiple filter queries are space-separated. For example. &#x27;state:RUNNABLE instanceType:CLOUD_SQL_INSTANCE&#x27;. By default, each expression is an AND expression. However, you can include AND and OR expressions explicitly.
+  maxResults: integer, The maximum number of instances to return. The service may return fewer than this value. If unspecified, at most 500 instances are returned. The maximum value is 1000; values above 1000 are coerced to 1000.
+    { # Database instances list response.
+  &quot;items&quot;: [ # List of database instance resources.
+  &quot;kind&quot;: &quot;A String&quot;, # This is always `sql#instancesList`.
+  &quot;warnings&quot;: [ # List of warnings that occurred while handling the request.
+    <code class="details" id="listServerCas">listServerCas(project, instance, x__xgafv=None)</code>
+  <pre>Lists all of the trusted Certificate Authorities (CAs) for the specified instance. There can be up to three CAs listed: the CA that was used to sign the certificate that is currently in use, a CA that has been added but not yet used to sign a certificate, and a CA used to sign a certificate that has previously rotated out.
+    { # Instances ListServerCas response.
+  &quot;activeVersion&quot;: &quot;A String&quot;,
+  &quot;certs&quot;: [ # List of server CA certificates for the instance.
+  &quot;kind&quot;: &quot;A String&quot;, # This is always `sql#instancesListServerCas`.
+    <code class="details" id="patch">patch(project, instance, body=None, x__xgafv=None)</code>
+  <pre>Partially updates settings of a Cloud SQL instance by merging the request with the current configuration. This method supports patch semantics.
+    <code class="details" id="pointInTimeRestore">pointInTimeRestore(parent, body=None, x__xgafv=None)</code>
+  <pre>Point in time restore for an instance managed by Google Cloud Backup and Disaster Recovery.
+  parent: string, Required. The parent resource where you created this instance. Format: projects/{project} (required)
+{ # The context to perform a point-in-time recovery of an instance managed by Backup and Disaster Recovery (DR) Service.
+  &quot;allocatedIpRange&quot;: &quot;A String&quot;, # Optional. The name of the allocated IP range for the internal IP Cloud SQL instance. For example: &quot;google-managed-services-default&quot;. If you set this, then Cloud SQL creates the IP address for the cloned instance in the allocated range. This range must comply with [RFC 1035](https://tools.ietf.org/html/rfc1035) standards. Specifically, the name must be 1-63 characters long and match the regular expression [a-z]([-a-z0-9]*[a-z0-9])?. Reserved for future use.
+  &quot;datasource&quot;: &quot;A String&quot;, # The Backup and Disaster Recovery (DR) Service Datasource URI. Format: projects/{project}/locations/{region}/backupVaults/{backupvault}/dataSources/{datasource}.
+  &quot;pointInTime&quot;: &quot;A String&quot;, # Required. The date and time to which you want to restore the instance.
+  &quot;preferredSecondaryZone&quot;: &quot;A String&quot;, # Optional. Point-in-time recovery of a regional instance in the specified zones. If not specified, clone to the same secondary zone as the source instance. This value cannot be the same as the preferred_zone field.
+  &quot;preferredZone&quot;: &quot;A String&quot;, # Optional. Point-in-time recovery of an instance to the specified zone. If no zone is specified, then clone to the same primary zone as the source instance.
+  &quot;privateNetwork&quot;: &quot;A String&quot;, # Optional. The resource link for the VPC network from which the Cloud SQL instance is accessible for private IP. For example, `/projects/myProject/global/networks/default`.
+  &quot;region&quot;: &quot;A String&quot;, # Optional. The region of the target instance where the datasource will be restored. For example: &quot;us-central1&quot;.
+  &quot;targetInstance&quot;: &quot;A String&quot;, # Target instance name.
+  &quot;targetInstanceClearSettingsFieldNames&quot;: [ # Optional. Specifies the instance settings that will be cleared from the source instance. This field is only applicable for cross project PITRs.
+  &quot;targetInstanceSettings&quot;: { # A Cloud SQL instance resource. # Optional. Specifies the instance settings that will be overridden from the source instance. This field is only applicable for cross project PITRs.
+    <code class="details" id="preCheckMajorVersionUpgrade">preCheckMajorVersionUpgrade(project, instance, body=None, x__xgafv=None)</code>
+  <pre>Execute MVU Pre-checks
+{ # Request for Pre-checks for MVU
+  &quot;preCheckMajorVersionUpgradeContext&quot;: { # Pre-check major version upgrade context. # Required. Contains details about the pre-check major version upgrade operation.
+    <code class="details" id="promoteReplica">promoteReplica(project, instance, failover=None, x__xgafv=None)</code>
+  <pre>Promotes the read replica instance to be an independent Cloud SQL primary instance. Using this operation might cause your instance to restart.
+  instance: string, Cloud SQL read replica instance name. (required)
+  failover: boolean, Set to true to invoke a replica failover to the DR replica. As part of replica failover, the promote operation attempts to add the original primary instance as a replica of the promoted DR replica when the original primary instance comes back online. If set to false or not specified, then the original primary instance becomes an independent Cloud SQL primary instance.
+    <code class="details" id="reencrypt">reencrypt(project, instance, body=None, x__xgafv=None)</code>
+  <pre>Reencrypt CMEK instance with latest key version.
+{ # Database Instance reencrypt request.
+  &quot;backupReencryptionConfig&quot;: { # Backup Reencryption Config # Configuration specific to backup re-encryption
+    &quot;backupLimit&quot;: 42, # Backup re-encryption limit
+    &quot;backupType&quot;: &quot;A String&quot;, # Type of backups users want to re-encrypt.
+    <code class="details" id="releaseSsrsLease">releaseSsrsLease(project, instance, x__xgafv=None)</code>
+  <pre>Release a lease for the setup of SQL Server Reporting Services (SSRS).
+  project: string, Required. The project ID that contains the instance. (required)
+  instance: string, Required. The Cloud SQL instance ID. This doesn&#x27;t include the project ID. The instance ID contains lowercase letters, numbers, and hyphens, and it must start with a letter. This ID can have a maximum length of 98 characters. (required)
+    { # Response for the release SSRS lease request.
+    <code class="details" id="resetSslConfig">resetSslConfig(project, instance, mode=None, x__xgafv=None)</code>
+  <pre>Deletes all client certificates and generates a new server SSL certificate for the instance.
+  mode: string, Optional. Reset SSL mode to use.
+      RESET_SSL_MODE_UNSPECIFIED - Reset SSL mode is not specified.
+      ALL - Refresh all TLS configs. This is the default behaviour.
+      SYNC_FROM_PRIMARY - Refreshes the replication-related TLS configuration settings provided by the primary instance. Not applicable to on-premises replication instances.
+    <code class="details" id="restart">restart(project, instance, x__xgafv=None)</code>
+  <pre>Restarts a Cloud SQL instance.
+  project: string, Project ID of the project that contains the instance to be restarted. (required)
+    <code class="details" id="restoreBackup">restoreBackup(project, instance, body=None, x__xgafv=None)</code>
+  <pre>Restores a backup of a Cloud SQL instance. Using this operation might cause your instance to restart.
+{ # Database instance restore backup request.
+  &quot;backup&quot;: &quot;A String&quot;, # The name of the backup that&#x27;s used to restore a Cloud SQL instance: Format: projects/{project-id}/backups/{backup-uid}. Only one of restore_backup_context, backup, backupdr_backup can be passed to the input.
+  &quot;backupdrBackup&quot;: &quot;A String&quot;, # The name of the backup that&#x27;s used to restore a Cloud SQL instance: Format: &quot;projects/{project-id}/locations/{location}/backupVaults/{backupvault}/dataSources/{datasource}/backups/{backup-uid}&quot;. Only one of restore_backup_context, backup, backupdr_backup can be passed to the input.
+  &quot;restoreBackupContext&quot;: { # Database instance restore from backup context. Backup context contains source instance id and project id. # Parameters required to perform the restore backup operation.
+    &quot;backupRunId&quot;: &quot;A String&quot;, # The ID of the backup run to restore from.
+    &quot;instanceId&quot;: &quot;A String&quot;, # The ID of the instance that the backup was taken from.
+    &quot;kind&quot;: &quot;A String&quot;, # This is always `sql#restoreBackupContext`.
+    &quot;project&quot;: &quot;A String&quot;, # The full project ID of the source instance.
+  &quot;restoreInstanceClearOverridesFieldNames&quot;: [ # Optional. This field has the same purpose as restore_instance_settings, changes any instance settings stored in the backup you are restoring from. With the difference that these fields are cleared in the settings.
+  &quot;restoreInstanceSettings&quot;: { # A Cloud SQL instance resource. # Optional. By using this parameter, Cloud SQL overrides any instance settings stored in the backup you are restoring from. You can&#x27;t change the instance&#x27;s major database version and you can only increase the disk size. You can use this field to restore new instances only. This field is not applicable for restore to existing instances.
+    <code class="details" id="rotateServerCa">rotateServerCa(project, instance, body=None, x__xgafv=None)</code>
+  <pre>Rotates the server certificate to one signed by the Certificate Authority (CA) version previously added with the addServerCA method. For instances that have enabled Certificate Authority Service (CAS) based server CA, use RotateServerCertificate to rotate the server certificate.
+{ # Rotate server CA request.
+  &quot;rotateServerCaContext&quot;: { # Instance rotate server CA context. # Contains details about the rotate server CA operation.
+    &quot;kind&quot;: &quot;A String&quot;, # This is always `sql#rotateServerCaContext`.
+    &quot;nextVersion&quot;: &quot;A String&quot;, # The fingerprint of the next version to be rotated to. If left unspecified, will be rotated to the most recently added server CA version.
+    <code class="details" id="startReplica">startReplica(project, instance, x__xgafv=None)</code>
+  <pre>Starts the replication in the read replica instance.
+    <code class="details" id="stopReplica">stopReplica(project, instance, x__xgafv=None)</code>
+  <pre>Stops the replication in the read replica instance.
+    <code class="details" id="switchover">switchover(project, instance, dbTimeout=None, x__xgafv=None)</code>
+  <pre>Switches over from the primary instance to the DR replica instance.
+  project: string, ID of the project that contains the replica. (required)
+  dbTimeout: string, Optional. (MySQL and PostgreSQL only) Cloud SQL instance operations timeout, which is a sum of all database operations. Default value is 10 minutes and can be modified to a maximum value of 24 hours.
+    <code class="details" id="truncateLog">truncateLog(project, instance, body=None, x__xgafv=None)</code>
+  <pre>Truncate MySQL general and slow query log tables MySQL only.
+  project: string, Project ID of the Cloud SQL project. (required)
+{ # Instance truncate log request.
+  &quot;truncateLogContext&quot;: { # Database Instance truncate log context. # Contains details about the truncate log operation.
+    &quot;kind&quot;: &quot;A String&quot;, # This is always `sql#truncateLogContext`.
+    &quot;logType&quot;: &quot;A String&quot;, # The type of log to truncate. Valid values are `MYSQL_GENERAL_TABLE` and `MYSQL_SLOW_TABLE`.
+    <code class="details" id="update">update(project, instance, body=None, x__xgafv=None)</code>
+  <pre>Updates settings of a Cloud SQL instance. Using this operation might cause your instance to restart.

@@ -1,0 +1,21 @@
+import { Arg, Field, ID, ObjectType, Resolver, ResolverFilterData, Root, Subscription } from 'type-graphql';
+export const PUSH_STATUS_UPDATES_TOPIC = 'PUSH_STATUS_UPDATES';
+export class PushStatusNotification {
+  @Field(() => String, { nullable: true })
+  @Field((_type) => Date)
+  date!: Date;
+  @Field((_type) => ID)
+  sessionId!: string;
+export interface PushStatusNotificationPayload {
+interface PushStatusNotificationArgs {
+@Resolver()
+export class PushStatusResolver {
+  @Subscription(() => PushStatusNotification, {
+    topics: PUSH_STATUS_UPDATES_TOPIC,
+    filter: ({ payload, args, context }: ResolverFilterData<PushStatusNotificationPayload, PushStatusNotificationArgs, any>) => {
+      return payload.sessionId === args.sessionId;
+  statusUpdates(
+    @Root() { message }: PushStatusNotificationPayload,
+    @Arg('sessionId', () => String) sessionId: string
+  ): PushStatusNotification {
+    return { message, date: new Date(), sessionId };

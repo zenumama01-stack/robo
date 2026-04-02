@@ -1,0 +1,39 @@
+<h1><a href="speech_v1.html">Cloud Speech-to-Text API</a> . <a href="speech_v1.projects.html">projects</a> . <a href="speech_v1.projects.locations.html">locations</a> . <a href="speech_v1.projects.locations.customClasses.html">customClasses</a></h1>
+<p class="firstline">Create a custom class.</p>
+<p class="firstline">Delete a custom class.</p>
+<p class="firstline">Get a custom class.</p>
+<p class="firstline">List custom classes.</p>
+<p class="firstline">Update a custom class.</p>
+  <pre>Create a custom class.
+  parent: string, Required. The parent resource where this custom class will be created. Format: `projects/{project}/locations/{location}/customClasses` Speech-to-Text supports three locations: `global`, `us` (US North America), and `eu` (Europe). If you are calling the `speech.googleapis.com` endpoint, use the `global` location. To specify a region, use a [regional endpoint](https://cloud.google.com/speech-to-text/docs/endpoints) with matching `us` or `eu` location value. (required)
+{ # Message sent by the client for the `CreateCustomClass` method.
+  &quot;customClass&quot;: { # A set of words or phrases that represents a common concept likely to appear in your audio, for example a list of passenger ship names. CustomClass items can be substituted into placeholders that you set in PhraseSet phrases. # Required. The custom class to create.
+    &quot;annotations&quot;: { # Output only. Allows users to store small amounts of arbitrary data. Both the key and the value must be 63 characters or less each. At most 100 annotations. This field is not used.
+    &quot;customClassId&quot;: &quot;A String&quot;, # If this custom class is a resource, the custom_class_id is the resource id of the CustomClass. Case sensitive.
+    &quot;deleteTime&quot;: &quot;A String&quot;, # Output only. The time at which this resource was requested for deletion. This field is not used.
+    &quot;displayName&quot;: &quot;A String&quot;, # Output only. User-settable, human-readable name for the CustomClass. Must be 63 characters or less. This field is not used.
+    &quot;etag&quot;: &quot;A String&quot;, # Output only. This checksum is computed by the server based on the value of other fields. This may be sent on update, undelete, and delete requests to ensure the client has an up-to-date value before proceeding. This field is not used.
+    &quot;expireTime&quot;: &quot;A String&quot;, # Output only. The time at which this resource will be purged. This field is not used.
+    &quot;items&quot;: [ # A collection of class items.
+      { # An item of the class.
+        &quot;value&quot;: &quot;A String&quot;, # The class item&#x27;s value.
+    &quot;kmsKeyName&quot;: &quot;A String&quot;, # Output only. The [KMS key name](https://cloud.google.com/kms/docs/resource-hierarchy#keys) with which the content of the ClassItem is encrypted. The expected format is `projects/{project}/locations/{location}/keyRings/{key_ring}/cryptoKeys/{crypto_key}`.
+    &quot;kmsKeyVersionName&quot;: &quot;A String&quot;, # Output only. The [KMS key version name](https://cloud.google.com/kms/docs/resource-hierarchy#key_versions) with which content of the ClassItem is encrypted. The expected format is `projects/{project}/locations/{location}/keyRings/{key_ring}/cryptoKeys/{crypto_key}/cryptoKeyVersions/{crypto_key_version}`.
+    &quot;name&quot;: &quot;A String&quot;, # The resource name of the custom class.
+    &quot;reconciling&quot;: True or False, # Output only. Whether or not this CustomClass is in the process of being updated. This field is not used.
+    &quot;state&quot;: &quot;A String&quot;, # Output only. The CustomClass lifecycle state. This field is not used.
+    &quot;uid&quot;: &quot;A String&quot;, # Output only. System-assigned unique identifier for the CustomClass. This field is not used.
+  &quot;customClassId&quot;: &quot;A String&quot;, # Required. The ID to use for the custom class, which will become the final component of the custom class&#x27; resource name. This value should restrict to letters, numbers, and hyphens, with the first character a letter, the last a letter or a number, and be 4-63 characters.
+    { # A set of words or phrases that represents a common concept likely to appear in your audio, for example a list of passenger ship names. CustomClass items can be substituted into placeholders that you set in PhraseSet phrases.
+  <pre>Delete a custom class.
+  name: string, Required. The name of the custom class to delete. Format: `projects/{project}/locations/{location}/customClasses/{custom_class}` Speech-to-Text supports three locations: `global`, `us` (US North America), and `eu` (Europe). If you are calling the `speech.googleapis.com` endpoint, use the `global` location. To specify a region, use a [regional endpoint](https://cloud.google.com/speech-to-text/docs/endpoints) with matching `us` or `eu` location value. (required)
+  <pre>Get a custom class.
+  name: string, Required. The name of the custom class to retrieve. Format: `projects/{project}/locations/{location}/customClasses/{custom_class}` (required)
+  <pre>List custom classes.
+  parent: string, Required. The parent, which owns this collection of custom classes. Format: `projects/{project}/locations/{location}/customClasses` Speech-to-Text supports three locations: `global`, `us` (US North America), and `eu` (Europe). If you are calling the `speech.googleapis.com` endpoint, use the `global` location. To specify a region, use a [regional endpoint](https://cloud.google.com/speech-to-text/docs/endpoints) with matching `us` or `eu` location value. (required)
+  pageSize: integer, The maximum number of custom classes to return. The service may return fewer than this value. If unspecified, at most 50 custom classes will be returned. The maximum value is 1000; values above 1000 will be coerced to 1000.
+  pageToken: string, A page token, received from a previous `ListCustomClass` call. Provide this to retrieve the subsequent page. When paginating, all other parameters provided to `ListCustomClass` must match the call that provided the page token.
+    { # Message returned to the client by the `ListCustomClasses` method.
+  &quot;customClasses&quot;: [ # The custom classes.
+  <pre>Update a custom class.
+  name: string, The resource name of the custom class. (required)

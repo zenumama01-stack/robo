@@ -1,0 +1,15 @@
+    <!-- Tag Basics Section -->
+        SectionKey="tagBasics"
+        SectionName="Tag Basics"
+    <!-- Tag Hierarchy Section -->
+        SectionKey="tagHierarchy"
+        SectionName="Tag Hierarchy"
+                [Params]="BuildRelationshipViewParamsByEntityName('MJ: Tagged Items','TagID')"
+    <!-- Tags Section -->
+        SectionKey="tags"
+        SectionName="Tags"
+        [BadgeCount]="GetSectionRowCount('tags')"
+                [Params]="BuildRelationshipViewParamsByEntityName('MJ: Tags','ParentID')"
+                [NewRecordValues]="NewRecordValues('MJ: Tags')"
+                [AllowLoad]="IsSectionExpanded('tags')"
+                (AfterDataLoad)="SetSectionRowCount('tags', $event.totalRowCount)"

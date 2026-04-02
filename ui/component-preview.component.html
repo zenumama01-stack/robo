@@ -1,0 +1,65 @@
+<div class="component-preview">
+  <div class="preview-toolbar">
+        @if (State.IsRunning) {
+          <button class="toolbar-btn stop-btn" (click)="StopComponent()" title="Stop component">
+            <i class="fa-solid fa-stop"></i>
+            <span>Stop</span>
+          <button class="toolbar-btn" (click)="RefreshComponent()" title="Refresh component">
+            <i class="fa-solid fa-rotate-right"></i>
+          <button class="toolbar-btn run-btn" (click)="RunSelectedComponent()" title="Run component">
+            <span>Run</span>
+    <div class="toolbar-center">
+      <!-- Viewport Size Selector (segmented control) -->
+        <div class="viewport-selector">
+          @for (preset of ViewportPresets; track preset.Size) {
+              class="viewport-btn"
+              [class.active]="ActiveViewport === preset.Size"
+              (click)="SetViewport(preset.Size)"
+              [title]="preset.Label">
+              <i class="fa-solid" [ngClass]="preset.Icon"></i>
+      @if (State.CurrentError) {
+        <button class="toolbar-btn ai-fix-btn" (click)="SendErrorToAI()" title="Ask AI to fix this error">
+          <i class="fa-solid fa-wand-magic-sparkles"></i>
+          <span>Ask AI to Fix</span>
+      @if (State.IsRunning && State.SelectedComponent) {
+        <span class="running-indicator">
+          <i class="fa-solid fa-circle running-dot"></i>
+          {{ GetComponentName() }}
+  <!-- Preview Area -->
+  <div class="preview-area">
+    @if (!State.SelectedComponent) {
+      <!-- Empty State: No component selected -->
+        <i class="fa-solid fa-eye fa-3x"></i>
+        <h3>Select a component to preview</h3>
+        <p>Choose a component from the sidebar to see its live preview here.</p>
+    } @else if (!State.IsRunning) {
+      <!-- Component selected but not running -->
+      <div class="empty-state run-state">
+        <i class="fa-solid fa-play-circle fa-3x"></i>
+        <h3>{{ GetComponentName() }}</h3>
+        <p>{{ GetComponentDescription() || 'No description available' }}</p>
+        <button class="run-component-btn" (click)="RunSelectedComponent()">
+          <i class="fa-solid fa-play"></i> Run Component
+    } @else if (LocalComponentSpec) {
+      <!-- Live Preview Container -->
+      <div class="preview-container"
+           [style.max-width]="GetPreviewContainerMaxWidth()"
+           [class.mobile]="ActiveViewport === 'mobile'"
+           [class.tablet]="ActiveViewport === 'tablet'"
+           [class.desktop]="ActiveViewport === 'desktop'">
+        <mj-react-component
+          #reactComponent
+          [component]="LocalComponentSpec"
+          (componentEvent)="OnComponentEvent($event)"
+          (openEntityRecord)="OnOpenEntityRecord($event)">
+        </mj-react-component>
+      <!-- Error Overlay (inline, does not replace the component) -->
+          <div class="error-overlay-content">
+            <div class="error-overlay-header">
+              <span class="error-overlay-title">{{ State.CurrentError.type }}</span>
+            <p class="error-overlay-message">{{ State.CurrentError.message }}</p>
+            <div class="error-overlay-actions">
+              <button class="toolbar-btn" (click)="RefreshComponent()">
+                <i class="fa-solid fa-rotate-right"></i> Retry
+              <button class="toolbar-btn ai-fix-btn" (click)="SendErrorToAI()">
+                <i class="fa-solid fa-wand-magic-sparkles"></i> Ask AI to Fix

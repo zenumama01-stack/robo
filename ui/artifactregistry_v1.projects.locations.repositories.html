@@ -1,0 +1,144 @@
+<h1><a href="artifactregistry_v1.html">Artifact Registry API</a> . <a href="artifactregistry_v1.projects.html">projects</a> . <a href="artifactregistry_v1.projects.locations.html">locations</a> . <a href="artifactregistry_v1.projects.locations.repositories.html">repositories</a></h1>
+  <code><a href="artifactregistry_v1.projects.locations.repositories.aptArtifacts.html">aptArtifacts()</a></code>
+<p class="firstline">Returns the aptArtifacts Resource.</p>
+  <code><a href="artifactregistry_v1.projects.locations.repositories.attachments.html">attachments()</a></code>
+  <code><a href="artifactregistry_v1.projects.locations.repositories.dockerImages.html">dockerImages()</a></code>
+<p class="firstline">Returns the dockerImages Resource.</p>
+  <code><a href="artifactregistry_v1.projects.locations.repositories.files.html">files()</a></code>
+<p class="firstline">Returns the files Resource.</p>
+  <code><a href="artifactregistry_v1.projects.locations.repositories.genericArtifacts.html">genericArtifacts()</a></code>
+<p class="firstline">Returns the genericArtifacts Resource.</p>
+  <code><a href="artifactregistry_v1.projects.locations.repositories.goModules.html">goModules()</a></code>
+<p class="firstline">Returns the goModules Resource.</p>
+  <code><a href="artifactregistry_v1.projects.locations.repositories.googetArtifacts.html">googetArtifacts()</a></code>
+<p class="firstline">Returns the googetArtifacts Resource.</p>
+  <code><a href="artifactregistry_v1.projects.locations.repositories.kfpArtifacts.html">kfpArtifacts()</a></code>
+<p class="firstline">Returns the kfpArtifacts Resource.</p>
+  <code><a href="artifactregistry_v1.projects.locations.repositories.mavenArtifacts.html">mavenArtifacts()</a></code>
+<p class="firstline">Returns the mavenArtifacts Resource.</p>
+  <code><a href="artifactregistry_v1.projects.locations.repositories.npmPackages.html">npmPackages()</a></code>
+<p class="firstline">Returns the npmPackages Resource.</p>
+  <code><a href="artifactregistry_v1.projects.locations.repositories.packages.html">packages()</a></code>
+<p class="firstline">Returns the packages Resource.</p>
+  <code><a href="artifactregistry_v1.projects.locations.repositories.pythonPackages.html">pythonPackages()</a></code>
+<p class="firstline">Returns the pythonPackages Resource.</p>
+  <code><a href="artifactregistry_v1.projects.locations.repositories.rules.html">rules()</a></code>
+<p class="firstline">Returns the rules Resource.</p>
+  <code><a href="artifactregistry_v1.projects.locations.repositories.yumArtifacts.html">yumArtifacts()</a></code>
+<p class="firstline">Returns the yumArtifacts Resource.</p>
+  <code><a href="#create">create(parent, body=None, repositoryId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Creates a repository. The returned Operation will finish once the repository has been created. Its response will be the created Repository.</p>
+<p class="firstline">Deletes a repository and all of its contents. The returned Operation will finish once the repository has been deleted. It will not have any Operation metadata and will return a google.protobuf.Empty response.</p>
+  <code><a href="#exportArtifact">exportArtifact(repository, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Exports an artifact to a Cloud Storage bucket.</p>
+<p class="firstline">Gets a repository.</p>
+<p class="firstline">Gets the IAM policy for a given resource.</p>
+<p class="firstline">Lists repositories.</p>
+<p class="firstline">Updates a repository.</p>
+<p class="firstline">Updates the IAM policy for a given resource.</p>
+<p class="firstline">Tests if the caller has a list of permissions on a resource.</p>
+    <code class="details" id="create">create(parent, body=None, repositoryId=None, x__xgafv=None)</code>
+  <pre>Creates a repository. The returned Operation will finish once the repository has been created. Its response will be the created Repository.
+  parent: string, Required. The name of the parent resource where the repository will be created. (required)
+{ # A Repository for storing artifacts with a specific format.
+  &quot;cleanupPolicies&quot;: { # Optional. Cleanup policies for this repository. Cleanup policies indicate when certain package versions can be automatically deleted. Map keys are policy IDs supplied by users during policy creation. They must unique within a repository and be under 128 characters in length.
+    &quot;a_key&quot;: { # Artifact policy configuration for repository cleanup policies.
+      &quot;action&quot;: &quot;A String&quot;, # Policy action.
+      &quot;condition&quot;: { # CleanupPolicyCondition is a set of conditions attached to a CleanupPolicy. If multiple entries are set, all must be satisfied for the condition to be satisfied. # Policy condition for matching versions.
+        &quot;newerThan&quot;: &quot;A String&quot;, # Match versions newer than a duration.
+        &quot;olderThan&quot;: &quot;A String&quot;, # Match versions older than a duration.
+        &quot;packageNamePrefixes&quot;: [ # Match versions by package prefix. Applied on any prefix match.
+        &quot;tagPrefixes&quot;: [ # Match versions by tag prefix. Applied on any prefix match.
+        &quot;tagState&quot;: &quot;A String&quot;, # Match versions by tag status.
+        &quot;versionNamePrefixes&quot;: [ # Match versions by version name prefix. Applied on any prefix match.
+      &quot;id&quot;: &quot;A String&quot;, # The user-provided ID of the cleanup policy.
+      &quot;mostRecentVersions&quot;: { # CleanupPolicyMostRecentVersions is an alternate condition of a CleanupPolicy for retaining a minimum number of versions. # Policy condition for retaining a minimum number of versions. May only be specified with a Keep action.
+        &quot;keepCount&quot;: 42, # Minimum number of versions to keep.
+        &quot;packageNamePrefixes&quot;: [ # List of package name prefixes that will apply this rule.
+  &quot;cleanupPolicyDryRun&quot;: True or False, # Optional. If true, the cleanup pipeline is prevented from deleting versions in this repository.
+  &quot;createTime&quot;: &quot;A String&quot;, # Output only. The time when the repository was created.
+  &quot;description&quot;: &quot;A String&quot;, # The user-provided description of the repository.
+  &quot;disallowUnspecifiedMode&quot;: True or False, # Optional. If this is true, an unspecified repo type will be treated as error rather than defaulting to standard.
+  &quot;dockerConfig&quot;: { # DockerRepositoryConfig is docker related repository details. Provides additional configuration details for repositories of the docker format type. # Docker repository config contains repository level configuration for the repositories of docker type.
+    &quot;immutableTags&quot;: True or False, # The repository which enabled this flag prevents all tags from being modified, moved or deleted. This does not prevent tags from being created.
+  &quot;format&quot;: &quot;A String&quot;, # Optional. The format of packages that are stored in the repository.
+  &quot;kmsKeyName&quot;: &quot;A String&quot;, # The Cloud KMS resource name of the customer managed encryption key that&#x27;s used to encrypt the contents of the Repository. Has the form: `projects/my-project/locations/my-region/keyRings/my-kr/cryptoKeys/my-key`. This value may not be changed after the Repository has been created.
+  &quot;labels&quot;: { # Labels with user-defined metadata. This field may contain up to 64 entries. Label keys and values may be no longer than 63 characters. Label keys must begin with a lowercase letter and may only contain lowercase letters, numeric characters, underscores, and dashes.
+  &quot;mavenConfig&quot;: { # MavenRepositoryConfig is maven related repository details. Provides additional configuration details for repositories of the maven format type. # Maven repository config contains repository level configuration for the repositories of maven type.
+    &quot;allowSnapshotOverwrites&quot;: True or False, # The repository with this flag will allow publishing the same snapshot versions.
+    &quot;versionPolicy&quot;: &quot;A String&quot;, # Version policy defines the versions that the registry will accept.
+  &quot;mode&quot;: &quot;A String&quot;, # Optional. The mode of the repository.
+  &quot;name&quot;: &quot;A String&quot;, # The name of the repository, for example: `projects/p1/locations/us-central1/repositories/repo1`. For each location in a project, repository names must be unique.
+  &quot;registryUri&quot;: &quot;A String&quot;, # Output only. The repository endpoint, for example: `us-docker.pkg.dev/my-proj/my-repo`.
+  &quot;remoteRepositoryConfig&quot;: { # Remote repository configuration. # Configuration specific for a Remote Repository.
+    &quot;aptRepository&quot;: { # Configuration for an Apt remote repository. # Specific settings for an Apt remote repository.
+      &quot;customRepository&quot;: { # Customer-specified publicly available remote repository. # Customer-specified remote repository.
+        &quot;uri&quot;: &quot;A String&quot;, # An http/https uri reference to the upstream remote repository, for ex: &quot;https://my.apt.registry/&quot;.
+      &quot;publicRepository&quot;: { # Publicly available Apt repositories constructed from a common repository base and a custom repository path. # One of the publicly available Apt repositories supported by Artifact Registry.
+        &quot;repositoryBase&quot;: &quot;A String&quot;, # A common public repository base for Apt.
+        &quot;repositoryPath&quot;: &quot;A String&quot;, # A custom field to define a path to a specific repository from the base.
+    &quot;commonRepository&quot;: { # Common remote repository settings type. # Common remote repository settings. Used as the remote repository upstream URL.
+      &quot;uri&quot;: &quot;A String&quot;, # Required. A common public repository base for remote repository.
+    &quot;description&quot;: &quot;A String&quot;, # The description of the remote source.
+    &quot;disableUpstreamValidation&quot;: True or False, # Input only. A create/update remote repo option to avoid making a HEAD/GET request to validate a remote repo and any supplied upstream credentials.
+    &quot;dockerRepository&quot;: { # Configuration for a Docker remote repository. # Specific settings for a Docker remote repository.
+        &quot;uri&quot;: &quot;A String&quot;, # An http/https uri reference to the custom remote repository, for ex: &quot;https://registry-1.docker.io&quot;.
+      &quot;publicRepository&quot;: &quot;A String&quot;, # One of the publicly available Docker repositories supported by Artifact Registry.
+    &quot;mavenRepository&quot;: { # Configuration for a Maven remote repository. # Specific settings for a Maven remote repository.
+        &quot;uri&quot;: &quot;A String&quot;, # An http/https uri reference to the upstream remote repository, for ex: &quot;https://my.maven.registry/&quot;.
+      &quot;publicRepository&quot;: &quot;A String&quot;, # One of the publicly available Maven repositories supported by Artifact Registry.
+    &quot;npmRepository&quot;: { # Configuration for a Npm remote repository. # Specific settings for an Npm remote repository.
+        &quot;uri&quot;: &quot;A String&quot;, # An http/https uri reference to the upstream remote repository, for ex: &quot;https://my.npm.registry/&quot;.
+      &quot;publicRepository&quot;: &quot;A String&quot;, # One of the publicly available Npm repositories supported by Artifact Registry.
+    &quot;pythonRepository&quot;: { # Configuration for a Python remote repository. # Specific settings for a Python remote repository.
+        &quot;uri&quot;: &quot;A String&quot;, # An http/https uri reference to the upstream remote repository, for ex: &quot;https://my.python.registry/&quot;.
+      &quot;publicRepository&quot;: &quot;A String&quot;, # One of the publicly available Python repositories supported by Artifact Registry.
+    &quot;upstreamCredentials&quot;: { # The credentials to access the remote repository. # Optional. The credentials used to access the remote repository.
+      &quot;usernamePasswordCredentials&quot;: { # Username and password credentials. # Use username and password to access the remote repository.
+        &quot;passwordSecretVersion&quot;: &quot;A String&quot;, # The Secret Manager key version that holds the password to access the remote repository. Must be in the format of `projects/{project}/secrets/{secret}/versions/{version}`.
+        &quot;username&quot;: &quot;A String&quot;, # The username to access the remote repository.
+    &quot;yumRepository&quot;: { # Configuration for a Yum remote repository. # Specific settings for a Yum remote repository.
+        &quot;uri&quot;: &quot;A String&quot;, # An http/https uri reference to the upstream remote repository, for ex: &quot;https://my.yum.registry/&quot;.
+      &quot;publicRepository&quot;: { # Publicly available Yum repositories constructed from a common repository base and a custom repository path. # One of the publicly available Yum repositories supported by Artifact Registry.
+        &quot;repositoryBase&quot;: &quot;A String&quot;, # A common public repository base for Yum.
+  &quot;satisfiesPzi&quot;: True or False, # Output only. Whether or not this repository satisfies PZI.
+  &quot;satisfiesPzs&quot;: True or False, # Output only. Whether or not this repository satisfies PZS.
+  &quot;sizeBytes&quot;: &quot;A String&quot;, # Output only. The size, in bytes, of all artifact storage in this repository. Repositories that are generally available or in public preview use this to calculate storage costs.
+  &quot;updateTime&quot;: &quot;A String&quot;, # Output only. The time when the repository was last updated.
+  &quot;virtualRepositoryConfig&quot;: { # Virtual repository configuration. # Configuration specific for a Virtual Repository.
+    &quot;upstreamPolicies&quot;: [ # Policies that configure the upstream artifacts distributed by the Virtual Repository. Upstream policies cannot be set on a standard repository.
+      { # Artifact policy configuration for the repository contents.
+        &quot;id&quot;: &quot;A String&quot;, # The user-provided ID of the upstream policy.
+        &quot;priority&quot;: 42, # Entries with a greater priority value take precedence in the pull order.
+        &quot;repository&quot;: &quot;A String&quot;, # A reference to the repository resource, for example: `projects/p1/locations/us-central1/repositories/repo1`.
+  &quot;vulnerabilityScanningConfig&quot;: { # Config on whether to perform vulnerability scanning for resources in this repository, as well as output fields describing current state. # Optional. Config and state for vulnerability scanning of resources within this Repository.
+    &quot;enablementConfig&quot;: &quot;A String&quot;, # Optional. Config for whether this repository has vulnerability scanning disabled.
+    &quot;enablementState&quot;: &quot;A String&quot;, # Output only. State of feature enablement, combining repository enablement config and API enablement state.
+    &quot;enablementStateReason&quot;: &quot;A String&quot;, # Output only. Reason for the repository state.
+    &quot;lastEnableTime&quot;: &quot;A String&quot;, # Output only. The last time this repository config was enabled.
+  repositoryId: string, Required. The repository id to use for this repository.
+  <pre>Deletes a repository and all of its contents. The returned Operation will finish once the repository has been deleted. It will not have any Operation metadata and will return a google.protobuf.Empty response.
+  name: string, Required. The name of the repository to delete. (required)
+    <code class="details" id="exportArtifact">exportArtifact(repository, body=None, x__xgafv=None)</code>
+  <pre>Exports an artifact to a Cloud Storage bucket.
+  repository: string, Required. The repository of the artifact to export. Format: projects/{project}/locations/{location}/repositories/{repository} (required)
+{ # The request for exporting an artifact to a destination.
+  &quot;gcsPath&quot;: &quot;A String&quot;, # The Cloud Storage path to export the artifact to. Should start with the bucket name, and optionally have a directory path. Examples: `dst_bucket`, `dst_bucket/sub_dir`. Existing objects with the same path will be overwritten.
+  &quot;sourceTag&quot;: &quot;A String&quot;, # The artifact tag to export. Format:projects/{project}/locations/{location}/repositories/{repository}/packages/{package}/tags/{tag}
+  &quot;sourceVersion&quot;: &quot;A String&quot;, # The artifact version to export. Format: projects/{project}/locations/{location}/repositories/{repository}/packages/{package}/versions/{version}
+  <pre>Gets a repository.
+  name: string, Required. The name of the repository to retrieve. (required)
+  <pre>Gets the IAM policy for a given resource.
+  <pre>Lists repositories.
+  parent: string, Required. The name of the parent resource whose repositories will be listed. (required)
+  filter: string, Optional. An expression for filtering the results of the request. Filter rules are case insensitive. The fields eligible for filtering are: * `name` Examples of using a filter: To filter the results of your request to repositories with the name `my-repo` in project `my-project` in the `us-central` region, append the following filter expression to your request: * `name=&quot;projects/my-project/locations/us-central1/repositories/my-repo&quot;` You can also use wildcards to match any number of characters before or after the value: * `name=&quot;projects/my-project/locations/us-central1/repositories/my-*&quot;` * `name=&quot;projects/my-project/locations/us-central1/repositories/*repo&quot;` * `name=&quot;projects/my-project/locations/us-central1/repositories/*repo*&quot;`
+  orderBy: string, Optional. The field to order the results by.
+  pageSize: integer, The maximum number of repositories to return. Maximum page size is 1,000.
+    { # The response from listing repositories.
+  &quot;nextPageToken&quot;: &quot;A String&quot;, # The token to retrieve the next page of repositories, or empty if there are no more repositories to return.
+  &quot;repositories&quot;: [ # The repositories returned.
+  <pre>Updates a repository.
+  name: string, The name of the repository, for example: `projects/p1/locations/us-central1/repositories/repo1`. For each location in a project, repository names must be unique. (required)
+  updateMask: string, The update mask applies to the resource. For the `FieldMask` definition, see https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#fieldmask
+  <pre>Updates the IAM policy for a given resource.
+  <pre>Tests if the caller has a list of permissions on a resource.

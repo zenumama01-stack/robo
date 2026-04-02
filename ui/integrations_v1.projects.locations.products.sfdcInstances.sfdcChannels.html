@@ -1,0 +1,28 @@
+<h1><a href="integrations_v1.html">Application Integration API</a> . <a href="integrations_v1.projects.html">projects</a> . <a href="integrations_v1.projects.locations.html">locations</a> . <a href="integrations_v1.projects.locations.products.html">products</a> . <a href="integrations_v1.projects.locations.products.sfdcInstances.html">sfdcInstances</a> . <a href="integrations_v1.projects.locations.products.sfdcInstances.sfdcChannels.html">sfdcChannels</a></h1>
+<p class="firstline">Creates an sfdc channel record. Store the sfdc channel in Spanner. Returns the sfdc channel.</p>
+<p class="firstline">Deletes an sfdc channel.</p>
+<p class="firstline">Gets an sfdc channel. If the channel doesn't exist, Code.NOT_FOUND exception will be thrown.</p>
+<p class="firstline">Lists all sfdc channels that match the filter. Restrict to sfdc channels belonging to the current client only.</p>
+<p class="firstline">Updates an sfdc channel. Updates the sfdc channel in spanner. Returns the sfdc channel.</p>
+  <pre>Creates an sfdc channel record. Store the sfdc channel in Spanner. Returns the sfdc channel.
+{ # The SfdcChannel that points to a CDC or Platform Event Channel.
+  &quot;channelTopic&quot;: &quot;A String&quot;, # Required. The Channel topic defined by salesforce once an channel is opened
+  &quot;createTime&quot;: &quot;A String&quot;, # Output only. Time when the channel is created
+  &quot;deleteTime&quot;: &quot;A String&quot;, # Output only. Time when the channel was deleted. Empty if not deleted.
+  &quot;description&quot;: &quot;A String&quot;, # Optional. The description for this channel
+  &quot;displayName&quot;: &quot;A String&quot;, # Optional. Client level unique name/alias to easily reference a channel.
+  &quot;isActive&quot;: True or False, # Output only. Indicated if a channel has any active integrations referencing it. Set to false when the channel is created, and set to true if there is any integration published with the channel configured in it.
+  &quot;lastReplayId&quot;: &quot;A String&quot;, # Output only. Last sfdc messsage replay id for channel
+  &quot;name&quot;: &quot;A String&quot;, # Resource name of the SFDC channel projects/{project}/locations/{location}/sfdcInstances/{sfdc_instance}/sfdcChannels/{sfdc_channel}.
+  &quot;updateTime&quot;: &quot;A String&quot;, # Output only. Time when the channel was last updated
+  <pre>Deletes an sfdc channel.
+  name: string, Required. The name that is associated with the SfdcChannel. (required)
+  <pre>Gets an sfdc channel. If the channel doesn&#x27;t exist, Code.NOT_FOUND exception will be thrown.
+  <pre>Lists all sfdc channels that match the filter. Restrict to sfdc channels belonging to the current client only.
+  parent: string, Required. The client, which owns this collection of SfdcChannels. (required)
+  readMask: string, The mask which specifies fields that need to be returned in the SfdcChannel&#x27;s response.
+    { # Response to list SfdcChannels.
+  &quot;sfdcChannels&quot;: [ # The list of SfdcChannels retrieved.
+  <pre>Updates an sfdc channel. Updates the sfdc channel in spanner. Returns the sfdc channel.
+  name: string, Resource name of the SFDC channel projects/{project}/locations/{location}/sfdcInstances/{sfdc_instance}/sfdcChannels/{sfdc_channel}. (required)
+  updateMask: string, Field mask specifying the fields in the above SfdcChannel that have been modified and need to be updated.

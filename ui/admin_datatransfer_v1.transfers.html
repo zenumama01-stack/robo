@@ -1,0 +1,33 @@
+<h1><a href="admin_datatransfer_v1.html">Admin SDK API</a> . <a href="admin_datatransfer_v1.transfers.html">transfers</a></h1>
+  <code><a href="#get">get(dataTransferId, x__xgafv=None)</a></code></p>
+<p class="firstline">Retrieves a data transfer request by its resource ID.</p>
+  <code><a href="#insert">insert(body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Inserts a data transfer request. See the [Transfer parameters](https://developers.google.com/workspace/admin/data-transfer/v1/parameters) reference for specific application requirements.</p>
+  <code><a href="#list">list(customerId=None, maxResults=None, newOwnerUserId=None, oldOwnerUserId=None, pageToken=None, status=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Lists the transfers for a customer by source user, destination user, or status.</p>
+    <code class="details" id="get">get(dataTransferId, x__xgafv=None)</code>
+  <pre>Retrieves a data transfer request by its resource ID.
+  dataTransferId: string, ID of the resource to be retrieved. This is returned in the response from the insert method. (required)
+    { # A Transfer resource represents the transfer of the ownership of user data between users.
+  &quot;applicationDataTransfers&quot;: [ # The list of per-application data transfer resources. It contains details of the applications associated with this transfer resource, and also specifies the applications for which data transfer has to be done at the time of the transfer resource creation.
+    { # Template to map fields of ApplicationDataTransfer resource.
+      &quot;applicationId&quot;: &quot;A String&quot;, # The application&#x27;s ID.
+      &quot;applicationTransferParams&quot;: [ # The transfer parameters for the application. These parameters are used to select the data which will get transferred in context of this application. For more information about the specific values available for each application, see the [Transfer parameters](https://developers.google.com/workspace/admin/data-transfer/v1/parameters) reference.
+      &quot;applicationTransferStatus&quot;: &quot;A String&quot;, # Read-only. Current status of transfer for this application.
+  &quot;id&quot;: &quot;A String&quot;, # Read-only. The transfer&#x27;s ID.
+  &quot;kind&quot;: &quot;admin#datatransfer#DataTransfer&quot;, # Identifies the resource as a DataTransfer request.
+  &quot;newOwnerUserId&quot;: &quot;A String&quot;, # ID of the user to whom the data is being transferred.
+  &quot;oldOwnerUserId&quot;: &quot;A String&quot;, # ID of the user whose data is being transferred.
+  &quot;overallTransferStatusCode&quot;: &quot;A String&quot;, # Read-only. Overall transfer status.
+  &quot;requestTime&quot;: &quot;A String&quot;, # Read-only. The time at which the data transfer was requested.
+    <code class="details" id="insert">insert(body=None, x__xgafv=None)</code>
+  <pre>Inserts a data transfer request. See the [Transfer parameters](https://developers.google.com/workspace/admin/data-transfer/v1/parameters) reference for specific application requirements.
+    <code class="details" id="list">list(customerId=None, maxResults=None, newOwnerUserId=None, oldOwnerUserId=None, pageToken=None, status=None, x__xgafv=None)</code>
+  <pre>Lists the transfers for a customer by source user, destination user, or status.
+  newOwnerUserId: string, Destination user&#x27;s profile ID.
+  oldOwnerUserId: string, Source user&#x27;s profile ID.
+  pageToken: string, Token to specify the next page in the list.
+  status: string, Status of the transfer.
+    { # Template for a collection of DataTransfer resources.
+  &quot;dataTransfers&quot;: [ # List of data transfer requests.
+  &quot;kind&quot;: &quot;admin#datatransfer#dataTransfersList&quot;, # Identifies the resource as a collection of data transfer requests.

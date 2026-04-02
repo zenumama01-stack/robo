@@ -1,0 +1,294 @@
+<div class="test-run-form" [class.is-mobile]="false">
+  <!-- Error State -->
+  @if (error) {
+    <div class="error-banner" (click)="retryLoad()">
+      <i class="fas fa-exclamation-triangle"></i>
+      <span>{{ error }}</span>
+      <button class="retry-btn">
+        <i class="fas fa-redo"></i> Retry
+  <div class="test-run-header" [class]="getStatusClass()">
+        @if (test) {
+            <a href="javascript:void(0)" (click)="openTest()">
+              <span class="breadcrumb-text">{{ test.Name }}</span>
+          <span>Run #{{ record.ID.substring(0, 8) }}</span>
+        <!-- Status Indicator -->
+        <div class="status-indicator" [style.background-color]="getStatusColor()">
+        <div class="test-run-info">
+          <h1>
+            Test Run
+          <div class="test-run-meta">
+                {{ test.Type }}
+            @if (autoRefreshEnabled) {
+                <i class="fas fa-sync-alt fa-spin"></i>
+                Auto-refreshing
+        <button kendoButton (click)="reRunTest()" [disabled]="!record.TestID" title="Re-run this test (Cmd+Shift+R)">
+          <i class="fas fa-redo"></i>
+          <span class="btn-text">Re-run</span>
+        <button kendoButton (click)="refresh()" [disabled]="isRefreshing" title="Refresh (Cmd+R)">
+          <i class="fas fa-sync-alt" [class.fa-spin]="isRefreshing"></i>
+          <span class="btn-text">Refresh</span>
+        <div class="metric-icon">
+          <div class="metric-value">{{ getRelativeTime(record.StartedAt) }}</div>
+          <div class="metric-detail">{{ record.StartedAt | date:'short' }}</div>
+          <i class="fas fa-stopwatch"></i>
+          <div class="metric-value">{{ calculateDuration() }}</div>
+          <div class="metric-label">Score</div>
+          <div class="metric-value">{{ formatScore(record.Score) }}</div>
+          @if (record.Score != null) {
+              <div class="progress-bar" [style.width.%]="getScorePercentage()" [style.background-color]="getStatusColor()"></div>
+          <div class="metric-label">Checks</div>
+          <div class="metric-value">{{ record.PassedChecks }}/{{ record.TotalChecks }}</div>
+          @if (record.TotalChecks) {
+              <div class="progress-bar" [style.width.%]="getPassRatePercentage()" [style.background-color]="getStatusColor()"></div>
+          <div class="metric-value">{{ formatCost(record.CostUSD) }}</div>
+    <!-- Secondary Info -->
+    @if (record.RunByUser || testSuiteRun || record.TargetLogEntityID) {
+      <div class="secondary-info">
+        @if (record.RunByUser) {
+          <span class="info-chip">
+            {{ record.RunByUser }}
+        @if (testSuiteRun) {
+          <span class="info-chip clickable" (click)="openTestSuiteRun()">
+            Part of Suite Run (Seq: {{ record.Sequence }})
+        <!-- Target Entity Link Pill -->
+        @if (record.TargetLogEntityID && record.TargetLogID) {
+            [entityName]="record.TargetLogEntity"
+            [recordId]="record.TargetLogID">
+    <!-- Tags Section - Sleek inline design -->
+    @if (!editingTags) {
+      <div class="tags-bar">
+        <div class="tags-bar-content">
+          <span class="tags-bar-label"><i class="fas fa-tags"></i></span>
+          @if (tags.length > 0) {
+            <div class="tags-bar-chips">
+              @for (tag of tags; track tag) {
+                <span class="tag-inline">{{ tag }}</span>
+          @if (tags.length === 0) {
+            <span class="tags-bar-empty">No tags</span>
+          <button class="tags-bar-edit" (click)="startEditingTags()" title="Edit tags">
+            <i class="fas fa-plus"></i> Add
+    <!-- Tags Editor - Expanded when editing -->
+    @if (editingTags) {
+      <div class="tags-editor-panel">
+        <div class="tags-editor-header">
+          <span class="tags-editor-title"><i class="fas fa-tags"></i> Edit Tags</span>
+        <div class="tags-editor-body">
+          <div class="tags-editor-chips">
+              <span class="tag-editable">
+                {{ tag }}
+                <button class="tag-remove-btn" (click)="removeTag(tag)" title="Remove tag">
+              <span class="tags-empty-hint">No tags yet</span>
+          <div class="tags-editor-input">
+            <input type="text"
+              [(ngModel)]="newTag"
+              placeholder="Type a tag and press Enter..."
+              (keyup.enter)="addTag()"
+              class="tag-text-input" />
+            <button kendoButton (click)="addTag()" [disabled]="!newTag.trim()" fillMode="flat">
+              <i class="fas fa-plus"></i>
+        <div class="tags-editor-footer">
+          <button kendoButton (click)="saveTags()" themeColor="primary" [disabled]="savingTags">
+            @if (savingTags) {
+              <i class="fas fa-spinner fa-spin"></i>
+            {{ savingTags ? 'Saving...' : 'Save' }}
+          <button kendoButton (click)="cancelEditingTags()" fillMode="flat">Cancel</button>
+      <button class="tab" [class.active]="activeTab === 'overview'" (click)="changeTab('overview')"
+        role="tab" [attr.aria-selected]="activeTab === 'overview'" title="Press 1">
+        <i class="fas fa-chart-pie"></i>
+      <button class="tab" [class.active]="activeTab === 'details'" (click)="changeTab('details')"
+        role="tab" [attr.aria-selected]="activeTab === 'details'" title="Press 2">
+        <i class="fas fa-info-circle"></i>
+        <span>Details</span>
+      <button class="tab" [class.active]="activeTab === 'ai-runs'" (click)="changeTab('ai-runs')"
+        role="tab" [attr.aria-selected]="activeTab === 'ai-runs'" title="Press 3">
+        <span>AI Runs</span>
+        @if (aiRunsLoaded) {
+          <span class="tab-badge">{{ aiAgentRuns.length + aiPromptRuns.length }}</span>
+      <button class="tab" [class.active]="activeTab === 'feedback'" (click)="changeTab('feedback')"
+        role="tab" [attr.aria-selected]="activeTab === 'feedback'" title="Press 4">
+        <i class="fas fa-comments"></i>
+        <span>Feedback</span>
+        @if (feedbackLoaded) {
+          <span class="tab-badge">{{ feedbacks.length }}</span>
+      <button class="tab" [class.active]="activeTab === 'execution'" (click)="changeTab('execution')"
+        role="tab" [attr.aria-selected]="activeTab === 'execution'" title="Press 5">
+        <i class="fas fa-microchip"></i>
+        <span>Execution</span>
+      @if (record.Log) {
+        <button class="tab" [class.active]="activeTab === 'log'" (click)="changeTab('log')"
+          role="tab" [attr.aria-selected]="activeTab === 'log'" title="Press 6">
+          <span>Log</span>
+      <div class="overview-tab" [@fadeIn]>
+        <!-- Result Hero -->
+        <div class="result-hero" [class]="getStatusClass()">
+          <div class="result-icon-wrapper">
+            @if (record.Status === 'Running') {
+              <div class="result-pulse"></div>
+          <div class="result-text">
+            <h2>TEST {{ record.Status.toUpperCase() }}</h2>
+            <div class="result-details">
+              <span class="result-score">Score: {{ formatScore(record.Score) }}</span>
+              <span class="result-divider">|</span>
+              <span class="result-checks">{{ record.PassedChecks }} of {{ record.TotalChecks }} checks passed</span>
+        <!-- Check Results -->
+        @if (getCheckResults().length > 0) {
+          <div class="check-results">
+              <h3><i class="fas fa-tasks"></i> Check Results</h3>
+              <span class="check-summary">{{ record.PassedChecks }} passed, {{ record.FailedChecks }} failed</span>
+            <div class="check-list">
+              @for (check of getCheckResults(); track check; let i = $index) {
+                <div class="check-item"
+                  [class.passed]="check.passed" [class.failed]="!check.passed"
+                  [style.animation-delay.ms]="i * 50">
+                  <div class="check-status">
+                    <i class="fas" [class.fa-check-circle]="check.passed" [class.fa-times-circle]="!check.passed"></i>
+                  <div class="check-content">
+                    <div class="check-name">{{ check.name }}</div>
+                    @if (check.message) {
+                      <div class="check-message">{{ check.message }}</div>
+                  @if (check.weight) {
+                    <div class="check-weight">
+                      <span class="weight-label">Weight:</span> {{ check.weight }}
+        <!-- Data Comparison -->
+        <div class="comparison-section">
+            <h3><i class="fas fa-exchange-alt"></i> Data Comparison</h3>
+          <div class="comparison-tabs">
+            <button class="comparison-tab" [class.active]="comparisonView === 'input'" (click)="setComparisonView('input')">
+              <i class="fas fa-sign-in-alt"></i> Input
+            <button class="comparison-tab" [class.active]="comparisonView === 'expected'" (click)="setComparisonView('expected')">
+              <i class="fas fa-bullseye"></i> Expected
+            <button class="comparison-tab" [class.active]="comparisonView === 'actual'" (click)="setComparisonView('actual')">
+              <i class="fas fa-check-square"></i> Actual
+          <div class="comparison-content">
+              [value]="getComparisonData()"
+    <!-- Details Tab -->
+    @if (activeTab === 'details') {
+      <div class="details-tab" [@fadeIn]>
+          <div class="detail-card">
+            <div class="detail-icon"><i class="fas fa-fingerprint"></i></div>
+            <div class="detail-content">
+              <div class="detail-label">Test Run ID</div>
+              <div class="detail-value monospace">{{ record.ID }}</div>
+            <div class="detail-card clickable" (click)="openTest()">
+              <div class="detail-icon"><i class="fas fa-flask"></i></div>
+                <div class="detail-label">Test</div>
+                <div class="detail-value link">{{ test.Name }}</div>
+              <i class="fas fa-external-link-alt detail-action"></i>
+            <div class="detail-icon"><i class="fas fa-tag"></i></div>
+              <div class="detail-label">Target Type</div>
+              <div class="detail-value">{{ record.TargetType || 'N/A' }}</div>
+            <div class="detail-icon"><i class="fas fa-play-circle"></i></div>
+              <div class="detail-label">Started At</div>
+              <div class="detail-value">{{ record.StartedAt | date:'medium' }}</div>
+            <div class="detail-icon"><i class="fas fa-stop-circle"></i></div>
+              <div class="detail-label">Completed At</div>
+              <div class="detail-value">{{ record.CompletedAt | date:'medium' }}</div>
+            <div class="detail-icon"><i class="fas fa-hourglass-half"></i></div>
+              <div class="detail-label">Duration</div>
+              <div class="detail-value">{{ calculateDuration() }}</div>
+        <!-- Error Message -->
+            <div class="section-header error">
+              <h3><i class="fas fa-exclamation-triangle"></i> Error Message</h3>
+                [value]="record.ErrorMessage"
+        <!-- Result Details -->
+        @if (parsedData.resultDetails) {
+          <div class="result-details-section">
+              <h3><i class="fas fa-file-code"></i> Result Details</h3>
+            <div class="result-details-content">
+                [value]="getFormattedResultDetails()"
+    <!-- AI Runs Tab -->
+    @if (activeTab === 'ai-runs') {
+      <div class="ai-runs-tab" [@fadeIn]>
+        @if (loadingAIRuns) {
+        <!-- AI Agent Runs -->
+        @if (!loadingAIRuns && aiAgentRuns.length > 0) {
+          <div class="ai-section">
+              <h3><i class="fas fa-robot"></i> AI Agent Runs</h3>
+              <span class="count-badge">{{ aiAgentRuns.length }}</span>
+            <div class="ai-run-list">
+              @for (run of aiAgentRuns; track run) {
+                <div class="ai-run-card" (click)="openAIAgentRun(run.ID)">
+                  <div class="ai-run-icon agent">
+                  <div class="ai-run-content">
+                    <div class="ai-run-name">{{ run.Agent }}</div>
+                    <div class="ai-run-meta">
+                      <span class="status-chip" [class]="run.Status.toLowerCase()">{{ run.Status }}</span>
+                      @if (run.TotalCost) {
+                        <span class="cost-chip">
+                          <i class="fas fa-dollar-sign"></i> {{ run.TotalCost | number:'1.4-4' }}
+                  <i class="fas fa-chevron-right ai-run-arrow"></i>
+        <!-- AI Prompt Runs -->
+        @if (!loadingAIRuns && aiPromptRuns.length > 0) {
+              <h3><i class="fas fa-comment-dots"></i> AI Prompt Runs</h3>
+              <span class="count-badge">{{ aiPromptRuns.length }}</span>
+              @for (run of aiPromptRuns; track run) {
+                <div class="ai-run-card" (click)="openAIPromptRun(run.ID)">
+                  <div class="ai-run-icon prompt">
+                    <i class="fas fa-comment-dots"></i>
+                    <div class="ai-run-name">{{ run.Prompt || run.Model }}</div>
+        @if (aiRunsLoaded && aiAgentRuns.length === 0 && aiPromptRuns.length === 0) {
+            <h3>No AI Runs</h3>
+            <p>This test execution didn't involve any AI agent or prompt runs.</p>
+    <!-- Feedback Tab -->
+    @if (activeTab === 'feedback') {
+      <div class="feedback-tab" [@fadeIn]>
+        @if (loadingFeedback) {
+              @for (i of [1,2]; track i) {
+                  <div class="skeleton-avatar"></div>
+                    <div class="skeleton-line medium"></div>
+        <!-- Feedback List -->
+        @if (!loadingFeedback && feedbacks.length > 0) {
+          <div class="feedback-list">
+            @for (feedback of feedbacks; track feedback) {
+              <div class="feedback-item">
+                  <div class="feedback-user">
+                    <div class="user-avatar">
+                    <span class="user-name">{{ feedback.ReviewerUser }}</span>
+                  <div class="feedback-date">
+                    {{ getRelativeTime(feedback.__mj_CreatedAt) }}
+                <div class="feedback-body">
+                  <div class="feedback-rating">
+                    <div class="rating-stars">
+                      @for (s of [1,2,3,4,5,6,7,8,9,10]; track s) {
+                        <i class="fas fa-star"
+                        [class.filled]="s <= (feedback.Rating || 0)"></i>
+                    <span class="rating-value">{{ feedback.Rating }}/10</span>
+                  @if (feedback.IsCorrect !== null) {
+                    <div class="feedback-verdict">
+                      <span class="verdict-badge" [class.correct]="feedback.IsCorrect" [class.incorrect]="!feedback.IsCorrect">
+                        <i class="fas" [class.fa-check]="feedback.IsCorrect" [class.fa-times]="!feedback.IsCorrect"></i>
+                        {{ feedback.IsCorrect ? 'Marked Correct' : 'Marked Incorrect' }}
+                  @if (feedback.CorrectionSummary) {
+                    <div class="feedback-comments">
+                      <p>{{ feedback.CorrectionSummary }}</p>
+        @if (feedbackLoaded && feedbacks.length === 0) {
+            <h3>No Feedback Yet</h3>
+            <p>No one has reviewed this test run yet. Be the first to provide feedback!</p>
+    <!-- Execution Context Tab -->
+    @if (activeTab === 'execution') {
+      <div class="execution-tab" [@fadeIn]>
+        <mj-execution-context
+          [machineName]="record.MachineName"
+          [machineId]="record.MachineID"
+          [runByUserName]="record.RunByUserName"
+          [runByUserEmail]="record.RunByUserEmail"
+          [runContextDetailsJson]="record.RunContextDetails">
+        </mj-execution-context>
+    <!-- Execution Log Tab -->
+    @if (activeTab === 'log') {
+      <div class="log-tab" [@fadeIn]>
+        <div class="log-header">
+          <div class="log-title">
+            <h3>Execution Log</h3>
+          <div class="log-actions">
+            <button kendoButton (click)="copyLogToClipboard()" look="flat">
+              <span class="btn-text">Copy</span>
+        <div class="log-container">
+            [value]="record.Log || ''"
+  <!-- Keyboard Shortcuts Help (shown on hover of ? icon) -->
+  <div class="shortcuts-hint" title="Keyboard Shortcuts">
+    <div class="shortcuts-popup">
+      <h4>Keyboard Shortcuts</h4>
+        <li><kbd>1-6</kbd> Switch tabs</li>
+        <li><kbd>Cmd+R</kbd> Refresh</li>
+        <li><kbd>Cmd+Shift+R</kbd> Re-run test</li>

@@ -1,0 +1,21 @@
+@if (isOpen) {
+  <!-- Backdrop -->
+  <div class="dialog-backdrop" (click)="onCancel()"></div>
+  <!-- Dialog -->
+  <div class="filter-dialog">
+        <span>Edit Filters</span>
+        @if (getFilterCount() > 0) {
+          <span class="filter-badge">{{ getFilterCount() }}</span>
+      <button class="close-btn" (click)="onCancel()" title="Close">
+      <mj-filter-builder
+        [fields]="fields"
+        [filter]="workingFilter"
+        [disabled]="disabled"
+        [config]="{ showClearButton: false, applyOnChange: true }"
+        (filterChange)="onFilterChange($event)">
+      </mj-filter-builder>
+      <button class="footer-btn clear-btn" (click)="onClear()" [disabled]="disabled || getFilterCount() === 0">
+        <i class="fa-solid fa-eraser"></i>
+        Clear All
+        <button class="footer-btn cancel-btn" (click)="onCancel()">
+        <button class="footer-btn apply-btn" (click)="onApply()" [disabled]="disabled">

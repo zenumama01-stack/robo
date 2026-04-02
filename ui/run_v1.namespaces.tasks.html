@@ -1,0 +1,26 @@
+<h1><a href="run_v1.html">Cloud Run Admin API</a> . <a href="run_v1.namespaces.html">namespaces</a> . <a href="run_v1.namespaces.tasks.html">tasks</a></h1>
+<p class="firstline">Get information about a task.</p>
+<p class="firstline">List tasks.</p>
+  <pre>Get information about a task.
+  name: string, Required. The name of the task to retrieve. Replace {namespace} with the project ID or number. It takes the form namespaces/{namespace}. For example: namespaces/PROJECT_ID (required)
+    { # Task represents a single run of a container to completion.
+  &quot;spec&quot;: { # TaskSpec is a description of a task. # Optional. Specification of the desired behavior of a task.
+  &quot;status&quot;: { # TaskStatus represents the status of a task. # Output only. Current status of a task.
+    &quot;completionTime&quot;: &quot;A String&quot;, # Optional. Represents time when the task was completed. It is not guaranteed to be set in happens-before order across separate operations. It is represented in RFC3339 form and is in UTC.
+    &quot;conditions&quot;: [ # Optional. Conditions communicate information about ongoing/complete reconciliation processes that bring the &quot;spec&quot; inline with the observed state of the world. Task-specific conditions include: * `Started`: `True` when the task has started to execute. * `Completed`: `True` when the task has succeeded. `False` when the task has failed.
+    &quot;index&quot;: 42, # Required. Index of the task, unique per execution, and beginning at 0.
+    &quot;lastAttemptResult&quot;: { # Result of a task attempt. # Optional. Result of the last attempt of this task.
+      &quot;exitCode&quot;: 42, # Optional. The exit code of this attempt. This may be unset if the container was unable to exit cleanly with a code due to some other failure. See status field for possible failure details. At most one of exit_code or term_signal will be set.
+      &quot;status&quot;: { # The `Status` type defines a logical error model that is suitable for different programming environments, including REST APIs and RPC APIs. It is used by [gRPC](https://github.com/grpc). Each `Status` message contains three pieces of data: error code, error message, and error details. You can find out more about this error model and how to work with it in the [API Design Guide](https://cloud.google.com/apis/design/errors). # Optional. The status of this attempt. If the status code is OK, then the attempt succeeded.
+      &quot;termSignal&quot;: 42, # Optional. Termination signal of the container. This is set to non-zero if the container is terminated by the system. At most one of exit_code or term_signal will be set.
+    &quot;logUri&quot;: &quot;A String&quot;, # Optional. URI where logs for this task can be found in Cloud Console.
+    &quot;observedGeneration&quot;: 42, # Optional. The &#x27;generation&#x27; of the task that was last processed by the controller.
+    &quot;retried&quot;: 42, # Optional. The number of times this task was retried. Instances are retried when they fail up to the maxRetries limit.
+    &quot;startTime&quot;: &quot;A String&quot;, # Optional. Represents time when the task started to run. It is not guaranteed to be set in happens-before order across separate operations. It is represented in RFC3339 form and is in UTC.
+  <pre>List tasks.
+  parent: string, Required. The namespace from which the tasks should be listed. Replace {namespace} with the project ID or number. It takes the form namespaces/{namespace}. For example: namespaces/PROJECT_ID (required)
+  labelSelector: string, Optional. Allows to filter resources based on a label. Supported operations are =, !=, exists, in, and notIn. For example, to list all tasks of execution &quot;foo&quot; in succeeded state: `run.googleapis.com/execution=foo,run.googleapis.com/runningState=Succeeded`. Supported states are: * `Pending`: Initial state of all tasks. The task has not yet started but eventually will. * `Running`: Container instances for this task are running or will be running shortly. * `Succeeded`: No more container instances to run for the task, and the last attempt succeeded. * `Failed`: No more container instances to run for the task, and the last attempt failed. This task has run out of retry attempts. * `Cancelled`: Task was running but got stopped because its parent execution has been aborted. * `Abandoned`: The task has not yet started and never will because its parent execution has been aborted.
+    { # ListTasksResponse is a list of Tasks resources.
+  &quot;items&quot;: [ # List of Tasks.
+  &quot;kind&quot;: &quot;A String&quot;, # The kind of this resource, in this case &quot;TasksList&quot;.
+  &quot;metadata&quot;: { # Metadata for synthetic resources like List. In Cloud Run, all List Resources Responses will have a ListMeta instead of ObjectMeta. # Metadata associated with this tasks list.

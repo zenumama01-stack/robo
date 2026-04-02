@@ -1,0 +1,26 @@
+<h1><a href="firebaseapphosting_v1.html">Firebase App Hosting API</a> . <a href="firebaseapphosting_v1.projects.html">projects</a> . <a href="firebaseapphosting_v1.projects.locations.html">locations</a> . <a href="firebaseapphosting_v1.projects.locations.backends.html">backends</a> . <a href="firebaseapphosting_v1.projects.locations.backends.traffic.html">traffic</a></h1>
+<p class="firstline">Gets information about a backend's traffic.</p>
+<p class="firstline">Updates a backend's traffic.</p>
+  <pre>Gets information about a backend&#x27;s traffic.
+  name: string, Required. Name of the resource in the format: `projects/{project}/locations/{locationId}/backends/{backendId}/traffic`. (required)
+    { # Controls traffic configuration for the backend.
+  &quot;current&quot;: { # A list of traffic splits that together represent where traffic is being routed. # Output only. Current state of traffic allocation for the backend. When setting `target`, this field may differ for some time until the desired state is reached.
+    &quot;splits&quot;: [ # Required. The list of traffic splits.
+      { # The traffic allocation for the backend.
+        &quot;build&quot;: &quot;A String&quot;, # Required. The build that traffic is being routed to.
+        &quot;percent&quot;: 42, # Required. The percentage of traffic to send to the build. Currently must be 100% or 0%.
+  &quot;name&quot;: &quot;A String&quot;, # Identifier. The resource name of the backend&#x27;s traffic. Format: `projects/{project}/locations/{locationId}/backends/{backendId}/traffic`.
+  &quot;reconciling&quot;: True or False, # Output only. A field that, if true, indicates that the system is working to make the backend&#x27;s `current` match the requested `target` list.
+  &quot;rolloutPolicy&quot;: { # The policy for how automatic builds and rollouts are triggered and rolled out. # A rollout policy specifies how new builds and automatic deployments are created.
+    &quot;codebaseBranch&quot;: &quot;A String&quot;, # If set, specifies a branch that triggers a new build to be started with this policy. Otherwise, no automatic rollouts will happen.
+    &quot;disabled&quot;: True or False, # Optional. A flag that, if true, prevents automatic rollouts from being created via this RolloutPolicy.
+    &quot;disabledTime&quot;: &quot;A String&quot;, # Output only. If `disabled` is set, the time at which the automatic rollouts were disabled.
+    &quot;ignoredPaths&quot;: [ # Optional. A list of file paths patterns to exclude from triggering a rollout. Patterns in this list take precedence over required_paths. **Note**: All paths must be in the ignored_paths in order for the rollout to be skipped. Limited to 100 paths. Example: ignored_paths: { pattern: &quot;foo/bar/excluded/*” type: GLOB }
+      { # A file path pattern to match against.
+        &quot;pattern&quot;: &quot;A String&quot;, # Optional. The pattern to match against.
+        &quot;type&quot;: &quot;A String&quot;, # Optional. The type of pattern to match against.
+    &quot;requiredPaths&quot;: [ # Optional. A list of file paths patterns that trigger a build and rollout if at least one of the changed files in the commit are present in this list. This field is optional; the rollout policy will default to triggering on all paths if not populated. Limited to 100 paths. Example: “required_paths: { pattern: &quot;foo/bar/*” type: GLOB }
+  &quot;target&quot;: { # A list of traffic splits that together represent where traffic is being routed. # Set to manually control the desired traffic for the backend. This will cause `current` to eventually match this value. The percentages must add up to 100%.
+  <pre>Updates a backend&#x27;s traffic.
+  name: string, Identifier. The resource name of the backend&#x27;s traffic. Format: `projects/{project}/locations/{locationId}/backends/{backendId}/traffic`. (required)
+  updateMask: string, Optional. Field mask is used to specify the fields to be overwritten in the traffic resource by the update. The fields specified in the update_mask are relative to the resource, not the full request. A field will be overwritten if it is in the mask. If the user does not provide a mask then all fields will be overwritten.

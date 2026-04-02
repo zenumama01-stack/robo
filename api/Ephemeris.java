@@ -1,0 +1,91 @@
+import org.openhab.core.model.script.internal.engine.action.EphemerisActionService;
+ * This allows a script to use ephemeris features.
+public class Ephemeris {
+    private static final Logger LOGGER = LoggerFactory.getLogger(Ephemeris.class);
+    @ActionDoc(text = "checks if today is a weekend day")
+    public static boolean isWeekend() {
+        return isWeekend(0);
+    @ActionDoc(text = "checks if today plus or minus a given offset is a weekend day")
+    public static boolean isWeekend(int offset) {
+        return isWeekend(ZonedDateTime.now().plusDays(offset));
+    @ActionDoc(text = "checks if a given day is a weekend day")
+    public static boolean isWeekend(ZonedDateTime day) {
+        return EphemerisActionService.ephemerisManager.isWeekend(day);
+    @ActionDoc(text = "checks if today is defined in a given dayset")
+    public static boolean isInDayset(String daysetName) {
+        return isInDayset(daysetName, 0);
+    @ActionDoc(text = "checks if today plus or minus a given offset is defined in a given dayset")
+    public static boolean isInDayset(String daysetName, int offset) {
+        return isInDayset(daysetName, ZonedDateTime.now().plusDays(offset));
+    @ActionDoc(text = "checks a given day is defined in a given dayset")
+    public static boolean isInDayset(String daysetName, ZonedDateTime day) {
+        return EphemerisActionService.ephemerisManager.isInDayset(daysetName, day);
+    @ActionDoc(text = "checks if today is a bank holiday")
+    public static boolean isBankHoliday() {
+        return isBankHoliday(0);
+    @ActionDoc(text = "checks if today plus or minus a given offset is a bank holiday")
+    public static boolean isBankHoliday(int offset) {
+        return isBankHoliday(ZonedDateTime.now().plusDays(offset));
+    @ActionDoc(text = "checks a given day is a bank holiday")
+    public static boolean isBankHoliday(ZonedDateTime day) {
+        return EphemerisActionService.ephemerisManager.isBankHoliday(day);
+    @ActionDoc(text = "checks if today is a bank holiday from a given userfile")
+    public static boolean isBankHoliday(String filename) {
+        return isBankHoliday(0, filename);
+    @ActionDoc(text = "checks if today plus or minus a given offset is a bank holiday from a given userfile")
+    public static boolean isBankHoliday(int offset, String filename) {
+        return isBankHoliday(ZonedDateTime.now().plusDays(offset), filename);
+    @ActionDoc(text = "checks a given day is a bank holiday from a given userfile")
+    public static boolean isBankHoliday(ZonedDateTime day, String filename) {
+            return EphemerisActionService.ephemerisManager.isBankHoliday(day, filename);
+            LOGGER.error("Error reading holiday user file {} : {}", filename, e.getMessage());
+    @ActionDoc(text = "get todays bank holiday name")
+    public static @Nullable String getBankHolidayName() {
+        return getBankHolidayName(0);
+    @ActionDoc(text = "get bank holiday name for today plus or minus a given offset")
+    public static @Nullable String getBankHolidayName(int offset) {
+        return getBankHolidayName(ZonedDateTime.now().plusDays(offset));
+    @ActionDoc(text = "get bank holiday name for a given day")
+    public static @Nullable String getBankHolidayName(ZonedDateTime day) {
+        return EphemerisActionService.ephemerisManager.getBankHolidayName(day);
+    @ActionDoc(text = "get holiday for today from a given userfile")
+    public static @Nullable String getBankHolidayName(String filename) {
+        return getBankHolidayName(0, filename);
+    @ActionDoc(text = "get holiday for today plus or minus an offset from a given userfile")
+    public static @Nullable String getBankHolidayName(int offset, String filename) {
+        return getBankHolidayName(ZonedDateTime.now().plusDays(offset), filename);
+    @ActionDoc(text = "get holiday for a given day from a given userfile")
+    public static @Nullable String getBankHolidayName(ZonedDateTime day, String filename) {
+            return EphemerisActionService.ephemerisManager.getBankHolidayName(day, filename);
+    @ActionDoc(text = "get next bank holiday")
+    public static @Nullable String getNextBankHoliday() {
+        return getNextBankHoliday(0);
+    @ActionDoc(text = "get next bank holiday plus or minus an offset")
+    public static @Nullable String getNextBankHoliday(int offset) {
+        return getNextBankHoliday(ZonedDateTime.now().plusDays(offset));
+    @ActionDoc(text = "get next bank holiday holiday from a given day")
+    public static @Nullable String getNextBankHoliday(ZonedDateTime day) {
+        return EphemerisActionService.ephemerisManager.getNextBankHoliday(day);
+    @ActionDoc(text = "get next bank holiday from a given userfile")
+    public static @Nullable String getNextBankHoliday(String filename) {
+        return getNextBankHoliday(0, filename);
+    @ActionDoc(text = "get next bank holiday plus or minus an offset from a given userfile")
+    public static @Nullable String getNextBankHoliday(int offset, String filename) {
+        return getNextBankHoliday(ZonedDateTime.now().plusDays(offset), filename);
+    @ActionDoc(text = "get next bank holiday a given day from a given userfilee")
+    public static @Nullable String getNextBankHoliday(ZonedDateTime day, String filename) {
+            return EphemerisActionService.ephemerisManager.getNextBankHoliday(day, filename);
+    @ActionDoc(text = "gets the localized description of a holiday key name")
+    public static @Nullable String getHolidayDescription(@Nullable String holiday) {
+        return EphemerisActionService.ephemerisManager.getHolidayDescription(holiday);
+    @ActionDoc(text = "gets the number of days between today and a given holiday")
+    public static long getDaysUntil(String searchedHoliday) {
+        return getDaysUntil(ZonedDateTime.now(), searchedHoliday);
+    public static long getDaysUntil(ZonedDateTime day, String searchedHoliday) {
+        return EphemerisActionService.ephemerisManager.getDaysUntil(day, searchedHoliday);
+    @ActionDoc(text = "gets the number of days between today and a given holiday from a given userfile")
+    public static long getDaysUntil(String searchedHoliday, String filename) {
+        return getDaysUntil(ZonedDateTime.now(), searchedHoliday, filename);
+    @ActionDoc(text = "gets the number of days between a given day and a given holiday from a given userfile")
+    public static long getDaysUntil(ZonedDateTime day, String searchedHoliday, String filename) {
+            return EphemerisActionService.ephemerisManager.getDaysUntil(day, searchedHoliday, filename);

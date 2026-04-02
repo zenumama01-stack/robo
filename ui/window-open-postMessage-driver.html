@@ -1,0 +1,5 @@
+  const child = window.open(`./window-open-postMessage.html`, '', 'show=no,nodeIntegration=yes,contextIsolation=no')
+  window.onmessage = (e) => {
+    if (e.data === 'ready') {
+      child.postMessage('testing', '*')
+      require('electron').ipcRenderer.send('complete', {eventOrigin: e.origin, ...JSON.parse(e.data)})

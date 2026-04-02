@@ -1,0 +1,14 @@
+<h1><a href="composer_v1.html">Cloud Composer API</a> . <a href="composer_v1.projects.html">projects</a> . <a href="composer_v1.projects.locations.html">locations</a> . <a href="composer_v1.projects.locations.environments.html">environments</a> . <a href="composer_v1.projects.locations.environments.workloads.html">workloads</a></h1>
+<p class="firstline">Lists workloads in a Cloud Composer environment. Workload is a unit that runs a single Composer component. This method is supported for Cloud Composer environments in versions composer-2.*.*-airflow-*.*.* and newer.</p>
+  <pre>Lists workloads in a Cloud Composer environment. Workload is a unit that runs a single Composer component. This method is supported for Cloud Composer environments in versions composer-2.*.*-airflow-*.*.* and newer.
+  parent: string, Required. The environment name to get workloads for, in the form: &quot;projects/{projectId}/locations/{locationId}/environments/{environmentId}&quot; (required)
+  filter: string, Optional. The list filter. Currently only supports equality on the type field. The value of a field specified in the filter expression must be one ComposerWorkloadType enum option. It&#x27;s possible to get multiple types using &quot;OR&quot; operator, e.g.: &quot;type=SCHEDULER OR type=CELERY_WORKER&quot;. If not specified, all items are returned.
+  pageSize: integer, Optional. The maximum number of environments to return.
+    { # Response to ListWorkloadsRequest.
+  &quot;workloads&quot;: [ # The list of environment workloads.
+    { # Information about a single workload.
+      &quot;name&quot;: &quot;A String&quot;, # Name of a workload.
+      &quot;status&quot;: { # Workload status. # Output only. Status of a workload.
+        &quot;detailedStatusMessage&quot;: &quot;A String&quot;, # Output only. Detailed message of the status.
+        &quot;statusMessage&quot;: &quot;A String&quot;, # Output only. Text to provide more descriptive status.
+      &quot;type&quot;: &quot;A String&quot;, # Type of a workload.

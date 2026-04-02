@@ -1,0 +1,41 @@
+<h1><a href="sqladmin_v1.html">Cloud SQL Admin API</a> . <a href="sqladmin_v1.databases.html">databases</a></h1>
+  <code><a href="#delete">delete(project, instance, database, x__xgafv=None)</a></code></p>
+<p class="firstline">Deletes a database from a Cloud SQL instance.</p>
+  <code><a href="#get">get(project, instance, database, x__xgafv=None)</a></code></p>
+<p class="firstline">Retrieves a resource containing information about a database inside a Cloud SQL instance.</p>
+<p class="firstline">Inserts a resource containing information about a database inside a Cloud SQL instance. **Note:** You can't modify the default character set and collation.</p>
+  <code><a href="#list">list(project, instance, x__xgafv=None)</a></code></p>
+<p class="firstline">Lists databases in the specified Cloud SQL instance.</p>
+  <code><a href="#patch">patch(project, instance, database, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Partially updates a resource containing information about a database inside a Cloud SQL instance. This method supports patch semantics.</p>
+  <code><a href="#update">update(project, instance, database, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Updates a resource containing information about a database inside a Cloud SQL instance.</p>
+    <code class="details" id="delete">delete(project, instance, database, x__xgafv=None)</code>
+  <pre>Deletes a database from a Cloud SQL instance.
+  instance: string, Database instance ID. This does not include the project ID. (required)
+  database: string, Name of the database to be deleted in the instance. (required)
+    <code class="details" id="get">get(project, instance, database, x__xgafv=None)</code>
+  <pre>Retrieves a resource containing information about a database inside a Cloud SQL instance.
+  database: string, Name of the database in the instance. (required)
+    { # Represents a SQL database on the Cloud SQL instance.
+  &quot;charset&quot;: &quot;A String&quot;, # The Cloud SQL charset value.
+  &quot;collation&quot;: &quot;A String&quot;, # The Cloud SQL collation value.
+  &quot;etag&quot;: &quot;A String&quot;, # This field is deprecated and will be removed from a future version of the API.
+  &quot;instance&quot;: &quot;A String&quot;, # The name of the Cloud SQL instance. This does not include the project ID.
+  &quot;kind&quot;: &quot;A String&quot;, # This is always `sql#database`.
+  &quot;name&quot;: &quot;A String&quot;, # The name of the database in the Cloud SQL instance. This does not include the project ID or instance name.
+  &quot;project&quot;: &quot;A String&quot;, # The project ID of the project containing the Cloud SQL database. The Google apps domain is prefixed if applicable.
+  &quot;sqlserverDatabaseDetails&quot;: { # Represents a Sql Server database on the Cloud SQL instance.
+    &quot;compatibilityLevel&quot;: 42, # The version of SQL Server with which the database is to be made compatible
+    &quot;recoveryModel&quot;: &quot;A String&quot;, # The recovery model of a SQL Server database
+  <pre>Inserts a resource containing information about a database inside a Cloud SQL instance. **Note:** You can&#x27;t modify the default character set and collation.
+    <code class="details" id="list">list(project, instance, x__xgafv=None)</code>
+  <pre>Lists databases in the specified Cloud SQL instance.
+    { # Database list response.
+  &quot;items&quot;: [ # List of database resources in the instance.
+  &quot;kind&quot;: &quot;A String&quot;, # This is always `sql#databasesList`.
+    <code class="details" id="patch">patch(project, instance, database, body=None, x__xgafv=None)</code>
+  <pre>Partially updates a resource containing information about a database inside a Cloud SQL instance. This method supports patch semantics.
+  database: string, Name of the database to be updated in the instance. (required)
+    <code class="details" id="update">update(project, instance, database, body=None, x__xgafv=None)</code>
+  <pre>Updates a resource containing information about a database inside a Cloud SQL instance.

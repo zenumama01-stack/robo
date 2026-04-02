@@ -1,0 +1,122 @@
+<h1><a href="connectors_v1.html">Connectors API</a> . <a href="connectors_v1.projects.html">projects</a> . <a href="connectors_v1.projects.locations.html">locations</a> . <a href="connectors_v1.projects.locations.providers.html">providers</a> . <a href="connectors_v1.projects.locations.providers.connectors.html">connectors</a> . <a href="connectors_v1.projects.locations.providers.connectors.versions.html">versions</a></h1>
+  <code><a href="connectors_v1.projects.locations.providers.connectors.versions.eventtypes.html">eventtypes()</a></code>
+<p class="firstline">Returns the eventtypes Resource.</p>
+  <code><a href="#fetchAuthSchema">fetchAuthSchema(name, view=None, x__xgafv=None)</a></code></p>
+<p class="firstline">fetch and return the list of auth config variables required to override the connection backend auth.</p>
+    <code class="details" id="fetchAuthSchema">fetchAuthSchema(name, view=None, x__xgafv=None)</code>
+  <pre>fetch and return the list of auth config variables required to override the connection backend auth.
+  name: string, Required. Parent resource of the Connector Version, of the form: `projects/*/locations/*/providers/*/connectors/*/versions/*` (required)
+  view: string, Optional. View of the AuthSchema. The default value is BASIC.
+      AUTH_SCHEMA_VIEW_UNSPECIFIED - Default value.
+      BASIC - Basic view of the AuthSchema.
+      JSON_SCHEMA - JSON schema view of the AuthSchema.
+      EUA_SCHEMA - EUA Schema view of the AuthSchema.
+    { # Response message for Connectors.GetAuthSchema.
+  &quot;authSchemas&quot;: [ # List of AuthSchemas.
+    { # AuthSchema defines the schema of an authentication type.
+      &quot;authFields&quot;: [ # List of AuthFields.
+        { # AuthField defines a field in an authentication type.
+          &quot;dataType&quot;: &quot;A String&quot;, # Data type of the field.
+          &quot;description&quot;: &quot;A String&quot;, # Description of the field.
+          &quot;key&quot;: &quot;A String&quot;, # Key of the field.
+      &quot;authKey&quot;: &quot;A String&quot;, # Auth key of the schema.
+      &quot;authType&quot;: &quot;A String&quot;, # Auth type of the schema.
+      &quot;description&quot;: &quot;A String&quot;, # Description of the schema.
+      &quot;displayName&quot;: &quot;A String&quot;, # Display name of the schema.
+      &quot;isDefault&quot;: True or False, # Whether the auth schema is the default one.
+  &quot;jsonSchema&quot;: { # JsonAuthSchema defines the JSON schema of all authentication types. # JSON schema of the AuthSchemas. This is only populated if the view is JSON_SCHEMA. The schema is in draft-07 format.
+    &quot;$schema&quot;: &quot;A String&quot;, # JSON schema of the AuthSchemas.
+    &quot;oneOf&quot;: [ # List of AuthObjects.
+      { # AuthObject defines a JSON schema of an authentication type.
+        &quot;additionalProperties&quot;: True or False, # Whether the object has additional properties.
+        &quot;authKey&quot;: &quot;A String&quot;, # Auth key of the object.
+        &quot;authType&quot;: &quot;A String&quot;, # Auth type of the object.
+        &quot;description&quot;: &quot;A String&quot;, # Description of the object.
+        &quot;isDefault&quot;: True or False, # Whether the object is the default one.
+        &quot;properties&quot;: { # Properties of the object.
+          &quot;a_key&quot;: { # AuthProperty defines a property of an authentication type.
+            &quot;description&quot;: &quot;A String&quot;, # Description of the property.
+            &quot;type&quot;: &quot;A String&quot;, # Type of the property.
+        &quot;type&quot;: &quot;A String&quot;, # Type of the object.
+  name: string, Required. Resource name of the form: `projects/*/locations/*/providers/*/connectors/*/versions/*` Only global location is supported for ConnectorVersion resource. (required)
+  &quot;authOverrideEnabled&quot;: True or False, # Output only. Flag to mark the dynamic auth override.
+  &quot;connectorInfraConfig&quot;: { # This cofiguration provides infra configs like rate limit threshold which need to be configurable for every connector version # Output only. Infra configs supported by Connector.
+    &quot;alwaysAllocateCpu&quot;: True or False, # Indicates that the Cloud Run CPU should always be allocated.
+    &quot;connectionRatelimitWindowSeconds&quot;: &quot;A String&quot;, # The window used for ratelimiting runtime requests to connections.
+    &quot;connectionServiceAccountEnabled&quot;: True or False, # Indicate whether connection service account is enabled. If false, the common runtime service agent is used.
+    &quot;connectorVersioningEnabled&quot;: True or False, # Indicate whether connector versioning is enabled.
+    &quot;deploymentModel&quot;: &quot;A String&quot;, # Indicate whether connector is deployed on GKE/CloudRun
+    &quot;hpaConfig&quot;: { # Autoscaling config for connector deployment system metrics. # HPA autoscaling config.
+    &quot;internalclientRatelimitThreshold&quot;: &quot;A String&quot;, # Max QPS supported for internal requests originating from Connd.
+    &quot;maxInstanceRequestConcurrency&quot;: 42, # Max Instance Request Conncurrency for Cloud Run service.
+    &quot;migrateDeploymentModel&quot;: True or False, # Indicate whether connector is being migrated to cloud run deployment model.
+    &quot;migrateTls&quot;: True or False, # Indicate whether connector is being migrated to TLS.
+    &quot;networkEgressModeOverride&quot;: { # NetworkEgressModeOverride provides the network egress mode override for a connector. # Network egress mode override to migrate to direct VPC egress.
+      &quot;isEventingOverrideEnabled&quot;: True or False, # boolean should be set to true to make sure only eventing enabled connections are migrated to direct vpc egress.
+      &quot;isJobsOverrideEnabled&quot;: True or False, # boolean should be set to true to make sure only async operations enabled connections are migrated to direct vpc egress.
+      &quot;networkEgressMode&quot;: &quot;A String&quot;, # Determines the VPC Egress mode for the connector.
+    &quot;provisionCloudSpanner&quot;: True or False, # Indicate whether cloud spanner is required for connector job.
+    &quot;provisionMemstore&quot;: True or False, # Indicate whether memstore is required for connector job.
+    &quot;publicNetworkIngressEnabled&quot;: True or False, # Indicate whether public network ingress should be enabled.
+    &quot;ratelimitThreshold&quot;: &quot;A String&quot;, # Max QPS supported by the connector version before throttling of requests.
+    &quot;resourceLimits&quot;: { # Resource limits defined for connection pods of a given connector type. # System resource limits.
+    &quot;resourceRequests&quot;: { # Resource requests defined for connection pods of a given connector type. # System resource requests.
+    &quot;sharedDeployment&quot;: &quot;A String&quot;, # The name of shared connector deployment.
+  &quot;destinationConfigTemplates&quot;: [ # Output only. List of destination configs needed to create a connection.
+    { # DestinationConfigTemplate defines required destinations supported by the Connector.
+      &quot;autocompleteSuggestions&quot;: [ # Autocomplete suggestions for destination URL field.
+      &quot;defaultPort&quot;: 42, # The default port.
+      &quot;isAdvanced&quot;: True or False, # Whether the current destination tempalate is part of Advanced settings
+      &quot;key&quot;: &quot;A String&quot;, # Key of the destination.
+      &quot;max&quot;: 42, # The maximum number of destinations supported for this key.
+      &quot;min&quot;: 42, # The minimum number of destinations supported for this key.
+      &quot;portFieldType&quot;: &quot;A String&quot;, # Whether port number should be provided by customers.
+      &quot;regexPattern&quot;: &quot;A String&quot;, # Regex pattern for host.
+    &quot;accessMode&quot;: &quot;A String&quot;, # Optional. Access mode for egress control.
+    &quot;additionalExtractionRules&quot;: { # Extraction Rules to identity the backends from customer provided configuration in Connection resource. # Additional extraction rules to identity the backends from customer provided configuration in Connection resource. These rules are applied in addition to the ones specified in `oneof_backends`.
+          &quot;formatString&quot;: &quot;A String&quot;, # Format string used to format the extracted backend details. If empty, extracted backend details will be returned as it is.
+            &quot;fieldId&quot;: &quot;A String&quot;, # Field identifier. For example config variable name.
+    &quot;allowlistedProjectNumbers&quot;: [ # Optional. Used when access_mode is RESTRICTED or ACCESS_MODE_UNSPECIFIED.
+    &quot;launchEnvironment&quot;: &quot;A String&quot;, # Launch environment for egress control.
+  &quot;eventingConfigTemplate&quot;: { # Eventing Config details of a connector version. next: 14 # Output only. Eventing configuration supported by the Connector.
+    &quot;additionalVariables&quot;: [ # Additional fields that need to be rendered.
+    &quot;authConfigTemplates&quot;: [ # AuthConfigTemplates represents the auth values for the webhook adapter.
+    &quot;autoRefresh&quot;: True or False, # Auto refresh to extend webhook life.
+    &quot;autoRegistrationSupported&quot;: True or False, # Auto Registration supported.
+    &quot;encryptionKeyTemplate&quot;: { # ConfigVariableTemplate provides metadata about a `ConfigVariable` that is used in a Connection. # Encryption key (can be either Google managed or CMEK).
+    &quot;enrichmentSupported&quot;: True or False, # Enrichment Supported.
+    &quot;eventListenerType&quot;: &quot;A String&quot;, # The type of the event listener for a specific connector.
+    &quot;isEventingSupported&quot;: True or False, # Is Eventing Supported.
+    &quot;listenerAuthConfigTemplates&quot;: [ # ListenerAuthConfigTemplates represents the auth values for the event listener.
+    &quot;proxyDestinationConfig&quot;: { # DestinationConfigTemplate defines required destinations supported by the Connector. # Proxy destination config template.
+    &quot;registrationDestinationConfig&quot;: { # DestinationConfigTemplate defines required destinations supported by the Connector. # Registration host destination config template.
+    &quot;sslConfigTemplate&quot;: { # Ssl config details of a connector version # SSL Config template for the connector version.
+      &quot;additionalVariables&quot;: [ # Any additional fields that need to be rendered
+      &quot;clientCertType&quot;: [ # List of supported Client Cert Types
+      &quot;isTlsMandatory&quot;: True or False, # Boolean for determining if the connector version mandates TLS.
+      &quot;serverCertType&quot;: [ # List of supported Server Cert Types
+      &quot;sslType&quot;: &quot;A String&quot;, # Controls the ssl type for the given connector version
+    &quot;triggerConfigVariables&quot;: [ # Trigger Config fields that needs to be rendered
+  &quot;isCustomActionsSupported&quot;: True or False, # Output only. Is custom actions supported.
+  &quot;isCustomEntitiesSupported&quot;: True or False, # Output only. Is custom entities supported.
+  &quot;name&quot;: &quot;A String&quot;, # Output only. Resource name of the Version. Format: projects/{project}/locations/{location}/providers/{provider}/connectors/{connector}/versions/{version} Only global location is supported for Connector resource.
+  &quot;roleGrant&quot;: { # This configuration defines all the Cloud IAM roles that needs to be granted to a particular Google Cloud resource for the selected principal like service account. These configurations will let UI display to customers what IAM roles need to be granted by them. Or these configurations can be used by the UI to render a &#x27;grant&#x27; button to do the same on behalf of the user. # Output only. Role grant configuration for this config variable. It will be DEPRECATED soon.
+    { # This configuration defines all the Cloud IAM roles that needs to be granted to a particular Google Cloud resource for the selected principal like service account. These configurations will let UI display to customers what IAM roles need to be granted by them. Or these configurations can be used by the UI to render a &#x27;grant&#x27; button to do the same on behalf of the user.
+  &quot;schemaRefreshConfig&quot;: { # Config for connection schema refresh # Connection Schema Refresh Config
+    &quot;useActionDisplayNames&quot;: True or False, # Whether to use displayName for actions in UI.
+    &quot;useSynchronousSchemaRefresh&quot;: True or False, # Whether to use synchronous schema refresh.
+  &quot;sslConfigTemplate&quot;: { # Ssl config details of a connector version # Output only. Ssl configuration supported by the Connector.
+  &quot;supportedRuntimeFeatures&quot;: { # Supported runtime features of a connector version. # Output only. Information about the runtime features supported by the Connector.
+    &quot;asyncOperations&quot;: True or False, # Specifies if the connector supports async long running operations.
+  &quot;supportedStandardActions&quot;: [ # Output only. Supported standard actions.
+    { # Standard action
+      &quot;name&quot;: &quot;A String&quot;, # Name of the standard action.
+  &quot;supportedStandardEntities&quot;: [ # Output only. Supported standard entities.
+    { # Standard entity
+      &quot;name&quot;: &quot;A String&quot;, # Name of the standard entity.
+  &quot;unsupportedConnectionTypes&quot;: [ # Output only. Unsupported connection types.
+  &quot;vpcscConfig&quot;: { # This configuration provides VPCSC config for a connector. # Output only. VPCSC config for the connector.
+    &quot;defaultAllowlistedHost&quot;: [ # The list of allowlisted FQDNs for VPCSC.
+    &quot;disableFirewallVpcscFlow&quot;: True or False, # Whether to disable firewall VPCSC flow.
+  parent: string, A parameter (required)
+  view: string, Specifies which fields of the ConnectorVersion are returned in the response. Defaults to `BASIC` view.

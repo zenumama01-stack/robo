@@ -1,0 +1,42 @@
+<h1><a href="translate_v3.html">Cloud Translation API</a> . <a href="translate_v3.projects.html">projects</a> . <a href="translate_v3.projects.locations.html">locations</a> . <a href="translate_v3.projects.locations.adaptiveMtDatasets.html">adaptiveMtDatasets</a></h1>
+  <code><a href="translate_v3.projects.locations.adaptiveMtDatasets.adaptiveMtFiles.html">adaptiveMtFiles()</a></code>
+<p class="firstline">Returns the adaptiveMtFiles Resource.</p>
+  <code><a href="translate_v3.projects.locations.adaptiveMtDatasets.adaptiveMtSentences.html">adaptiveMtSentences()</a></code>
+<p class="firstline">Creates an Adaptive MT dataset.</p>
+<p class="firstline">Deletes an Adaptive MT dataset, including all its entries and associated metadata.</p>
+<p class="firstline">Gets the Adaptive MT dataset.</p>
+  <code><a href="#importAdaptiveMtFile">importAdaptiveMtFile(parent, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Imports an AdaptiveMtFile and adds all of its sentences into the AdaptiveMtDataset.</p>
+<p class="firstline">Lists all Adaptive MT datasets for which the caller has read permission.</p>
+  <pre>Creates an Adaptive MT dataset.
+  parent: string, Required. Name of the parent project. In form of `projects/{project-number-or-id}/locations/{location-id}` (required)
+{ # An Adaptive MT Dataset.
+  &quot;createTime&quot;: &quot;A String&quot;, # Output only. Timestamp when this dataset was created.
+  &quot;displayName&quot;: &quot;A String&quot;, # The name of the dataset to show in the interface. The name can be up to 32 characters long and can consist only of ASCII Latin letters A-Z and a-z, underscores (_), and ASCII digits 0-9.
+  &quot;exampleCount&quot;: 42, # The number of examples in the dataset.
+  &quot;name&quot;: &quot;A String&quot;, # Identifier. The resource name of the dataset, in form of `projects/{project-number-or-id}/locations/{location_id}/adaptiveMtDatasets/{dataset_id}`
+  &quot;sourceLanguageCode&quot;: &quot;A String&quot;, # The BCP-47 language code of the source language.
+  &quot;targetLanguageCode&quot;: &quot;A String&quot;, # The BCP-47 language code of the target language.
+  &quot;updateTime&quot;: &quot;A String&quot;, # Output only. Timestamp when this dataset was last updated.
+  <pre>Deletes an Adaptive MT dataset, including all its entries and associated metadata.
+  name: string, Required. Name of the dataset. In the form of `projects/{project-number-or-id}/locations/{location-id}/adaptiveMtDatasets/{adaptive-mt-dataset-id}` (required)
+  <pre>Gets the Adaptive MT dataset.
+    <code class="details" id="importAdaptiveMtFile">importAdaptiveMtFile(parent, body=None, x__xgafv=None)</code>
+  <pre>Imports an AdaptiveMtFile and adds all of its sentences into the AdaptiveMtDataset.
+  parent: string, Required. The resource name of the file, in form of `projects/{project-number-or-id}/locations/{location_id}/adaptiveMtDatasets/{dataset}` (required)
+{ # The request for importing an AdaptiveMt file along with its sentences.
+  &quot;fileInputSource&quot;: { # An inlined file. # Inline file source.
+    &quot;content&quot;: &quot;A String&quot;, # Required. The file&#x27;s byte contents.
+    &quot;displayName&quot;: &quot;A String&quot;, # Required. The file&#x27;s display name.
+    &quot;mimeType&quot;: &quot;A String&quot;, # Required. The file&#x27;s mime type.
+  &quot;gcsInputSource&quot;: { # The Google Cloud Storage location for the input content. # Google Cloud Storage file source.
+    { # The response for importing an AdaptiveMtFile
+  &quot;adaptiveMtFile&quot;: { # An AdaptiveMtFile. # Output only. The Adaptive MT file that was imported.
+  <pre>Lists all Adaptive MT datasets for which the caller has read permission.
+  parent: string, Required. The resource name of the project from which to list the Adaptive MT datasets. `projects/{project-number-or-id}/locations/{location-id}` (required)
+  filter: string, Optional. An expression for filtering the results of the request. Filter is not supported yet.
+  pageSize: integer, Optional. Requested page size. The server may return fewer results than requested. If unspecified, the server picks an appropriate default.
+  pageToken: string, Optional. A token identifying a page of results the server should return. Typically, this is the value of ListAdaptiveMtDatasetsResponse.next_page_token returned from the previous call to `ListAdaptiveMtDatasets` method. The first page is returned if `page_token`is empty or missing.
+    { # A list of AdaptiveMtDatasets.
+  &quot;adaptiveMtDatasets&quot;: [ # Output only. A list of Adaptive MT datasets.
+  &quot;nextPageToken&quot;: &quot;A String&quot;, # Optional. A token to retrieve a page of results. Pass this value in the [ListAdaptiveMtDatasetsRequest.page_token] field in the subsequent call to `ListAdaptiveMtDatasets` method to retrieve the next page of results.

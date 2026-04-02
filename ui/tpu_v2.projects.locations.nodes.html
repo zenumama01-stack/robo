@@ -1,0 +1,55 @@
+<h1><a href="tpu_v2.html">Cloud TPU API</a> . <a href="tpu_v2.projects.html">projects</a> . <a href="tpu_v2.projects.locations.html">locations</a> . <a href="tpu_v2.projects.locations.nodes.html">nodes</a></h1>
+  <code><a href="#getGuestAttributes">getGuestAttributes(name, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Retrieves the guest attributes for the node.</p>
+<p class="firstline">Updates the configurations of a node.</p>
+  &quot;acceleratorConfig&quot;: { # A TPU accelerator configuration. # The AccleratorConfig for the TPU Node.
+  &quot;acceleratorType&quot;: &quot;A String&quot;, # Optional. The type of hardware accelerators associated with this node.
+  &quot;bootDiskConfig&quot;: { # Sets the boot disk configuration for the TPU node. # Optional. Boot disk configuration.
+    &quot;customerEncryptionKey&quot;: { # Defines the customer encryption key for disk encryption. # Optional. Customer encryption key for boot disk.
+      &quot;kmsKeyName&quot;: &quot;A String&quot;, # The name of the encryption key that is stored in Google Cloud KMS. For example: &quot;kmsKeyName&quot;: &quot;projects/KMS_PROJECT_ID/locations/REGION/keyRings/KEY_REGION/cryptoKeys/KEY The fully-qualifed key name may be returned for resource GET requests. For example: &quot;kmsKeyName&quot;: &quot;projects/KMS_PROJECT_ID/locations/REGION/keyRings/KEY_REGION/cryptoKeys/KEY/cryptoKeyVersions/1
+  &quot;dataDisks&quot;: [ # The additional data disks for the Node.
+    { # A node-attached disk resource. Next ID: 8;
+      &quot;mode&quot;: &quot;A String&quot;, # The mode in which to attach this disk. If not specified, the default is READ_WRITE mode. Only applicable to data_disks.
+      &quot;sourceDisk&quot;: &quot;A String&quot;, # Specifies the full path to an existing disk. For example: &quot;projects/my-project/zones/us-central1-c/disks/my-disk&quot;.
+  &quot;id&quot;: &quot;A String&quot;, # Output only. The unique identifier for the TPU Node.
+  &quot;metadata&quot;: { # Custom metadata to apply to the TPU Node. Can set startup-script and shutdown-script
+  &quot;multisliceNode&quot;: True or False, # Output only. Whether the Node belongs to a Multislice group.
+  &quot;name&quot;: &quot;A String&quot;, # Output only. Immutable. The name of the TPU.
+  &quot;networkConfig&quot;: { # Network related configurations. # Network configurations for the TPU node. network_config and network_configs are mutually exclusive, you can only specify one of them. If both are specified, an error will be returned.
+    &quot;canIpForward&quot;: True or False, # Allows the TPU node to send and receive packets with non-matching destination or source IPs. This is required if you plan to use the TPU workers to forward routes.
+    &quot;enableExternalIps&quot;: True or False, # Indicates that external IP addresses would be associated with the TPU workers. If set to false, the specified subnetwork or network should have Private Google Access enabled.
+    &quot;network&quot;: &quot;A String&quot;, # The name of the network for the TPU node. It must be a preexisting Google Compute Engine network. If none is provided, &quot;default&quot; will be used.
+    &quot;queueCount&quot;: 42, # Optional. Specifies networking queue count for TPU VM instance&#x27;s network interface.
+    &quot;subnetwork&quot;: &quot;A String&quot;, # The name of the subnetwork for the TPU node. It must be a preexisting Google Compute Engine subnetwork. If none is provided, &quot;default&quot; will be used.
+  &quot;networkConfigs&quot;: [ # Optional. Repeated network configurations for the TPU node. This field is used to specify multiple networks configs for the TPU node. network_config and network_configs are mutually exclusive, you can only specify one of them. If both are specified, an error will be returned.
+    { # Network related configurations.
+  &quot;networkEndpoints&quot;: [ # Output only. The network endpoints where TPU workers can be accessed and sent work. It is recommended that runtime clients of the node reach out to the 0th entry in this map first.
+      &quot;accessConfig&quot;: { # An access config attached to the TPU worker. # The access config for the TPU worker.
+        &quot;externalIp&quot;: &quot;A String&quot;, # Output only. An external IP address associated with the TPU worker.
+      &quot;ipAddress&quot;: &quot;A String&quot;, # The internal IP address of this network endpoint.
+  &quot;queuedResource&quot;: &quot;A String&quot;, # Output only. The qualified name of the QueuedResource that requested this Node.
+  &quot;runtimeVersion&quot;: &quot;A String&quot;, # Required. The runtime version running in the Node.
+    &quot;spot&quot;: True or False, # Optional. Defines whether the node is Spot VM.
+  &quot;serviceAccount&quot;: { # A service account. # The Google Cloud Platform Service Account to be used by the TPU node VMs. If None is specified, the default compute service account will be used.
+    &quot;email&quot;: &quot;A String&quot;, # Email address of the service account. If empty, default Compute service account will be used.
+    &quot;scope&quot;: [ # The list of scopes to be made available for this service account. If empty, access to all Cloud APIs will be allowed.
+  &quot;tags&quot;: [ # Tags to apply to the TPU Node. Tags are used to identify valid sources or targets for network firewalls.
+  &quot;upcomingMaintenance&quot;: { # Upcoming Maintenance notification information. # Output only. Upcoming maintenance on this TPU node.
+    &quot;latestWindowStartTime&quot;: &quot;A String&quot;, # The latest time for the planned maintenance window to start. This timestamp value is in RFC3339 text format.
+    &quot;maintenanceStatus&quot;: &quot;A String&quot;, # The status of the maintenance.
+    &quot;windowEndTime&quot;: &quot;A String&quot;, # The time by which the maintenance disruption will be completed. This timestamp value is in RFC3339 text format.
+    &quot;windowStartTime&quot;: &quot;A String&quot;, # The current start time of the maintenance window. This timestamp value is in RFC3339 text format.
+    <code class="details" id="getGuestAttributes">getGuestAttributes(name, body=None, x__xgafv=None)</code>
+  <pre>Retrieves the guest attributes for the node.
+{ # Request for GetGuestAttributes.
+  &quot;queryPath&quot;: &quot;A String&quot;, # The guest attributes path to be queried.
+  &quot;workerIds&quot;: [ # The 0-based worker ID. If it is empty, all workers&#x27; GuestAttributes will be returned.
+    { # Response for GetGuestAttributes.
+  &quot;guestAttributes&quot;: [ # The guest attributes for the TPU workers.
+    { # A guest attributes.
+      &quot;queryPath&quot;: &quot;A String&quot;, # The path to be queried. This can be the default namespace (&#x27;/&#x27;) or a nested namespace (&#x27;/\/&#x27;) or a specified key (&#x27;/\/\&#x27;)
+      &quot;queryValue&quot;: { # Array of guest attribute namespace/key/value tuples. # The value of the requested queried path.
+        &quot;items&quot;: [ # The list of guest attributes entries.
+  <pre>Updates the configurations of a node.
+  name: string, Output only. Immutable. The name of the TPU. (required)
+  updateMask: string, Required. Mask of fields from Node to update. Supported fields: [description, tags, labels, metadata, network_config.enable_external_ips].

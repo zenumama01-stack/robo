@@ -1,0 +1,64 @@
+<h1><a href="compute_alpha.html">Compute Engine API</a> . <a href="compute_alpha.instantSnapshots.html">instantSnapshots</a></h1>
+<p class="firstline">Retrieves an aggregated list of instantSnapshots.</p>
+  <code><a href="#delete">delete(project, zone, instantSnapshot, requestId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Deletes the specified InstantSnapshot resource. Keep in mind that deleting</p>
+  <code><a href="#get">get(project, zone, instantSnapshot, x__xgafv=None)</a></code></p>
+<p class="firstline">Returns the specified InstantSnapshot resource in the specified zone.</p>
+<p class="firstline">Creates an instant snapshot in the specified zone.</p>
+<p class="firstline">Retrieves the list of InstantSnapshot resources contained within</p>
+<p class="firstline">Sets the labels on a instantSnapshot in the given zone. To learn more about</p>
+  <pre>Retrieves an aggregated list of instantSnapshots.
+  &quot;items&quot;: { # A list of InstantSnapshotsScopedList resources.
+    &quot;a_key&quot;: { # [Output Only] Name of the scope containing this set of instantSnapshots.
+      &quot;instantSnapshots&quot;: [ # [Output Only] A list of instantSnapshots contained in this scope.
+        { # Represents a InstantSnapshot resource.
+            # You can use instant snapshots to create disk rollback points quickly..
+          &quot;architecture&quot;: &quot;A String&quot;, # Output only. [Output Only] The architecture of the instant snapshot. Valid values are
+          &quot;guestFlush&quot;: True or False, # Whether to attempt an application consistent instant snapshot by
+          &quot;kind&quot;: &quot;compute#instantSnapshot&quot;, # Output only. [Output Only] Type of the resource. Alwayscompute#instantSnapshot for InstantSnapshot resources.
+          &quot;labelFingerprint&quot;: &quot;A String&quot;, # A fingerprint for the labels being applied to this InstantSnapshot, which
+              # retrieve a InstantSnapshot.
+          &quot;labels&quot;: { # Labels to apply to this InstantSnapshot. These can be later modified by
+          &quot;params&quot;: { # Additional instant snapshot params. # Input only. Additional params passed with the request, but not persisted
+            &quot;resourceManagerTags&quot;: { # Input only. Resource manager tags to be bound to the instant snapshot. Tag keys and
+          &quot;region&quot;: &quot;A String&quot;, # Output only. [Output Only] URL of the region where the instant snapshot resides.
+          &quot;resourceStatus&quot;: { # Output only. [Output Only] Status information for the instant snapshot resource.
+            &quot;storageSizeBytes&quot;: &quot;A String&quot;, # [Output Only] The storage size of this instant snapshot.
+          &quot;sourceDisk&quot;: &quot;A String&quot;, # URL of the source disk used to create this instant snapshot.
+              # Note that the source disk must be in the same zone/region as the
+              # instant snapshot to be created. This can be a full or valid partial URL.
+          &quot;sourceDiskId&quot;: &quot;A String&quot;, # Output only. [Output Only] The ID value of the disk used to create this InstantSnapshot.
+              # This value may be used to determine whether the InstantSnapshot
+              # was taken from the current or a previous instance of a given disk name.
+          &quot;sourceInstantSnapshotGroup&quot;: &quot;A String&quot;, # Output only. [Output Only] URL of the source instant snapshot this instant snapshot is
+              # part of. Note that the source instant snapshot group must be in the same
+              # zone/region as the instant snapshot to be created. This can be a full or
+              # valid partial URL.
+          &quot;sourceInstantSnapshotGroupId&quot;: &quot;A String&quot;, # Output only. [Output Only] The ID value of the source instant snapshot group this
+              # InstantSnapshot is part of. This value may be used to determine whether the
+              # InstantSnapshot was created as part of an InstantSnapshotGroup creation.
+          &quot;status&quot;: &quot;A String&quot;, # Output only. [Output Only] The status of the instantSnapshot. This can beCREATING, DELETING, FAILED, orREADY.
+          &quot;zone&quot;: &quot;A String&quot;, # Output only. [Output Only] URL of the zone where the instant snapshot resides.
+      &quot;warning&quot;: { # [Output Only] Informational warning which replaces the list of
+          # instantSnapshots when the list is empty.
+  &quot;kind&quot;: &quot;compute#instantSnapshotAggregatedList&quot;, # Output only. [Output Only] Type of resource. Alwayscompute#instantSnapshotAggregatedList for aggregated lists of
+      # instantSnapshots.
+    <code class="details" id="delete">delete(project, zone, instantSnapshot, requestId=None, x__xgafv=None)</code>
+  <pre>Deletes the specified InstantSnapshot resource. Keep in mind that deleting
+a single instantSnapshot might not necessarily delete all the data on that
+instantSnapshot. If any data on the instantSnapshot that is marked for
+deletion is needed for subsequent instantSnapshots, the data will be moved
+to the next corresponding instantSnapshot.
+For more information, seeDeleting
+instantSnapshots.
+  instantSnapshot: string, Name of the InstantSnapshot resource to delete. (required)
+    <code class="details" id="get">get(project, zone, instantSnapshot, x__xgafv=None)</code>
+  <pre>Returns the specified InstantSnapshot resource in the specified zone.
+  instantSnapshot: string, Name of the InstantSnapshot resource to return. (required)
+  <pre>Creates an instant snapshot in the specified zone.
+  <pre>Retrieves the list of InstantSnapshot resources contained within
+    { # Contains a list of InstantSnapshot resources.
+  &quot;items&quot;: [ # A list of InstantSnapshot resources.
+  &quot;kind&quot;: &quot;compute#instantSnapshotList&quot;, # Output only. Type of resource.
+  <pre>Sets the labels on a instantSnapshot in the given zone. To learn more about
+labels, read the Labeling

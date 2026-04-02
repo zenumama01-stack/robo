@@ -1,0 +1,12 @@
+<h1><a href="workflowexecutions_v1.html">Workflow Executions API</a> . <a href="workflowexecutions_v1.projects.html">projects</a> . <a href="workflowexecutions_v1.projects.locations.html">locations</a> . <a href="workflowexecutions_v1.projects.locations.workflows.html">workflows</a></h1>
+  <code><a href="workflowexecutions_v1.projects.locations.workflows.executions.html">executions()</a></code>
+  <code><a href="#triggerPubsubExecution">triggerPubsubExecution(workflow, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Triggers a new execution using the latest revision of the given workflow by a Pub/Sub push notification.</p>
+    <code class="details" id="triggerPubsubExecution">triggerPubsubExecution(workflow, body=None, x__xgafv=None)</code>
+  <pre>Triggers a new execution using the latest revision of the given workflow by a Pub/Sub push notification.
+  workflow: string, Required. Name of the workflow for which an execution should be created. Format: projects/{project}/locations/{location}/workflows/{workflow} (required)
+{ # Request for the TriggerPubsubExecution method.
+  &quot;GCPCloudEventsMode&quot;: &quot;A String&quot;, # Required. LINT: LEGACY_NAMES The query parameter value for __GCP_CloudEventsMode, set by the Eventarc service when configuring triggers.
+  &quot;deliveryAttempt&quot;: 42, # The number of attempts that have been made to deliver this message. This is set by Pub/Sub for subscriptions that have the &quot;dead letter&quot; feature enabled, and hence provided here for compatibility, but is ignored by Workflows.
+  &quot;message&quot;: { # A message that is published by publishers and consumed by subscribers. The message must contain either a non-empty data field or at least one attribute. Note that client libraries represent this object differently depending on the language. See the corresponding [client library documentation](https://cloud.google.com/pubsub/docs/reference/libraries) for more information. See [quotas and limits] (https://cloud.google.com/pubsub/quotas) for more information about message limits. # Required. The message of the Pub/Sub push notification.
+  &quot;subscription&quot;: &quot;A String&quot;, # Required. The subscription of the Pub/Sub push notification. Format: projects/{project}/subscriptions/{sub}

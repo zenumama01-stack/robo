@@ -1,0 +1,128 @@
+[module: SuppressMessage("Microsoft.Naming", "CA1711:IdentifiersShouldNotHaveIncorrectSuffix", Scope = "type", Target = "~T:Microsoft.PowerShell.Commands.ByteCollection")]
+    /// Don't use! The API is obsolete!.
+    [Obsolete("This class is included in this SDK for completeness only. The members of this class cannot be used directly, nor should this class be used to derive other classes.", true)]
+    public enum TextEncodingType
+        /// No encoding.
+        /// Unicode encoding.
+        String,
+        Unicode,
+        /// Byte encoding.
+        Byte,
+        /// Big Endian Unicode encoding.
+        BigEndianUnicode,
+        /// Big Endian UTF32 encoding.
+        BigEndianUTF32,
+        /// UTF8 encoding.
+        Utf8,
+        /// UTF7 encoding.
+        Utf7,
+        /// ASCII encoding.
+        Ascii,
+    /// Utility class to contain resources for the Microsoft.PowerShell.Utility module.
+    [Obsolete("This class is obsolete", true)]
+    public static class UtilityResources
+        public static string PathDoesNotExist { get { return UtilityCommonStrings.PathDoesNotExist; } }
+        public static string FileReadError { get { return UtilityCommonStrings.FileReadError; } }
+        /// The resource string used to indicate 'PATH:' in the formatting header.
+        public static string FormatHexPathPrefix { get { return UtilityCommonStrings.FormatHexPathPrefix; } }
+        /// The file '{0}' could not be parsed as a PowerShell Data File.
+        public static string CouldNotParseAsPowerShellDataFile { get { return UtilityCommonStrings.CouldNotParseAsPowerShellDataFile; } }
+    /// ByteCollection is used as a wrapper class for the collection of bytes.
+    public class ByteCollection
+        /// Initializes a new instance of the <see cref="ByteCollection"/> class.
+        /// <param name="offset">The Offset address to be used while displaying the bytes in the collection.</param>
+        /// <param name="value">Underlying bytes stored in the collection.</param>
+        /// <param name="path">Indicates the path of the file whose contents are wrapped in the ByteCollection.</param>
+        [Obsolete("The constructor is deprecated.", true)]
+        public ByteCollection(uint offset, byte[] value, string path)
+            : this((ulong)offset, value, path)
+        public ByteCollection(ulong offset, byte[] value, string path)
+                throw PSTraceSource.NewArgumentNullException(nameof(value));
+            Offset64 = offset;
+            Bytes = value;
+            Label = path;
+        public ByteCollection(uint offset, byte[] value)
+            : this((ulong)offset, value)
+        public ByteCollection(ulong offset, byte[] value)
+        /// <param name="label">
+        /// The label for the byte group. This may be a file path or a formatted identifying string for the group.
+        public ByteCollection(ulong offset, string label, byte[] value)
+            : this(offset, value)
+            Label = label;
+        public ByteCollection(byte[] value)
+        /// Gets the Offset address to be used while displaying the bytes in the collection.
+        [Obsolete("The property is deprecated, please use Offset64 instead.", true)]
+        public uint Offset
+                return (uint)Offset64;
+                Offset64 = value;
+        public ulong Offset64 { get; private set; }
+        /// Gets underlying bytes stored in the collection.
+        public byte[] Bytes { get; }
+        /// Gets the path of the file whose contents are wrapped in the ByteCollection.
+        public string Path { get; }
+        /// Gets the hexadecimal representation of the <see cref="Offset64"/> value.
+        public string HexOffset => string.Create(CultureInfo.CurrentCulture, $"{Offset64:X16}");
+        /// Gets the type of the input objects used to create the <see cref="ByteCollection"/>.
+        public string Label { get; }
+        private const int BytesPerLine = 16;
+        private string _hexBytes = string.Empty;
+        /// Gets a space-delimited string of the <see cref="Bytes"/> in this <see cref="ByteCollection"/>
+        /// in hexadecimal format.
+        public string HexBytes
+                if (_hexBytes == string.Empty)
+                    StringBuilder line = new(BytesPerLine * 3);
+                    foreach (var currentByte in Bytes)
+                        line.AppendFormat(CultureInfo.CurrentCulture, "{0:X2} ", currentByte);
+                    _hexBytes = line.ToString().Trim();
+                return _hexBytes;
+        private string _ascii = string.Empty;
+        /// Gets the ASCII string representation of the <see cref="Bytes"/> in this <see cref="ByteCollection"/>.
+        public string Ascii
+                if (_ascii == string.Empty)
+                    StringBuilder ascii = new(BytesPerLine);
+                        var currentChar = (char)currentByte;
+                        if (currentChar == 0x0)
+                            ascii.Append(' ');
+                        else if (char.IsControl(currentChar))
+                            ascii.Append((char)0xFFFD);
+                            ascii.Append(currentChar);
+                    _ascii = ascii.ToString();
+                return _ascii;
+        /// Displays the hexadecimal format of the bytes stored in the collection.
+            const int BytesPerLine = 16;
+            const string LineFormat = "{0:X16}   ";
+            // '16 + 3' comes from format "{0:X16}   ".
+            // '16' comes from '[Uint64]::MaxValue.ToString("X").Length'.
+            StringBuilder nextLine = new(16 + 3 + (BytesPerLine * 3));
+            StringBuilder asciiEnd = new(BytesPerLine);
+            // '+1' comes from 'result.Append(nextLine.ToString() + " " + asciiEnd.ToString());' below.
+            StringBuilder result = new(nextLine.Capacity + asciiEnd.Capacity + 1);
+            if (Bytes.Length > 0)
+                long charCounter = 0;
+                var currentOffset = Offset64;
+                nextLine.AppendFormat(CultureInfo.InvariantCulture, LineFormat, currentOffset);
+                foreach (byte currentByte in Bytes)
+                    // Display each byte, in 2-digit hexadecimal, and add that to the left-hand side.
+                    nextLine.AppendFormat("{0:X2} ", currentByte);
+                    // If the character is printable, add its ascii representation to
+                    // the right-hand side.  Otherwise, add a dot to the right hand side.
+                        asciiEnd.Append(' ');
+                        asciiEnd.Append((char)0xFFFD);
+                        asciiEnd.Append(currentChar);
+                    charCounter++;
+                    // If we've hit the end of a line, combine the right half with the
+                    // left half, and start a new line.
+                    if ((charCounter % BytesPerLine) == 0)
+                        result.Append(nextLine).Append(' ').Append(asciiEnd);
+                        nextLine.Clear();
+                        asciiEnd.Clear();
+                        currentOffset += BytesPerLine;
+                        // Adding a newline to support long inputs strings flowing through InputObject parameterset.
+                        if ((charCounter <= Bytes.Length) && string.IsNullOrEmpty(Path))
+                            result.AppendLine();
+                // At the end of the file, we might not have had the chance to output
+                // the end of the line yet. Only do this if we didn't exit on the 16-byte
+                // boundary, though.
+                if ((charCounter % 16) != 0)
+                    while ((charCounter % 16) != 0)
+                        nextLine.Append(' ', 3);

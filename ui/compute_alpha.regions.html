@@ -1,0 +1,33 @@
+<h1><a href="compute_alpha.html">Compute Engine API</a> . <a href="compute_alpha.regions.html">regions</a></h1>
+<p class="firstline">Returns the specified Region resource.</p>
+<p class="firstline">Retrieves the list of region resources available to the specified project.</p>
+  <pre>Returns the specified Region resource.
+This method fails if the quota information is unavailable for the region
+and if the organization policy constraint
+compute.requireBasicQuotaInResponse is enforced. This
+constraint, when enforced, disables the fail-open behaviour when quota
+information (the `items.quotas` field) is unavailable for the region.
+It is recommended to use the default setting
+for the constraint unless your application requires the fail-closed
+behaviour for this method.
+  region: string, Name of the region resource to return. (required)
+    { # Represents a Region resource.
+    # A region is a geographical area where a resource is located. For more
+    # information, readRegions
+    # and Zones.
+  &quot;deprecated&quot;: { # Deprecation status for a public resource. # [Output Only] The deprecation status associated with this region.
+  &quot;kind&quot;: &quot;compute#region&quot;, # Output only. [Output Only] Type of the resource. Always compute#region for
+      # regions.
+  &quot;quotaStatusWarning&quot;: { # Output only. [Output Only] Warning of fetching the `quotas` field for this region. This
+      # field is populated only if fetching of the `quotas` field fails.
+  &quot;quotas&quot;: [ # [Output Only] Quotas assigned to this region.
+  &quot;status&quot;: &quot;A String&quot;, # [Output Only] Status of the region, either UP orDOWN.
+  &quot;zones&quot;: [ # [Output Only] A list of zones available in this region, in the form of
+      # resource URLs.
+  <pre>Retrieves the list of region resources available to the specified project.
+especially recommended for unused quota information
+(the `items.quotas` field).
+    { # Contains a list of region resources.
+  &quot;items&quot;: [ # A list of Region resources.
+  &quot;kind&quot;: &quot;compute#regionList&quot;, # Output only. [Output Only] Type of resource. Always compute#regionList for
+      # lists of regions.

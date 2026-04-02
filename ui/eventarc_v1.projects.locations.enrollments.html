@@ -1,0 +1,40 @@
+<h1><a href="eventarc_v1.html">Eventarc API</a> . <a href="eventarc_v1.projects.html">projects</a> . <a href="eventarc_v1.projects.locations.html">locations</a> . <a href="eventarc_v1.projects.locations.enrollments.html">enrollments</a></h1>
+  <code><a href="#create">create(parent, body=None, enrollmentId=None, validateOnly=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Create a new Enrollment in a particular project and location.</p>
+<p class="firstline">Delete a single Enrollment.</p>
+<p class="firstline">Get a single Enrollment.</p>
+<p class="firstline">List Enrollments.</p>
+  <code><a href="#patch">patch(name, allowMissing=None, body=None, updateMask=None, validateOnly=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Update a single Enrollment.</p>
+    <code class="details" id="create">create(parent, body=None, enrollmentId=None, validateOnly=None, x__xgafv=None)</code>
+  <pre>Create a new Enrollment in a particular project and location.
+  parent: string, Required. The parent collection in which to add this enrollment. (required)
+{ # An enrollment represents a subscription for messages on a particular message bus. It defines a matching criteria for messages on the bus and the subscriber endpoint where matched messages should be delivered.
+  &quot;annotations&quot;: { # Optional. Resource annotations.
+  &quot;celMatch&quot;: &quot;A String&quot;, # Required. A CEL expression identifying which messages this enrollment applies to.
+  &quot;destination&quot;: &quot;A String&quot;, # Required. Destination is the Pipeline that the Enrollment is delivering to. It must point to the full resource name of a Pipeline. Format: &quot;projects/{PROJECT_ID}/locations/{region}/pipelines/{PIPELINE_ID)&quot;
+  &quot;displayName&quot;: &quot;A String&quot;, # Optional. Resource display name.
+  &quot;etag&quot;: &quot;A String&quot;, # Output only. This checksum is computed by the server based on the value of other fields, and might be sent only on update and delete requests to ensure that the client has an up-to-date value before proceeding.
+  &quot;messageBus&quot;: &quot;A String&quot;, # Required. Immutable. Resource name of the message bus identifying the source of the messages. It matches the form projects/{project}/locations/{location}/messageBuses/{messageBus}.
+  &quot;name&quot;: &quot;A String&quot;, # Identifier. Resource name of the form projects/{project}/locations/{location}/enrollments/{enrollment}
+  enrollmentId: string, Required. The user-provided ID to be assigned to the Enrollment. It should match the format `^[a-z]([a-z0-9-]{0,61}[a-z0-9])?$`.
+  <pre>Delete a single Enrollment.
+  name: string, Required. The name of the Enrollment to be deleted. (required)
+  allowMissing: boolean, Optional. If set to true, and the Enrollment is not found, the request will succeed but no action will be taken on the server.
+  etag: string, Optional. If provided, the Enrollment will only be deleted if the etag matches the current etag on the resource.
+  <pre>Get a single Enrollment.
+  name: string, Required. The name of the Enrollment to get. (required)
+  <pre>List Enrollments.
+  parent: string, Required. The parent collection to list triggers on. (required)
+  filter: string, Optional. The filter field that the list request will filter on. Possible filtersare described in https://google.aip.dev/160.
+  orderBy: string, Optional. The sorting order of the resources returned. Value should be a comma-separated list of fields. The default sorting order is ascending. To specify descending order for a field, append a `desc` suffix; for example: `name desc, update_time`.
+  pageSize: integer, Optional. The maximum number of results to return on each page. Note: The service may send fewer.
+  pageToken: string, Optional. The page token; provide the value from the `next_page_token` field in a previous call to retrieve the subsequent page. When paginating, all other parameters provided must match the previous call that provided the page token.
+    { # The response message for the `ListEnrollments` method.
+  &quot;enrollments&quot;: [ # The requested Enrollments, up to the number specified in `page_size`.
+  &quot;nextPageToken&quot;: &quot;A String&quot;, # A page token that can be sent to `ListEnrollments` to request the next page. If this is empty, then there are no more pages.
+    <code class="details" id="patch">patch(name, allowMissing=None, body=None, updateMask=None, validateOnly=None, x__xgafv=None)</code>
+  <pre>Update a single Enrollment.
+  name: string, Identifier. Resource name of the form projects/{project}/locations/{location}/enrollments/{enrollment} (required)
+  allowMissing: boolean, Optional. If set to true, and the Enrollment is not found, a new Enrollment will be created. In this situation, `update_mask` is ignored.
+  updateMask: string, Optional. The fields to be updated; only fields explicitly provided are updated. If no field mask is provided, all provided fields in the request are updated. To update all fields, provide a field mask of &quot;*&quot;.

@@ -1,0 +1,60 @@
+<h1><a href="firebaseappcheck_v1.html">Firebase App Check API</a> . <a href="firebaseappcheck_v1.projects.html">projects</a> . <a href="firebaseappcheck_v1.projects.apps.html">apps</a></h1>
+  <code><a href="firebaseappcheck_v1.projects.apps.appAttestConfig.html">appAttestConfig()</a></code>
+<p class="firstline">Returns the appAttestConfig Resource.</p>
+  <code><a href="firebaseappcheck_v1.projects.apps.debugTokens.html">debugTokens()</a></code>
+<p class="firstline">Returns the debugTokens Resource.</p>
+  <code><a href="firebaseappcheck_v1.projects.apps.deviceCheckConfig.html">deviceCheckConfig()</a></code>
+<p class="firstline">Returns the deviceCheckConfig Resource.</p>
+  <code><a href="firebaseappcheck_v1.projects.apps.playIntegrityConfig.html">playIntegrityConfig()</a></code>
+<p class="firstline">Returns the playIntegrityConfig Resource.</p>
+  <code><a href="firebaseappcheck_v1.projects.apps.recaptchaEnterpriseConfig.html">recaptchaEnterpriseConfig()</a></code>
+<p class="firstline">Returns the recaptchaEnterpriseConfig Resource.</p>
+  <code><a href="firebaseappcheck_v1.projects.apps.recaptchaV3Config.html">recaptchaV3Config()</a></code>
+<p class="firstline">Returns the recaptchaV3Config Resource.</p>
+  <code><a href="firebaseappcheck_v1.projects.apps.safetyNetConfig.html">safetyNetConfig()</a></code>
+<p class="firstline">Returns the safetyNetConfig Resource.</p>
+  <code><a href="#exchangeCustomToken">exchangeCustomToken(app, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Validates a custom token signed using your project's Admin SDK service account credentials. If valid, returns an AppCheckToken.</p>
+  <code><a href="#exchangeDeviceCheckToken">exchangeDeviceCheckToken(app, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Accepts a [`device_token`](https://developer.apple.com/documentation/devicecheck/dcdevice) issued by DeviceCheck, and attempts to validate it with Apple. If valid, returns an AppCheckToken.</p>
+  <code><a href="#exchangePlayIntegrityToken">exchangePlayIntegrityToken(app, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Validates an [integrity verdict response token from Play Integrity](https://developer.android.com/google/play/integrity/verdict#decrypt-verify). If valid, returns an AppCheckToken.</p>
+  <code><a href="#exchangeRecaptchaEnterpriseToken">exchangeRecaptchaEnterpriseToken(app, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Validates a [reCAPTCHA Enterprise response token](https://cloud.google.com/recaptcha-enterprise/docs/create-assessment#retrieve_token). If valid, returns an AppCheckToken.</p>
+  <code><a href="#exchangeRecaptchaV3Token">exchangeRecaptchaV3Token(app, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Validates a [reCAPTCHA v3 response token](https://developers.google.com/recaptcha/docs/v3). If valid, returns an AppCheckToken.</p>
+  <code><a href="#exchangeSafetyNetToken">exchangeSafetyNetToken(app, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Validates a [SafetyNet token](https://developer.android.com/training/safetynet/attestation#request-attestation-step). If valid, returns an AppCheckToken.</p>
+  <code><a href="#generatePlayIntegrityChallenge">generatePlayIntegrityChallenge(app, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Generates a challenge that protects the integrity of an immediately following integrity verdict request to the Play Integrity API. The next call to ExchangePlayIntegrityToken using the resulting integrity token will verify the presence and validity of the challenge. A challenge should not be reused for multiple calls.</p>
+    <code class="details" id="exchangeCustomToken">exchangeCustomToken(app, body=None, x__xgafv=None)</code>
+  <pre>Validates a custom token signed using your project&#x27;s Admin SDK service account credentials. If valid, returns an AppCheckToken.
+{ # Request message for the ExchangeCustomToken method.
+  &quot;customToken&quot;: &quot;A String&quot;, # Required. A custom token signed using your project&#x27;s Admin SDK service account credentials.
+    <code class="details" id="exchangeDeviceCheckToken">exchangeDeviceCheckToken(app, body=None, x__xgafv=None)</code>
+  <pre>Accepts a [`device_token`](https://developer.apple.com/documentation/devicecheck/dcdevice) issued by DeviceCheck, and attempts to validate it with Apple. If valid, returns an AppCheckToken.
+{ # Request message for the ExchangeDeviceCheckToken method.
+  &quot;deviceToken&quot;: &quot;A String&quot;, # Required. The `device_token` as returned by Apple&#x27;s client-side [DeviceCheck API](https://developer.apple.com/documentation/devicecheck/dcdevice). This is the base64 encoded `Data` (Swift) or `NSData` (ObjC) object.
+    <code class="details" id="exchangePlayIntegrityToken">exchangePlayIntegrityToken(app, body=None, x__xgafv=None)</code>
+  <pre>Validates an [integrity verdict response token from Play Integrity](https://developer.android.com/google/play/integrity/verdict#decrypt-verify). If valid, returns an AppCheckToken.
+  app: string, Required. The relative resource name of the Android app, in the format: ``` projects/{project_number}/apps/{app_id} ``` If necessary, the `project_number` element can be replaced with the project ID of the Firebase project. Learn more about using project identifiers in Google&#x27;s [AIP 2510](https://google.aip.dev/cloud/2510) standard. (required)
+{ # Request message for the ExchangePlayIntegrityToken method.
+  &quot;playIntegrityToken&quot;: &quot;A String&quot;, # Required. The [integrity verdict response token from Play Integrity](https://developer.android.com/google/play/integrity/verdict#decrypt-verify) issued to your app.
+    <code class="details" id="exchangeRecaptchaEnterpriseToken">exchangeRecaptchaEnterpriseToken(app, body=None, x__xgafv=None)</code>
+  <pre>Validates a [reCAPTCHA Enterprise response token](https://cloud.google.com/recaptcha-enterprise/docs/create-assessment#retrieve_token). If valid, returns an AppCheckToken.
+  app: string, Required. The relative resource name of the web app, in the format: ``` projects/{project_number}/apps/{app_id} ``` If necessary, the `project_number` element can be replaced with the project ID of the Firebase project. Learn more about using project identifiers in Google&#x27;s [AIP 2510](https://google.aip.dev/cloud/2510) standard. (required)
+{ # Request message for the ExchangeRecaptchaEnterpriseToken method.
+  &quot;recaptchaEnterpriseToken&quot;: &quot;A String&quot;, # Required. The reCAPTCHA token as returned by the [reCAPTCHA Enterprise JavaScript API](https://cloud.google.com/recaptcha-enterprise/docs/instrument-web-pages).
+    <code class="details" id="exchangeRecaptchaV3Token">exchangeRecaptchaV3Token(app, body=None, x__xgafv=None)</code>
+  <pre>Validates a [reCAPTCHA v3 response token](https://developers.google.com/recaptcha/docs/v3). If valid, returns an AppCheckToken.
+{ # Request message for the ExchangeRecaptchaV3Token method.
+  &quot;recaptchaV3Token&quot;: &quot;A String&quot;, # Required. The reCAPTCHA token as returned by the [reCAPTCHA v3 JavaScript API](https://developers.google.com/recaptcha/docs/v3).
+    <code class="details" id="exchangeSafetyNetToken">exchangeSafetyNetToken(app, body=None, x__xgafv=None)</code>
+  <pre>Validates a [SafetyNet token](https://developer.android.com/training/safetynet/attestation#request-attestation-step). If valid, returns an AppCheckToken.
+{ # Request message for the ExchangeSafetyNetToken method.
+  &quot;safetyNetToken&quot;: &quot;A String&quot;, # Required. The [SafetyNet attestation response](https://developer.android.com/training/safetynet/attestation#request-attestation-step) issued to your app.
+    <code class="details" id="generatePlayIntegrityChallenge">generatePlayIntegrityChallenge(app, body=None, x__xgafv=None)</code>
+  <pre>Generates a challenge that protects the integrity of an immediately following integrity verdict request to the Play Integrity API. The next call to ExchangePlayIntegrityToken using the resulting integrity token will verify the presence and validity of the challenge. A challenge should not be reused for multiple calls.
+{ # Request message for the GeneratePlayIntegrityChallenge method.
+    { # Response message for the GeneratePlayIntegrityChallenge method.
+  &quot;challenge&quot;: &quot;A String&quot;, # A one-time use [challenge](https://developer.android.com/google/play/integrity/verdict#protect-against-replay-attacks) for the client to pass to the Play Integrity API.

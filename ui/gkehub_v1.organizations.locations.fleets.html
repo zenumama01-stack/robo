@@ -1,0 +1,25 @@
+<h1><a href="gkehub_v1.html">GKE Hub API</a> . <a href="gkehub_v1.organizations.html">organizations</a> . <a href="gkehub_v1.organizations.locations.html">locations</a> . <a href="gkehub_v1.organizations.locations.fleets.html">fleets</a></h1>
+<p class="firstline">Returns all fleets within an organization or a project that the caller has access to.</p>
+  <pre>Returns all fleets within an organization or a project that the caller has access to.
+  parent: string, Required. The organization or project to list for Fleets under, in the format `organizations/*/locations/*` or `projects/*/locations/*`. (required)
+  pageSize: integer, Optional. The maximum number of fleets to return. The service may return fewer than this value. If unspecified, at most 200 fleets will be returned. The maximum value is 1000; values above 1000 will be coerced to 1000.
+  pageToken: string, Optional. A page token, received from a previous `ListFleets` call. Provide this to retrieve the subsequent page. When paginating, all other parameters provided to `ListFleets` must match the call that provided the page token.
+    { # Response message for the `GkeHub.ListFleetsResponse` method.
+  &quot;fleets&quot;: [ # The list of matching fleets.
+    { # Fleet contains the Fleet-wide metadata and configuration.
+      &quot;createTime&quot;: &quot;A String&quot;, # Output only. When the Fleet was created.
+      &quot;defaultClusterConfig&quot;: { # DefaultClusterConfig describes the default cluster configurations to be applied to all clusters born-in-fleet. # Optional. The default cluster configurations to apply across the fleet.
+        &quot;binaryAuthorizationConfig&quot;: { # BinaryAuthorizationConfig defines the fleet level configuration of binary authorization feature. # Optional. Enable/Disable binary authorization features for the cluster.
+          &quot;evaluationMode&quot;: &quot;A String&quot;, # Optional. Mode of operation for binauthz policy evaluation.
+              &quot;name&quot;: &quot;A String&quot;, # The relative resource name of the binauthz platform policy to audit. GKE platform policies have the following format: `projects/{project_number}/platforms/gke/policies/{policy_id}`.
+        &quot;compliancePostureConfig&quot;: { # Deprecated: Compliance Posture is no longer supported. For more details, see https://cloud.google.com/kubernetes-engine/docs/deprecations/posture-management-deprecation. CompliancePostureConfig defines the settings needed to enable/disable features for the Compliance Posture. # Optional. Deprecated: Compliance Posture is no longer supported. For more details, see https://cloud.google.com/kubernetes-engine/docs/deprecations/posture-management-deprecation. Enable/Disable Compliance Posture features for the cluster. Note that on UpdateFleet, only full replacement of this field is allowed. Users are not allowed for partial updates through field mask.
+        &quot;securityPostureConfig&quot;: { # SecurityPostureConfig defines the flags needed to enable/disable features for the Security Posture API. # Optional. Enable/Disable Security Posture features for the cluster.
+      &quot;deleteTime&quot;: &quot;A String&quot;, # Output only. When the Fleet was deleted.
+      &quot;displayName&quot;: &quot;A String&quot;, # Optional. A user-assigned display name of the Fleet. When present, it must be between 4 to 30 characters. Allowed characters are: lowercase and uppercase letters, numbers, hyphen, single-quote, double-quote, space, and exclamation point. Example: `Production Fleet`
+      &quot;labels&quot;: { # Optional. Labels for this Fleet.
+      &quot;name&quot;: &quot;A String&quot;, # Output only. The full, unique resource name of this fleet in the format of `projects/{project}/locations/{location}/fleets/{fleet}`. Each Google Cloud project can have at most one fleet resource, named &quot;default&quot;.
+      &quot;state&quot;: { # FleetLifecycleState describes the state of a Fleet resource. # Output only. State of the namespace resource.
+        &quot;code&quot;: &quot;A String&quot;, # Output only. The current state of the Fleet resource.
+      &quot;uid&quot;: &quot;A String&quot;, # Output only. Google-generated UUID for this resource. This is unique across all Fleet resources. If a Fleet resource is deleted and another resource with the same name is created, it gets a different uid.
+      &quot;updateTime&quot;: &quot;A String&quot;, # Output only. When the Fleet was last updated.
+  &quot;nextPageToken&quot;: &quot;A String&quot;, # A token, which can be sent as `page_token` to retrieve the next page. If this field is omitted, there are no subsequent pages. The token is only valid for 1h.

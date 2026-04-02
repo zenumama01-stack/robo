@@ -1,0 +1,90 @@
+<h1><a href="contactcenterinsights_v1.html">Contact Center AI Insights API</a> . <a href="contactcenterinsights_v1.projects.html">projects</a> . <a href="contactcenterinsights_v1.projects.locations.html">locations</a> . <a href="contactcenterinsights_v1.projects.locations.conversations.html">conversations</a></h1>
+  <code><a href="contactcenterinsights_v1.projects.locations.conversations.analyses.html">analyses()</a></code>
+<p class="firstline">Returns the analyses Resource.</p>
+  <code><a href="contactcenterinsights_v1.projects.locations.conversations.assessments.html">assessments()</a></code>
+  <code><a href="contactcenterinsights_v1.projects.locations.conversations.feedbackLabels.html">feedbackLabels()</a></code>
+  <code><a href="contactcenterinsights_v1.projects.locations.conversations.segments.html">segments()</a></code>
+  <code><a href="#bulkAnalyze">bulkAnalyze(parent, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Analyzes multiple conversations in a single request.</p>
+  <code><a href="#bulkDelete">bulkDelete(parent, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Deletes multiple conversations in a single request.</p>
+  <code><a href="#create">create(parent, body=None, conversationId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Creates a conversation. Note that this method does not support audio transcription or redaction. Use `conversations.upload` instead.</p>
+  <code><a href="#ingest">ingest(parent, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Imports conversations and processes them according to the user's configuration.</p>
+  <code><a href="#patch">patch(name, allowMissing=None, body=None, conversationAutoLabelingUpdateConfig_allowAutoLabelingUpdate=None, updateMask=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Updates a conversation.</p>
+  <code><a href="#sample">sample(parent, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Samples conversations based on user configuration and handles the sampled conversations for different use cases.</p>
+<p class="firstline">Create a long-running conversation upload operation. This method differs from `CreateConversation` by allowing audio transcription and optional DLP redaction.</p>
+    <code class="details" id="bulkAnalyze">bulkAnalyze(parent, body=None, x__xgafv=None)</code>
+  <pre>Analyzes multiple conversations in a single request.
+  parent: string, Required. The parent resource to create analyses in. (required)
+{ # The request to analyze conversations in bulk.
+  &quot;analysisPercentage&quot;: 3.14, # Required. Percentage of selected conversation to analyze, between [0, 100].
+  &quot;filter&quot;: &quot;A String&quot;, # Required. Filter used to select the subset of conversations to analyze.
+  &quot;parent&quot;: &quot;A String&quot;, # Required. The parent resource to create analyses in.
+  &quot;relabel&quot;: True or False, # Optional. If true, the labeling rules will be re-evaluated for the conversations.
+    <code class="details" id="bulkDelete">bulkDelete(parent, body=None, x__xgafv=None)</code>
+  <pre>Deletes multiple conversations in a single request.
+  parent: string, Required. The parent resource to delete conversations from. Format: projects/{project}/locations/{location} (required)
+{ # The request to delete conversations in bulk.
+  &quot;filter&quot;: &quot;A String&quot;, # Filter used to select the subset of conversations to delete.
+  &quot;force&quot;: True or False, # If set to true, all of this conversation&#x27;s analyses will also be deleted. Otherwise, the request will only succeed if the conversation has no analyses.
+  &quot;maxDeleteCount&quot;: 42, # Maximum number of conversations to delete.
+  &quot;parent&quot;: &quot;A String&quot;, # Required. The parent resource to delete conversations from. Format: projects/{project}/locations/{location}
+    <code class="details" id="create">create(parent, body=None, conversationId=None, x__xgafv=None)</code>
+  <pre>Creates a conversation. Note that this method does not support audio transcription or redaction. Use `conversations.upload` instead.
+  conversationId: string, A unique ID for the new conversation. This ID will become the final component of the conversation&#x27;s resource name. If no ID is specified, a server-generated ID will be used. This value should be 4-64 characters and must match the regular expression `^[a-z0-9-]{4,64}$`. Valid characters are `a-z-`
+    <code class="details" id="ingest">ingest(parent, body=None, x__xgafv=None)</code>
+  <pre>Imports conversations and processes them according to the user&#x27;s configuration.
+  parent: string, Required. The parent resource for new conversations. (required)
+{ # The request to ingest conversations.
+  &quot;conversationConfig&quot;: { # Configuration that applies to all conversations. # Configuration that applies to all conversations.
+    &quot;agentChannel&quot;: 42, # Optional. Indicates which of the channels, 1 or 2, contains the agent. Note that this must be set for conversations to be properly displayed and analyzed.
+    &quot;agentId&quot;: &quot;A String&quot;, # Optional. An opaque, user-specified string representing a human agent who handled all conversations in the import. Note that this will be overridden if per-conversation metadata is provided through the `metadata_bucket_uri`.
+    &quot;customerChannel&quot;: 42, # Optional. Indicates which of the channels, 1 or 2, contains the agent. Note that this must be set for conversations to be properly displayed and analyzed.
+  &quot;gcsSource&quot;: { # Configuration for Cloud Storage bucket sources. # A cloud storage bucket source. Note that any previously ingested objects from the source will be skipped to avoid duplication.
+    &quot;audioBucketUri&quot;: &quot;A String&quot;, # Optional. The Cloud Storage path to the conversation audio file. Note that: [1] Audio files will be transcribed if not already. [2] Audio files and transcript files must be in separate buckets / folders. [3] A source file and its corresponding audio file must share the same name to be properly ingested, E.g. `gs://bucket/transcript/conversation1.json` and `gs://bucket/audio/conversation1.mp3`.
+    &quot;bucketObjectType&quot;: &quot;A String&quot;, # Optional. Specifies the type of the objects in `bucket_uri`. Avoid passing this. This is inferred from the `transcript_bucket_uri`, `audio_bucket_uri`.
+    &quot;bucketUri&quot;: &quot;A String&quot;, # Optional. The Cloud Storage bucket containing source objects. Avoid passing this. Pass this through one of `transcript_bucket_uri` or `audio_bucket_uri`.
+    &quot;customMetadataKeys&quot;: [ # Optional. Custom keys to extract as conversation labels from metadata files in `metadata_bucket_uri`. Keys not included in this field will be ignored. Note that there is a limit of 100 labels per conversation.
+    &quot;metadataBucketUri&quot;: &quot;A String&quot;, # Optional. The Cloud Storage path to the conversation metadata. Note that: [1] Metadata files are expected to be in JSON format. [2] Metadata and source files (transcripts or audio) must be in separate buckets / folders. [3] A source file and its corresponding metadata file must share the same name to be properly ingested, E.g. `gs://bucket/audio/conversation1.mp3` and `gs://bucket/metadata/conversation1.json`.
+    &quot;transcriptBucketUri&quot;: &quot;A String&quot;, # Optional. The Cloud Storage path to the conversation transcripts. Note that: [1] Transcript files are expected to be in JSON format. [2] Transcript, audio, metadata files must be in separate buckets / folders. [3] A source file and its corresponding metadata file must share the same name to be properly ingested, E.g. `gs://bucket/audio/conversation1.mp3` and `gs://bucket/metadata/conversation1.json`.
+  &quot;parent&quot;: &quot;A String&quot;, # Required. The parent resource for new conversations.
+  &quot;redactionConfig&quot;: { # DLP resources used for redaction while ingesting conversations. DLP settings are applied to conversations ingested from the `UploadConversation` and `IngestConversations` endpoints, including conversation coming from CCAI Platform. They are not applied to conversations ingested from the `CreateConversation` endpoint or the Dialogflow / Agent Assist runtime integrations. When using Dialogflow / Agent Assist runtime integrations, redaction should be performed in Dialogflow / Agent Assist. # Optional. DLP settings for transcript redaction. Optional, will default to the config specified in Settings.
+    &quot;deidentifyTemplate&quot;: &quot;A String&quot;, # The fully-qualified DLP deidentify template resource name. Format: `projects/{project}/deidentifyTemplates/{template}`
+    &quot;inspectTemplate&quot;: &quot;A String&quot;, # The fully-qualified DLP inspect template resource name. Format: `projects/{project}/locations/{location}/inspectTemplates/{template}`
+  &quot;sampleSize&quot;: 42, # Optional. If set, this fields indicates the number of objects to ingest from the Cloud Storage bucket. If empty, the entire bucket will be ingested. Unless they are first deleted, conversations produced through sampling won&#x27;t be ingested by subsequent ingest requests.
+  &quot;speechConfig&quot;: { # Speech-to-Text configuration. Speech-to-Text settings are applied to conversations ingested from the `UploadConversation` and `IngestConversations` endpoints, including conversation coming from CCAI Platform. They are not applied to conversations ingested from the `CreateConversation` endpoint. # Optional. Default Speech-to-Text configuration. Optional, will default to the config specified in Settings.
+    &quot;disableWordTimeOffsets&quot;: True or False, # Whether to disable word time offsets. If true, the `enable_word_time_offsets` field in the recognition config will be set to false.
+    &quot;speechRecognizer&quot;: &quot;A String&quot;, # The fully-qualified Speech Recognizer resource name. Format: `projects/{project_id}/locations/{location}/recognizer/{recognizer}`
+  &quot;transcriptObjectConfig&quot;: { # Configuration for processing transcript objects. # Configuration for when `source` contains conversation transcripts.
+    &quot;medium&quot;: &quot;A String&quot;, # Required. The medium transcript objects represent.
+    <code class="details" id="patch">patch(name, allowMissing=None, body=None, conversationAutoLabelingUpdateConfig_allowAutoLabelingUpdate=None, updateMask=None, x__xgafv=None)</code>
+  <pre>Updates a conversation.
+  name: string, Immutable. The resource name of the conversation. Format: projects/{project}/locations/{location}/conversations/{conversation} (required)
+  allowMissing: boolean, Optional. Defaults to false. If set to true, and the conversation is not found, a new conversation will be created. In this situation, `update_mask` is ignored.
+  conversationAutoLabelingUpdateConfig_allowAutoLabelingUpdate: boolean, Optional. If set to true, the conversation will be updated with auto labeling results.
+  updateMask: string, The list of fields to be updated. All possible fields can be updated by passing `*`, or a subset of the following updateable fields can be provided: * `agent_id` * `language_code` * `labels` * `metadata` * `quality_metadata` * `call_metadata` * `start_time` * `expire_time` or `ttl` * `data_source.gcs_source.audio_uri` or * `data_source.dialogflow_source.audio_uri` * `data_source.screen_recordings`
+    <code class="details" id="sample">sample(parent, body=None, x__xgafv=None)</code>
+  <pre>Samples conversations based on user configuration and handles the sampled conversations for different use cases.
+  parent: string, Required. The parent resource of the dataset. (required)
+{ # The request to sample conversations to a dataset.
+  &quot;destinationDataset&quot;: { # Dataset resource represents a collection of conversations that may be bounded (Static Dataset, e.g. golden dataset for training), or unbounded (Dynamic Dataset, e.g. live traffic, or agent training traffic) # The dataset resource to copy the sampled conversations to.
+    &quot;createTime&quot;: &quot;A String&quot;, # Output only. Dataset create time.
+    &quot;description&quot;: &quot;A String&quot;, # Dataset description.
+    &quot;displayName&quot;: &quot;A String&quot;, # Display name for the dataaset
+    &quot;name&quot;: &quot;A String&quot;, # Immutable. Identifier. Resource name of the dataset. Format: projects/{project}/locations/{location}/datasets/{dataset}
+    &quot;ttl&quot;: &quot;A String&quot;, # Optional. Option TTL for the dataset.
+    &quot;type&quot;: &quot;A String&quot;, # Dataset usage type.
+    &quot;updateTime&quot;: &quot;A String&quot;, # Output only. Dataset update time.
+  &quot;parent&quot;: &quot;A String&quot;, # Required. The parent resource of the dataset.
+  &quot;sampleRule&quot;: { # Message for sampling conversations. # Optional. The sample rule used for sampling conversations.
+  <pre>Create a long-running conversation upload operation. This method differs from `CreateConversation` by allowing audio transcription and optional DLP redaction.
+{ # Request to upload a conversation.
+  &quot;conversation&quot;: { # The conversation resource. # Required. The conversation resource to create.
+  &quot;conversationId&quot;: &quot;A String&quot;, # Optional. A unique ID for the new conversation. This ID will become the final component of the conversation&#x27;s resource name. If no ID is specified, a server-generated ID will be used. This value should be 4-64 characters and must match the regular expression `^[a-z0-9-]{4,64}$`. Valid characters are `a-z-`
+  &quot;parent&quot;: &quot;A String&quot;, # Required. The parent resource of the conversation.
+  &quot;redactionConfig&quot;: { # DLP resources used for redaction while ingesting conversations. DLP settings are applied to conversations ingested from the `UploadConversation` and `IngestConversations` endpoints, including conversation coming from CCAI Platform. They are not applied to conversations ingested from the `CreateConversation` endpoint or the Dialogflow / Agent Assist runtime integrations. When using Dialogflow / Agent Assist runtime integrations, redaction should be performed in Dialogflow / Agent Assist. # Optional. DLP settings for transcript redaction. Will default to the config specified in Settings.
+  &quot;speechConfig&quot;: { # Speech-to-Text configuration. Speech-to-Text settings are applied to conversations ingested from the `UploadConversation` and `IngestConversations` endpoints, including conversation coming from CCAI Platform. They are not applied to conversations ingested from the `CreateConversation` endpoint. # Optional. Speech-to-Text configuration. Will default to the config specified in Settings.

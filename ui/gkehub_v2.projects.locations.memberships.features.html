@@ -1,0 +1,106 @@
+<h1><a href="gkehub_v2.html">GKE Hub API</a> . <a href="gkehub_v2.projects.html">projects</a> . <a href="gkehub_v2.projects.locations.html">locations</a> . <a href="gkehub_v2.projects.locations.memberships.html">memberships</a> . <a href="gkehub_v2.projects.locations.memberships.features.html">features</a></h1>
+<p class="firstline">Creates membershipFeature under a given parent.</p>
+<p class="firstline">Removes a membershipFeature.</p>
+<p class="firstline">========= MembershipFeature Services ========= Gets details of a membershipFeature.</p>
+<p class="firstline">Lists MembershipFeatures in a given project and location.</p>
+<p class="firstline">Updates an existing MembershipFeature.</p>
+  <pre>Creates membershipFeature under a given parent.
+  parent: string, Required. The name of parent where the MembershipFeature will be created. Specified in the format `projects/*/locations/*/memberships/*`. (required)
+{ # MembershipFeature represents the settings and status of a Fleet Feature enabled on a single Fleet Membership.
+  &quot;createTime&quot;: &quot;A String&quot;, # Output only. When the MembershipFeature resource was created.
+  &quot;deleteTime&quot;: &quot;A String&quot;, # Output only. When the MembershipFeature resource was deleted.
+  &quot;labels&quot;: { # Google Cloud labels for this MembershipFeature.
+  &quot;lifecycleState&quot;: { # LifecycleState describes the state of a MembershipFeature *resource* in the GkeHub API. See `FeatureState` for the &quot;running state&quot; of the MembershipFeature. # Output only. Lifecycle information of the resource itself.
+    &quot;state&quot;: &quot;A String&quot;, # Output only. The current state of the Feature resource in the Hub API.
+  &quot;name&quot;: &quot;A String&quot;, # Output only. The resource name of the membershipFeature, in the format: `projects/{project}/locations/{location}/memberships/{membership}/features/{feature}`. Note that `membershipFeatures` is shortened to `features` in the resource name. (see http://go/aip/122#collection-identifiers)
+  &quot;spec&quot;: { # FeatureSpec contains user input per-feature spec information. # Optional. Spec of this membershipFeature.
+    &quot;cloudbuild&quot;: { # **Cloud Build**: Configurations for each Cloud Build enabled cluster. # Cloudbuild-specific FeatureSpec.
+    &quot;configmanagement&quot;: { # **Anthos Config Management**: Configuration for a single cluster. Intended to parallel the ConfigManagement CR. # Config Management FeatureSpec.
+      &quot;binauthz&quot;: { # Configuration for Binauthz. # Optional. Deprecated: Binauthz configuration will be ignored and should not be set.
+        &quot;oci&quot;: { # OCI repo configuration for a single cluster. # Optional. OCI repo configuration for the cluster.
+      &quot;hierarchyController&quot;: { # Configuration for Hierarchy Controller. # Optional. Hierarchy Controller configuration for the cluster. Deprecated: Configuring Hierarchy Controller through the configmanagement feature is no longer recommended. Use https://github.com/kubernetes-sigs/hierarchical-namespaces instead.
+    &quot;identityservice&quot;: { # **IdentityService**: Configuration for a single membership. # IdentityService FeatureSpec.
+          &quot;googleConfig&quot;: { # Configuration for the Google Plugin Auth flow. # GoogleConfig specific configuration
+    &quot;origin&quot;: { # Origin defines where this FeatureSpec originated from. # Whether this per-Feature spec was inherited from a fleet-level default. This field can be updated by users by either overriding a Feature config (updated to USER implicitly) or setting to FLEET explicitly.
+    &quot;policycontroller&quot;: { # **Policy Controller**: Configuration for a single cluster. Intended to parallel the PolicyController CR. # Policycontroller-specific FeatureSpec.
+        &quot;deploymentConfigs&quot;: { # Map of deployment configs to deployments (“admission”, “audit”, “mutation”).
+              &quot;exemptedNamespaces&quot;: [ # the set of namespaces to be exempted from the bundle
+    &quot;rbacrolebindingactuation&quot;: { # **RBAC RoleBinding Actuation**: The membership-specific input for RBACRoleBindingActuation feature. # Rbacrolebindingactuation-specific FeatureSpec.
+    &quot;servicemesh&quot;: { # **Service Mesh**: Spec for a single Membership for the servicemesh feature # ServiceMesh Feature Spec.
+    &quot;workloadcertificate&quot;: { # **WorkloadCertificate**: The membership-specific input for WorkloadCertificate feature. # Workloadcertificate-specific FeatureSpec.
+      &quot;certificateManagement&quot;: &quot;A String&quot;, # CertificateManagement specifies workload certificate management.
+  &quot;state&quot;: { # FeatureState contains high-level state information and per-feature state information for this MembershipFeature. # Output only. State of the this membershipFeature.
+    &quot;clusterupgrade&quot;: { # Per-membership state for this feature. # Cluster upgrade state.
+        { # MembershipGKEUpgradeState is a GKEUpgrade and its state per-membership.
+            &quot;name&quot;: &quot;A String&quot;, # Name of the upgrade, e.g., &quot;k8s_control_plane&quot;.
+            &quot;version&quot;: &quot;A String&quot;, # Version of the upgrade, e.g., &quot;1.22.1-gke.100&quot;.
+    &quot;configmanagement&quot;: { # **Anthos Config Management**: State for a single cluster. # Config Management state
+      &quot;binauthzState&quot;: { # State for Binauthz. # Output only. Binauthz status.
+      &quot;configSyncState&quot;: { # State information for ConfigSync. # Output only. Current sync status.
+        &quot;deploymentState&quot;: { # The state of ConfigSync&#x27;s deployment on a cluster. # Output only. Information about the deployment of ConfigSync, including the version. of the various Pods deployed
+          &quot;admissionWebhook&quot;: &quot;A String&quot;, # Deployment state of admission-webhook.
+          &quot;gitSync&quot;: &quot;A String&quot;, # Deployment state of the git-sync pod.
+          &quot;importer&quot;: &quot;A String&quot;, # Deployment state of the importer pod.
+          &quot;monitor&quot;: &quot;A String&quot;, # Deployment state of the monitor pod.
+          &quot;reconcilerManager&quot;: &quot;A String&quot;, # Deployment state of reconciler-manager pod.
+          &quot;rootReconciler&quot;: &quot;A String&quot;, # Deployment state of root-reconciler.
+          &quot;syncer&quot;: &quot;A String&quot;, # Deployment state of the syncer pod.
+        &quot;syncState&quot;: { # State indicating an ACM&#x27;s progress syncing configurations to a cluster. # Output only. The state of ConfigSync&#x27;s process to sync configs to a cluster.
+          &quot;code&quot;: &quot;A String&quot;, # Sync status code.
+            { # An ACM created error representing a problem syncing configurations.
+                { # Model for a config file in the git repo with an associated Sync error.
+                  &quot;resourceGvk&quot;: { # A Kubernetes object&#x27;s GVK. # Group/version/kind of the resource that is causing an error
+          &quot;lastSync&quot;: &quot;A String&quot;, # Deprecated: use last_sync_time instead. Timestamp of when ACM last successfully synced the repo. The time format is specified in https://golang.org/pkg/time/#Time.String
+          &quot;lastSyncTime&quot;: &quot;A String&quot;, # Timestamp type of when ACM last successfully synced the repo.
+        &quot;version&quot;: { # Specific versioning information pertaining to ConfigSync&#x27;s Pods. # Output only. The version of ConfigSync deployed.
+          &quot;admissionWebhook&quot;: &quot;A String&quot;, # Version of the deployed admission-webhook pod.
+          &quot;gitSync&quot;: &quot;A String&quot;, # Version of the deployed git-sync pod.
+          &quot;importer&quot;: &quot;A String&quot;, # Version of the deployed importer pod.
+          &quot;monitor&quot;: &quot;A String&quot;, # Version of the deployed monitor pod.
+          &quot;reconcilerManager&quot;: &quot;A String&quot;, # Version of the deployed reconciler-manager pod.
+          &quot;rootReconciler&quot;: &quot;A String&quot;, # Version of the deployed reconciler container in root-reconciler pod.
+          &quot;syncer&quot;: &quot;A String&quot;, # Version of the deployed syncer pod.
+      &quot;hierarchyControllerState&quot;: { # State for Hierarchy Controller. # Output only. Hierarchy Controller status.
+        &quot;state&quot;: { # Deployment state for Hierarchy Controller # The deployment state for Hierarchy Controller.
+          &quot;extension&quot;: &quot;A String&quot;, # The deployment state for Hierarchy Controller extension (e.g. v0.7.0-hc.1).
+          &quot;hnc&quot;: &quot;A String&quot;, # The deployment state for open source HNC (e.g. v0.7.0-hc.0).
+        &quot;version&quot;: { # Version for Hierarchy Controller. # The version for Hierarchy Controller.
+          &quot;extension&quot;: &quot;A String&quot;, # Version for Hierarchy Controller extension.
+          &quot;hnc&quot;: &quot;A String&quot;, # Version for open source HNC.
+      &quot;membershipSpec&quot;: { # **Anthos Config Management**: Configuration for a single cluster. Intended to parallel the ConfigManagement CR. # Output only. Membership configuration in the cluster. This represents the actual state in the cluster, while the MembershipSpec in the FeatureSpec represents the intended state.
+      &quot;operatorState&quot;: { # State information for an ACM&#x27;s Operator. # Output only. Current install status of ACM&#x27;s Operator.
+        &quot;deploymentState&quot;: &quot;A String&quot;, # The state of the Operator&#x27;s deployment.
+          { # Errors pertaining to the installation of ACM.
+            &quot;errorMessage&quot;: &quot;A String&quot;, # A string representing the user facing error message.
+        &quot;version&quot;: &quot;A String&quot;, # The semenatic version number of the operator.
+      &quot;policyControllerState&quot;: { # State for PolicyControllerState. # Output only. PolicyController status.
+    &quot;identityservice&quot;: { # **IdentityService**: State for a single membership, analyzed and reported by feature controller. # Identity service state
+      &quot;memberConfig&quot;: { # **IdentityService**: Configuration for a single membership. # Last reconciled membership configuration
+    &quot;metering&quot;: { # **Metering**: State for a single membership, analyzed and reported by feature controller. # Metering state
+    &quot;policycontroller&quot;: { # **Policy Controller**: State for a single cluster. # Policy Controller state
+    &quot;rbacrolebindingactuation&quot;: { # **RBAC RoleBinding Actuation**: A membership-specific Feature state for the RBACRoleBindingActuation fleet feature. # RBAC Role Binding Actuation state
+      &quot;rbacrolebindingStates&quot;: { # Output only. The state of RBACRoleBindings using custom roles that exist on the cluster, keyed by RBACRoleBinding resource name with format: projects/{project}/locations/{location}/scopes/{scope}/rbacrolebindings/{rbacrolebinding}.
+        &quot;a_key&quot;: { # RBACRoleBindingState is the status of an RBACRoleBinding which exists on a membership.
+          &quot;description&quot;: &quot;A String&quot;, # The reason for the failure.
+          &quot;state&quot;: &quot;A String&quot;, # Output only. The state of the RBACRoleBinding.
+          &quot;updateTime&quot;: &quot;A String&quot;, # The time the RBACRoleBinding status was last updated.
+    &quot;servicemesh&quot;: { # **Service Mesh**: State for a single Membership, as analyzed by the Service Mesh Hub Controller. # Service mesh state
+    &quot;state&quot;: { # High-level state of a MembershipFeature. # The high-level state of this MembershipFeature.
+      &quot;code&quot;: &quot;A String&quot;, # The high-level, machine-readable status of this MembershipFeature.
+    &quot;workloadidentity&quot;: { # **WorkloadIdentity**: The membership-specific state for WorkloadIdentity feature. # Workload Identity state
+  &quot;updateTime&quot;: &quot;A String&quot;, # Output only. When the MembershipFeature resource was last updated.
+  featureId: string, Required. The ID of the membership_feature to create.
+  requestId: string, Idempotent request UUID.
+  <pre>Removes a membershipFeature.
+  name: string, Required. The name of the membershipFeature to be deleted. Specified in the format `projects/*/locations/*/memberships/*/features/*`. (required)
+  <pre>========= MembershipFeature Services ========= Gets details of a membershipFeature.
+  name: string, Required. The MembershipFeature resource name in the format `projects/*/locations/*/memberships/*/features/*`. (required)
+  <pre>Lists MembershipFeatures in a given project and location.
+  parent: string, Required. The parent where the MembershipFeature will be listed. In the format: `projects/*/locations/*/memberships/*`. (required)
+  filter: string, Lists MembershipFeatures that match the filter expression, following the syntax outlined in https://google.aip.dev/160. Examples: - Feature with the name &quot;helloworld&quot; in project &quot;foo-proj&quot; and membership &quot;member-bar&quot;: name = &quot;projects/foo-proj/locations/global/memberships/member-bar/features/helloworld&quot; - Features that have a label called `foo`: labels.foo:* - Features that have a label called `foo` whose value is `bar`: labels.foo = bar
+    { # Response message for the `GkeHubFeature.ListMembershipFeatures` method.
+  &quot;membershipFeatures&quot;: [ # The list of matching MembershipFeatures.
+  &quot;nextPageToken&quot;: &quot;A String&quot;, # A token to request the next page of resources from the `ListMembershipFeatures` method. The value of an empty string means that there are no more resources to return.
+  <pre>Updates an existing MembershipFeature.
+  name: string, Output only. The resource name of the membershipFeature, in the format: `projects/{project}/locations/{location}/memberships/{membership}/features/{feature}`. Note that `membershipFeatures` is shortened to `features` in the resource name. (see http://go/aip/122#collection-identifiers) (required)
+  allowMissing: boolean, Optional. If set to true, and the MembershipFeature is not found, a new MembershipFeature will be created. In this situation, `update_mask` is ignored.

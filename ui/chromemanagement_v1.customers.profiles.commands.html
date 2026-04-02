@@ -1,0 +1,26 @@
+<h1><a href="chromemanagement_v1.html">Chrome Management API</a> . <a href="chromemanagement_v1.customers.html">customers</a> . <a href="chromemanagement_v1.customers.profiles.html">profiles</a> . <a href="chromemanagement_v1.customers.profiles.commands.html">commands</a></h1>
+<p class="firstline">Creates a Chrome browser profile remote command.</p>
+<p class="firstline">Gets a Chrome browser profile remote command.</p>
+<p class="firstline">Lists remote commands of a Chrome browser profile.</p>
+  <pre>Creates a Chrome browser profile remote command.
+  parent: string, Required. Format: customers/{customer_id}/profiles/{profile_permanent_id} (required)
+{ # A representation of a remote command for a Chrome browser profile.
+  &quot;commandResult&quot;: { # Result of the execution of a command. # Output only. Result of the remote command.
+    &quot;clientExecutionTime&quot;: &quot;A String&quot;, # Output only. Timestamp of the client execution of the remote command.
+    &quot;resultCode&quot;: &quot;A String&quot;, # Output only. Result code that indicates the type of error or success of the command.
+    &quot;resultType&quot;: &quot;A String&quot;, # Output only. Result type of the remote command.
+  &quot;commandState&quot;: &quot;A String&quot;, # Output only. State of the remote command.
+  &quot;commandType&quot;: &quot;A String&quot;, # Required. Type of the remote command. The only supported command_type is &quot;clearBrowsingData&quot;.
+  &quot;issueTime&quot;: &quot;A String&quot;, # Output only. Timestamp of the issurance of the remote command.
+  &quot;name&quot;: &quot;A String&quot;, # Identifier. Format: customers/{customer_id}/profiles/{profile_permanent_id}/commands/{command_id}
+  &quot;payload&quot;: { # Required. Payload of the remote command. The payload for &quot;clearBrowsingData&quot; command supports: - fields &quot;clearCache&quot; and &quot;clearCookies&quot; - values of boolean type.
+  &quot;validDuration&quot;: &quot;A String&quot;, # Output only. Valid duration of the remote command.
+  <pre>Gets a Chrome browser profile remote command.
+  name: string, Required. Format: customers/{customer_id}/profiles/{profile_permanent_id}/commands/{command_id} (required)
+  <pre>Lists remote commands of a Chrome browser profile.
+  pageSize: integer, Optional. The maximum number of commands to return. The default page size is 100 if page_size is unspecified, and the maximum page size allowed is 100.
+  pageToken: string, Optional. The page token used to retrieve a specific page of the listing request.
+    { # Response to ListChromeBrowserProfileCommands method.
+  &quot;chromeBrowserProfileCommands&quot;: [ # The list of commands returned.
+  &quot;nextPageToken&quot;: &quot;A String&quot;, # The pagination token that can be used to list the next page.
+  &quot;totalSize&quot;: &quot;A String&quot;, # Total size represents an estimated number of resources returned.

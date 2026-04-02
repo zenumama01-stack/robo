@@ -1,0 +1,39 @@
+@if (isVisible) {
+    [width]="500"
+    [height]="400"
+    (close)="close()">
+    <kendo-dialog-titlebar>
+        <i class="fa-solid fa-folder-plus" style="color: #28a745;"></i>
+        Create New Query Category
+    </kendo-dialog-titlebar>
+    <div style="padding: 20px;">
+      <div class="form-group" style="margin-bottom: 20px;">
+        <label for="categoryName" style="display: block; margin-bottom: 8px; font-weight: 600; color: #495057;">
+          <i class="fa-solid fa-tag"></i> Category Name <span style="color: #dc3545;">*</span>
+          [(ngModel)]="categoryName"
+          name="categoryName"
+          placeholder="Enter category name..."
+        <label for="parentCategory" style="display: block; margin-bottom: 8px; font-weight: 600; color: #495057;">
+          <i class="fa-solid fa-folder-tree"></i> Parent Category (Optional)
+          [(ngModel)]="selectedParentId"
+          name="parentCategory"
+          [data]="flattenedCategories"
+          [textField]="'name'"
+          [valueField]="'id'"
+          [defaultItem]="{id: null, name: '-- No Parent (Top Level) --'}"
+            <div style="padding-left: {{getCategoryIndent(dataItem)}}; display: flex; align-items: center; gap: 6px;">
+              @if (dataItem.children && dataItem.children.length > 0) {
+                <i class="fa-solid fa-folder" style="color: #ffc107; font-size: 0.9em;"></i>
+                <i class="fa-solid fa-folder-open" style="color: #6c757d; font-size: 0.9em;"></i>
+              <span>{{ dataItem.name }}</span>
+        @if (selectedParentId) {
+          <div style="margin-top: 8px; padding: 8px; background: #f8f9fa; border-radius: 4px; font-size: 0.85em; color: #6c757d;">
+            Full path: {{ getFullPath() }}
+      <button kendoButton (click)="close()">
+        <i class="fa-solid fa-times"></i> Cancel
+        [themeColor]="'primary'"
+        [disabled]="!categoryName.trim() || isCreating"
+        (click)="createCategory()">
+        @if (isCreating) {
+          <i class="fa-solid fa-spinner fa-spin"></i> Creating...
+          <i class="fa-solid fa-check"></i> Create Category

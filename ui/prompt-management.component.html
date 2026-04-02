@@ -1,0 +1,98 @@
+<div class="prompt-management-container">
+      <span class="item-count">{{ filteredPrompts.length }} prompts</span>
+      @if (UserCanCreatePrompts) {
+          (click)="createNewPrompt()"
+          title="Create New Prompt">
+          New Prompt
+  <div class="main-content">
+      orientation="horizontal">
+        [size]="showFilters ? '320px' : '0px'"
+        [resizable]="showFilters"
+        [hidden]="!showFilters">
+              <select class="filter-select" [value]="selectedCategory" (change)="onCategoryChange($any($event.target).value)">
+                <option value="all">All Categories</option>
+                @for (category of categories; track category.ID) {
+                @for (type of types; track type.ID) {
+      <!-- Prompts List Panel -->
+        <div class="prompts-content">
+          <!-- Prompts Display -->
+            @if (filteredPrompts.length === 0) {
+                <h3>No prompts found</h3>
+                <p>{{ hasActiveFilters ? 'Try adjusting your filters' : 'Create your first AI prompt to get started' }}</p>
+                @if (!hasActiveFilters && UserCanCreatePrompts) {
+                    (click)="createNewPrompt()">
+                <div class="prompts-grid">
+                  @for (prompt of filteredPrompts; track prompt.ID) {
+                    <div class="prompt-card" [class.expanded]="expandedPromptId === prompt.ID">
+                      <div class="card-header" (click)="togglePromptExpansion(prompt.ID)">
+                          <div class="prompt-icon">
+                            <i [class]="getPromptIcon(prompt)"></i>
+                          <div class="prompt-details">
+                            <h4 class="prompt-name" [innerHTML]="prompt.Name | highlightSearch:searchTerm"></h4>
+                            <div class="prompt-meta">
+                                {{ prompt.CategoryName }}
+                              @if (prompt.Status) {
+                                <span class="meta-item" [class]="'status-' + prompt.Status.toLowerCase()">
+                                  {{ prompt.Status }}
+                           [class.rotated]="expandedPromptId === prompt.ID"></i>
+                          <p class="prompt-description" [innerHTML]="prompt.Description | highlightSearch:searchTerm"></p>
+                          <p class="prompt-description text-muted">No description provided</p>
+                        @if (expandedPromptId === prompt.ID) {
+                            <div class="prompt-stats">
+                                <span class="stat-label">Type</span>
+                                <span class="stat-value">{{ prompt.TypeName }}</span>
+                                <span class="stat-label">Template</span>
+                                  @if (prompt.MJTemplateEntity) {
+                                    <i class="fa-solid fa-check" style="color: #28a745;"></i> Yes
+                                    <i class="fa-solid fa-times" style="color: #dc3545;"></i> No
+                        @if (UserCanReadPrompts) {
+                            (click)="showPromptDetails(prompt, $event)"
+                        @if (prompt.Status === 'Active' && UserCanReadPrompts) {
+                            (click)="testPrompt(prompt.ID, $event)"
+                            title="Run Prompt">
+                  <table class="prompts-table">
+                        <th (click)="sortBy('Category')"
+                            [class.sorted]="sortColumn === 'Category'"
+                            [class.desc]="sortColumn === 'Category' && sortDirection === 'desc'">
+                        <th (click)="sortBy('Type')"
+                            [class.sorted]="sortColumn === 'Type'"
+                            [class.desc]="sortColumn === 'Type' && sortDirection === 'desc'">
+                        <th>Template</th>
+                            <div class="prompt-name-cell">
+                              <div class="prompt-icon-small">
+                                <div class="prompt-name" [innerHTML]="prompt.Name | highlightSearch:searchTerm"></div>
+                                  <div class="prompt-description-small" [innerHTML]="prompt.Description | highlightSearch:searchTerm"></div>
+                          <td>{{ prompt.CategoryName }}</td>
+                          <td>{{ prompt.TypeName }}</td>
+                            <span class="status-badge" [class]="'status-' + (prompt.Status || 'unknown').toLowerCase()">
+                              {{ prompt.Status || 'Unknown' }}
+                              <i class="fa-solid fa-times-circle" style="color: #6c757d;"></i>
+                                  (click)="showPromptDetails(prompt)"
+    @if (selectedPrompt) {
+            <i [class]="getPromptIcon(selectedPrompt)"></i>
+            <h3>{{ selectedPrompt.Name }}</h3>
+            <span class="detail-subtitle">{{ selectedPrompt.TypeName || 'Prompt' }}</span>
+            <span class="status-badge" [class]="'status-' + (selectedPrompt.Status || 'unknown').toLowerCase()">
+              {{ selectedPrompt.Status || 'Unknown' }}
+            @if (selectedPrompt.MJTemplateEntity) {
+                Has Template
+        @if (selectedPrompt.Description) {
+            <p class="detail-description">{{ selectedPrompt.Description }}</p>
+              <span class="detail-value">{{ selectedPrompt.CategoryName || 'Uncategorized' }}</span>
+              <span class="detail-label">Type</span>
+              <span class="detail-value">{{ selectedPrompt.TypeName || 'Unknown' }}</span>
+              <span class="detail-label">Response Format</span>
+              <span class="detail-value">{{ selectedPrompt.ResponseFormat }}</span>
+              <span class="detail-label">Selection Strategy</span>
+              <span class="detail-value">{{ selectedPrompt.SelectionStrategy }}</span>
+              <span class="detail-label">Power Preference</span>
+              <span class="detail-value">{{ selectedPrompt.PowerPreference }}</span>
+            @if (selectedPrompt.MinPowerRank) {
+                <span class="detail-label">Min Power Rank</span>
+                <span class="detail-value">{{ selectedPrompt.MinPowerRank }}</span>
+              <span class="detail-value">{{ selectedPrompt.__mj_CreatedAt | date:'medium' }}</span>
+              <span class="detail-value">{{ selectedPrompt.__mj_UpdatedAt | date:'medium' }}</span>
+        @if (selectedPrompt.Status === 'Active') {
+            (click)="testPrompt(selectedPrompt.ID)">
+            Run Prompt
+          (click)="openPromptFromPanel()">

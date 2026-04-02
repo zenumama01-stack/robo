@@ -1,0 +1,44 @@
+  <div class="dialog-backdrop" (click)="OnClose()"></div>
+      <span>Save View</span>
+    @if (EntityName) {
+      <span class="entity-badge">{{ EntityName }}</span>
+    <button class="close-btn" (click)="OnClose()" title="Close">
+      <label for="quickSaveName">View Name</label>
+        id="quickSaveName"
+        [class.invalid]="NameTouched && !Name.trim()"
+        placeholder="e.g., Active West Coast Contacts"
+        (keydown.enter)="OnSave(false)"
+      @if (NameTouched && !Name.trim()) {
+      <label for="quickSaveDescription">Description <span class="optional">(optional)</span></label>
+        id="quickSaveDescription"
+        class="form-input form-textarea"
+        placeholder="What does this view show?"
+    <!-- Share Toggle -->
+      <input type="checkbox" [(ngModel)]="IsShared" />
+        <strong>Share with others</strong>
+        <small>Allow other users to use this view</small>
+    <!-- View Summary Preview -->
+      <div class="summary-section">
+          <span>View includes:</span>
+        <div class="summary-items">
+            <span>{{ Summary.ColumnCount }} column{{ Summary.ColumnCount !== 1 ? 's' : '' }}</span>
+              <i class="fa-solid fa-arrow-up-wide-short"></i>
+              <span>{{ Summary.SortCount }} sort level{{ Summary.SortCount !== 1 ? 's' : '' }}</span>
+          @if (Summary.SmartFilterActive) {
+            <div class="summary-item smart-filter">
+              <span>Smart filter: "{{ Summary.SmartFilterPrompt }}"</span>
+              <span>{{ Summary.FilterCount }} filter{{ Summary.FilterCount !== 1 ? 's' : '' }}</span>
+              <span>{{ Summary.AggregateCount }} aggregate{{ Summary.AggregateCount !== 1 ? 's' : '' }}</span>
+    <!-- Advanced Link -->
+    <button class="advanced-link" (click)="OnOpenAdvanced()">
+      <span>Customize columns, filters & sorting...</span>
+      @if (ViewEntity) {
+        <!-- Existing view: Update + Save As New -->
+          (click)="OnSave(false)"
+          [disabled]="!Name.trim() || IsSaving">
+          {{ IsSaving ? 'Saving...' : 'Update' }}
+          (click)="OnSave(true)"
+          Save As New
+        <!-- New view: Create -->
+          {{ IsSaving ? 'Saving...' : 'Create View' }}
+    <button class="btn btn-cancel" (click)="OnClose()">

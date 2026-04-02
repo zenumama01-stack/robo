@@ -1,0 +1,62 @@
+<h1><a href="managedkafka_v1.html">Managed Service for Apache Kafka API</a> . <a href="managedkafka_v1.projects.html">projects</a> . <a href="managedkafka_v1.projects.locations.html">locations</a> . <a href="managedkafka_v1.projects.locations.clusters.html">clusters</a></h1>
+  <code><a href="managedkafka_v1.projects.locations.clusters.acls.html">acls()</a></code>
+<p class="firstline">Returns the acls Resource.</p>
+  <code><a href="managedkafka_v1.projects.locations.clusters.consumerGroups.html">consumerGroups()</a></code>
+<p class="firstline">Returns the consumerGroups Resource.</p>
+  <code><a href="managedkafka_v1.projects.locations.clusters.topics.html">topics()</a></code>
+<p class="firstline">Creates a new cluster in a given project and location.</p>
+<p class="firstline">Deletes a single cluster.</p>
+<p class="firstline">Returns the properties of a single cluster.</p>
+<p class="firstline">Lists the clusters in a given project and location.</p>
+<p class="firstline">Updates the properties of a single cluster.</p>
+  <pre>Creates a new cluster in a given project and location.
+  parent: string, Required. The parent region in which to create the cluster. Structured like `projects/{project}/locations/{location}`. (required)
+{ # An Apache Kafka cluster deployed in a location.
+  &quot;brokerDetails&quot;: [ # Output only. Only populated when FULL view is requested. Details of each broker in the cluster.
+    { # Details of a broker in the Kafka cluster.
+      &quot;brokerIndex&quot;: &quot;A String&quot;, # Output only. The index of the broker.
+      &quot;nodeId&quot;: &quot;A String&quot;, # Output only. The node id of the broker.
+      &quot;rack&quot;: &quot;A String&quot;, # Output only. The rack of the broker.
+  &quot;capacityConfig&quot;: { # A capacity configuration of a Kafka cluster. # Required. Capacity configuration for the Kafka cluster.
+    &quot;memoryBytes&quot;: &quot;A String&quot;, # Required. The memory to provision for the cluster in bytes. The CPU:memory ratio (vCPU:GiB) must be between 1:1 and 1:8. Minimum: 3221225472 (3 GiB).
+    &quot;vcpuCount&quot;: &quot;A String&quot;, # Required. The number of vCPUs to provision for the cluster. Minimum: 3.
+  &quot;createTime&quot;: &quot;A String&quot;, # Output only. The time when the cluster was created.
+  &quot;gcpConfig&quot;: { # Configuration properties for a Kafka cluster deployed to Google Cloud Platform. # Required. Configuration properties for a Kafka cluster deployed to Google Cloud Platform.
+    &quot;accessConfig&quot;: { # The configuration of access to the Kafka cluster. # Required. Access configuration for the Kafka cluster.
+      &quot;networkConfigs&quot;: [ # Required. Virtual Private Cloud (VPC) networks that must be granted direct access to the Kafka cluster. Minimum of 1 network is required. Maximum 10 networks can be specified.
+        { # The configuration of a Virtual Private Cloud (VPC) network that can access the Kafka cluster.
+          &quot;subnet&quot;: &quot;A String&quot;, # Required. Name of the VPC subnet in which to create Private Service Connect (PSC) endpoints for the Kafka brokers and bootstrap address. Structured like: projects/{project}/regions/{region}/subnetworks/{subnet_id} The subnet must be located in the same region as the Kafka cluster. The project may differ. Multiple subnets from the same parent network must not be specified.
+    &quot;kmsKey&quot;: &quot;A String&quot;, # Optional. Immutable. The Cloud KMS Key name to use for encryption. The key must be located in the same region as the cluster and cannot be changed. Structured like: projects/{project}/locations/{location}/keyRings/{key_ring}/cryptoKeys/{crypto_key}.
+  &quot;kafkaVersion&quot;: &quot;A String&quot;, # Output only. Only populated when FULL view is requested. The Kafka version of the cluster.
+  &quot;name&quot;: &quot;A String&quot;, # Identifier. The name of the cluster. Structured like: projects/{project_number}/locations/{location}/clusters/{cluster_id}
+  &quot;rebalanceConfig&quot;: { # Defines rebalancing behavior of a Kafka cluster. # Optional. Rebalance configuration for the Kafka cluster.
+    &quot;mode&quot;: &quot;A String&quot;, # Optional. The rebalance behavior for the cluster. When not specified, defaults to `NO_REBALANCE`.
+  &quot;tlsConfig&quot;: { # The TLS configuration for the Kafka cluster. # Optional. TLS configuration for the Kafka cluster.
+    &quot;sslPrincipalMappingRules&quot;: &quot;A String&quot;, # Optional. A list of rules for mapping from SSL principal names to short names. These are applied in order by Kafka. Refer to the Apache Kafka documentation for `ssl.principal.mapping.rules` for the precise formatting details and syntax. Example: &quot;RULE:^CN=(.*?),OU=ServiceUsers.*$/$1@example.com/,DEFAULT&quot; This is a static Kafka broker configuration. Setting or modifying this field will trigger a rolling restart of the Kafka brokers to apply the change. An empty string means no rules are applied (Kafka default).
+    &quot;trustConfig&quot;: { # Sources of CA certificates to install in the broker&#x27;s truststore. # Optional. The configuration of the broker truststore. If specified, clients can use mTLS for authentication.
+      &quot;casConfigs&quot;: [ # Optional. Configuration for the Google Certificate Authority Service. Maximum 10.
+        { # A configuration for the Google Certificate Authority Service.
+          &quot;caPool&quot;: &quot;A String&quot;, # Required. The name of the CA pool to pull CA certificates from. Structured like: projects/{project}/locations/{location}/caPools/{ca_pool}. The CA pool does not need to be in the same project or location as the Kafka cluster.
+  &quot;updateOptions&quot;: { # UpdateOptions specifies options that influence how a cluster update is applied. These options control the behavior of the update process, rather than defining the desired end-state of a cluster. # Optional. UpdateOptions represents options that control how updates to the cluster are applied.
+    &quot;allowBrokerDownscaleOnClusterUpscale&quot;: True or False, # Optional. If true, allows an update operation that increases the total vCPU and/or memory allocation of the cluster to significantly decrease the per-broker vCPU and/or memory allocation. This can result in reduced performance and availability. By default, the update operation will fail if an upscale request results in a vCPU or memory allocation for the brokers that is smaller than 90% of the current broker size.
+  &quot;updateTime&quot;: &quot;A String&quot;, # Output only. The time when the cluster was last updated.
+  clusterId: string, Required. The ID to use for the cluster, which will become the final component of the cluster&#x27;s name. The ID must be 1-63 characters long, and match the regular expression `[a-z]([-a-z0-9]*[a-z0-9])?` to comply with RFC 1035. This value is structured like: `my-cluster-id`.
+  requestId: string, Optional. An optional request ID to identify requests. Specify a unique request ID to avoid duplication of requests. If a request times out or fails, retrying with the same ID allows the server to recognize the previous attempt. For at least 60 minutes, the server ignores duplicate requests bearing the same ID. For example, consider a situation where you make an initial request and the request times out. If you make the request again with the same request ID within 60 minutes of the last request, the server checks if an original operation with the same request ID was received. If so, the server ignores the second request. The request ID must be a valid UUID. A zero UUID is not supported (00000000-0000-0000-0000-000000000000).
+  <pre>Deletes a single cluster.
+  name: string, Required. The name of the cluster to delete. (required)
+  <pre>Returns the properties of a single cluster.
+  name: string, Required. The name of the cluster whose configuration to return. (required)
+  view: string, Optional. Specifies the view of the Cluster resource to be returned. Defaults to CLUSTER_VIEW_BASIC. See the ClusterView enum for possible values.
+      CLUSTER_VIEW_UNSPECIFIED - The default / unset value. The API will default to the BASIC view.
+      CLUSTER_VIEW_BASIC - Include the basic metadata of the Cluster. This is the default value (for both ListClusters and GetCluster).
+      CLUSTER_VIEW_FULL - Include everything, including data fetched from the Kafka cluster source of truth.
+  <pre>Lists the clusters in a given project and location.
+  parent: string, Required. The parent location whose clusters are to be listed. Structured like `projects/{project}/locations/{location}`. (required)
+  filter: string, Optional. Filter expression for the result.
+  pageSize: integer, Optional. The maximum number of clusters to return. The service may return fewer than this value. If unspecified, server will pick an appropriate default.
+  pageToken: string, Optional. A page token, received from a previous `ListClusters` call. Provide this to retrieve the subsequent page. When paginating, all other parameters provided to `ListClusters` must match the call that provided the page token.
+    { # Response for ListClusters.
+  &quot;clusters&quot;: [ # The list of Clusters in the requested parent.
+  <pre>Updates the properties of a single cluster.
+  name: string, Identifier. The name of the cluster. Structured like: projects/{project_number}/locations/{location}/clusters/{cluster_id} (required)
+  updateMask: string, Required. Field mask is used to specify the fields to be overwritten in the cluster resource by the update. The fields specified in the update_mask are relative to the resource, not the full request. A field will be overwritten if it is in the mask. The mask is required and a value of * will update all fields.

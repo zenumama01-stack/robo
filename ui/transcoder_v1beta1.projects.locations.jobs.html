@@ -1,0 +1,18 @@
+<h1><a href="transcoder_v1beta1.html">Transcoder API</a> . <a href="transcoder_v1beta1.projects.html">projects</a> . <a href="transcoder_v1beta1.projects.locations.html">locations</a> . <a href="transcoder_v1beta1.projects.locations.jobs.html">jobs</a></h1>
+  &quot;failureDetails&quot;: [ # Output only. List of failure details. This property may contain additional information about the failure when `failure_reason` is present. *Note*: This feature is not yet available.
+    { # Additional information about the reasons for the failure.
+      &quot;description&quot;: &quot;A String&quot;, # A description of the failure.
+  &quot;failureReason&quot;: &quot;A String&quot;, # Output only. A description of the reason for the failure. This property is always present when `state` is `FAILED`.
+  &quot;inputUri&quot;: &quot;A String&quot;, # Input only. Specify the `input_uri` to populate empty `uri` fields in each element of `Job.config.inputs` or `JobTemplate.config.inputs` when using template. URI of the media. Input files must be at least 5 seconds in duration and stored in Cloud Storage (for example, `gs://bucket/inputs/file.mp4`).
+  &quot;name&quot;: &quot;A String&quot;, # The resource name of the job. Format: `projects/{project}/locations/{location}/jobs/{job}`
+  &quot;originUri&quot;: { # The origin URI. # Output only. The origin URI. *Note*: This feature is not yet available.
+    &quot;dash&quot;: &quot;A String&quot;, # Dash manifest URI. If multiple Dash manifests are created, only the first one is listed.
+    &quot;hls&quot;: &quot;A String&quot;, # HLS manifest URI per https://tools.ietf.org/html/rfc8216#section-4.3.4. If multiple HLS manifests are created, only the first one is listed.
+  &quot;outputUri&quot;: &quot;A String&quot;, # Input only. Specify the `output_uri` to populate an empty `Job.config.output.uri` or `JobTemplate.config.output.uri` when using template. URI for the output file(s). For example, `gs://my-bucket/outputs/`.
+  &quot;priority&quot;: 42, # Specify the priority of the job. Enter a value between 0 and 100, where 0 is the lowest priority and 100 is the highest priority. The default is 0.
+  &quot;progress&quot;: { # Estimated fractional progress for each step, from `0` to `1`. # Output only. Estimated fractional progress, from `0` to `1` for each step. *Note*: This feature is not yet available.
+    &quot;analyzed&quot;: 3.14, # Estimated fractional progress for `analyzing` step.
+    &quot;encoded&quot;: 3.14, # Estimated fractional progress for `encoding` step.
+    &quot;notified&quot;: 3.14, # Estimated fractional progress for `notifying` step.
+    &quot;uploaded&quot;: 3.14, # Estimated fractional progress for `uploading` step.
+  &quot;templateId&quot;: &quot;A String&quot;, # Input only. Specify the `template_id` to use for populating `Job.config`. The default is `preset/web-hd`. Preset Transcoder templates: - `preset/{preset_id}` - User defined JobTemplate: `{job_template_id}`

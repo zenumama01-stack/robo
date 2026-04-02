@@ -1,0 +1,202 @@
+<h1><a href="aiplatform_v1.html">Vertex AI API</a> . <a href="aiplatform_v1.projects.html">projects</a> . <a href="aiplatform_v1.projects.locations.html">locations</a> . <a href="aiplatform_v1.projects.locations.endpoints.html">endpoints</a></h1>
+  <code><a href="aiplatform_v1.projects.locations.endpoints.chat.html">chat()</a></code>
+  <code><a href="aiplatform_v1.projects.locations.endpoints.deployedModels.html">deployedModels()</a></code>
+<p class="firstline">Returns the deployedModels Resource.</p>
+  <code><a href="aiplatform_v1.projects.locations.endpoints.google.html">google()</a></code>
+<p class="firstline">Returns the google Resource.</p>
+  <code><a href="aiplatform_v1.projects.locations.endpoints.invoke.html">invoke()</a></code>
+  <code><a href="aiplatform_v1.projects.locations.endpoints.openapi.html">openapi()</a></code>
+<p class="firstline">Returns the openapi Resource.</p>
+  <code><a href="aiplatform_v1.projects.locations.endpoints.operations.html">operations()</a></code>
+  <code><a href="#create">create(parent, body=None, endpointId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Creates an Endpoint.</p>
+<p class="firstline">Deletes an Endpoint.</p>
+  <code><a href="#deployModel">deployModel(endpoint, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Deploys a Model into this Endpoint, creating a DeployedModel within it.</p>
+  <code><a href="#directPredict">directPredict(endpoint, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Perform an unary online prediction request to a gRPC model server for Vertex first-party products and frameworks.</p>
+  <code><a href="#directRawPredict">directRawPredict(endpoint, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Perform an unary online prediction request to a gRPC model server for custom containers.</p>
+  <code><a href="#explain">explain(endpoint, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Perform an online explanation. If deployed_model_id is specified, the corresponding DeployModel must have explanation_spec populated. If deployed_model_id is not specified, all DeployedModels must have explanation_spec populated.</p>
+<p class="firstline">Gets an Endpoint.</p>
+  <code><a href="#list">list(parent, filter=None, gdcZone=None, orderBy=None, pageSize=None, pageToken=None, readMask=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Lists Endpoints in a Location.</p>
+  <code><a href="#mutateDeployedModel">mutateDeployedModel(endpoint, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Updates an existing deployed model. Updatable fields include `min_replica_count`, `max_replica_count`, `required_replica_count`, `autoscaling_metric_specs`, `disable_container_logging` (v1 only), and `enable_container_logging` (v1beta1 only).</p>
+<p class="firstline">Updates an Endpoint.</p>
+  <code><a href="#rawPredict">rawPredict(endpoint, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Perform an online prediction with an arbitrary HTTP payload. The response includes the following HTTP headers: * `X-Vertex-AI-Endpoint-Id`: ID of the Endpoint that served this prediction. * `X-Vertex-AI-Deployed-Model-Id`: ID of the Endpoint's DeployedModel that served this prediction.</p>
+  <code><a href="#serverStreamingPredict">serverStreamingPredict(endpoint, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Perform a server-side streaming online prediction request for Vertex LLM streaming.</p>
+  <code><a href="#streamRawPredict">streamRawPredict(endpoint, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Perform a streaming online prediction with an arbitrary HTTP payload.</p>
+  <code><a href="#undeployModel">undeployModel(endpoint, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Undeploys a Model from an Endpoint, removing a DeployedModel from it, and freeing all resources it's using.</p>
+  <code><a href="#update">update(name, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Updates an Endpoint with a long running operation.</p>
+    <code class="details" id="create">create(parent, body=None, endpointId=None, x__xgafv=None)</code>
+  <pre>Creates an Endpoint.
+  parent: string, Required. The resource name of the Location to create the Endpoint in. Format: `projects/{project}/locations/{location}` (required)
+{ # Models are deployed into it, and afterwards Endpoint is called to obtain predictions and explanations.
+  &quot;clientConnectionConfig&quot;: { # Configurations (e.g. inference timeout) that are applied on your endpoints. # Configurations that are applied to the endpoint for online prediction.
+    &quot;inferenceTimeout&quot;: &quot;A String&quot;, # Customizable online prediction request timeout.
+  &quot;createTime&quot;: &quot;A String&quot;, # Output only. Timestamp when this Endpoint was created.
+  &quot;dedicatedEndpointDns&quot;: &quot;A String&quot;, # Output only. DNS of the dedicated endpoint. Will only be populated if dedicated_endpoint_enabled is true. Depending on the features enabled, uid might be a random number or a string. For example, if fast_tryout is enabled, uid will be fasttryout. Format: `https://{endpoint_id}.{region}-{uid}.prediction.vertexai.goog`.
+  &quot;dedicatedEndpointEnabled&quot;: True or False, # If true, the endpoint will be exposed through a dedicated DNS [Endpoint.dedicated_endpoint_dns]. Your request to the dedicated DNS will be isolated from other users&#x27; traffic and will have better performance and reliability. Note: Once you enabled dedicated endpoint, you won&#x27;t be able to send request to the shared DNS {region}-aiplatform.googleapis.com. The limitation will be removed soon.
+  &quot;deployedModels&quot;: [ # Output only. The models deployed in this Endpoint. To add or remove DeployedModels use EndpointService.DeployModel and EndpointService.UndeployModel respectively.
+  &quot;description&quot;: &quot;A String&quot;, # The description of the Endpoint.
+  &quot;displayName&quot;: &quot;A String&quot;, # Required. The display name of the Endpoint. The name can be up to 128 characters long and can consist of any UTF-8 characters.
+  &quot;enablePrivateServiceConnect&quot;: True or False, # Deprecated: If true, expose the Endpoint via private service connect. Only one of the fields, network or enable_private_service_connect, can be set.
+  &quot;encryptionSpec&quot;: { # Represents a customer-managed encryption key specification that can be applied to a Vertex AI resource. # Customer-managed encryption key spec for an Endpoint. If set, this Endpoint and all sub-resources of this Endpoint will be secured by this key.
+  &quot;gdcConfig&quot;: { # Google Distributed Cloud (GDC) config. # Configures the Google Distributed Cloud (GDC) environment for online prediction. Only set this field when the Endpoint is to be deployed in a GDC environment.
+    &quot;zone&quot;: &quot;A String&quot;, # GDC zone. A cluster will be designated for the Vertex AI workload in this zone.
+  &quot;genAiAdvancedFeaturesConfig&quot;: { # Configuration for GenAiAdvancedFeatures. # Optional. Configuration for GenAiAdvancedFeatures. If the endpoint is serving GenAI models, advanced features like native RAG integration can be configured. Currently, only Model Garden models are supported.
+    &quot;ragConfig&quot;: { # Configuration for Retrieval Augmented Generation feature. # Configuration for Retrieval Augmented Generation feature.
+      &quot;enableRag&quot;: True or False, # If true, enable Retrieval Augmented Generation in ChatCompletion request. Once enabled, the endpoint will be identified as GenAI endpoint and Arthedain router will be used.
+  &quot;labels&quot;: { # The labels with user-defined metadata to organize your Endpoints. Label keys and values can be no longer than 64 characters (Unicode codepoints), can only contain lowercase letters, numeric characters, underscores and dashes. International characters are allowed. See https://goo.gl/xmQnxf for more information and examples of labels.
+  &quot;modelDeploymentMonitoringJob&quot;: &quot;A String&quot;, # Output only. Resource name of the Model Monitoring job associated with this Endpoint if monitoring is enabled by JobService.CreateModelDeploymentMonitoringJob. Format: `projects/{project}/locations/{location}/modelDeploymentMonitoringJobs/{model_deployment_monitoring_job}`
+  &quot;name&quot;: &quot;A String&quot;, # Identifier. The resource name of the Endpoint.
+  &quot;network&quot;: &quot;A String&quot;, # Optional. The full name of the Google Compute Engine [network](https://cloud.google.com//compute/docs/networks-and-firewalls#networks) to which the Endpoint should be peered. Private services access must already be configured for the network. If left unspecified, the Endpoint is not peered with any network. Only one of the fields, network or enable_private_service_connect, can be set. [Format](https://cloud.google.com/compute/docs/reference/rest/v1/networks/insert): `projects/{project}/global/networks/{network}`. Where `{project}` is a project number, as in `12345`, and `{network}` is network name.
+  &quot;predictRequestResponseLoggingConfig&quot;: { # Configuration for logging request-response to a BigQuery table. # Configures the request-response logging for online prediction.
+    &quot;bigqueryDestination&quot;: { # The BigQuery location for the output content. # BigQuery table for logging. If only given a project, a new dataset will be created with name `logging__` where will be made BigQuery-dataset-name compatible (e.g. most special characters will become underscores). If no table name is given, a new table will be created with name `request_response_logging`
+    &quot;enabled&quot;: True or False, # If logging is enabled or not.
+    &quot;samplingRate&quot;: 3.14, # Percentage of requests to be logged, expressed as a fraction in range(0,1].
+  &quot;privateServiceConnectConfig&quot;: { # Represents configuration for private service connect. # Optional. Configuration for private service connect. network and private_service_connect_config are mutually exclusive.
+    &quot;enablePrivateServiceConnect&quot;: True or False, # Required. If true, expose the IndexEndpoint via private service connect.
+    &quot;projectAllowlist&quot;: [ # A list of Projects from which the forwarding rule will target the service attachment.
+    &quot;pscAutomationConfigs&quot;: [ # Optional. List of projects and networks where the PSC endpoints will be created. This field is used by Online Inference(Prediction) only.
+      { # PSC config that is used to automatically create PSC endpoints in the user projects.
+        &quot;errorMessage&quot;: &quot;A String&quot;, # Output only. Error message if the PSC service automation failed.
+        &quot;forwardingRule&quot;: &quot;A String&quot;, # Output only. Forwarding rule created by the PSC service automation.
+        &quot;ipAddress&quot;: &quot;A String&quot;, # Output only. IP address rule created by the PSC service automation.
+        &quot;network&quot;: &quot;A String&quot;, # Required. The full name of the Google Compute Engine [network](https://cloud.google.com/compute/docs/networks-and-firewalls#networks). [Format](https://cloud.google.com/compute/docs/reference/rest/v1/networks/get): `projects/{project}/global/networks/{network}`.
+        &quot;projectId&quot;: &quot;A String&quot;, # Required. Project id used to create forwarding rule.
+        &quot;state&quot;: &quot;A String&quot;, # Output only. The state of the PSC service automation.
+    &quot;serviceAttachment&quot;: &quot;A String&quot;, # Output only. The name of the generated service attachment resource. This is only populated if the endpoint is deployed with PrivateServiceConnect.
+  &quot;trafficSplit&quot;: { # A map from a DeployedModel&#x27;s ID to the percentage of this Endpoint&#x27;s traffic that should be forwarded to that DeployedModel. If a DeployedModel&#x27;s ID is not listed in this map, then it receives no traffic. The traffic percentage values must add up to 100, or map must be empty if the Endpoint is to not accept any traffic at a moment.
+    &quot;a_key&quot;: 42,
+  &quot;updateTime&quot;: &quot;A String&quot;, # Output only. Timestamp when this Endpoint was last updated.
+  endpointId: string, Immutable. The ID to use for endpoint, which will become the final component of the endpoint resource name. If not provided, Vertex AI will generate a value for this ID. If the first character is a letter, this value may be up to 63 characters, and valid characters are `[a-z0-9-]`. The last character must be a letter or number. If the first character is a number, this value may be up to 9 characters, and valid characters are `[0-9]` with no leading zeros. When using HTTP/JSON, this field is populated based on a query string argument, such as `?endpoint_id=12345`. This is the fallback for fields that are not included in either the URI or the body.
+  <pre>Deletes an Endpoint.
+  name: string, Required. The name of the Endpoint resource to be deleted. Format: `projects/{project}/locations/{location}/endpoints/{endpoint}` (required)
+    <code class="details" id="deployModel">deployModel(endpoint, body=None, x__xgafv=None)</code>
+  <pre>Deploys a Model into this Endpoint, creating a DeployedModel within it.
+  endpoint: string, Required. The name of the Endpoint resource into which to deploy a Model. Format: `projects/{project}/locations/{location}/endpoints/{endpoint}` (required)
+{ # Request message for EndpointService.DeployModel.
+  &quot;deployedModel&quot;: { # A deployment of a Model. Endpoints contain one or more DeployedModels. # Required. The DeployedModel to be created within the Endpoint. Note that Endpoint.traffic_split must be updated for the DeployedModel to start receiving traffic, either as part of this call, or via EndpointService.UpdateEndpoint.
+  &quot;trafficSplit&quot;: { # A map from a DeployedModel&#x27;s ID to the percentage of this Endpoint&#x27;s traffic that should be forwarded to that DeployedModel. If this field is non-empty, then the Endpoint&#x27;s traffic_split will be overwritten with it. To refer to the ID of the just being deployed Model, a &quot;0&quot; should be used, and the actual ID of the new DeployedModel will be filled in its place by this method. The traffic percentage values must add up to 100. If this field is empty, then the Endpoint&#x27;s traffic_split is not updated.
+    <code class="details" id="directPredict">directPredict(endpoint, body=None, x__xgafv=None)</code>
+  <pre>Perform an unary online prediction request to a gRPC model server for Vertex first-party products and frameworks.
+{ # Request message for PredictionService.DirectPredict.
+  &quot;inputs&quot;: [ # The prediction input.
+    { # A tensor value type.
+      &quot;boolVal&quot;: [ # Type specific representations that make it easy to create tensor protos in all languages. Only the representation corresponding to &quot;dtype&quot; can be set. The values hold the flattened representation of the tensor in row major order. BOOL
+      &quot;bytesVal&quot;: [ # STRING
+      &quot;doubleVal&quot;: [ # DOUBLE
+      &quot;dtype&quot;: &quot;A String&quot;, # The data type of tensor.
+      &quot;floatVal&quot;: [ # FLOAT
+      &quot;int64Val&quot;: [ # INT64
+      &quot;intVal&quot;: [ # INT_8 INT_16 INT_32
+      &quot;listVal&quot;: [ # A list of tensor values.
+        # Object with schema name: GoogleCloudAiplatformV1Tensor
+      &quot;shape&quot;: [ # Shape of the tensor.
+      &quot;stringVal&quot;: [ # STRING
+      &quot;structVal&quot;: { # A map of string to tensor.
+        &quot;a_key&quot;: # Object with schema name: GoogleCloudAiplatformV1Tensor
+      &quot;tensorVal&quot;: &quot;A String&quot;, # Serialized raw tensor content.
+      &quot;uint64Val&quot;: [ # UINT64
+      &quot;uintVal&quot;: [ # UINT8 UINT16 UINT32
+  &quot;parameters&quot;: { # A tensor value type. # The parameters that govern the prediction.
+    { # Response message for PredictionService.DirectPredict.
+  &quot;outputs&quot;: [ # The prediction output.
+    <code class="details" id="directRawPredict">directRawPredict(endpoint, body=None, x__xgafv=None)</code>
+  <pre>Perform an unary online prediction request to a gRPC model server for custom containers.
+{ # Request message for PredictionService.DirectRawPredict.
+  &quot;input&quot;: &quot;A String&quot;, # The prediction input.
+  &quot;methodName&quot;: &quot;A String&quot;, # Fully qualified name of the API method being invoked to perform predictions. Format: `/namespace.Service/Method/` Example: `/tensorflow.serving.PredictionService/Predict`
+    { # Response message for PredictionService.DirectRawPredict.
+  &quot;output&quot;: &quot;A String&quot;, # The prediction output.
+    <code class="details" id="explain">explain(endpoint, body=None, x__xgafv=None)</code>
+  <pre>Perform an online explanation. If deployed_model_id is specified, the corresponding DeployModel must have explanation_spec populated. If deployed_model_id is not specified, all DeployedModels must have explanation_spec populated.
+  endpoint: string, Required. The name of the Endpoint requested to serve the explanation. Format: `projects/{project}/locations/{location}/endpoints/{endpoint}` (required)
+{ # Request message for PredictionService.Explain.
+  &quot;deployedModelId&quot;: &quot;A String&quot;, # If specified, this ExplainRequest will be served by the chosen DeployedModel, overriding Endpoint.traffic_split.
+  &quot;explanationSpecOverride&quot;: { # The ExplanationSpec entries that can be overridden at online explanation time. # If specified, overrides the explanation_spec of the DeployedModel. Can be used for explaining prediction results with different configurations, such as: - Explaining top-5 predictions results as opposed to top-1; - Increasing path count or step count of the attribution methods to reduce approximate errors; - Using different baselines for explaining the prediction results.
+    &quot;examplesOverride&quot;: { # Overrides for example-based explanations. # The example-based explanations parameter overrides.
+      &quot;crowdingCount&quot;: 42, # The number of neighbors to return that have the same crowding tag.
+      &quot;dataFormat&quot;: &quot;A String&quot;, # The format of the data being provided with each call.
+      &quot;neighborCount&quot;: 42, # The number of neighbors to return.
+      &quot;restrictions&quot;: [ # Restrict the resulting nearest neighbors to respect these constraints.
+        { # Restrictions namespace for example-based explanations overrides.
+          &quot;allow&quot;: [ # The list of allowed tags.
+          &quot;deny&quot;: [ # The list of deny tags.
+          &quot;namespaceName&quot;: &quot;A String&quot;, # The namespace name.
+      &quot;returnEmbeddings&quot;: True or False, # If true, return the embeddings instead of neighbors.
+    &quot;metadata&quot;: { # The ExplanationMetadata entries that can be overridden at online explanation time. # The metadata to be overridden. If not specified, no metadata is overridden.
+      &quot;inputs&quot;: { # Required. Overrides the input metadata of the features. The key is the name of the feature to be overridden. The keys specified here must exist in the input metadata to be overridden. If a feature is not specified here, the corresponding feature&#x27;s input metadata is not overridden.
+        &quot;a_key&quot;: { # The input metadata entries to be overridden.
+          &quot;inputBaselines&quot;: [ # Baseline inputs for this feature. This overrides the `input_baseline` field of the ExplanationMetadata.InputMetadata object of the corresponding feature&#x27;s input metadata. If it&#x27;s not specified, the original baselines are not overridden.
+    &quot;parameters&quot;: { # Parameters to configure explaining for Model&#x27;s predictions. # The parameters to be overridden. Note that the attribution method cannot be changed. If not specified, no parameter is overridden.
+  &quot;instances&quot;: [ # Required. The instances that are the input to the explanation call. A DeployedModel may have an upper limit on the number of instances it supports per request, and when it is exceeded the explanation call errors in case of AutoML Models, or, in case of customer created Models, the behaviour is as documented by that Model. The schema of any single instance may be specified via Endpoint&#x27;s DeployedModels&#x27; Model&#x27;s PredictSchemata&#x27;s instance_schema_uri.
+    { # Response message for PredictionService.Explain.
+  &quot;deployedModelId&quot;: &quot;A String&quot;, # ID of the Endpoint&#x27;s DeployedModel that served this explanation.
+  &quot;explanations&quot;: [ # The explanations of the Model&#x27;s PredictResponse.predictions. It has the same number of elements as instances to be explained.
+    { # Explanation of a prediction (provided in PredictResponse.predictions) produced by the Model on a given instance.
+      &quot;attributions&quot;: [ # Output only. Feature attributions grouped by predicted outputs. For Models that predict only one output, such as regression Models that predict only one score, there is only one attibution that explains the predicted output. For Models that predict multiple outputs, such as multiclass Models that predict multiple classes, each element explains one specific item. Attribution.output_index can be used to identify which output this attribution is explaining. By default, we provide Shapley values for the predicted class. However, you can configure the explanation request to generate Shapley values for any other classes too. For example, if a model predicts a probability of `0.4` for approving a loan application, the model&#x27;s decision is to reject the application since `p(reject) = 0.6 &gt; p(approve) = 0.4`, and the default Shapley values would be computed for rejection decision and not approval, even though the latter might be the positive class. If users set ExplanationParameters.top_k, the attributions are sorted by instance_output_value in descending order. If ExplanationParameters.output_indices is specified, the attributions are stored by Attribution.output_index in the same order as they appear in the output_indices.
+        { # Attribution that explains a particular prediction output.
+          &quot;approximationError&quot;: 3.14, # Output only. Error of feature_attributions caused by approximation used in the explanation method. Lower value means more precise attributions. * For Sampled Shapley attribution, increasing path_count might reduce the error. * For Integrated Gradients attribution, increasing step_count might reduce the error. * For XRAI attribution, increasing step_count might reduce the error. See [this introduction](/vertex-ai/docs/explainable-ai/overview) for more information.
+          &quot;baselineOutputValue&quot;: 3.14, # Output only. Model predicted output if the input instance is constructed from the baselines of all the features defined in ExplanationMetadata.inputs. The field name of the output is determined by the key in ExplanationMetadata.outputs. If the Model&#x27;s predicted output has multiple dimensions (rank &gt; 1), this is the value in the output located by output_index. If there are multiple baselines, their output values are averaged.
+          &quot;featureAttributions&quot;: &quot;&quot;, # Output only. Attributions of each explained feature. Features are extracted from the prediction instances according to explanation metadata for inputs. The value is a struct, whose keys are the name of the feature. The values are how much the feature in the instance contributed to the predicted result. The format of the value is determined by the feature&#x27;s input format: * If the feature is a scalar value, the attribution value is a floating number. * If the feature is an array of scalar values, the attribution value is an array. * If the feature is a struct, the attribution value is a struct. The keys in the attribution value struct are the same as the keys in the feature struct. The formats of the values in the attribution struct are determined by the formats of the values in the feature struct. The ExplanationMetadata.feature_attributions_schema_uri field, pointed to by the ExplanationSpec field of the Endpoint.deployed_models object, points to the schema file that describes the features and their attribution values (if it is populated).
+          &quot;instanceOutputValue&quot;: 3.14, # Output only. Model predicted output on the corresponding explanation instance. The field name of the output is determined by the key in ExplanationMetadata.outputs. If the Model predicted output has multiple dimensions, this is the value in the output located by output_index.
+          &quot;outputDisplayName&quot;: &quot;A String&quot;, # Output only. The display name of the output identified by output_index. For example, the predicted class name by a multi-classification Model. This field is only populated iff the Model predicts display names as a separate field along with the explained output. The predicted display name must has the same shape of the explained output, and can be located using output_index.
+          &quot;outputIndex&quot;: [ # Output only. The index that locates the explained prediction output. If the prediction output is a scalar value, output_index is not populated. If the prediction output has multiple dimensions, the length of the output_index list is the same as the number of dimensions of the output. The i-th element in output_index is the element index of the i-th dimension of the output vector. Indices start from 0.
+          &quot;outputName&quot;: &quot;A String&quot;, # Output only. Name of the explain output. Specified as the key in ExplanationMetadata.outputs.
+      &quot;neighbors&quot;: [ # Output only. List of the nearest neighbors for example-based explanations. For models deployed with the examples explanations feature enabled, the attributions field is empty and instead the neighbors field is populated.
+        { # Neighbors for example-based explanations.
+          &quot;neighborDistance&quot;: 3.14, # Output only. The neighbor distance.
+          &quot;neighborId&quot;: &quot;A String&quot;, # Output only. The neighbor id.
+  &quot;predictions&quot;: [ # The predictions that are the output of the predictions call. Same as PredictResponse.predictions.
+  <pre>Gets an Endpoint.
+  name: string, Required. The name of the Endpoint resource. Format: `projects/{project}/locations/{location}/endpoints/{endpoint}` (required)
+    <code class="details" id="list">list(parent, filter=None, gdcZone=None, orderBy=None, pageSize=None, pageToken=None, readMask=None, x__xgafv=None)</code>
+  <pre>Lists Endpoints in a Location.
+  parent: string, Required. The resource name of the Location from which to list the Endpoints. Format: `projects/{project}/locations/{location}` (required)
+  filter: string, Optional. An expression for filtering the results of the request. For field names both snake_case and camelCase are supported. * `endpoint` supports `=` and `!=`. `endpoint` represents the Endpoint ID, i.e. the last segment of the Endpoint&#x27;s resource name. * `display_name` supports `=` and `!=`. * `labels` supports general map functions that is: * `labels.key=value` - key:value equality * `labels.key:*` or `labels:key` - key existence * A key including a space must be quoted. `labels.&quot;a key&quot;`. * `base_model_name` only supports `=`. Some examples: * `endpoint=1` * `displayName=&quot;myDisplayName&quot;` * `labels.myKey=&quot;myValue&quot;` * `baseModelName=&quot;text-bison&quot;`
+  gdcZone: string, Optional. Configures the Google Distributed Cloud (GDC) environment for online prediction. Only set this field when the Endpoint is to be deployed in a GDC environment.
+  orderBy: string, A comma-separated list of fields to order by, sorted in ascending order. Use &quot;desc&quot; after a field name for descending. Supported fields: * `display_name` * `create_time` * `update_time` Example: `display_name, create_time desc`.
+  pageToken: string, Optional. The standard list page token. Typically obtained via ListEndpointsResponse.next_page_token of the previous EndpointService.ListEndpoints call.
+    { # Response message for EndpointService.ListEndpoints.
+  &quot;endpoints&quot;: [ # List of Endpoints in the requested page.
+  &quot;nextPageToken&quot;: &quot;A String&quot;, # A token to retrieve the next page of results. Pass to ListEndpointsRequest.page_token to obtain that page.
+    <code class="details" id="mutateDeployedModel">mutateDeployedModel(endpoint, body=None, x__xgafv=None)</code>
+  <pre>Updates an existing deployed model. Updatable fields include `min_replica_count`, `max_replica_count`, `required_replica_count`, `autoscaling_metric_specs`, `disable_container_logging` (v1 only), and `enable_container_logging` (v1beta1 only).
+  endpoint: string, Required. The name of the Endpoint resource into which to mutate a DeployedModel. Format: `projects/{project}/locations/{location}/endpoints/{endpoint}` (required)
+{ # Request message for EndpointService.MutateDeployedModel.
+  &quot;deployedModel&quot;: { # A deployment of a Model. Endpoints contain one or more DeployedModels. # Required. The DeployedModel to be mutated within the Endpoint. Only the following fields can be mutated: * `min_replica_count` in either DedicatedResources or AutomaticResources * `max_replica_count` in either DedicatedResources or AutomaticResources * `required_replica_count` in DedicatedResources * autoscaling_metric_specs * `disable_container_logging` (v1 only) * `enable_container_logging` (v1beta1 only) * `scale_to_zero_spec` in DedicatedResources (v1beta1 only) * `initial_replica_count` in DedicatedResources (v1beta1 only)
+  &quot;updateMask&quot;: &quot;A String&quot;, # Required. The update mask applies to the resource. See google.protobuf.FieldMask.
+  <pre>Updates an Endpoint.
+  name: string, Identifier. The resource name of the Endpoint. (required)
+  updateMask: string, Required. The update mask applies to the resource. See google.protobuf.FieldMask.
+    <code class="details" id="rawPredict">rawPredict(endpoint, body=None, x__xgafv=None)</code>
+  <pre>Perform an online prediction with an arbitrary HTTP payload. The response includes the following HTTP headers: * `X-Vertex-AI-Endpoint-Id`: ID of the Endpoint that served this prediction. * `X-Vertex-AI-Deployed-Model-Id`: ID of the Endpoint&#x27;s DeployedModel that served this prediction.
+{ # Request message for PredictionService.RawPredict.
+  &quot;httpBody&quot;: { # Message that represents an arbitrary HTTP body. It should only be used for payload formats that can&#x27;t be represented as JSON, such as raw binary or an HTML page. This message can be used both in streaming and non-streaming API methods in the request as well as the response. It can be used as a top-level request field, which is convenient if one wants to extract parameters from either the URL or HTTP template into the request fields and also want access to the raw HTTP body. Example: message GetResourceRequest { // A unique request id. string request_id = 1; // The raw HTTP body is bound to this field. google.api.HttpBody http_body = 2; } service ResourceService { rpc GetResource(GetResourceRequest) returns (google.api.HttpBody); rpc UpdateResource(google.api.HttpBody) returns (google.protobuf.Empty); } Example with streaming methods: service CaldavService { rpc GetCalendar(stream google.api.HttpBody) returns (stream google.api.HttpBody); rpc UpdateCalendar(stream google.api.HttpBody) returns (stream google.api.HttpBody); } Use of this type only changes how the request and response bodies are handled, all other features will continue to work unchanged. # The prediction input. Supports HTTP headers and arbitrary data payload. A DeployedModel may have an upper limit on the number of instances it supports per request. When this limit it is exceeded for an AutoML model, the RawPredict method returns an error. When this limit is exceeded for a custom-trained model, the behavior varies depending on the model. You can specify the schema for each instance in the predict_schemata.instance_schema_uri field when you create a Model. This schema applies when you deploy the `Model` as a `DeployedModel` to an Endpoint and use the `RawPredict` method.
+    <code class="details" id="serverStreamingPredict">serverStreamingPredict(endpoint, body=None, x__xgafv=None)</code>
+  <pre>Perform a server-side streaming online prediction request for Vertex LLM streaming.
+{ # Request message for PredictionService.StreamingPredict. The first message must contain endpoint field and optionally input. The subsequent messages must contain input.
+    { # Response message for PredictionService.StreamingPredict.
+    <code class="details" id="streamRawPredict">streamRawPredict(endpoint, body=None, x__xgafv=None)</code>
+  <pre>Perform a streaming online prediction with an arbitrary HTTP payload.
+{ # Request message for PredictionService.StreamRawPredict.
+  &quot;httpBody&quot;: { # Message that represents an arbitrary HTTP body. It should only be used for payload formats that can&#x27;t be represented as JSON, such as raw binary or an HTML page. This message can be used both in streaming and non-streaming API methods in the request as well as the response. It can be used as a top-level request field, which is convenient if one wants to extract parameters from either the URL or HTTP template into the request fields and also want access to the raw HTTP body. Example: message GetResourceRequest { // A unique request id. string request_id = 1; // The raw HTTP body is bound to this field. google.api.HttpBody http_body = 2; } service ResourceService { rpc GetResource(GetResourceRequest) returns (google.api.HttpBody); rpc UpdateResource(google.api.HttpBody) returns (google.protobuf.Empty); } Example with streaming methods: service CaldavService { rpc GetCalendar(stream google.api.HttpBody) returns (stream google.api.HttpBody); rpc UpdateCalendar(stream google.api.HttpBody) returns (stream google.api.HttpBody); } Use of this type only changes how the request and response bodies are handled, all other features will continue to work unchanged. # The prediction input. Supports HTTP headers and arbitrary data payload.
+    <code class="details" id="undeployModel">undeployModel(endpoint, body=None, x__xgafv=None)</code>
+  <pre>Undeploys a Model from an Endpoint, removing a DeployedModel from it, and freeing all resources it&#x27;s using.
+  endpoint: string, Required. The name of the Endpoint resource from which to undeploy a Model. Format: `projects/{project}/locations/{location}/endpoints/{endpoint}` (required)
+{ # Request message for EndpointService.UndeployModel.
+  &quot;deployedModelId&quot;: &quot;A String&quot;, # Required. The ID of the DeployedModel to be undeployed from the Endpoint.
+  &quot;trafficSplit&quot;: { # If this field is provided, then the Endpoint&#x27;s traffic_split will be overwritten with it. If last DeployedModel is being undeployed from the Endpoint, the [Endpoint.traffic_split] will always end up empty when this call returns. A DeployedModel will be successfully undeployed only if it doesn&#x27;t have any traffic assigned to it when this method executes, or if this field unassigns any traffic to it.
+    <code class="details" id="update">update(name, body=None, x__xgafv=None)</code>
+  <pre>Updates an Endpoint with a long running operation.
+{ # Request message for EndpointService.UpdateEndpointLongRunning.
+  &quot;endpoint&quot;: { # Models are deployed into it, and afterwards Endpoint is called to obtain predictions and explanations. # Required. The Endpoint which replaces the resource on the server. Currently we only support updating the `client_connection_config` field, all the other fields&#x27; update will be blocked.

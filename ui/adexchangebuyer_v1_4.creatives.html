@@ -1,0 +1,63 @@
+<h1><a href="adexchangebuyer_v1_4.html">Ad Exchange Buyer API</a> . <a href="adexchangebuyer_v1_4.creatives.html">creatives</a></h1>
+  <code><a href="#addDeal">addDeal(accountId, buyerCreativeId, dealId)</a></code></p>
+<p class="firstline">Add a deal id association for the creative.</p>
+  <code><a href="#list">list(accountId=None, buyerCreativeId=None, dealsStatusFilter=None, maxResults=None, openAuctionStatusFilter=None, pageToken=None)</a></code></p>
+  <code><a href="#listDeals">listDeals(accountId, buyerCreativeId)</a></code></p>
+<p class="firstline">Lists the external deal ids associated with the creative.</p>
+  <code><a href="#removeDeal">removeDeal(accountId, buyerCreativeId, dealId)</a></code></p>
+<p class="firstline">Remove a deal id associated with the creative.</p>
+    <code class="details" id="addDeal">addDeal(accountId, buyerCreativeId, dealId)</code>
+  <pre>Add a deal id association for the creative.
+  dealId: string, The id of the deal id to associate with this creative. (required)
+  &quot;HTMLSnippet&quot;: &quot;A String&quot;, # The HTML snippet that displays the ad when inserted in the web page. If set, videoURL, videoVastXML, and nativeAd should not be set.
+  &quot;adChoicesDestinationUrl&quot;: &quot;A String&quot;, # The link to the Ad Preferences page. This is only supported for native ads.
+  &quot;advertiserName&quot;: &quot;A String&quot;, # The name of the company being advertised in the creative. A list of advertisers is provided in the advertisers.txt file.
+  &quot;attribute&quot;: [ # List of buyer selectable attributes for the ads that may be shown from this snippet. Each attribute is represented by an integer as defined in  buyer-declarable-creative-attributes.txt.
+      &quot;contexts&quot;: [ # All known serving contexts containing serving status information.
+          &quot;auctionType&quot;: [ # Only set when contextType=AUCTION_TYPE. Represents the auction types this correction applies to.
+          &quot;contextType&quot;: &quot;A String&quot;, # The type of context (e.g., location, platform, auction type, SSL-ness).
+          &quot;geoCriteriaId&quot;: [ # Only set when contextType=LOCATION. Represents the geo criterias this correction applies to.
+          &quot;platform&quot;: [ # Only set when contextType=PLATFORM. Represents the platforms this correction applies to.
+  &quot;creativeStatusIdentityType&quot;: &quot;A String&quot;, # Creative status identity type that the creative item applies to. Ad Exchange real-time bidding is migrating to the sizeless creative verification. Originally, Ad Exchange assigned creative verification status to a unique combination of a buyer creative ID and creative dimensions. Post-migration, a single verification status will be assigned at the buyer creative ID level. This field allows to distinguish whether a given creative status applies to a unique combination of a buyer creative ID and creative dimensions, or to a buyer creative ID as a whole.
+  &quot;dealsStatus&quot;: &quot;A String&quot;, # Top-level deals status. Read-only. This field should not be set in requests. If disapproved, an entry for auctionType=DIRECT_DEALS (or ALL) in servingRestrictions will also exist. Note that this may be nuanced with other contextual restrictions, in which case it may be preferable to read from servingRestrictions directly.
+  &quot;detectedDomains&quot;: [ # Detected domains for this creative. Read-only. This field should not be set in requests.
+        &quot;filteringStatus&quot;: 42, # The filtering status code as defined in  creative-status-codes.txt.
+  &quot;languages&quot;: [ # Detected languages for this creative. Read-only. This field should not be set in requests.
+  &quot;nativeAd&quot;: { # If nativeAd is set, HTMLSnippet, videoVastXML, and the videoURL outside of nativeAd should not be set. (The videoURL inside nativeAd can be set.)
+    &quot;videoURL&quot;: &quot;A String&quot;, # The URL of the XML VAST for a native ad. Note this is a separate field from resource.video_url.
+  &quot;openAuctionStatus&quot;: &quot;A String&quot;, # Top-level open auction status. Read-only. This field should not be set in requests. If disapproved, an entry for auctionType=OPEN_AUCTION (or ALL) in servingRestrictions will also exist. Note that this may be nuanced with other contextual restrictions, in which case it may be preferable to read from ServingRestrictions directly.
+  &quot;productCategories&quot;: [ # Detected product categories, if any. Each category is represented by an integer as defined in  ad-product-categories.txt. Read-only. This field should not be set in requests.
+  &quot;restrictedCategories&quot;: [ # All restricted categories for the ads that may be shown from this snippet. Each category is represented by an integer as defined in the  ad-restricted-categories.txt.
+  &quot;sensitiveCategories&quot;: [ # Detected sensitive categories, if any. Each category is represented by an integer as defined in  ad-sensitive-categories.txt. Read-only. This field should not be set in requests.
+  &quot;servingRestrictions&quot;: [ # The granular status of this ad in specific contexts. A context here relates to where something ultimately serves (for example, a physical location, a platform, an HTTPS vs HTTP request, or the type of auction). Read-only. This field should not be set in requests. See the examples in the Creatives guide for more details.
+      &quot;contexts&quot;: [ # All known contexts/restrictions.
+          &quot;auctionType&quot;: [ # Only set when contextType=AUCTION_TYPE. Represents the auction types this restriction applies to.
+          &quot;geoCriteriaId&quot;: [ # Only set when contextType=LOCATION. Represents the geo criterias this restriction applies to. Impressions are considered to match a context if either the user location or publisher location matches a given geoCriteriaId.
+          &quot;platform&quot;: [ # Only set when contextType=PLATFORM. Represents the platforms this restriction applies to.
+      &quot;disapprovalReasons&quot;: [ # The reasons for disapproval within this restriction, if any. Note that not all disapproval reasons may be categorized, so it is possible for the creative to have a status of DISAPPROVED or CONDITIONALLY_APPROVED with an empty list for disapproval_reasons. In this case, please reach out to your TAM to help debug the issue.
+      &quot;reason&quot;: &quot;A String&quot;, # Why the creative is ineligible to serve in this context (e.g., it has been explicitly disapproved or is pending review).
+  &quot;vendorType&quot;: [ # List of vendor types for the ads that may be shown from this snippet. Each vendor type is represented by an integer as defined in vendors.txt.
+  &quot;videoURL&quot;: &quot;A String&quot;, # The URL to fetch a video ad. If set, HTMLSnippet, videoVastXML, and nativeAd should not be set. Note, this is different from resource.native_ad.video_url above.
+  &quot;videoVastXML&quot;: &quot;A String&quot;, # The contents of a VAST document for a video ad. This document should conform to the VAST 2.0 or 3.0 standard. If set, HTMLSnippet, videoURL, and nativeAd and should not be set.
+    <code class="details" id="list">list(accountId=None, buyerCreativeId=None, dealsStatusFilter=None, maxResults=None, openAuctionStatusFilter=None, pageToken=None)</code>
+  dealsStatusFilter: string, When specified, only creatives having the given deals status are returned.
+      approved - Creatives which have been approved for serving on deals.
+      conditionally_approved - Creatives which have been conditionally approved for serving on deals.
+      disapproved - Creatives which have been disapproved for serving on deals.
+      not_checked - Creatives whose deals status is not yet checked.
+  openAuctionStatusFilter: string, When specified, only creatives having the given open auction status are returned.
+      approved - Creatives which have been approved for serving on the open auction.
+      conditionally_approved - Creatives which have been conditionally approved for serving on the open auction.
+      disapproved - Creatives which have been disapproved for serving on the open auction.
+      not_checked - Creatives whose open auction status is not yet checked.
+    <code class="details" id="listDeals">listDeals(accountId, buyerCreativeId)</code>
+  <pre>Lists the external deal ids associated with the creative.
+    { # The external deal ids associated with a creative.
+  &quot;dealStatuses&quot;: [ # A list of external deal ids and ARC approval status.
+      &quot;arcStatus&quot;: &quot;A String&quot;, # ARC approval status.
+      &quot;dealId&quot;: &quot;A String&quot;, # External deal ID.
+      &quot;webPropertyId&quot;: 42, # Publisher ID.
+  &quot;kind&quot;: &quot;adexchangebuyer#creativeDealIds&quot;, # Resource type.
+    <code class="details" id="removeDeal">removeDeal(accountId, buyerCreativeId, dealId)</code>
+  <pre>Remove a deal id associated with the creative.
+  dealId: string, The id of the deal id to disassociate with this creative. (required)

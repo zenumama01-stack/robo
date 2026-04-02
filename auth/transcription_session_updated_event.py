@@ -1,0 +1,10 @@
+from .transcription_session import TranscriptionSession
+__all__ = ["TranscriptionSessionUpdatedEvent"]
+class TranscriptionSessionUpdatedEvent(BaseModel):
+    session: TranscriptionSession
+    """A new Realtime transcription session configuration.
+    When a session is created on the server via REST API, the session object also
+    contains an ephemeral key. Default TTL for keys is 10 minutes. This property is
+    not present when a session is updated via the WebSocket API.
+    type: Literal["transcription_session.updated"]
+    """The event type, must be `transcription_session.updated`."""

@@ -1,0 +1,38 @@
+<h1><a href="apigee_v1.html">Apigee API</a> . <a href="apigee_v1.organizations.html">organizations</a> . <a href="apigee_v1.organizations.apps.html">apps</a></h1>
+<p class="firstline">Gets the app profile for the specified app ID.</p>
+  <code><a href="#list">list(parent, apiProduct=None, apptype=None, expand=None, filter=None, ids=None, includeCred=None, keyStatus=None, pageSize=None, pageToken=None, rows=None, startKey=None, status=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Lists IDs of apps within an organization that have the specified app status (approved or revoked) or are of the specified app type (developer or company).</p>
+  <pre>Gets the app profile for the specified app ID.
+  name: string, Required. App ID in the following format: `organizations/{org}/apps/{app}` (required)
+  &quot;apiProducts&quot;: [ # List of API products associated with the app.
+  &quot;appGroup&quot;: &quot;A String&quot;, # Name of the AppGroup
+  &quot;appId&quot;: &quot;A String&quot;, # ID of the app.
+  &quot;attributes&quot;: [ # List of attributes.
+  &quot;callbackUrl&quot;: &quot;A String&quot;, # Callback URL used by OAuth 2.0 authorization servers to communicate authorization codes back to apps.
+  &quot;companyName&quot;: &quot;A String&quot;, # Name of the company that owns the app.
+  &quot;createdAt&quot;: &quot;A String&quot;, # Output only. Unix time when the app was created.
+  &quot;credentials&quot;: [ # Output only. Set of credentials for the app. Credentials are API key/secret pairs associated with API products.
+  &quot;developerEmail&quot;: &quot;A String&quot;, # Email of the developer.
+  &quot;developerId&quot;: &quot;A String&quot;, # ID of the developer.
+  &quot;keyExpiresIn&quot;: &quot;A String&quot;, # Duration, in milliseconds, of the consumer key that will be generated for the app. The default value, -1, indicates an infinite validity period. Once set, the expiration can&#x27;t be updated. json key: keyExpiresIn
+  &quot;lastModifiedAt&quot;: &quot;A String&quot;, # Output only. Last modified time as milliseconds since epoch.
+  &quot;name&quot;: &quot;A String&quot;, # Name of the app.
+  &quot;scopes&quot;: [ # Scopes to apply to the app. The specified scope names must already exist on the API product that you associate with the app.
+  &quot;status&quot;: &quot;A String&quot;, # Status of the credential.
+    <code class="details" id="list">list(parent, apiProduct=None, apptype=None, expand=None, filter=None, ids=None, includeCred=None, keyStatus=None, pageSize=None, pageToken=None, rows=None, startKey=None, status=None, x__xgafv=None)</code>
+  <pre>Lists IDs of apps within an organization that have the specified app status (approved or revoked) or are of the specified app type (developer or company).
+  parent: string, Required. Resource path of the parent in the following format: `organizations/{org}` (required)
+  apiProduct: string, API product.
+  apptype: string, Optional. &#x27;apptype&#x27; is no longer available. Use a &#x27;filter&#x27; instead.
+  expand: boolean, Optional. Flag that specifies whether to return an expanded list of apps for the organization. Defaults to `false`.
+  filter: string, Optional. The filter expression to be used to get the list of apps, where filtering can be done on developerEmail, apiProduct, consumerKey, status, appId, appName, appType and appGroup. Examples: &quot;developerEmail=foo@bar.com&quot;, &quot;appType=AppGroup&quot;, or &quot;appType=Developer&quot; &quot;filter&quot; is supported from ver 1.10.0 and above.
+  ids: string, Optional. Comma-separated list of app IDs on which to filter.
+  includeCred: boolean, Optional. Flag that specifies whether to include credentials in the response.
+  keyStatus: string, Optional. Key status of the app. Valid values include `approved` or `revoked`. Defaults to `approved`.
+  pageSize: integer, Optional. Count of apps a single page can have in the response. If unspecified, at most 1000 apps will be returned. The maximum value is 1000; values above 1000 will be coerced to 1000. &quot;page_size&quot; is supported from ver 1.10.0 and above.
+  pageToken: string, Optional. The starting index record for listing the developers. &quot;page_token&quot; is supported from ver 1.10.0 and above.
+  rows: string, Optional. Maximum number of app IDs to return. Defaults to 1000, which is also the upper limit. To get more than 1000, use pagination with &#x27;pageSize&#x27; and &#x27;pageToken&#x27; parameters.
+  startKey: string, Returns the list of apps starting from the specified app ID.
+  status: string, Optional. Filter by the status of the app. Valid values are `approved` or `revoked`. Defaults to `approved`.
+  &quot;app&quot;: [
+  &quot;totalSize&quot;: 42, # Total count of Apps.

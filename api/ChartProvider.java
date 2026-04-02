@@ -1,0 +1,51 @@
+package org.openhab.core.ui.chart;
+import java.awt.image.BufferedImage;
+ * Defines the interface for chart providers. A chart provider interfaces with
+ * the persistence store to get the data and receives parameters from the UI
+ * chart servlet and returns a chart image object (PNG).
+ * @author Holger Reichert - Support for themes, DPI, legend hiding
+ * @author Jan N. Klug - add y-axis label formatter
+public interface ChartProvider {
+     * Gets the name of this chart provider.
+     * @return String containing the provider name
+     * Creates a chart object. This sets the initial parameters for the chart
+     * before the items are added
+     * @param service A string containing the name of the persistence service. May
+     *            be null in which case the chart provider can decide itself
+     *            which store to use.
+     * @param theme A string containing a theme name for the chart. The provider
+     *            should store its own themes. May be null to use a default
+     *            theme.
+     * @param startTime The start time of the chart
+     * @param endTime The end time of the chart
+     * @param height The height of the chart
+     * @param width The width of the chart
+     * @param items The items to display on the chart
+     * @param groups The groups to display on the chart
+     * @param dpi The DPI (dots per inch) value, can be <code>null</code>
+     * @param interpolation The interpolation between two datapoint (<code>linear</code> or <code>step</code>),
+     *            <code>null</code> defaults to <code>linear</code> for numeric values and to <code>step</code> for
+     *            binary values
+     * @param legend Show the legend? If <code>null</code>, the ChartProvider should make his own decision.
+     * @return BufferedImage object if the chart is rendered correctly,
+     *         otherwise null.
+     * @throws ItemNotFoundException if an item or group is not found
+     * @throws IllegalArgumentException if an invalid argument is passed
+    BufferedImage createChart(@Nullable String service, @Nullable String theme, ZonedDateTime startTime,
+            ZonedDateTime endTime, int height, int width, @Nullable String items, @Nullable String groups,
+            @Nullable Integer dpi, @Nullable String interpolation, @Nullable Boolean legend)
+            throws ItemNotFoundException;
+     * @param yAxisDecimalPattern The format pattern for the y-axis labels
+    default BufferedImage createChart(@Nullable String service, @Nullable String theme, ZonedDateTime startTime,
+            @Nullable Integer dpi, @Nullable String yAxisDecimalPattern, @Nullable String interpolation,
+            @Nullable Boolean legend) throws ItemNotFoundException {
+        return createChart(service, theme, startTime, endTime, height, width, items, groups, dpi, interpolation,
+                legend);
+     * Gets the type of data that will be written by the chart.
+     * @return ImageType
+    ImageType getChartType();
+     * Provides a list of image types
+    enum ImageType {
+        png,
+        jpg,
+        gif

@@ -1,0 +1,122 @@
+@if (_isVisible) {
+    [minWidth]="600"
+    [width]="800"
+    [height]="700"
+    (close)="close()"
+    [title]="'Test Template: ' + (template?.Name || 'Unknown')">
+    <div class="dialog-content" style="display: flex; flex-direction: column; height: 100%; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">
+      <div class="header-section" style="margin-bottom: 20px; padding-bottom: 16px; border-bottom: 2px solid #e9ecef;">
+          <i class="fa-solid fa-sliders" style="color: #6c757d; font-size: 1.2em;"></i>
+          <h5 style="margin: 0; color: #495057; font-weight: 600;">Template Testing</h5>
+        <p style="margin: 0; color: #6c757d; font-size: 0.9em;">
+          Configure parameter values for testing. Parameters with <span style="color: #dc3545;">*</span> are required.
+      @if (isLoading) {
+        <div class="loading-state" style="display: flex; align-items: center; justify-content: center; padding: 40px;">
+          <span style="color: #6c757d;">Loading template parameters...</span>
+        <!-- Template Parameters Section -->
+              @if (parameters.length > 0) {
+                  {{ parameters.length }}
+              Configure parameter values for template testing. Values can be JSON objects, strings, or numbers.
+            <!-- Parameters Table -->
+              <div style="border: 1px solid #dee2e6; border-radius: 6px; background: #f8f9fa;">
+                <div style="display: grid; grid-template-columns: 200px 1fr 60px; gap: 12px; padding: 12px 16px; background: #e9ecef; font-weight: 600; font-size: 0.85em; color: #495057; border-bottom: 1px solid #dee2e6;">
+                  <div>Parameter Name</div>
+                  <div>Value</div>
+                <!-- Parameter Rows -->
+                @for (param of parameters; track $index; let i = $index) {
+                  <div style="display: grid; grid-template-columns: 200px 1fr 60px; gap: 12px; padding: 12px 16px; border-bottom: 1px solid #e9ecef; align-items: start; background: white;">
+                    <!-- Parameter Name -->
+                    <div class="param-name" style="display: flex; flex-direction: column;">
+                      <div style="display: flex; align-items: center; gap: 4px; margin-bottom: 4px;">
+                        @if (param.isFromTemplate) {
+                          <i class="fa-solid fa-database" style="color: #28a745; font-size: 0.75em;" title="From template definition"></i>
+                          <i class="fa-solid fa-edit" style="color: #fd7e14; font-size: 0.75em;" title="Custom parameter"></i>
+                          <span style="color: #dc3545; font-weight: bold;">*</span>
+                        <div style="font-family: 'Courier New', monospace; font-size: 0.9em; font-weight: 500; color: #495057; padding: 4px 0; word-break: break-word;">
+                          {{ param.key }}
+                          <div style="font-size: 0.75em; color: #6c757d; margin-top: 2px; font-style: italic; word-break: break-word;">
+                        @if (param.type && param.type !== 'Scalar') {
+                          <div style="font-size: 0.7em; color: #17a2b8; margin-top: 2px;">
+                            Type: {{ param.type }}
+                        <kendo-textbox [(ngModel)]="param.key"
+                          (ngModelChange)="onParameterChange()"
+                          style="font-family: 'Courier New', monospace; width: 100%;">
+                    <!-- Parameter Value -->
+                    <div class="param-value">
+                      <kendo-textarea [(ngModel)]="param.value"
+                        placeholder="Enter value (JSON strings, numbers, objects)..."
+                        style="font-family: 'Courier New', monospace; font-size: 0.9em; width: 100%;">
+                    <div class="param-actions" style="display: flex; align-items: start; justify-content: center; padding-top: 4px;">
+                      @if (!param.isFromTemplate && parameters.length > 1) {
+                        <button kendoButton fillMode="flat"
+                          (click)="removeParameter(i)"
+                          title="Remove parameter">
+                <!-- Add Parameter Row -->
+                <div style="padding: 12px 16px; text-align: center; background: white; border-top: 1px solid #dee2e6;">
+                  <button kendoButton fillMode="outline"
+                    themeColor="success"
+                    (click)="addParameter()"
+                    [disabled]="isRunning">
+              <div style="text-align: center; padding: 20px; color: #6c757d;">
+                <i class="fa-solid fa-info-circle" style="font-size: 2em; margin-bottom: 12px; opacity: 0.5;"></i>
+                <p style="margin: 0 0 12px 0;">No parameters defined yet</p>
+                <button kendoButton themeColor="primary" size="small"
+        <!-- JSON Preview Section -->
+          [(expanded)]="jsonPreviewExpanded"
+              Context Data (JSON)
+            <div style="background: #f8f9fa; border: 1px solid #dee2e6; border-radius: 4px; padding: 12px; font-family: 'Courier New', monospace; font-size: 0.85em; color: #495057; max-height: 200px; overflow-y: auto;">
+              <pre style="margin: 0; white-space: pre-wrap;">{{ parametersAsJson }}</pre>
+        <!-- Test Results Section -->
+          style="margin-bottom: 16px; flex: 1; display: flex; flex-direction: column;">
+              Test Results
+              @if (testResult) {
+                  [style.background]="testResult.success ? '#28a745' : '#dc3545'"
+                  style="color: white; padding: 2px 6px; border-radius: 10px; font-size: 0.7em;">
+                  {{ testResult.success ? 'Success' : 'Error' }}
+          <div style="padding: 12px 0; flex: 1; display: flex; flex-direction: column;">
+              <div class="loading-state" style="display: flex; align-items: center; justify-content: center; padding: 40px; flex: 1;">
+                <span style="color: #6c757d;">Running template...</span>
+            } @else if (testResult) {
+              <div style="flex: 1; display: flex; flex-direction: column;">
+                <!-- Result Header with Stats -->
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 12px; margin-bottom: 16px; padding: 12px; border: 1px solid #dee2e6; border-radius: 6px;"
+                  [style.background]="testResult.success ? '#d4edda' : '#f8d7da'">
+                    <div style="font-size: 0.75em; margin-bottom: 2px;" [style.color]="testResult.success ? '#155724' : '#721c24'">STATUS</div>
+                    <div style="font-weight: 600;" [style.color]="testResult.success ? '#155724' : '#721c24'">
+                      {{ testResult.success ? 'Success' : 'Failed' }}
+                  @if (testResult.executionTimeMs) {
+                      <div style="font-size: 0.75em; margin-bottom: 2px;" [style.color]="testResult.success ? '#155724' : '#721c24'">EXECUTION TIME</div>
+                      <div style="font-weight: 600;" [style.color]="testResult.success ? '#155724' : '#721c24'">{{ testResult.executionTimeMs }}ms</div>
+                    <div style="font-size: 0.75em; margin-bottom: 2px;" [style.color]="testResult.success ? '#155724' : '#721c24'">ACTIONS</div>
+                      (click)="saveResults()"
+                      title="Save results to file"
+                      style="min-width: auto; padding: 4px 8px;">
+                      <i class="fa-solid fa-download"></i>
+                <!-- Result Content -->
+                  @if (testResult.success && testResult.output) {
+                    <div style="margin-bottom: 12px; flex: 1; display: flex; flex-direction: column;">
+                      <h6 style="margin: 0 0 8px 0; color: #495057; display: flex; align-items: center; gap: 6px;">
+                        <i class="fa-solid fa-check-circle" style="color: #28a745;"></i>
+                        Template Output
+                      <div style="background: #f8f9fa; border: 1px solid #dee2e6; border-radius: 4px; padding: 12px; font-family: 'Courier New', monospace; font-size: 0.9em; white-space: pre-wrap; overflow: auto; height: 150px;">
+                        {{ testResult.output }}
+                  } @else if (!testResult.success && testResult.error) {
+                      <h6 style="margin: 0 0 8px 0; color: #dc3545; display: flex; align-items: center; gap: 6px;">
+                        Error Details
+                      <div style="background: #f8d7da; border: 1px solid #f5c6cb; border-radius: 4px; padding: 12px; color: #721c24; font-family: 'Courier New', monospace; font-size: 0.9em; white-space: pre-wrap; overflow: auto; height: 150px;">{{ testResult.error }}</div>
+              <div style="display: flex; align-items: center; justify-content: center; padding: 40px; color: #6c757d; flex: 1;">
+                  <i class="fa-solid fa-play-circle" style="font-size: 3em; margin-bottom: 12px; opacity: 0.3;"></i>
+                  <p style="margin: 0;">No test results yet. Run the template to see results here.</p>
+      <div style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
+          @if (hasUnsavedParameters) {
+              themeColor="info"
+              (click)="updateTemplateParams()"
+              <i class="fa-solid fa-save"></i> Update Template Params
+          <button kendoButton fillMode="outline" (click)="close()">
+            Close
+            <button kendoButton fillMode="outline" themeColor="info" (click)="saveResults()">
+              <i class="fa-solid fa-download"></i> Save Results
+          <button kendoButton themeColor="primary"
+            [disabled]="isRunning || isLoading"
+            (click)="runTemplate()">
+              <i class="fa-solid fa-play"></i> Run Template

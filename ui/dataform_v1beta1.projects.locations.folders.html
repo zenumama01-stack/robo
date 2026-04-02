@@ -1,0 +1,49 @@
+<h1><a href="dataform_v1beta1.html">Dataform API</a> . <a href="dataform_v1beta1.projects.html">projects</a> . <a href="dataform_v1beta1.projects.locations.html">locations</a> . <a href="dataform_v1beta1.projects.locations.folders.html">folders</a></h1>
+  <code><a href="#create">create(parent, body=None, folderId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Creates a new Folder in a given project and location.</p>
+<p class="firstline">Deletes a single Folder.</p>
+<p class="firstline">Fetches a single Folder.</p>
+<p class="firstline">Moves a Folder to a new Folder, TeamFolder, or the root location.</p>
+<p class="firstline">Updates a single Folder.</p>
+  <code><a href="#queryFolderContents">queryFolderContents(folder, filter=None, orderBy=None, pageSize=None, pageToken=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Returns the contents of a given Folder.</p>
+  <code><a href="#queryFolderContents_next">queryFolderContents_next()</a></code></p>
+    <code class="details" id="create">create(parent, body=None, folderId=None, x__xgafv=None)</code>
+  <pre>Creates a new Folder in a given project and location.
+  parent: string, Required. The location in which to create the Folder. Must be in the format `projects/*/locations/*`. (required)
+{ # Represents a Dataform Folder. This is a resource that is used to organize Files and other Folders and provide hierarchical access controls.
+  &quot;containingFolder&quot;: &quot;A String&quot;, # Optional. The containing Folder resource name. This should take the format: projects/{project}/locations/{location}/folders/{folder}, projects/{project}/locations/{location}/teamFolders/{teamFolder}, or just projects/{project}/locations/{location} if this is a root Folder. This field can only be updated through MoveFolder.
+  &quot;createTime&quot;: &quot;A String&quot;, # Output only. The timestamp of when the Folder was created.
+  &quot;creatorIamPrincipal&quot;: &quot;A String&quot;, # Output only. The IAM principal identifier of the creator of the Folder.
+  &quot;displayName&quot;: &quot;A String&quot;, # Required. The Folder&#x27;s user-friendly name.
+  &quot;name&quot;: &quot;A String&quot;, # Identifier. The Folder&#x27;s name.
+  &quot;teamFolderName&quot;: &quot;A String&quot;, # Output only. The resource name of the TeamFolder that this Folder is associated with. This should take the format: projects/{project}/locations/{location}/teamFolders/{teamFolder}. If this is not set, the Folder is not associated with a TeamFolder and is a UserFolder.
+  &quot;updateTime&quot;: &quot;A String&quot;, # Output only. The timestamp of when the Folder was last updated.
+  folderId: string, The ID to use for the Folder, which will become the final component of the Folder&#x27;s resource name.
+  <pre>Deletes a single Folder.
+  name: string, Required. The Folder&#x27;s name. (required)
+  <pre>Fetches a single Folder.
+  <pre>Moves a Folder to a new Folder, TeamFolder, or the root location.
+  name: string, Required. The full resource name of the Folder to move. (required)
+{ # `MoveFolder` request message.
+  &quot;destinationContainingFolder&quot;: &quot;A String&quot;, # Optional. The name of the Folder, TeamFolder, or root location to move the Folder to. Can be in the format of: &quot;&quot; to move into the root User folder, `projects/*/locations/*/folders/*`, `projects/*/locations/*/teamFolders/*`
+  <pre>Updates a single Folder.
+  name: string, Identifier. The Folder&#x27;s name. (required)
+  updateMask: string, Optional. Specifies the fields to be updated in the Folder. If left unset, all fields that can be updated, will be updated. A few fields cannot be updated and will be ignored if specified in the update_mask (e.g. parent_name, team_folder_name).
+    <code class="details" id="queryFolderContents">queryFolderContents(folder, filter=None, orderBy=None, pageSize=None, pageToken=None, x__xgafv=None)</code>
+  <pre>Returns the contents of a given Folder.
+  folder: string, Required. Name of the folder whose contents to list. Format: projects/*/locations/*/folders/* (required)
+  filter: string, Optional. Optional filtering for the returned list. Filtering is currently only supported on the `display_name` field. Example: - `filter=&quot;display_name=&quot;MyFolder&quot;&quot;`
+  orderBy: string, Optional. Field to additionally sort results by. Will order Folders before Repositories, and then by `order_by` in ascending order. Supported keywords: display_name (default), create_time, last_modified_time. Examples: - `orderBy=&quot;display_name&quot;` - `orderBy=&quot;display_name desc&quot;`
+  pageToken: string, Optional. Page token received from a previous `QueryFolderContents` call. Provide this to retrieve the subsequent page. When paginating, all other parameters provided to `QueryFolderContents`, with the exception of `page_size`, must match the call that provided the page token.
+    { # `QueryFolderContents` response message.
+  &quot;entries&quot;: [ # List of entries in the folder.
+    { # Represents a single content entry.
+      &quot;folder&quot;: { # Represents a Dataform Folder. This is a resource that is used to organize Files and other Folders and provide hierarchical access controls. # A subfolder.
+      &quot;repository&quot;: { # Represents a Dataform Git repository. # A repository.
+        &quot;containingFolder&quot;: &quot;A String&quot;, # Optional. The name of the containing folder of the repository. The field is immutable and it can be modified via a MoveRepository operation. Format: `projects/*/locations/*/folders/*`. or `projects/*/locations/*/teamFolders/*`.
+          &quot;tokenStatus&quot;: &quot;A String&quot;, # Output only. Deprecated: The field does not contain any token status information. Instead use https://cloud.google.com/dataform/reference/rest/v1beta1/projects.locations.repositories/computeAccessTokenStatus
+        &quot;setAuthenticatedUserAdmin&quot;: True or False, # Optional. Input only. If set to true, the authenticated user will be granted the roles/dataform.admin role on the created repository. To modify access to the created repository later apply setIamPolicy from https://cloud.google.com/dataform/reference/rest#rest-resource:-v1beta1.projects.locations.repositories
+        &quot;teamFolderName&quot;: &quot;A String&quot;, # Output only. The resource name of the TeamFolder that this Repository is associated with. This should take the format: projects/{project}/locations/{location}/teamFolders/{teamFolder}. If this is not set, the Repository is not associated with a TeamFolder.
+        &quot;workspaceCompilationOverrides&quot;: { # Configures workspace compilation overrides for a repository. Primarily used by the UI (`console.cloud.google.com`). `schema_suffix` and `table_prefix` can have a special expression - `${workspaceName}`, which refers to the workspace name from which the compilation results will be created. API callers are expected to resolve the expression in these overrides and provide them explicitly in `code_compilation_config` (https://cloud.google.com/dataform/reference/rest/v1beta1/projects.locations.repositories.compilationResults#codecompilationconfig) when creating workspace-scoped compilation results. # Optional. If set, fields of `workspace_compilation_overrides` override the default compilation settings that are specified in dataform.json when creating workspace-scoped compilation results. See documentation for `WorkspaceCompilationOverrides` for more information.
+    <code class="details" id="queryFolderContents_next">queryFolderContents_next()</code>

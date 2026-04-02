@@ -1,0 +1,53 @@
+<h1><a href="dataform_v1.html">Dataform API</a> . <a href="dataform_v1.projects.html">projects</a> . <a href="dataform_v1.projects.locations.html">locations</a> . <a href="dataform_v1.projects.locations.repositories.html">repositories</a> . <a href="dataform_v1.projects.locations.repositories.workflowInvocations.html">workflowInvocations</a></h1>
+<p class="firstline">Requests cancellation of a running WorkflowInvocation.</p>
+<p class="firstline">Creates a new WorkflowInvocation in a given Repository.</p>
+<p class="firstline">Deletes a single WorkflowInvocation.</p>
+<p class="firstline">Fetches a single WorkflowInvocation.</p>
+<p class="firstline">Lists WorkflowInvocations in a given Repository.</p>
+  <code><a href="#query">query(name, pageSize=None, pageToken=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Returns WorkflowInvocationActions in a given WorkflowInvocation.</p>
+  <pre>Requests cancellation of a running WorkflowInvocation.
+  name: string, Required. The workflow invocation resource&#x27;s name. (required)
+{ # `CancelWorkflowInvocation` request message.
+    { # `CancelWorkflowInvocation` response message.
+  <pre>Creates a new WorkflowInvocation in a given Repository.
+  parent: string, Required. The repository in which to create the workflow invocation. Must be in the format `projects/*/locations/*/repositories/*`. (required)
+{ # Represents a single invocation of a compilation result.
+  &quot;compilationResult&quot;: &quot;A String&quot;, # Immutable. The name of the compilation result to use for this invocation. Must be in the format `projects/*/locations/*/repositories/*/compilationResults/*`.
+  &quot;invocationConfig&quot;: { # Includes various configuration options for a workflow invocation. If both `included_targets` and `included_tags` are unset, all actions will be included. # Immutable. If left unset, a default InvocationConfig will be used.
+  &quot;invocationTiming&quot;: { # Represents a time interval, encoded as a Timestamp start (inclusive) and a Timestamp end (exclusive). The start must be less than or equal to the end. When the start equals the end, the interval is empty (matches no time). When both start and end are unspecified, the interval matches any time. # Output only. This workflow invocation&#x27;s timing details.
+  &quot;name&quot;: &quot;A String&quot;, # Output only. The workflow invocation&#x27;s name.
+  &quot;privateResourceMetadata&quot;: { # Metadata used to identify if a resource is user scoped. # Output only. Metadata indicating whether this resource is user-scoped. `WorkflowInvocation` resource is `user_scoped` only if it is sourced from a compilation result and the compilation result is user-scoped.
+  &quot;resolvedCompilationResult&quot;: &quot;A String&quot;, # Output only. The resolved compilation result that was used to create this invocation. Will be in the format `projects/*/locations/*/repositories/*/compilationResults/*`.
+  &quot;state&quot;: &quot;A String&quot;, # Output only. This workflow invocation&#x27;s current state.
+  &quot;workflowConfig&quot;: &quot;A String&quot;, # Immutable. The name of the workflow config to invoke. Must be in the format `projects/*/locations/*/repositories/*/workflowConfigs/*`.
+  <pre>Deletes a single WorkflowInvocation.
+  <pre>Fetches a single WorkflowInvocation.
+  <pre>Lists WorkflowInvocations in a given Repository.
+  parent: string, Required. The parent resource of the WorkflowInvocation type. Must be in the format `projects/*/locations/*/repositories/*`. (required)
+  pageSize: integer, Optional. Maximum number of workflow invocations to return. The server may return fewer items than requested. If unspecified, the server will pick an appropriate default.
+  pageToken: string, Optional. Page token received from a previous `ListWorkflowInvocations` call. Provide this to retrieve the subsequent page. When paginating, all other parameters provided to `ListWorkflowInvocations`, with the exception of `page_size`, must match the call that provided the page token.
+    { # `ListWorkflowInvocations` response message.
+  &quot;workflowInvocations&quot;: [ # List of workflow invocations.
+    <code class="details" id="query">query(name, pageSize=None, pageToken=None, x__xgafv=None)</code>
+  <pre>Returns WorkflowInvocationActions in a given WorkflowInvocation.
+  name: string, Required. The workflow invocation&#x27;s name. (required)
+  pageToken: string, Optional. Page token received from a previous `QueryWorkflowInvocationActions` call. Provide this to retrieve the subsequent page. When paginating, all other parameters provided to `QueryWorkflowInvocationActions`, with the exception of `page_size`, must match the call that provided the page token.
+    { # `QueryWorkflowInvocationActions` response message.
+  &quot;workflowInvocationActions&quot;: [ # List of workflow invocation actions.
+    { # Represents a single action in a workflow invocation.
+      &quot;bigqueryAction&quot;: { # Represents a workflow action that will run against BigQuery. # Output only. The workflow action&#x27;s bigquery action details.
+        &quot;jobId&quot;: &quot;A String&quot;, # Output only. The ID of the BigQuery job that executed the SQL in sql_script. Only set once the job has started to run.
+        &quot;sqlScript&quot;: &quot;A String&quot;, # Output only. The generated BigQuery SQL script that will be executed.
+      &quot;canonicalTarget&quot;: { # Represents an action identifier. If the action writes output, the output will be written to the referenced database object. # Output only. The action&#x27;s identifier if the project had been compiled without any overrides configured. Unique within the compilation result.
+      &quot;dataPreparationAction&quot;: { # Represents a workflow action that will run a Data Preparation. # Output only. The workflow action&#x27;s data preparation action details.
+          &quot;loadConfig&quot;: { # Simplified load configuration for actions # Load configuration.
+        &quot;contentsYaml&quot;: &quot;A String&quot;, # Output only. YAML representing the contents of the data preparation. Can be used to show the customer what the input was to their workflow.
+        &quot;generatedSql&quot;: &quot;A String&quot;, # Output only. The generated BigQuery SQL script that will be executed. For reference only.
+      &quot;failureReason&quot;: &quot;A String&quot;, # Output only. If and only if action&#x27;s state is FAILED a failure reason is set.
+      &quot;invocationTiming&quot;: { # Represents a time interval, encoded as a Timestamp start (inclusive) and a Timestamp end (exclusive). The start must be less than or equal to the end. When the start equals the end, the interval is empty (matches no time). When both start and end are unspecified, the interval matches any time. # Output only. This action&#x27;s timing details. `start_time` will be set if the action is in [RUNNING, SUCCEEDED, CANCELLED, FAILED] state. `end_time` will be set if the action is in [SUCCEEDED, CANCELLED, FAILED] state.
+      &quot;notebookAction&quot;: { # Represents a workflow action that will run against a Notebook runtime. # Output only. The workflow action&#x27;s notebook action details.
+        &quot;contents&quot;: &quot;A String&quot;, # Output only. The code contents of a Notebook to be run.
+        &quot;jobId&quot;: &quot;A String&quot;, # Output only. The ID of the Vertex job that executed the notebook in contents and also the ID used for the outputs created in Google Cloud Storage buckets. Only set once the job has started to run.
+      &quot;state&quot;: &quot;A String&quot;, # Output only. This action&#x27;s current state.
+      &quot;target&quot;: { # Represents an action identifier. If the action writes output, the output will be written to the referenced database object. # Output only. This action&#x27;s identifier. Unique within the workflow invocation.

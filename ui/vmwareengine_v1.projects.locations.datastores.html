@@ -1,0 +1,48 @@
+<h1><a href="vmwareengine_v1.html">VMware Engine API</a> . <a href="vmwareengine_v1.projects.html">projects</a> . <a href="vmwareengine_v1.projects.locations.html">locations</a> . <a href="vmwareengine_v1.projects.locations.datastores.html">datastores</a></h1>
+  <code><a href="#create">create(parent, body=None, datastoreId=None, requestId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Creates a new `Datastore` resource in a given project and location.</p>
+<p class="firstline">Deletes a `Datastore` resource. You can only delete a Datastore after all resources that refer to it are deleted. For example, multiple clusters of the same private cloud or different private clouds can refer to the same datastore.</p>
+<p class="firstline">Retrieves a `Datastore` resource by its resource name. The resource contains details of the Datastore, such as its description, subnets, type, and more.</p>
+  <code><a href="#list">list(parent, filter=None, orderBy=None, pageSize=None, pageToken=None, requestId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Lists `Datastore` resources in a given project and location.</p>
+<p class="firstline">Modifies a Datastore resource. Only fields specified in `updateMask` are applied.</p>
+    <code class="details" id="create">create(parent, body=None, datastoreId=None, requestId=None, x__xgafv=None)</code>
+  <pre>Creates a new `Datastore` resource in a given project and location.
+  parent: string, Required. The resource name of the location to create the new datastore in. Resource names are schemeless URIs that follow the conventions in https://cloud.google.com/apis/design/resource_names. For example: `projects/my-project/locations/us-central1` (required)
+{ # Represents a datastore resource.
+  &quot;clusters&quot;: [ # Output only. Clusters to which the datastore is attached.
+  &quot;createTime&quot;: &quot;A String&quot;, # Output only. Creation time of this resource.
+  &quot;description&quot;: &quot;A String&quot;, # Optional. User-provided description for this datastore
+  &quot;etag&quot;: &quot;A String&quot;, # Optional. Checksum that may be sent on update and delete requests to ensure that the user-provided value is up to date before the server processes a request. The server computes checksums based on the value of other fields in the request.
+  &quot;name&quot;: &quot;A String&quot;, # Output only. Identifier. The resource name of this datastore. Resource names are schemeless URIs that follow the conventions in https://cloud.google.com/apis/design/resource_names. For example: `projects/my-project/locations/us-central1/datastores/datastore`
+  &quot;nfsDatastore&quot;: { # The NFS datastore configuration. # Required. Settings for the NFS datastore.
+    &quot;googleFileService&quot;: { # Google service file service configuration # Google file service configuration
+      &quot;filestoreInstance&quot;: &quot;A String&quot;, # Google filestore instance resource name e.g. projects/my-project/locations/me-west1-b/instances/my-instance
+      &quot;netappVolume&quot;: &quot;A String&quot;, # Google netapp volume resource name e.g. projects/my-project/locations/me-west1-b/volumes/my-volume
+    &quot;googleVmwareFileService&quot;: { # Volume message captures user inputs for creation of file services managed by GCVE # GCVE file service configuration
+    &quot;thirdPartyFileService&quot;: { # Third party file service configuration # Third party file service configuration
+      &quot;fileShare&quot;: &quot;A String&quot;, # Required. Required Mount Folder name
+      &quot;network&quot;: &quot;A String&quot;, # Required. Required to identify vpc peering used for NFS access network name of NFS&#x27;s vpc e.g. projects/project-id/global/networks/my-network_id
+      &quot;servers&quot;: [ # Required. Server IP addresses of the NFS file service. NFS v3, provide a single IP address or DNS name. Multiple servers can be supported in future when NFS 4.1 protocol support is enabled.
+  &quot;state&quot;: &quot;A String&quot;, # Output only. The state of the Datastore.
+  &quot;uid&quot;: &quot;A String&quot;, # Output only. System-generated unique identifier for the resource.
+  datastoreId: string, Required. The user-provided identifier of the datastore to be created. This identifier must be unique among each `Datastore` within the parent and becomes the final token in the name URI. The identifier must meet the following requirements: * Only contains 1-63 alphanumeric characters and hyphens * Begins with an alphabetical character * Ends with a non-hyphen character * Not formatted as a UUID * Complies with [RFC 1034](https://datatracker.ietf.org/doc/html/rfc1034) (section 3.5)
+  requestId: string, Optional. The request ID must be a valid UUID with the exception that zero UUID is not supported (00000000-0000-0000-0000-000000000000).
+  <pre>Deletes a `Datastore` resource. You can only delete a Datastore after all resources that refer to it are deleted. For example, multiple clusters of the same private cloud or different private clouds can refer to the same datastore.
+  name: string, Required. The resource name of the Datastore to be deleted. Resource names are schemeless URIs that follow the conventions in https://cloud.google.com/apis/design/resource_names. For example: `projects/my-project/locations/us-central1/datastore/my-datastore` (required)
+  etag: string, Optional. Checksum used to ensure that the user-provided value is up to date before the server processes the request. The server compares provided checksum with the current checksum of the resource. If the user-provided value is out of date, this request returns an `ABORTED` error.
+  <pre>Retrieves a `Datastore` resource by its resource name. The resource contains details of the Datastore, such as its description, subnets, type, and more.
+  name: string, Required. The resource name of the Datastore to retrieve. Resource names are schemeless URIs that follow the conventions in https://cloud.google.com/apis/design/resource_names. For example: `projects/my-project/locations/us-central1/datastores/my-datastore` (required)
+    <code class="details" id="list">list(parent, filter=None, orderBy=None, pageSize=None, pageToken=None, requestId=None, x__xgafv=None)</code>
+  <pre>Lists `Datastore` resources in a given project and location.
+  parent: string, Required. The resource name of the location to query for Datastores. Resource names are schemeless URIs that follow the conventions in https://cloud.google.com/apis/design/resource_names. For example: `projects/my-project/locations/us-central1` (required)
+  filter: string, Optional. A filter expression that matches resources returned in the response. The expression must specify the field name, a comparison operator, and the value that you want to use for filtering. The value must be a string, a number, or a boolean. The comparison operator must be `=`, `!=`, `&gt;`, or `&lt;`. For example, if you are filtering a list of datastores, you can exclude the ones named `example-datastore` by specifying `name != &quot;example-datastore&quot;`. To filter on multiple expressions, provide each separate expression within parentheses. For example: ``` (name = &quot;example-datastore&quot;) (createTime &gt; &quot;2021-04-12T08:15:10.40Z&quot;) ``` By default, each expression is an `AND` expression. However, you can include `AND` and `OR` expressions explicitly. For example: ``` (name = &quot;example-datastore-1&quot;) AND (createTime &gt; &quot;2021-04-12T08:15:10.40Z&quot;) OR (name = &quot;example-datastore-2&quot;) ```
+  orderBy: string, Optional. Sorts list results by a certain order. By default, returned results are ordered by `name` in ascending order. You can also sort results in descending order based on the `name` value using `orderBy=&quot;name desc&quot;`. Currently, only ordering by `name` is supported.
+  pageSize: integer, Optional. The maximum number of results to return in one page. The maximum value is coerced to 1000. The default value of this field is 500.
+  pageToken: string, Optional. A page token, received from a previous `ListDatastores` call. Provide this to retrieve the subsequent page. When paginating, all other parameters provided to `ListDatastores` must match the call that provided the page token.
+    { # Response message for VmwareEngine.ListDatastores
+  &quot;datastores&quot;: [ # A list of Datastores.
+  &quot;unreachable&quot;: [ # Unreachable resources.
+  <pre>Modifies a Datastore resource. Only fields specified in `updateMask` are applied.
+  name: string, Output only. Identifier. The resource name of this datastore. Resource names are schemeless URIs that follow the conventions in https://cloud.google.com/apis/design/resource_names. For example: `projects/my-project/locations/us-central1/datastores/datastore` (required)
+  updateMask: string, Optional. Field mask is used to specify the fields to be overwritten in the Datastore resource by the update. The fields specified in the `update_mask` are relative to the resource, not the full request. A field will be overwritten if it is in the mask. If the user does not provide a mask then all fields will be overwritten.

@@ -1,0 +1,68 @@
+<h1><a href="androidpublisher_v3.html">Google Play Android Developer API</a> . <a href="androidpublisher_v3.apprecovery.html">apprecovery</a></h1>
+  <code><a href="#addTargeting">addTargeting(packageName, appRecoveryId, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Incrementally update targeting for a recovery action. Note that only the criteria selected during the creation of recovery action can be expanded.</p>
+  <code><a href="#cancel">cancel(packageName, appRecoveryId, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Cancel an already executing app recovery action. Note that this action changes status of the recovery action to CANCELED.</p>
+  <code><a href="#create">create(packageName, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Create an app recovery action with recovery status as DRAFT. Note that this action does not execute the recovery action.</p>
+  <code><a href="#deploy">deploy(packageName, appRecoveryId, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Deploy an already created app recovery action with recovery status DRAFT. Note that this action activates the recovery action for all targeted users and changes its status to ACTIVE.</p>
+  <code><a href="#list">list(packageName, versionCode=None, x__xgafv=None)</a></code></p>
+<p class="firstline">List all app recovery action resources associated with a particular package name and app version.</p>
+    <code class="details" id="addTargeting">addTargeting(packageName, appRecoveryId, body=None, x__xgafv=None)</code>
+  <pre>Incrementally update targeting for a recovery action. Note that only the criteria selected during the creation of recovery action can be expanded.
+  packageName: string, Required. Package name of the app for which recovery action is to be updated. (required)
+  appRecoveryId: string, Required. ID corresponding to the app recovery action. (required)
+{ # Request message for AddTargeting.
+  &quot;targetingUpdate&quot;: { # Update type for targeting. Note it is always a subset Targeting. # Specifies targeting updates such as regions, android sdk versions etc.
+    &quot;allUsers&quot;: { # Object representation to describe all set of users. # All users are targeted.
+      &quot;isAllUsersRequested&quot;: True or False, # Required. Set to true if all set of users are needed.
+    &quot;androidSdks&quot;: { # Android api level targeting data for app recovery action targeting. # Additional android sdk levels are targeted by the recovery action.
+      &quot;sdkLevels&quot;: [ # Android api levels of devices targeted by recovery action. See https://developer.android.com/guide/topics/manifest/uses-sdk-element#ApiLevels for different api levels in android.
+    &quot;regions&quot;: { # Region targeting data for app recovery action targeting. # Additional regions are targeted by the recovery action.
+      &quot;regionCode&quot;: [ # Regions targeted by the recovery action. Region codes are ISO 3166 Alpha-2 country codes. For example, US stands for United States of America. See https://www.iso.org/iso-3166-country-codes.html for the complete list of country codes.
+    { # Response message for AddTargeting.
+    <code class="details" id="cancel">cancel(packageName, appRecoveryId, body=None, x__xgafv=None)</code>
+  <pre>Cancel an already executing app recovery action. Note that this action changes status of the recovery action to CANCELED.
+  packageName: string, Required. Package name of the app for which recovery action cancellation is requested. (required)
+{ # Request message for CancelAppRecovery.
+    { # Response message for CancelAppRecovery.
+    <code class="details" id="create">create(packageName, body=None, x__xgafv=None)</code>
+  <pre>Create an app recovery action with recovery status as DRAFT. Note that this action does not execute the recovery action.
+  packageName: string, Required. Package name of the app on which recovery action is performed. (required)
+{ # Request message for CreateDraftAppRecovery.
+  &quot;remoteInAppUpdate&quot;: { # Object representation for Remote in-app update action type. # Action type is remote in-app update. As a consequence of this action, a downloadable recovery module is also created for testing purposes.
+    &quot;isRemoteInAppUpdateRequested&quot;: True or False, # Required. Set to true if Remote In-App Update action type is needed.
+  &quot;targeting&quot;: { # Targeting details for a recovery action such as regions, android sdk levels, app versions etc. # Specifies targeting criteria for the recovery action such as regions, android sdk versions, app versions etc.
+    &quot;androidSdks&quot;: { # Android api level targeting data for app recovery action targeting. # Targeting is based on android api levels of devices.
+    &quot;regions&quot;: { # Region targeting data for app recovery action targeting. # Targeting is based on the user account region.
+    &quot;versionList&quot;: { # Data format for a list of app versions. # Target version codes as a list.
+      &quot;versionCodes&quot;: [ # List of app version codes.
+    &quot;versionRange&quot;: { # Data format for a continuous range of app versions. # Target version codes as a range.
+      &quot;versionCodeEnd&quot;: &quot;A String&quot;, # Highest app version in the range, inclusive.
+      &quot;versionCodeStart&quot;: &quot;A String&quot;, # Lowest app version in the range, inclusive.
+    { # Information about an app recovery action.
+  &quot;appRecoveryId&quot;: &quot;A String&quot;, # ID corresponding to the app recovery action.
+  &quot;cancelTime&quot;: &quot;A String&quot;, # Timestamp of when the app recovery action is canceled by the developer. Only set if the recovery action has been canceled.
+  &quot;createTime&quot;: &quot;A String&quot;, # Timestamp of when the app recovery action is created by the developer. It is always set after creation of the recovery action.
+  &quot;deployTime&quot;: &quot;A String&quot;, # Timestamp of when the app recovery action is deployed to the users. Only set if the recovery action has been deployed.
+  &quot;lastUpdateTime&quot;: &quot;A String&quot;, # Timestamp of when the developer last updated recovery action. In case the action is cancelled, it corresponds to cancellation time. It is always set after creation of the recovery action.
+  &quot;remoteInAppUpdateData&quot;: { # Data related to Remote In-App Update action such as recovered user count, affected user count etc. # Data about the remote in-app update action such as such as recovered user base, recoverable user base etc. Set only if the recovery action type is Remote In-App Update.
+    &quot;remoteAppUpdateDataPerBundle&quot;: [ # Data related to the recovery action at bundle level.
+      { # Data related to the recovery action at bundle level.
+        &quot;recoveredDeviceCount&quot;: &quot;A String&quot;, # Total number of devices which have been rescued.
+        &quot;totalDeviceCount&quot;: &quot;A String&quot;, # Total number of devices affected by this recovery action associated with bundle of the app.
+        &quot;versionCode&quot;: &quot;A String&quot;, # Version Code corresponding to the target bundle.
+  &quot;status&quot;: &quot;A String&quot;, # The status of the recovery action.
+    <code class="details" id="deploy">deploy(packageName, appRecoveryId, body=None, x__xgafv=None)</code>
+  <pre>Deploy an already created app recovery action with recovery status DRAFT. Note that this action activates the recovery action for all targeted users and changes its status to ACTIVE.
+  packageName: string, Required. Package name of the app for which recovery action is deployed. (required)
+  appRecoveryId: string, Required. ID corresponding to the app recovery action to deploy. (required)
+{ # Request message for DeployAppRecovery.
+    { # Response message for DeployAppRecovery.
+    <code class="details" id="list">list(packageName, versionCode=None, x__xgafv=None)</code>
+  <pre>List all app recovery action resources associated with a particular package name and app version.
+  packageName: string, Required. Package name of the app for which list of recovery actions is requested. (required)
+  versionCode: string, Required. Version code targeted by the list of recovery actions.
+    { # Response message for ListAppRecoveries. -- api-linter: core::0158::response-next-page-token-field=disabled
+  &quot;recoveryActions&quot;: [ # List of recovery actions associated with the requested package name.

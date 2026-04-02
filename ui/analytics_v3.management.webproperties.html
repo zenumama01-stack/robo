@@ -1,0 +1,49 @@
+<h1><a href="analytics_v3.html">Google Analytics API</a> . <a href="analytics_v3.management.html">management</a> . <a href="analytics_v3.management.webproperties.html">webproperties</a></h1>
+  <code><a href="#get">get(accountId, webPropertyId)</a></code></p>
+<p class="firstline">Gets a web property to which the user has access.</p>
+<p class="firstline">Create a new property if the account has fewer than 20 properties. Web properties are visible in the Google Analytics interface only if they have at least one profile.</p>
+<p class="firstline">Lists web properties to which the user has access.</p>
+  <code><a href="#patch">patch(accountId, webPropertyId, body=None)</a></code></p>
+<p class="firstline">Updates an existing web property. This method supports patch semantics.</p>
+  <code><a href="#update">update(accountId, webPropertyId, body=None)</a></code></p>
+<p class="firstline">Updates an existing web property.</p>
+    <code class="details" id="get">get(accountId, webPropertyId)</code>
+  <pre>Gets a web property to which the user has access.
+  accountId: string, Account ID to retrieve the web property for. (required)
+  webPropertyId: string, ID to retrieve the web property for. (required)
+    { # JSON template for an Analytics web property.
+  &quot;childLink&quot;: { # Child link for this web property. Points to the list of views (profiles) for this web property.
+    &quot;href&quot;: &quot;A String&quot;, # Link to the list of views (profiles) for this web property.
+    &quot;type&quot;: &quot;analytics#profiles&quot;, # Type of the parent link. Its value is &quot;analytics#profiles&quot;.
+  &quot;created&quot;: &quot;A String&quot;, # Time this web property was created.
+  &quot;dataRetentionResetOnNewActivity&quot;: True or False, # Set to true to reset the retention period of the user identifier with each new event from that user (thus setting the expiration date to current time plus retention period).
+      # Set to false to delete data associated with the user identifier automatically after the rentention period.
+      # This property cannot be set on insert.
+  &quot;dataRetentionTtl&quot;: &quot;A String&quot;, # The length of time for which user and event data is retained.
+  &quot;defaultProfileId&quot;: &quot;A String&quot;, # Default view (profile) ID.
+  &quot;industryVertical&quot;: &quot;A String&quot;, # The industry vertical/category selected for this web property.
+  &quot;kind&quot;: &quot;analytics#webproperty&quot;, # Resource type for Analytics WebProperty.
+  &quot;parentLink&quot;: { # Parent link for this web property. Points to the account to which this web property belongs.
+    &quot;href&quot;: &quot;A String&quot;, # Link to the account for this web property.
+    &quot;type&quot;: &quot;analytics#account&quot;, # Type of the parent link. Its value is &quot;analytics#account&quot;.
+  &quot;permissions&quot;: { # Permissions the user has for this web property.
+    &quot;effective&quot;: [ # All the permissions that the user has for this web property. These include any implied permissions (e.g., EDIT implies VIEW) or inherited permissions from the parent account.
+  &quot;profileCount&quot;: 42, # View (Profile) count for this web property.
+  &quot;selfLink&quot;: &quot;A String&quot;, # Link for this web property.
+  &quot;updated&quot;: &quot;A String&quot;, # Time this web property was last modified.
+  <pre>Create a new property if the account has fewer than 20 properties. Web properties are visible in the Google Analytics interface only if they have at least one profile.
+  accountId: string, Account ID to create the web property for. (required)
+  <pre>Lists web properties to which the user has access.
+  accountId: string, Account ID to retrieve web properties for. Can either be a specific account ID or &#x27;~all&#x27;, which refers to all the accounts that user has access to. (required)
+  max_results: integer, The maximum number of web properties to include in this response.
+    { # A web property collection lists Analytics web properties to which the user has access. Each resource in the collection corresponds to a single Analytics web property.
+  &quot;items&quot;: [ # A list of web properties.
+  &quot;kind&quot;: &quot;analytics#webproperties&quot;, # Collection type.
+  &quot;nextLink&quot;: &quot;A String&quot;, # Link to next page for this web property collection.
+  &quot;previousLink&quot;: &quot;A String&quot;, # Link to previous page for this web property collection.
+    <code class="details" id="patch">patch(accountId, webPropertyId, body=None)</code>
+  <pre>Updates an existing web property. This method supports patch semantics.
+  accountId: string, Account ID to which the web property belongs (required)
+  webPropertyId: string, Web property ID (required)
+    <code class="details" id="update">update(accountId, webPropertyId, body=None)</code>
+  <pre>Updates an existing web property.

@@ -1,0 +1,24 @@
+<h1><a href="admob_v1.html">AdMob API</a> . <a href="admob_v1.accounts.html">accounts</a></h1>
+  <code><a href="admob_v1.accounts.adUnits.html">adUnits()</a></code>
+<p class="firstline">Returns the adUnits Resource.</p>
+  <code><a href="admob_v1.accounts.apps.html">apps()</a></code>
+<p class="firstline">Returns the apps Resource.</p>
+  <code><a href="admob_v1.accounts.mediationReport.html">mediationReport()</a></code>
+<p class="firstline">Returns the mediationReport Resource.</p>
+  <code><a href="admob_v1.accounts.networkReport.html">networkReport()</a></code>
+<p class="firstline">Returns the networkReport Resource.</p>
+<p class="firstline">Gets information about the specified AdMob publisher account.</p>
+<p class="firstline">Lists the AdMob publisher account that was most recently signed in to from the AdMob UI. For more information, see https://support.google.com/admob/answer/10243672.</p>
+  <pre>Gets information about the specified AdMob publisher account.
+  name: string, Resource name of the publisher account to retrieve. Example: accounts/pub-9876543210987654 (required)
+    { # A publisher account contains information relevant to the use of this API, such as the time zone used for the reports.
+  &quot;currencyCode&quot;: &quot;A String&quot;, # Currency code of the earning-related metrics, which is the 3-letter code defined in ISO 4217. The daily average rate is used for the currency conversion.
+  &quot;name&quot;: &quot;A String&quot;, # Resource name of this account. Format is accounts/{publisher_id}.
+  &quot;publisherId&quot;: &quot;A String&quot;, # The unique ID by which this publisher account can be identified in the API requests (for example, pub-1234567890).
+  &quot;reportingTimeZone&quot;: &quot;A String&quot;, # The time zone that is used in reports that are generated for this account. The value is a time-zone ID as specified by the CLDR project, for example, &quot;America/Los_Angeles&quot;.
+  <pre>Lists the AdMob publisher account that was most recently signed in to from the AdMob UI. For more information, see https://support.google.com/admob/answer/10243672.
+  pageSize: integer, Maximum number of accounts to return.
+  pageToken: string, The value returned by the last `ListPublisherAccountsResponse`; indicates that this is a continuation of a prior `ListPublisherAccounts` call, and that the system should return the next page of data.
+    { # Response for the publisher account list request.
+  &quot;account&quot;: [ # Publisher that the client credentials can access.
+  &quot;nextPageToken&quot;: &quot;A String&quot;, # If not empty, indicates that there might be more accounts for the request; you must pass this value in a new `ListPublisherAccountsRequest`.

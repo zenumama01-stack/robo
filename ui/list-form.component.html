@@ -1,0 +1,322 @@
+<!-- World-Class List Form -->
+<div class="list-form-explorer">
+  <header class="list-header">
+      <div class="header-icon" [style.background-color]="'#2196F3'">
+        <div class="name-row">
+          @if (!isEditingName) {
+            <h1 class="list-name">{{record.Name || 'Untitled List'}}</h1>
+            @if (isCurrentUserOwner()) {
+                class="edit-btn"
+                (click)="startEditingName()"
+                title="Edit name"
+          @if (isEditingName) {
+              class="inline-edit-input name-input"
+              [(ngModel)]="editingName"
+              (keydown.enter)="saveNameEdit()"
+              (keydown.escape)="cancelNameEdit()"
+              #nameInput />
+            <button class="save-btn" (click)="saveNameEdit()">
+            <button class="cancel-btn" (click)="cancelNameEdit()">
+        <div class="entity-badge">
+          <span>{{entityDisplayName}}</span>
+        <span class="stat-value">{{formattedItemCount}}</span>
+        <span class="stat-label">Items</span>
+        <span class="stat-value">{{stats.shareCount}}</span>
+        <span class="stat-label">Shares</span>
+        <span class="stat-value">{{formattedLastUpdated}}</span>
+        <span class="stat-label">Updated</span>
+    @for (nav of navItems; track nav) {
+        [class.active]="activeSection === nav.id"
+        [class.disabled]="nav.disabled"
+        (click)="setActiveSection(nav.id)"
+        [title]="nav.label">
+        <i [class]="nav.icon"></i>
+        <span class="nav-label">{{nav.label}}</span>
+        @if (nav.badge && nav.badge > 0) {
+          <span class="nav-badge">{{nav.badge}}</span>
+  <main class="main-content">
+    <!-- Overview Section -->
+        <div class="overview-grid">
+          <!-- Description Card -->
+          <div class="overview-card description-card">
+              <h3><i class="fa-solid fa-align-left"></i> Description</h3>
+              @if (isCurrentUserOwner() && !isEditingDescription) {
+                  (click)="startEditingDescription()"
+              @if (!isEditingDescription) {
+                @if (record.Description) {
+                  <p class="description-text">{{record.Description}}</p>
+                @if (!record.Description) {
+                  <p class="description-empty">No description provided</p>
+              @if (isEditingDescription) {
+                  class="inline-edit-input description-input"
+                  [(ngModel)]="editingDescription"
+                  placeholder="Add a description..."
+                  rows="3"
+                (keydown.escape)="cancelDescriptionEdit()"></textarea>
+                <div class="edit-actions">
+                  <button class="btn-primary" (click)="saveDescriptionEdit()">Save</button>
+                  <button class="btn-secondary" (click)="cancelDescriptionEdit()">Cancel</button>
+          <!-- Details Card -->
+          <div class="overview-card details-card">
+              <h3><i class="fa-solid fa-info-circle"></i> Details</h3>
+              <div class="detail-row">
+                <span class="detail-label">Entity</span>
+                  <i [class]="entityIcon" class="detail-icon"></i>
+                  {{entityDisplayName}}
+                <span class="detail-label">Category</span>
+                @if (!isCurrentUserOwner()) {
+                    <i class="fa-solid fa-folder detail-icon"></i>
+                    {{categoryName}}
+                    class="category-select"
+                    [ngModel]="record.CategoryID"
+                    (ngModelChange)="onCategoryChange($event)">
+                    <option [ngValue]="null">Uncategorized</option>
+                    @for (cat of categories; track cat) {
+                      <option [ngValue]="cat.ID">{{cat.Name}}</option>
+                <span class="detail-label">Owner</span>
+                  <i class="fa-solid fa-user detail-icon"></i>
+                  {{getOwnerName()}}
+                    <span class="owner-badge">You</span>
+                <span class="detail-label">Created</span>
+                  <i class="fa-solid fa-calendar detail-icon"></i>
+                  {{record.__mj_CreatedAt | date:'mediumDate'}}
+          <!-- Quick Actions Card -->
+          <div class="overview-card actions-card">
+              <h3><i class="fa-solid fa-bolt"></i> Quick Actions</h3>
+              <button class="action-btn" (click)="setActiveSection('items')">
+                <span>View Items</span>
+                <span class="action-count">{{stats.itemCount}}</span>
+                <button class="action-btn" (click)="openShareDialog()">
+                  <span>Share List</span>
+                  @if (stats.shareCount > 0) {
+                    <span class="action-count">{{stats.shareCount}}</span>
+                <button class="action-btn" (click)="setActiveSection('sharing')">
+                  <span>View Sharing</span>
+              <button class="action-btn" [disabled]="true" title="Coming soon">
+                <i class="fa-solid fa-file-export"></i>
+                <span>Export Data</span>
+                <span class="coming-soon">Soon</span>
+    <!-- Items Section -->
+    @if (activeSection === 'items') {
+      <section class="section items-section">
+          <h2>List Items</h2>
+                placeholder="Search items..."
+                [(ngModel)]="itemSearchTerm" />
+              <div class="add-buttons">
+                <button class="btn-secondary" (click)="openAddRecordsDialog()" title="Add individual records">
+                  <i class="fa-solid fa-plus"></i> Add Records
+                <button class="btn-secondary" (click)="openAddFromViewDialog()" title="Add records from a saved view">
+                  <i class="fa-solid fa-table-list"></i> Add From View
+            <button class="btn-icon" (click)="refreshItems()" title="Refresh">
+        @if (isLoadingItems) {
+            <mj-loading text="Loading items..." size="medium"></mj-loading>
+        @if (!isLoadingItems && listItems.length === 0) {
+            <div class="empty-icon">
+            <h3>No Items Yet</h3>
+            <p>This list doesn't have any items. Add records from the {{entityDisplayName}} entity.</p>
+        <!-- Items Table -->
+        @if (!isLoadingItems && listItems.length > 0) {
+          <div class="items-table-container">
+            @if (selectedItems.size > 0) {
+              <div class="items-toolbar">
+                <span class="selection-count">{{selectedItems.size}} selected</span>
+                <button class="btn-danger" (click)="removeSelectedItems()">
+                  Remove from List
+            <table class="items-table">
+                  <th class="col-checkbox">
+                      [checked]="isSelectAllChecked"
+                      (change)="toggleSelectAll()" />
+                  <th class="col-name">Name</th>
+                  <th class="col-id">Record ID</th>
+                  <th class="col-added">Added</th>
+                  <th class="col-actions"></th>
+                @for (item of filteredItems; track item) {
+                    [class.selected]="selectedItems.has(item.detail.ID)">
+                    <td class="col-checkbox">
+                        [checked]="selectedItems.has(item.detail.ID)"
+                        (change)="toggleItemSelection(item)" />
+                    <td class="col-name">
+                      <div class="item-name" [class.loading]="item.isLoading">
+                        <i [class]="entityIcon" class="item-icon"></i>
+                        <span>{{item.recordName}}</span>
+                        @if (item.isLoading) {
+                    <td class="col-id">
+                      <code class="record-id">{{item.detail.RecordID}}</code>
+                    <td class="col-added">
+                      {{item.detail.__mj_CreatedAt | date:'shortDate'}}
+                    <td class="col-actions">
+                        class="btn-icon"
+                        (click)="openRecord(item)"
+                        title="Open record">
+                        <i class="fa-solid fa-arrow-up-right-from-square"></i>
+            <div class="items-footer">
+              <span class="items-count">
+                Showing {{filteredItems.length}} of {{listItems.length}} items
+    <!-- Sharing Section -->
+    @if (activeSection === 'sharing') {
+      <section class="section sharing-section">
+          <h2>Sharing</h2>
+              <button class="btn-primary" (click)="openShareDialog()">
+                <i class="fa-solid fa-user-plus"></i> Manage Sharing
+        <!-- Sharing summary -->
+        @if (stats.shareCount > 0 || stats.invitationCount > 0) {
+          <div class="sharing-summary">
+            <div class="summary-card">
+              <div class="summary-icon">
+                <i class="fa-solid fa-users"></i>
+                <span class="summary-value">{{stats.shareCount}}</span>
+                <span class="summary-label">Active Share{{stats.shareCount !== 1 ? 's' : ''}}</span>
+            @if (stats.invitationCount > 0) {
+                <div class="summary-icon pending">
+                  <i class="fa-solid fa-envelope"></i>
+                  <span class="summary-value">{{stats.invitationCount}}</span>
+                  <span class="summary-label">Pending Invitation{{stats.invitationCount !== 1 ? 's' : ''}}</span>
+        <!-- Empty state for no shares -->
+        @if (stats.shareCount === 0 && stats.invitationCount === 0) {
+            <h3>Not Shared Yet</h3>
+              <p>This list is private. Click "Manage Sharing" to share it with other users or roles.</p>
+              <p>This list hasn't been shared with anyone else.</p>
+                <i class="fa-solid fa-user-plus"></i> Share This List
+        <!-- Read-only notice for non-owners -->
+        @if (!isCurrentUserOwner() && (stats.shareCount > 0 || stats.invitationCount > 0)) {
+          <div class="readonly-notice">
+            <span>Only the list owner can manage sharing settings.</span>
+    <!-- Activity Section -->
+    @if (activeSection === 'activity') {
+      <section class="section activity-section">
+          <h2>Activity</h2>
+        <div class="activity-timeline">
+          <div class="timeline-item">
+            <div class="timeline-icon">
+            <div class="timeline-content">
+              <p class="timeline-text">List updated</p>
+              <span class="timeline-date">{{record.__mj_UpdatedAt | date:'medium'}}</span>
+            <div class="timeline-icon create">
+              <p class="timeline-text">List created</p>
+              <span class="timeline-date">{{record.__mj_CreatedAt | date:'medium'}}</span>
+        <div class="activity-info">
+          <p>Detailed activity tracking coming soon. You'll be able to see who added items, when shares were created, and more.</p>
+    <!-- Settings Section -->
+          <h2>Settings</h2>
+        <div class="settings-form">
+          <mj-collapsible-panel
+            SectionKey="listSettings"
+            SectionName="List Settings"
+            Icon="fa fa-cog"
+            [Form]="this"
+            [FormContext]="formContext">
+                FieldName="Name"
+                FieldName="CategoryID"
+                [FormContext]="formContext"
+                LinkType="Record"
+                LinkComponentType="Search">
+          </mj-collapsible-panel>
+            SectionKey="systemInfo"
+            SectionName="System Information"
+            Icon="fa fa-info-circle"
+                FieldName="EntityID"
+                [EditMode]="false"
+                FieldName="UserID"
+                FieldName="__mj_CreatedAt"
+                FieldName="__mj_UpdatedAt"
+<!-- Add Records Dialog -->
+@if (showAddRecordsDialog) {
+  <kendo-dialog
+    [title]="'Add ' + entityDisplayName + ' to List'"
+    (close)="closeAddRecordsDialog()"
+    [minWidth]="400"
+    [width]="600"
+    [height]="550">
+    <div class="dialog-content add-records-dialog">
+      @if (addDialogSaving) {
+        <div class="dialog-loading">
+          <mj-loading [text]="'Adding ' + addTotal + ' records to list...'" size="small"></mj-loading>
+      @if (!addDialogSaving) {
+            [placeholder]="'Search ' + entityDisplayName + '...'"
+            (valueChange)="onAddRecordsSearchChange($event)"
+            [value]="addRecordsSearchFilter"
+              <span class="fa-solid fa-search search-icon"></span>
+          <span class="search-hint">Type at least 2 characters to search</span>
+        <!-- Records List -->
+        <div class="records-list">
+          @if (addDialogLoading) {
+            <div class="list-loading">
+              <mj-loading [showText]="false" size="small"></mj-loading>
+          @if (!addDialogLoading && addableRecords.length === 0 && addRecordsSearchFilter.length >= 2) {
+            <div class="empty-results">
+              <span class="fa-solid fa-search empty-icon"></span>
+              <p>No records found matching "{{ addRecordsSearchFilter }}"</p>
+          @if (!addDialogLoading && addableRecords.length === 0 && addRecordsSearchFilter.length < 2) {
+              <span class="fa-solid fa-list empty-icon"></span>
+              <p>Search for records to add to this list</p>
+          @if (!addDialogLoading && addableRecords.length > 0) {
+            <!-- Selection controls -->
+            <div class="selection-controls">
+              <button kendoButton fillMode="flat" size="small" (click)="selectAllAddable()">Select All</button>
+              <button kendoButton fillMode="flat" size="small" (click)="deselectAllAddable()">Deselect All</button>
+              <span class="selection-info">{{ selectedAddableRecords.length }} selected</span>
+            <!-- Records -->
+            <div class="records-scroll">
+              @for (record of addableRecords; track record) {
+                <div class="record-item"
+                  [class.in-list]="record.isInList"
+                  [class.selected]="record.isSelected"
+                  (click)="toggleRecordSelection(record)">
+                  <div class="record-checkbox">
+                    @if (record.isInList) {
+                      <span class="fa-solid fa-check in-list-icon" title="Already in list"></span>
+                    @if (!record.isInList) {
+                        [checked]="record.isSelected"
+                        (click)="$event.stopPropagation()"
+                        (change)="toggleRecordSelection(record)">
+                  <div class="record-name">{{ record.Name }}</div>
+                    <span class="in-list-badge">In List</span>
+    <kendo-dialog-actions>
+        (click)="confirmAddRecords()"
+        [disabled]="addDialogSaving || selectedAddableRecords.length === 0"
+        themeColor="primary">
+        Add {{ selectedAddableRecords.length > 0 ? selectedAddableRecords.length : '' }} Record{{ selectedAddableRecords.length !== 1 ? 's' : '' }}
+        (click)="closeAddRecordsDialog()"
+        [disabled]="addDialogSaving"
+        fillMode="outline">
+    </kendo-dialog-actions>
+  </kendo-dialog>
+<!-- Add From View Dialog -->
+@if (showAddFromViewDialog) {
+    title="Add Records from Views"
+    (close)="closeAddFromViewDialog()"
+    [height]="500">
+      @if (showAddFromViewLoader && fetchingRecordsToSave) {
+          <mj-loading text="Loading records from views..." size="small"></mj-loading>
+      @if (showAddFromViewLoader && addFromViewTotal > 0 && !fetchingRecordsToSave) {
+          <mj-loading [text]="'Adding ' + addFromViewTotal + ' records to list...'" size="small"></mj-loading>
+      @if (showAddFromViewLoader && !fetchingRecordsToSave && addFromViewTotal === 0) {
+          <mj-loading text="Loading views..." size="small"></mj-loading>
+      @if (!showAddFromViewLoader) {
+        <p class="dialog-instruction">Select views to add their records to this list:</p>
+        <div class="views-list">
+          @if (!userViews || userViews.length === 0) {
+              <span class="fa-solid fa-folder-open empty-icon"></span>
+              <p>No saved views found for this entity</p>
+          @if (userViews && userViews.length > 0) {
+            @for (view of userViews; track view) {
+              <div class="view-item"
+                [class.selected]="isViewSelected(view)"
+                (click)="toggleViewSelection(view)">
+                  [checked]="isViewSelected(view)"
+                  (change)="toggleViewSelection(view)">
+                <span class="fa-solid fa-table-list view-icon"></span>
+                <span class="view-name">{{ view.Name }}</span>
+        (click)="confirmAddFromView()"
+        [disabled]="showAddFromViewLoader || userViewsToAdd.length === 0"
+        Add from {{ userViewsToAdd.length }} View{{ userViewsToAdd.length !== 1 ? 's' : '' }}
+        (click)="closeAddFromViewDialog()"
+        [disabled]="showAddFromViewLoader"
+<!-- Share Dialog -->
+@if (showShareDialog && shareDialogConfig) {
+  <mj-list-share-dialog
+    [config]="shareDialogConfig"
+    [visible]="showShareDialog"
+    (complete)="onShareDialogComplete($event)"
+    (cancel)="onShareDialogCancel()">
+  </mj-list-share-dialog>

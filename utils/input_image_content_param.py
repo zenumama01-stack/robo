@@ -1,0 +1,2 @@
+from ..responses.response_input_image_param import ResponseInputImageParam
+InputImageContentParam = ResponseInputImageParam

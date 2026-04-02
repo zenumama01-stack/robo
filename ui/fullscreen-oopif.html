@@ -1,0 +1,7 @@
+        ipcRenderer.send('fullscreenChange', webFrame.frameToken)
+    window.addEventListener('message', ({ data }) => {
+        if (data === 'exitFullscreen') {
+            document.exitFullscreen()
+        window.focus()
+        webFrame.executeJavaScript('document.querySelector("video").requestFullscreen()', true)
+<video></video>

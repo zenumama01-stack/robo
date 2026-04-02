@@ -1,0 +1,61 @@
+  MemberJunction Angular Elements Demo - Entity List and Detail Example
+  This demo shows how to:
+  1. Include the bundled Angular Elements JavaScript file
+  2. Use multiple custom elements that work together in a standard HTML page
+  3. Handle communication between components using events
+  4. Set up a GraphQL data provider for MemberJunction
+  5. Style the components using standard CSS
+  This is a more advanced example showing how components can interact with
+  each other in a standard web page without any Angular dependencies.
+  <title>MemberJunction Angular Elements Demo</title>
+  <!-- Import the bundled Angular Elements JavaScript
+       This file is created by the build_angular_elements.sh script -->
+  <script src="dist/mj-angular-elements-demo-complete.js"></script>
+  <!-- Include MemberJunction GraphQL Data Provider for connecting to a backend -->
+  <script src="../../../MemberJunction/GraphQLDataProvider/dist-browser/MemberJunctionGraphQLDataProvider.js"></script>
+  <!-- Standard CSS for laying out the components -->
+    /* Container for the two components with flexbox layout */
+      font-family: Arial, sans-serif;
+    /* Style for each component container */
+    .entity-demo {
+      margin: 0 10px; /* 0 top/bottom, 10px left/right */
+      box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+    /* Add a header to each component */
+    .entity-demo::before {
+      content: attr(data-title);
+    <!-- Container for the entity list and detail components -->
+        <!-- Left column with the entity list component -->
+        <div class="entity-demo" data-title="Entity List">
+              This component displays a list of MemberJunction entities
+              and emits an event when a row is clicked.
+            <mj-entity-list-demo></mj-entity-list-demo>
+        <!-- Right column with the entity detail component -->
+        <div class="entity-demo" data-title="Entity Details">
+              This component displays details of a selected entity.
+              It gets its data from the entity-list-demo component
+              through JavaScript that sets its 'entity' property.
+            <mj-entity-detail-demo></mj-entity-detail-demo>
+    document.addEventListener("DOMContentLoaded", async function() {
+        // Set up communication between the entity list and entity detail components
+        const entityList = document.querySelector('mj-entity-list-demo');
+        const entityDetail = document.querySelector('mj-entity-detail-demo');
+        if(entityList && entityDetail) {
+            // Listen for the 'rowClicked' event from the entity list component
+            entityList.addEventListener('rowClicked', entityInfo => {
+                // When a row is clicked, update the entity detail component's data
+                // Note how we're directly setting a property on a custom element
+                // This demonstrates the power of Angular Elements for component communication
+                entityDetail.entity = entityInfo.detail;
+            console.log("Event listener set up successfully between components");
+        // Variables for setup (replace with actual values)
+        const token = 'YOUR_JWT_TOKEN_HERE'; // Replace with your actual JWT token
+        const url = 'http://localhost:4000';
+        const wsurl = 'ws://localhost:4000/';
+        const schemaName = '__mj'; // Replace with environment.MJ_CORE_SCHEMA_NAME if available
+        // Initialize the GraphQL client for MemberJunction
+            const { GraphQLProviderConfigData, setupGraphQLClient } = MemberJunctionGraphQLDataProvider;
+            const config = new GraphQLProviderConfigData(token, url, wsurl, schemaName);
+            console.log("GraphQL client initialized successfully");
+            // At this point, the components will automatically load their data
+            // through the LoggedIn event that MemberJunction raises
+            console.error("Error initializing GraphQL client:", error);

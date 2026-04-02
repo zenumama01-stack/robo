@@ -1,0 +1,28 @@
+<h1><a href="datalabeling_v1beta1.html">Data Labeling API</a> . <a href="datalabeling_v1beta1.projects.html">projects</a> . <a href="datalabeling_v1beta1.projects.instructions.html">instructions</a></h1>
+<p class="firstline">Creates an instruction for how data should be labeled.</p>
+<p class="firstline">Deletes an instruction object by resource name.</p>
+<p class="firstline">Gets an instruction by resource name.</p>
+<p class="firstline">Lists instructions for a project. Pagination is supported.</p>
+  <pre>Creates an instruction for how data should be labeled.
+  parent: string, Required. Instruction resource parent, format: projects/{project_id} (required)
+{ # Request message for CreateInstruction.
+  &quot;instruction&quot;: { # Instruction of how to perform the labeling task for human operators. Currently only PDF instruction is supported. # Required. Instruction of how to perform the labeling task.
+    &quot;blockingResources&quot;: [ # Output only. The names of any related resources that are blocking changes to the instruction.
+    &quot;createTime&quot;: &quot;A String&quot;, # Output only. Creation time of instruction.
+    &quot;csvInstruction&quot;: { # Deprecated: this instruction format is not supported any more. Instruction from a CSV file. # Deprecated: this instruction format is not supported any more. Instruction from a CSV file, such as for classification task. The CSV file should have exact two columns, in the following format: * The first column is labeled data, such as an image reference, text. * The second column is comma separated labels associated with data.
+      &quot;gcsFileUri&quot;: &quot;A String&quot;, # CSV file for the instruction. Only gcs path is allowed.
+    &quot;dataType&quot;: &quot;A String&quot;, # Required. The data type of this instruction.
+    &quot;description&quot;: &quot;A String&quot;, # Optional. User-provided description of the instruction. The description can be up to 10000 characters long.
+    &quot;displayName&quot;: &quot;A String&quot;, # Required. The display name of the instruction. Maximum of 64 characters.
+    &quot;name&quot;: &quot;A String&quot;, # Output only. Instruction resource name, format: projects/{project_id}/instructions/{instruction_id}
+    &quot;pdfInstruction&quot;: { # Instruction from a PDF file. # Instruction from a PDF document. The PDF should be in a Cloud Storage bucket.
+      &quot;gcsFileUri&quot;: &quot;A String&quot;, # PDF file for the instruction. Only gcs path is allowed.
+    &quot;updateTime&quot;: &quot;A String&quot;, # Output only. Last update time of instruction.
+  <pre>Deletes an instruction object by resource name.
+  name: string, Required. Instruction resource name, format: projects/{project_id}/instructions/{instruction_id} (required)
+  <pre>Gets an instruction by resource name.
+    { # Instruction of how to perform the labeling task for human operators. Currently only PDF instruction is supported.
+  <pre>Lists instructions for a project. Pagination is supported.
+  pageToken: string, Optional. A token identifying a page of results for the server to return. Typically obtained by ListInstructionsResponse.next_page_token of the previous [DataLabelingService.ListInstructions] call. Return first page if empty.
+    { # Results of listing instructions under a project.
+  &quot;instructions&quot;: [ # The list of Instructions to return.

@@ -1,0 +1,32 @@
+<h1><a href="networksecurity_v1.html">Network Security API</a> . <a href="networksecurity_v1.projects.html">projects</a> . <a href="networksecurity_v1.projects.locations.html">locations</a> . <a href="networksecurity_v1.projects.locations.backendAuthenticationConfigs.html">backendAuthenticationConfigs</a></h1>
+  <code><a href="#create">create(parent, backendAuthenticationConfigId=None, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Creates a new BackendAuthenticationConfig in a given project and location.</p>
+<p class="firstline">Deletes a single BackendAuthenticationConfig to BackendAuthenticationConfig.</p>
+<p class="firstline">Gets details of a single BackendAuthenticationConfig to BackendAuthenticationConfig.</p>
+<p class="firstline">Lists BackendAuthenticationConfigs in a given project and location.</p>
+<p class="firstline">Updates the parameters of a single BackendAuthenticationConfig to BackendAuthenticationConfig.</p>
+    <code class="details" id="create">create(parent, backendAuthenticationConfigId=None, body=None, x__xgafv=None)</code>
+  <pre>Creates a new BackendAuthenticationConfig in a given project and location.
+  parent: string, Required. The parent resource of the BackendAuthenticationConfig. Must be in the format `projects/*/locations/{location}`. (required)
+{ # BackendAuthenticationConfig message groups the TrustConfig together with other settings that control how the load balancer authenticates, and expresses its identity to, the backend: * `trustConfig` is the attached TrustConfig. * `wellKnownRoots` indicates whether the load balance should trust backend server certificates that are issued by public certificate authorities, in addition to certificates trusted by the TrustConfig. * `clientCertificate` is a client certificate that the load balancer uses to express its identity to the backend, if the connection to the backend uses mTLS. You can attach the BackendAuthenticationConfig to the load balancer&#x27;s BackendService directly determining how that BackendService negotiates TLS.
+  &quot;clientCertificate&quot;: &quot;A String&quot;, # Optional. A reference to a certificatemanager.googleapis.com.Certificate resource. This is a relative resource path following the form &quot;projects/{project}/locations/{location}/certificates/{certificate}&quot;. Used by a BackendService to negotiate mTLS when the backend connection uses TLS and the backend requests a client certificate. Must have a CLIENT_AUTH scope.
+  &quot;etag&quot;: &quot;A String&quot;, # Output only. Etag of the resource.
+  &quot;labels&quot;: { # Set of label tags associated with the resource.
+  &quot;name&quot;: &quot;A String&quot;, # Required. Name of the BackendAuthenticationConfig resource. It matches the pattern `projects/*/locations/{location}/backendAuthenticationConfigs/{backend_authentication_config}`
+  &quot;trustConfig&quot;: &quot;A String&quot;, # Optional. A reference to a TrustConfig resource from the certificatemanager.googleapis.com namespace. This is a relative resource path following the form &quot;projects/{project}/locations/{location}/trustConfigs/{trust_config}&quot;. A BackendService uses the chain of trust represented by this TrustConfig, if specified, to validate the server certificates presented by the backend. Required unless wellKnownRoots is set to PUBLIC_ROOTS.
+  &quot;wellKnownRoots&quot;: &quot;A String&quot;, # Well known roots to use for server certificate validation.
+  backendAuthenticationConfigId: string, Required. Short name of the BackendAuthenticationConfig resource to be created. This value should be 1-63 characters long, containing only letters, numbers, hyphens, and underscores, and should not start with a number. E.g. &quot;backend-auth-config&quot;.
+  <pre>Deletes a single BackendAuthenticationConfig to BackendAuthenticationConfig.
+  name: string, Required. A name of the BackendAuthenticationConfig to delete. Must be in the format `projects/*/locations/{location}/backendAuthenticationConfigs/*`. (required)
+  etag: string, Optional. Etag of the resource. If this is provided, it must match the server&#x27;s etag.
+  <pre>Gets details of a single BackendAuthenticationConfig to BackendAuthenticationConfig.
+  name: string, Required. A name of the BackendAuthenticationConfig to get. Must be in the format `projects/*/locations/{location}/backendAuthenticationConfigs/*`. (required)
+  <pre>Lists BackendAuthenticationConfigs in a given project and location.
+  parent: string, Required. The project and location from which the BackendAuthenticationConfigs should be listed, specified in the format `projects/*/locations/{location}`. (required)
+  pageSize: integer, Maximum number of BackendAuthenticationConfigs to return per call.
+  pageToken: string, The value returned by the last `ListBackendAuthenticationConfigsResponse` Indicates that this is a continuation of a prior `ListBackendAuthenticationConfigs` call, and that the system should return the next page of data.
+    { # Response returned by the ListBackendAuthenticationConfigs method.
+  &quot;backendAuthenticationConfigs&quot;: [ # List of BackendAuthenticationConfig resources.
+  <pre>Updates the parameters of a single BackendAuthenticationConfig to BackendAuthenticationConfig.
+  name: string, Required. Name of the BackendAuthenticationConfig resource. It matches the pattern `projects/*/locations/{location}/backendAuthenticationConfigs/{backend_authentication_config}` (required)
+  updateMask: string, Optional. Field mask is used to specify the fields to be overwritten in the BackendAuthenticationConfig resource by the update. The fields specified in the update_mask are relative to the resource, not the full request. A field will be overwritten if it is in the mask. If the user does not provide a mask then all fields will be overwritten.

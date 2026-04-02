@@ -1,0 +1,26 @@
+<div class="visualization-container">
+    <kendo-splitter orientation="horizontal" style="height: 100%;">
+      <!-- Diagram Pane -->
+      <kendo-splitter-pane [collapsible]="false">
+        <div class="diagram-container" #svgContainer>
+          <div class="diagram-toolbar">
+            <div class="toolbar-title">
+              Agent Execution Flow
+            <div class="zoom-controls">
+              <button (click)="zoomIn()" title="Zoom in">
+                <i class="fa-solid fa-search-plus"></i>
+              <button (click)="zoomOut()" title="Zoom out">
+              <button (click)="resetZoom()" title="Reset zoom">
+              <span class="zoom-level">{{ (panZoom.scale * 100).toFixed(0) }}%</span>
+              <span>Loading visualization...</span>
+      </kendo-splitter-pane>
+      <!-- Detail Pane -->
+      @if (selectedItem) {
+        <kendo-splitter-pane [size]="'400px'" [min]="'300px'" [max]="'600px'" [collapsible]="true">
+          <mj-ai-agent-run-step-detail
+            [selectedTimelineItem]="selectedItem"
+            (closePanel)="closeDetailPane()"
+            (navigateToActionLog)="navigateToActionLog($event)"
+            (copyToClipboard)="copyToClipboard($event)">
+          </mj-ai-agent-run-step-detail>
+    </kendo-splitter>

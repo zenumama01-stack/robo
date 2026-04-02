@@ -1,0 +1,43 @@
+<h1><a href="netapp_v1.html">NetApp API</a> . <a href="netapp_v1.projects.html">projects</a> . <a href="netapp_v1.projects.locations.html">locations</a> . <a href="netapp_v1.projects.locations.activeDirectories.html">activeDirectories</a></h1>
+  <code><a href="#create">create(parent, activeDirectoryId=None, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">CreateActiveDirectory Creates the active directory specified in the request.</p>
+<p class="firstline">Delete the active directory specified in the request.</p>
+<p class="firstline">Describes a specified active directory.</p>
+<p class="firstline">Lists active directories.</p>
+<p class="firstline">Update the parameters of an active directories.</p>
+    <code class="details" id="create">create(parent, activeDirectoryId=None, body=None, x__xgafv=None)</code>
+  <pre>CreateActiveDirectory Creates the active directory specified in the request.
+{ # ActiveDirectory is the public representation of the active directory config.
+  &quot;administrators&quot;: [ # Optional. Users to be added to the Built-in Admininstrators group.
+  &quot;aesEncryption&quot;: True or False, # If enabled, AES encryption will be enabled for SMB communication.
+  &quot;backupOperators&quot;: [ # Optional. Users to be added to the Built-in Backup Operator active directory group.
+  &quot;createTime&quot;: &quot;A String&quot;, # Output only. Create time of the active directory.
+  &quot;description&quot;: &quot;A String&quot;, # Description of the active directory.
+  &quot;dns&quot;: &quot;A String&quot;, # Required. Comma separated list of DNS server IP addresses for the Active Directory domain.
+  &quot;domain&quot;: &quot;A String&quot;, # Required. Name of the Active Directory domain
+  &quot;encryptDcConnections&quot;: True or False, # If enabled, traffic between the SMB server to Domain Controller (DC) will be encrypted.
+  &quot;kdcHostname&quot;: &quot;A String&quot;, # Name of the active directory machine. This optional parameter is used only while creating kerberos volume
+  &quot;kdcIp&quot;: &quot;A String&quot;, # KDC server IP address for the active directory machine.
+  &quot;labels&quot;: { # Labels for the active directory.
+  &quot;ldapSigning&quot;: True or False, # Specifies whether or not the LDAP traffic needs to be signed.
+  &quot;name&quot;: &quot;A String&quot;, # Identifier. The resource name of the active directory. Format: `projects/{project_number}/locations/{location_id}/activeDirectories/{active_directory_id}`.
+  &quot;netBiosPrefix&quot;: &quot;A String&quot;, # Required. NetBIOSPrefix is used as a prefix for SMB server name.
+  &quot;nfsUsersWithLdap&quot;: True or False, # If enabled, will allow access to local users and LDAP users. If access is needed for only LDAP users, it has to be disabled.
+  &quot;organizationalUnit&quot;: &quot;A String&quot;, # The Organizational Unit (OU) within the Windows Active Directory the user belongs to.
+  &quot;password&quot;: &quot;A String&quot;, # Required. Password of the Active Directory domain administrator.
+  &quot;securityOperators&quot;: [ # Optional. Domain users to be given the SeSecurityPrivilege.
+  &quot;site&quot;: &quot;A String&quot;, # The Active Directory site the service will limit Domain Controller discovery too.
+  &quot;state&quot;: &quot;A String&quot;, # Output only. The state of the AD.
+  &quot;stateDetails&quot;: &quot;A String&quot;, # Output only. The state details of the Active Directory.
+  &quot;username&quot;: &quot;A String&quot;, # Required. Username of the Active Directory domain administrator.
+  activeDirectoryId: string, Required. ID of the active directory to create. Must be unique within the parent resource. Must contain only letters, numbers and hyphen, with the first character a letter , the last a letter or a number, and a 63 character maximum.
+  <pre>Delete the active directory specified in the request.
+  name: string, Required. Name of the active directory. (required)
+  <pre>Describes a specified active directory.
+  <pre>Lists active directories.
+  parent: string, Required. Parent value for ListActiveDirectoriesRequest (required)
+    { # ListActiveDirectoriesResponse contains all the active directories requested.
+  &quot;activeDirectories&quot;: [ # The list of active directories.
+  <pre>Update the parameters of an active directories.
+  name: string, Identifier. The resource name of the active directory. Format: `projects/{project_number}/locations/{location_id}/activeDirectories/{active_directory_id}`. (required)
+  updateMask: string, Required. Field mask is used to specify the fields to be overwritten in the Active Directory resource by the update. The fields specified in the update_mask are relative to the resource, not the full request. A field will be overwritten if it is in the mask. If the user does not provide a mask then all fields will be overwritten.

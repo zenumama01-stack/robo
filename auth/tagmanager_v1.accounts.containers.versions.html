@@ -1,0 +1,62 @@
+<h1><a href="tagmanager_v1.html">Tag Manager API</a> . <a href="tagmanager_v1.accounts.html">accounts</a> . <a href="tagmanager_v1.accounts.containers.html">containers</a> . <a href="tagmanager_v1.accounts.containers.versions.html">versions</a></h1>
+<p class="firstline">Creates a Container Version.</p>
+  <code><a href="#delete">delete(accountId, containerId, containerVersionId, x__xgafv=None)</a></code></p>
+<p class="firstline">Deletes a Container Version.</p>
+  <code><a href="#get">get(accountId, containerId, containerVersionId, x__xgafv=None)</a></code></p>
+<p class="firstline">Gets a Container Version.</p>
+  <code><a href="#list">list(accountId, containerId, headers=None, includeDeleted=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Lists all Container Versions of a GTM Container.</p>
+  <code><a href="#publish">publish(accountId, containerId, containerVersionId, fingerprint=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Publishes a Container Version.</p>
+  <code><a href="#restore">restore(accountId, containerId, containerVersionId, x__xgafv=None)</a></code></p>
+<p class="firstline">Restores a Container Version. This will overwrite the container's current configuration (including its variables, triggers and tags). The operation will not have any effect on the version that is being served (i.e. the published version).</p>
+  <code><a href="#undelete">undelete(accountId, containerId, containerVersionId, x__xgafv=None)</a></code></p>
+<p class="firstline">Undeletes a Container Version.</p>
+  <code><a href="#update">update(accountId, containerId, containerVersionId, body=None, fingerprint=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Updates a Container Version.</p>
+  <pre>Creates a Container Version.
+{ # Options for new container versions.
+  &quot;name&quot;: &quot;A String&quot;, # The name of the container version to be created.
+  &quot;notes&quot;: &quot;A String&quot;, # The notes of the container version to be created.
+  &quot;quickPreview&quot;: True or False, # The creation of this version may be for quick preview and shouldn&#x27;t be saved.
+    { # Create container versions response.
+  &quot;compilerError&quot;: True or False, # Compiler errors or not.
+  &quot;containerVersion&quot;: { # Represents a Google Tag Manager Container Version. # The container version created.
+    &quot;container&quot;: { # Represents a Google Tag Manager Container. # The container that this version was taken from.
+    &quot;containerVersionId&quot;: &quot;A String&quot;, # The Container Version ID uniquely identifies the GTM Container Version.
+    &quot;deleted&quot;: True or False, # A value of true indicates this container version has been deleted.
+    &quot;fingerprint&quot;: &quot;A String&quot;, # The fingerprint of the GTM Container Version as computed at storage time. This value is recomputed whenever the container version is modified.
+    &quot;folder&quot;: [ # The folders in the container that this version was taken from.
+    &quot;name&quot;: &quot;A String&quot;, # Container version display name.
+    &quot;notes&quot;: &quot;A String&quot;, # User notes on how to apply this container version in the container.
+    &quot;tag&quot;: [ # The tags in the container that this version was taken from.
+    &quot;trigger&quot;: [ # The triggers in the container that this version was taken from.
+    &quot;variable&quot;: [ # The variables in the container that this version was taken from.
+    <code class="details" id="delete">delete(accountId, containerId, containerVersionId, x__xgafv=None)</code>
+  <pre>Deletes a Container Version.
+  containerVersionId: string, The GTM Container Version ID. (required)
+    <code class="details" id="get">get(accountId, containerId, containerVersionId, x__xgafv=None)</code>
+  <pre>Gets a Container Version.
+  containerVersionId: string, The GTM Container Version ID. Specify published to retrieve the currently published version. (required)
+    { # Represents a Google Tag Manager Container Version.
+    <code class="details" id="list">list(accountId, containerId, headers=None, includeDeleted=None, x__xgafv=None)</code>
+  <pre>Lists all Container Versions of a GTM Container.
+  headers: boolean, Retrieve headers only when true.
+  includeDeleted: boolean, Also retrieve deleted (archived) versions when true.
+    { # List container versions response.
+  &quot;containerVersion&quot;: [ # All versions of a GTM Container.
+  &quot;containerVersionHeader&quot;: [ # All container version headers of a GTM Container.
+    { # Represents a Google Tag Manager Container Version Header.
+      &quot;numTags&quot;: &quot;A String&quot;, # Number of tags in the container version.
+      &quot;numTriggers&quot;: &quot;A String&quot;, # Number of triggers in the container version.
+      &quot;numVariables&quot;: &quot;A String&quot;, # Number of variables in the container version.
+    <code class="details" id="publish">publish(accountId, containerId, containerVersionId, fingerprint=None, x__xgafv=None)</code>
+  <pre>Publishes a Container Version.
+  fingerprint: string, When provided, this fingerprint must match the fingerprint of the container version in storage.
+    { # Publish container version response.
+    <code class="details" id="restore">restore(accountId, containerId, containerVersionId, x__xgafv=None)</code>
+  <pre>Restores a Container Version. This will overwrite the container&#x27;s current configuration (including its variables, triggers and tags). The operation will not have any effect on the version that is being served (i.e. the published version).
+    <code class="details" id="undelete">undelete(accountId, containerId, containerVersionId, x__xgafv=None)</code>
+  <pre>Undeletes a Container Version.
+    <code class="details" id="update">update(accountId, containerId, containerVersionId, body=None, fingerprint=None, x__xgafv=None)</code>
+  <pre>Updates a Container Version.

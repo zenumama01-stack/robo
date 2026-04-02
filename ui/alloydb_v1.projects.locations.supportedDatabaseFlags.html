@@ -1,0 +1,27 @@
+<h1><a href="alloydb_v1.html">AlloyDB API</a> . <a href="alloydb_v1.projects.html">projects</a> . <a href="alloydb_v1.projects.locations.html">locations</a> . <a href="alloydb_v1.projects.locations.supportedDatabaseFlags.html">supportedDatabaseFlags</a></h1>
+  <code><a href="#list">list(parent, pageSize=None, pageToken=None, scope=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Lists SupportedDatabaseFlags for a given project and location.</p>
+    <code class="details" id="list">list(parent, pageSize=None, pageToken=None, scope=None, x__xgafv=None)</code>
+  <pre>Lists SupportedDatabaseFlags for a given project and location.
+  parent: string, Required. The name of the parent resource. The required format is: * projects/{project}/locations/{location} Regardless of the parent specified here, as long it is contains a valid project and location, the service will return a static list of supported flags resources. Note that we do not yet support region-specific flags. (required)
+  scope: string, Optional. The scope for which supported flags are requested. If not specified, default is DATABASE.
+      SCOPE_UNSPECIFIED - The scope of the flag is not specified. Default is DATABASE.
+      DATABASE - The flag is a database flag.
+      CONNECTION_POOL - The flag is a connection pool flag.
+    { # Message for response to listing SupportedDatabaseFlags.
+  &quot;supportedDatabaseFlags&quot;: [ # The list of SupportedDatabaseFlags.
+    { # SupportedDatabaseFlag gives general information about a database flag, like type and allowed values. This is a static value that is defined on the server side, and it cannot be modified by callers. To set the Database flags on a particular Instance, a caller should modify the Instance.database_flags field.
+      &quot;acceptsMultipleValues&quot;: True or False, # Whether the database flag accepts multiple values. If true, a comma-separated list of stringified values may be specified.
+      &quot;flagName&quot;: &quot;A String&quot;, # The name of the database flag, e.g. &quot;max_allowed_packets&quot;. The is a possibly key for the Instance.database_flags map field.
+      &quot;integerRestrictions&quot;: { # Restrictions on INTEGER type values. # Restriction on INTEGER type value.
+        &quot;maxValue&quot;: &quot;A String&quot;, # The maximum value that can be specified, if applicable.
+        &quot;minValue&quot;: &quot;A String&quot;, # The minimum value that can be specified, if applicable.
+      &quot;name&quot;: &quot;A String&quot;, # The name of the flag resource, following Google Cloud conventions, e.g.: * projects/{project}/locations/{location}/flags/{flag} This field currently has no semantic meaning.
+      &quot;recommendedIntegerValue&quot;: &quot;A String&quot;, # The recommended value for an INTEGER flag.
+      &quot;recommendedStringValue&quot;: &quot;A String&quot;, # The recommended value for a STRING flag.
+      &quot;requiresDbRestart&quot;: True or False, # Whether setting or updating this flag on an Instance requires a database restart. If a flag that requires database restart is set, the backend will automatically restart the database (making sure to satisfy any availability SLO&#x27;s).
+      &quot;scope&quot;: &quot;A String&quot;, # The scope of the flag.
+      &quot;stringRestrictions&quot;: { # Restrictions on STRING type values # Restriction on STRING type value.
+        &quot;allowedValues&quot;: [ # The list of allowed values, if bounded. This field will be empty if there is a unbounded number of allowed values.
+      &quot;supportedDbVersions&quot;: [ # Major database engine versions for which this flag is supported.
+      &quot;valueType&quot;: &quot;A String&quot;,

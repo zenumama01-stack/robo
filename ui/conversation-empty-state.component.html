@@ -1,0 +1,33 @@
+<div class="conversation-empty-state">
+  <!-- Sidebar Toggle Button (top-left when sidebar is collapsed) -->
+  @if (disabled) {
+      <mj-loading text="Creating your conversation..." size="large"></mj-loading>
+  <div class="empty-state-container" [class.loading]="disabled">
+    <!-- Greeting Header -->
+      <div class="greeting-icon">
+        <i class="fa-solid fa-comments fa-3x"></i>
+      <h1 class="greeting-title">Welcome to Conversations</h1>
+      <p class="greeting-subtitle">
+        Start a new conversation by typing a message below, or choose a suggested prompt to get started.
+    <!-- Suggested Prompts -->
+    <div class="suggested-prompts">
+      <div class="prompt-grid">
+        @for (prompt of suggestedPrompts; track prompt) {
+            class="prompt-card"
+            (click)="onSuggestedPromptClicked(prompt.prompt)"
+            [class.disabled]="disabled"
+              <i class="fa-solid {{prompt.icon}}"></i>
+              <div class="prompt-title">{{prompt.title}}</div>
+              <div class="prompt-text">{{prompt.prompt}}</div>
+    <!-- Message Input (using full mj-message-input in empty state mode) -->
+    <div class="message-input-wrapper">
+        [placeholder]="'Type your message to start a new conversation...'"
+        [emptyStateMode]="true"
+        [enableAttachments]="true"
+        (emptyStateSubmit)="onEmptyStateSubmit($event)">
+    <!-- Footer Tips -->
+    <div class="tips-section">
+      <div class="tip-item">
+        <i class="fa-solid fa-at"></i>
+        <span>Use <strong>&#64;AgentName</strong> to directly invoke a specific agent</span>
+        <span>Press <strong>Enter</strong> to send, <strong>Shift+Enter</strong> for new line</span>

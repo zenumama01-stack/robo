@@ -1,0 +1,151 @@
+<!-- 
+<!-- Advanced Settings Dialog -->
+<div class="advanced-settings-dialog">
+      <p>Loading settings...</p>
+    <!-- Form Content -->
+    <form [formGroup]="advancedForm" class="advanced-form">
+      <!-- Identity & Behavior Section -->
+        <h3 class="section-title">
+          <i class="fa-solid fa-id-card"></i>
+          Identity & Behavior
+        <div class="form-grid">
+          <!-- Logo URL -->
+          <div class="form-field full-width">
+            <label for="logoURL">Logo URL</label>
+              formControlName="logoURL"
+              placeholder="https://example.com/logo.png or data:image/png;base64,..."
+              class="form-control">
+            <small class="field-hint">URL to image file or base64 data URI. Takes precedence over Icon Class.</small>
+          <!-- Icon Class -->
+          <div class="form-field">
+            <label for="iconClass">Icon Class</label>
+              formControlName="iconClass"
+              placeholder="fa-robot"
+            <small class="field-hint">Font Awesome icon class (fallback when Logo URL is not set)</small>
+          <!-- Driver Class -->
+            <label for="driverClass">Driver Class</label>
+              formControlName="driverClass"
+              placeholder="CustomAgentDriver"
+            <small class="field-hint">Optional override for custom agent implementation class</small>
+      <!-- System Configuration Section -->
+          <i class="fa-solid fa-cogs"></i>
+          System Configuration
+          <!-- Agent Type -->
+            <label for="typeID">Agent Type</label>
+            <kendo-dropdownlist 
+              formControlName="typeID"
+              [data]="agentTypes$ | async"
+              textField="Name"
+              valueField="ID"
+              [valuePrimitive]="true"
+            </kendo-dropdownlist>
+            <small class="field-hint">Defines category and system-level behavior</small>
+          <!-- Status -->
+            <label for="status">Status</label>
+              formControlName="status"
+              [data]="statusOptions"
+              textField="text"
+              valueField="value"
+            <small class="field-hint">Current agent status (Active agents can be executed)</small>
+          <!-- Expose As Action -->
+            <label class="checkbox-label">
+              <kendo-checkbox formControlName="exposeAsAction"></kendo-checkbox>
+              Expose As Action
+            <small class="field-hint">Allow this agent to be used as an action by other agents (only for root agents)</small>
+      <!-- Context Compression Section -->
+          <i class="fa-solid fa-compress"></i>
+          Context Compression
+          <!-- Enable Context Compression -->
+              <kendo-checkbox formControlName="enableContextCompression"></kendo-checkbox>
+              Enable Context Compression
+            <small class="field-hint">Automatically compress conversation context when message threshold is reached</small>
+          @if (advancedForm.get('enableContextCompression')?.value) {
+            <!-- Message Threshold -->
+              <label for="contextCompressionMessageThreshold">Message Threshold *</label>
+              <kendo-numerictextbox 
+                formControlName="contextCompressionMessageThreshold"
+                [min]="1"
+                [format]="'0'"
+              </kendo-numerictextbox>
+              @if (isFieldInvalid('contextCompressionMessageThreshold')) {
+                <div class="field-error">{{ getFieldError('contextCompressionMessageThreshold') }}</div>
+              <small class="field-hint">Number of messages that triggers compression</small>
+            <!-- Compression Prompt -->
+              <label for="contextCompressionPromptID">Compression Prompt *</label>
+              <div class="prompt-selector-field">
+                <div class="selected-prompt-display">
+                  @if (selectedCompressionPrompt) {
+                    <div class="prompt-info">
+                      <span class="prompt-name">{{ selectedCompressionPrompt.Name }}</span>
+                      @if (selectedCompressionPrompt.Description) {
+                        <span class="prompt-description">{{ selectedCompressionPrompt.Description }}</span>
+                    <span class="no-prompt-selected">No compression prompt selected</span>
+                <div class="prompt-actions">
+                  <button type="button" kendoButton size="small" fillMode="solid"
+                          (click)="selectCompressionPrompt()"
+                          title="Select compression prompt">
+                    {{ selectedCompressionPrompt ? 'Change' : 'Select' }}
+                    <button type="button" kendoButton size="small" fillMode="flat"
+                            (click)="viewContextCompressionPrompt()"
+                            title="View selected prompt">
+                      <i class="fa-solid fa-external-link"></i>
+                            (click)="clearCompressionPrompt()"
+                            title="Clear selection">
+                      <i class="fa-solid fa-times"></i>
+              @if (isFieldInvalid('contextCompressionPromptID')) {
+                <div class="field-error">{{ getFieldError('contextCompressionPromptID') }}</div>
+              <small class="field-hint">AI prompt used for context compression</small>
+            <!-- Message Retention Count -->
+              <label for="contextCompressionMessageRetentionCount">Message Retention Count *</label>
+                formControlName="contextCompressionMessageRetentionCount"
+              @if (isFieldInvalid('contextCompressionMessageRetentionCount')) {
+                <div class="field-error">{{ getFieldError('contextCompressionMessageRetentionCount') }}</div>
+              <small class="field-hint">Recent messages to keep uncompressed</small>
+      <!-- Payload Control Section -->
+          <i class="fa-solid fa-exchange-alt"></i>
+          Payload Control
+          <!-- Downstream Paths -->
+            <label for="payloadDownstreamPaths">Downstream Paths *</label>
+            <div class="json-field">
+              <kendo-textarea 
+                formControlName="payloadDownstreamPaths"
+                [rows]="3"
+                [class.json-invalid]="!isValidJSON(advancedForm.get('payloadDownstreamPaths')?.value)">
+              </kendo-textarea>
+              <div class="json-actions">
+                        (click)="formatJSON('payloadDownstreamPaths')">
+                  <i class="fa-solid fa-code"></i> Format
+                        (click)="resetToDefault('payloadDownstreamPaths')">
+                  <i class="fa-solid fa-undo"></i> Reset
+            <small class="field-hint">JSON array of paths sent downstream to sub-agents. Use ["*"] for entire payload.</small>
+          <!-- Upstream Paths -->
+            <label for="payloadUpstreamPaths">Upstream Paths *</label>
+                formControlName="payloadUpstreamPaths"
+                [class.json-invalid]="!isValidJSON(advancedForm.get('payloadUpstreamPaths')?.value)">
+                        (click)="formatJSON('payloadUpstreamPaths')">
+                        (click)="resetToDefault('payloadUpstreamPaths')">
+            <small class="field-hint">JSON array of paths sub-agents can write back upstream. Use ["*"] to allow all writes.</small>
+          <!-- Self Read Paths -->
+            <label for="payloadSelfReadPaths">Self Read Paths</label>
+                formControlName="payloadSelfReadPaths"
+                [class.json-invalid]="advancedForm.get('payloadSelfReadPaths')?.value && !isValidJSON(advancedForm.get('payloadSelfReadPaths')?.value)">
+                        (click)="formatJSON('payloadSelfReadPaths')">
+                        (click)="resetToDefault('payloadSelfReadPaths')">
+            <small class="field-hint">JSON array of paths this agent's prompt can read from payload.</small>
+          <!-- Self Write Paths -->
+            <label for="payloadSelfWritePaths">Self Write Paths</label>
+                formControlName="payloadSelfWritePaths"
+                [class.json-invalid]="advancedForm.get('payloadSelfWritePaths')?.value && !isValidJSON(advancedForm.get('payloadSelfWritePaths')?.value)">
+                        (click)="formatJSON('payloadSelfWritePaths')">
+                        (click)="resetToDefault('payloadSelfWritePaths')">
+            <small class="field-hint">JSON array of paths this agent's prompt can write back to payload.</small>
+            (click)="cancel()"
+            [disabled]="(isSaving$ | async) || false">
+            (click)="save()"
+            [disabled]="((isSaving$ | async) || false) || ((isLoading$ | async) || false)">
+      @if (isSaving$ | async) {
+        <i class="fa-solid fa-spinner fa-spin"></i>
+        Saving...
+        <i class="fa-solid fa-save"></i>
+        Save Settings
+-->

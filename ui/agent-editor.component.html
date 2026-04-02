@@ -1,0 +1,119 @@
+<div class="agent-editor-container">
+  <div class="editor-header">
+          class="back-btn"
+          (click)="closeEditor()"
+          title="Back to Agent List">
+          Back to Agents
+        @if (currentAgent) {
+            class="open-btn"
+            (click)="openCurrentAgentRecord()"
+            title="Open Agent Record">
+            Open Record
+        <div class="agent-breadcrumb">
+          <h2>{{ currentAgent.Name }}</h2>
+          @if (currentAgent.Parent) {
+            <span class="breadcrumb-item">
+              Child of {{ currentAgent.Parent }}
+  @if (!isLoading && !error && currentAgent) {
+    <div class="tab-navigation">
+        class="tab-btn"
+        [class.active]="activeTab === 'hierarchy'"
+        (click)="setActiveTab('hierarchy')">
+        Hierarchy
+        [class.active]="activeTab === 'prompts'"
+        (click)="setActiveTab('prompts')">
+        Prompts
+        [class.active]="activeTab === 'properties'"
+        (click)="setActiveTab('properties')">
+        Properties
+      <mj-loading text="Loading agent data..." size="large"></mj-loading>
+        <h3>Error Loading Agent</h3>
+        <button class="retry-btn" (click)="loadAgentData()">
+          <i class="fa-solid fa-retry"></i>
+    <div class="tab-content" >
+      <!-- Hierarchy Tab -->
+      @if (activeTab === 'hierarchy') {
+        <div class="hierarchy-section" >
+              Agent Hierarchy
+            <div class="hierarchy-controls">
+                  class="zoom-btn"
+                  (click)="zoomIn()"
+                  title="Zoom In">
+                  (click)="zoomOut()"
+                  title="Zoom Out">
+                  <i class="fa-solid fa-minus"></i>
+                  (click)="resetZoom()"
+                  title="Reset Zoom">
+                  <i class="fa-solid fa-expand"></i>
+              <div class="hierarchy-legend">
+                  <div class="legend-rect level-0"></div>
+                  <span>Root</span>
+                  <div class="legend-rect level-1"></div>
+                  <span>Level 1</span>
+                  <div class="legend-rect level-2"></div>
+                  <span>Level 2+</span>
+          <div class="hierarchy-chart" #hierarchyChart >
+            <!-- Help text overlay -->
+            @if (hierarchyData && (hasChildren() || hasParent())) {
+              <div class="chart-help">
+                <small>
+                  <i class="fa-solid fa-hand-pointer"></i>
+                  Drag to pan • Use zoom controls or scroll to zoom • Click nodes to navigate
+            <!-- Empty state for hierarchy -->
+            @if (!hierarchyData || (!hasChildren() && !hasParent())) {
+              <div class="empty-hierarchy">
+                <h4>No Agent Hierarchy</h4>
+                <p>This agent doesn't have any parent or child agents yet.</p>
+                <button class="create-subagent-btn" (click)="openCreateSubAgent()">
+      <!-- Prompts Tab -->
+      @if (activeTab === 'prompts') {
+        <div class="prompts-section" >
+              Agent Prompts
+            <button class="add-prompt-btn" title="Add New Prompt">
+              Add Prompt
+          <div class="prompts-list">
+            @if (agentPrompts.length === 0) {
+              <div class="empty-prompts">
+                <p>No prompts configured for this agent</p>
+                <button class="add-first-prompt-btn">
+                  Add First Prompt
+              @for (prompt of agentPrompts; track prompt.id) {
+                <div class="prompt-card">
+                      <h4>{{ prompt.name }}</h4>
+                      <span class="prompt-type">{{ prompt.type }}</span>
+                      <button class="action-btn" title="Edit Prompt">
+                      <button class="action-btn danger" title="Delete Prompt">
+                    <p>{{ prompt.content }}</p>
+      <!-- Properties Tab -->
+      @if (activeTab === 'properties') {
+        <div class="properties-section" >
+              Agent Properties
+            <button class="save-btn" title="Save Changes">
+              Save
+          <div class="properties-form">
+                class="form-input"
+                [value]="currentAgent.Name"
+                placeholder="Agent name">
+                class="form-textarea"
+                [value]="currentAgent.Description"
+                placeholder="Agent description"
+                <label>Execution Mode</label>
+                <select class="form-select" [value]="currentAgent.ExecutionMode">
+                <label>Execution Order</label>
+                  [value]="currentAgent.ExecutionOrder"
+            <div class="form-group checkbox-group">
+                  [checked]="currentAgent.ExposeAsAction">
+                <span class="checkmark"></span>
+                Expose as Action
+              <small>Allow this agent to be used as an action by other agents</small>
+                  [checked]="currentAgent.EnableContextCompression">
+              <small>Automatically compress conversation context when threshold is reached</small>
+            @if (currentAgent.EnableContextCompression) {
+                  <label>Message Threshold</label>
+                    [value]="currentAgent.ContextCompressionMessageThreshold"
+                    min="1"
+                    placeholder="Number of messages">
+                  <label>Retention Count</label>
+                    [value]="currentAgent.ContextCompressionMessageRetentionCount"
+                    placeholder="Messages to keep">
+  <!-- Sub-Agent creation now uses CreateAgentService slide-in panel -->

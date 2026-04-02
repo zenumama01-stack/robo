@@ -1,0 +1,21 @@
+<h1><a href="aiplatform_v1beta1.html">Vertex AI API</a> . <a href="aiplatform_v1beta1.projects.html">projects</a></h1>
+  <code><a href="aiplatform_v1beta1.projects.locations.html">locations()</a></code>
+  <code><a href="aiplatform_v1beta1.projects.modelGardenEula.html">modelGardenEula()</a></code>
+<p class="firstline">Returns the modelGardenEula Resource.</p>
+  <code><a href="aiplatform_v1beta1.projects.publishers.html">publishers()</a></code>
+  <code><a href="#fetchPublisherModelConfig">fetchPublisherModelConfig(name, x__xgafv=None)</a></code></p>
+<p class="firstline">Fetches the configs of publisher models.</p>
+  <code><a href="#setPublisherModelConfig">setPublisherModelConfig(name, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Sets (creates or updates) configs of publisher models. For example, sets the request/response logging config.</p>
+    <code class="details" id="fetchPublisherModelConfig">fetchPublisherModelConfig(name, x__xgafv=None)</code>
+  <pre>Fetches the configs of publisher models.
+  name: string, Required. The name of the publisher model, in the format of `projects/{project}/locations/{location}/publishers/{publisher}/models/{model}`. (required)
+    { # This message contains configs of a publisher model.
+  &quot;loggingConfig&quot;: { # Configuration for logging request-response to a BigQuery table. # The prediction request/response logging config.
+    &quot;enableOtelLogging&quot;: True or False, # This field is used for large models. If true, in addition to the original large model logs, logs will be converted in OTel schema format, and saved in otel_log column. Default value is false.
+    &quot;errorSamplingRate&quot;: 3.14, # Optional. Percentage of failed requests to be logged, expressed as a fraction in range [0,1]. Only non-transient errors will be logged (currently `500/Internal` errors).
+    &quot;requestResponseLoggingSchemaVersion&quot;: &quot;A String&quot;, # Output only. The schema version used in creating the BigQuery table for the request response logging. The versions are &quot;v1&quot; and &quot;v2&quot;. The current default version is &quot;v1&quot;.
+    <code class="details" id="setPublisherModelConfig">setPublisherModelConfig(name, body=None, x__xgafv=None)</code>
+  <pre>Sets (creates or updates) configs of publisher models. For example, sets the request/response logging config.
+{ # Request message for EndpointService.SetPublisherModelConfig.
+  &quot;publisherModelConfig&quot;: { # This message contains configs of a publisher model. # Required. The publisher model config.

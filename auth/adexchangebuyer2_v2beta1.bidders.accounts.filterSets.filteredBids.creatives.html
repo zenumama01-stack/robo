@@ -1,0 +1,13 @@
+<h1><a href="adexchangebuyer2_v2beta1.html">Ad Exchange Buyer API II</a> . <a href="adexchangebuyer2_v2beta1.bidders.html">bidders</a> . <a href="adexchangebuyer2_v2beta1.bidders.accounts.html">accounts</a> . <a href="adexchangebuyer2_v2beta1.bidders.accounts.filterSets.html">filterSets</a> . <a href="adexchangebuyer2_v2beta1.bidders.accounts.filterSets.filteredBids.html">filteredBids</a> . <a href="adexchangebuyer2_v2beta1.bidders.accounts.filterSets.filteredBids.creatives.html">creatives</a></h1>
+  <code><a href="#list">list(filterSetName, creativeStatusId, pageSize=None, pageToken=None, x__xgafv=None)</a></code></p>
+<p class="firstline">List all creatives associated with a specific reason for which bids were filtered, with the number of bids filtered for each creative.</p>
+    <code class="details" id="list">list(filterSetName, creativeStatusId, pageSize=None, pageToken=None, x__xgafv=None)</code>
+  <pre>List all creatives associated with a specific reason for which bids were filtered, with the number of bids filtered for each creative.
+  creativeStatusId: integer, The ID of the creative status for which to retrieve a breakdown by creative. See [creative-status-codes](https://developers.google.com/authorized-buyers/rtb/downloads/creative-status-codes). (required)
+  pageToken: string, A token identifying a page of results the server should return. Typically, this is the value of ListCreativeStatusBreakdownByCreativeResponse.nextPageToken returned from the previous call to the filteredBids.creatives.list method.
+    { # Response message for listing all creatives associated with a given filtered bid reason.
+  &quot;filteredBidCreativeRows&quot;: [ # List of rows, with counts of bids with a given creative status aggregated by creative.
+    { # The number of filtered bids with the specified dimension values that have the specified creative.
+      &quot;bidCount&quot;: { # A metric value, with an expected value and a variance; represents a count that may be either exact or estimated (for example, when sampled). # The number of bids with the specified creative.
+      &quot;creativeId&quot;: &quot;A String&quot;, # The ID of the creative.
+  &quot;nextPageToken&quot;: &quot;A String&quot;, # A token to retrieve the next page of results. Pass this value in the ListCreativeStatusBreakdownByCreativeRequest.pageToken field in the subsequent call to the filteredBids.creatives.list method to retrieve the next page of results.

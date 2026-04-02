@@ -1,0 +1,19 @@
+<h1><a href="cloudbilling_v1beta.html">Cloud Billing API</a> . <a href="cloudbilling_v1beta.skuGroups.html">skuGroups</a> . <a href="cloudbilling_v1beta.skuGroups.skus.html">skus</a></h1>
+<p class="firstline">Gets a publicly listed SKU that is part of a publicly listed SKU group.</p>
+<p class="firstline">Lists all publicly listed SKUs contained by a publicly listed SKU group.</p>
+  <pre>Gets a publicly listed SKU that is part of a publicly listed SKU group.
+  name: string, Required. The name of the SKU group SKU to retrieve. Format: skuGroups/{sku_group}/skus/{sku} (required)
+    { # Encapsulates a publicly listed stock keeping unit (SKU) that is part of a publicly listed SKU group. A SKU group represents a collection of SKUs that are related to each other. For example, the `AI Platform APIs` SKU group includes SKUs from the Cloud Dialogflow API, the Cloud Text-to-Speech API, and additional related APIs.
+  &quot;displayName&quot;: &quot;A String&quot;, # Description of the SkuGroupSku. Example: &quot;A2 Instance Core running in Hong Kong&quot;.
+  &quot;geoTaxonomy&quot;: { # Encapsulates geographic metadata, such as regions and multi-regions like `us-east4` or `European Union`. # Geographic metadata that applies to the SkuGroupSku.
+    &quot;type&quot;: &quot;A String&quot;, # Type of geographic taxonomy associated with the SKU group SKU.
+  &quot;name&quot;: &quot;A String&quot;, # Resource name for the SkuGroupSku. Example: &quot;skuGroups/0e6403d1-4694-44d2-a696-7a78b1a69301/skus/AA95-CD31-42FE&quot;.
+  &quot;productTaxonomy&quot;: { # Encapsulates product categories, such as `Serverless`, `Cloud Run`, `TaskQueue`, and others. # List of product categories that apply to the SkuGroupSku.
+    &quot;taxonomyCategories&quot;: [ # All product categories that the SKU group SKU belongs to.
+  &quot;service&quot;: &quot;A String&quot;, # Service that the SkuGroupSku belongs to.
+  <pre>Lists all publicly listed SKUs contained by a publicly listed SKU group.
+  parent: string, Required. The SkuGroup to list SkuGroupSku from. Format: skuGroups/{sku_group} (required)
+  pageSize: integer, Maximum number of SKU group SKUs to return. Results may return fewer than this value. Default value is 50 and maximum value is 5000.
+  pageToken: string, Page token received from a previous ListSkuGroupSkus call to retrieve the next page of results. If this field is empty, the first page is returned.
+    { # Response message for ListSkuGroupSkus.
+  &quot;skuGroupSkus&quot;: [ # The returned SKU group SKUs.

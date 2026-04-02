@@ -1,0 +1,64 @@
+<h1><a href="contactcenterinsights_v1.html">Contact Center AI Insights API</a> . <a href="contactcenterinsights_v1.projects.html">projects</a> . <a href="contactcenterinsights_v1.projects.locations.html">locations</a> . <a href="contactcenterinsights_v1.projects.locations.dashboards.html">dashboards</a> . <a href="contactcenterinsights_v1.projects.locations.dashboards.charts.html">charts</a></h1>
+  <code><a href="#create">create(parent, body=None, chartId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Creates a Chart.</p>
+<p class="firstline">Deletes a Chart.</p>
+<p class="firstline">Gets a Chart.</p>
+<p class="firstline">Lists Charts.</p>
+<p class="firstline">Updates a Chart.</p>
+    <code class="details" id="create">create(parent, body=None, chartId=None, x__xgafv=None)</code>
+  <pre>Creates a Chart.
+  parent: string, Required. The parent resource of the chart. (required)
+{ # Configurable dashboard&#x27;s widget that displays data as a chart.
+  &quot;chartType&quot;: &quot;A String&quot;, # Output only. Chart type.
+  &quot;chartVisualizationType&quot;: &quot;A String&quot;, # Chart visualization type.
+  &quot;createTime&quot;: &quot;A String&quot;, # Output only. Chart create time.
+  &quot;dataSource&quot;: { # The request data for visualizing the dataset in the chart.
+    &quot;generativeInsights&quot;: { # Request that use natural language query to generate the chart. # Use natural language query to generate the chart.
+      &quot;chartCheckpoint&quot;: { # The current chart checkpoint state. # The chart checkpoint used to generate the chart.
+        &quot;revisionId&quot;: &quot;A String&quot;, # The revision id of the chart.
+        &quot;sessionId&quot;: &quot;A String&quot;, # The session id of the chart.
+      &quot;chartConversations&quot;: [ # Output only. The chart conversations used to generate the chart.
+        { # The conversation used to generate the chart.
+          &quot;conversationId&quot;: &quot;A String&quot;, # The conversation id of the chart.
+          &quot;createTime&quot;: &quot;A String&quot;, # The create time of the conversation.
+          &quot;messages&quot;: [ # Ordered list of messages, including user inputs and system responses.
+            { # The message in the conversation.
+              &quot;createTime&quot;: &quot;A String&quot;, # For user messages, this is the time at which the system received the message. For system messages, this is the time at which the system generated the message.
+              &quot;messageId&quot;: &quot;A String&quot;, # The message id of the message.
+              &quot;systemMessage&quot;: { # A message from the system in response to the user. This message can also be a message from the user as historical context for multiturn conversations with the system. # A message from the system in response to the user.
+                &quot;chartSpec&quot;: { # Chart spec from LLM
+                &quot;generatedSqlQuery&quot;: &quot;A String&quot;, # Raw SQL from LLM, before templatization
+                &quot;textOutput&quot;: { # A text output message from the system. # A direct natural language response to the user message.
+                  &quot;texts&quot;: [ # The parts of the message.
+                  &quot;type&quot;: &quot;A String&quot;, # The type of the text message.
+              &quot;userMessage&quot;: { # The user message. # A message from the user that is interacting with the system.
+                &quot;text&quot;: &quot;A String&quot;, # A message from the user that is interacting with the system.
+          &quot;updateTime&quot;: &quot;A String&quot;, # The update time of the conversation.
+      &quot;chartSpec&quot;: { # Chart spec for the chart.
+      &quot;sqlQuery&quot;: &quot;A String&quot;, # SQL query used to generate the chart.
+    &quot;queryMetrics&quot;: { # Request data that use the existing QueryMetrics. # Use the existing QueryMetrics to generate the chart.
+  &quot;dateRangeConfig&quot;: { # Date range configuration for dashboard charts. # Date range config applied to the chart.
+    &quot;absoluteDateRange&quot;: { # A time window for querying conversations. # An absolute date range.
+    &quot;relativeDateRange&quot;: { # Relative date range configuration. # A relative date range.
+      &quot;quantity&quot;: &quot;A String&quot;, # Required. The quantity of units in the past.
+      &quot;unit&quot;: &quot;A String&quot;, # Required. The unit of time.
+  &quot;description&quot;: &quot;A String&quot;, # Chart description
+  &quot;displayName&quot;: &quot;A String&quot;, # User provided display name of the chart.
+  &quot;filter&quot;: &quot;A String&quot;, # Filter applied to all charts in the container. Should support scope later.
+  &quot;height&quot;: 42, # The height of the chart in grid units.
+  &quot;name&quot;: &quot;A String&quot;, # Identifier. Chart resource name. Format: projects/{project}/locations/{location}/dashboards/{dashboard}/charts/{chart}
+  &quot;updateTime&quot;: &quot;A String&quot;, # Output only. Chart last update time.
+  &quot;width&quot;: 42, # The width of the chart in grid units.
+  chartId: string, Optional. A unique ID for the new Chart. This ID will become the final component of the Chart&#x27;s resource name. If no ID is specified, a server-generated ID will be used. This value should be 4-64 characters and must match the regular expression `^[a-z]([a-z0-9-]{0,61}[a-z0-9])?$`.
+  <pre>Deletes a Chart.
+  name: string, Required. The name of the chart to delete. (required)
+  <pre>Gets a Chart.
+  name: string, Required. The name of the chart to get. (required)
+  <pre>Lists Charts.
+  parent: string, Required. The parent resource of the charts. (required)
+    { # The response of listing charts.
+  &quot;charts&quot;: [ # The charts under the parent.
+  &quot;nextPageToken&quot;: &quot;A String&quot;, # The value returned by the last `ListChartsResponse`. This value indicates that this is a continuation of a prior `ListCharts` call and that the system should return the next page of data.
+  <pre>Updates a Chart.
+  name: string, Identifier. Chart resource name. Format: projects/{project}/locations/{location}/dashboards/{dashboard}/charts/{chart} (required)
+  updateMask: string, Optional. List of fields to be updated. All possible fields can be updated by passing `*`, or a subset of the following updateable fields can be provided: * `display_name`

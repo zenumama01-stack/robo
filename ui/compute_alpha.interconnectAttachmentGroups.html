@@ -1,0 +1,328 @@
+<h1><a href="compute_alpha.html">Compute Engine API</a> . <a href="compute_alpha.interconnectAttachmentGroups.html">interconnectAttachmentGroups</a></h1>
+  <code><a href="#createMembers">createMembers(project, interconnectAttachmentGroup, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Create Interconnect Attachments with redundancy by creating them in a</p>
+  <code><a href="#delete">delete(project, interconnectAttachmentGroup, requestId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Deletes the specified InterconnectAttachmentGroup in the given scope</p>
+  <code><a href="#get">get(project, interconnectAttachmentGroup, x__xgafv=None)</a></code></p>
+<p class="firstline">Returns the specified InterconnectAttachmentGroup resource in the given</p>
+  <code><a href="#getOperationalStatus">getOperationalStatus(project, interconnectAttachmentGroup, x__xgafv=None)</a></code></p>
+<p class="firstline">Returns the InterconnectAttachmentStatuses for the specified</p>
+<p class="firstline">Creates a InterconnectAttachmentGroup in the specified project in the given</p>
+<p class="firstline">Lists the InterconnectAttachmentGroups for a project in the given scope.</p>
+  <code><a href="#patch">patch(project, interconnectAttachmentGroup, body=None, requestId=None, updateMask=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Patches the specified InterconnectAttachmentGroup resource with the data</p>
+    <code class="details" id="createMembers">createMembers(project, interconnectAttachmentGroup, body=None, x__xgafv=None)</code>
+  <pre>Create Interconnect Attachments with redundancy by creating them in a
+specified interconnect attachment group.
+  interconnectAttachmentGroup: string, Name of the group resource to create members for. (required)
+  &quot;request&quot;: {
+    &quot;attachments&quot;: [ # Parameters for the specific Attachments to create.
+      { # LINT.IfChange
+          # Parameters used to create an InterconnectAttachment. This is similar to
+          # InterconnectAttachment, but the region field used here is not output only
+          # and all other output only fields are excluded.
+        &quot;adminEnabled&quot;: True or False, # Determines whether this Attachment will carry packets.
+            # Not present for PARTNER_PROVIDER.
+        &quot;bandwidth&quot;: &quot;A String&quot;, # Provisioned bandwidth capacity for the interconnect attachment. For
+            # attachments of type DEDICATED, the user can set the bandwidth.
+            # For attachments of type PARTNER, the Google Partner that is operating
+            # the interconnect must set the bandwidth.
+            # Output only for PARTNER type, mutable for PARTNER_PROVIDER and DEDICATED,
+            # and can take one of the following values:
+            #    - BPS_50M: 50 Mbit/s
+            #    - BPS_100M: 100 Mbit/s
+            #    - BPS_200M: 200 Mbit/s
+            #    - BPS_300M: 300 Mbit/s
+            #    - BPS_400M: 400 Mbit/s
+            #    - BPS_500M: 500 Mbit/s
+            #    - BPS_1G: 1 Gbit/s
+            #    - BPS_2G: 2 Gbit/s
+            #    - BPS_5G: 5 Gbit/s
+            #    - BPS_10G: 10 Gbit/s
+            #    - BPS_20G: 20 Gbit/s
+            #    - BPS_50G: 50 Gbit/s
+            #    - BPS_100G: 100 Gbit/s
+            #    - BPS_400G: 400 Gbit/s
+        &quot;candidateCloudRouterIpAddress&quot;: &quot;A String&quot;, # Single IPv4 address + prefix length to be configured on the cloud router
+            # interface for this interconnect attachment.
+            #    - Both candidate_cloud_router_ip_address and
+            #    candidate_customer_router_ip_address fields must be set or both must be
+            #    unset.
+            #    - Prefix length of both candidate_cloud_router_ip_address and
+            #    candidate_customer_router_ip_address must be the same.
+            #    - Max prefix length is 31.
+        &quot;candidateCloudRouterIpv6Address&quot;: &quot;A String&quot;, # Single IPv6 address + prefix length to be configured on the cloud router
+            #    - Both candidate_cloud_router_ipv6_address and
+            #    candidate_customer_router_ipv6_address fields must be set or both must be
+            #    - Prefix length of both candidate_cloud_router_ipv6_address and
+            #    candidate_customer_router_ipv6_address must be the same.
+            #    - Max prefix length is 126.
+        &quot;candidateCustomerRouterIpAddress&quot;: &quot;A String&quot;, # Single IPv4 address + prefix length to be configured on the customer
+            # router interface for this interconnect attachment.
+        &quot;candidateCustomerRouterIpv6Address&quot;: &quot;A String&quot;, # Single IPv6 address + prefix length to be configured on the customer
+        &quot;candidateIpv6Subnets&quot;: [ # This field is not available.
+        &quot;candidateSubnets&quot;: [ # Input only. Up to 16 candidate prefixes that can be used to restrict the allocation
+            # of cloudRouterIpAddress and customerRouterIpAddress for this attachment.
+            # All prefixes must be within link-local address space (169.254.0.0/16) and
+            # must be /29 or shorter (/28, /27, etc). Google will attempt to select an
+            # unused /29 from the supplied candidate prefix(es). The request will fail
+            # if all possible /29s are in use on Google&#x27;s edge. If not supplied, Google
+            # will randomly select an unused /29 from all of link-local space.
+        &quot;cloudRouterIpv6InterfaceId&quot;: &quot;A String&quot;, # This field is not available.
+        &quot;customerRouterIpv6InterfaceId&quot;: &quot;A String&quot;, # This field is not available.
+        &quot;edgeAvailabilityDomain&quot;: &quot;A String&quot;, # Input only. Desired availability domain for the attachment. Only available for type
+            # PARTNER, at creation time, and can take one of the following values:
+            #    - AVAILABILITY_DOMAIN_ANY
+            #    - AVAILABILITY_DOMAIN_1
+            #    - AVAILABILITY_DOMAIN_2
+            # For improved reliability, customers should configure a pair of
+            # attachments, one per availability domain. The selected availability
+            # domain will be provided to the Partner via the pairing key, so that the
+            # provisioned circuit will lie in the specified domain. If not specified,
+            # the value will default to AVAILABILITY_DOMAIN_ANY.
+        &quot;encryption&quot;: &quot;A String&quot;, # Indicates the user-supplied encryption option of this VLAN attachment
+            # (interconnectAttachment). Can only be specified at attachment creation
+            # for PARTNER or DEDICATED attachments.
+            #    - alpha - This is the default value, which means that
+            #    the VLAN attachment carries unencrypted traffic. VMs are able to send
+            #    traffic to, or receive traffic from, such a VLAN attachment.
+            #    - IPSEC - The VLAN attachment carries only encrypted
+            #    traffic that is encrypted by an IPsec device, such as an HA VPN gateway
+            #    or third-party IPsec VPN. VMs cannot directly send traffic to, or receive
+            #    traffic from, such a VLAN attachment. To use *HA VPN over Cloud
+            #    Interconnect*, the VLAN attachment must be created with this
+            #    option.
+        &quot;interconnect&quot;: &quot;A String&quot;, # URL of the underlying Interconnect object that this attachment&#x27;s traffic
+            # will traverse through.
+        &quot;ipsecInternalAddresses&quot;: [ # A list of URLs of addresses that have been reserved for the VLAN
+            # attachment. Used only for the VLAN attachment that has the encryption
+            # option as IPSEC. The addresses must be regional internal IP address
+            # ranges. When creating an HA VPN gateway over the VLAN attachment, if the
+            # attachment is configured to use a regional internal IP address, then the
+            # VPN gateway&#x27;s IP address is allocated from the IP address range specified
+            # here. For example, if the HA VPN gateway&#x27;s interface 0 is paired to this
+            # VLAN attachment, then a regional internal IP address for the VPN gateway
+            # interface 0 will be allocated from the IP address specified for this
+            # VLAN attachment.
+            # If this field is not specified when creating the VLAN attachment, then
+            # later on when creating an HA VPN gateway on this VLAN attachment, the HA
+            # VPN gateway&#x27;s IP address is allocated from the regional external IP
+            # address pool.
+        &quot;l2Forwarding&quot;: { # L2 Interconnect Attachment related configuration. # L2 Interconnect Attachment related config. This field is required if the
+            # type is L2_DEDICATED.
+            # The configuration specifies how VLAN tags (like dot1q, qinq, or dot1ad)
+            # within L2 packets are mapped to the destination appliances IP addresses.
+            # The packet is then encapsulated with the appliance IP address and sent to
+            # the edge appliance.
+          &quot;applianceMappings&quot;: { # Optional. A map of VLAN tags to appliances and optional inner mapping
+              # rules. If VLANs are not explicitly mapped to any appliance, the
+              # defaultApplianceIpAddress is used.
+              # Each VLAN tag can be a single number or a range of numbers in the range
+              # of 1 to 4094, e.g., &quot;1&quot; or &quot;4001-4094&quot;. Non-empty and non-overlapping
+              # VLAN tag ranges are enforced, and violating operations will be rejected.
+              # The VLAN tags in the Ethernet header must use an ethertype value of
+              # 0x88A8 or 0x8100.
+            &quot;a_key&quot;: { # Two-level VLAN-to-Appliance mapping rule.
+              &quot;applianceIpAddress&quot;: &quot;A String&quot;, # Optional. A single IPv4 or IPv6 address used as the destination IP
+                  # address for ingress packets that match on a VLAN tag, but do not match
+                  # a more specific inner VLAN tag.
+                  # Unset field (null-value) indicates both VLAN tags are required to be
+                  # mapped. Otherwise, defaultApplianceIpAddress is used.
+              &quot;innerVlanToApplianceMappings&quot;: [ # Optional. Used to match against the inner VLAN when the packet
+                  # contains two VLAN tags.
+                  # A list of mapping rules from inner VLAN tags to IP addresses. If the
+                  # inner VLAN is not explicitly mapped to an IP address range, the
+                  # applianceIpAddress is used.
+                { # The inner VLAN-to-Appliance mapping.
+                  &quot;innerApplianceIpAddress&quot;: &quot;A String&quot;, # Required in this object. A single IPv4 or IPv6 address used as the
+                      # destination IP address for ingress packets that match on both VLAN
+                      # tags.
+                  &quot;innerVlanTags&quot;: [ # Required in this object. Used to match the inner VLAN tag on the
+                      # packet. Each entry can be a single number or a range of numbers in
+                      # the range of 1 to 4094, e.g., [&quot;1&quot;, &quot;4001-4094&quot;] is valid. Non-empty
+                      # and Non-overlapping VLAN tag ranges are enforced, and violating
+                      # operations will be rejected.
+                      # The inner VLAN tags must have an ethertype value of 0x8100.
+              &quot;name&quot;: &quot;A String&quot;, # Optional. The name of this appliance mapping rule.
+          &quot;defaultApplianceIpAddress&quot;: &quot;A String&quot;, # Optional. A single IPv4 or IPv6 address used as the default destination
+              # IP when there is no VLAN mapping result found.
+              # Unset field (null-value) indicates the unmatched packet should be
+              # dropped.
+          &quot;geneveHeader&quot;: { # GeneveHeader related configurations. # Optional. It represents the structure of a Geneve (Generic Network
+              # Virtualization Encapsulation) header, as defined in RFC8926. It encapsulates packets from various
+              # protocols (e.g., Ethernet, IPv4, IPv6) for use in network virtualization
+              # environments.
+            &quot;vni&quot;: 42, # Optional. VNI is a 24-bit unique virtual network identifier, from 0 to
+                # 16,777,215.
+          &quot;network&quot;: &quot;A String&quot;, # Required. Resource URL of the network to which this attachment belongs.
+          &quot;tunnelEndpointIpAddress&quot;: &quot;A String&quot;, # Required. A single IPv4 or IPv6 address. This address will be used as the
+              # source IP address for packets sent to the appliances, and must be used as
+              # the destination IP address for packets that should be sent out through
+              # this attachment.
+        &quot;mtu&quot;: 42, # Maximum Transmission Unit (MTU), in bytes, of packets passing through
+            # this interconnect attachment. Valid values are 1440, 1460,
+            # 1500, or 8896. If not specified, the value will default to 1440.
+        &quot;multicastEnabled&quot;: True or False, # Whether or not to permit multicast traffic for this attachment. Multicast
+            # packets will be dropped if this is not enabled.
+        &quot;name&quot;: &quot;A String&quot;, # Name of the resource. Provided by the client when the resource is
+            # created. Must be set on either the template_attachment or on each
+            # specific attachment. If set, the name must be 1-63 characters long, and
+            # comply with RFC1035. Specifically, the name must be 1-63
+        &quot;pairingKey&quot;: &quot;A String&quot;, # [Output only for type PARTNER. Input only for PARTNER_PROVIDER. Not
+            # present for DEDICATED].
+            # The opaque identifier of a PARTNER attachment used to initiate
+            # provisioning with a selected partner.
+            # Of the form &quot;XXXXX/region/domain&quot;
+        &quot;partnerAsn&quot;: &quot;A String&quot;, # Optional BGP ASN for the router supplied by a Layer 3 Partner if they
+            # configured BGP on behalf of the customer.
+            # Output only for PARTNER type, input only for PARTNER_PROVIDER, not
+            # available for DEDICATED.
+        &quot;partnerMetadata&quot;: { # Informational metadata about Partner attachments from Partners to display # Informational metadata about Partner attachments from Partners to display
+            # to customers.
+            # Output only for PARTNER type, mutable for PARTNER_PROVIDER, not
+            # to customers.  These fields are propagated from PARTNER_PROVIDER
+            # attachments to their corresponding PARTNER attachments.
+          &quot;interconnectName&quot;: &quot;A String&quot;, # Plain text name of the Interconnect this attachment is connected to, as
+              # displayed in the Partner&#x27;s portal. For instance &quot;Chicago 1&quot;.
+              # This value may be validated to match approved Partner values.
+          &quot;partnerName&quot;: &quot;A String&quot;, # Plain text name of the Partner providing this attachment.
+          &quot;portalUrl&quot;: &quot;A String&quot;, # URL of the Partner&#x27;s portal for this Attachment. Partners may customise
+              # this to be a deep link to the specific resource on the Partner portal.
+        &quot;region&quot;: &quot;A String&quot;, # The region that the Attachment is in.
+        &quot;router&quot;: &quot;A String&quot;, # URL of the Cloud Router to be used for dynamic routing. This router must
+            # be in the same region as this InterconnectAttachment. The
+            # InterconnectAttachment will automatically connect the Interconnect to the
+            # network &amp; region within which the Cloud Router is configured.
+        &quot;stackType&quot;: &quot;A String&quot;, # The stack type for this interconnect attachment to identify whether the
+            # IPv6 feature is enabled or not. If not specified, IPV4_ONLY
+            # This field can be both set at interconnect attachments creation and
+            # update interconnect attachment operations.
+        &quot;subnetLength&quot;: 42, # Input only. Length of the IPv4 subnet mask.
+            # Allowed values:
+            #     - 29 (default)
+            #     - 30
+            # The default value is 29, except for Cross-Cloud Interconnect
+            # connections that use an InterconnectRemoteLocation with a
+            # constraints.subnetLengthRange.min equal to 30. For example,
+            # connections that use an Azure remote location fall into this
+            # category. In these cases, the default value is 30, and requesting
+            # 29 returns an error.
+            # Where both 29 and 30 are allowed, 29 is preferred, because it gives
+            # Google Cloud Support more debugging visibility.
+        &quot;type&quot;: &quot;A String&quot;, # The type of interconnect attachment this is, which can take one of the
+            #    - DEDICATED: an attachment to a Dedicated Interconnect.
+            #    - PARTNER: an attachment to a Partner Interconnect, created by the
+            #    customer.
+            #    - PARTNER_PROVIDER: an attachment to a Partner Interconnect, created by
+            #    the partner.
+        &quot;vlanTag8021q&quot;: 42, # The IEEE 802.1Q VLAN tag for this attachment, in the range 2-4093.
+            # Only specified at creation time.
+    &quot;intentMismatchBehavior&quot;: &quot;A String&quot;, # How to behave when configured.availabilitySLA.effectiveSLA would not equal
+        # intent.availabilitySLA after this call.
+    &quot;templateAttachment&quot;: { # LINT.IfChange # Default parameters for the Attachments to create in this call.
+    <code class="details" id="delete">delete(project, interconnectAttachmentGroup, requestId=None, x__xgafv=None)</code>
+  <pre>Deletes the specified InterconnectAttachmentGroup in the given scope
+  interconnectAttachmentGroup: string, Name of the InterconnectAttachmentGroup resource to delete. (required)
+    <code class="details" id="get">get(project, interconnectAttachmentGroup, x__xgafv=None)</code>
+  <pre>Returns the specified InterconnectAttachmentGroup resource in the given
+scope.
+  interconnectAttachmentGroup: string, Name of the InterconnectAttachmentGroup resource to return. (required)
+    { # An interconnect attachment group resource allows customers to create,
+    # analyze, and expand highly available deployments.
+  &quot;attachments&quot;: { # Attachments in the AttachmentGroup. Keys are arbitrary user-specified
+      # strings. Users are encouraged, but not required, to use their preferred
+      # format for resource links as keys.
+      # Note that there are add-members and remove-members methods in gcloud.
+      # The size of this map is limited by an &quot;Attachments per group&quot; quota.
+    &quot;a_key&quot;: { # An Attachment in this AttachmentGroup.
+      &quot;attachment&quot;: &quot;A String&quot;,
+  &quot;configured&quot;: { # [Output Only] The redundancy this group is configured to support. The way a
+      # user queries what SLA their Attachment gets is by looking at this field of
+      # the Attachment&#x27;s AttachmentGroup.
+    &quot;availabilitySla&quot;: { # [Output Only] Which SLA this group is configured to support, and why this
+        # group does or does not meet that SLA&#x27;s requirements.
+      &quot;effectiveSla&quot;: &quot;A String&quot;,
+      &quot;intendedSlaBlockers&quot;: [
+        { # [Output Only] Reasons why configuration.availabilitySLA.sla differs from
+            # intent.availabilitySLA. This list is empty if and only if those are the
+            # same.
+          &quot;attachments&quot;: [ # Output only. [Output Only] URLs of any particular Attachments to explain this
+              # blocker in more detail.
+          &quot;blockerType&quot;: &quot;A String&quot;,
+          &quot;documentationLink&quot;: &quot;A String&quot;, # Output only. [Output Only] The url of Google Cloud public documentation explaining
+              # this requirement. This is set for every type of requirement.
+          &quot;explanation&quot;: &quot;A String&quot;, # Output only. [Output Only] A human-readable explanation of this requirement and
+              # why it&#x27;s not met. This is set for every type of requirement.
+          &quot;metros&quot;: [ # Output only. [Output Only] Metros used to explain this blocker in more detail.
+              # These are three-letter lowercase strings like &quot;iad&quot;. This will be set
+              # for some blockers (like NO_ATTACHMENTS_IN_METRO_AND_ZONE) but does
+              # not apply to others.
+          &quot;regions&quot;: [ # Output only. [Output Only] Regions used to explain this blocker in more
+              # detail. These are region names formatted like &quot;us-central1&quot;. This
+              # will be set for some blockers (like INCOMPATIBLE_REGIONS) but does
+          &quot;zones&quot;: [ # Output only. [Output Only] Zones used to explain this blocker in more detail.
+              # Format is &quot;zone1&quot; and/or &quot;zone2&quot;. This will be set for some blockers
+              # (like  MISSING_ZONE) but does not apply to others.
+  &quot;etag&quot;: &quot;A String&quot;, # Opaque system-generated token that uniquely identifies the configuration.
+      # If provided when patching a configuration in update mode, the provided
+      # token must match the current token or the update is rejected. This provides
+      # a reliable means of doing read-modify-write (optimistic locking) as
+      # described byAIP 154.
+  &quot;intent&quot;: { # The user&#x27;s intent for this AttachmentGroup. This is the only required field
+      # besides the name that must be specified on group creation.
+    &quot;availabilitySla&quot;: &quot;A String&quot;,
+  &quot;interconnectGroup&quot;: &quot;A String&quot;, # The URL of an InterconnectGroup that groups these Attachments&#x27;
+      # Interconnects. Customers do not need to set this unless directed by
+      # Google Support.
+  &quot;kind&quot;: &quot;compute#interconnectAttachmentGroup&quot;, # Output only. [Output Only] Type of the resource. Always
+      # compute#interconnectAttachmentGroup.
+  &quot;logicalStructure&quot;: { # [Output Only] An analysis of the logical layout of Attachments in this
+      # group. Every Attachment in the group is shown once in this structure.
+    &quot;regions&quot;: [
+      { # [Output Only] The regions Attachments in this group are in.
+        &quot;metros&quot;: [
+          { # [Output Only] The metros of Attachments in this group in this region.
+            &quot;facilities&quot;: [
+              { # [Output Only] The facilities used for this group&#x27;s Attachments&#x27;
+                  # Interconnects.
+                &quot;facility&quot;: &quot;A String&quot;, # Output only. [Output Only] The name of a facility, like &quot;iad-1234&quot;.
+                &quot;zones&quot;: [
+                  { # [Output Only] The zones that Attachments in this group are present
+                      # in, in the given facilities.  This is inherited from their
+                    &quot;attachments&quot;: [ # Output only. [Output Only] URLs of Attachments in the given zone, to the given
+                        # region, on Interconnects in the given facility and metro. Every
+                        # Attachment in the AG has such an entry.
+                    &quot;zone&quot;: &quot;A String&quot;, # Output only. [Output Only] The name of a zone, either &quot;zone1&quot; or &quot;zone2&quot;.
+            &quot;metro&quot;: &quot;A String&quot;, # Output only. [Output Only] The name of the metro, as a three-letter lowercase
+                # string like &quot;iad&quot;. This is the first component of the location of an
+                # Interconnect.
+        &quot;region&quot;: &quot;A String&quot;, # Output only. [Output Only] The name of a region, like &quot;us-central1&quot;.
+    <code class="details" id="getOperationalStatus">getOperationalStatus(project, interconnectAttachmentGroup, x__xgafv=None)</code>
+  <pre>Returns the InterconnectAttachmentStatuses for the specified
+InterconnectAttachmentGroup resource.
+  interconnectAttachmentGroup: string, Name of the interconnectAttachmentGroup resource to query. (required)
+    { # Response for the InterconnectAttachmentGroupsGetOperationalStatusResponse.
+  &quot;result&quot;: {
+    &quot;attachmentStatuses&quot;: [
+      { # The status of one Attachment in the group. List order is arbitrary.
+        &quot;adminEnabled&quot;: True or False, # Output only. Whether this Attachment is enabled. This becomes false when the customer
+            # drains their Attachment.
+        &quot;attachment&quot;: &quot;A String&quot;, # Output only. The URL of the Attachment being described.
+        &quot;isActive&quot;: &quot;A String&quot;, # Output only. Whether this Attachment is participating in the redundant configuration.
+            # This will be ACTIVE if and only if the status below is CONNECTION_UP.
+            # Any INACTIVE Attachments are excluded from the analysis that generates
+            # operational.availabilitySLA.
+        &quot;status&quot;: &quot;A String&quot;, # Output only. Whether this Attachment is active, and if so, whether BGP is up.
+    &quot;groupStatus&quot;: &quot;A String&quot;, # Output only. Summarizes the status of the group.
+    &quot;operational&quot;: { # [Output Only] The redundancy this group is configured to support. The way a # Output only. The operational state of the group, including only active Attachments.
+  <pre>Creates a InterconnectAttachmentGroup in the specified project in the given
+scope using the parameters that are included in the request.
+  <pre>Lists the InterconnectAttachmentGroups for a project in the given scope.
+  &quot;items&quot;: [ # A list of InterconnectAttachmentGroup resources.
+  &quot;kind&quot;: &quot;compute#interconnectAttachmentGroup&quot;,
+      # end_interface:
+      # MixerListResponseWithEtagBuilder
+    <code class="details" id="patch">patch(project, interconnectAttachmentGroup, body=None, requestId=None, updateMask=None, x__xgafv=None)</code>
+  <pre>Patches the specified InterconnectAttachmentGroup resource with the data
+included in the request. This method supports PATCH
+  interconnectAttachmentGroup: string, Name of the InterconnectAttachmentGroup resource to patch. (required)

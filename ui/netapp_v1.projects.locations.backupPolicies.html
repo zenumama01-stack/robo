@@ -1,0 +1,32 @@
+<h1><a href="netapp_v1.html">NetApp API</a> . <a href="netapp_v1.projects.html">projects</a> . <a href="netapp_v1.projects.locations.html">locations</a> . <a href="netapp_v1.projects.locations.backupPolicies.html">backupPolicies</a></h1>
+  <code><a href="#create">create(parent, backupPolicyId=None, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Creates new backup policy</p>
+<p class="firstline">Warning! This operation will permanently delete the backup policy.</p>
+<p class="firstline">Returns the description of the specified backup policy by backup_policy_id.</p>
+<p class="firstline">Returns list of all available backup policies.</p>
+<p class="firstline">Updates settings of a specific backup policy.</p>
+    <code class="details" id="create">create(parent, backupPolicyId=None, body=None, x__xgafv=None)</code>
+  <pre>Creates new backup policy
+  parent: string, Required. The location to create the backup policies of, in the format `projects/{project_id}/locations/{location}` (required)
+{ # Backup Policy.
+  &quot;assignedVolumeCount&quot;: 42, # Output only. The total number of volumes assigned by this backup policy.
+  &quot;createTime&quot;: &quot;A String&quot;, # Output only. The time when the backup policy was created.
+  &quot;dailyBackupLimit&quot;: 42, # Number of daily backups to keep. Note that the minimum daily backup limit is 2.
+  &quot;description&quot;: &quot;A String&quot;, # Description of the backup policy.
+  &quot;enabled&quot;: True or False, # If enabled, make backups automatically according to the schedules. This will be applied to all volumes that have this policy attached and enforced on volume level. If not specified, default is true.
+  &quot;monthlyBackupLimit&quot;: 42, # Number of monthly backups to keep. Note that the sum of daily, weekly and monthly backups should be greater than 1.
+  &quot;name&quot;: &quot;A String&quot;, # Identifier. The resource name of the backup policy. Format: `projects/{project_id}/locations/{location}/backupPolicies/{backup_policy_id}`.
+  &quot;state&quot;: &quot;A String&quot;, # Output only. The backup policy state.
+  &quot;weeklyBackupLimit&quot;: 42, # Number of weekly backups to keep. Note that the sum of daily, weekly and monthly backups should be greater than 1.
+  backupPolicyId: string, Required. The ID to use for the backup policy. The ID must be unique within the specified location. Must contain only letters, numbers and hyphen, with the first character a letter, the last a letter or a number, and a 63 character maximum.
+  <pre>Warning! This operation will permanently delete the backup policy.
+  name: string, Required. The backup policy resource name, in the format `projects/{project_id}/locations/{location}/backupPolicies/{backup_policy_id}` (required)
+  <pre>Returns the description of the specified backup policy by backup_policy_id.
+  name: string, Required. The backupPolicy resource name, in the format `projects/{project_id}/locations/{location}/backupPolicies/{backup_policy_id}` (required)
+  <pre>Returns list of all available backup policies.
+  parent: string, Required. Parent value for ListBackupPoliciesRequest (required)
+    { # ListBackupPoliciesResponse contains all the backup policies requested.
+  &quot;backupPolicies&quot;: [ # The list of backup policies.
+  <pre>Updates settings of a specific backup policy.
+  name: string, Identifier. The resource name of the backup policy. Format: `projects/{project_id}/locations/{location}/backupPolicies/{backup_policy_id}`. (required)
+  updateMask: string, Required. Field mask is used to specify the fields to be overwritten in the Backup Policy resource by the update. The fields specified in the update_mask are relative to the resource, not the full request. A field will be overwritten if it is in the mask. If the user does not provide a mask then all fields will be overwritten.

@@ -1,0 +1,31 @@
+<h1><a href="netapp_v1.html">NetApp API</a> . <a href="netapp_v1.projects.html">projects</a> . <a href="netapp_v1.projects.locations.html">locations</a> . <a href="netapp_v1.projects.locations.hostGroups.html">hostGroups</a></h1>
+  <code><a href="#create">create(parent, body=None, hostGroupId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Creates a new host group.</p>
+<p class="firstline">Deletes a host group.</p>
+<p class="firstline">Returns details of the specified host group.</p>
+<p class="firstline">Returns a list of host groups in a `location`. Use `-` as location to list host groups across all locations.</p>
+<p class="firstline">Updates an existing host group.</p>
+    <code class="details" id="create">create(parent, body=None, hostGroupId=None, x__xgafv=None)</code>
+  <pre>Creates a new host group.
+  parent: string, Required. Parent value for CreateHostGroupRequest (required)
+{ # Host group is a collection of hosts that can be used for accessing a Block Volume.
+  &quot;createTime&quot;: &quot;A String&quot;, # Output only. Create time of the host group.
+  &quot;description&quot;: &quot;A String&quot;, # Optional. Description of the host group.
+  &quot;hosts&quot;: [ # Required. The list of hosts associated with the host group.
+  &quot;labels&quot;: { # Optional. Labels of the host group.
+  &quot;name&quot;: &quot;A String&quot;, # Identifier. The resource name of the host group. Format: `projects/{project_number}/locations/{location_id}/hostGroups/{host_group_id}`.
+  &quot;osType&quot;: &quot;A String&quot;, # Required. The OS type of the host group. It indicates the type of operating system used by all of the hosts in the HostGroup. All hosts in a HostGroup must be of the same OS type. This can be set only when creating a HostGroup.
+  &quot;state&quot;: &quot;A String&quot;, # Output only. State of the host group.
+  &quot;type&quot;: &quot;A String&quot;, # Required. Type of the host group.
+  hostGroupId: string, Required. ID of the host group to create. Must be unique within the parent resource. Must contain only letters, numbers, and hyphen, with the first character a letter or underscore, the last a letter or underscore or a number, and a 63 character maximum.
+  <pre>Deletes a host group.
+  name: string, Required. The resource name of the host group. Format: `projects/{project_number}/locations/{location_id}/hostGroups/{host_group_id}`. (required)
+  <pre>Returns details of the specified host group.
+  <pre>Returns a list of host groups in a `location`. Use `-` as location to list host groups across all locations.
+  parent: string, Required. Parent value for ListHostGroupsRequest (required)
+  filter: string, Optional. Filter to apply to the request.
+  pageSize: integer, Optional. Requested page size. Server may return fewer items than requested. If unspecified, the server will pick an appropriate default.
+    { # ListHostGroupsResponse is the response to a ListHostGroupsRequest.
+  &quot;hostGroups&quot;: [ # The list of host groups.
+  <pre>Updates an existing host group.
+  name: string, Identifier. The resource name of the host group. Format: `projects/{project_number}/locations/{location_id}/hostGroups/{host_group_id}`. (required)

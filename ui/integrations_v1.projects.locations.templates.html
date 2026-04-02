@@ -1,0 +1,97 @@
+<h1><a href="integrations_v1.html">Application Integration API</a> . <a href="integrations_v1.projects.html">projects</a> . <a href="integrations_v1.projects.locations.html">locations</a> . <a href="integrations_v1.projects.locations.templates.html">templates</a></h1>
+<p class="firstline">Creates a new template</p>
+<p class="firstline">Deletes a template</p>
+<p class="firstline">Downloads a template. Retrieves the `Template` and returns the response as a string.</p>
+<p class="firstline">Get a template in the specified project.</p>
+<p class="firstline">Import the template to an existing integration. This api would keep track of usage_count and last_used_time. PERMISSION_DENIED would be thrown if template is not accessible by client.</p>
+<p class="firstline">Lists all templates matching the filter.</p>
+<p class="firstline">Updates the template by given id.</p>
+  <code><a href="#search">search(parent, enableNaturalLanguageQueryUnderstanding=None, filter=None, orderBy=None, pageSize=None, pageToken=None, query=None, readMask=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Search templates based on user query and filters. This api would query the templates and return a list of templates based on the user filter.</p>
+<p class="firstline">Share a template with other clients. Only the template owner can share the templates with other projects. PERMISSION_DENIED would be thrown if the request is not from the owner.</p>
+  <code><a href="#unshare">unshare(name, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Unshare a template from given clients. Owner of the template can unshare template with clients. Shared client can only unshare the template from itself. PERMISSION_DENIED would be thrown if request is not from owner or for unsharing itself.</p>
+<p class="firstline">Uploads a template. The content can be a previously downloaded template. Performs the same function as CreateTemplate, but accepts input in a string format, which holds the complete representation of the Template content.</p>
+  <code><a href="#use">use(name, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Use the template to create integration. This api would keep track of usage_count and last_used_time. PERMISSION_DENIED would be thrown if template is not accessible by client.</p>
+  <pre>Creates a new template
+{ # Defines the template for Application Integration
+  &quot;author&quot;: &quot;A String&quot;, # Optional. Creator of the template.
+  &quot;categories&quot;: [ # Required. Categories associated with the Template. The categories listed below will be utilized for the Template listing.
+  &quot;components&quot;: [ # Optional. Components being used in the template. This could be used to categorize and filter.
+    { # Define the components that are present in a template.
+      &quot;name&quot;: &quot;A String&quot;, # Optional. Name of the component.
+      &quot;type&quot;: &quot;A String&quot;, # Optional. Type of the component.
+  &quot;description&quot;: &quot;A String&quot;, # Optional. Description of the template. The length should not be more than 255 characters
+  &quot;displayName&quot;: &quot;A String&quot;, # Required. The name of the template
+  &quot;docLink&quot;: &quot;A String&quot;, # Optional. Link to template documentation.
+  &quot;lastUsedTime&quot;: &quot;A String&quot;, # Optional. Time the template was last used.
+  &quot;name&quot;: &quot;A String&quot;, # Identifier. Resource name of the template.
+  &quot;sharedWith&quot;: [ # Required. Resource names with which the template is shared for example ProjectNumber/Ord id
+  &quot;tags&quot;: [ # Required. Tags which are used to identify templates. These tags could be for business use case, connectors etc.
+  &quot;templateBundle&quot;: { # Define the bundle of the template. # Required. Bundle which is part of the templates. The template entities in the bundle would be converted to an actual entity.
+    &quot;integrationVersionTemplate&quot;: { # Define the template of IntegrationVersion. # Required. Main integration templates of the template bundle.
+      &quot;integrationVersion&quot;: { # The integration version definition. # Required. Templatized version of integration.
+      &quot;key&quot;: &quot;A String&quot;, # Required. Unique Key of the IntegrationVersion.
+    &quot;subIntegrationVersionTemplates&quot;: [ # Optional. Sub integration templates which would be added along with main integration.
+      { # Define the template of IntegrationVersion.
+  &quot;updateTime&quot;: &quot;A String&quot;, # Output only. Auto-generated
+  &quot;usageCount&quot;: &quot;A String&quot;, # Optional. Number of template usages.
+  &quot;usageInfo&quot;: &quot;A String&quot;, # Optional. Information on how to use the template. This should contain detailed information about usage of the template.
+  &quot;visibility&quot;: &quot;A String&quot;, # Required. Visibility of the template.
+  <pre>Deletes a template
+  name: string, Required. The name that is associated with the Template. (required)
+  <pre>Downloads a template. Retrieves the `Template` and returns the response as a string.
+  name: string, Required. The template to download. Format: projects/{project}/locations/{location}/template/{template_id} (required)
+  fileFormat: string, Required. File format for download request.
+    { # Response for DownloadTemplate.
+  &quot;content&quot;: &quot;A String&quot;, # String representation of the template.
+  <pre>Get a template in the specified project.
+  name: string, Required. The template to retrieve. Format: projects/{project}/locations/{location}/templates/{template} (required)
+  <pre>Import the template to an existing integration. This api would keep track of usage_count and last_used_time. PERMISSION_DENIED would be thrown if template is not accessible by client.
+{ # Request to Import template
+  &quot;integration&quot;: &quot;A String&quot;, # Required. Resource Name of the integration where template needs to be imported/inserted.
+  &quot;subIntegrations&quot;: { # Optional. Sub Integration which would be created via templates.
+    &quot;a_key&quot;: { # Sub Integration which would be created via templates.
+      &quot;integration&quot;: &quot;A String&quot;, # Required. Name of the sub integration which would be created via templates.
+      &quot;integrationDescription&quot;: &quot;A String&quot;, # Optional. Description of the sub integration which would be created via templates.
+    { # Response for import template
+  &quot;integrationVersion&quot;: { # The integration version definition. # IntegrationVersion after the import.
+  &quot;subIntegrationVersions&quot;: [ # Sub integration versions which are imported.
+  <pre>Lists all templates matching the filter.
+  parent: string, Required. The client, which owns this collection of Templates. (required)
+  filter: string, Optional. Standard filter field to filter templates. client_id filter won&#x27;t be supported and will restrict to templates belonging to the current client only. Return all templates of the current client if the filter is empty. Also supports operators like AND, OR, NOT For example, &quot;status=\&quot;ACTIVE\&quot;
+  orderBy: string, Optional. The results would be returned in the order you specified here.
+  pageSize: integer, Optional. The size of the response entries. If unspecified, defaults to 100. The maximum value is 1000; values above 1000 will be coerced to 1000.
+  readMask: string, Optional. The mask which specifies fields that need to be returned in the template&#x27;s response.
+    { # Response for a request to list templates
+  &quot;templates&quot;: [ # List of templates retrieved.
+  <pre>Updates the template by given id.
+  name: string, Identifier. Resource name of the template. (required)
+  updateMask: string, Required. Field mask specifying the fields in the above template that have been modified and must be updated.
+    <code class="details" id="search">search(parent, enableNaturalLanguageQueryUnderstanding=None, filter=None, orderBy=None, pageSize=None, pageToken=None, query=None, readMask=None, x__xgafv=None)</code>
+  <pre>Search templates based on user query and filters. This api would query the templates and return a list of templates based on the user filter.
+  query: string, Optional. The search query that will be passed to Vertex search service.
+    { # Response for a request to search templates
+  <pre>Share a template with other clients. Only the template owner can share the templates with other projects. PERMISSION_DENIED would be thrown if the request is not from the owner.
+{ # Request to Share template
+  &quot;resourceNames&quot;: [ # Optional. Project name resources to share the template. The project names is expected in resource format Ex: projects/{project-number} or organization/{org-id}
+    <code class="details" id="unshare">unshare(name, body=None, x__xgafv=None)</code>
+  <pre>Unshare a template from given clients. Owner of the template can unshare template with clients. Shared client can only unshare the template from itself. PERMISSION_DENIED would be thrown if request is not from owner or for unsharing itself.
+{ # Request to Unshare template
+  &quot;resourceNames&quot;: [ # Optional. Project name resources to unshare the template. The project names is expected in resource format Ex: projects/{project-number}
+  <pre>Uploads a template. The content can be a previously downloaded template. Performs the same function as CreateTemplate, but accepts input in a string format, which holds the complete representation of the Template content.
+  parent: string, Required. The template to upload. Format: projects/{project}/locations/{location} (required)
+{ # Request for UploadTemplate.
+  &quot;content&quot;: &quot;A String&quot;, # Required. The textproto of the template.
+  &quot;fileFormat&quot;: &quot;A String&quot;, # Required. File format for upload request.
+    { # Response for UploadTemplate.
+  &quot;template&quot;: { # Defines the template for Application Integration # The uploaded Template
+    <code class="details" id="use">use(name, body=None, x__xgafv=None)</code>
+  <pre>Use the template to create integration. This api would keep track of usage_count and last_used_time. PERMISSION_DENIED would be thrown if template is not accessible by client.
+{ # Request to Use template
+  &quot;integrationDetails&quot;: { # Sub Integration which would be created via templates. # Required. Integration details which would be created via templates.
+  &quot;integrationRegion&quot;: &quot;A String&quot;, # Required. The region of the Integration to be created.
+    { # Response for use template
+  &quot;integrationVersion&quot;: { # The integration version definition. # IntegrationVersion which is created.
+  &quot;subIntegrationVersions&quot;: [ # Sub integration versions which are created.

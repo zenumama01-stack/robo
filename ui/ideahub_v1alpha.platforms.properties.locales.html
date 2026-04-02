@@ -1,0 +1,11 @@
+<h1><a href="ideahub_v1alpha.html">Idea Hub API</a> . <a href="ideahub_v1alpha.platforms.html">platforms</a> . <a href="ideahub_v1alpha.platforms.properties.html">properties</a> . <a href="ideahub_v1alpha.platforms.properties.locales.html">locales</a></h1>
+<p class="firstline">Returns which locales ideas are available in for a given Creator.</p>
+  <pre>Returns which locales ideas are available in for a given Creator.
+  parent: string, Required. The web property to check idea availability for Format: platforms/{platform}/property/{property} (required)
+  pageSize: integer, The maximum number of locales to return. The service may return fewer than this value. If unspecified, at most 100 locales will be returned. The maximum value is 100; values above 100 will be coerced to 100.
+  pageToken: string, A page token, received from a previous `ListAvailableLocales` call. Provide this to retrieve the subsequent page. When paginating, all other parameters provided to `ListAvailableLocales` must match the call that provided the page token.
+    { # Response for whether ideas are available for a given web property on a platform, for the currently logged-in user.
+  &quot;availableLocales&quot;: [ # Locales for which ideas are available for the given Creator.
+    { # Represents locales that are available for a web property.
+      &quot;locale&quot;: &quot;A String&quot;, # A string in BCP 47 format, without a resource prefix.
+      &quot;name&quot;: &quot;A String&quot;, # A string in BCP 47 format, prefixed with the platform and property name, and &quot;locales/&quot;. Format: platforms/{platform}/properties/{property}/locales/{locale}

@@ -1,0 +1,49 @@
+<h1><a href="firebaseapphosting_v1.html">Firebase App Hosting API</a> . <a href="firebaseapphosting_v1.projects.html">projects</a> . <a href="firebaseapphosting_v1.projects.locations.html">locations</a> . <a href="firebaseapphosting_v1.projects.locations.backends.html">backends</a></h1>
+  <code><a href="firebaseapphosting_v1.projects.locations.backends.builds.html">builds()</a></code>
+  <code><a href="firebaseapphosting_v1.projects.locations.backends.domains.html">domains()</a></code>
+  <code><a href="firebaseapphosting_v1.projects.locations.backends.rollouts.html">rollouts()</a></code>
+  <code><a href="firebaseapphosting_v1.projects.locations.backends.traffic.html">traffic()</a></code>
+<p class="firstline">Returns the traffic Resource.</p>
+  <code><a href="#create">create(parent, backendId=None, body=None, requestId=None, validateOnly=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Creates a new backend in a given project and location.</p>
+<p class="firstline">Deletes a single backend.</p>
+<p class="firstline">Gets information about a backend.</p>
+<p class="firstline">Lists backends in a given project and location.</p>
+<p class="firstline">Updates the information for a single backend.</p>
+    <code class="details" id="create">create(parent, backendId=None, body=None, requestId=None, validateOnly=None, x__xgafv=None)</code>
+  <pre>Creates a new backend in a given project and location.
+  parent: string, Required. A parent name of the form `projects/{project}/locations/{locationId}`. (required)
+{ # A backend is the primary resource of App Hosting.
+  &quot;appId&quot;: &quot;A String&quot;, # Optional. The [ID of a Web App](https://firebase.google.com/docs/reference/firebase-management/rest/v1beta1/projects.webApps#WebApp.FIELDS.app_id) associated with the backend.
+  &quot;codebase&quot;: { # The connection to an external source repository to watch for event-driven updates to the backend. # Optional. If specified, the connection to an external source repository to watch for event-driven updates to the backend.
+    &quot;repository&quot;: &quot;A String&quot;, # Required. The resource name for the Developer Connect [`gitRepositoryLink`](https://cloud.google.com/developer-connect/docs/api/reference/rest/v1/projects.locations.connections.gitRepositoryLinks) connected to this backend, in the format: `projects/{project}/locations/{location}/connections/{connection}/gitRepositoryLinks/{repositoryLink}` The connection for the `gitRepositoryLink` must made be using the Firebase App Hosting GitHub App via the Firebase Console.
+    &quot;rootDirectory&quot;: &quot;A String&quot;, # Optional. If `repository` is provided, the directory relative to the root of the repository to use as the root for the deployed web app. Defaults to use the root of the repository if not provided. If deploying a [monorepo](https://firebase.google.com/docs/app-hosting/monorepos), this should be the directory that contains the `package.json` or `apphosting.yaml` file.
+  &quot;createTime&quot;: &quot;A String&quot;, # Output only. Time at which the backend was created.
+  &quot;deleteTime&quot;: &quot;A String&quot;, # Output only. Time at which the backend was deleted.
+  &quot;environment&quot;: &quot;A String&quot;, # Optional. The environment name of the backend, used to load environment variables from environment specific configuration.
+  &quot;managedResources&quot;: [ # Output only. A list of the resources managed by this backend.
+    { # An external resource managed by App Hosting on the project.
+      &quot;runService&quot;: { # A managed Cloud Run [`service`](https://cloud.google.com/run/docs/reference/rest/v2/projects.locations.services#resource:-service). # A Cloud Run [`service`](https://cloud.google.com/run/docs/reference/rest/v2/projects.locations.services#resource:-service), managed by App Hosting.
+        &quot;service&quot;: &quot;A String&quot;, # Optional. The name of the Cloud Run [`service`](https://cloud.google.com/run/docs/reference/rest/v2/projects.locations.services#resource:-service), in the format: `projects/{project}/locations/{location}/services/{serviceId}`
+  &quot;mode&quot;: &quot;A String&quot;, # Optional. Deprecated: Use `environment` instead.
+  &quot;name&quot;: &quot;A String&quot;, # Identifier. The resource name of the backend. Format: `projects/{project}/locations/{locationId}/backends/{backendId}`.
+  &quot;reconciling&quot;: True or False, # Output only. A field that, if true, indicates that the system is working to make adjustments to the backend during a LRO.
+  &quot;requestLogsDisabled&quot;: True or False, # Optional. A field that, if true, indicates that incoming request logs are disabled for this backend. Incoming request logs are enabled by default.
+  &quot;serviceAccount&quot;: &quot;A String&quot;, # Required. The name of the service account used for Cloud Build and Cloud Run. Should have the role roles/firebaseapphosting.computeRunner or equivalent permissions.
+  &quot;servingLocality&quot;: &quot;A String&quot;, # Required. Immutable. Specifies how App Hosting will serve the content for this backend. It will either be contained to a single region (REGIONAL_STRICT) or allowed to use App Hosting&#x27;s global-replicated serving infrastructure (GLOBAL_ACCESS).
+  &quot;updateTime&quot;: &quot;A String&quot;, # Output only. Time at which the backend was last updated.
+  &quot;uri&quot;: &quot;A String&quot;, # Output only. The primary URI to communicate with the backend.
+  backendId: string, Required. Id of the backend. Also used as the service ID for Cloud Run, and as part of the default domain name.
+  <pre>Deletes a single backend.
+  name: string, Required. Name of the resource in the format: `projects/{project}/locations/{locationId}/backends/{backendId}`. (required)
+  force: boolean, Optional. If set to true, any resources for this backend will also be deleted. Otherwise, any children resources will block deletion.
+  requestId: string, Optional. An optional request ID to identify requests. Specify a unique request ID so that if you must retry your request, the server will know to ignore the request if it has already been completed. The server will guarantee that for at least 60 minutes after the first request. For example, consider a situation where you make an initial request and t he request times out. If you make the request again with the same request ID, the server can check if original operation with the same request ID was received, and if so, will ignore the second request. This prevents clients from accidentally creating duplicate commitments. The request ID must be a valid UUID with the exception that zero UUID is not supported (00000000-0000-0000-0000-000000000000).
+  validateOnly: boolean, Optional. Indicates that the request should be validated, without persisting the request or updating any resources.
+  <pre>Gets information about a backend.
+  <pre>Lists backends in a given project and location.
+    { # Message for response to list backends
+  &quot;backends&quot;: [ # The list of backends
+  <pre>Updates the information for a single backend.
+  name: string, Identifier. The resource name of the backend. Format: `projects/{project}/locations/{locationId}/backends/{backendId}`. (required)
+  allowMissing: boolean, Optional. If set to true, and the backend is not found, a new backend will be created.
+  updateMask: string, Optional. Field mask is used to specify the fields to be overwritten in the backend resource by the update. The fields specified in the update_mask are relative to the resource, not the full request. A field will be overwritten if it is in the mask. If the user does not provide a mask then all fields will be overwritten.

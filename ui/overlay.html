@@ -1,0 +1,33 @@
+        --fallback-title-bar-height: 40px;
+      .draggable {
+        /* Pre-fix app-region during standardization process */
+        -webkit-app-region: drag;
+      .nonDraggable {
+        -webkit-app-region: no-drag;
+      #titleBarContainer {
+        top: env(titlebar-area-y, 0);
+        height: env(titlebar-area-height, var(--fallback-title-bar-height));
+      #titleBar {
+        left: env(titlebar-area-x, 0);
+        width: env(titlebar-area-width, 100%);
+      #mainContent {
+        top: env(titlebar-area-height, var(--fallback-title-bar-height));
+      navigator.windowControlsOverlay.ongeometrychange = function() {
+        const {x, y, width, height} = navigator.windowControlsOverlay.getTitlebarAreaRect();
+        ipcRenderer.send('geometrychange', {x, y, width, height});
+    <div id="titleBarContainer">
+      <div id="titleBar" class=" draggable">
+        <span class="draggable">Title goes here</span>
+        <input class="nonDraggable" type="text" placeholder="Search"></input>
+    <div id="mainContent"><!-- The rest of the webpage --></div>
+      function getCssOverlayProperties() {
+        const cssOverlayProps = {};
+        const titleBarContainer = document.getElementById('titleBarContainer');
+        const titleBar = document.getElementById('titleBar');
+        cssOverlayProps.y = titleBarContainer.computedStyleMap().get('top').value;
+        cssOverlayProps.height = titleBarContainer.computedStyleMap().get('height').value;
+        cssOverlayProps.x = titleBar.computedStyleMap().get('left').value;
+        cssOverlayProps.width = titleBar.computedStyleMap().get('width').value;
+        return cssOverlayProps;
+      function getJSOverlayProperties() {
+        return {x, y, width, height};

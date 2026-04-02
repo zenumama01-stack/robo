@@ -1,0 +1,70 @@
+ * A helper to parse a sequence of tokens. This class is immutable.
+public class TokenList {
+    private List<String> list;
+    private int head;
+    private int tail;
+     * @param list of the initial tokens
+    public TokenList(List<String> list) {
+        this.list = List.copyOf(list);
+        this.head = 0;
+        this.tail = list.size() - 1;
+    private TokenList(List<String> list, int head, int tail) {
+        this.head = head;
+        this.tail = tail;
+     * Gets the first token of the list.
+     * @return the first token of the list
+    public String head() {
+        return (list.isEmpty() || head < 0 || head >= list.size()) ? null : list.get(head);
+     * Gets the last token of the list.
+     * @return the last token of the list
+    public String tail() {
+        return (list.isEmpty() || tail < 0 || tail >= list.size()) ? null : list.get(tail);
+     * Checks, if the list is empty.
+     * @return if the list is empty
+    public boolean eof() {
+        return head > tail;
+     * Retrieves the token count within the list.
+     * @return token count
+        return tail - head + 1;
+     * Checks for the first token of the list.
+     * If it is equal to one of the provided alternatives, it will succeed.
+     * @param alternatives Allowed token values for the list's first token.
+     *            If empty, all token values are allowed.
+     * @return True, if first token is equal to one of the alternatives or if no alternatives were provided.
+     *         False otherwise. Always false, if there is no first token (if the list is empty).
+    public boolean checkHead(String... alternatives) {
+        return check(head, alternatives);
+     * Checks for the last token of the list.
+     * @param alternatives Allowed token values for the list's last token.
+     * @return True, if last token is equal to one of the alternatives or if no alternatives were provided.
+     *         False otherwise. Always false, if there is no last token (if the list is empty).
+    public boolean checkTail(String... alternatives) {
+        return check(tail, alternatives);
+     * Retrieves the first token of the list, in case it is equal to one of the provided alternatives.
+     * @return First token, if it is equal to one of the alternatives or if no alternatives were provided.
+     *         Null otherwise. Always null, if there is no first token (if the list is empty).
+    public String peekHead(String... alternatives) {
+        return peek(head, alternatives);
+     * Retrieves the last token of the list, in case it is equal to one of the provided alternatives.
+     * @return Last token, if it is equal to one of the alternatives or if no alternatives were provided.
+     *         Null otherwise. Always null, if there is no last token (if the list is empty).
+    public String peekTail(String... alternatives) {
+        return peek(tail, alternatives);
+     * Creates a new list without the first token.
+     * @return a new list without the first token
+    public TokenList skipHead() {
+        return new TokenList(list, head + 1, tail);
+     * Creates a new list without the last token.
+     * @return a new list without the last token
+    public TokenList skipTail() {
+        return new TokenList(list, head, tail - 1);
+    private String peek(int index, String... alternatives) {
+        return splice(index, alternatives);
+    private boolean check(int index, String... alternatives) {
+        return splice(index, alternatives) != null;
+    private String splice(int index, String... alternatives) {
+        if (index < head || index > tail || head > tail) {
+        String token = list.get(index);
+        if (alternatives.length == 0) {
+            for (String alt : alternatives) {
+                if (alt.equals(token)) {

@@ -1,0 +1,32 @@
+<h1><a href="metastore_v1.html">Dataproc Metastore API</a> . <a href="metastore_v1.projects.html">projects</a> . <a href="metastore_v1.projects.locations.html">locations</a> . <a href="metastore_v1.projects.locations.services.html">services</a> . <a href="metastore_v1.projects.locations.services.metadataImports.html">metadataImports</a></h1>
+  <code><a href="#create">create(parent, body=None, metadataImportId=None, requestId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Creates a new MetadataImport in a given project and location.</p>
+<p class="firstline">Gets details of a single import.</p>
+<p class="firstline">Lists imports in a service.</p>
+<p class="firstline">Updates a single import. Only the description field of MetadataImport is supported to be updated.</p>
+    <code class="details" id="create">create(parent, body=None, metadataImportId=None, requestId=None, x__xgafv=None)</code>
+  <pre>Creates a new MetadataImport in a given project and location.
+  parent: string, Required. The relative resource name of the service in which to create a metastore import, in the following form:projects/{project_number}/locations/{location_id}/services/{service_id}. (required)
+{ # A metastore resource that imports metadata.
+  &quot;createTime&quot;: &quot;A String&quot;, # Output only. The time when the metadata import was started.
+  &quot;databaseDump&quot;: { # A specification of the location of and metadata about a database dump from a relational database management system. # Immutable. A database dump from a pre-existing metastore&#x27;s database.
+    &quot;databaseType&quot;: &quot;A String&quot;, # The type of the database.
+    &quot;gcsUri&quot;: &quot;A String&quot;, # Optional. A Cloud Storage object or folder URI that specifies the source from which to import metadata. It must begin with gs://.
+    &quot;sourceDatabase&quot;: &quot;A String&quot;, # Optional. The name of the source database.
+    &quot;type&quot;: &quot;A String&quot;, # Optional. The type of the database dump. If unspecified, defaults to MYSQL.
+  &quot;description&quot;: &quot;A String&quot;, # Optional. The description of the metadata import.
+  &quot;endTime&quot;: &quot;A String&quot;, # Output only. The time when the metadata import finished.
+  &quot;name&quot;: &quot;A String&quot;, # Immutable. Identifier. The relative resource name of the metadata import, of the form:projects/{project_number}/locations/{location_id}/services/{service_id}/metadataImports/{metadata_import_id}.
+  &quot;state&quot;: &quot;A String&quot;, # Output only. The current state of the metadata import.
+  &quot;updateTime&quot;: &quot;A String&quot;, # Output only. The time when the metadata import was last updated.
+  metadataImportId: string, Required. The ID of the metadata import, which is used as the final component of the metadata import&#x27;s name.This value must be between 1 and 64 characters long, begin with a letter, end with a letter or number, and consist of alpha-numeric ASCII characters or hyphens.
+  <pre>Gets details of a single import.
+  name: string, Required. The relative resource name of the metadata import to retrieve, in the following form:projects/{project_number}/locations/{location_id}/services/{service_id}/metadataImports/{import_id}. (required)
+  <pre>Lists imports in a service.
+  parent: string, Required. The relative resource name of the service whose metadata imports to list, in the following form:projects/{project_number}/locations/{location_id}/services/{service_id}/metadataImports. (required)
+  pageSize: integer, Optional. The maximum number of imports to return. The response may contain less than the maximum number. If unspecified, no more than 500 imports are returned. The maximum value is 1000; values above 1000 are changed to 1000.
+    { # Response message for DataprocMetastore.ListMetadataImports.
+  &quot;metadataImports&quot;: [ # The imports in the specified service.
+  <pre>Updates a single import. Only the description field of MetadataImport is supported to be updated.
+  name: string, Immutable. Identifier. The relative resource name of the metadata import, of the form:projects/{project_number}/locations/{location_id}/services/{service_id}/metadataImports/{metadata_import_id}. (required)
+  updateMask: string, Required. A field mask used to specify the fields to be overwritten in the metadata import resource by the update. Fields specified in the update_mask are relative to the resource (not to the full request). A field is overwritten if it is in the mask.

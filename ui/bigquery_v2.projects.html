@@ -1,0 +1,27 @@
+<h1><a href="bigquery_v2.html">BigQuery API</a> . <a href="bigquery_v2.projects.html">projects</a></h1>
+  <code><a href="#getServiceAccount">getServiceAccount(projectId, x__xgafv=None)</a></code></p>
+<p class="firstline">RPC to get the service account for a project used for interactions with Google Cloud KMS</p>
+  <code><a href="#list">list(maxResults=None, pageToken=None, x__xgafv=None)</a></code></p>
+<p class="firstline">RPC to list projects to which the user has been granted any project role. Users of this method are encouraged to consider the [Resource Manager](https://cloud.google.com/resource-manager/docs/) API, which provides the underlying data for this method and has more capabilities.</p>
+    <code class="details" id="getServiceAccount">getServiceAccount(projectId, x__xgafv=None)</code>
+  <pre>RPC to get the service account for a project used for interactions with Google Cloud KMS
+  projectId: string, Required. ID of the project. (required)
+    { # Response object of GetServiceAccount
+  &quot;email&quot;: &quot;A String&quot;, # The service account email address.
+  &quot;kind&quot;: &quot;bigquery#getServiceAccountResponse&quot;, # The resource type of the response.
+    <code class="details" id="list">list(maxResults=None, pageToken=None, x__xgafv=None)</code>
+  <pre>RPC to list projects to which the user has been granted any project role. Users of this method are encouraged to consider the [Resource Manager](https://cloud.google.com/resource-manager/docs/) API, which provides the underlying data for this method and has more capabilities.
+  maxResults: integer, `maxResults` unset returns all results, up to 50 per page. Additionally, the number of projects in a page may be fewer than `maxResults` because projects are retrieved and then filtered to only projects with the BigQuery API enabled.
+  pageToken: string, Page token, returned by a previous call, to request the next page of results. If not present, no further pages are present.
+    { # Response object of ListProjects
+  &quot;etag&quot;: &quot;A String&quot;, # A hash of the page of results.
+  &quot;kind&quot;: &quot;bigquery#projectList&quot;, # The resource type of the response.
+  &quot;nextPageToken&quot;: &quot;A String&quot;, # Use this token to request the next page of results.
+  &quot;projects&quot;: [ # Projects to which the user has at least READ access.
+    { # Information about a single project.
+      &quot;friendlyName&quot;: &quot;A String&quot;, # A descriptive name for this project. A wrapper is used here because friendlyName can be set to the empty string.
+      &quot;id&quot;: &quot;A String&quot;, # An opaque ID of this project.
+      &quot;numericId&quot;: &quot;A String&quot;, # The numeric ID of this project.
+      &quot;projectReference&quot;: { # A unique reference to a project. # A unique reference to this project.
+        &quot;projectId&quot;: &quot;A String&quot;, # Required. ID of the project. Can be either the numeric ID or the assigned ID of the project.
+  &quot;totalItems&quot;: 42, # The total number of projects in the page. A wrapper is used here because the field should still be in the response when the value is 0.

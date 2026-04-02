@@ -1,0 +1,15 @@
+<h1><a href="cloudresourcemanager_v3.html">Cloud Resource Manager API</a> . <a href="cloudresourcemanager_v3.effectiveTags.html">effectiveTags</a></h1>
+<p class="firstline">Return a list of effective tags for the given Google Cloud resource, as specified in `parent`.</p>
+  <pre>Return a list of effective tags for the given Google Cloud resource, as specified in `parent`.
+  pageSize: integer, Optional. The maximum number of effective tags to return in the response. The server allows a maximum of 300 effective tags to return in a single page. If unspecified, the server will use 100 as the default.
+  pageToken: string, Optional. A pagination token returned from a previous call to `ListEffectiveTags` that indicates from where this listing should continue.
+  parent: string, Required. The full resource name of a resource for which you want to list the effective tags. E.g. &quot;//cloudresourcemanager.googleapis.com/projects/123&quot;
+    { # The response of ListEffectiveTags.
+  &quot;effectiveTags&quot;: [ # A possibly paginated list of effective tags for the specified resource.
+    { # An EffectiveTag represents a tag that applies to a resource during policy evaluation. Tags can be either directly bound to a resource or inherited from its ancestor. EffectiveTag contains the name and namespaced_name of the tag value and tag key, with additional fields of `inherited` to indicate the inheritance status of the effective tag.
+      &quot;inherited&quot;: True or False, # Indicates the inheritance status of a tag value attached to the given resource. If the tag value is inherited from one of the resource&#x27;s ancestors, inherited will be true. If false, then the tag value is directly attached to the resource, inherited will be false.
+      &quot;namespacedTagKey&quot;: &quot;A String&quot;, # The namespaced name of the TagKey. Can be in the form `{organization_id}/{tag_key_short_name}` or `{project_id}/{tag_key_short_name}` or `{project_number}/{tag_key_short_name}`.
+      &quot;namespacedTagValue&quot;: &quot;A String&quot;, # The namespaced name of the TagValue. Can be in the form `{organization_id}/{tag_key_short_name}/{tag_value_short_name}` or `{project_id}/{tag_key_short_name}/{tag_value_short_name}` or `{project_number}/{tag_key_short_name}/{tag_value_short_name}`.
+      &quot;tagKey&quot;: &quot;A String&quot;, # The name of the TagKey, in the format `tagKeys/{id}`, such as `tagKeys/123`.
+      &quot;tagKeyParentName&quot;: &quot;A String&quot;, # The parent name of the tag key. Must be in the format `organizations/{organization_id}` or `projects/{project_number}`
+      &quot;tagValue&quot;: &quot;A String&quot;, # Resource name for TagValue in the format `tagValues/456`.

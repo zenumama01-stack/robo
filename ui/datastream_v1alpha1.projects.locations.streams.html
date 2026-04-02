@@ -1,0 +1,25 @@
+<h1><a href="datastream_v1alpha1.html">Datastream API</a> . <a href="datastream_v1alpha1.projects.html">projects</a> . <a href="datastream_v1alpha1.projects.locations.html">locations</a> . <a href="datastream_v1alpha1.projects.locations.streams.html">streams</a></h1>
+  <code><a href="datastream_v1alpha1.projects.locations.streams.objects.html">objects()</a></code>
+  <code><a href="#fetchErrors">fetchErrors(stream, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Use this method to fetch any errors associated with a stream.</p>
+    &quot;destinationConnectionProfileName&quot;: &quot;A String&quot;, # Required. Destination connection profile identifier.
+    &quot;gcsDestinationConfig&quot;: { # Google Cloud Storage destination configuration # GCS destination configuration.
+      &quot;fileRotationInterval&quot;: &quot;A String&quot;, # The maximum duration for which new events are added before a file is closed and a new file is created.
+      &quot;gcsFileFormat&quot;: &quot;A String&quot;, # File format that data should be written in. Deprecated field (b/169501737) - use file_format instead.
+  &quot;name&quot;: &quot;A String&quot;, # Output only. The stream&#x27;s name.
+    &quot;mysqlSourceConfig&quot;: { # MySQL source configuration # MySQL data source configuration
+      &quot;allowlist&quot;: { # MySQL database structure # MySQL objects to retrieve from the source.
+      &quot;rejectlist&quot;: { # MySQL database structure # MySQL objects to exclude from the stream.
+    &quot;oracleSourceConfig&quot;: { # Oracle data source configuration # Oracle data source configuration
+      &quot;allowlist&quot;: { # Oracle database structure. # Oracle objects to include in the stream.
+      &quot;rejectlist&quot;: { # Oracle database structure. # Oracle objects to exclude from the stream.
+    &quot;sourceConnectionProfileName&quot;: &quot;A String&quot;, # Required. Source connection profile identifier.
+  validateOnly: boolean, Optional. Only validate the stream, but do not create any resources. The default is false.
+    <code class="details" id="fetchErrors">fetchErrors(stream, body=None, x__xgafv=None)</code>
+  <pre>Use this method to fetch any errors associated with a stream.
+  stream: string, Name of the Stream resource for which to fetch any errors. (required)
+{ # Request message for &#x27;FetchErrors&#x27; request.
+  pageSize: integer, Maximum number of streams to return. If unspecified, at most 50 streams will be returned. The maximum value is 1000; values above 1000 will be coerced to 1000.
+  pageToken: string, Page token received from a previous `ListStreams` call. Provide this to retrieve the subsequent page. When paginating, all other parameters provided to `ListStreams` must match the call that provided the page token.
+  name: string, Output only. The stream&#x27;s name. (required)
+  force: boolean, Optional. Execute the update without validating it.

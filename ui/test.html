@@ -1,0 +1,148 @@
+      /* Page is expected to be exactly 800x600 */
+        flex-flow: column nowrap;
+        flex-flow: row nowrap;
+      .row.rounding-0 > .box {
+        -electron-corner-smoothing: 0%;
+      .row.rounding-30 > .box {
+        -electron-corner-smoothing: 30%;
+      .row.rounding-60 > .box {
+        -electron-corner-smoothing: 60%;
+      .row.rounding-100 > .box {
+        -electron-corner-smoothing: 100%;
+      .row.rounding-invalid > .box {
+        -electron-corner-smoothing: 200%;
+      .row.rounding-invalid > .box:nth-child(2) {
+        -electron-corner-smoothing: -10%;
+      .row.rounding-invalid > .box:nth-child(3) {
+        -electron-corner-smoothing: -200%;
+      .box {
+        --boxes-x: 8;
+        --boxes-y: 5;
+        --box-shadow-offset: 4px;
+        --box-shadow-spread: 2px;
+        --box-shadow-grow: 2px;
+        --box-gap: calc(var(--box-shadow-offset) + var(--box-shadow-spread) + var(--box-shadow-grow) + 4px);
+        --box-size: min(calc(((100vw - var(--box-gap)) / var(--boxes-x)) - var(--box-gap)), calc(((100vh - var(--box-gap)) / var(--boxes-y)) - var(--box-gap)));
+        width: var(--box-size);
+        height: var(--box-size);
+        border-radius: calc((var(--box-size) / 4) - 4px);
+        background-color: black;
+      .box.outline {
+        background-color: bisque;
+        border: 8px solid black;
+      .box.outline.dashed {
+        background-color: darkkhaki;
+      .box.outline.double {
+        background-color: darkseagreen;
+        border-style: double;
+      .box.outer {
+        overflow: clip;
+      .box.outer > .inner {
+        background-color: blueviolet;
+      .box.shadow {
+        background-color: skyblue;
+        box-shadow: var(--box-shadow-offset) var(--box-shadow-offset) var(--box-shadow-spread) var(--box-shadow-grow) cornflowerblue;
+      .box.multiple-radii {
+        background-color: coral;
+        border-radius: 0 0 calc((var(--box-size) / 8) - 2px) calc((var(--box-size) / 2) - 8px);
+    <div class="row rounding-0">
+      <div class="box"></div>
+      <img class="box" src="image.png" />
+      <div class="box outline"></div>
+      <div class="box outline dashed"></div>
+      <div class="box outline double"></div>
+      <div class="box outer"><div class="inner"></div></div>
+      <div class="box shadow"></div>
+      <div class="box multiple-radii"></div>
+    <div class="row rounding-30">
+    <div class="row rounding-60">
+    <div class="row rounding-100">
+    <div class="row rounding-invalid">
+        width: 256px;
+        height: 256px;
+        border-radius: 48px;
+        background-color: cornflowerblue;
+      .box.rounding-0 {
+      .box.rounding-system-ui {
+        -electron-corner-smoothing: system-ui;
+      .box.rounding-100 {
+    <div class="box rounding-0"></div>
+    <div class="box rounding-system-ui"></div>
+    <div class="box rounding-100"></div>
+{% comment %}Translators: Django comment block for translators
+string's meaning unveiled
+{% endcomment %}
+{% translate "This literal should be included." %}
+{% translate "This literal should also be included wrapped or not wrapped depending on the use of the --no-wrap option." %}
+{% comment %}Some random comment
+Some random comment
+Translators: One-line translator comment #1
+{% translate "Translatable literal #1a" %}
+Translators: Two-line translator comment #1
+continued here.
+{% translate "Translatable literal #1b" %}
+Translators: One-line translator comment #2
+{% translate "Translatable literal #2a" %}
+Translators: Two-line translator comment #2
+{% translate "Translatable literal #2b" %}
+{% comment %}
+    Translators: One-line translator comment #3
+{% translate "Translatable literal #3a" %}
+Translators: Two-line translator comment #3
+{% translate "Translatable literal #3b" %}
+{% comment %} Translators: One-line translator comment #4{% endcomment %}
+{% translate "Translatable literal #4a" %}
+{% comment %}  Translators: Two-line translator comment #4
+continued here.{% endcomment %}
+{% translate "Translatable literal #4b" %}
+{% comment %} Translators: One-line translator comment #5 -- with non ASCII characters: áéíóúö{% endcomment %}
+{% translate "Translatable literal #5a" %}
+{% comment %}  Translators: Two-line translator comment #5 -- with non ASCII characters: áéíóúö
+{% translate "Translatable literal #6b" %}
+{% translate "Translatable literal #7a" context "Special trans context #1" %}
+{% translate "Translatable literal #7b" as var context "Special trans context #2" %}
+{% translate "Translatable literal #7c" context "Special trans context #3" as var %}
+{% translate "Translatable literal #7.1a" | upper context "context #7.1a" %}
+{% translate "Translatable literal #7.1b" |upper as var context "context #7.1b" %}
+{% translate "Translatable literal #7.1c"| upper context "context #7.1c" as var %}
+{% translate "Translatable literal #7.1d"|add:" foo" context "context #7.1d" %}
+{% translate "Translatable literal #7.1e"|add:' ûè本' as var context "context #7.1e" %}
+{% with foo=" foo" %}
+    {% translate "Translatable literal #7.1f"|add:foo context "context #7.1f" as var %}
+{% endwith %}
+{% translate "Translatable literal #7.1g"|add:2 context "context #7.1g" as var %}
+{% translate "Translatable literal #7.1h" | add:"foo" | add:2 context "context #7.1h" as var %}
+<!-- Source file inside a msgid, should be left as-is. -->
+{% translate "#: templates/test.html.py" %}
+<!-- Deliberate duplicated string. -->
+{% blocktranslate context "Special blocktranslate context #1" %}Translatable literal #8a{% endblocktranslate %}
+{% blocktranslate count 2 context "Special blocktranslate context #2" %}Translatable literal #8b-singular{% plural %}Translatable literal #8b-plural{% endblocktranslate %}
+{% blocktranslate context "Special blocktranslate context #3" count 2 %}Translatable literal #8c-singular{% plural %}Translatable literal #8c-plural{% endblocktranslate %}
+{% blocktranslate with a=1 context "Special blocktranslate context #4" %}Translatable literal #8d {{ a }}{% endblocktranslate %}
+{% translate "Translatable literal with context wrapped in single quotes" context 'Context wrapped in single quotes' as var %}
+{% translate "Translatable literal with context wrapped in double quotes" context "Context wrapped in double quotes" as var %}
+{% blocktranslate context 'Special blocktranslate context wrapped in single quotes' %}Translatable literal with context wrapped in single quotes{% endblocktranslate %}
+{% blocktranslate context "Special blocktranslate context wrapped in double quotes" %}Translatable literal with context wrapped in double quotes{% endblocktranslate %}
+{# Backwards compatibility tests #}
+{% blocktrans %}blocktrans text{% endblocktrans %}
+{% trans "trans text" %}
+{# BasicExtractorTests.test_blocktranslate_trimmed #}
+{% blocktranslate %}
+  Text with a few
+  line breaks.
+{% endblocktranslate %}
+{% blocktranslate trimmed %}
+  Again some text with a few
+  line breaks, this time
+  should be trimmed.
+{% translate "Get my line number" %}
+{% blocktranslate trimmed count counter=mylist|length %}
+First `translate`, then `blocktranslate` with a plural
+{% plural %}
+Plural for a `translate` and `blocktranslate` collision case
+{% translate "Non-breaking space :" %}
+A non-Python file will be classed as translatable.
+The temporary file created from this should be removed from the file system if
+an error is raised.
+First template
+Second template

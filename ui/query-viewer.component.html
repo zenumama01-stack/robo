@@ -1,0 +1,61 @@
+<!-- Query Viewer Component -->
+<div class="query-viewer-container">
+  <!-- Header bar when query is loaded -->
+    <div class="query-header">
+        <h3 class="query-name">{{ QueryInfo.Name }}</h3>
+          <span class="query-category">
+      <div class="query-actions">
+        <!-- Info button -->
+        <button (click)="OpenInfoPanel()"
+          title="Query information">
+          Info
+        <!-- Parameters button -->
+        @if (HasParameters) {
+            (click)="OpenParametersPanel()"
+            title="Edit parameters">
+        <!-- Execution stats -->
+        @if (ExecutionTimeMs !== null) {
+          <span class="execution-stats">
+            {{ ExecutionTimeMs }}ms
+  <!-- Main content area -->
+    <!-- No query selected state -->
+    @if (!QueryId) {
+      <div class="no-query-state">
+        <i class="fa-solid fa-database state-icon"></i>
+        <p class="state-message">Select a query to view results</p>
+    <!-- Query not found error -->
+    @if (QueryId && !QueryInfo && LastError) {
+        <i class="fa-solid fa-exclamation-triangle state-icon error"></i>
+        <p class="state-message">{{ LastError }}</p>
+    <!-- Query description -->
+    @if (QueryInfo?.Description && !HasRun) {
+      <div class="query-description">
+        {{ QueryInfo?.Description }}
+    <!-- Query execution error -->
+    @if (LastError && HasRun) {
+      <div class="execution-error">
+        <span>{{ LastError }}</span>
+        <button class="btn btn-secondary" (click)="Refresh()">Try Again</button>
+      <mj-query-data-grid
+        [Data]="QueryData"
+        [VisualConfig]="VisualConfig"
+        [IsLoading]="IsLoading"
+        (EntityLinkClick)="OnEntityLinkClick($event)"
+        (RowDoubleClick)="OnRowDoubleClick($event)"
+        (SelectionChange)="OnSelectionChange($event)"
+        (GridStateChange)="OnGridStateChange($event)"
+        (RefreshRequest)="OnRefreshRequest()">
+      </mj-query-data-grid>
+  <!-- Parameter form panel -->
+  <mj-query-parameter-form
+    [InitialValues]="SavedParams"
+    [IsOpen]="ShowParamsPanel"
+    (ParametersSubmit)="OnParametersSubmit($event)"
+    (Close)="OnParamsPanelClose()">
+  </mj-query-parameter-form>
+  <!-- Query info panel -->
+  <mj-query-info-panel
+    [Visible]="ShowInfoPanel"
+    (Close)="CloseInfoPanel()"
+    (OpenRecord)="OnOpenQueryRecord($event)">
+  </mj-query-info-panel>

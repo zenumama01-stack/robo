@@ -1,0 +1,20 @@
+    <!-- Merge Identification Section -->
+        SectionKey="mergeIdentification"
+        SectionName="Merge Identification"
+            FieldName="SurvivingRecordID"
+    <!-- User Actions & Approvals Section -->
+        SectionKey="userActionsApprovals"
+        SectionName="User Actions & Approvals"
+        Icon="fa fa-user-check"
+            FieldName="InitiatedByUserID"
+            FieldName="ProcessingStartedAt"
+            FieldName="ProcessingEndedAt"
+                [Params]="BuildRelationshipViewParamsByEntityName('MJ: Duplicate Run Detail Matches','RecordMergeLogID')"
+    <!-- Record Merge Deletion Logs Section -->
+        SectionKey="recordMergeDeletionLogs"
+        SectionName="Record Merge Deletion Logs"
+        [BadgeCount]="GetSectionRowCount('recordMergeDeletionLogs')"
+                [Params]="BuildRelationshipViewParamsByEntityName('MJ: Record Merge Deletion Logs','RecordMergeLogID')"
+                [NewRecordValues]="NewRecordValues('MJ: Record Merge Deletion Logs')"
+                [AllowLoad]="IsSectionExpanded('recordMergeDeletionLogs')"
+                (AfterDataLoad)="SetSectionRowCount('recordMergeDeletionLogs', $event.totalRowCount)"

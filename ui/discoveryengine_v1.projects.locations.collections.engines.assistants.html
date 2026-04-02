@@ -1,0 +1,76 @@
+<h1><a href="discoveryengine_v1.html">Discovery Engine API</a> . <a href="discoveryengine_v1.projects.html">projects</a> . <a href="discoveryengine_v1.projects.locations.html">locations</a> . <a href="discoveryengine_v1.projects.locations.collections.html">collections</a> . <a href="discoveryengine_v1.projects.locations.collections.engines.html">engines</a> . <a href="discoveryengine_v1.projects.locations.collections.engines.assistants.html">assistants</a></h1>
+  <code><a href="discoveryengine_v1.projects.locations.collections.engines.assistants.agents.html">agents()</a></code>
+  <code><a href="#create">create(parent, assistantId=None, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Creates an Assistant.</p>
+<p class="firstline">Deletes an Assistant.</p>
+<p class="firstline">Gets an Assistant.</p>
+<p class="firstline">Lists all Assistants under an Engine.</p>
+<p class="firstline">Updates an Assistant</p>
+  <code><a href="#streamAssist">streamAssist(name, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Assists the user with a query in a streaming fashion.</p>
+    <code class="details" id="create">create(parent, assistantId=None, body=None, x__xgafv=None)</code>
+  <pre>Creates an Assistant.
+  parent: string, Required. The parent resource name. Format: `projects/{project}/locations/{location}/collections/{collection}/engines/{engine}` (required)
+{ # Discovery Engine Assistant resource.
+  &quot;customerPolicy&quot;: { # Customer-defined policy for the assistant. # Optional. Customer policy for the assistant.
+    &quot;bannedPhrases&quot;: [ # Optional. List of banned phrases.
+      { # Definition of a customer-defined banned phrase. A banned phrase is not allowed to appear in the user query or the LLM response, or else the answer will be refused.
+        &quot;ignoreDiacritics&quot;: True or False, # Optional. If true, diacritical marks (e.g., accents, umlauts) are ignored when matching banned phrases. For example, &quot;cafe&quot; would match &quot;café&quot;.
+        &quot;matchType&quot;: &quot;A String&quot;, # Optional. Match type for the banned phrase.
+        &quot;phrase&quot;: &quot;A String&quot;, # Required. The raw string content to be banned.
+    &quot;modelArmorConfig&quot;: { # Configuration for customer defined Model Armor templates to be used for sanitizing user prompts and assistant responses. # Optional. Model Armor configuration to be used for sanitizing user prompts and assistant responses.
+      &quot;failureMode&quot;: &quot;A String&quot;, # Optional. Defines the failure mode for Model Armor sanitization.
+      &quot;responseTemplate&quot;: &quot;A String&quot;, # Optional. The resource name of the Model Armor template for sanitizing assistant responses. Format: `projects/{project}/locations/{location}/templates/{template_id}` If not specified, no sanitization will be applied to the assistant response.
+      &quot;userPromptTemplate&quot;: &quot;A String&quot;, # Optional. The resource name of the Model Armor template for sanitizing user prompts. Format: `projects/{project}/locations/{location}/templates/{template_id}` If not specified, no sanitization will be applied to the user prompt.
+  &quot;defaultWebGroundingToggleOff&quot;: True or False, # Optional. This field controls the default web grounding toggle for end users if `web_grounding_type` is set to `WEB_GROUNDING_TYPE_GOOGLE_SEARCH` or `WEB_GROUNDING_TYPE_ENTERPRISE_WEB_SEARCH`. By default, this field is set to false. If `web_grounding_type` is `WEB_GROUNDING_TYPE_GOOGLE_SEARCH` or `WEB_GROUNDING_TYPE_ENTERPRISE_WEB_SEARCH`, end users will have web grounding enabled by default on UI. If true, grounding toggle will be disabled by default on UI. End users can still enable web grounding in the UI if web grounding is enabled.
+  &quot;description&quot;: &quot;A String&quot;, # Optional. Description for additional information. Expected to be shown on the configuration UI, not to the users of the assistant.
+  &quot;displayName&quot;: &quot;A String&quot;, # Required. The assistant display name. It must be a UTF-8 encoded string with a length limit of 128 characters.
+  &quot;enabledTools&quot;: { # Optional. Note: not implemented yet. Use enabled_actions instead. The enabled tools on this assistant. The keys are connector name, for example &quot;projects/{projectId}/locations/{locationId}/collections/{collectionId}/dataconnector The values consist of admin enabled tools towards the connector instance. Admin can selectively enable multiple tools on any of the connector instances that they created in the project. For example {&quot;jira1ConnectorName&quot;: [(toolId1, &quot;createTicket&quot;), (toolId2, &quot;transferTicket&quot;)], &quot;gmail1ConnectorName&quot;: [(toolId3, &quot;sendEmail&quot;),..] }
+    &quot;a_key&quot;: { # The enabled tools on a connector
+      &quot;toolInfo&quot;: [ # The list of tools with corresponding tool information.
+        { # Information to identify a tool.
+          &quot;toolDisplayName&quot;: &quot;A String&quot;, # The display name of the tool.
+          &quot;toolName&quot;: &quot;A String&quot;, # The name of the tool as defined by DataConnectorService.QueryAvailableActions. Note: it&#x27;s using `action` in the DataConnectorService apis, but they are the same as the `tool` here.
+  &quot;generationConfig&quot;: { # Configuration for the generation of the assistant response. # Optional. Configuration for the generation of the assistant response.
+    &quot;allowedModelIds&quot;: [ # Optional. The list of models that are allowed to be used for assistant.
+    &quot;defaultLanguage&quot;: &quot;A String&quot;, # The default language to use for the generation of the assistant response. Use an ISO 639-1 language code such as `en`. If not specified, the language will be automatically detected.
+    &quot;defaultModelId&quot;: &quot;A String&quot;, # Optional. The default model to use for assistant.
+    &quot;systemInstruction&quot;: { # System instruction, also known as the prompt preamble for LLM calls. # System instruction, also known as the prompt preamble for LLM calls. See also https://cloud.google.com/vertex-ai/generative-ai/docs/learn/prompts/system-instructions
+      &quot;additionalSystemInstruction&quot;: &quot;A String&quot;, # Optional. Additional system instruction that will be added to the default system instruction.
+  &quot;name&quot;: &quot;A String&quot;, # Immutable. Resource name of the assistant. Format: `projects/{project}/locations/{location}/collections/{collection}/engines/{engine}/assistants/{assistant}` It must be a UTF-8 encoded string with a length limit of 1024 characters.
+  assistantId: string, Required. The ID to use for the Assistant, which will become the final component of the Assistant&#x27;s resource name. This field must conform to [RFC-1034](https://tools.ietf.org/html/rfc1034) with a length limit of 63 characters.
+  <pre>Deletes an Assistant.
+  name: string, Required. Resource name of Assistant. Format: `projects/{project}/locations/{location}/collections/{collection}/engines/{engine}/assistants/{assistant}` If the caller does not have permission to delete the Assistant, regardless of whether or not it exists, a PERMISSION_DENIED error is returned. If the Assistant to delete does not exist, a NOT_FOUND error is returned. (required)
+  <pre>Gets an Assistant.
+  name: string, Required. Resource name of Assistant. Format: `projects/{project}/locations/{location}/collections/{collection}/engines/{engine}/assistants/{assistant}` (required)
+  <pre>Lists all Assistants under an Engine.
+  pageSize: integer, Maximum number of Assistants to return. If unspecified, defaults to 100. The maximum allowed value is 1000; anything above that will be coerced down to 1000.
+  pageToken: string, A page token ListAssistantsResponse.next_page_token, received from a previous AssistantService.ListAssistants call. Provide this to retrieve the subsequent page. When paginating, all other parameters provided to ListAssistants must match the call that provided the page token.
+    { # Response message for the AssistantService.ListAssistants method.
+  &quot;assistants&quot;: [ # All the customer&#x27;s Assistants.
+  &quot;nextPageToken&quot;: &quot;A String&quot;, # A token that can be sent as ListAssistantsRequest.page_token to retrieve the next page. If this field is omitted, there are no subsequent pages.
+  <pre>Updates an Assistant
+  name: string, Immutable. Resource name of the assistant. Format: `projects/{project}/locations/{location}/collections/{collection}/engines/{engine}/assistants/{assistant}` It must be a UTF-8 encoded string with a length limit of 1024 characters. (required)
+    <code class="details" id="streamAssist">streamAssist(name, body=None, x__xgafv=None)</code>
+  <pre>Assists the user with a query in a streaming fashion.
+  name: string, Required. The resource name of the Assistant. Format: `projects/{project}/locations/{location}/collections/{collection}/engines/{engine}/assistants/{assistant}` (required)
+{ # Request for the AssistantService.StreamAssist method.
+  &quot;generationSpec&quot;: { # Assistant generation specification for the request. This allows to override the default generation configuration at the engine level. # Optional. Specification of the generation configuration for the request.
+    &quot;modelId&quot;: &quot;A String&quot;, # Optional. The Vertex AI model_id used for the generative model. If not set, the default Assistant model will be used.
+  &quot;query&quot;: { # Defines a user inputed query. # Optional. Current user query. Empty query is only supported if `file_ids` are provided. In this case, the answer will be generated based on those context files.
+  &quot;session&quot;: &quot;A String&quot;, # Optional. The session to use for the request. If specified, the assistant has access to the session history, and the query and the answer are stored there. If `-` is specified as the session ID, or it is left empty, then a new session is created with an automatically generated ID. Format: `projects/{project}/locations/{location}/collections/{collection}/engines/{engine}/sessions/{session}`
+  &quot;toolsSpec&quot;: { # Specification of tools that are used to serve the request. # Optional. Specification of tools that are used to serve the request.
+    &quot;imageGenerationSpec&quot;: { # Specification of the image generation tool. # Optional. Specification of the image generation tool.
+    &quot;vertexAiSearchSpec&quot;: { # Specification of the Vertex AI Search tool. # Optional. Specification of the Vertex AI Search tool.
+      &quot;dataStoreSpecs&quot;: [ # Optional. Specs defining DataStores to filter on in a search call and configurations for those data stores. This is only considered for Engines with multiple data stores.
+      &quot;filter&quot;: &quot;A String&quot;, # Optional. The filter syntax consists of an expression language for constructing a predicate from one or more fields of the documents being filtered. Filter expression is case-sensitive. If this field is unrecognizable, an `INVALID_ARGUMENT` is returned. Filtering in Vertex AI Search is done by mapping the LHS filter key to a key property defined in the Vertex AI Search backend -- this mapping is defined by the customer in their schema. For example a media customer might have a field &#x27;name&#x27; in their schema. In this case the filter would look like this: filter --&gt; name:&#x27;ANY(&quot;king kong&quot;)&#x27; For more information about filtering including syntax and filter operators, see [Filter](https://cloud.google.com/generative-ai-app-builder/docs/filter-search-metadata)
+    &quot;videoGenerationSpec&quot;: { # Specification of the video generation tool. # Optional. Specification of the video generation tool.
+    &quot;webGroundingSpec&quot;: { # Specification of the web grounding tool. # Optional. Specification of the web grounding tool. If field is present, enables grounding with web search. Works only if Assistant.web_grounding_type is WEB_GROUNDING_TYPE_GOOGLE_SEARCH or WEB_GROUNDING_TYPE_ENTERPRISE_WEB_SEARCH.
+  &quot;userMetadata&quot;: { # User metadata of the request. # Optional. Information about the user initiating the query.
+    &quot;preferredLanguageCode&quot;: &quot;A String&quot;, # Optional. Preferred language to be used for answering if language detection fails. Also used as the language of error messages created by actions, regardless of language detection results.
+    { # Response for the AssistantService.StreamAssist method.
+  &quot;answer&quot;: { # AssistAnswer resource, main part of AssistResponse. # Assist answer resource object containing parts of the assistant&#x27;s final answer for the user&#x27;s query. Not present if the current response doesn&#x27;t add anything to previously sent AssistAnswer.replies. Observe AssistAnswer.state to see if more parts are to be expected. While the state is `IN_PROGRESS`, the AssistAnswer.replies field in each response will contain replies (reply fragments) to be appended to the ones received in previous responses. AssistAnswer.name won&#x27;t be filled. If the state is `SUCCEEDED`, `FAILED` or `SKIPPED`, the response is the last response and AssistAnswer.name will have a value.
+  &quot;assistToken&quot;: &quot;A String&quot;, # A global unique ID that identifies the current pair of request and stream of responses. Used for feedback and support.
+  &quot;invocationTools&quot;: [ # The tool names of the tools that were invoked.
+  &quot;sessionInfo&quot;: { # Information about the session. # Session information. Only included in the final StreamAssistResponse of the response stream.
+    &quot;session&quot;: &quot;A String&quot;, # Name of the newly generated or continued session. Format: `projects/{project}/locations/{location}/collections/{collection}/engines/{engine}/sessions/{session}`.

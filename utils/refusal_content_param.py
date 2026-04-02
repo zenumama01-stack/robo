@@ -1,0 +1,2 @@
+from ..responses.response_output_refusal_param import ResponseOutputRefusalParam
+RefusalContentParam = ResponseOutputRefusalParam

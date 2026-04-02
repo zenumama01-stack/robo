@@ -1,0 +1,26 @@
+    <!-- Message Type Details Section -->
+        SectionKey="messageTypeDetails"
+        SectionName="Message Type Details"
+            FieldName="MaxBytes"
+    <!-- Supported Features Section -->
+        SectionKey="supportedFeatures"
+        SectionName="Supported Features"
+            FieldName="SupportsAttachments"
+            FieldName="SupportsSubjectLine"
+            FieldName="SupportsHtml"
+    <!-- Communication Provider Message Types Section -->
+        SectionKey="communicationProviderMessageTypes"
+        SectionName="Communication Provider Message Types"
+        [BadgeCount]="GetSectionRowCount('communicationProviderMessageTypes')"
+                [Params]="BuildRelationshipViewParamsByEntityName('MJ: Communication Provider Message Types','CommunicationBaseMessageTypeID')"
+                [NewRecordValues]="NewRecordValues('MJ: Communication Provider Message Types')"
+                [AllowLoad]="IsSectionExpanded('communicationProviderMessageTypes')"
+                (AfterDataLoad)="SetSectionRowCount('communicationProviderMessageTypes', $event.totalRowCount)"
+    <!-- Entity Communication Message Types Section -->
+        SectionKey="entityCommunicationMessageTypes"
+        SectionName="Entity Communication Message Types"
+        [BadgeCount]="GetSectionRowCount('entityCommunicationMessageTypes')"
+                [Params]="BuildRelationshipViewParamsByEntityName('MJ: Entity Communication Message Types','BaseMessageTypeID')"
+                [NewRecordValues]="NewRecordValues('MJ: Entity Communication Message Types')"
+                [AllowLoad]="IsSectionExpanded('entityCommunicationMessageTypes')"
+                (AfterDataLoad)="SetSectionRowCount('entityCommunicationMessageTypes', $event.totalRowCount)"

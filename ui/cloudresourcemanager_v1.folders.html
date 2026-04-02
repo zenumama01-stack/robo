@@ -1,0 +1,61 @@
+<h1><a href="cloudresourcemanager_v1.html">Cloud Resource Manager API</a> . <a href="cloudresourcemanager_v1.folders.html">folders</a></h1>
+  <code><a href="#clearOrgPolicy">clearOrgPolicy(resource, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Clears a `Policy` from a resource.</p>
+  <code><a href="#getEffectiveOrgPolicy">getEffectiveOrgPolicy(resource, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Gets the effective `Policy` on a resource. This is the result of merging `Policies` in the resource hierarchy. The returned `Policy` will not have an `etag`set because it is a computed `Policy` across multiple resources. Subtrees of Resource Manager resource hierarchy with 'under:' prefix will not be expanded.</p>
+  <code><a href="#getOrgPolicy">getOrgPolicy(resource, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Gets a `Policy` on a resource. If no `Policy` is set on the resource, a `Policy` is returned with default values including `POLICY_TYPE_NOT_SET` for the `policy_type oneof`. The `etag` value can be used with `SetOrgPolicy()` to create or update a `Policy` during read-modify-write.</p>
+  <code><a href="#listAvailableOrgPolicyConstraints">listAvailableOrgPolicyConstraints(resource, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Lists `Constraints` that could be applied on the specified resource.</p>
+  <code><a href="#listAvailableOrgPolicyConstraints_next">listAvailableOrgPolicyConstraints_next()</a></code></p>
+  <code><a href="#listOrgPolicies">listOrgPolicies(resource, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Lists all the `Policies` set for a particular resource.</p>
+  <code><a href="#listOrgPolicies_next">listOrgPolicies_next()</a></code></p>
+  <code><a href="#setOrgPolicy">setOrgPolicy(resource, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Updates the specified `Policy` on the resource. Creates a new `Policy` for that `Constraint` on the resource if one does not exist. Not supplying an `etag` on the request `Policy` results in an unconditional write of the `Policy`.</p>
+    <code class="details" id="clearOrgPolicy">clearOrgPolicy(resource, body=None, x__xgafv=None)</code>
+  <pre>Clears a `Policy` from a resource.
+  resource: string, Name of the resource for the `Policy` to clear. (required)
+{ # The request sent to the ClearOrgPolicy method.
+  &quot;constraint&quot;: &quot;A String&quot;, # Name of the `Constraint` of the `Policy` to clear.
+  &quot;etag&quot;: &quot;A String&quot;, # The current version, for concurrency control. Not sending an `etag` will cause the `Policy` to be cleared blindly.
+    <code class="details" id="getEffectiveOrgPolicy">getEffectiveOrgPolicy(resource, body=None, x__xgafv=None)</code>
+  <pre>Gets the effective `Policy` on a resource. This is the result of merging `Policies` in the resource hierarchy. The returned `Policy` will not have an `etag`set because it is a computed `Policy` across multiple resources. Subtrees of Resource Manager resource hierarchy with &#x27;under:&#x27; prefix will not be expanded.
+  resource: string, The name of the resource to start computing the effective `Policy`. (required)
+{ # The request sent to the GetEffectiveOrgPolicy method.
+  &quot;constraint&quot;: &quot;A String&quot;, # The name of the `Constraint` to compute the effective `Policy`.
+    <code class="details" id="getOrgPolicy">getOrgPolicy(resource, body=None, x__xgafv=None)</code>
+  <pre>Gets a `Policy` on a resource. If no `Policy` is set on the resource, a `Policy` is returned with default values including `POLICY_TYPE_NOT_SET` for the `policy_type oneof`. The `etag` value can be used with `SetOrgPolicy()` to create or update a `Policy` during read-modify-write.
+  resource: string, Name of the resource the `Policy` is set on. (required)
+{ # The request sent to the GetOrgPolicy method.
+  &quot;constraint&quot;: &quot;A String&quot;, # Name of the `Constraint` to get the `Policy`.
+    <code class="details" id="listAvailableOrgPolicyConstraints">listAvailableOrgPolicyConstraints(resource, body=None, x__xgafv=None)</code>
+  <pre>Lists `Constraints` that could be applied on the specified resource.
+  resource: string, Name of the resource to list `Constraints` for. (required)
+{ # The request sent to the `ListAvailableOrgPolicyConstraints` method on the project, folder, or organization.
+  &quot;pageSize&quot;: 42, # Size of the pages to be returned. This is currently unsupported and will be ignored. The server may at any point start using this field to limit page size.
+  &quot;pageToken&quot;: &quot;A String&quot;, # Page token used to retrieve the next page. This is currently unsupported and will be ignored. The server may at any point start using this field.
+    { # The response returned from the `ListAvailableOrgPolicyConstraints` method. Returns all `Constraints` that could be set at this level of the hierarchy (contrast with the response from `ListPolicies`, which returns all policies which are set).
+  &quot;constraints&quot;: [ # The collection of constraints that are settable on the request resource.
+    { # A `Constraint` describes a way in which a resource&#x27;s configuration can be restricted. For example, it controls which cloud services can be activated across an organization, or whether a Compute Engine instance can have serial port connections established. `Constraints` can be configured by the organization&#x27;s policy administrator to fit the needs of the organzation by setting Policies for `Constraints` at different locations in the organization&#x27;s resource hierarchy. Policies are inherited down the resource hierarchy from higher levels, but can also be overridden. For details about the inheritance rules please read about [Policies](/resource-manager/reference/rest/v1/Policy). `Constraints` have a default behavior determined by the `constraint_default` field, which is the enforcement behavior that is used in the absence of a `Policy` being defined or inherited for the resource in question.
+      &quot;description&quot;: &quot;A String&quot;, # Detailed description of what this `Constraint` controls as well as how and where it is enforced. Mutable.
+      &quot;displayName&quot;: &quot;A String&quot;, # The human readable name. Mutable.
+      &quot;listConstraint&quot;: { # A `Constraint` that allows or disallows a list of string values, which are configured by an Organization&#x27;s policy administrator with a `Policy`. # Defines this constraint as being a ListConstraint.
+        &quot;suggestedValue&quot;: &quot;A String&quot;, # Optional. The Google Cloud Console will try to default to a configuration that matches the value specified in this `Constraint`.
+      &quot;name&quot;: &quot;A String&quot;, # Immutable value, required to globally be unique. For example, `constraints/serviceuser.services`
+      &quot;version&quot;: 42, # Version of the `Constraint`. Default version is 0;
+  &quot;nextPageToken&quot;: &quot;A String&quot;, # Page token used to retrieve the next page. This is currently not used.
+    <code class="details" id="listAvailableOrgPolicyConstraints_next">listAvailableOrgPolicyConstraints_next()</code>
+    <code class="details" id="listOrgPolicies">listOrgPolicies(resource, body=None, x__xgafv=None)</code>
+  <pre>Lists all the `Policies` set for a particular resource.
+  resource: string, Name of the resource to list Policies for. (required)
+{ # The request sent to the ListOrgPolicies method.
+    { # The response returned from the `ListOrgPolicies` method. It will be empty if no `Policies` are set on the resource.
+  &quot;nextPageToken&quot;: &quot;A String&quot;, # Page token used to retrieve the next page. This is currently not used, but the server may at any point start supplying a valid token.
+  &quot;policies&quot;: [ # The `Policies` that are set on the resource. It will be empty if no `Policies` are set.
+    <code class="details" id="listOrgPolicies_next">listOrgPolicies_next()</code>
+    <code class="details" id="setOrgPolicy">setOrgPolicy(resource, body=None, x__xgafv=None)</code>
+  <pre>Updates the specified `Policy` on the resource. Creates a new `Policy` for that `Constraint` on the resource if one does not exist. Not supplying an `etag` on the request `Policy` results in an unconditional write of the `Policy`.
+  resource: string, Resource name of the resource to attach the `Policy`. (required)
+{ # The request sent to the SetOrgPolicyRequest method.
+  &quot;policy&quot;: { # Defines a Cloud Organization `Policy` which is used to specify `Constraints` for configurations of Cloud Platform resources. # `Policy` to set on the resource.

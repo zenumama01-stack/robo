@@ -1,0 +1,627 @@
+using System.Management.Automation.Configuration;
+    /// Null class implementation of PSHostUserInterface used when no console is available and when PowerShell
+    /// is run in servmode where no console is needed.
+    internal class NullHostUserInterface : PSHostUserInterface
+        /// RawUI.
+        public override PSHostRawUserInterface? RawUI
+            => null;
+        /// Prompt.
+        /// <param name="caption"></param>
+        /// <param name="descriptions"></param>
+        public override Dictionary<string, PSObject> Prompt(string caption, string message, Collection<FieldDescription> descriptions)
+            => throw new PSNotImplementedException();
+        /// PromptForChoice.
+        /// <param name="choices"></param>
+        /// <param name="defaultChoice"></param>
+        public override int PromptForChoice(string caption, string message, Collection<ChoiceDescription> choices, int defaultChoice)
+        /// PromptForCredential.
+        /// <param name="userName"></param>
+        /// <param name="targetName"></param>
+        public override PSCredential PromptForCredential(string caption, string message, string userName, string targetName)
+        /// <param name="allowedCredentialTypes"></param>
+        public override PSCredential PromptForCredential(string caption, string message, string userName, string targetName, PSCredentialTypes allowedCredentialTypes, PSCredentialUIOptions options)
+        /// ReadLine.
+        public override string ReadLine()
+        /// ReadLineAsSecureString.
+        public override SecureString ReadLineAsSecureString()
+        /// Write.
+        public override void Write(string value)
+        /// <param name="foregroundColor"></param>
+        /// <param name="backgroundColor"></param>
+        public override void Write(ConsoleColor foregroundColor, ConsoleColor backgroundColor, string value)
+        /// WriteDebugLine.
+        public override void WriteDebugLine(string message)
+        /// WriteErrorLine.
+        public override void WriteErrorLine(string value)
+            => Console.Out.WriteLine(value);
+        /// WriteLine.
+        public override void WriteLine(string value)
+        /// WriteProgress.
+        /// <param name="sourceId"></param>
+        /// <param name="record"></param>
+        public override void WriteProgress(long sourceId, ProgressRecord record)
+        /// WriteVerboseLine.
+        public override void WriteVerboseLine(string message)
+        /// WriteWarningLine.
+        public override void WriteWarningLine(string message)
+    internal class CommandLineParameterParser
+        private const int MaxPipePathLengthLinux = 108;
+        private const int MaxPipePathLengthMacOS = 104;
+        internal static int MaxNameLength()
+                return ushort.MaxValue;
+            int maxLength = Platform.IsLinux ? MaxPipePathLengthLinux : MaxPipePathLengthMacOS;
+            return maxLength - Path.GetTempPath().Length;
+        internal bool? InputRedirectedTestHook;
+        private static readonly string[] s_validParameters = {
+            "sta",
+            "mta",
+            "command",
+            "commandwithargs",
+            "configurationname",
+            "custompipename",
+            "encodedcommand",
+            "executionpolicy",
+            "file",
+            "help",
+            "inputformat",
+            "login",
+            "noexit",
+            "nologo",
+            "noninteractive",
+            "noprofile",
+            "noprofileloadtime",
+            "outputformat",
+            "removeworkingdirectorytrailingcharacter",
+            "settingsfile",
+            "version",
+            "windowstyle",
+            "workingdirectory"
+#pragma warning disable SA1025 // CodeMustNotContainMultipleWhitespaceInARow
+        /// These represent the parameters that are used when starting pwsh.
+        /// We can query in our telemetry to determine how pwsh was invoked.
+        internal enum ParameterBitmap : long
+            Command             = 0x0000000000000001, // -Command | -c
+            ConfigurationName   = 0x0000000000000002, // -ConfigurationName | -config
+            CustomPipeName      = 0x0000000000000004, // -CustomPipeName
+            EncodedCommand      = 0x0000000000000008, // -EncodedCommand | -e | -ec
+            EncodedArgument     = 0x0000000000000010, // -EncodedArgument
+            ExecutionPolicy     = 0x0000000000000020, // -ExecutionPolicy | -ex | -ep
+            File                = 0x0000000000000040, // -File | -f
+            Help                = 0x0000000000000080, // -Help, -?, /?
+            InputFormat         = 0x0000000000000100, // -InputFormat | -inp | -if
+            Interactive         = 0x0000000000000200, // -Interactive | -i
+            Login               = 0x0000000000000400, // -Login | -l
+            MTA                 = 0x0000000000000800, // -MTA
+            NoExit              = 0x0000000000001000, // -NoExit | -noe
+            NoLogo              = 0x0000000000002000, // -NoLogo | -nol
+            NonInteractive      = 0x0000000000004000, // -NonInteractive | -noni
+            NoProfile           = 0x0000000000008000, // -NoProfile | -nop
+            OutputFormat        = 0x0000000000010000, // -OutputFormat | -o | -of
+            SettingsFile        = 0x0000000000020000, // -SettingsFile | -settings
+            SSHServerMode       = 0x0000000000040000, // -SSHServerMode | -sshs
+            SocketServerMode    = 0x0000000000080000, // -SocketServerMode | -sockets
+            ServerMode          = 0x0000000000100000, // -ServerMode | -server
+            NamedPipeServerMode = 0x0000000000200000, // -NamedPipeServerMode | -namedpipes
+            STA                 = 0x0000000000400000, // -STA
+            Version             = 0x0000000000800000, // -Version | -v
+            WindowStyle         = 0x0000000001000000, // -WindowStyle | -w
+            WorkingDirectory    = 0x0000000002000000, // -WorkingDirectory | -wd
+            ConfigurationFile   = 0x0000000004000000, // -ConfigurationFile
+            NoProfileLoadTime   = 0x0000000008000000, // -NoProfileLoadTime
+            CommandWithArgs     = 0x0000000010000000, // -CommandWithArgs | -cwa
+            // Enum values for specified ExecutionPolicy
+            EPUnrestricted      = 0x0000000100000000, // ExecutionPolicy unrestricted
+            EPRemoteSigned      = 0x0000000200000000, // ExecutionPolicy remote signed
+            EPAllSigned         = 0x0000000400000000, // ExecutionPolicy all signed
+            EPRestricted        = 0x0000000800000000, // ExecutionPolicy restricted
+            EPDefault           = 0x0000001000000000, // ExecutionPolicy default
+            EPBypass            = 0x0000002000000000, // ExecutionPolicy bypass
+            EPUndefined         = 0x0000004000000000, // ExecutionPolicy undefined
+            EPIncorrect         = 0x0000008000000000, // ExecutionPolicy incorrect
+            // V2 Socket Server Mode
+            V2SocketServerMode  = 0x0000100000000000, // -V2SocketServerMode | -v2so
+#pragma warning restore SA1025 // CodeMustNotContainMultipleWhitespaceInARow
+        internal ParameterBitmap ParametersUsed = 0;
+        internal double ParametersUsedAsDouble
+            get { return (double)ParametersUsed; }
+        private void AssertArgumentsParsed()
+            if (!_dirty)
+                throw new InvalidOperationException("Parse has not been called yet");
+        internal CommandLineParameterParser()
+        internal bool AbortStartup
+                AssertArgumentsParsed();
+                return _abortStartup;
+        internal string? SettingsFile
+                return _settingsFile;
+        internal string? InitialCommand
+                return _commandLineCommand;
+        internal bool WasInitialCommandEncoded
+                return _wasCommandEncoded;
+        internal ProcessWindowStyle? WindowStyle
+                return _windowStyle;
+        internal bool ShowBanner
+                return _showBanner;
+        internal bool NoExit
+                return _noExit;
+        internal bool SkipProfiles
+                return _skipUserInit;
+        internal uint ExitCode
+                return _exitCode;
+        internal bool ExplicitReadCommandsFromStdin
+                return _explicitReadCommandsFromStdin;
+        internal bool NoPrompt
+                return _noPrompt;
+        internal Collection<CommandParameter> Args
+                return _collectedArgs;
+        internal string? ConfigurationFile
+                return _configurationFile;
+        internal string? ConfigurationName
+                return _configurationName;
+                    _configurationName = value;
+        internal bool SocketServerMode
+                return _socketServerMode;
+        internal bool NamedPipeServerMode
+                return _namedPipeServerMode;
+        internal bool SSHServerMode
+                return _sshServerMode;
+        internal bool ServerMode
+                return _serverMode;
+        // Added for using in xUnit tests
+        internal string? ErrorMessage
+                return _error;
+        internal bool ShowShortHelp
+                return _showHelp;
+        internal bool ShowExtendedHelp
+                return _showExtendedHelp;
+        internal bool NoProfileLoadTime
+                return _noProfileLoadTime;
+        internal bool ShowVersion
+                return _showVersion;
+        internal string? CustomPipeName
+                return _customPipeName;
+        internal Serialization.DataFormat OutputFormat
+                return _outFormat;
+        internal bool OutputFormatSpecified
+                return _outputFormatSpecified;
+        internal Serialization.DataFormat InputFormat
+                return _inFormat;
+        internal string? File
+                return _file;
+        internal string? ExecutionPolicy
+                return _executionPolicy;
+        internal bool StaMode
+                if (_staMode.HasValue)
+                    return _staMode.Value;
+                    return Platform.IsStaSupported;
+        internal bool ThrowOnReadAndPrompt
+                return _noInteractive;
+        internal bool NonInteractive
+        internal string? WorkingDirectory
+                if (_removeWorkingDirectoryTrailingCharacter && _workingDirectory?.Length > 0)
+                    return _workingDirectory.Remove(_workingDirectory.Length - 1);
+                return _workingDirectory;
+        internal bool RemoveWorkingDirectoryTrailingCharacter
+                return _removeWorkingDirectoryTrailingCharacter;
+        internal DateTimeOffset? UTCTimestamp
+                return _utcTimestamp;
+        internal string? Token
+                return _token;
+        internal bool V2SocketServerMode
+                return _v2SocketServerMode;
+        #region static methods
+        /// Processes the -SettingFile Argument.
+        /// <param name="args">
+        /// The command line parameters to be processed.
+        /// <param name="settingFileArgIndex">
+        /// The index in args to the argument following '-SettingFile'.
+        /// Returns true if the argument was parsed successfully and false if not.
+        private bool TryParseSettingFileHelper(string[] args, int settingFileArgIndex)
+            if (settingFileArgIndex >= args.Length)
+                SetCommandLineError(CommandLineParameterParserStrings.MissingSettingsFileArgument);
+            string configFile;
+                configFile = NormalizeFilePath(args[settingFileArgIndex]);
+                string error = string.Format(CultureInfo.CurrentCulture, CommandLineParameterParserStrings.InvalidSettingsFileArgument, args[settingFileArgIndex], ex.Message);
+                SetCommandLineError(error);
+            if (!System.IO.File.Exists(configFile))
+                string error = string.Format(CultureInfo.CurrentCulture, CommandLineParameterParserStrings.SettingsFileNotExists, configFile);
+            _settingsFile = configFile;
+        internal static string GetConfigurationNameFromGroupPolicy()
+            // Current user policy takes precedence.
+            var consoleSessionSetting = Utils.GetPolicySetting<ConsoleSessionConfiguration>(Utils.CurrentUserThenSystemWideConfig);
+            return (consoleSessionSetting?.EnableConsoleSessionConfiguration == true && !string.IsNullOrEmpty(consoleSessionSetting?.ConsoleSessionConfigurationName)) ?
+                    consoleSessionSetting.ConsoleSessionConfigurationName : string.Empty;
+        /// Gets the word in a switch from the current argument or parses a file.
+        /// For example -foo, /foo, or --foo would return 'foo'.
+        /// <param name="argIndex">
+        /// The index in args to the argument to process.
+        /// <param name="noexitSeen">
+        /// Used during parsing files.
+        /// Returns a Tuple:
+        /// The first value is a String called 'switchKey' with the word in a switch from the current argument or null.
+        /// The second value is a bool called 'shouldBreak', indicating if the parsing look should break.
+        private (string switchKey, bool shouldBreak) GetSwitchKey(string[] args, ref int argIndex, ref bool noexitSeen)
+            string switchKey = args[argIndex].Trim();
+            if (string.IsNullOrEmpty(switchKey))
+                return (switchKey: string.Empty, shouldBreak: false);
+            char firstChar = switchKey[0];
+            if (!CharExtensions.IsDash(firstChar) && firstChar != '/')
+                // then it's a file
+                --argIndex;
+                ParseFile(args, ref argIndex, noexitSeen);
+                return (switchKey: string.Empty, shouldBreak: true);
+            // chop off the first character so that we're agnostic wrt specifying / or -
+            // in front of the switch name.
+            switchKey = switchKey.Substring(1);
+            // chop off the second dash so we're agnostic wrt specifying - or --
+            if (!string.IsNullOrEmpty(switchKey) && CharExtensions.IsDash(firstChar) && switchKey[0] == firstChar)
+            return (switchKey: switchKey, shouldBreak: false);
+        internal static string NormalizeFilePath(string path)
+            // Normalize slashes
+            path = path.Replace(
+                StringLiterals.AlternatePathSeparator,
+                StringLiterals.DefaultPathSeparator);
+            return Path.GetFullPath(path);
+        /// Determine the execution policy based on the supplied string.
+        /// If the string doesn't match to any known execution policy, set it to incorrect.
+        /// <param name="_executionPolicy">The value provided on the command line.</param>
+        /// <returns>The execution policy.</returns>
+        private static ParameterBitmap GetExecutionPolicy(string? _executionPolicy)
+            if (_executionPolicy is null)
+                return ParameterBitmap.EPUndefined;
+            ParameterBitmap executionPolicySetting = ParameterBitmap.EPIncorrect;
+            if (string.Equals(_executionPolicy, "default", StringComparison.OrdinalIgnoreCase))
+                executionPolicySetting = ParameterBitmap.EPDefault;
+            else if (string.Equals(_executionPolicy, "remotesigned", StringComparison.OrdinalIgnoreCase))
+                executionPolicySetting = ParameterBitmap.EPRemoteSigned;
+            else if (string.Equals(_executionPolicy, "bypass", StringComparison.OrdinalIgnoreCase))
+                executionPolicySetting = ParameterBitmap.EPBypass;
+            else if (string.Equals(_executionPolicy, "allsigned", StringComparison.OrdinalIgnoreCase))
+                executionPolicySetting = ParameterBitmap.EPAllSigned;
+            else if (string.Equals(_executionPolicy, "restricted", StringComparison.OrdinalIgnoreCase))
+                executionPolicySetting = ParameterBitmap.EPRestricted;
+            else if (string.Equals(_executionPolicy, "unrestricted", StringComparison.OrdinalIgnoreCase))
+                executionPolicySetting = ParameterBitmap.EPUnrestricted;
+            else if (string.Equals(_executionPolicy, "undefined", StringComparison.OrdinalIgnoreCase))
+                executionPolicySetting = ParameterBitmap.EPUndefined;
+            return executionPolicySetting;
+        private static bool MatchSwitch(string switchKey, string match, string smallestUnambiguousMatch)
+            Dbg.Assert(!string.IsNullOrEmpty(match), "need a value");
+            Dbg.Assert(match.Trim().ToLowerInvariant() == match, "match should be normalized to lowercase w/ no outside whitespace");
+            Dbg.Assert(smallestUnambiguousMatch.Trim().ToLowerInvariant() == smallestUnambiguousMatch, "match should be normalized to lowercase w/ no outside whitespace");
+            Dbg.Assert(match.Contains(smallestUnambiguousMatch), "sUM should be a substring of match");
+            return (switchKey.Length >= smallestUnambiguousMatch.Length
+                    && match.StartsWith(switchKey, StringComparison.OrdinalIgnoreCase));
+        private void ShowError(PSHostUserInterface hostUI)
+            if (_error != null)
+                hostUI.WriteErrorLine(_error);
+        private void ShowHelp(PSHostUserInterface hostUI, string? helpText)
+            if (helpText is null)
+            if (_showHelp)
+                hostUI.WriteLine();
+                hostUI.Write(helpText);
+                if (_showExtendedHelp)
+                    hostUI.Write(ManagedEntranceStrings.ExtendedHelp);
+        private void DisplayBanner(PSHostUserInterface hostUI, string? bannerText)
+            if (_showBanner && !_showHelp)
+                // If banner text is not supplied do nothing.
+                if (!string.IsNullOrEmpty(bannerText))
+                    hostUI.WriteLine(bannerText);
+                if (UpdatesNotification.CanNotifyUpdates)
+                    UpdatesNotification.ShowUpdateNotification(hostUI);
+        /// Processes all the command line parameters to ConsoleHost.  Returns the exit code to be used to terminate the process, or
+        /// Success to indicate that the program should continue running.
+        internal void Parse(string[] args)
+            if (_dirty)
+                throw new InvalidOperationException("This instance has already been used. Create a new instance.");
+            for (int i = 0; i < args.Length; i++)
+                ArgumentNullException.ThrowIfNull(args[i], CommandLineParameterParserStrings.NullElementInArgs);
+            // Indicates that we've called this method on this instance, and that when it's done, the state variables
+            // will reflect the parse.
+            _dirty = true;
+            ParseHelper(args);
+        private void ParseHelper(string[] args)
+            if (args.Length == 0)
+            bool noexitSeen = false;
+            for (int i = 0; i < args.Length; ++i)
+                (string switchKey, bool shouldBreak) switchKeyResults = GetSwitchKey(args, ref i, ref noexitSeen);
+                if (switchKeyResults.shouldBreak)
+                string switchKey = switchKeyResults.switchKey;
+                // If version is in the commandline, don't continue to look at any other parameters
+                if (MatchSwitch(switchKey, "version", "v"))
+                    _showVersion = true;
+                    _showBanner = false;
+                    _noInteractive = true;
+                    _skipUserInit = true;
+                    _noExit = false;
+                    ParametersUsed |= ParameterBitmap.Version;
+                if (MatchSwitch(switchKey, "help", "h") || MatchSwitch(switchKey, "?", "?"))
+                    _showHelp = true;
+                    _showExtendedHelp = true;
+                    _abortStartup = true;
+                    ParametersUsed |= ParameterBitmap.Help;
+                else if (MatchSwitch(switchKey, "login", "l"))
+                    // On Windows, '-Login' does nothing.
+                    // On *nix, '-Login' is already handled much earlier to improve startup performance, so we do nothing here.
+                    ParametersUsed |= ParameterBitmap.Login;
+                else if (MatchSwitch(switchKey, "noexit", "noe"))
+                    _noExit = true;
+                    noexitSeen = true;
+                    ParametersUsed |= ParameterBitmap.NoExit;
+                else if (MatchSwitch(switchKey, "noprofile", "nop"))
+                    ParametersUsed |= ParameterBitmap.NoProfile;
+                else if (MatchSwitch(switchKey, "nologo", "nol"))
+                    ParametersUsed |= ParameterBitmap.NoLogo;
+                else if (MatchSwitch(switchKey, "noninteractive", "noni"))
+                    ParametersUsed |= ParameterBitmap.NonInteractive;
+                else if (MatchSwitch(switchKey, "socketservermode", "so"))
+                    _socketServerMode = true;
+                    ParametersUsed |= ParameterBitmap.SocketServerMode;
+                else if (MatchSwitch(switchKey, "v2socketservermode", "v2so"))
+                    _v2SocketServerMode = true;
+                    ParametersUsed |= ParameterBitmap.V2SocketServerMode;
+                else if (MatchSwitch(switchKey, "servermode", "s"))
+                    _serverMode = true;
+                    ParametersUsed |= ParameterBitmap.ServerMode;
+                else if (MatchSwitch(switchKey, "namedpipeservermode", "nam"))
+                    _namedPipeServerMode = true;
+                    ParametersUsed |= ParameterBitmap.NamedPipeServerMode;
+                else if (MatchSwitch(switchKey, "sshservermode", "sshs"))
+                    _sshServerMode = true;
+                    ParametersUsed |= ParameterBitmap.SSHServerMode;
+                else if (MatchSwitch(switchKey, "noprofileloadtime", "noprofileloadtime"))
+                    _noProfileLoadTime = true;
+                    ParametersUsed |= ParameterBitmap.NoProfileLoadTime;
+                else if (MatchSwitch(switchKey, "interactive", "i"))
+                    _noInteractive = false;
+                    ParametersUsed |= ParameterBitmap.Interactive;
+                else if (MatchSwitch(switchKey, "configurationfile", "configurationfile"))
+                    if (i >= args.Length)
+                        SetCommandLineError(
+                            CommandLineParameterParserStrings.MissingConfigurationFileArgument);
+                    _configurationFile = args[i];
+                    ParametersUsed |= ParameterBitmap.ConfigurationFile;
+                else if (MatchSwitch(switchKey, "configurationname", "config"))
+                            CommandLineParameterParserStrings.MissingConfigurationNameArgument);
+                    _configurationName = args[i];
+                    ParametersUsed |= ParameterBitmap.ConfigurationName;
+                else if (MatchSwitch(switchKey, "custompipename", "cus"))
+                            CommandLineParameterParserStrings.MissingCustomPipeNameArgument);
+                    int maxNameLength = MaxNameLength();
+                    if (args[i].Length > maxNameLength)
+                                CommandLineParameterParserStrings.CustomPipeNameTooLong,
+                                maxNameLength,
+                                args[i],
+                                args[i].Length));
+                    _customPipeName = args[i];
+                    ParametersUsed |= ParameterBitmap.CustomPipeName;
+                else if (MatchSwitch(switchKey, "commandwithargs", "commandwithargs") || MatchSwitch(switchKey, "cwa", "cwa"))
+                    _commandHasArgs = true;
+                    if (!ParseCommand(args, ref i, noexitSeen, false))
+                    CollectPSArgs(args, ref i);
+                    ParametersUsed |= ParameterBitmap.CommandWithArgs;
+                else if (MatchSwitch(switchKey, "command", "c"))
+                    ParametersUsed |= ParameterBitmap.Command;
+                else if (MatchSwitch(switchKey, "windowstyle", "w"))
+                        CommandLineParameterParserStrings.WindowStyleArgumentNotImplemented);
+                            CommandLineParameterParserStrings.MissingWindowStyleArgument);
+                        _windowStyle = LanguagePrimitives.ConvertTo<ProcessWindowStyle>(args[i]);
+                            string.Format(CultureInfo.CurrentCulture, CommandLineParameterParserStrings.InvalidWindowStyleArgument, args[i], e.Message));
+                    ParametersUsed |= ParameterBitmap.WindowStyle;
+                else if (MatchSwitch(switchKey, "file", "f"))
+                    if (!ParseFile(args, ref i, noexitSeen))
+                    ParametersUsed |= ParameterBitmap.File;
+                else if (MatchSwitch(switchKey, "isswait", "isswait"))
+                    // Just toss this option, it was processed earlier in 'ManagedEntrance.Start()'.
+                else if (MatchSwitch(switchKey, "outputformat", "o") || MatchSwitch(switchKey, "of", "o"))
+                    ParseFormat(args, ref i, ref _outFormat, CommandLineParameterParserStrings.MissingOutputFormatParameter);
+                    _outputFormatSpecified = true;
+                    ParametersUsed |= ParameterBitmap.OutputFormat;
+                else if (MatchSwitch(switchKey, "inputformat", "inp") || MatchSwitch(switchKey, "if", "if"))
+                    ParseFormat(args, ref i, ref _inFormat, CommandLineParameterParserStrings.MissingInputFormatParameter);
+                    ParametersUsed |= ParameterBitmap.InputFormat;
+                else if (MatchSwitch(switchKey, "executionpolicy", "ex") || MatchSwitch(switchKey, "ep", "ep"))
+                    ParseExecutionPolicy(args, ref i, ref _executionPolicy, CommandLineParameterParserStrings.MissingExecutionPolicyParameter);
+                    ParametersUsed |= ParameterBitmap.ExecutionPolicy;
+                    var executionPolicy = GetExecutionPolicy(_executionPolicy);
+                    if (executionPolicy == ParameterBitmap.EPIncorrect)
+                            string.Format(CultureInfo.CurrentCulture, CommandLineParameterParserStrings.InvalidExecutionPolicyArgument, _executionPolicy),
+                            showHelp: true);
+                    ParametersUsed |= executionPolicy;
+                else if (MatchSwitch(switchKey, "encodedcommand", "e") || MatchSwitch(switchKey, "ec", "e"))
+                    _wasCommandEncoded = true;
+                    if (!ParseCommand(args, ref i, noexitSeen, true))
+                    ParametersUsed |= ParameterBitmap.EncodedCommand;
+                else if (MatchSwitch(switchKey, "encodedarguments", "encodeda") || MatchSwitch(switchKey, "ea", "ea"))
+                    if (!CollectArgs(args, ref i))
+                    ParametersUsed |= ParameterBitmap.EncodedArgument;
+                else if (MatchSwitch(switchKey, "settingsfile", "settings"))
+                    // Parse setting file arg and write error
+                    if (!TryParseSettingFileHelper(args, ++i))
+                    ParametersUsed |= ParameterBitmap.SettingsFile;
+                else if (MatchSwitch(switchKey, "sta", "sta"))
+                    if (!Platform.IsWindowsDesktop || !Platform.IsStaSupported)
+                            CommandLineParameterParserStrings.STANotImplemented);
+                        // -sta and -mta are mutually exclusive.
+                            CommandLineParameterParserStrings.MtaStaMutuallyExclusive);
+                    _staMode = true;
+                    ParametersUsed |= ParameterBitmap.STA;
+                else if (MatchSwitch(switchKey, "mta", "mta"))
+                            CommandLineParameterParserStrings.MTANotImplemented);
+                    _staMode = false;
+                    ParametersUsed |= ParameterBitmap.MTA;
+                else if (MatchSwitch(switchKey, "workingdirectory", "wo") || MatchSwitch(switchKey, "wd", "wd"))
+                            CommandLineParameterParserStrings.MissingWorkingDirectoryArgument);
+                    _workingDirectory = args[i];
+                    ParametersUsed |= ParameterBitmap.WorkingDirectory;
+                else if (MatchSwitch(switchKey, "removeworkingdirectorytrailingcharacter", "removeworkingdirectorytrailingcharacter"))
+                    _removeWorkingDirectoryTrailingCharacter = true;
+                else if (MatchSwitch(switchKey, "token", "to"))
+                            string.Format(CultureInfo.CurrentCulture, CommandLineParameterParserStrings.MissingMandatoryArgument, "-Token"));
+                    _token = args[i];
+                    // Not adding anything to ParametersUsed, because it is required with V2 socket server mode
+                    // So, we can assume it based on that bit
+                else if (MatchSwitch(switchKey, "utctimestamp", "utc"))
+                            string.Format(CultureInfo.CurrentCulture, CommandLineParameterParserStrings.MissingMandatoryArgument, "-UTCTimestamp"));
+                    // Parse as iso8601UtcString
+                    _utcTimestamp = DateTimeOffset.ParseExact(args[i], "yyyy-MM-dd'T'HH:mm:ssK", CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind);
+                    // The first parameter we fail to recognize marks the beginning of the file string.
+                    // default to filename being the next argument.
+                    ((_exitCode == ConsoleHost.ExitCodeBadCommandLineParameter) && _abortStartup)
+                || (_exitCode == ConsoleHost.ExitCodeSuccess),
+                "if exit code is failure, then abortstartup should be true");
+        internal void ShowErrorHelpBanner(PSHostUserInterface hostUI, string? bannerText, string? helpText)
+            ShowError(hostUI);
+            ShowHelp(hostUI, helpText);
+            DisplayBanner(hostUI, bannerText);
+        private void SetCommandLineError(string msg, bool showHelp = false, bool showBanner = false)
+                throw new ArgumentException(nameof(SetCommandLineError), nameof(_error));
+            _error = msg;
+            _showHelp = showHelp;
+            _showBanner = showBanner;
+            _exitCode = ConsoleHost.ExitCodeBadCommandLineParameter;
+        private void ParseFormat(string[] args, ref int i, ref Serialization.DataFormat format, string resourceStr)
+            StringBuilder sb = new StringBuilder();
+            foreach (string s in Enum.GetNames<Serialization.DataFormat>())
+                sb.Append(s);
+                sb.Append(Environment.NewLine);
+                        resourceStr,
+                        sb.ToString()),
+                format = (Serialization.DataFormat)Enum.Parse(typeof(Serialization.DataFormat), args[i], true);
+                        CommandLineParameterParserStrings.BadFormatParameterValue,
+        private void ParseExecutionPolicy(string[] args, ref int i, ref string? executionPolicy, string resourceStr)
+                SetCommandLineError(resourceStr, showHelp: true);
+            executionPolicy = args[i];
+        // Process file execution. We don't need to worry about checking -command
+        // since if -command comes before -file, -file will be treated as part
+        // of the script to evaluate. If -file comes before -command, it will
+        // treat -command as an argument to the script...
+        private bool ParseFile(string[] args, ref int i, bool noexitSeen)
+                    CommandLineParameterParserStrings.MissingFileArgument,
+                    showHelp: true,
+                    showBanner: false);
+            // Don't show the startup banner unless -noexit has been specified.
+            if (!noexitSeen)
+            // Process interactive input...
+            if (args[i] == "-")
+                // the arg to -file is -, which is secret code for "read the commands from stdin with prompts"
+                _explicitReadCommandsFromStdin = true;
+                _noPrompt = false;
+                // Exit on script completion unless -noexit was specified...
+                // We need to get the full path to the script because it will be
+                // executed after the profiles are run and they may change the current
+                // directory.
+                    _file = NormalizeFilePath(args[i]);
+                    // Catch all exceptions - we're just going to exit anyway so there's
+                    // no issue of the system being destabilized.
+                        string.Format(CultureInfo.CurrentCulture, CommandLineParameterParserStrings.InvalidFileArgument, args[i], e.Message),
+                if (!System.IO.File.Exists(_file))
+                    if (args[i].StartsWith('-') && args[i].Length > 1)
+                        string param = args[i].Substring(1, args[i].Length - 1);
+                        StringBuilder possibleParameters = new StringBuilder();
+                        foreach (string validParameter in s_validParameters)
+                            if (validParameter.Contains(param, StringComparison.OrdinalIgnoreCase))
+                                possibleParameters.Append("\n  -");
+                                possibleParameters.Append(validParameter);
+                        if (possibleParameters.Length > 0)
+                                string.Format(CultureInfo.CurrentCulture, CommandLineParameterParserStrings.InvalidArgument, args[i])
+                                    + possibleParameters.ToString(),
+                        string.Format(CultureInfo.CurrentCulture, CommandLineParameterParserStrings.ArgumentFileDoesNotExist, args[i]),
+                // Only do the .ps1 extension check on Windows since shebang is not supported
+                if (!_file.EndsWith(".ps1", StringComparison.OrdinalIgnoreCase))
+                    SetCommandLineError(string.Format(CultureInfo.CurrentCulture, CommandLineParameterParserStrings.InvalidFileArgumentExtension, args[i]));
+        private void CollectPSArgs(string[] args, ref int i)
+            // Try parse '$true', 'true', '$false' and 'false' values.
+            static object ConvertToBoolIfPossible(string arg)
+                // Before parsing we skip '$' if present.
+                return arg.Length > 0 && bool.TryParse(arg.AsSpan(arg[0] == '$' ? 1 : 0), out bool boolValue)
+                    ? (object)boolValue
+                    : (object)arg;
+            string? pendingParameter = null;
+            while (i < args.Length)
+                string arg = args[i];
+                // If there was a pending parameter, add a named parameter
+                // using the pending parameter and current argument
+                if (pendingParameter != null)
+                    _collectedArgs.Add(new CommandParameter(pendingParameter, arg));
+                    pendingParameter = null;
+                else if (!string.IsNullOrEmpty(arg) && CharExtensions.IsDash(arg[0]) && arg.Length > 1)
+                    int offset = arg.IndexOf(':');
+                    if (offset >= 0)
+                        if (offset == arg.Length - 1)
+                            pendingParameter = arg.TrimEnd(':');
+                            string argValue = arg.Substring(offset + 1);
+                            string argName = arg.Substring(0, offset);
+                            _collectedArgs.Add(new CommandParameter(argName, ConvertToBoolIfPossible(argValue)));
+                        _collectedArgs.Add(new CommandParameter(arg));
+                    _collectedArgs.Add(new CommandParameter(null, arg));
+        private bool ParseCommand(string[] args, ref int i, bool noexitSeen, bool isEncoded)
+            if (_commandLineCommand != null)
+                // we've already set the command, so squawk
+                SetCommandLineError(CommandLineParameterParserStrings.CommandAlreadySpecified, showHelp: true);
+                SetCommandLineError(CommandLineParameterParserStrings.MissingCommandParameter, showHelp: true);
+            if (isEncoded)
+                    _commandLineCommand = StringToBase64Converter.Base64ToString(args[i]);
+                // decoding failed
+                    SetCommandLineError(CommandLineParameterParserStrings.BadCommandValue, showHelp: true);
+            else if (args[i] == "-")
+                // the arg to -command is -, which is secret code for "read the commands from stdin with no prompts"
+                _noPrompt = true;
+                if (i != args.Length)
+                    // there are more parameters to -command than -, which is an error.
+                    SetCommandLineError(CommandLineParameterParserStrings.TooManyParametersToCommand, showHelp: true);
+                if (InputRedirectedTestHook.HasValue ? !InputRedirectedTestHook.Value : !Console.IsInputRedirected)
+                    SetCommandLineError(CommandLineParameterParserStrings.StdinNotRedirected, showHelp: true);
+                if (_commandHasArgs)
+                    _commandLineCommand = args[i];
+                    _commandLineCommand = string.Join(' ', args, i, args.Length - i);
+                    i = args.Length;
+            if (!noexitSeen && !_explicitReadCommandsFromStdin)
+                // don't reset this if they've already specified -noexit
+        private bool CollectArgs(string[] args, ref int i)
+            if (_collectedArgs.Count != 0)
+                SetCommandLineError(CommandLineParameterParserStrings.ArgsAlreadySpecified, showHelp: true);
+                SetCommandLineError(CommandLineParameterParserStrings.MissingArgsValue, showHelp: true);
+                object[] a = StringToBase64Converter.Base64ToArgsConverter(args[i]);
+                if (a != null)
+                    foreach (object obj in a)
+                        _collectedArgs.Add(new CommandParameter(null, obj));
+                SetCommandLineError(CommandLineParameterParserStrings.BadArgsValue, showHelp: true);
+        private bool _socketServerMode;
+        private bool _v2SocketServerMode;
+        private bool _serverMode;
+        private bool _namedPipeServerMode;
+        private bool _sshServerMode;
+        private bool _noProfileLoadTime;
+        private bool _showVersion;
+        private string? _configurationFile;
+        private string? _configurationName;
+        private string? _error;
+        private bool _showHelp;
+        private bool _showExtendedHelp;
+        private bool _showBanner = true;
+        private bool _noInteractive;
+        private bool _abortStartup;
+        private bool _skipUserInit;
+        private string? _customPipeName;
+        private bool? _staMode = null;
+        private bool _noExit = true;
+        private bool _explicitReadCommandsFromStdin;
+        private bool _noPrompt;
+        private string? _commandLineCommand;
+        private bool _wasCommandEncoded;
+        private bool _commandHasArgs;
+        private uint _exitCode = ConsoleHost.ExitCodeSuccess;
+        private bool _dirty;
+        private Serialization.DataFormat _outFormat = Serialization.DataFormat.Text;
+        private bool _outputFormatSpecified = false;
+        private Serialization.DataFormat _inFormat = Serialization.DataFormat.Text;
+        private readonly Collection<CommandParameter> _collectedArgs = new Collection<CommandParameter>();
+        private string? _file;
+        private string? _executionPolicy;
+        private string? _settingsFile;
+        private string? _workingDirectory;
+        private string? _token;
+        private DateTimeOffset? _utcTimestamp;
+        private ProcessWindowStyle? _windowStyle;
+        private bool _removeWorkingDirectoryTrailingCharacter = false;
+}   // namespace

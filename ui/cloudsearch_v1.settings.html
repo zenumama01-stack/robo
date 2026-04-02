@@ -1,0 +1,21 @@
+<h1><a href="cloudsearch_v1.html">Cloud Search API</a> . <a href="cloudsearch_v1.settings.html">settings</a></h1>
+  <code><a href="cloudsearch_v1.settings.datasources.html">datasources()</a></code>
+  <code><a href="cloudsearch_v1.settings.searchapplications.html">searchapplications()</a></code>
+<p class="firstline">Returns the searchapplications Resource.</p>
+  <code><a href="#getCustomer">getCustomer(x__xgafv=None)</a></code></p>
+<p class="firstline">Get customer settings. **Note:** This API requires an admin account to execute.</p>
+  <code><a href="#updateCustomer">updateCustomer(body=None, updateMask=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Update customer settings. **Note:** This API requires an admin account to execute.</p>
+    <code class="details" id="getCustomer">getCustomer(x__xgafv=None)</code>
+  <pre>Get customer settings. **Note:** This API requires an admin account to execute.
+    { # Represents settings at a customer level.
+  &quot;auditLoggingSettings&quot;: { # Represents the settings for Cloud audit logging # Audit Logging settings for the customer. If update_mask is empty then this field will be updated based on UpdateCustomerSettings request.
+    &quot;logAdminReadActions&quot;: True or False, # Indicates whether audit logging is on/off for admin activity read APIs i.e. Get/List DataSources, Get/List SearchApplications etc.
+    &quot;logDataReadActions&quot;: True or False, # Indicates whether audit logging is on/off for data access read APIs i.e. ListItems, GetItem etc.
+    &quot;logDataWriteActions&quot;: True or False, # Indicates whether audit logging is on/off for data access write APIs i.e. IndexItem etc.
+    &quot;project&quot;: &quot;A String&quot;, # The resource name of the GCP Project to store audit logs. Cloud audit logging will be enabled after project_name has been updated through CustomerService. Format: projects/{project_id}
+  &quot;vpcSettings&quot;: { # VPC SC settings for the customer. If update_mask is empty then this field will be updated based on UpdateCustomerSettings request.
+    &quot;project&quot;: &quot;A String&quot;, # The resource name of the GCP Project to be used for VPC SC policy check. VPC security settings on this project will be honored for Cloud Search APIs after project_name has been updated through CustomerService. Format: projects/{project_id}
+    <code class="details" id="updateCustomer">updateCustomer(body=None, updateMask=None, x__xgafv=None)</code>
+  <pre>Update customer settings. **Note:** This API requires an admin account to execute.
+  updateMask: string, Update mask to control which fields get updated. If you specify a field in the update_mask but don&#x27;t specify its value here, that field will be cleared. If the mask is not present or empty, all fields will be updated. Currently supported field paths: vpc_settings and audit_logging_settings

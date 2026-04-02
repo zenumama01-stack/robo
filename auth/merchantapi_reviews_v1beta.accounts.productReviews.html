@@ -1,0 +1,59 @@
+<h1><a href="merchantapi_reviews_v1beta.html">Merchant API</a> . <a href="merchantapi_reviews_v1beta.accounts.html">accounts</a> . <a href="merchantapi_reviews_v1beta.accounts.productReviews.html">productReviews</a></h1>
+<p class="firstline">Deletes a product review.</p>
+<p class="firstline">Gets a product review.</p>
+<p class="firstline">Inserts a product review.</p>
+<p class="firstline">Lists product reviews.</p>
+  <pre>Deletes a product review.
+  name: string, Required. The ID of the Product review. Format: accounts/{account}/productReviews/{productReview} (required)
+  <pre>Gets a product review.
+  name: string, Required. The ID of the merchant review. Format: accounts/{account}/productReviews/{productReview} (required)
+    { # A review for a product. For more information, see [Introduction to Product Review Feeds](https://developers.google.com/product-review-feeds)
+  &quot;customAttributes&quot;: [ # Optional. A list of custom (merchant-provided) attributes.
+  &quot;dataSource&quot;: &quot;A String&quot;, # Output only. The primary data source of the product review.
+  &quot;name&quot;: &quot;A String&quot;, # Identifier. The name of the product review. Format: `&quot;{productreview.name=accounts/{account}/productReviews/{productReview}}&quot;`
+  &quot;productReviewAttributes&quot;: { # Attributes. # Optional. A list of product review attributes.
+    &quot;aggregatorName&quot;: &quot;A String&quot;, # Optional. The name of the aggregator of the product reviews. A publisher may use a reviews aggregator to manage reviews and provide the feeds. This element indicates the use of an aggregator and contains information about the aggregator.
+    &quot;asins&quot;: [ # Optional. Contains ASINs (Amazon Standard Identification Numbers) associated with a product.
+    &quot;brands&quot;: [ # Optional. Contains brand names associated with a product.
+    &quot;cons&quot;: [ # Optional. Contains the disadvantages based on the opinion of the reviewer. Omit boilerplate text like &quot;con:&quot; unless it was written by the reviewer.
+    &quot;content&quot;: &quot;A String&quot;, # Optional. The content of the review. If empty, the content might still get populated from pros and cons.
+    &quot;gtins&quot;: [ # Optional. Contains GTINs (global trade item numbers) associated with a product. Sub-types of GTINs (e.g. UPC, EAN, ISBN, JAN) are supported.
+    &quot;isIncentivizedReview&quot;: True or False, # Optional. Indicates whether the review is incentivized.
+    &quot;isSpam&quot;: True or False, # Optional. Indicates whether the review is marked as spam in the publisher&#x27;s system.
+    &quot;isVerifiedPurchase&quot;: True or False, # Optional. Indicates whether the reviewer&#x27;s purchase is verified.
+    &quot;maxRating&quot;: &quot;A String&quot;, # Optional. The maximum possible number for the rating. The value of the max rating must be greater than the value of the min attribute.
+    &quot;minRating&quot;: &quot;A String&quot;, # Optional. Contains the ratings associated with the review. The minimum possible number for the rating. This should be the worst possible rating and should not be a value for no rating.
+    &quot;mpns&quot;: [ # Optional. Contains MPNs (manufacturer part numbers) associated with a product.
+    &quot;productLinks&quot;: [ # Optional. The URI of the product. This URI can have the same value as the `review_link` element, if the review URI and the product URI are the same.
+    &quot;productNames&quot;: [ # Optional. Descriptive name of a product.
+    &quot;pros&quot;: [ # Optional. Contains the advantages based on the opinion of the reviewer. Omit boilerplate text like &quot;pro:&quot; unless it was written by the reviewer.
+    &quot;publisherFavicon&quot;: &quot;A String&quot;, # Optional. A link to the company favicon of the publisher. The image dimensions should be favicon size: 16x16 pixels. The image format should be GIF, JPG or PNG.
+    &quot;publisherName&quot;: &quot;A String&quot;, # Optional. The name of the publisher of the product reviews. The information about the publisher, which may be a retailer, manufacturer, reviews service company, or any entity that publishes product reviews.
+    &quot;rating&quot;: 3.14, # Optional. The reviewer&#x27;s overall rating of the product.
+    &quot;reviewCountry&quot;: &quot;A String&quot;, # Optional. The country of the review defined by ISO 3166-1 Alpha-2 Country Code.
+    &quot;reviewLink&quot;: { # The URI of the review landing page. # Optional. The URI of the review landing page.
+      &quot;link&quot;: &quot;A String&quot;, # Optional. The URI of the review landing page. For example: `http://www.example.com/review_5.html`.
+      &quot;type&quot;: &quot;A String&quot;, # Optional. Type of the review URI.
+    &quot;reviewerId&quot;: &quot;A String&quot;, # Optional. The author of the product review. A permanent, unique identifier for the author of the review in the publisher&#x27;s system.
+    &quot;reviewerImageLinks&quot;: [ # Optional. A URI to an image of the reviewed product created by the review author. The URI does not have to end with an image file extension.
+    &quot;reviewerIsAnonymous&quot;: True or False, # Optional. Set to true if the reviewer should remain anonymous.
+    &quot;reviewerUsername&quot;: &quot;A String&quot;, # Optional. The name of the reviewer of the product review.
+    &quot;skus&quot;: [ # Optional. Contains SKUs (stock keeping units) associated with a product. Often this matches the product Offer Id in the product feed.
+    &quot;subclientName&quot;: &quot;A String&quot;, # Optional. The name of the subclient of the product reviews. The subclient is an identifier of the product review source. It should be equivalent to the directory provided in the file data source path.
+    &quot;transactionId&quot;: &quot;A String&quot;, # Optional. A permanent, unique identifier for the transaction associated with the review in the publisher&#x27;s system. This ID can be used to indicate that multiple reviews are associated with the same transaction.
+  &quot;productReviewId&quot;: &quot;A String&quot;, # Required. The permanent, unique identifier for the product review in the publisher’s system.
+  &quot;productReviewStatus&quot;: { # Product review status. # Output only. The status of a product review, data validation issues, that is, information about a product review computed asynchronously.
+    &quot;destinationStatuses&quot;: [ # Output only. The intended destinations for the product review.
+      { # The destination status of the product review status.
+    &quot;itemLevelIssues&quot;: [ # Output only. A list of all issues associated with the product review.
+      { # The ItemLevelIssue of the product review status.
+        &quot;severity&quot;: &quot;A String&quot;, # Output only. How this issue affects serving of the product review.
+  <pre>Inserts a product review.
+  parent: string, Required. The account where the product review will be inserted. Format: accounts/{account} (required)
+  dataSource: string, Required. Format: `accounts/{account}/dataSources/{datasource}`.
+  <pre>Lists product reviews.
+  parent: string, Required. The account to list product reviews for. Format: accounts/{account} (required)
+  pageSize: integer, Optional. The maximum number of products to return. The service may return fewer than this value.
+  pageToken: string, Optional. A page token, received from a previous `ListProductReviews` call. Provide this to retrieve the subsequent page. When paginating, all other parameters provided to `ListProductReviews` must match the call that provided the page token.
+    { # response message for the ListProductReviews method.
+  &quot;productReviews&quot;: [ # The product review.

@@ -1,0 +1,34 @@
+<h1><a href="firebaseappdistribution_v1.html">Firebase App Distribution API</a> . <a href="firebaseappdistribution_v1.projects.html">projects</a> . <a href="firebaseappdistribution_v1.projects.testers.html">testers</a></h1>
+  <code><a href="#batchAdd">batchAdd(project, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Batch adds testers. This call adds testers for the specified emails if they don't already exist. Returns all testers specified in the request, including newly created and previously existing testers. This action is idempotent.</p>
+  <code><a href="#batchRemove">batchRemove(project, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Batch removes testers. If found, this call deletes testers for the specified emails. Returns all deleted testers.</p>
+<p class="firstline">Lists testers and their resource ids.</p>
+<p class="firstline">Update a tester. If the testers joins a group they gain access to all releases that the group has access to.</p>
+    <code class="details" id="batchAdd">batchAdd(project, body=None, x__xgafv=None)</code>
+  <pre>Batch adds testers. This call adds testers for the specified emails if they don&#x27;t already exist. Returns all testers specified in the request, including newly created and previously existing testers. This action is idempotent.
+  project: string, Required. The name of the project resource. Format: `projects/{project_number}` (required)
+{ # The Request message for batch adding testers
+  &quot;emails&quot;: [ # Required. The email addresses of the tester resources to create. A maximum of 999 and a minimum of 1 tester can be created in a batch.
+    { # The Response message for `BatchAddTesters`.
+  &quot;testers&quot;: [ # The testers which are created and/or already exist
+    { # A person that can be invited to test apps in a Firebase project.
+      &quot;displayName&quot;: &quot;A String&quot;, # The name of the tester associated with the Google account used to accept the tester invitation.
+      &quot;groups&quot;: [ # The resource names of the groups this tester belongs to.
+      &quot;lastActivityTime&quot;: &quot;A String&quot;, # Output only. The time the tester was last active. This is the most recent time the tester installed one of the apps. If they&#x27;ve never installed one or if the release no longer exists, this is the time the tester was added to the project.
+      &quot;name&quot;: &quot;A String&quot;, # The name of the tester resource. Format: `projects/{project_number}/testers/{email_address}`
+    <code class="details" id="batchRemove">batchRemove(project, body=None, x__xgafv=None)</code>
+  <pre>Batch removes testers. If found, this call deletes testers for the specified emails. Returns all deleted testers.
+{ # The request message for `BatchRemoveTesters`.
+  &quot;emails&quot;: [ # Required. The email addresses of the tester resources to removed. A maximum of 999 and a minimum of 1 testers can be deleted in a batch.
+    { # The response message for `BatchRemoveTesters`
+  &quot;emails&quot;: [ # List of deleted tester emails
+  <pre>Lists testers and their resource ids.
+  parent: string, Required. The name of the project resource, which is the parent of the tester resources. Format: `projects/{project_number}` (required)
+  filter: string, Optional. The expression to filter testers listed in the response. To learn more about filtering, refer to [Google&#x27;s AIP-160 standard](http://aip.dev/160). Supported fields: - `name` - `displayName` - `groups` Example: - `name = &quot;projects/-/testers/*@example.com&quot;` - `displayName = &quot;Joe Sixpack&quot;` - `groups = &quot;projects/*/groups/qa-team&quot;`
+  pageSize: integer, Optional. The maximum number of testers to return. The service may return fewer than this value. The valid range is [1-1000]; If unspecified (0), at most 10 testers are returned. Values above 1000 are coerced to 1000.
+  pageToken: string, Optional. A page token, received from a previous `ListTesters` call. Provide this to retrieve the subsequent page. When paginating, all other parameters provided to `ListTesters` must match the call that provided the page token.
+    { # The response message for `ListTesters`.
+  &quot;testers&quot;: [ # The testers listed.
+  <pre>Update a tester. If the testers joins a group they gain access to all releases that the group has access to.
+  name: string, The name of the tester resource. Format: `projects/{project_number}/testers/{email_address}` (required)

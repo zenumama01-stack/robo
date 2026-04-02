@@ -1,0 +1,60 @@
+<h1><a href="beyondcorp_v1.html">BeyondCorp API</a> . <a href="beyondcorp_v1.projects.html">projects</a> . <a href="beyondcorp_v1.projects.locations.html">locations</a> . <a href="beyondcorp_v1.projects.locations.appConnectors.html">appConnectors</a></h1>
+  <code><a href="#create">create(parent, appConnectorId=None, body=None, requestId=None, validateOnly=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Creates a new AppConnector in a given project and location.</p>
+<p class="firstline">Deletes a single AppConnector.</p>
+<p class="firstline">Gets details of a single AppConnector.</p>
+<p class="firstline">Lists AppConnectors in a given project and location.</p>
+  <code><a href="#patch">patch(name, body=None, requestId=None, updateMask=None, validateOnly=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Updates the parameters of a single AppConnector.</p>
+  <code><a href="#reportStatus">reportStatus(appConnector, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Report status for a given connector.</p>
+  <code><a href="#resolveInstanceConfig">resolveInstanceConfig(appConnector, x__xgafv=None)</a></code></p>
+<p class="firstline">Gets instance configuration for a given AppConnector. An internal method called by a AppConnector to get its container config.</p>
+    <code class="details" id="create">create(parent, appConnectorId=None, body=None, requestId=None, validateOnly=None, x__xgafv=None)</code>
+  <pre>Creates a new AppConnector in a given project and location.
+  parent: string, Required. The resource project name of the AppConnector location using the form: `projects/{project_id}/locations/{location_id}` (required)
+{ # A BeyondCorp connector resource that represents an application facing component deployed proximal to and with direct access to the application instances. It is used to establish connectivity between the remote enterprise environment and GCP. It initiates connections to the applications and can proxy the data from users over the connection.
+  &quot;displayName&quot;: &quot;A String&quot;, # Optional. An arbitrary user-provided name for the AppConnector. Cannot exceed 64 characters.
+  &quot;name&quot;: &quot;A String&quot;, # Required. Unique resource name of the AppConnector. The name is ignored when creating a AppConnector.
+  &quot;principalInfo&quot;: { # PrincipalInfo represents an Identity oneof. # Required. Principal information about the Identity of the AppConnector.
+    &quot;serviceAccount&quot;: { # ServiceAccount represents a GCP service account. # A GCP service account.
+  &quot;resourceInfo&quot;: { # ResourceInfo represents the information/status of an app connector resource. Such as: - remote_agent - container - runtime - appgateway - appconnector - appconnection - tunnel - logagent # Optional. Resource info of the connector.
+    &quot;id&quot;: &quot;A String&quot;, # Required. Unique Id for the resource.
+    &quot;resource&quot;: { # Specific details for the resource. This is for internal use only.
+    &quot;status&quot;: &quot;A String&quot;, # Overall health status. Overall status is derived based on the status of each sub level resources.
+    &quot;sub&quot;: [ # List of Info for the sub level resources.
+      # Object with schema name: GoogleCloudBeyondcorpAppconnectorsV1ResourceInfo
+    &quot;time&quot;: &quot;A String&quot;, # The timestamp to collect the info. It is suggested to be set by the topmost level resource only.
+  &quot;state&quot;: &quot;A String&quot;, # Output only. The current state of the AppConnector.
+  appConnectorId: string, Optional. User-settable AppConnector resource ID. * Must start with a letter. * Must contain between 4-63 characters from `/a-z-/`. * Must end with a number or a letter.
+  <pre>Deletes a single AppConnector.
+  name: string, Required. BeyondCorp AppConnector name using the form: `projects/{project_id}/locations/{location_id}/appConnectors/{app_connector_id}` (required)
+  <pre>Gets details of a single AppConnector.
+  <pre>Lists AppConnectors in a given project and location.
+  parent: string, Required. The resource name of the AppConnector location using the form: `projects/{project_id}/locations/{location_id}` (required)
+  pageToken: string, Optional. The next_page_token value returned from a previous ListAppConnectorsRequest, if any.
+    { # Response message for BeyondCorp.ListAppConnectors.
+  &quot;appConnectors&quot;: [ # A list of BeyondCorp AppConnectors in the project.
+    <code class="details" id="patch">patch(name, body=None, requestId=None, updateMask=None, validateOnly=None, x__xgafv=None)</code>
+  <pre>Updates the parameters of a single AppConnector.
+  name: string, Required. Unique resource name of the AppConnector. The name is ignored when creating a AppConnector. (required)
+  updateMask: string, Required. Mask of fields to update. At least one path must be supplied in this field. The elements of the repeated paths field may only include these fields from [BeyondCorp.AppConnector]: * `labels` * `display_name`
+    <code class="details" id="reportStatus">reportStatus(appConnector, body=None, x__xgafv=None)</code>
+  <pre>Report status for a given connector.
+  appConnector: string, Required. BeyondCorp Connector name using the form: `projects/{project_id}/locations/{location_id}/connectors/{connector}` (required)
+{ # Request report the connector status.
+  &quot;resourceInfo&quot;: { # ResourceInfo represents the information/status of an app connector resource. Such as: - remote_agent - container - runtime - appgateway - appconnector - appconnection - tunnel - logagent # Required. Resource info of the connector.
+  &quot;validateOnly&quot;: True or False, # Optional. If set, validates request by executing a dry-run which would not alter the resource in any way.
+    <code class="details" id="resolveInstanceConfig">resolveInstanceConfig(appConnector, x__xgafv=None)</code>
+  <pre>Gets instance configuration for a given AppConnector. An internal method called by a AppConnector to get its container config.
+  appConnector: string, Required. BeyondCorp AppConnector name using the form: `projects/{project_id}/locations/{location_id}/appConnectors/{app_connector}` (required)
+    { # Response message for BeyondCorp.ResolveInstanceConfig.
+  &quot;instanceConfig&quot;: { # AppConnectorInstanceConfig defines the instance config of a AppConnector. # AppConnectorInstanceConfig.
+    &quot;imageConfig&quot;: { # ImageConfig defines the control plane images to run. # ImageConfig defines the GCR images to run for the remote agent&#x27;s control plane.
+      &quot;stableImage&quot;: &quot;A String&quot;, # The stable image that the remote agent will fallback to if the target image fails. Format would be a gcr image path, e.g.: gcr.io/PROJECT-ID/my-image:tag1
+      &quot;targetImage&quot;: &quot;A String&quot;, # The initial image the remote agent will attempt to run for the control plane. Format would be a gcr image path, e.g.: gcr.io/PROJECT-ID/my-image:tag1
+    &quot;instanceConfig&quot;: { # The SLM instance agent configuration.
+    &quot;notificationConfig&quot;: { # NotificationConfig defines the mechanisms to notify instance agent. # NotificationConfig defines the notification mechanism that the remote instance should subscribe to in order to receive notification.
+      &quot;pubsubNotification&quot;: { # The configuration for Pub/Sub messaging for the AppConnector. # Cloud Pub/Sub Configuration to receive notifications.
+        &quot;pubsubSubscription&quot;: &quot;A String&quot;, # The Pub/Sub subscription the AppConnector uses to receive notifications.
+    &quot;sequenceNumber&quot;: &quot;A String&quot;, # Required. A monotonically increasing number generated and maintained by the API provider. Every time a config changes in the backend, the sequenceNumber should be bumped up to reflect the change.

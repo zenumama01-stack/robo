@@ -1,0 +1,22 @@
+    <!-- Key Information Section -->
+        SectionKey="keyInformation"
+        SectionName="Key Information"
+            FieldName="Hash"
+    <!-- Ownership Section -->
+        SectionKey="ownership"
+        SectionName="Ownership"
+            FieldName="CreatedByUserID"
+    <!-- Status & Usage Section -->
+        SectionKey="statusUsage"
+        SectionName="Status & Usage"
+            FieldName="LastUsedAt"
+                [Params]="BuildRelationshipViewParamsByEntityName('MJ: API Key Applications','APIKeyID')"
+    <!-- MJ: API Key Scopes Section -->
+        SectionKey="mJAPIKeyScopes"
+        SectionName="MJ: API Key Scopes"
+        [BadgeCount]="GetSectionRowCount('mJAPIKeyScopes')"
+                [Params]="BuildRelationshipViewParamsByEntityName('MJ: API Key Scopes','APIKeyID')"
+                [NewRecordValues]="NewRecordValues('MJ: API Key Scopes')"
+                [AllowLoad]="IsSectionExpanded('mJAPIKeyScopes')"
+                (AfterDataLoad)="SetSectionRowCount('mJAPIKeyScopes', $event.totalRowCount)"
+                [Params]="BuildRelationshipViewParamsByEntityName('MJ: API Key Usage Logs','APIKeyID')"

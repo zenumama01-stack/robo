@@ -1,0 +1,97 @@
+<h1><a href="connectors_v1.html">Connectors API</a> . <a href="connectors_v1.projects.html">projects</a> . <a href="connectors_v1.projects.locations.html">locations</a> . <a href="connectors_v1.projects.locations.connections.html">connections</a> . <a href="connectors_v1.projects.locations.connections.connectionSchemaMetadata.html">connectionSchemaMetadata</a></h1>
+  <code><a href="#getAction">getAction(name, actionId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Get action.</p>
+  <code><a href="#getEntityType">getEntityType(name, entityId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Get entity type.</p>
+  <code><a href="#listActions">listActions(name, filter=None, pageSize=None, pageToken=None, view=None, x__xgafv=None)</a></code></p>
+<p class="firstline">List actions.</p>
+  <code><a href="#listActions_next">listActions_next()</a></code></p>
+  <code><a href="#listEntityTypes">listEntityTypes(name, filter=None, pageSize=None, pageToken=None, view=None, x__xgafv=None)</a></code></p>
+<p class="firstline">List entity types.</p>
+  <code><a href="#listEntityTypes_next">listEntityTypes_next()</a></code></p>
+<p class="firstline">Refresh runtime schema of a connection.</p>
+    <code class="details" id="getAction">getAction(name, actionId=None, x__xgafv=None)</code>
+  <pre>Get action.
+  name: string, Required. Resource name format: projects/{project}/locations/{location}/connections/{connection}/connectionSchemaMetadata (required)
+  actionId: string, Required. Id of the action.
+    <code class="details" id="getEntityType">getEntityType(name, entityId=None, x__xgafv=None)</code>
+  <pre>Get entity type.
+  entityId: string, Required. Id of the entity type.
+    <code class="details" id="listActions">listActions(name, filter=None, pageSize=None, pageToken=None, view=None, x__xgafv=None)</code>
+  <pre>List actions.
+  name: string, Required. Resource name format. projects/{project}/locations/{location}/connections/{connection}/connectionSchemaMetadata (required)
+  filter: string, Required. Filter Wildcards are not supported in the filter currently.
+  pageSize: integer, Page size. If unspecified, at most 50 actions will be returned.
+  view: string, Specifies which fields are returned in response. Defaults to BASIC view.
+      VIEW_UNSPECIFIED - 
+      BASIC - 
+    { # Response message for ListActions API
+  &quot;actions&quot;: [ # list of actions
+    { # Schema of a runtime action.
+      &quot;action&quot;: &quot;A String&quot;, # Output only. Name of the action.
+      &quot;description&quot;: &quot;A String&quot;, # Output only. Brief Description of action
+      &quot;displayName&quot;: &quot;A String&quot;, # Output only. Display Name of action to be shown on client side
+      &quot;inputJsonSchema&quot;: { # JsonSchema representation of schema metadata # Output only. JsonSchema representation of this action&#x27;s input metadata
+        &quot;additionalDetails&quot;: { # Additional details apart from standard json schema fields, this gives flexibility to store metadata about the schema
+        &quot;default&quot;: &quot;&quot;, # The default value of the field or object described by this schema.
+        &quot;description&quot;: &quot;A String&quot;, # A description of this schema.
+        &quot;enum&quot;: [ # Possible values for an enumeration. This works in conjunction with `type` to represent types with a fixed set of legal values
+        &quot;exclusiveMaximum&quot;: True or False, # Whether the maximum number value is exclusive.
+        &quot;exclusiveMinimum&quot;: True or False, # Whether the minimum number value is exclusive.
+        &quot;format&quot;: &quot;A String&quot;, # Format of the value as per https://json-schema.org/understanding-json-schema/reference/string.html#format
+        &quot;items&quot;: # Object with schema name: JsonSchema # Schema that applies to array values, applicable only if this is of type `array`.
+        &quot;jdbcType&quot;: &quot;A String&quot;, # JDBC datatype of the field.
+        &quot;maxItems&quot;: 42, # Maximum number of items in the array field.
+        &quot;maxLength&quot;: 42, # Maximum length of the string field.
+        &quot;maximum&quot;: &quot;&quot;, # Maximum value of the number field.
+        &quot;minItems&quot;: 42, # Minimum number of items in the array field.
+        &quot;minLength&quot;: 42, # Minimum length of the string field.
+        &quot;minimum&quot;: &quot;&quot;, # Minimum value of the number field.
+        &quot;pattern&quot;: &quot;A String&quot;, # Regex pattern of the string field. This is a string value that describes the regular expression that the string value should match.
+        &quot;properties&quot;: { # The child schemas, applicable only if this is of type `object`. The key is the name of the property and the value is the json schema that describes that property
+          &quot;a_key&quot;: # Object with schema name: JsonSchema
+        &quot;required&quot;: [ # Whether this property is required.
+        &quot;type&quot;: [ # JSON Schema Validation: A Vocabulary for Structural Validation of JSON
+        &quot;uniqueItems&quot;: True or False, # Whether the items in the array field are unique.
+      &quot;inputParameters&quot;: [ # Output only. List of input parameter metadata for the action.
+        { # Metadata of an input parameter.
+          &quot;dataType&quot;: &quot;A String&quot;, # The data type of the Parameter.
+          &quot;defaultValue&quot;: &quot;&quot;, # The following field specifies the default value of the Parameter provided by the external system if a value is not provided.
+          &quot;description&quot;: &quot;A String&quot;, # A brief description of the Parameter.
+          &quot;jsonSchema&quot;: { # JsonSchema representation of schema metadata # JsonSchema representation of this action&#x27;s parameter
+          &quot;nullable&quot;: True or False, # Specifies whether a null value is allowed.
+          &quot;parameter&quot;: &quot;A String&quot;, # Name of the Parameter.
+      &quot;inputSchemaAsString&quot;: &quot;A String&quot;, # Output only. Input schema as string.
+      &quot;resultJsonSchema&quot;: { # JsonSchema representation of schema metadata # Output only. JsonSchema representation of this action&#x27;s result metadata
+      &quot;resultMetadata&quot;: [ # Output only. List of result field metadata.
+        { # Metadata of result field.
+          &quot;dataType&quot;: &quot;A String&quot;, # The data type of the field.
+          &quot;description&quot;: &quot;A String&quot;, # A brief description of the field.
+          &quot;field&quot;: &quot;A String&quot;, # Name of the result field.
+          &quot;jsonSchema&quot;: { # JsonSchema representation of schema metadata # JsonSchema representation of this action&#x27;s result
+      &quot;resultSchemaAsString&quot;: &quot;A String&quot;, # Output only. Result schema as string.
+  &quot;nextPageToken&quot;: &quot;A String&quot;, # token for next page
+    <code class="details" id="listActions_next">listActions_next()</code>
+    <code class="details" id="listEntityTypes">listEntityTypes(name, filter=None, pageSize=None, pageToken=None, view=None, x__xgafv=None)</code>
+  <pre>List entity types.
+  pageSize: integer, Page size. If unspecified, at most 50 entity types will be returned.
+    { # Response message for ListEntityTypes API
+  &quot;entityTypes&quot;: [ # list of entity types
+    { # Schema of a runtime entity.
+      &quot;entity&quot;: &quot;A String&quot;, # Output only. Name of the entity.
+      &quot;fields&quot;: [ # Output only. List of fields in the entity.
+        { # Metadata of an entity field.
+          &quot;additionalDetails&quot;: { # The following map contains fields that are not explicitly mentioned above,this give connectors the flexibility to add new metadata fields.
+          &quot;dataType&quot;: &quot;A String&quot;, # The data type of the Field.
+          &quot;defaultValue&quot;: &quot;&quot;, # The following field specifies the default value of the Field provided by the external system if a value is not provided.
+          &quot;description&quot;: &quot;A String&quot;, # A brief description of the Field.
+          &quot;field&quot;: &quot;A String&quot;, # Name of the Field.
+          &quot;jsonSchema&quot;: { # JsonSchema representation of schema metadata # JsonSchema representation of this entity&#x27;s schema
+          &quot;key&quot;: True or False, # The following boolean field specifies if the current Field acts as a primary key or id if the parent is of type entity.
+          &quot;readonly&quot;: True or False, # Specifies if the Field is readonly.
+      &quot;jsonSchema&quot;: { # JsonSchema representation of schema metadata # Output only. JsonSchema representation of this entity&#x27;s metadata
+      &quot;operations&quot;: [ # List of operations supported by this entity
+    <code class="details" id="listEntityTypes_next">listEntityTypes_next()</code>
+  <pre>Refresh runtime schema of a connection.
+  name: string, Required. Resource name. Format: projects/{project}/locations/{location}/connections/{connection}/connectionSchemaMetadata (required)
+{ # Request message for ConnectorsService.RefreshConnectionSchemaMetadata.

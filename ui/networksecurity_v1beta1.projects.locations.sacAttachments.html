@@ -1,0 +1,31 @@
+<h1><a href="networksecurity_v1beta1.html">Network Security API</a> . <a href="networksecurity_v1beta1.projects.html">projects</a> . <a href="networksecurity_v1beta1.projects.locations.html">locations</a> . <a href="networksecurity_v1beta1.projects.locations.sacAttachments.html">sacAttachments</a></h1>
+  <code><a href="#create">create(parent, body=None, requestId=None, sacAttachmentId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Creates a new SACAttachment in a given project and location.</p>
+<p class="firstline">Deletes the specified attachment.</p>
+<p class="firstline">Returns the specified attachment.</p>
+<p class="firstline">Lists SACAttachments in a given project and location.</p>
+    <code class="details" id="create">create(parent, body=None, requestId=None, sacAttachmentId=None, x__xgafv=None)</code>
+  <pre>Creates a new SACAttachment in a given project and location.
+  parent: string, Required. The parent, in the form `projects/{project}/locations/{location}`. (required)
+{ # Represents a Secure Access Connect (SAC) attachment resource. A Secure Access Connect attachment enables NCC Gateway to process traffic with an SSE product.
+  &quot;country&quot;: &quot;A String&quot;, # Optional. Case-insensitive ISO-3166 alpha-2 country code used for localization. Only valid for Symantec attachments.
+  &quot;createTime&quot;: &quot;A String&quot;, # Output only. Timestamp when the attachment was created.
+  &quot;labels&quot;: { # Optional. Optional list of labels applied to the resource.
+  &quot;name&quot;: &quot;A String&quot;, # Identifier. Resource name, in the form `projects/{project}/locations/{location}/sacAttachments/{sac_attachment}`.
+  &quot;nccGateway&quot;: &quot;A String&quot;, # Required. NCC Gateway associated with the attachment. This can be input as an ID or a full resource name. The output always has the form `projects/{project_number}/locations/{location}/spokes/{ncc_gateway}`.
+  &quot;sacRealm&quot;: &quot;A String&quot;, # Required. SAC Realm which owns the attachment. This can be input as an ID or a full resource name. The output always has the form `projects/{project_number}/locations/{location}/sacRealms/{sac_realm}`.
+  &quot;state&quot;: &quot;A String&quot;, # Output only. State of the attachment.
+  &quot;symantecOptions&quot;: { # Fields specific to attachments associated with Symantec Cloud SWG. # Optional. Configuration required for Symantec attachments.
+    &quot;symantecLocationName&quot;: &quot;A String&quot;, # Immutable. Name to be used when creating a location on the customer&#x27;s behalf in Symantec&#x27;s Location API. Not to be confused with Google Cloud locations.
+    &quot;symantecSite&quot;: &quot;A String&quot;, # Immutable. Symantec data center identifier that this attachment will connect to.
+  &quot;timeZone&quot;: &quot;A String&quot;, # Optional. Case-sensitive tzinfo identifier used for localization. Only valid for Symantec attachments.
+  &quot;updateTime&quot;: &quot;A String&quot;, # Output only. Timestamp when the attachment was last updated.
+  sacAttachmentId: string, Required. ID of the created attachment. The ID must be 1-63 characters long, and comply with RFC1035. Specifically, it must be 1-63 characters long and match the regular expression `[a-z]([-a-z0-9]*[a-z0-9])?` which means the first character must be a lowercase letter, and all following characters must be a dash, lowercase letter, or digit, except the last character, which cannot be a dash.
+  <pre>Deletes the specified attachment.
+  name: string, Required. Name of the resource, in the form `projects/{project}/locations/{location}/sacAttachments/{sac_attachment}`. (required)
+  <pre>Returns the specified attachment.
+  <pre>Lists SACAttachments in a given project and location.
+  filter: string, Optional. An expression that filters the list of results.
+  orderBy: string, Optional. Sort the results by a certain order.
+    { # Response for `ListSACAttachments` method.
+  &quot;sacAttachments&quot;: [ # The list of SACAttachments.

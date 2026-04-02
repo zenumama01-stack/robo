@@ -1,0 +1,12 @@
+<h1><a href="texttospeech_v1.html">Cloud Text-to-Speech API</a> . <a href="texttospeech_v1.text.html">text</a></h1>
+  <code><a href="#synthesize">synthesize(body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Synthesizes speech synchronously: receive results after all text input has been processed.</p>
+    <code class="details" id="synthesize">synthesize(body=None, x__xgafv=None)</code>
+  <pre>Synthesizes speech synchronously: receive results after all text input has been processed.
+{ # The top-level message sent by the client for the `SynthesizeSpeech` method.
+  &quot;advancedVoiceOptions&quot;: { # Used for advanced voice options. # Optional. Advanced voice options.
+    &quot;enableTextnorm&quot;: True or False, # Optional. If true, textnorm will be applied to text input. This feature is enabled by default. Only applies for Gemini TTS.
+    &quot;lowLatencyJourneySynthesis&quot;: True or False, # Only for Journey voices. If false, the synthesis is context aware and has a higher latency.
+    &quot;relaxSafetyFilters&quot;: True or False, # Optional. Input only. If true, relaxes safety filters for Gemini TTS.
+    { # The message returned to the client by the `SynthesizeSpeech` method.
+  &quot;audioContent&quot;: &quot;A String&quot;, # The audio data bytes encoded as specified in the request, including the header for encodings that are wrapped in containers (e.g. MP3, OGG_OPUS). For LINEAR16 audio, we include the WAV header. Note: as with all bytes fields, protobuffers use a pure binary representation, whereas JSON representations use base64.

@@ -1,0 +1,47 @@
+<h1><a href="developerconnect_v1.html">Developer Connect API</a> . <a href="developerconnect_v1.projects.html">projects</a> . <a href="developerconnect_v1.projects.locations.html">locations</a> . <a href="developerconnect_v1.projects.locations.insightsConfigs.html">insightsConfigs</a></h1>
+  <code><a href="developerconnect_v1.projects.locations.insightsConfigs.deploymentEvents.html">deploymentEvents()</a></code>
+<p class="firstline">Returns the deploymentEvents Resource.</p>
+  <code><a href="#create">create(parent, body=None, insightsConfigId=None, validateOnly=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Creates a new InsightsConfig in a given project and location.</p>
+<p class="firstline">Deletes a single Insight.</p>
+<p class="firstline">Gets details of a single Insight.</p>
+<p class="firstline">Lists InsightsConfigs in a given project and location.</p>
+  <code><a href="#patch">patch(name, allowMissing=None, body=None, requestId=None, validateOnly=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Updates the parameters of a single InsightsConfig.</p>
+    <code class="details" id="create">create(parent, body=None, insightsConfigId=None, validateOnly=None, x__xgafv=None)</code>
+  <pre>Creates a new InsightsConfig in a given project and location.
+{ # The InsightsConfig resource is the core configuration object to capture events from your Software Development Lifecycle. It acts as the central hub for managing how Developer Connect understands your application, its runtime environments, and the artifacts deployed within them.
+  &quot;annotations&quot;: { # Optional. User specified annotations. See https://google.aip.dev/148#annotations for more details such as format and size limitations.
+  &quot;appHubApplication&quot;: &quot;A String&quot;, # Optional. The name of the App Hub Application. Format: projects/{project}/locations/{location}/applications/{application}
+  &quot;artifactConfigs&quot;: [ # Optional. The artifact configurations of the artifacts that are deployed.
+    { # The artifact config of the artifact that is deployed.
+      &quot;googleArtifactAnalysis&quot;: { # Google Artifact Analysis configurations. # Optional. Set if the artifact metadata is stored in Artifact analysis.
+        &quot;projectId&quot;: &quot;A String&quot;, # Required. The project id of the project where the provenance is stored.
+      &quot;googleArtifactRegistry&quot;: { # Google Artifact Registry configurations. # Optional. Set if the artifact is stored in Artifact registry.
+        &quot;artifactRegistryPackage&quot;: &quot;A String&quot;, # Required. Immutable. The name of the artifact registry package.
+        &quot;projectId&quot;: &quot;A String&quot;, # Required. The host project of Artifact Registry.
+      &quot;uri&quot;: &quot;A String&quot;, # Required. Immutable. The URI of the artifact that is deployed. e.g. `us-docker.pkg.dev/my-project/my-repo/image`. The URI does not include the tag / digest because it captures a lineage of artifacts.
+  &quot;createTime&quot;: &quot;A String&quot;, # Output only. Create timestamp.
+  &quot;errors&quot;: [ # Output only. Any errors that occurred while setting up the InsightsConfig. Each error will be in the format: `field_name: error_message`, e.g. GetAppHubApplication: Permission denied while getting App Hub application. Please grant permissions to the P4SA.
+  &quot;labels&quot;: { # Optional. Set of labels associated with an InsightsConfig.
+  &quot;name&quot;: &quot;A String&quot;, # Identifier. The name of the InsightsConfig. Format: projects/{project}/locations/{location}/insightsConfigs/{insightsConfig}
+  &quot;projects&quot;: { # Projects represents the projects to track with the InsightsConfig. # Optional. The projects to track with the InsightsConfig.
+    &quot;projectIds&quot;: [ # Optional. The project IDs. Format: {project}
+  &quot;reconciling&quot;: True or False, # Output only. Reconciling (https://google.aip.dev/128#reconciliation). Set to true if the current state of InsightsConfig does not match the user&#x27;s intended state, and the service is actively updating the resource to reconcile them. This can happen due to user-triggered updates or system actions like failover or maintenance.
+  &quot;runtimeConfigs&quot;: [ # Output only. The runtime configurations where the application is deployed.
+    { # RuntimeConfig represents the runtimes where the application is deployed.
+  &quot;state&quot;: &quot;A String&quot;, # Optional. Output only. The state of the InsightsConfig.
+  &quot;updateTime&quot;: &quot;A String&quot;, # Output only. Update timestamp.
+  insightsConfigId: string, Required. ID of the requesting InsightsConfig.
+  <pre>Deletes a single Insight.
+  name: string, Required. Value for parent. (required)
+  <pre>Gets details of a single Insight.
+  <pre>Lists InsightsConfigs in a given project and location.
+  parent: string, Required. Parent value for ListInsightsConfigsRequest. (required)
+  filter: string, Optional. Filtering results. See https://google.aip.dev/160 for more details. Filter string, adhering to the rules in https://google.aip.dev/160. List only InsightsConfigs matching the filter. If filter is empty, all InsightsConfigs are listed.
+    { # Request for response to listing InsightsConfigs.
+  &quot;insightsConfigs&quot;: [ # The list of InsightsConfigs.
+    <code class="details" id="patch">patch(name, allowMissing=None, body=None, requestId=None, validateOnly=None, x__xgafv=None)</code>
+  <pre>Updates the parameters of a single InsightsConfig.
+  name: string, Identifier. The name of the InsightsConfig. Format: projects/{project}/locations/{location}/insightsConfigs/{insightsConfig} (required)
+  allowMissing: boolean, Optional. If set to true, and the insightsConfig is not found a new insightsConfig will be created. In this situation `update_mask` is ignored. The creation will succeed only if the input insightsConfig has all the necessary information (e.g a github_config with both user_oauth_token and installation_id properties).

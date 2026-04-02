@@ -1,0 +1,14 @@
+  function tryPostMessage(...args) {
+      window.opener.postMessage(...args)
+  const parsedURL = new URL(window.location.href);
+  if (parsedURL.searchParams.has('opened')) {
+    // Ensure origins are properly checked by removing a single character from the end
+    tryPostMessage('do not deliver substring origin', window.location.origin.substring(0, window.location.origin.length - 1))
+    tryPostMessage('do not deliver file://', 'file://')
+    tryPostMessage('do not deliver http without port', 'http://127.0.0.1')
+    tryPostMessage('do not deliver atom', 'atom://')
+    tryPostMessage('do not deliver null', 'null')
+    tryPostMessage('do not deliver \\:/', '\\:/')
+    tryPostMessage('do not deliver empty', '')
+    window.opener.postMessage('deliver', window.location.origin)
+    const opened = window.open(`${window.location.href}?opened=true`, '', 'show=no,contextIsolation=no,nodeIntegration=yes')

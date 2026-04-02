@@ -1,0 +1,211 @@
+export type ProcessPersonRecordGroupParams = {
+    Records: Record<string, any>[];
+    Startrow: number;
+    GroupLength: number;
+    Md: Metadata;
+    CurrentUser: UserInfo;
+    EmploymentHistoryEntityName?: string;
+    EmploymentHistoryContactIDFieldName?: string;
+    EmploymentHistoryOrganizationFieldName?: string;
+    EmploymentHistoryTitleFieldName?: string;
+    EducationHistoryEntityName?: string;
+    EducationHistoryContactIDFieldName?: string;
+    EducationHistoryInstitutionFieldName?: string;
+    EducationHistoryDegreeFieldName?: string;
+export type ApolloBulkPeopleRequest = {
+     * The API key for the Apollo.io request (required)
+    api_key: string;
+     * The list of people to enrich (required)
+    details: ApolloBulkPeopleRequestDetail[];
+     * Flag to reveal personal emails (optional) 
+     * Default false
+     * Note: Personal emails will not be revealed for GDPR compliant regions
+    reveal_personal_emails?: boolean;
+     * Flag to reveal phone number (optional)
+     *  Default false. 
+     * If you set to this true, Apollo will asynchronously verify direct dials for you, and you must specify a Webhook callback URL.
+    reveal_phone_numbers?: boolean;
+     * Webhook callback URL for sending 'reveal_phone_number' response (optional) 
+     * This parameter is required if you request direct dials via "reveal_phone_number"
+    webhook_url?: string;
+export type ApolloBulkPeopleRequestDetail = {
+    * The person's first name (optional)
+    first_name?: string;
+     * The person's last name (optional)
+    last_name?: string;
+     * The person's full name (optional)
+     * The person's email (optional)
+     * The person's md5 or sha256 hashed email (optional)
+    hased_email?: string;
+     * The person's company name (optional)
+    organization_name?: string;
+     * The person's company domain (optional)
+    domain?: string;
+     * The person's ID obtained from the search endpoint (optional)
+     * The person's linkedin URL (optional)
+    linkedin_url?: string;
+export type ApolloBulkPeopleResponse = {
+    error_code: number,
+    error_message: string,
+    total_requested_enrichments: number,
+    unique_enriched_records: number,
+    missing_records: number,
+    credits_consumed: number,
+    matches: Array<SearchPeopleResponsePerson | null>;
+export type ContactEntityFields = {
+    AccountIDField: string;
+    EmailSourceField: string;
+    ActivityCountField: string;
+export type ContactEducationHistoryEntityFields = {
+    ContactIDField: string;
+    InstitutionField: string;
+    DegreeField: string;
+    GradeLevelField: string;
+    StartDateField: string;
+    EndDateField: string;
+    IsCurrentField: string;
+export type TechnologyCategoryEntityFields = {
+    NameField: string;
+    IDField: string;
+export type AccountTechnologyEntityFields = {
+    TechnologyIDField: string;
+    TechnologyField: string;
+    CategoryField: string;
+    EndedUseAtField: string;
+export type AccountEntityFields = {
+    DomainField: string;
+    CityField?: string;
+    StateProvinceField?: string;
+    PostalCodeField?: string;
+    DescriptionField?: string;
+    PhoneNumberField?: string;
+    CountryField?: string;
+    LogoURLField?: string;
+    AddressField?: string;
+export type ProcessSingleDomainParams = {
+    Record: Record<string, any>;
+    AccountEntity: AccountEntityFields;
+    AccountTechnologyEntity: AccountTechnologyEntityFields | null;
+    TechnologyCategoryEntity: TechnologyCategoryEntityFields | null;
+    ContactEntity: ContactEntityFields | null;
+    ContactEducationHistoryEntity: ContactEducationHistoryEntityFields | null;
+export type OrganizationEnrichmentRequest = {
+     * The company domain
+     * @example "apollo.io"
+    domain: string;
+export type OrganizationEnrichmentResponse = {
+    organization: OrganizationEnrichmentOrganization
+export type OrganizationEnrichmentOrganization = {
+    website_url: string,
+    blog_url: string,
+    angellist_url: string,
+    linkedin_url: string,
+    twitter_url: string,
+    facebook_url: string,
+    primary_phone: Record<'number' | 'source', string>,
+    languages: string[],
+    alexa_ranking: number,
+    phone: string,
+    linkedin_uid: string,
+    founded_year: number,
+    publicly_traded_symbol: string,
+    publicly_traded_exchange: string,
+    logo_url: string,
+    crunchbase_url: string,
+    primary_domain: string,
+    industry: string,
+    keywords: string[],
+    estimated_num_employees: number,
+    snippets_loaded: boolean,
+    industry_tag_id: string,
+    retail_location_count: number,
+    raw_address: string,
+    street_address: string,
+    city: string,
+    state: string,
+    postal_code: string,
+    country: string,
+    owned_by_organization_id: string,
+    suborganizations: string[],
+    num_suborganizations: number,
+    seo_description: string,
+    short_description: string,
+    annual_revenue_printed: string,
+    annual_revenue: number,
+    total_funding: number,
+    total_funding_printed: string,
+    latest_funding_round_date: string,
+    latest_funding_stage: string,
+    funding_events: Record<'id' | 'date' | 'news_url' | 'type' | 'investors' | 'amount' | 'currency', string>[],
+    technology_names: string[],
+    current_technologies: Record<'uid' | 'name' | 'category', string>[],
+    account_id: string,
+    account: Record<string, any>,
+    departmental_head_count: Record<string, number>
+export type OrganizationEnrichmentOrganizationAccount = {
+    domain: string,
+    team_id: string,
+    organization_id: string,
+    account_stage_id: string,
+    original_source: string,
+    owner_id: string,
+    created_at: string,
+    phone_status: string,
+    test_predictive_score: string,
+    hubspot_id: string,
+    salesforce_id: string,
+    crm_owner_id: string,
+    parent_account_id: string,
+    sanitized_phone: string,
+    account_playbook_statuses: string[],
+    existence_level: string,
+    label_ids: string[],
+    typed_custom_fields: Record<string, any>,
+    modality: string,
+    persona_counts: Record<string, number>
+export type TechnologyMap = {
+    category: string;
+    uid: string;
+export type SearchPeopleResponse = {
+    breadcrumbs: Record<string, any>[];
+    partial_results_only: boolean;
+    disable_eu_prospecting: boolean;
+    partial_results_limit: number;
+    pagination: {
+        page: number;
+        per_page: number;
+        total_entries: number;
+        total_pages: number;
+    contacts: Record<string, any>[];
+    people: SearchPeopleResponsePerson[];
+export type SearchPeopleResponsePerson = {
+    first_name: string;
+    last_name: string;
+    linkedin_url: string;
+    email_status: string;
+    photo_url: string;
+    twitter_url: string;
+    github_url: string;
+    facebook_url: string;
+    extrapolated_email_confidence: string;
+    headline: string;
+    employment_history: EmploymentHistory[];
+    state: string;
+    city: string;
+    country: string;
+    organization_id: string;
+    organization: OrganizationEnrichmentOrganization;
+    account_id: string;
+    account: OrganizationEnrichmentOrganizationAccount;
+    departments: string[];
+    subdepartments: string[];
+    functions: string[];
+    seniority: string;
+export type EmploymentHistory = {
+    current: boolean;
+    degree: string;
+    emails: any;
+    end_date: string;
+    start_date: string;
+    grade_level: string;
+    organization_name: string;

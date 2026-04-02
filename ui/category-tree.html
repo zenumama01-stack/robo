@@ -1,0 +1,37 @@
+    <button kendoButton (click)="clearSelection()">All Files</button>
+    <button kendoButton (click)="createNewCategory()" size="small">Add category</button>
+  <kendo-treeview
+    [nodes]="categoriesData"
+    kendoTreeViewExpandable
+    kendoTreeViewFlatDataBinding
+    idField="ID"
+    parentIdField="ParentID"
+    (selectionChange)="categorySelected.emit($event.dataItem.ID)"
+    kendoTreeViewDragAndDrop
+    kendoTreeViewSelectable
+    (addItem)="handleDrop($event)"
+    [selectedKeys]="selectedKeys"
+    <ng-template kendoTreeViewNodeTemplate let-dataItem>
+      <span #target>{{ dataItem.Name }} </span>
+      <kendo-contextmenu [target]="target" (select)="handleMenuSelect($event)">
+        <kendo-menu-item text="Rename" [data]="dataItem"> </kendo-menu-item>
+        <kendo-menu-item text="Delete" [data]="dataItem" [disabled]="true"> </kendo-menu-item>
+      </kendo-contextmenu>
+  </kendo-treeview>
+  @if (showNew) {
+    <kendo-dialog title="New file category" (close)="cancelNewCategory()" [minWidth]="250" [width]="450">
+        <form #templateForm="ngForm">
+          <kendo-label class="k-form" text="Name">
+              [(ngModel)]="newCategoryName"
+              [showSuccessIcon]="newCategoryName.length > 0"
+              showErrorIcon="initial"
+            ></kendo-textbox>
+        <button kendoButton (click)="cancelNewCategory()" [disabled]="isLoading">Cancel</button>
+        <button kendoButton (click)="saveNewCategory()" [disabled]="isLoading" themeColor="primary">Save</button>
+  @if (!!renameFileCategory) {
+    <kendo-dialog title="Rename file category" (close)="cancelRename()" [minWidth]="250" [width]="450">
+              name="Name"
+              [(ngModel)]="renameFileCategory.Name"
+              [showSuccessIcon]="renameFileCategory.Name.length > 0"
+        <button kendoButton (click)="cancelRename()" [disabled]="isLoading">Cancel</button>
+        <button kendoButton (click)="saveRename()" [disabled]="isLoading || !renameFileCategory.Dirty" themeColor="primary">Save</button>

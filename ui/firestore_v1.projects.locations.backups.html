@@ -1,0 +1,22 @@
+<h1><a href="firestore_v1.html">Cloud Firestore API</a> . <a href="firestore_v1.projects.html">projects</a> . <a href="firestore_v1.projects.locations.html">locations</a> . <a href="firestore_v1.projects.locations.backups.html">backups</a></h1>
+<p class="firstline">Gets information about a backup.</p>
+<p class="firstline">Lists all the backups.</p>
+  name: string, Required. Name of the backup to delete. format is `projects/{project}/locations/{location}/backups/{backup}`. (required)
+  <pre>Gets information about a backup.
+  name: string, Required. Name of the backup to fetch. Format is `projects/{project}/locations/{location}/backups/{backup}`. (required)
+    { # A Backup of a Cloud Firestore Database. The backup contains all documents and index configurations for the given database at a specific point in time.
+  &quot;database&quot;: &quot;A String&quot;, # Output only. Name of the Firestore database that the backup is from. Format is `projects/{project}/databases/{database}`.
+  &quot;databaseUid&quot;: &quot;A String&quot;, # Output only. The system-generated UUID4 for the Firestore database that the backup is from.
+  &quot;expireTime&quot;: &quot;A String&quot;, # Output only. The timestamp at which this backup expires.
+  &quot;name&quot;: &quot;A String&quot;, # Output only. The unique resource name of the Backup. Format is `projects/{project}/locations/{location}/backups/{backup}`. The location in the name will be the Standard Managed Multi-Region (SMMR) location (e.g. `us`) if the backup was created with an SMMR location, or the Google Managed Multi-Region (GMMR) location (e.g. `nam5`) if the backup was created with a GMMR location.
+  &quot;snapshotTime&quot;: &quot;A String&quot;, # Output only. The backup contains an externally consistent copy of the database at this time.
+  &quot;stats&quot;: { # Backup specific statistics. # Output only. Statistics about the backup. This data only becomes available after the backup is fully materialized to secondary storage. This field will be empty till then.
+    &quot;documentCount&quot;: &quot;A String&quot;, # Output only. The total number of documents contained in the backup.
+    &quot;indexCount&quot;: &quot;A String&quot;, # Output only. The total number of index entries contained in the backup.
+    &quot;sizeBytes&quot;: &quot;A String&quot;, # Output only. Summation of the size of all documents and index entries in the backup, measured in bytes.
+  <pre>Lists all the backups.
+  parent: string, Required. The location to list backups from. Format is `projects/{project}/locations/{location}`. Use `{location} = &#x27;-&#x27;` to list backups from all locations for the given project. This allows listing backups from a single location or from all locations. (required)
+  filter: string, An expression that filters the list of returned backups. A filter expression consists of a field name, a comparison operator, and a value for filtering. The value must be a string, a number, or a boolean. The comparison operator must be one of: `&lt;`, `&gt;`, `&lt;=`, `&gt;=`, `!=`, `=`, or `:`. Colon `:` is the contains operator. Filter rules are not case sensitive. The following fields in the Backup are eligible for filtering: * `database_uid` (supports `=` only)
+    { # The response for FirestoreAdmin.ListBackups.
+  &quot;backups&quot;: [ # List of all backups for the project.
+  &quot;unreachable&quot;: [ # List of locations that existing backups were not able to be fetched from. Instead of failing the entire requests when a single location is unreachable, this response returns a partial result set and list of locations unable to be reached here. The request can be retried against a single location to get a concrete error.

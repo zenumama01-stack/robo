@@ -1,0 +1,16 @@
+<h1><a href="osconfig_v1.html">OS Config API</a> . <a href="osconfig_v1.projects.html">projects</a> . <a href="osconfig_v1.projects.locations.html">locations</a> . <a href="osconfig_v1.projects.locations.instances.html">instances</a> . <a href="osconfig_v1.projects.locations.instances.inventories.html">inventories</a></h1>
+<p class="firstline">Get inventory data for the specified VM instance. If the VM has no associated inventory, the message `NOT_FOUND` is returned.</p>
+<p class="firstline">List inventory data for all VM instances in the specified zone.</p>
+  <pre>Get inventory data for the specified VM instance. If the VM has no associated inventory, the message `NOT_FOUND` is returned.
+  name: string, Required. API resource name for inventory resource. Format: `projects/{project}/locations/{location}/instances/{instance}/inventory` For `{project}`, either `project-number` or `project-id` can be provided. For `{instance}`, either Compute Engine `instance-id` or `instance-name` can be provided. (required)
+  view: string, Inventory view indicating what information should be included in the inventory resource. If unspecified, the default view is BASIC.
+      INVENTORY_VIEW_UNSPECIFIED - The default value. The API defaults to the BASIC view.
+      BASIC - Returns the basic inventory information that includes `os_info`.
+    { # This API resource represents the available inventory data for a Compute Engine virtual machine (VM) instance at a given point in time. You can use this API resource to determine the inventory data of your VM. For more information, see [Information provided by OS inventory management](https://cloud.google.com/compute/docs/instances/os-inventory-management#data-collected).
+  <pre>List inventory data for all VM instances in the specified zone.
+  parent: string, Required. The parent resource name. Format: `projects/{project}/locations/{location}/instances/-` For `{project}`, either `project-number` or `project-id` can be provided. (required)
+  filter: string, If provided, this field specifies the criteria that must be met by a `Inventory` API resource to be included in the response.
+  pageToken: string, A pagination token returned from a previous call to `ListInventories` that indicates where this listing should continue from.
+    { # A response message for listing inventory data for all VMs in a specified location.
+  &quot;inventories&quot;: [ # List of inventory objects.
+  &quot;nextPageToken&quot;: &quot;A String&quot;, # The pagination token to retrieve the next page of inventory objects.

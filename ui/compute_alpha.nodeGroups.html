@@ -1,0 +1,141 @@
+<h1><a href="compute_alpha.html">Compute Engine API</a> . <a href="compute_alpha.nodeGroups.html">nodeGroups</a></h1>
+  <code><a href="#addNodes">addNodes(project, zone, nodeGroup, body=None, requestId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Adds specified number of nodes to the node group.</p>
+<p class="firstline">Retrieves an aggregated list of node groups.</p>
+  <code><a href="#delete">delete(project, zone, nodeGroup, requestId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Deletes the specified NodeGroup resource.</p>
+  <code><a href="#deleteNodes">deleteNodes(project, zone, nodeGroup, body=None, requestId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Deletes specified nodes from the node group.</p>
+  <code><a href="#get">get(project, zone, nodeGroup, x__xgafv=None)</a></code></p>
+<p class="firstline">Returns the specified NodeGroup. Get a list of available NodeGroups</p>
+  <code><a href="#insert">insert(project, zone, initialNodeCount, body=None, requestId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Creates a NodeGroup resource in the specified project using the data</p>
+<p class="firstline">Retrieves a list of node groups available to the specified project.</p>
+  <code><a href="#listNodes">listNodes(project, zone, nodeGroup, filter=None, maxResults=None, orderBy=None, pageToken=None, returnPartialSuccess=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Lists nodes in the node group.</p>
+  <code><a href="#listNodes_next">listNodes_next()</a></code></p>
+  <code><a href="#patch">patch(project, zone, nodeGroup, body=None, requestId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Updates the specified node group.</p>
+  <code><a href="#performMaintenance">performMaintenance(project, zone, nodeGroup, body=None, requestId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Perform maintenance on a subset of nodes in the node group.</p>
+  <code><a href="#setNodeTemplate">setNodeTemplate(project, zone, nodeGroup, body=None, requestId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Updates the node template of the node group.</p>
+  <code><a href="#simulateMaintenanceEvent">simulateMaintenanceEvent(project, zone, nodeGroup, body=None, requestId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Simulates maintenance event on specified nodes from the node group.</p>
+    <code class="details" id="addNodes">addNodes(project, zone, nodeGroup, body=None, requestId=None, x__xgafv=None)</code>
+  <pre>Adds specified number of nodes to the node group.
+  nodeGroup: string, Name of the NodeGroup resource. (required)
+  &quot;additionalNodeCount&quot;: 42, # Count of additional nodes to be added to the node group.
+  <pre>Retrieves an aggregated list of node groups.
+Note: use nodeGroups.listNodes for more details about each group.
+  &quot;items&quot;: { # A list of NodeGroupsScopedList resources.
+    &quot;a_key&quot;: { # [Output Only] Name of the scope containing this set of node groups.
+      &quot;nodeGroups&quot;: [ # [Output Only] A list of node groups contained in this scope.
+        { # Represents a sole-tenant Node Group resource.
+            # A sole-tenant node is a physical server that is dedicated to
+            # hosting VM instances only for your specific project. Use sole-tenant nodes to
+            # keep your instances physically separated from instances in other projects, or
+            # to group your instances together on the same host hardware. For more
+            # information, readSole-tenant nodes.
+          &quot;autoscalingPolicy&quot;: { # Specifies how autoscaling should behave.
+            &quot;maxNodes&quot;: 42, # The maximum number of nodes that the group should have. Must be set if
+                # autoscaling is enabled. Maximum value allowed is 100.
+            &quot;minNodes&quot;: 42, # The minimum number of nodes that the group should have.
+            &quot;mode&quot;: &quot;A String&quot;, # The autoscaling mode. Set to one of: ON, OFF,
+                # or ONLY_SCALE_OUT. For more information, see
+                # Autoscaler modes.
+          &quot;fingerprint&quot;: &quot;A String&quot;,
+          &quot;kind&quot;: &quot;compute#nodeGroup&quot;, # Output only. [Output Only] The type of the resource. Alwayscompute#nodeGroup for node group.
+          &quot;locationHint&quot;: &quot;A String&quot;, # An opaque location hint used to place the Node close to other
+              # The location hint here on the NodeGroup overrides any location_hint
+              # present in the NodeTemplate.
+              # are: `AS_NEEDED` and `RECURRENT`.
+          &quot;maintenancePolicy&quot;: &quot;A String&quot;, # Specifies how to handle instances when a node in the group undergoes
+              # maintenance. Set to one of: DEFAULT,RESTART_IN_PLACE, or MIGRATE_WITHIN_NODE_GROUP.
+              # The default value is DEFAULT. For more information, see
+              # Maintenance policies.
+          &quot;maintenanceWindow&quot;: { # Time window specified for daily maintenance operations. GCE&#x27;s internal
+              # maintenance will be performed within this window.
+            &quot;duration&quot;: &quot;A String&quot;, # Output only. [Output only] A predetermined duration for the window, automatically
+                # chosen to be the smallest possible in the given scenario.
+            &quot;maintenanceDuration&quot;: { # A Duration represents a fixed-length span of time represented # Output only. [Output only] A predetermined duration for the window, automatically
+            &quot;startTime&quot;: &quot;A String&quot;, # Start time of the window. This must be in UTC format that resolves to one
+                # of 00:00, 04:00, 08:00,12:00, 16:00, or 20:00. For
+                # example, both 13:00-5 and 08:00 are valid.
+          &quot;nodeTemplate&quot;: &quot;A String&quot;, # URL of the node template to create the node group from.
+          &quot;shareSettings&quot;: { # The share setting for reservations and sole tenancy node groups. # Share-settings for the node group
+          &quot;size&quot;: 42, # Output only. [Output Only] The total number of nodes in the node group.
+          &quot;status&quot;: &quot;A String&quot;,
+          &quot;zone&quot;: &quot;A String&quot;, # Output only. [Output Only] The name of the zone where the node group resides,
+      &quot;warning&quot;: { # [Output Only] An informational warning that appears when the nodeGroup
+  &quot;kind&quot;: &quot;compute#nodeGroupAggregatedList&quot;, # Output only. [Output Only] Type of resource.Alwayscompute#nodeGroupAggregatedList for aggregated lists of node
+    <code class="details" id="delete">delete(project, zone, nodeGroup, requestId=None, x__xgafv=None)</code>
+  <pre>Deletes the specified NodeGroup resource.
+  nodeGroup: string, Name of the NodeGroup resource to delete. (required)
+    <code class="details" id="deleteNodes">deleteNodes(project, zone, nodeGroup, body=None, requestId=None, x__xgafv=None)</code>
+  <pre>Deletes specified nodes from the node group.
+  nodeGroup: string, Name of the NodeGroup resource whose nodes will be deleted. (required)
+  &quot;nodes&quot;: [ # Names of the nodes to delete.
+    <code class="details" id="get">get(project, zone, nodeGroup, x__xgafv=None)</code>
+  <pre>Returns the specified NodeGroup. Get a list of available NodeGroups
+Note: the &quot;nodes&quot; field should not be used. Use nodeGroups.listNodes
+instead.
+  nodeGroup: string, Name of the node group to return. (required)
+    <code class="details" id="insert">insert(project, zone, initialNodeCount, body=None, requestId=None, x__xgafv=None)</code>
+  <pre>Creates a NodeGroup resource in the specified project using the data
+  initialNodeCount: integer, Initial count of nodes in the node group. (required)
+  <pre>Retrieves a list of node groups available to the specified project.
+    { # Contains a list of nodeGroups.
+  &quot;items&quot;: [ # A list of NodeGroup resources.
+  &quot;kind&quot;: &quot;compute#nodeGroupList&quot;, # Output only. [Output Only] Type of resource.Always compute#nodeGroupList
+      # for lists of node groups.
+    <code class="details" id="listNodes">listNodes(project, zone, nodeGroup, filter=None, maxResults=None, orderBy=None, pageToken=None, returnPartialSuccess=None, x__xgafv=None)</code>
+  <pre>Lists nodes in the node group.
+  nodeGroup: string, Name of the NodeGroup resource whose nodes you want to list. (required)
+  &quot;items&quot;: [ # A list of Node resources.
+      &quot;accelerators&quot;: [ # Accelerators for this node.
+      &quot;consumedResources&quot;: { # Output only. Node resources that are reserved by all instances.
+        &quot;guestCpus&quot;: 42, # Output only. The number of virtual CPUs that are available to the instance.
+        &quot;localSsdGb&quot;: 42, # Output only. The amount of local SSD storage available to the instance,
+            # defined in GiB.
+        &quot;memoryMb&quot;: 42, # Output only. The amount of physical memory available to the instance,
+            # defined in MiB.
+        &quot;minNodeCpus&quot;: 42, # Output only. The minimal guaranteed number of virtual CPUs that are reserved.
+      &quot;cpuOvercommitType&quot;: &quot;A String&quot;, # CPU overcommit.
+      &quot;disks&quot;: [ # Local disk configurations.
+          &quot;diskCount&quot;: 42, # Specifies the number of such disks.
+          &quot;diskSizeGb&quot;: 42, # Specifies the size of the disk in base-2 GB.
+          &quot;diskType&quot;: &quot;A String&quot;, # Specifies the desired disk type on the node. This disk type must be a
+              # local storage type (e.g.: local-ssd).
+              # Note that for nodeTemplates, this should be the name of the disk type and
+              # not its URL.
+      &quot;instanceConsumptionData&quot;: [ # Output only. Instance data that shows consumed resources on the node.
+          &quot;consumptionInfo&quot;: { # Output only. Resources consumed by the instance.
+          &quot;instance&quot;: &quot;A String&quot;, # Output only. Server-defined URL for the instance.
+      &quot;instances&quot;: [ # Instances scheduled on this node.
+      &quot;name&quot;: &quot;A String&quot;, # The name of the node.
+      &quot;nodeType&quot;: &quot;A String&quot;, # The type of this node.
+      &quot;serverBinding&quot;: { # Binding properties for the physical server.
+      &quot;serverId&quot;: &quot;A String&quot;, # Server ID associated with this node.
+      &quot;totalResources&quot;: { # Output only. Total amount of available resources on the node.
+      &quot;upcomingMaintenance&quot;: { # Upcoming Maintenance notification information. # Output only. [Output Only] The information about an upcoming maintenance event.
+  &quot;kind&quot;: &quot;compute#nodeGroupsListNodes&quot;, # Output only. [Output Only] The resource type, which is alwayscompute.nodeGroupsListNodes for the list of nodes in the
+      # specified node group.
+    <code class="details" id="listNodes_next">listNodes_next()</code>
+    <code class="details" id="patch">patch(project, zone, nodeGroup, body=None, requestId=None, x__xgafv=None)</code>
+  <pre>Updates the specified node group.
+  nodeGroup: string, Name of the NodeGroup resource to update. (required)
+    <code class="details" id="performMaintenance">performMaintenance(project, zone, nodeGroup, body=None, requestId=None, x__xgafv=None)</code>
+  <pre>Perform maintenance on a subset of nodes in the node group.
+  nodeGroup: string, Name of the node group scoping this request. (required)
+  &quot;nodes&quot;: [ # [Required] List of nodes affected by the call.
+  &quot;startTime&quot;: &quot;A String&quot;, # The start time of the schedule. The timestamp is an RFC3339 string.
+    <code class="details" id="setNodeTemplate">setNodeTemplate(project, zone, nodeGroup, body=None, requestId=None, x__xgafv=None)</code>
+  <pre>Updates the node template of the node group.
+  &quot;nodeTemplate&quot;: &quot;A String&quot;, # Full or partial URL of the node template resource to be updated for this
+      # node group.
+    <code class="details" id="simulateMaintenanceEvent">simulateMaintenanceEvent(project, zone, nodeGroup, body=None, requestId=None, x__xgafv=None)</code>
+  <pre>Simulates maintenance event on specified nodes from the node group.
+  nodeGroup: string, Name of the NodeGroup resource whose nodes will go under maintenance
+simulation. (required)
+  &quot;nodes&quot;: [ # Names of the nodes to go under maintenance simulation.

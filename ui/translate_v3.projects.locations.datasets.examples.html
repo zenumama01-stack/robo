@@ -1,0 +1,15 @@
+<h1><a href="translate_v3.html">Cloud Translation API</a> . <a href="translate_v3.projects.html">projects</a> . <a href="translate_v3.projects.locations.html">locations</a> . <a href="translate_v3.projects.locations.datasets.html">datasets</a> . <a href="translate_v3.projects.locations.datasets.examples.html">examples</a></h1>
+<p class="firstline">Lists sentence pairs in the dataset.</p>
+  <pre>Lists sentence pairs in the dataset.
+  parent: string, Required. Name of the parent dataset. In form of `projects/{project-number-or-id}/locations/{location-id}/datasets/{dataset-id}` (required)
+  filter: string, Optional. An expression for filtering the examples that will be returned. Example filter: * `usage=TRAIN`
+  pageSize: integer, Optional. Requested page size. The server can return fewer results than requested.
+  pageToken: string, Optional. A token identifying a page of results for the server to return. Typically obtained from next_page_token field in the response of a ListExamples call.
+    { # Response message for ListExamples.
+  &quot;examples&quot;: [ # The sentence pairs.
+    { # A sentence pair.
+      &quot;name&quot;: &quot;A String&quot;, # Output only. The resource name of the example, in form of `projects/{project-number-or-id}/locations/{location_id}/datasets/{dataset_id}/examples/{example_id}`
+      &quot;sourceText&quot;: &quot;A String&quot;, # Sentence in source language.
+      &quot;targetText&quot;: &quot;A String&quot;, # Sentence in target language.
+      &quot;usage&quot;: &quot;A String&quot;, # Output only. Usage of the sentence pair. Options are TRAIN|VALIDATION|TEST.
+  &quot;nextPageToken&quot;: &quot;A String&quot;, # A token to retrieve next page of results. Pass this token to the page_token field in the ListExamplesRequest to obtain the corresponding page.

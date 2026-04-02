@@ -1,0 +1,99 @@
+import { Component, Input, Output, EventEmitter, OnInit, OnDestroy, OnChanges, SimpleChanges, inject, HostListener, ChangeDetectorRef, NgZone, ViewEncapsulation } from '@angular/core';
+import { FormsModule, ReactiveFormsModule, FormBuilder, FormGroup } from '@angular/forms';
+import { MJEntityPermissionEntity, MJEntityEntity, MJRoleEntity } from '@memberjunction/core-entities';
+export interface PermissionDialogData {
+  roles: MJRoleEntity[];
+  existingPermissions: MJEntityPermissionEntity[];
+export interface PermissionDialogResult {
+  entity?: MJEntityEntity;
+interface RolePermissions {
+  roleId: string;
+  roleName: string;
+  entityPermission: MJEntityPermissionEntity;
+  selector: 'mj-permission-dialog',
+  encapsulation: ViewEncapsulation.None,
+  templateUrl: './permission-dialog.component.html',
+  styleUrls: ['./permission-dialog.component.css']
+export class PermissionDialogComponent implements OnInit, OnDestroy, OnChanges {
+  @Input() data: PermissionDialogData | null = null;
+  @Output() result = new EventEmitter<PermissionDialogResult>();
+  public permissionForm: FormGroup;
+  public rolePermissions: RolePermissions[] = [];
+  public availableRoles: MJRoleEntity[] = [];
+    this.permissionForm = this.fb.group({});
+    console.log('Permission dialog ngOnChanges called:', changes);
+      // Load data when dialog becomes visible and we have data
+      if (this.data) {
+        console.log('Dialog became visible, loading permission data');
+        this.loadPermissionData();
+    if (changes['data'] && this.data && this.visible) {
+      console.log('Data changed while dialog is visible, reloading permission data');
+  @HostListener('document:keydown.escape', ['$event'])
+  onEscapeKey(event: Event): void {
+  public get hasChanges(): boolean {
+    return this.rolePermissions.some(rp => rp.isNew || rp.entityPermission.Dirty);
+  public hasEntityChanges(rolePermission: RolePermissions): boolean {
+    return rolePermission.isNew || rolePermission.entityPermission.Dirty;
+  private loadPermissionData(): void {
+    if (!this.data) return;
+    console.log('Loading permission data for entity:', this.data.entity.Name);
+    console.log('Existing permissions:', this.data.existingPermissions);
+    console.log('Available roles:', this.data.roles);
+    // Initialize role permissions from existing data
+    this.rolePermissions = [];
+    const existingRoleIds = new Set<string>();
+    // Process existing permissions
+    for (const permission of this.data.existingPermissions) {
+      const role = this.data.roles.find(r => r.ID === permission.RoleID);
+        console.log(`Processing permission for role ${role.Name}:`, {
+          canCreate: permission.CanCreate,
+          canRead: permission.CanRead,
+          canUpdate: permission.CanUpdate,
+          canDelete: permission.CanDelete
+        this.rolePermissions.push({
+          roleId: role.ID,
+          roleName: role.Name || '',
+          entityPermission: permission,
+          isNew: false
+        existingRoleIds.add(role.ID);
+    console.log('Loaded role permissions:', this.rolePermissions);
+    // Set available roles (those not already configured)
+    this.availableRoles = this.data.roles.filter(role => !existingRoleIds.has(role.ID));
+    console.log('Available roles for adding:', this.availableRoles.map(r => r.Name));
+    // Trigger change detection to update the UI
+  public async addRolePermission(role: MJRoleEntity): Promise<void> {
+    // Create new EntityPermission entity
+    const entityPermission = await this.metadata.GetEntityObject<MJEntityPermissionEntity>('MJ: Entity Permissions');
+    entityPermission.NewRecord();
+    entityPermission.EntityID = this.data!.entity.ID;
+    entityPermission.RoleID = role.ID;
+    entityPermission.CanCreate = false;
+    entityPermission.CanRead = true; // Default to read access
+    entityPermission.CanUpdate = false;
+    entityPermission.CanDelete = false;
+    // Add new role permission
+      entityPermission: entityPermission,
+      isNew: true
+    // Remove from available roles
+    this.availableRoles = this.availableRoles.filter(r => r.ID !== role.ID);
+  public removeRolePermission(rolePermission: RolePermissions): void {
+    // Add back to available roles if not new
+    if (!rolePermission.isNew) {
+      const role = this.data?.roles.find(r => r.ID === rolePermission.roleId);
+        this.availableRoles.push(role);
+        this.availableRoles.sort((a, b) => (a.Name || '').localeCompare(b.Name || ''));
+      // Add back to available roles
+    // Remove from role permissions
+    this.rolePermissions = this.rolePermissions.filter(rp => rp.roleId !== rolePermission.roleId);
+    if (!this.data || !this.hasChanges) return;
+      // Process each role permission
+      for (const rolePermission of this.rolePermissions) {
+        if (rolePermission.isNew || rolePermission.entityPermission.Dirty) {
+          await this.saveRolePermission(rolePermission);
+      this.result.emit({ action: 'save', entity: this.data.entity });
+      console.error('Error saving permissions:', error);
+        this.error = error instanceof Error ? error.message : 'An unexpected error occurred while saving permissions';
+  private async saveRolePermission(rolePermission: RolePermissions): Promise<void> {
+    // Save the entity directly - it already has all the values bound
+    const saveResult = await rolePermission.entityPermission.Save();
+      throw new Error(rolePermission.entityPermission.LatestResult?.Message || `Failed to save permissions for role ${rolePermission.roleName}`);

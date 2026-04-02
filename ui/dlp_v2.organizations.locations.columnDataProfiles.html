@@ -1,0 +1,43 @@
+<h1><a href="dlp_v2.html">Sensitive Data Protection (DLP)</a> . <a href="dlp_v2.organizations.html">organizations</a> . <a href="dlp_v2.organizations.locations.html">locations</a> . <a href="dlp_v2.organizations.locations.columnDataProfiles.html">columnDataProfiles</a></h1>
+<p class="firstline">Gets a column data profile.</p>
+<p class="firstline">Lists column data profiles for an organization.</p>
+  <pre>Gets a column data profile.
+  name: string, Required. Resource name, for example `organizations/12345/locations/us/columnDataProfiles/53234423`. (required)
+    { # The profile for a scanned column within a table.
+  &quot;column&quot;: &quot;A String&quot;, # The name of the column.
+  &quot;columnInfoType&quot;: { # The infoType details for this column. # If it&#x27;s been determined this column can be identified as a single type, this will be set. Otherwise the column either has unidentifiable content or mixed types.
+    &quot;estimatedPrevalence&quot;: 42, # Not populated for predicted infotypes.
+    &quot;infoType&quot;: { # Type of information detected by the API. # The infoType.
+  &quot;columnType&quot;: &quot;A String&quot;, # The data type of a given column.
+  &quot;dataRiskLevel&quot;: { # Score is a summary of all elements in the data profile. A higher number means more risk. # The data risk level for this column.
+    &quot;score&quot;: &quot;A String&quot;, # The score applied to the resource.
+  &quot;datasetId&quot;: &quot;A String&quot;, # The BigQuery dataset ID, if the resource profiled is a BigQuery table.
+  &quot;datasetLocation&quot;: &quot;A String&quot;, # If supported, the location where the dataset&#x27;s data is stored. See https://cloud.google.com/bigquery/docs/locations for supported BigQuery locations.
+  &quot;datasetProjectId&quot;: &quot;A String&quot;, # The Google Cloud project ID that owns the profiled resource.
+  &quot;estimatedNullPercentage&quot;: &quot;A String&quot;, # Approximate percentage of entries being null in the column.
+  &quot;estimatedUniquenessScore&quot;: &quot;A String&quot;, # Approximate uniqueness of the column.
+  &quot;freeTextScore&quot;: 3.14, # The likelihood that this column contains free-form text. A value close to 1 may indicate the column is likely to contain free-form or natural language text. Range in 0-1.
+  &quot;name&quot;: &quot;A String&quot;, # The name of the profile.
+  &quot;otherMatches&quot;: [ # Other types found within this column. List will be unordered.
+    { # Infotype details for other infoTypes found within a column.
+      &quot;estimatedPrevalence&quot;: 42, # Approximate percentage of non-null rows that contained data detected by this infotype.
+      &quot;excludedFromAnalysis&quot;: True or False, # Whether this infoType was excluded from sensitivity and risk analysis due to factors such as low prevalence (subject to change).
+      &quot;infoType&quot;: { # Type of information detected by the API. # The other infoType.
+  &quot;policyState&quot;: &quot;A String&quot;, # Indicates if a policy tag has been applied to the column.
+  &quot;profileLastGenerated&quot;: &quot;A String&quot;, # The last time the profile was generated.
+  &quot;profileStatus&quot;: { # Success or errors for the profile generation. # Success or error status from the most recent profile generation attempt. May be empty if the profile is still being generated.
+    &quot;status&quot;: { # The `Status` type defines a logical error model that is suitable for different programming environments, including REST APIs and RPC APIs. It is used by [gRPC](https://github.com/grpc). Each `Status` message contains three pieces of data: error code, error message, and error details. You can find out more about this error model and how to work with it in the [API Design Guide](https://cloud.google.com/apis/design/errors). # Profiling status code and optional message. The `status.code` value is 0 (default value) for OK.
+    &quot;timestamp&quot;: &quot;A String&quot;, # Time when the profile generation status was updated
+  &quot;sensitivityScore&quot;: { # Score is calculated from of all elements in the data profile. A higher level means the data is more sensitive. # The sensitivity of this column.
+  &quot;state&quot;: &quot;A String&quot;, # State of a profile.
+  &quot;tableDataProfile&quot;: &quot;A String&quot;, # The resource name of the table data profile.
+  &quot;tableFullResource&quot;: &quot;A String&quot;, # The resource name of the resource this column is within.
+  &quot;tableId&quot;: &quot;A String&quot;, # The table ID.
+  <pre>Lists column data profiles for an organization.
+  parent: string, Required. Resource name of the organization or project, for example `organizations/433245324/locations/europe` or `projects/project-id/locations/asia`. (required)
+  filter: string, Allows filtering. Supported syntax: * Filter expressions are made up of one or more restrictions. * Restrictions can be combined by `AND` or `OR` logical operators. A sequence of restrictions implicitly uses `AND`. * A restriction has the form of `{field} {operator} {value}`. * Supported fields: - `table_data_profile_name`: The name of the related table data profile - `project_id`: The Google Cloud project ID (REQUIRED) - `dataset_id`: The BigQuery dataset ID (REQUIRED) - `table_id`: The BigQuery table ID (REQUIRED) - `field_id`: The ID of the BigQuery field - `info_type`: The infotype detected in the resource - `sensitivity_level`: HIGH|MEDIUM|LOW - `data_risk_level`: How much risk is associated with this data - `status_code`: An RPC status code as defined in https://github.com/googleapis/googleapis/blob/master/google/rpc/code.proto - `profile_last_generated`: Date and time the profile was last generated * The operator must be `=` for project_id, dataset_id, and table_id. Other filters also support `!=`. The `profile_last_generated` filter also supports `&lt;` and `&gt;`. The syntax is based on https://google.aip.dev/160. Examples: * project_id = 12345 AND status_code = 1 * project_id = 12345 AND sensitivity_level = HIGH * project_id = 12345 AND info_type = STREET_ADDRESS * profile_last_generated &lt; &quot;2025-01-01T00:00:00.000Z&quot; The length of this field should be no more than 500 characters.
+  orderBy: string, Comma-separated list of fields to order by, followed by `asc` or `desc` postfix. This list is case insensitive. The default sorting order is ascending. Redundant space characters are insignificant. Only one order field at a time is allowed. Examples: * `project_id asc` * `table_id` * `sensitivity_level desc` Supported fields are: - `project_id`: The Google Cloud project ID. - `dataset_id`: The ID of a BigQuery dataset. - `table_id`: The ID of a BigQuery table. - `sensitivity_level`: How sensitive the data in a column is, at most. - `data_risk_level`: How much risk is associated with this data. - `profile_last_generated`: When the profile was last updated in epoch seconds.
+  pageSize: integer, Size of the page. This value can be limited by the server. If zero, server returns a page of max size 100.
+  pageToken: string, Page token to continue retrieval.
+    { # List of profiles generated for a given organization or project.
+  &quot;columnDataProfiles&quot;: [ # List of data profiles.

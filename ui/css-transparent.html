@@ -1,0 +1,9 @@
+    <title>test-color-window</title>
+  <body id="body">
+      const observer = new MutationObserver((mutationList, observer) => {
+        for (const { type, attributeName } of mutationList) {
+          if (type === 'attributes' && attributeName === 'style') {
+            ipcRenderer.send('set-transparent');
+      observer.observe(document.body, { attributes: true });
+      document.addEventListener('DOMContentLoaded', event => {
+        document.body.style.background = 'transparent';

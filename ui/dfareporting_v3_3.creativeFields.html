@@ -1,0 +1,30 @@
+<h1><a href="dfareporting_v3_3.html">Campaign Manager 360 API</a> . <a href="dfareporting_v3_3.creativeFields.html">creativeFields</a></h1>
+<p class="firstline">Deletes an existing creative field.</p>
+<p class="firstline">Gets one creative field by ID.</p>
+<p class="firstline">Inserts a new creative field.</p>
+  <code><a href="#list">list(profileId, advertiserIds=None, ids=None, maxResults=None, pageToken=None, searchString=None, sortField=None, sortOrder=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Retrieves a list of creative fields, possibly filtered. This method supports paging.</p>
+<p class="firstline">Updates an existing creative field. This method supports patch semantics.</p>
+<p class="firstline">Updates an existing creative field.</p>
+  <pre>Deletes an existing creative field.
+  id: string, Creative Field ID (required)
+  <pre>Gets one creative field by ID.
+    { # Contains properties of a creative field.
+  &quot;accountId&quot;: &quot;A String&quot;, # Account ID of this creative field. This is a read-only field that can be left blank.
+  &quot;advertiserId&quot;: &quot;A String&quot;, # Advertiser ID of this creative field. This is a required field on insertion.
+  &quot;id&quot;: &quot;A String&quot;, # ID of this creative field. This is a read-only, auto-generated field.
+  &quot;kind&quot;: &quot;A String&quot;, # Identifies what kind of resource this is. Value: the fixed string &quot;dfareporting#creativeField&quot;.
+  &quot;name&quot;: &quot;A String&quot;, # Name of this creative field. This is a required field and must be less than 256 characters long and unique among creative fields of the same advertiser.
+  &quot;subaccountId&quot;: &quot;A String&quot;, # Subaccount ID of this creative field. This is a read-only field that can be left blank.
+  <pre>Inserts a new creative field.
+    <code class="details" id="list">list(profileId, advertiserIds=None, ids=None, maxResults=None, pageToken=None, searchString=None, sortField=None, sortOrder=None, x__xgafv=None)</code>
+  <pre>Retrieves a list of creative fields, possibly filtered. This method supports paging.
+  advertiserIds: string, Select only creative fields that belong to these advertisers. (repeated)
+  ids: string, Select only creative fields with these IDs. (repeated)
+  searchString: string, Allows searching for creative fields by name or ID. Wildcards (*) are allowed. For example, &quot;creativefield*2015&quot; will return creative fields with names like &quot;creativefield June 2015&quot;, &quot;creativefield April 2015&quot;, or simply &quot;creativefield 2015&quot;. Most of the searches also add wild-cards implicitly at the start and the end of the search string. For example, a search string of &quot;creativefield&quot; will match creative fields with the name &quot;my creativefield&quot;, &quot;creativefield 2015&quot;, or simply &quot;creativefield&quot;.
+    { # Creative Field List Response
+  &quot;creativeFields&quot;: [ # Creative field collection.
+  &quot;kind&quot;: &quot;A String&quot;, # Identifies what kind of resource this is. Value: the fixed string &quot;dfareporting#creativeFieldsListResponse&quot;.
+  <pre>Updates an existing creative field. This method supports patch semantics.
+  id: string, CreativeField ID. (required)
+  <pre>Updates an existing creative field.

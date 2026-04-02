@@ -1,0 +1,19 @@
+<h1><a href="recommendationengine_v1beta1.html">Recommendations AI (Beta)</a> . <a href="recommendationengine_v1beta1.projects.html">projects</a> . <a href="recommendationengine_v1beta1.projects.locations.html">locations</a> . <a href="recommendationengine_v1beta1.projects.locations.catalogs.html">catalogs</a> . <a href="recommendationengine_v1beta1.projects.locations.catalogs.eventStores.html">eventStores</a> . <a href="recommendationengine_v1beta1.projects.locations.catalogs.eventStores.predictionApiKeyRegistrations.html">predictionApiKeyRegistrations</a></h1>
+<p class="firstline">Register an API key for use with predict method.</p>
+<p class="firstline">Unregister an apiKey from using for predict method.</p>
+<p class="firstline">List the registered apiKeys for use with predict method.</p>
+  <pre>Register an API key for use with predict method.
+  parent: string, Required. The parent resource path. `projects/*/locations/global/catalogs/default_catalog/eventStores/default_event_store`. (required)
+{ # Request message for the `CreatePredictionApiKeyRegistration` method.
+  &quot;predictionApiKeyRegistration&quot;: { # Registered Api Key. # Required. The prediction API key registration.
+    &quot;apiKey&quot;: &quot;A String&quot;, # The API key.
+    { # Registered Api Key.
+  <pre>Unregister an apiKey from using for predict method.
+  name: string, Required. The API key to unregister including full resource path. `projects/*/locations/global/catalogs/default_catalog/eventStores/default_event_store/predictionApiKeyRegistrations/` (required)
+  <pre>List the registered apiKeys for use with predict method.
+  parent: string, Required. The parent placement resource name such as `projects/1234/locations/global/catalogs/default_catalog/eventStores/default_event_store` (required)
+  pageSize: integer, Optional. Maximum number of results to return per page. If unset, the service will choose a reasonable default.
+  pageToken: string, Optional. The previous `ListPredictionApiKeyRegistration.nextPageToken`.
+    { # Response message for the `ListPredictionApiKeyRegistrations`.
+  &quot;nextPageToken&quot;: &quot;A String&quot;, # If empty, the list is complete. If nonempty, pass the token to the next request&#x27;s `ListPredictionApiKeysRegistrationsRequest.pageToken`.
+  &quot;predictionApiKeyRegistrations&quot;: [ # The list of registered API keys.

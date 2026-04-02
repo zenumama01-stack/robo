@@ -1,0 +1,117 @@
+<h1><a href="compute_alpha.html">Compute Engine API</a> . <a href="compute_alpha.vpnTunnels.html">vpnTunnels</a></h1>
+<p class="firstline">Retrieves an aggregated list of VPN tunnels.</p>
+  <code><a href="#delete">delete(project, region, vpnTunnel, requestId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Deletes the specified VpnTunnel resource.</p>
+  <code><a href="#get">get(project, region, vpnTunnel, x__xgafv=None)</a></code></p>
+<p class="firstline">Returns the specified VpnTunnel resource.</p>
+<p class="firstline">Creates a VpnTunnel resource in the specified project and region using</p>
+<p class="firstline">Retrieves a list of VpnTunnel resources contained in the specified</p>
+<p class="firstline">Sets the labels on a VpnTunnel. To learn more about labels, read theLabeling</p>
+  <pre>Retrieves an aggregated list of VPN tunnels.
+  &quot;items&quot;: { # A list of VpnTunnelsScopedList resources.
+    &quot;a_key&quot;: { # Name of the scope containing this set of VPN tunnels.
+      &quot;vpnTunnels&quot;: [ # A list of VPN tunnels contained in this scope.
+        { # Represents a Cloud VPN Tunnel resource.
+            # For more information about VPN, read the
+            # the Cloud VPN Overview.
+          &quot;capacityTier&quot;: &quot;A String&quot;, # Capacity tier of the VPN tunnel. This is used for IPsec over Interconnect
+              # tunnels to indicate different bandwidth limits.
+          &quot;cipherSuite&quot;: { # User specified list of ciphers to use for the phase 1 and phase 2 of the
+              # IKE protocol.
+            &quot;phase1&quot;: {
+              &quot;dh&quot;: [
+              &quot;encryption&quot;: [
+              &quot;integrity&quot;: [
+              &quot;prf&quot;: [
+            &quot;phase2&quot;: {
+              &quot;pfs&quot;: [
+          &quot;detailedStatus&quot;: &quot;A String&quot;, # [Output Only] Detailed status message for the VPN tunnel.
+          &quot;ikeVersion&quot;: 42, # IKE protocol version to use when establishing the VPN tunnel with the peer
+              # VPN gateway. Acceptable IKE versions are 1 or 2.
+              # The default version is 2.
+          &quot;kind&quot;: &quot;compute#vpnTunnel&quot;, # Output only. [Output Only] Type of resource. Always compute#vpnTunnel for
+              # VPN tunnels.
+          &quot;labelFingerprint&quot;: &quot;A String&quot;, # A fingerprint for the labels being applied to this VpnTunnel, which is
+              # retrieve a VpnTunnel.
+          &quot;localTrafficSelector&quot;: [ # Local traffic selector to use when establishing the VPN tunnel with the
+              # peer VPN gateway. The value should be a CIDR formatted string, for
+              # example: 192.168.0.0/16. The ranges must be disjoint.
+              # Only IPv4 is supported for Classic VPN tunnels. This field is output only
+              # for HA VPN tunnels.
+          &quot;peerExternalGateway&quot;: &quot;A String&quot;, # URL of the peer side external VPN gateway to which this VPN tunnel is
+              # connected.
+              # Provided by the client when the VPN tunnel is created.
+              # This field is exclusive with the field peerGcpGateway.
+          &quot;peerExternalGatewayInterface&quot;: 42, # The interface ID of the external VPN gateway to which this VPN tunnel is
+              # connected. Provided by the client when the VPN tunnel is created.
+              # Possible values are: `0`, `1`, `2`, `3`. The number of IDs in use
+              # depends on the external VPN gateway redundancy type.
+          &quot;peerGcpGateway&quot;: &quot;A String&quot;, # URL of the peer side HA VPN gateway to which this VPN tunnel
+              # is connected. Provided by the client when the VPN tunnel is created.
+              # This field can be used when creating highly available VPN from VPC network
+              # to VPC network, the field is exclusive with the field peerExternalGateway.
+              # If provided, the VPN tunnel will automatically use the same
+              # vpnGatewayInterface ID in the peer Google Cloud VPN gateway.
+          &quot;peerIp&quot;: &quot;A String&quot;, # IP address of the peer VPN gateway. Only IPv4 is supported. This field can
+              # be set only for Classic VPN tunnels.
+          &quot;region&quot;: &quot;A String&quot;, # [Output Only] URL of the region where the VPN tunnel resides.
+          &quot;remoteTrafficSelector&quot;: [ # Remote traffic selectors to use when establishing the VPN tunnel with
+              # the peer VPN gateway. The value should be a CIDR formatted string,
+              # for example: 192.168.0.0/16. The ranges should be disjoint. Only IPv4 is
+              # supported for Classic VPN tunnels. This field is output only for HA VPN
+              # tunnels.
+          &quot;router&quot;: &quot;A String&quot;, # URL of the router resource to be used for dynamic routing.
+          &quot;sharedSecret&quot;: &quot;A String&quot;, # Shared secret used to set the secure session between the Cloud VPN gateway
+              # and the peer VPN gateway.
+          &quot;sharedSecretHash&quot;: &quot;A String&quot;, # Hash of the shared secret.
+          &quot;status&quot;: &quot;A String&quot;, # [Output Only] The status of the VPN tunnel, which can be one of the
+              #    - PROVISIONING: Resource is being allocated for the VPN tunnel.
+              #    - WAITING_FOR_FULL_CONFIG: Waiting to receive all VPN-related configs
+              #    from
+              #      the user. Network, TargetVpnGateway, VpnTunnel, ForwardingRule, and Route
+              #      resources are needed to setup the VPN tunnel.
+              #    - FIRST_HANDSHAKE: Successful first handshake with the peer VPN.
+              #    - ESTABLISHED: Secure session is successfully established with the peer
+              #    VPN.
+              #    - NETWORK_ERROR: Deprecated, replaced by
+              #    NO_INCOMING_PACKETS
+              #    - AUTHORIZATION_ERROR: Auth error (for example,
+              #    bad shared secret).
+              #    - NEGOTIATION_FAILURE: Handshake failed.
+              #    - DEPROVISIONING: Resources are being deallocated for the VPN
+              #    tunnel.
+              #    - FAILED: Tunnel creation has failed and the tunnel is not
+              #    ready to be used.
+              #    - NO_INCOMING_PACKETS: No incoming packets from
+              #    peer.
+              #    - REJECTED: Tunnel configuration was rejected, can be result
+              #    of being denied access.
+              #    - ALLOCATING_RESOURCES: Cloud VPN is in the
+              #    process of allocating all required resources.
+              #    - STOPPED: Tunnel is stopped due to its Forwarding Rules being deleted
+              #    for Classic VPN tunnels or the project is in frozen state.
+              #    - PEER_IDENTITY_MISMATCH: Peer identity does not match peer IP,
+              #    probably behind NAT.
+              #    - TS_NARROWING_NOT_ALLOWED: Traffic selector
+              #    narrowing not allowed for an HA-VPN tunnel.
+          &quot;targetVpnGateway&quot;: &quot;A String&quot;, # URL of the Target VPN gateway with which this VPN tunnel is associated.
+              # This field can be set only for Classic VPN tunnels.
+          &quot;vpnGateway&quot;: &quot;A String&quot;, # URL of the VPN gateway with which this VPN tunnel is associated.
+              # Provided by the client when the VPN tunnel is created. This must be
+              # used (instead of target_vpn_gateway) if a High Availability VPN gateway
+          &quot;vpnGatewayInterface&quot;: 42, # The interface ID of the VPN gateway with which this VPN tunnel is
+              # associated.
+              # Possible values are: `0`, `1`.
+  &quot;kind&quot;: &quot;compute#vpnTunnelAggregatedList&quot;, # Output only. [Output Only] Type of resource. Always compute#vpnTunnel for
+    <code class="details" id="delete">delete(project, region, vpnTunnel, requestId=None, x__xgafv=None)</code>
+  <pre>Deletes the specified VpnTunnel resource.
+  vpnTunnel: string, Name of the VpnTunnel resource to delete. (required)
+    <code class="details" id="get">get(project, region, vpnTunnel, x__xgafv=None)</code>
+  <pre>Returns the specified VpnTunnel resource.
+  vpnTunnel: string, Name of the VpnTunnel resource to return. (required)
+  <pre>Creates a VpnTunnel resource in the specified project and region using
+  <pre>Retrieves a list of VpnTunnel resources contained in the specified
+    { # Contains a list of VpnTunnel resources.
+  &quot;items&quot;: [ # A list of VpnTunnel resources.
+  &quot;kind&quot;: &quot;compute#vpnTunnelList&quot;, # Output only. [Output Only] Type of resource. Always compute#vpnTunnel for
+  <pre>Sets the labels on a VpnTunnel. To learn more about labels, read theLabeling

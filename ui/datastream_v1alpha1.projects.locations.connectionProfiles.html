@@ -1,0 +1,36 @@
+<h1><a href="datastream_v1alpha1.html">Datastream API</a> . <a href="datastream_v1alpha1.projects.html">projects</a> . <a href="datastream_v1alpha1.projects.locations.html">locations</a> . <a href="datastream_v1alpha1.projects.locations.connectionProfiles.html">connectionProfiles</a></h1>
+<p class="firstline">Use this method to delete a connection profile..</p>
+<p class="firstline">Use this method to discover a connection profile. The discover API call exposes the data objects and metadata belonging to the profile. Typically, a request returns children data objects under a parent data object that's optionally supplied in the request.</p>
+  &quot;gcsProfile&quot;: { # Cloud Storage bucket profile. # Cloud Storage ConnectionProfile configuration.
+    &quot;bucketName&quot;: &quot;A String&quot;, # Required. The full project and resource path for Cloud Storage bucket including the name.
+  &quot;mysqlProfile&quot;: { # MySQL database profile. # MySQL ConnectionProfile configuration.
+    &quot;password&quot;: &quot;A String&quot;, # Required. Input only. Password for the MySQL connection.
+      &quot;clientCertificate&quot;: &quot;A String&quot;, # Input only. PEM-encoded certificate that will be used by the replica to authenticate against the source database server. If this field is used then the &#x27;client_key&#x27; and the &#x27;ca_certificate&#x27; fields are mandatory.
+      &quot;clientKey&quot;: &quot;A String&quot;, # Input only. PEM-encoded private key associated with the Client Certificate. If this field is used then the &#x27;client_certificate&#x27; and the &#x27;ca_certificate&#x27; fields are mandatory.
+  &quot;name&quot;: &quot;A String&quot;, # Output only. The resource&#x27;s name.
+  &quot;noConnectivity&quot;: { # No connectivity settings. # No connectivity option chosen.
+  &quot;oracleProfile&quot;: { # Oracle database profile. # Oracle ConnectionProfile configuration.
+    &quot;password&quot;: &quot;A String&quot;, # Required. Password for the Oracle connection.
+    &quot;privateConnectionName&quot;: &quot;A String&quot;,
+  &quot;staticServiceIpConnectivity&quot;: { # Static IP address connectivity. # Static Service IP connectivity.
+  <pre>Use this method to delete a connection profile..
+  <pre>Use this method to discover a connection profile. The discover API call exposes the data objects and metadata belonging to the profile. Typically, a request returns children data objects under a parent data object that&#x27;s optionally supplied in the request.
+  parent: string, Required. The parent resource of the ConnectionProfile type. Must be in the format `projects/*/locations/*`. (required)
+  &quot;connectionProfile&quot;: { # An ad-hoc ConnectionProfile configuration.
+  &quot;connectionProfileName&quot;: &quot;A String&quot;, # A reference to an existing ConnectionProfile.
+  &quot;mysqlRdbms&quot;: { # MySQL database structure # MySQL RDBMS to enrich with child data objects and metadata.
+        &quot;databaseName&quot;: &quot;A String&quot;, # Database name.
+            &quot;mysqlColumns&quot;: [ # MySQL columns in the database. When unspecified as part of include/exclude lists, includes/excludes everything.
+                &quot;columnName&quot;: &quot;A String&quot;, # Column name.
+            &quot;tableName&quot;: &quot;A String&quot;, # Table name.
+  &quot;oracleRdbms&quot;: { # Oracle database structure. # Oracle RDBMS to enrich with child data objects and metadata.
+            &quot;oracleColumns&quot;: [ # Oracle columns in the schema. When unspecified as part of inclue/exclude lists, includes/excludes everything.
+        &quot;schemaName&quot;: &quot;A String&quot;, # Schema name.
+  &quot;recursionDepth&quot;: 42, # The number of hierarchy levels below the current level to be retrieved.
+  &quot;recursive&quot;: True or False, # Whether to retrieve the full hierarchy of data objects (TRUE) or only the current level (FALSE).
+  filter: string, Filter request.
+  orderBy: string, Order by fields for the result.
+  pageSize: integer, Maximum number of connection profiles to return. If unspecified, at most 50 connection profiles will be returned. The maximum value is 1000; values above 1000 will be coerced to 1000.
+  pageToken: string, Page token received from a previous `ListConnectionProfiles` call. Provide this to retrieve the subsequent page. When paginating, all other parameters provided to `ListConnectionProfiles` must match the call that provided the page token.
+  name: string, Output only. The resource&#x27;s name. (required)
+  validateOnly: boolean, Optional. Only validate the connection profile, but do not update any resources. The default is false.

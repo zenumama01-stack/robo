@@ -1,0 +1,145 @@
+  <div class="modal-backdrop" (click)="onCancel()" role="presentation">
+      [class.fullscreen]="isFullscreen"
+      aria-labelledby="application-dialog-title"
+      aria-describedby="application-dialog-description"
+      <!-- Modal Header -->
+      <div class="modal-header" [class.create-mode]="!isEditMode" [class.edit-mode]="isEditMode">
+        <div class="modal-header-content">
+          <h2 class="modal-title" id="application-dialog-title">
+            <i class="fa-solid" [class.fa-plus]="!isEditMode" [class.fa-layer-group]="isEditMode" aria-hidden="true"></i>
+            {{ isEditMode ? 'Edit Application' : 'Create New Application' }}
+          <p class="modal-subtitle" id="application-dialog-description">
+            {{ isEditMode ? 'Update application information and settings' : 'Add a new application to the system' }}
+            class="modal-action-btn"
+            (click)="toggleFullscreen()"
+            [attr.aria-label]="isFullscreen ? 'Exit fullscreen' : 'Enter fullscreen'"
+            <i class="fa-solid" [class.fa-compress]="isFullscreen" [class.fa-expand]="!isFullscreen" aria-hidden="true"></i>
+      <!-- Modal Body -->
+        <form [formGroup]="applicationForm" (ngSubmit)="onSubmit()">
+              <div class="alert alert-error" role="alert">
+                <i class="fa-solid fa-exclamation-triangle" aria-hidden="true"></i>
+                <div>{{ error }}</div>
+          <fieldset class="form-section collapsible-section">
+            <legend class="section-header clickable" (click)="toggleSection('basicInfo')">
+                <span class="section-title">
+                  <i class="fa-solid fa-info-circle" aria-hidden="true"></i>
+                  Application Information
+                <i class="fa-solid chevron-icon"
+                   [class.fa-chevron-up]="sectionExpanded.basicInfo"
+                   [class.fa-chevron-down]="!sectionExpanded.basicInfo"
+              <span class="section-description">Define the application's basic properties</span>
+            </legend>
+            @if (sectionExpanded.basicInfo) {
+                <label class="field-label required" for="app-name">Application Name</label>
+                  id="app-name"
+                  class="field-input"
+                  placeholder="My Application"
+                  [class.error]="applicationForm.get('name')?.invalid && applicationForm.get('name')?.touched"
+                  [attr.aria-invalid]="applicationForm.get('name')?.invalid && applicationForm.get('name')?.touched"
+                  aria-describedby="app-name-error"
+                @if (applicationForm.get('name')?.invalid && applicationForm.get('name')?.touched) {
+                  <div class="field-error" id="app-name-error" role="alert">
+                    <i class="fa-solid fa-exclamation-circle" aria-hidden="true"></i>
+                    @if (applicationForm.get('name')?.errors?.['required']) {
+                      Application name is required
+                    @if (applicationForm.get('name')?.errors?.['maxlength']) {
+                      Application name cannot exceed 100 characters
+                <label class="field-label" for="app-description">Description</label>
+                  id="app-description"
+                  class="field-textarea"
+                  placeholder="Describe the application's purpose and functionality..."
+                  Provide a clear description of what this application does and its main features.
+          </fieldset>
+          <!-- Entity Management Section -->
+            <legend class="section-header clickable" (click)="toggleSection('entities')">
+                   [class.fa-chevron-up]="sectionExpanded.entities"
+                   [class.fa-chevron-down]="!sectionExpanded.entities"
+              <span class="section-description">Manage which entities are included in this application</span>
+            @if (sectionExpanded.entities) {
+              <!-- Assigned Entities -->
+              @if (applicationEntities.length > 0) {
+                <div class="assigned-entities">
+                  <h4 class="subsection-title">Assigned Entities ({{ applicationEntities.length }})</h4>
+                  <div class="entities-list"
+                       role="list"
+                       (cdkDropListDropped)="onEntityDrop($event)">
+                    @for (config of applicationEntities; track config.entity.ID; let i = $index) {
+                        class="entity-item"
+                        [class.is-new]="config.isNew"
+                        [class.has-changes]="config.hasChanges"
+                        <i class="fa-solid fa-grip-vertical drag-handle" aria-hidden="true"></i>
+                          <div class="entity-icon">
+                            <i class="fa-solid fa-table" aria-hidden="true"></i>
+                          <div class="entity-details">
+                            <div class="entity-name">
+                              {{ config.entity.Name }}
+                              @if (config.entity.Description) {
+                                <i
+                                  class="fa-solid fa-info-circle entity-info-icon"
+                                  [title]="config.entity.Description"
+                                  [attr.aria-label]="'Entity description: ' + config.entity.Description"
+                        <div class="entity-config">
+                            <label class="config-label">
+                                [(ngModel)]="config.defaultForNewUser"
+                                (change)="onDefaultForNewUserChange(config)"
+                                class="config-checkbox"
+                              <span class="checkbox-text">Default for new users</span>
+                          <div class="sequence-badge" [attr.aria-label]="'Sequence ' + config.sequence">{{ config.sequence }}</div>
+                        <div class="entity-actions">
+                            class="btn-icon btn-danger"
+                            (click)="removeEntity(config)"
+                            title="Remove entity"
+                            [attr.aria-label]="'Remove ' + config.entity.Name"
+                <div class="no-entities">
+                  <p>No entities assigned to this application</p>
+                  <p class="empty-subtext">Add entities from the available list below</p>
+              <!-- Available Entities -->
+              @if (availableEntities.length > 0) {
+                <div class="available-entities">
+                  <div class="available-entities-header">
+                    <h4 class="subsection-title">Available Entities ({{ filteredAvailableEntities.length }} of {{ availableEntities.length }})</h4>
+                      <i class="fa-solid fa-search entity-search-icon" aria-hidden="true"></i>
+                        class="entity-search-input"
+                        [value]="entitySearchTerm"
+                        (input)="onEntitySearchChange($event)"
+                        aria-label="Search available entities"
+                          class="entity-search-clear"
+                          (click)="clearEntitySearch()"
+                          aria-label="Clear search"
+                  @if (filteredAvailableEntities.length > 0) {
+                    <div class="entities-grid" role="list">
+                      @for (entity of filteredAvailableEntities; track entity.ID) {
+                          class="entity-chip"
+                          (click)="addEntity(entity)"
+                          [attr.aria-label]="'Add ' + entity.Name"
+                          <div class="chip-content">
+                            <span class="chip-name">{{ entity.Name }}</span>
+                    <div class="no-search-results">
+                      <i class="fa-solid fa-search" aria-hidden="true"></i>
+                      <p>No entities match "{{ entitySearchTerm }}"</p>
+                <div class="all-assigned">
+                  <i class="fa-solid fa-check-circle" aria-hidden="true"></i>
+                  <p>All entities have been assigned to this application</p>
+          <!-- System Information Section (Edit Mode Only) -->
+          @if (isEditMode) {
+              <legend class="section-header clickable" (click)="toggleSection('systemInfo')">
+                    System Information
+                     [class.fa-chevron-up]="sectionExpanded.systemInfo"
+                     [class.fa-chevron-down]="!sectionExpanded.systemInfo"
+                <span class="section-description">Application metadata and audit information</span>
+              @if (sectionExpanded.systemInfo) {
+                    <span class="info-value">{{ data?.application?.__mj_CreatedAt | date:'medium' }}</span>
+                    <span class="info-label">Last Updated</span>
+                    <span class="info-value">{{ data?.application?.__mj_UpdatedAt | date:'medium' }}</span>
+                    <span class="info-label">Application ID</span>
+                    <span class="info-value">{{ data?.application?.ID }}</span>
+                    <span class="info-label">Total Entities</span>
+                    <span class="info-value">{{ applicationEntities.length }}</span>
+      <!-- Modal Footer - Primary and Cancel buttons on RIGHT -->
+          class="mj-btn mj-btn-primary"
+          [disabled]="applicationForm.invalid || isLoading"
+          (click)="onSubmit()"
+          [attr.aria-busy]="isLoading"
+            <i class="fa-solid fa-save" aria-hidden="true"></i>
+            {{ isEditMode ? 'Update Application' : 'Create Application' }}
+        <button type="button" class="mj-btn mj-btn-secondary" (click)="onCancel()">

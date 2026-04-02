@@ -1,0 +1,99 @@
+<h1><a href="looker_v1.html">Looker (Google Cloud core) API</a> . <a href="looker_v1.projects.html">projects</a> . <a href="looker_v1.projects.locations.html">locations</a> . <a href="looker_v1.projects.locations.instances.html">instances</a></h1>
+  <code><a href="looker_v1.projects.locations.instances.backups.html">backups()</a></code>
+<p class="firstline">Delete instance.</p>
+<p class="firstline">Export instance.</p>
+<p class="firstline">Import instance.</p>
+<p class="firstline">Update Instance.</p>
+<p class="firstline">Restart instance.</p>
+<p class="firstline">Restore Looker instance.</p>
+  parent: string, Required. Format: `projects/{project}/locations/{location}`. (required)
+{ # A Looker instance.
+  &quot;adminSettings&quot;: { # Looker instance Admin settings fields. # Looker Instance Admin settings.
+    &quot;allowedEmailDomains&quot;: [ # Email domain allowlist for the instance.
+  &quot;classType&quot;: &quot;A String&quot;, # Optional. Storage class of the instance.
+  &quot;consumerNetwork&quot;: &quot;A String&quot;, # Network name in the consumer project. Format: `projects/{project}/global/networks/{network}`. Note that the consumer network may be in a different GCP project than the consumer project that is hosting the Looker Instance.
+  &quot;controlledEgressConfig&quot;: { # Controlled egress configuration. # Optional. Controlled egress configuration.
+    &quot;egressFqdns&quot;: [ # Optional. List of fully qualified domain names to be added to the allowlist for outbound traffic.
+    &quot;marketplaceEnabled&quot;: True or False, # Optional. Whether marketplace is enabled.
+    &quot;webProxyIps&quot;: [ # Output only. The list of IP addresses used by Secure Web Proxy for outbound traffic.
+  &quot;controlledEgressEnabled&quot;: True or False, # Optional. Whether controlled egress is enabled on the Looker instance.
+  &quot;createTime&quot;: &quot;A String&quot;, # Output only. The time when the Looker instance provisioning was first requested.
+  &quot;customDomain&quot;: { # Custom domain information. # Custom domain configuration for the instance.
+    &quot;domain&quot;: &quot;A String&quot;, # Domain name.
+    &quot;state&quot;: &quot;A String&quot;, # Domain state.
+  &quot;denyMaintenancePeriod&quot;: { # Specifies the maintenance denial period. # Maintenance denial period for this instance.
+    &quot;endDate&quot;: { # Represents a whole or partial calendar date, such as a birthday. The time of day and time zone are either specified elsewhere or are insignificant. The date is relative to the Gregorian Calendar. This can represent one of the following: * A full date, with non-zero year, month, and day values. * A month and day, with a zero year (for example, an anniversary). * A year on its own, with a zero month and a zero day. * A year and month, with a zero day (for example, a credit card expiration date). Related types: * google.type.TimeOfDay * google.type.DateTime * google.protobuf.Timestamp # Required. End date of the deny maintenance period.
+    &quot;startDate&quot;: { # Represents a whole or partial calendar date, such as a birthday. The time of day and time zone are either specified elsewhere or are insignificant. The date is relative to the Gregorian Calendar. This can represent one of the following: * A full date, with non-zero year, month, and day values. * A month and day, with a zero year (for example, an anniversary). * A year on its own, with a zero month and a zero day. * A year and month, with a zero day (for example, a credit card expiration date). Related types: * google.type.TimeOfDay * google.type.DateTime * google.protobuf.Timestamp # Required. Start date of the deny maintenance period.
+    &quot;time&quot;: { # Represents a time of day. The date and time zone are either not significant or are specified elsewhere. An API may choose to allow leap seconds. Related types are google.type.Date and `google.protobuf.Timestamp`. # Required. Time in UTC when the period starts and ends.
+  &quot;egressPublicIp&quot;: &quot;A String&quot;, # Output only. Public Egress IP (IPv4).
+  &quot;encryptionConfig&quot;: { # Encryption configuration (i.e. CMEK). # Encryption configuration (CMEK). Only set if CMEK has been enabled on the instance.
+  &quot;fipsEnabled&quot;: True or False, # Optional. Whether FIPS is enabled on the Looker instance.
+  &quot;geminiEnabled&quot;: True or False, # Optional. Whether Gemini feature is enabled on the Looker instance or not.
+  &quot;ingressPrivateIp&quot;: &quot;A String&quot;, # Output only. Private Ingress IP (IPv4).
+  &quot;ingressPublicIp&quot;: &quot;A String&quot;, # Output only. Public Ingress IP (IPv4).
+  &quot;lastDenyMaintenancePeriod&quot;: { # Specifies the maintenance denial period. # Output only. Last computed maintenance denial period for this instance.
+  &quot;linkedLspProjectNumber&quot;: &quot;A String&quot;, # Optional. Linked Google Cloud Project Number for Looker Studio Pro.
+  &quot;lookerUri&quot;: &quot;A String&quot;, # Output only. Looker instance URI which can be used to access the Looker Instance UI.
+  &quot;lookerVersion&quot;: &quot;A String&quot;, # Output only. The Looker version that the instance is using.
+  &quot;maintenanceSchedule&quot;: { # Published upcoming future maintenance schedule. # Maintenance schedule for this instance.
+    &quot;endTime&quot;: &quot;A String&quot;, # The scheduled end time for the maintenance.
+    &quot;startTime&quot;: &quot;A String&quot;, # The scheduled start time for the maintenance.
+  &quot;maintenanceWindow&quot;: { # Specifies the recurring maintenance window. # Maintenance window for this instance.
+    &quot;dayOfWeek&quot;: &quot;A String&quot;, # Required. Day of the week for this MaintenanceWindow (in UTC).
+    &quot;startTime&quot;: { # Represents a time of day. The date and time zone are either not significant or are specified elsewhere. An API may choose to allow leap seconds. Related types are google.type.Date and `google.protobuf.Timestamp`. # Required. Time in UTC when the period starts. Maintenance will be scheduled within 60 minutes.
+  &quot;name&quot;: &quot;A String&quot;, # Output only. Format: `projects/{project}/locations/{location}/instances/{instance}`.
+  &quot;oauthConfig&quot;: { # Looker instance OAuth login settings. # Looker instance OAuth login settings.
+    &quot;clientId&quot;: &quot;A String&quot;, # Input only. Client ID from an external OAuth application. This is an input-only field, and thus will not be set in any responses.
+    &quot;clientSecret&quot;: &quot;A String&quot;, # Input only. Client secret from an external OAuth application. This is an input-only field, and thus will not be set in any responses.
+    &quot;sharedOauthClientEnabled&quot;: True or False, # Optional. Whether to use the shared OAuth client. Instances specifying this field do not need to provide client_id and client_secret.
+  &quot;periodicExportConfig&quot;: { # Configuration for periodic export. # Optional. Configuration for periodic export.
+    &quot;gcsUri&quot;: &quot;A String&quot;, # Required. Cloud Storage bucket URI for periodic export. Format: gs://{bucket_name}
+    &quot;kmsKey&quot;: &quot;A String&quot;, # Required. Name of the CMEK key in KMS. Format: projects/{project}/locations/{location}/keyRings/{key_ring}/cryptoKeys/{crypto_key}
+    &quot;startTime&quot;: { # Represents a time of day. The date and time zone are either not significant or are specified elsewhere. An API may choose to allow leap seconds. Related types are google.type.Date and `google.protobuf.Timestamp`. # Required. Time in UTC to start the periodic export job.
+  &quot;platformEdition&quot;: &quot;A String&quot;, # Platform edition.
+  &quot;privateIpEnabled&quot;: True or False, # Whether private IP is enabled on the Looker instance.
+  &quot;pscConfig&quot;: { # Information for Private Service Connect (PSC) setup for a Looker instance. # Optional. PSC configuration. Used when `psc_enabled` is true.
+    &quot;allowedVpcs&quot;: [ # Optional. List of VPCs that are allowed ingress into looker. Format: projects/{project}/global/networks/{network}
+    &quot;lookerServiceAttachmentUri&quot;: &quot;A String&quot;, # Output only. URI of the Looker service attachment.
+    &quot;serviceAttachments&quot;: [ # Optional. List of egress service attachment configurations.
+      { # Service attachment configuration.
+        &quot;connectionStatus&quot;: &quot;A String&quot;, # Output only. Connection status.
+        &quot;failureReason&quot;: &quot;A String&quot;, # Output only. Reason the service attachment creation failed. This value will only be populated if the service attachment encounters an issue during provisioning.
+        &quot;localFqdn&quot;: &quot;A String&quot;, # Optional. Fully qualified domain name that will be used in the private DNS record created for the service attachment.
+        &quot;localFqdns&quot;: [ # Optional. List of fully qualified domain names that will be used in the private DNS record created for the service attachment.
+        &quot;targetServiceAttachmentUri&quot;: &quot;A String&quot;, # Required. URI of the service attachment to connect to. Format: projects/{project}/regions/{region}/serviceAttachments/{service_attachment}
+  &quot;pscEnabled&quot;: True or False, # Optional. Whether to use Private Service Connect (PSC) for private IP connectivity. If true, neither `public_ip_enabled` nor `private_ip_enabled` can be true.
+  &quot;publicIpEnabled&quot;: True or False, # Whether public IP is enabled on the Looker instance.
+  &quot;reservedRange&quot;: &quot;A String&quot;, # Name of a reserved IP address range within the Instance.consumer_network, to be used for private services access connection. May or may not be specified in a create request.
+  &quot;state&quot;: &quot;A String&quot;, # Output only. The state of the instance.
+  &quot;updateTime&quot;: &quot;A String&quot;, # Output only. The time when the Looker instance was last updated.
+  &quot;userMetadata&quot;: { # Metadata about users for a Looker instance. # Optional. User metadata.
+    &quot;additionalDeveloperUserCount&quot;: 42, # Optional. The number of additional developer users the instance owner has purchased.
+    &quot;additionalStandardUserCount&quot;: 42, # Optional. The number of additional standard users the instance owner has purchased.
+    &quot;additionalViewerUserCount&quot;: 42, # Optional. The number of additional viewer users the instance owner has purchased.
+  instanceId: string, Required. The unique instance identifier. Must contain only lowercase letters, numbers, or hyphens, with the first character a letter and the last a letter or a number. 63 characters maximum.
+  <pre>Delete instance.
+  name: string, Required. Format: `projects/{project}/locations/{location}/instances/{instance}`. (required)
+  force: boolean, Whether to force cascading delete.
+  <pre>Export instance.
+{ # Request options for exporting data of an Instance.
+  &quot;encryptionConfig&quot;: { # Configuration for Encryption - e.g. CMEK. # Required. Encryption configuration (CMEK). For CMEK enabled instances it should be same as looker CMEK.
+    &quot;kmsKeyName&quot;: &quot;A String&quot;, # Required. Name of the CMEK key in KMS.
+  &quot;gcsUri&quot;: &quot;A String&quot;, # The path to the folder in Google Cloud Storage where the export will be stored. The URI is in the form `gs://bucketName/folderName`.
+  <pre>Import instance.
+{ # Requestion options for importing looker data to an Instance
+  &quot;gcsUri&quot;: &quot;A String&quot;, # Path to the import folder in Google Cloud Storage, in the form `gs://bucketName/folderName`.
+  pageSize: integer, The maximum number of instances to return. If unspecified at most 256 will be returned. The maximum possible value is 2048.
+  pageToken: string, A page token received from a previous ListInstancesRequest.
+    { # Response from ListInstances.
+  &quot;instances&quot;: [ # The list of instances matching the request filters, up to the requested ListInstancesRequest.pageSize.
+  &quot;nextPageToken&quot;: &quot;A String&quot;, # If provided, a page token that can look up the next ListInstancesRequest.pageSize results. If empty, the results list is exhausted.
+  <pre>Update Instance.
+  name: string, Output only. Format: `projects/{project}/locations/{location}/instances/{instance}`. (required)
+  updateMask: string, Required. Field mask used to specify the fields to be overwritten in the Instance resource by the update. The fields specified in the mask are relative to the resource, not the full request. A field will be overwritten if it is in the mask.
+  <pre>Restart instance.
+{ # Request options for restarting an instance.
+  <pre>Restore Looker instance.
+  name: string, Required. Instance being restored Format: projects/{project}/locations/{location}/instances/{instance} (required)
+{ # Request options for restoring an instance
+  &quot;backup&quot;: &quot;A String&quot;, # Required. Backup being used to restore the instance Format: projects/{project}/locations/{location}/instances/{instance}/backups/{backup}

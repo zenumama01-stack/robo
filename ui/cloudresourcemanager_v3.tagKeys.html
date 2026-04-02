@@ -1,0 +1,46 @@
+<h1><a href="cloudresourcemanager_v3.html">Cloud Resource Manager API</a> . <a href="cloudresourcemanager_v3.tagKeys.html">tagKeys</a></h1>
+<p class="firstline">Creates a new TagKey. If another request with the same parameters is sent while the original request is in process, the second request will receive an error. A maximum of 1000 TagKeys can exist under a parent at any given time.</p>
+<p class="firstline">Deletes a TagKey. The TagKey cannot be deleted if it has any child TagValues.</p>
+<p class="firstline">Retrieves a TagKey. This method will return `PERMISSION_DENIED` if the key does not exist or the user does not have permission to view it.</p>
+<p class="firstline">Gets the access control policy for a TagKey. The returned policy may be empty if no such policy or resource exists. The `resource` field should be the TagKey's resource name. For example, "tagKeys/1234". The caller must have `cloudresourcemanager.googleapis.com/tagKeys.getIamPolicy` permission on the specified TagKey.</p>
+  <code><a href="#getNamespaced">getNamespaced(name=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Retrieves a TagKey by its namespaced name. This method will return `PERMISSION_DENIED` if the key does not exist or the user does not have permission to view it.</p>
+<p class="firstline">Lists all TagKeys for a parent resource.</p>
+<p class="firstline">Updates the attributes of the TagKey resource.</p>
+<p class="firstline">Sets the access control policy on a TagKey, replacing any existing policy. The `resource` field should be the TagKey's resource name. For example, "tagKeys/1234". The caller must have `resourcemanager.tagKeys.setIamPolicy` permission on the identified tagValue.</p>
+<p class="firstline">Returns permissions that a caller has on the specified TagKey. The `resource` field should be the TagKey's resource name. For example, "tagKeys/1234". There are no permissions required for making this API call.</p>
+  <pre>Creates a new TagKey. If another request with the same parameters is sent while the original request is in process, the second request will receive an error. A maximum of 1000 TagKeys can exist under a parent at any given time.
+{ # A TagKey, used to group a set of TagValues.
+  &quot;allowedValuesRegex&quot;: &quot;A String&quot;, # Optional. Regular expression constraint for freeform tag values. If present, it implicitly allows freeform values (constrained by the regex).
+  &quot;description&quot;: &quot;A String&quot;, # Optional. User-assigned description of the TagKey. Must not exceed 256 characters. Read-write.
+  &quot;etag&quot;: &quot;A String&quot;, # Optional. Entity tag which users can pass to prevent race conditions. This field is always set in server responses. See UpdateTagKeyRequest for details.
+  &quot;name&quot;: &quot;A String&quot;, # Immutable. The resource name for a TagKey. Must be in the format `tagKeys/{tag_key_id}`, where `tag_key_id` is the generated numeric id for the TagKey.
+  &quot;namespacedName&quot;: &quot;A String&quot;, # Output only. Immutable. Namespaced name of the TagKey.
+  &quot;parent&quot;: &quot;A String&quot;, # Immutable. The resource name of the TagKey&#x27;s parent. A TagKey can be parented by an Organization or a Project. For a TagKey parented by an Organization, its parent must be in the form `organizations/{org_id}`. For a TagKey parented by a Project, its parent can be in the form `projects/{project_id}` or `projects/{project_number}`.
+  &quot;purpose&quot;: &quot;A String&quot;, # Optional. A purpose denotes that this Tag is intended for use in policies of a specific policy engine, and will involve that policy engine in management operations involving this Tag. A purpose does not grant a policy engine exclusive rights to the Tag, and it may be referenced by other policy engines. A purpose cannot be changed once set.
+  &quot;purposeData&quot;: { # Optional. Purpose data corresponds to the policy system that the tag is intended for. See documentation for `Purpose` for formatting of this field. Purpose data cannot be changed once set.
+  &quot;shortName&quot;: &quot;A String&quot;, # Required. Immutable. The user friendly name for a TagKey. The short name should be unique for TagKeys within the same tag namespace. The short name must be 1-256 characters, beginning and ending with an alphanumeric character ([a-z0-9A-Z]) with dashes (-), underscores (_), dots (.), and alphanumerics between.
+  validateOnly: boolean, Optional. Set to true to perform validations necessary for creating the resource, but not actually perform the action.
+  <pre>Deletes a TagKey. The TagKey cannot be deleted if it has any child TagValues.
+  name: string, Required. The resource name of a TagKey to be deleted in the format `tagKeys/123`. The TagKey cannot be a parent of any existing TagValues or it will not be deleted successfully. (required)
+  etag: string, Optional. The etag known to the client for the expected state of the TagKey. This is to be used for optimistic concurrency.
+  validateOnly: boolean, Optional. Set as true to perform validations necessary for deletion, but not actually perform the action.
+  <pre>Retrieves a TagKey. This method will return `PERMISSION_DENIED` if the key does not exist or the user does not have permission to view it.
+  name: string, Required. A resource name in the format `tagKeys/{id}`, such as `tagKeys/123`. (required)
+  <pre>Gets the access control policy for a TagKey. The returned policy may be empty if no such policy or resource exists. The `resource` field should be the TagKey&#x27;s resource name. For example, &quot;tagKeys/1234&quot;. The caller must have `cloudresourcemanager.googleapis.com/tagKeys.getIamPolicy` permission on the specified TagKey.
+    <code class="details" id="getNamespaced">getNamespaced(name=None, x__xgafv=None)</code>
+  <pre>Retrieves a TagKey by its namespaced name. This method will return `PERMISSION_DENIED` if the key does not exist or the user does not have permission to view it.
+  name: string, Required. A namespaced tag key name in the format `{parentId}/{tagKeyShort}`, such as `42/foo` for a key with short name &quot;foo&quot; under the organization with ID 42 or `r2-d2/bar` for a key with short name &quot;bar&quot; under the project `r2-d2`.
+  <pre>Lists all TagKeys for a parent resource.
+  pageSize: integer, Optional. The maximum number of TagKeys to return in the response. The server allows a maximum of 300 TagKeys to return. If unspecified, the server will use 100 as the default.
+  pageToken: string, Optional. A pagination token returned from a previous call to `ListTagKey` that indicates where this listing should continue from.
+  parent: string, Required. The resource name of the TagKey&#x27;s parent. Must be of the form `organizations/{org_id}` or `projects/{project_id}` or `projects/{project_number}`
+    { # The ListTagKeys response message.
+  &quot;nextPageToken&quot;: &quot;A String&quot;, # A pagination token returned from a previous call to `ListTagKeys` that indicates from where listing should continue.
+  &quot;tagKeys&quot;: [ # List of TagKeys that live under the specified parent in the request.
+  <pre>Updates the attributes of the TagKey resource.
+  name: string, Immutable. The resource name for a TagKey. Must be in the format `tagKeys/{tag_key_id}`, where `tag_key_id` is the generated numeric id for the TagKey. (required)
+  updateMask: string, Fields to be updated. The mask may only contain `description` or `etag`. If omitted entirely, both `description` and `etag` are assumed to be significant.
+  validateOnly: boolean, Set as true to perform validations necessary for updating the resource, but not actually perform the action.
+  <pre>Sets the access control policy on a TagKey, replacing any existing policy. The `resource` field should be the TagKey&#x27;s resource name. For example, &quot;tagKeys/1234&quot;. The caller must have `resourcemanager.tagKeys.setIamPolicy` permission on the identified tagValue.
+  <pre>Returns permissions that a caller has on the specified TagKey. The `resource` field should be the TagKey&#x27;s resource name. For example, &quot;tagKeys/1234&quot;. There are no permissions required for making this API call.

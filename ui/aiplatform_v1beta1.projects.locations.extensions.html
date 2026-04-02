@@ -1,0 +1,75 @@
+<h1><a href="aiplatform_v1beta1.html">Vertex AI API</a> . <a href="aiplatform_v1beta1.projects.html">projects</a> . <a href="aiplatform_v1beta1.projects.locations.html">locations</a> . <a href="aiplatform_v1beta1.projects.locations.extensions.html">extensions</a></h1>
+  <code><a href="aiplatform_v1beta1.projects.locations.extensions.operations.html">operations()</a></code>
+<p class="firstline">Deletes an Extension.</p>
+<p class="firstline">Executes the request against a given extension.</p>
+<p class="firstline">Gets an Extension.</p>
+<p class="firstline">Imports an Extension.</p>
+<p class="firstline">Lists Extensions in a location.</p>
+<p class="firstline">Updates an Extension.</p>
+<p class="firstline">Queries an extension with a default controller.</p>
+  <pre>Deletes an Extension.
+  name: string, Required. The name of the Extension resource to be deleted. Format: `projects/{project}/locations/{location}/extensions/{extension}` (required)
+  <pre>Executes the request against a given extension.
+  name: string, Required. Name (identifier) of the extension; Format: `projects/{project}/locations/{location}/extensions/{extension}` (required)
+{ # Request message for ExtensionExecutionService.ExecuteExtension.
+  &quot;operationId&quot;: &quot;A String&quot;, # Required. The desired ID of the operation to be executed in this extension as defined in ExtensionOperation.operation_id.
+  &quot;operationParams&quot;: { # Optional. Request parameters that will be used for executing this operation. The struct should be in a form of map with param name as the key and actual param value as the value. E.g. If this operation requires a param &quot;name&quot; to be set to &quot;abc&quot;. you can set this to something like {&quot;name&quot;: &quot;abc&quot;}.
+  &quot;runtimeAuthConfig&quot;: { # Auth configuration to run the extension. # Optional. Auth config provided at runtime to override the default value in Extension.manifest.auth_config. The AuthConfig.auth_type should match the value in Extension.manifest.auth_config.
+    { # Response message for ExtensionExecutionService.ExecuteExtension.
+  &quot;content&quot;: &quot;A String&quot;, # Response content from the extension. The content should be conformant to the response.content schema in the extension&#x27;s manifest/OpenAPI spec.
+  <pre>Gets an Extension.
+  name: string, Required. The name of the Extension resource. Format: `projects/{project}/locations/{location}/extensions/{extension}` (required)
+    { # Extensions are tools for large language models to access external data, run computations, etc.
+  &quot;createTime&quot;: &quot;A String&quot;, # Output only. Timestamp when this Extension was created.
+  &quot;description&quot;: &quot;A String&quot;, # Optional. The description of the Extension.
+  &quot;displayName&quot;: &quot;A String&quot;, # Required. The display name of the Extension. The name can be up to 128 characters long and can consist of any UTF-8 characters.
+  &quot;extensionOperations&quot;: [ # Output only. Supported operations.
+    { # Operation of an extension.
+      &quot;functionDeclaration&quot;: { # Structured representation of a function declaration as defined by the [OpenAPI 3.0 specification](https://spec.openapis.org/oas/v3.0.3). Included in this declaration are the function name, description, parameters and response type. This FunctionDeclaration is a representation of a block of code that can be used as a `Tool` by the model and executed by the client. # Output only. Structured representation of a function declaration as defined by the OpenAPI Spec.
+      &quot;operationId&quot;: &quot;A String&quot;, # Operation ID that uniquely identifies the operations among the extension. See: &quot;Operation Object&quot; in https://swagger.io/specification/. This field is parsed from the OpenAPI spec. For HTTP extensions, if it does not exist in the spec, we will generate one from the HTTP method and path.
+  &quot;manifest&quot;: { # Manifest spec of an Extension needed for runtime execution. # Required. Manifest of the Extension.
+    &quot;apiSpec&quot;: { # The API specification shown to the LLM. # Required. Immutable. The API specification shown to the LLM.
+      &quot;openApiGcsUri&quot;: &quot;A String&quot;, # Cloud Storage URI pointing to the OpenAPI spec.
+      &quot;openApiYaml&quot;: &quot;A String&quot;, # The API spec in Open API standard and YAML format.
+    &quot;authConfig&quot;: { # Auth configuration to run the extension. # Required. Immutable. Type of auth supported by this extension.
+    &quot;description&quot;: &quot;A String&quot;, # Required. The natural language description shown to the LLM. It should describe the usage of the extension, and is essential for the LLM to perform reasoning. e.g., if the extension is a data store, you can let the LLM know what data it contains.
+    &quot;name&quot;: &quot;A String&quot;, # Required. Extension name shown to the LLM. The name can be up to 128 characters long.
+  &quot;name&quot;: &quot;A String&quot;, # Identifier. The resource name of the Extension.
+  &quot;privateServiceConnectConfig&quot;: { # PrivateExtensionConfig configuration for the extension. # Optional. The PrivateServiceConnect config for the extension. If specified, the service endpoints associated with the Extension should be [registered with private network access in the provided Service Directory](https://cloud.google.com/service-directory/docs/configuring-private-network-access). If the service contains more than one endpoint with a network, the service will arbitrarilty choose one of the endpoints to use for extension execution.
+    &quot;serviceDirectory&quot;: &quot;A String&quot;, # Required. The Service Directory resource name in which the service endpoints associated to the extension are registered. Format: `projects/{project_id}/locations/{location_id}/namespaces/{namespace_id}/services/{service_id}` - The Vertex AI Extension Service Agent (https://cloud.google.com/vertex-ai/docs/general/access-control#service-agents) should be granted `servicedirectory.viewer` and `servicedirectory.pscAuthorizedService` roles on the resource.
+  &quot;runtimeConfig&quot;: { # Runtime configuration to run the extension. # Optional. Runtime config controlling the runtime behavior of this Extension.
+    &quot;codeInterpreterRuntimeConfig&quot;: { # Code execution runtime configurations for code interpreter extension.
+      &quot;fileInputGcsBucket&quot;: &quot;A String&quot;, # Optional. The Cloud Storage bucket for file input of this Extension. If specified, support input from the Cloud Storage bucket. Vertex Extension Custom Code Service Agent should be granted file reader to this bucket. If not specified, the extension will only accept file contents from request body and reject Cloud Storage file inputs.
+      &quot;fileOutputGcsBucket&quot;: &quot;A String&quot;, # Optional. The Cloud Storage bucket for file output of this Extension. If specified, write all output files to the Cloud Storage bucket. Vertex Extension Custom Code Service Agent should be granted file writer to this bucket. If not specified, the file content will be output in response body.
+    &quot;defaultParams&quot;: { # Optional. Default parameters that will be set for all the execution of this extension. If specified, the parameter values can be overridden by values in [[ExecuteExtensionRequest.operation_params]] at request time. The struct should be in a form of map with param name as the key and actual param value as the value. E.g. If this operation requires a param &quot;name&quot; to be set to &quot;abc&quot;. you can set this to something like {&quot;name&quot;: &quot;abc&quot;}.
+    &quot;vertexAiSearchRuntimeConfig&quot;: { # Runtime configuration for Vertex AI Search extension.
+      &quot;engineId&quot;: &quot;A String&quot;, # Optional. Vertex AI Search engine ID. This is used to construct the search request. By setting this engine_id, API will construct the serving config using the default value to call search API for the user. The engine_id and serving_config_name cannot both be empty at the same time.
+      &quot;servingConfigName&quot;: &quot;A String&quot;, # Optional. Vertex AI Search serving config name. Format: `projects/{project}/locations/{location}/collections/{collection}/engines/{engine}/servingConfigs/{serving_config}`
+  &quot;toolUseExamples&quot;: [ # Optional. Examples to illustrate the usage of the extension as a tool.
+    { # A single example of the tool usage.
+      &quot;displayName&quot;: &quot;A String&quot;, # Required. The display name for example.
+      &quot;extensionOperation&quot;: { # Identifies one operation of the extension. # Extension operation to call.
+        &quot;extension&quot;: &quot;A String&quot;, # Resource name of the extension.
+        &quot;operationId&quot;: &quot;A String&quot;, # Required. Operation ID of the extension.
+      &quot;functionName&quot;: &quot;A String&quot;, # Function name to call.
+      &quot;query&quot;: &quot;A String&quot;, # Required. Query that should be routed to this tool.
+      &quot;requestParams&quot;: { # Request parameters used for executing this tool.
+      &quot;responseParams&quot;: { # Response parameters generated by this tool.
+      &quot;responseSummary&quot;: &quot;A String&quot;, # Summary of the tool response to the user query.
+  &quot;updateTime&quot;: &quot;A String&quot;, # Output only. Timestamp when this Extension was most recently updated.
+  <pre>Imports an Extension.
+  parent: string, Required. The resource name of the Location to import the Extension in. Format: `projects/{project}/locations/{location}` (required)
+  <pre>Lists Extensions in a location.
+  parent: string, Required. The resource name of the Location to list the Extensions from. Format: `projects/{project}/locations/{location}` (required)
+  filter: string, Optional. The standard list filter. Supported fields: * `display_name` * `create_time` * `update_time` More detail in [AIP-160](https://google.aip.dev/160).
+    { # Response message for ExtensionRegistryService.ListExtensions
+  &quot;extensions&quot;: [ # List of Extension in the requested page.
+  &quot;nextPageToken&quot;: &quot;A String&quot;, # A token to retrieve the next page of results. Pass to ListExtensionsRequest.page_token to obtain that page.
+  <pre>Updates an Extension.
+  name: string, Identifier. The resource name of the Extension. (required)
+  updateMask: string, Required. Mask specifying which fields to update. Supported fields: * `display_name` * `description` * `runtime_config` * `tool_use_examples` * `manifest.description`
+  <pre>Queries an extension with a default controller.
+{ # Request message for ExtensionExecutionService.QueryExtension.
+    { # Response message for ExtensionExecutionService.QueryExtension.
+  &quot;failureMessage&quot;: &quot;A String&quot;, # Failure message if any.
+  &quot;steps&quot;: [ # Steps of extension or LLM interaction, can contain function call, function response, or text response. The last step contains the final response to the query.

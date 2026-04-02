@@ -1,0 +1,20 @@
+<h1><a href="ideahub_v1alpha.html">Idea Hub API</a> . <a href="ideahub_v1alpha.ideas.html">ideas</a></h1>
+  <code><a href="#list">list(filter=None, orderBy=None, pageSize=None, pageToken=None, parent=None, x__xgafv=None)</a></code></p>
+<p class="firstline">List ideas for a given Creator and filter and sort options.</p>
+    <code class="details" id="list">list(filter=None, orderBy=None, pageSize=None, pageToken=None, parent=None, x__xgafv=None)</code>
+  <pre>List ideas for a given Creator and filter and sort options.
+  filter: string, Allows filtering. Supported syntax: * Filter expressions are made up of one or more restrictions. * Restrictions are implicitly combined, as if the `AND` operator was always used. The `OR` operator is currently unsupported. * Supported functions: - `saved(bool)`: If set to true, fetches only saved ideas. If set to false, fetches all except saved ideas. Can&#x27;t be simultaneously used with `dismissed(bool)`. - `dismissed(bool)`: If set to true, fetches only dismissed ideas. Can&#x27;t be simultaneously used with `saved(bool)`. The `false` value is currently unsupported. Examples: * `saved(true)` * `saved(false)` * `dismissed(true)` The length of this field should be no more than 500 characters.
+  orderBy: string, Order semantics described below.
+  pageSize: integer, The maximum number of ideas per page. If unspecified, at most 10 ideas will be returned. The maximum value is 2000; values above 2000 will be coerced to 2000.
+  pageToken: string, Used to fetch next page.
+  parent: string, If defined, specifies the creator for which to filter by. Format: publishers/{publisher}/properties/{property}
+  &quot;ideas&quot;: [ # Results for the ListIdeasRequest.
+    { # A single Idea that we want to show the end user.
+      &quot;name&quot;: &quot;A String&quot;, # Unique identifier for the idea. Format: ideas/{ideaId}
+      &quot;text&quot;: &quot;A String&quot;, # The idea’s text.
+      &quot;topics&quot;: [ # The Topics that match the idea.
+        { # Represents a Topic umbrella for a list of questions that a Creator may want to respond to.
+          &quot;displayName&quot;: &quot;A String&quot;, # String displayed to the creator indicating the name of the Topic.
+          &quot;mid&quot;: &quot;A String&quot;, # The mID of the topic.
+          &quot;name&quot;: &quot;A String&quot;, # Unique identifier for the topic. Format: topics/{topic}
+  &quot;nextPageToken&quot;: &quot;A String&quot;, # Used to fetch the next page in a subsequent request.

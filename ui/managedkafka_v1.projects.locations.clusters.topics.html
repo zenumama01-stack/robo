@@ -1,0 +1,29 @@
+<h1><a href="managedkafka_v1.html">Managed Service for Apache Kafka API</a> . <a href="managedkafka_v1.projects.html">projects</a> . <a href="managedkafka_v1.projects.locations.html">locations</a> . <a href="managedkafka_v1.projects.locations.clusters.html">clusters</a> . <a href="managedkafka_v1.projects.locations.clusters.topics.html">topics</a></h1>
+  <code><a href="#create">create(parent, body=None, topicId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Creates a new topic in a given project and location.</p>
+<p class="firstline">Deletes a single topic.</p>
+<p class="firstline">Returns the properties of a single topic.</p>
+<p class="firstline">Lists the topics in a given cluster.</p>
+<p class="firstline">Updates the properties of a single topic.</p>
+    <code class="details" id="create">create(parent, body=None, topicId=None, x__xgafv=None)</code>
+  <pre>Creates a new topic in a given project and location.
+  parent: string, Required. The parent cluster in which to create the topic. Structured like `projects/{project}/locations/{location}/clusters/{cluster}`. (required)
+{ # A Kafka topic in a given cluster.
+  &quot;configs&quot;: { # Optional. Configurations for the topic that are overridden from the cluster defaults. The key of the map is a Kafka topic property name, for example: `cleanup.policy`, `compression.type`.
+  &quot;name&quot;: &quot;A String&quot;, # Identifier. The name of the topic. The `topic` segment is used when connecting directly to the cluster. Structured like: projects/{project}/locations/{location}/clusters/{cluster}/topics/{topic}
+  &quot;partitionCount&quot;: 42, # Required. The number of partitions this topic has. The partition count can only be increased, not decreased. Please note that if partitions are increased for a topic that has a key, the partitioning logic or the ordering of the messages will be affected.
+  &quot;replicationFactor&quot;: 42, # Required. Immutable. The number of replicas of each partition. A replication factor of 3 is recommended for high availability.
+  topicId: string, Required. The ID to use for the topic, which will become the final component of the topic&#x27;s name. This value is structured like: `my-topic-name`.
+  <pre>Deletes a single topic.
+  name: string, Required. The name of the topic to delete. `projects/{project}/locations/{location}/clusters/{cluster}/topics/{topic}`. (required)
+  <pre>Returns the properties of a single topic.
+  name: string, Required. The name of the topic whose configuration to return. Structured like: projects/{project}/locations/{location}/clusters/{cluster}/topics/{topic}. (required)
+  <pre>Lists the topics in a given cluster.
+  parent: string, Required. The parent cluster whose topics are to be listed. Structured like `projects/{project}/locations/{location}/clusters/{cluster}`. (required)
+  pageSize: integer, Optional. The maximum number of topics to return. The service may return fewer than this value. If unset or zero, all topics for the parent is returned.
+  pageToken: string, Optional. A page token, received from a previous `ListTopics` call. Provide this to retrieve the subsequent page. When paginating, all other parameters provided to `ListTopics` must match the call that provided the page token.
+    { # Response for ListTopics.
+  &quot;topics&quot;: [ # The list of topics in the requested parent. The order of the topics is unspecified.
+  <pre>Updates the properties of a single topic.
+  name: string, Identifier. The name of the topic. The `topic` segment is used when connecting directly to the cluster. Structured like: projects/{project}/locations/{location}/clusters/{cluster}/topics/{topic} (required)
+  updateMask: string, Required. Field mask is used to specify the fields to be overwritten in the Topic resource by the update. The fields specified in the update_mask are relative to the resource, not the full request. A field will be overwritten if it is in the mask. The mask is required and a value of * will update all fields.

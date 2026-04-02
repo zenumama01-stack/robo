@@ -1,0 +1,31 @@
+<h1><a href="adexchangebuyer2_v2beta1.html">Ad Exchange Buyer API II</a> . <a href="adexchangebuyer2_v2beta1.accounts.html">accounts</a> . <a href="adexchangebuyer2_v2beta1.accounts.products.html">products</a></h1>
+  <code><a href="#get">get(accountId, productId, x__xgafv=None)</a></code></p>
+<p class="firstline">Gets the requested product by ID.</p>
+  <code><a href="#list">list(accountId, filter=None, pageSize=None, pageToken=None, x__xgafv=None)</a></code></p>
+<p class="firstline">List all products visible to the buyer (optionally filtered by the specified PQL query).</p>
+    <code class="details" id="get">get(accountId, productId, x__xgafv=None)</code>
+  <pre>Gets the requested product by ID.
+  productId: string, The ID for the product to get the head revision for. (required)
+    { # A product is a segment of inventory that a seller wants to sell. It is associated with certain terms and targeting information which helps the buyer know more about the inventory.
+  &quot;availableEndTime&quot;: &quot;A String&quot;, # The proposed end time for the deal. The field will be truncated to the order of seconds during serving.
+  &quot;availableStartTime&quot;: &quot;A String&quot;, # Inventory availability dates. The start time will be truncated to seconds during serving. Thus, a field specified as 3:23:34.456 (HH:mm:ss.SSS) will be truncated to 3:23:34 when serving.
+  &quot;createTime&quot;: &quot;A String&quot;, # Creation time.
+  &quot;creatorContacts&quot;: [ # Optional contact information for the creator of this product.
+  &quot;displayName&quot;: &quot;A String&quot;, # The display name for this product as set by the seller.
+  &quot;hasCreatorSignedOff&quot;: True or False, # If the creator has already signed off on the product, then the buyer can finalize the deal by accepting the product as is. When copying to a proposal, if any of the terms are changed, then auto_finalize is automatically set to false.
+  &quot;productId&quot;: &quot;A String&quot;, # The unique ID for the product.
+  &quot;productRevision&quot;: &quot;A String&quot;, # The revision number of the product (auto-assigned by Marketplace).
+  &quot;publisherProfileId&quot;: &quot;A String&quot;, # An ID which can be used by the Publisher Profile API to get more information about the seller that created this product.
+  &quot;seller&quot;: { # Represents a seller of inventory. Each seller is identified by a unique Ad Manager account ID. # Information about the seller that created this product.
+  &quot;syndicationProduct&quot;: &quot;A String&quot;, # The syndication product associated with the deal.
+  &quot;targetingCriterion&quot;: [ # Targeting that is shared between the buyer and the seller. Each targeting criterion has a specified key and for each key there is a list of inclusion value or exclusion values.
+  &quot;terms&quot;: { # The deal terms specify the details of a Product/deal. They specify things like price per buyer, the type of pricing model (for example, fixed price, auction) and expected impressions from the publisher. # The negotiable terms of the deal.
+  &quot;updateTime&quot;: &quot;A String&quot;, # Time of last update.
+  &quot;webPropertyCode&quot;: &quot;A String&quot;, # The web-property code for the seller. This needs to be copied as is when adding a new deal to a proposal.
+    <code class="details" id="list">list(accountId, filter=None, pageSize=None, pageToken=None, x__xgafv=None)</code>
+  <pre>List all products visible to the buyer (optionally filtered by the specified PQL query).
+  filter: string, An optional PQL query used to query for products. See https://developers.google.com/ad-manager/docs/pqlreference for documentation about PQL and examples. Nested repeated fields, such as product.targetingCriterion.inclusions, cannot be filtered.
+  pageToken: string, The page token as returned from ListProductsResponse.
+    { # Response message for listing products visible to the buyer.
+  &quot;nextPageToken&quot;: &quot;A String&quot;, # List pagination support.
+  &quot;products&quot;: [ # The list of matching products at their head revision number.

@@ -1,0 +1,132 @@
+import org.openhab.core.io.rest.core.internal.persistence.PersistenceResource.PersistenceItemInfoDTO;
+import org.openhab.core.persistence.dto.ItemHistoryDTO.HistoryDataBean;
+import org.openhab.core.persistence.internal.PersistenceManagerImpl;
+ * Tests for PersistenceItem REST resource
+public class PersistenceResourceTest {
+    private static final String PERSISTENCE_SERVICE_ID = "TestServiceID";
+    private @NonNullByDefault({}) PersistenceResource pResource;
+    private @NonNullByDefault({}) List<HistoricItem> items;
+    private @Mock @NonNullByDefault({}) PersistenceServiceRegistry persistenceServiceRegistryMock;
+    private @Mock @NonNullByDefault({}) ModifiablePersistenceService pServiceMock;
+    private @Mock @NonNullByDefault({}) PersistenceManagerImpl persistenceManagerMock;
+    private @Mock @NonNullByDefault({}) PersistenceServiceConfigurationRegistry persistenceServiceConfigurationRegistryMock;
+    private @Mock @NonNullByDefault({}) ManagedPersistenceServiceConfigurationProvider managedPersistenceServiceConfigurationProviderMock;
+    private @Mock @NonNullByDefault({}) TimeZoneProvider timeZoneProviderMock;
+    private @Mock @NonNullByDefault({}) ConfigurationService configurationServiceMock;
+    private @Mock @NonNullByDefault({}) PersistenceServiceConfiguration persistenceServiceConfigurationMock;
+    private @Mock @NonNullByDefault({}) Item itemMock;
+    private static final String ITEM = "Test";
+    private static final int START_VALUE = 2016;
+    private static final int END_VALUE = 2018;
+    private static final int VALUE_COUNT = END_VALUE - START_VALUE + 1;
+        pResource = new PersistenceResource(itemRegistryMock, localeServiceMock, persistenceServiceRegistryMock,
+                persistenceManagerMock, persistenceServiceConfigurationRegistryMock,
+                managedPersistenceServiceConfigurationProviderMock, timeZoneProviderMock, configurationServiceMock);
+        items = new ArrayList<>(VALUE_COUNT);
+        for (int i = START_VALUE; i <= END_VALUE; i++) {
+            final int year = i;
+            items.add(new HistoricItem() {
+                public ZonedDateTime getTimestamp() {
+                    return ZonedDateTime.of(year, 1, 1, 0, 0, 0, 0, ZoneId.systemDefault());
+                public State getState() {
+                    if (year % 2 == 0) {
+                        return OnOffType.ON;
+                        return OnOffType.OFF;
+                    return ITEM;
+        when(persistenceServiceRegistryMock.get(PERSISTENCE_SERVICE_ID)).thenReturn(pServiceMock);
+        when(pServiceMock.getId()).thenReturn(PERSISTENCE_SERVICE_ID);
+        when(pServiceMock.query(any(), any())).thenReturn(items);
+        when(timeZoneProviderMock.getTimeZone()).thenReturn(ZoneId.systemDefault());
+    public void testGetPersistenceItemData() {
+        ItemHistoryDTO dto = pResource.createDTO(pServiceMock, "testItem", null, null, 1, 10, false, false);
+        assertNotNull(dto);
+        assertThat(Integer.parseInt(dto.datapoints), is(5));
+        assertThat(dto.data, hasSize(5));
+        // since we added binary state type elements, all except the first have to be repeated but with the timestamp of
+        // the following item
+        HistoryDataBean item0 = dto.data.getFirst();
+        HistoryDataBean item1 = dto.data.get(1);
+        assertEquals(item0.state, item1.state);
+        assertNotEquals(item0.time, item1.time);
+        HistoryDataBean item2 = dto.data.get(2);
+        assertEquals(item1.time, item2.time);
+        assertNotEquals(item1.state, item2.state);
+        HistoryDataBean item3 = dto.data.get(3);
+        assertEquals(item2.state, item3.state);
+        assertNotEquals(item2.time, item3.time);
+        HistoryDataBean item4 = dto.data.get(4);
+        assertEquals(item3.time, item4.time);
+        assertNotEquals(item3.state, item4.state);
+    public void testGetPersistenceItemDataWithBoundery() {
+        ItemHistoryDTO dto = pResource.createDTO(pServiceMock, "testItem", null, null, 1, 10, true, false);
+        assertThat(Integer.parseInt(dto.datapoints), is(7));
+        assertThat(dto.data, hasSize(7));
+    public void testGetPersistenceItemDataWithItemState() throws ItemNotFoundException {
+        when(itemRegistryMock.getItem("testItem")).thenReturn(itemMock);
+        when(itemMock.getState()).thenReturn(DecimalType.ZERO);
+        ItemHistoryDTO dto = pResource.createDTO(pServiceMock, "testItem", null, null, 1, 10, false, true);
+        assertThat(Integer.parseInt(dto.datapoints), is(6));
+        assertThat(dto.data, hasSize(6));
+        assertThat(dto.data.get(dto.data.size() - 1).state, is("0"));
+    public void testGetPersistenceItemDataWithItemStateUndefined() throws ItemNotFoundException {
+        when(itemMock.getState()).thenReturn(UnDefType.UNDEF);
+    public void testGetPersistenceItemDataWithItemStateNull() throws ItemNotFoundException {
+        when(itemMock.getState()).thenReturn(UnDefType.NULL);
+    public void testGetPersistenceItemDataWithBoundaryAndItemStateButNoItemStateRequired()
+            throws ItemNotFoundException {
+        ItemHistoryDTO dto = pResource.createDTO(pServiceMock, "testItem", null, null, 1, 10, true, true);
+        assertThat(dto.data.get(dto.data.size() - 1).state, not("0"));
+    public void testPutPersistenceItemData() throws ItemNotFoundException {
+        HttpHeaders headersMock = mock(HttpHeaders.class);
+        Item item = new NumberItem("itemName");
+        when(itemRegistryMock.getItem("itemName")).thenReturn(item);
+        pResource.httpPutPersistenceItemData(headersMock, PERSISTENCE_SERVICE_ID, "itemName",
+                "2024-02-01T00:00:00.000Z", "0");
+        verify(persistenceManagerMock).handleExternalPersistenceDataChange(eq(pServiceMock), eq(item));
+    public void testGetPersistenceItemInfoNotImplemented() throws UnsupportedOperationException {
+        // Test method not supported
+        when(pServiceMock.getItemInfo()).thenThrow(UnsupportedOperationException.class);
+        assertThrows(UnsupportedOperationException.class, () -> pResource.createDTO(pServiceMock, null));
+    public void testGetPersistenceItemInfo() throws UnsupportedOperationException {
+        when(pServiceMock.getItemInfo()).thenReturn(Set.of(new PersistenceItemInfo() {
+            public @Nullable Integer getCount() {
+                return VALUE_COUNT;
+            public @Nullable Date getEarliest() {
+                return Date.from(ZonedDateTime.of(START_VALUE, 1, 1, 0, 0, 0, 0, ZoneId.systemDefault()).toInstant());
+            public @Nullable Date getLatest() {
+                return Date.from(ZonedDateTime.of(END_VALUE, 1, 1, 0, 0, 0, 0, ZoneId.systemDefault()).toInstant());
+        // Testing with a specific implementation
+        Set<PersistenceItemInfoDTO> dto = pResource.createDTO(pServiceMock, null);
+        PersistenceItemInfoDTO itemInfo = dto.iterator().next();
+        assertThat(itemInfo.name(), is(ITEM));
+        assertThat(itemInfo.earliest(),
+                is(Date.from(ZonedDateTime.of(START_VALUE, 1, 1, 0, 0, 0, 0, ZoneId.systemDefault()).toInstant())));
+        assertThat(itemInfo.latest(),
+                is(Date.from(ZonedDateTime.of(END_VALUE, 1, 1, 0, 0, 0, 0, ZoneId.systemDefault()).toInstant())));
+        assertThat(itemInfo.count(), is(VALUE_COUNT));
+    public void testGetPersistenceItemInfoWithItemDefault() throws UnsupportedOperationException {
+        when(pServiceMock.getItemInfo(any(), any())).thenReturn(new PersistenceItemInfo() {
+        // This is testing the default behavior when no specific implementation exists in the service
+        Set<PersistenceItemInfoDTO> dto = pResource.createDTO(pServiceMock, ITEM);
+        assertThat(dto.size(), is(1));
+        assertNull(itemInfo.earliest());
+        assertNull(itemInfo.count());
+    public void testGetPersistenceItemInfoWithItem() throws UnsupportedOperationException {
+        when(pServiceMock.getItemInfo(any(), any())).thenAnswer(invocation -> {
+            String firstArg = invocation.getArgument(0);
+            String secondArg = invocation.getArgument(1);
+            if (!firstArg.equals(ITEM)) {
+            return new PersistenceItemInfo() {
+                    return secondArg != null ? secondArg : firstArg;
+                    return Date
+                            .from(ZonedDateTime.of(START_VALUE, 1, 1, 0, 0, 0, 0, ZoneId.systemDefault()).toInstant());
+        // Testing when ITEM does not exist
+        Set<PersistenceItemInfoDTO> dto = pResource.createDTO(pServiceMock, "NotFoundTest");
+        assertNull(dto);
+        // Test when specific implementation exists and no alias is used
+        dto = pResource.createDTO(pServiceMock, ITEM);
+        // Test when an alias exists
+        when(persistenceServiceConfigurationRegistryMock.get(any())).thenReturn(persistenceServiceConfigurationMock);
+        when(persistenceServiceConfigurationMock.getAliases()).thenReturn(Map.of(ITEM, "TestAlias"));
+        itemInfo = dto.iterator().next();
+        assertThat(itemInfo.name(), is("TestAlias"));

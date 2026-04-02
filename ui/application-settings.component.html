@@ -1,0 +1,55 @@
+<div class="application-settings">
+  <h2 class="section-title">Applications</h2>
+  <p class="section-description">Choose which applications appear in your app switcher and set their order</p>
+  @if (SuccessMessage && !IsLoading) {
+      <span>{{ SuccessMessage }}</span>
+  @if (!IsLoading && !ErrorMessage) {
+    <div class="app-config-layout">
+      <!-- Available Apps Panel -->
+      <div class="app-panel available-panel">
+            Available Applications
+          <span class="panel-count">{{ AvailableApps.length }}</span>
+          @if (AvailableApps.length === 0) {
+              <span>All applications are selected</span>
+          @for (item of AvailableApps; track item.App.ID) {
+            <div class="app-item" (click)="AddApp(item)">
+                <i [class]="item.App.Icon || 'fa-solid fa-window-maximize'"></i>
+                <span class="app-name">{{ item.App.Name }}</span>
+                @if (item.App.Description) {
+                  <span class="app-desc">{{ item.App.Description }}</span>
+                class="app-action add-btn"
+                (click)="AddApp(item); $event.stopPropagation()"
+                title="Add to selected"
+      <!-- Selected Apps Panel -->
+      <div class="app-panel selected-panel">
+          <span class="panel-count">{{ ActiveApps.length }}</span>
+        <div class="panel-content" (dragover)="OnDragOver($event)">
+          @if (ActiveApps.length === 0) {
+              <span>Add applications from the list</span>
+          @for (item of ActiveApps; track item.App.ID; let i = $index; let first = $first; let last = $last) {
+              class="app-item selected"
+              [class.drop-target]="IsDropTarget(i)"
+              [class.dirty]="item.IsDirty"
+              draggable="true"
+              (dragstart)="OnDragStart($event, item, i)"
+              (dragenter)="OnDragEnter($event, i)"
+              (dragend)="OnDragEnd()"
+              (drop)="OnDrop($event)"
+              <div class="drag-handle" title="Drag to reorder">
+                <i class="fa-solid fa-grip-vertical"></i>
+                <span class="app-sequence">Position {{ i + 1 }}</span>
+              <div class="app-actions">
+                  [disabled]="first"
+                  (click)="MoveUp(item)"
+                  title="Move up"
+                  [disabled]="last"
+                  (click)="MoveDown(item)"
+                  title="Move down"
+                  class="action-btn remove-btn"
+                  (click)="RemoveApp(item)"
+                  title="Remove"
+    <div class="action-bar">
+        (click)="Reset()"
+        [disabled]="!HasChanges() || IsSaving"
+        Reset
+        (click)="Save()"

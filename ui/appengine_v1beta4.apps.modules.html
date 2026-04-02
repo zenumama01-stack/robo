@@ -1,0 +1,28 @@
+<h1><a href="appengine_v1beta4.html">App Engine Admin API</a> . <a href="appengine_v1beta4.apps.html">apps</a> . <a href="appengine_v1beta4.apps.modules.html">modules</a></h1>
+  <code><a href="appengine_v1beta4.apps.modules.versions.html">versions()</a></code>
+  <code><a href="#delete">delete(appsId, modulesId, x__xgafv=None)</a></code></p>
+<p class="firstline">Deletes the specified module and all enclosed versions.</p>
+  <code><a href="#get">get(appsId, modulesId, x__xgafv=None)</a></code></p>
+<p class="firstline">Gets the current configuration of the specified module.</p>
+<p class="firstline">Lists all the modules in the application.</p>
+  <code><a href="#patch">patch(appsId, modulesId, body=None, mask=None, migrateTraffic=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Updates the configuration of the specified module.</p>
+    <code class="details" id="delete">delete(appsId, modulesId, x__xgafv=None)</code>
+  <pre>Deletes the specified module and all enclosed versions.
+  appsId: string, Part of `name`. Name of the resource requested. Example: apps/myapp/modules/default. (required)
+  modulesId: string, Part of `name`. See documentation of `appsId`. (required)
+    <code class="details" id="get">get(appsId, modulesId, x__xgafv=None)</code>
+  <pre>Gets the current configuration of the specified module.
+    { # A Module resource is a logical component of an application that can share state and communicate in a secure fashion with other modules. For example, an application that handles customer requests might include separate modules to handle tasks such as backend data analysis or API requests from mobile devices. Each module has a collection of versions that define a specific set of code used to implement the functionality of that module.
+  &quot;id&quot;: &quot;A String&quot;, # Relative name of the module within the application. Example: default.@OutputOnly
+  &quot;name&quot;: &quot;A String&quot;, # Full path to the Module resource in the API. Example: apps/myapp/modules/default.@OutputOnly
+  &quot;split&quot;: { # Traffic routing configuration for versions within a single module. Traffic splits define how traffic directed to the module is assigned to versions. # Mapping that defines fractional HTTP traffic diversion to different versions within the module.
+    &quot;allocations&quot;: { # Mapping from version IDs within the module to fractional (0.000, 1] allocations of traffic for that version. Each version can be specified only once, but some versions in the module may not have any traffic allocation. Modules that have traffic allocated cannot be deleted until either the module is deleted or their traffic allocation is removed. Allocations must sum to 1. Up to two decimal place precision is supported for IP-based splits and up to three decimal places is supported for cookie-based splits.
+  <pre>Lists all the modules in the application.
+  appsId: string, Part of `name`. Name of the resource requested. Example: apps/myapp. (required)
+    { # Response message for Modules.ListModules.
+  &quot;modules&quot;: [ # The modules belonging to the requested application.
+    <code class="details" id="patch">patch(appsId, modulesId, body=None, mask=None, migrateTraffic=None, x__xgafv=None)</code>
+  <pre>Updates the configuration of the specified module.
+  appsId: string, Part of `name`. Name of the resource to update. Example: apps/myapp/modules/default. (required)
+  migrateTraffic: boolean, Set to true to gradually shift traffic to one or more versions that you specify. By default, traffic is shifted immediately. For gradual traffic migration, the target versions must be located within instances that are configured for both warmup requests (https://cloud.google.com/appengine/docs/admin-api/reference/rest/v1beta4/apps.modules.versions#inboundservicetype) and automatic scaling (https://cloud.google.com/appengine/docs/admin-api/reference/rest/v1beta4/apps.modules.versions#automaticscaling). You must specify the shardBy (https://cloud.google.com/appengine/docs/admin-api/reference/rest/v1beta4/apps.modules#shardby) field in the Module resource. Gradual traffic migration is not supported in the App Engine flexible environment. For examples, see Migrating and Splitting Traffic (https://cloud.google.com/appengine/docs/admin-api/migrating-splitting-traffic).

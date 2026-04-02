@@ -1,0 +1,127 @@
+package org.openhab.core.audio.internal;
+import static java.util.Comparator.comparing;
+import org.openhab.core.audio.AudioException;
+import org.openhab.core.audio.AudioManager;
+import org.openhab.core.audio.AudioSink;
+import org.openhab.core.audio.AudioSource;
+import org.openhab.core.i18n.LocaleProvider;
+import org.openhab.core.io.console.Console;
+import org.openhab.core.io.console.extensions.AbstractConsoleCommandExtension;
+import org.openhab.core.io.console.extensions.ConsoleCommandExtension;
+ * Console command extension for all audio features.
+ * @author Kai Kreuzer - refactored to match AudioManager implementation
+ * @author Wouter Born - Sort audio sink and source options
+ * @author Miguel Álvarez Díez - Add record command
+@Component(service = ConsoleCommandExtension.class)
+public class AudioConsoleCommandExtension extends AbstractConsoleCommandExtension {
+    static final String SUBCMD_PLAY = "play";
+    static final String SUBCMD_RECORD = "record";
+    static final String SUBCMD_STREAM = "stream";
+    static final String SUBCMD_SYNTHESIZE = "synthesize";
+    static final String SUBCMD_SOURCES = "sources";
+    static final String SUBCMD_SINKS = "sinks";
+    private final AudioManager audioManager;
+    private final LocaleProvider localeProvider;
+    public AudioConsoleCommandExtension(final @Reference AudioManager audioManager,
+            final @Reference LocaleProvider localeProvider) {
+        super("audio", "Commands around audio enablement features.");
+        this.audioManager = audioManager;
+        this.localeProvider = localeProvider;
+    public List<String> getUsages() {
+        return List.of(
+                buildCommandUsage(SUBCMD_PLAY + " [<sink>] <filename>",
+                        "plays a sound file from the sounds folder through the optionally specified audio sink(s)"),
+                buildCommandUsage(SUBCMD_PLAY + " <sink> <filename> <volume>",
+                        "plays a sound file from the sounds folder through the specified audio sink(s) with the specified volume"),
+                buildCommandUsage(SUBCMD_RECORD + " [<source>] <seconds> <filename>",
+                        "record an audio file of the specified seconds to the sounds folder. The extension '.wav' will be added to the filename if missed."),
+                buildCommandUsage(SUBCMD_STREAM + " [<sink>] <url>",
+                        "streams the sound from the url through the optionally specified audio sink(s)"),
+                buildCommandUsage(SUBCMD_SYNTHESIZE + " [<sink>] \"<melody>\"",
+                        "synthesize a tone melody and play it through the optionally specified audio sink(s) ("
+                                + SUBCMD_SYNTHESIZE + " \"A O A O A\")"),
+                buildCommandUsage(SUBCMD_SYNTHESIZE + " <sink> \"<melody>\" <volume>",
+                        "synthesize a tone melody and play it through the optionally specified audio sink(s) with the specified volume"),
+                buildCommandUsage(SUBCMD_SOURCES, "lists the audio sources"),
+                buildCommandUsage(SUBCMD_SINKS, "lists the audio sinks"));
+    public void execute(String[] args, Console console) {
+            String subCommand = args[0];
+            switch (subCommand) {
+                case SUBCMD_PLAY:
+                    if (args.length > 1) {
+                        play(Arrays.copyOfRange(args, 1, args.length), console);
+                        console.println(
+                                "Specify file to play, and optionally the sink(s) to use (e.g. 'play javasound hello.mp3')");
+                case SUBCMD_RECORD:
+                    if (args.length > 2) {
+                        record(Arrays.copyOfRange(args, 1, args.length), console);
+                                "Specify time to record and the desired filename, and optionally the source to use (e.g. 'record javasound 10 good_morning.wav')");
+                case SUBCMD_STREAM:
+                        stream(Arrays.copyOfRange(args, 1, args.length), console);
+                        console.println("Specify url to stream from, and optionally the sink(s) to use");
+                case SUBCMD_SYNTHESIZE:
+                        synthesizeMelody(Arrays.copyOfRange(args, 1, args.length), console);
+                                "Specify file to play, and optionally the sink(s) to use (e.g. 'play javasound A B C:1000')");
+                case SUBCMD_SOURCES:
+                    listSources(console);
+                case SUBCMD_SINKS:
+                    listSinks(console);
+            printUsage(console);
+    private void listSources(Console console) {
+        Set<AudioSource> sources = audioManager.getAllSources();
+        if (!sources.isEmpty()) {
+            AudioSource defaultSource = audioManager.getSource();
+            Locale locale = localeProvider.getLocale();
+            sources.stream().sorted(comparing(s -> s.getLabel(locale))).forEach(source -> {
+                console.println(String.format("%s %s (%s)", source.equals(defaultSource) ? "*" : " ",
+                        source.getLabel(locale), source.getId()));
+            console.println("No audio sources found.");
+    private void listSinks(Console console) {
+        Set<AudioSink> sinks = audioManager.getAllSinks();
+        if (!sinks.isEmpty()) {
+            AudioSink defaultSink = audioManager.getSink();
+            sinks.stream().sorted(comparing(s -> s.getLabel(locale))).forEach(sink -> {
+                console.println(String.format("%s %s (%s)", sink.equals(defaultSink) ? "*" : " ", sink.getLabel(locale),
+                        sink.getId()));
+            console.println("No audio sinks found.");
+    private void play(String[] args, Console console) {
+        switch (args.length) {
+                playOnSink(null, args[0], null, console);
+                playOnSinks(args[0], args[1], null, console);
+                PercentType volume;
+                    volume = PercentType.valueOf(args[2]);
+                    console.println("Specify volume as percentage between 0 and 100");
+                playOnSinks(args[0], args[1], volume, console);
+    private void record(String[] args, Console console) {
+            String sourceId = args.length > 2 ? args[0] : null;
+            int seconds = Integer.parseInt(args.length > 2 ? args[1] : args[0]);
+            String filename = args.length > 2 ? args[2] : args[1];
+            audioManager.record(seconds, filename, sourceId);
+            console.println("Recording completed");
+        } catch (NumberFormatException e) {
+            console.println("Unable to parse the recording time: " + e.getMessage());
+            console.println("Recording terminated with audio exception: " + e.getMessage());
+    private void synthesizeMelody(String[] args, Console console) {
+                playMelodyOnSink(null, args[0], null, console);
+                playMelodyOnSinks(args[0], args[1], null, console);
+                playMelodyOnSink(args[0], args[1], volume, console);
+    private void playMelodyOnSinks(String pattern, String melody, @Nullable PercentType volume, Console console) {
+        for (String sinkId : audioManager.getSinkIds(pattern)) {
+            playMelodyOnSink(sinkId, melody, volume, console);
+    private void playMelodyOnSink(@Nullable String sinkId, String melody, @Nullable PercentType volume,
+            Console console) {
+        audioManager.playMelody(melody, sinkId, volume);
+    private void playOnSinks(String pattern, String fileName, @Nullable PercentType volume, Console console) {
+            playOnSink(sinkId, fileName, volume, console);
+    private void playOnSink(@Nullable String sinkId, String fileName, @Nullable PercentType volume, Console console) {
+            audioManager.playFile(fileName, sinkId, volume);
+            console.println(Objects.requireNonNullElse(e.getMessage(),
+                    String.format("An error occurred while playing '%s' on sink '%s'", fileName, sinkId)));
+    private void stream(String[] args, Console console) {
+                streamOnSink(null, args[0], console);
+                streamOnSinks(args[0], args[1], console);
+    private void streamOnSinks(String pattern, String url, Console console) {
+            streamOnSink(sinkId, url, console);
+    private void streamOnSink(@Nullable String sinkId, String url, Console console) {
+            audioManager.stream(url, sinkId);
+                    String.format("An error occurred while streaming '%s' to sink '%s'", url, sinkId)));

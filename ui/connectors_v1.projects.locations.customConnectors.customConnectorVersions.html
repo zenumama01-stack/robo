@@ -1,0 +1,35 @@
+<h1><a href="connectors_v1.html">Connectors API</a> . <a href="connectors_v1.projects.html">projects</a> . <a href="connectors_v1.projects.locations.html">locations</a> . <a href="connectors_v1.projects.locations.customConnectors.html">customConnectors</a> . <a href="connectors_v1.projects.locations.customConnectors.customConnectorVersions.html">customConnectorVersions</a></h1>
+<p class="firstline">Deletes a single CustomConnectorVersion.</p>
+  <code><a href="#deprecate">deprecate(name, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Deprecates a single CustomConnectorVersion.</p>
+<p class="firstline">Publish request for the CustomConnectorVersion. Once approved, the CustomConnectorVersion will be published as PartnerConnector.</p>
+  <code><a href="#withdraw">withdraw(name, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Withdraw the publish request for the CustomConnectorVersion. This can only be used before the CustomConnectorVersion is published.</p>
+  <pre>Deletes a single CustomConnectorVersion.
+  name: string, Required. Resource name of the form: `projects/{project}/locations/{location}/customConnectors/{custom_connector}/customConnectorVersions/{custom_connector_version}` (required)
+    <code class="details" id="deprecate">deprecate(name, body=None, x__xgafv=None)</code>
+  <pre>Deprecates a single CustomConnectorVersion.
+{ # Request message for ConnectorsService.DeprecateCustomConnectorVersion
+  <pre>Publish request for the CustomConnectorVersion. Once approved, the CustomConnectorVersion will be published as PartnerConnector.
+{ # Request message for ConnectorsService.PublishCustomConnectorVersion
+  &quot;partnerMetadata&quot;: { # Partner metadata details. This will be populated when publishing the custom connector as a partner connector version. On publishing, parntner connector version will be created using the fields in PartnerMetadata. # Required. Partner metadata details for validating and publishing the custom connector as a partner connector version.
+    &quot;acceptGcpTos&quot;: True or False, # Required. Whether the user has accepted the Google Cloud Platform Terms of Service (https://cloud.google.com/terms/) and the Google Cloud Marketplace Terms of Service (https://cloud.google.com/terms/marketplace/launcher?hl=en).
+    &quot;additionalComments&quot;: &quot;A String&quot;, # Optional. Additional comments for the submission.
+    &quot;confirmPartnerRequirements&quot;: True or False, # Required. Confirmation that connector meets all applicable requirements mentioned in the Partner Connector Publishing requirements list and Partner onboardiong requirements list (https://cloud.google.com/marketplace/docs/partners/get-started#requirements).
+    &quot;demoUri&quot;: &quot;A String&quot;, # Required. Public URL for the demo video.
+    &quot;hasDynamicSpecUri&quot;: True or False, # Output only. Has dynamic open api spec uri.
+    &quot;integrationTemplates&quot;: &quot;A String&quot;, # Required. Integration example templates for the custom connector.
+    &quot;localSpecPath&quot;: &quot;A String&quot;, # Output only. Local spec path. Required if has_dynamic_spec_uri is true.
+    &quot;marketplaceProduct&quot;: &quot;A String&quot;, # Optional. Marketplace product name.
+    &quot;marketplaceProductId&quot;: &quot;A String&quot;, # Required. Marketplace product ID.
+    &quot;marketplaceProductProjectId&quot;: &quot;A String&quot;, # Optional. Marketplace product project ID.
+    &quot;marketplaceProductUri&quot;: &quot;A String&quot;, # Optional. Marketplace product URL.
+    &quot;partner&quot;: &quot;A String&quot;, # Required. Partner name.
+    &quot;partnerConnectorDisplayName&quot;: &quot;A String&quot;, # Required. Partner connector display name.
+    &quot;publishRequestTime&quot;: &quot;A String&quot;, # Output only. Publish request time.
+    &quot;targetApplication&quot;: &quot;A String&quot;, # Required. Target application for which partner connector is built.
+    &quot;targetCustomerSegment&quot;: &quot;A String&quot;, # Required. Target customer segment for the partner connector.
+    &quot;useCases&quot;: &quot;A String&quot;, # Required. Details about partner connector use cases.
+    <code class="details" id="withdraw">withdraw(name, body=None, x__xgafv=None)</code>
+  <pre>Withdraw the publish request for the CustomConnectorVersion. This can only be used before the CustomConnectorVersion is published.
+{ # Request message for ConnectorsService.WithdrawCustomConnectorVersion

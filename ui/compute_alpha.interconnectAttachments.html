@@ -1,0 +1,153 @@
+<h1><a href="compute_alpha.html">Compute Engine API</a> . <a href="compute_alpha.interconnectAttachments.html">interconnectAttachments</a></h1>
+<p class="firstline">Retrieves an aggregated list of interconnect attachments.</p>
+  <code><a href="#delete">delete(project, region, interconnectAttachment, requestId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Deletes the specified interconnect attachment.</p>
+  <code><a href="#get">get(project, region, interconnectAttachment, x__xgafv=None)</a></code></p>
+<p class="firstline">Returns the specified interconnect attachment.</p>
+  <code><a href="#getIamPolicy">getIamPolicy(project, region, resource, optionsRequestedPolicyVersion=None, x__xgafv=None)</a></code></p>
+  <code><a href="#insert">insert(project, region, body=None, requestId=None, validateOnly=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Creates an InterconnectAttachment in the specified project using the data</p>
+<p class="firstline">Retrieves the list of interconnect attachments contained within</p>
+  <code><a href="#patch">patch(project, region, interconnectAttachment, body=None, requestId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Updates the specified interconnect attachment with the data included in the</p>
+  <code><a href="#setIamPolicy">setIamPolicy(project, region, resource, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Sets the labels on an InterconnectAttachment. To learn more about labels,</p>
+  <pre>Retrieves an aggregated list of interconnect attachments.
+  &quot;items&quot;: { # A list of InterconnectAttachmentsScopedList resources.
+    &quot;a_key&quot;: { # Name of the scope containing this set of interconnect attachments.
+      &quot;interconnectAttachments&quot;: [ # A list of interconnect attachments contained in this scope.
+        { # Represents an Interconnect Attachment (VLAN) resource.
+            # You can use Interconnect attachments (VLANS) to connect your Virtual Private
+            # Cloud networks to your on-premises networks through an Interconnect.
+            # Creating VLAN Attachments.
+          &quot;attachmentGroup&quot;: &quot;A String&quot;, # Output only. [Output Only] URL of the AttachmentGroup that includes this Attachment.
+          &quot;candidateCustomerRouterIpAddress&quot;: &quot;A String&quot;, # Single IPv4 address + prefix length to be configured on the customer router
+          &quot;candidateCustomerRouterIpv6Address&quot;: &quot;A String&quot;, # Single IPv6 address + prefix length to be configured on the customer router
+              # unused /29 from the supplied candidate prefix(es). The request will fail if
+              # all possible /29s are in use on Google&#x27;s edge. If not supplied, Google will
+              # randomly select an unused /29 from all of link-local space.
+          &quot;cloudRouterIpAddress&quot;: &quot;A String&quot;, # Output only. [Output Only] IPv4 address + prefix length to be configured on Cloud Router
+              # Interface for this interconnect attachment.
+          &quot;cloudRouterIpv6Address&quot;: &quot;A String&quot;, # Output only. [Output Only] IPv6 address + prefix length to be configured on Cloud
+              # Router Interface for this interconnect attachment.
+          &quot;configurationConstraints&quot;: { # Output only. [Output Only] Constraints for this attachment, if any. The attachment does
+              # not work if these constraints are not met.
+            &quot;bgpMd5&quot;: &quot;A String&quot;, # Output only. [Output Only] Whether the attachment&#x27;s BGP session
+                # requires/allows/disallows BGP MD5 authentication. This can take one of
+                # the following values: MD5_OPTIONAL, MD5_REQUIRED, MD5_UNSUPPORTED.
+                # For example, a Cross-Cloud Interconnect connection to a remote cloud
+                # provider that requires BGP MD5 authentication has the
+                # interconnectRemoteLocation attachment_configuration_constraints.bgp_md5
+                # field set to MD5_REQUIRED, and that property is propagated to the
+                # attachment. Similarly, if BGP MD5 is MD5_UNSUPPORTED, an error is
+                # returned if MD5 is requested.
+            &quot;bgpPeerAsnRanges&quot;: [ # Output only. [Output Only] List of ASN ranges that the remote location is known to
+                # support. Formatted as an array of inclusive ranges {min: min-value, max:
+                # max-value}. For example, [{min: 123, max: 123}, {min: 64512, max: 65534}]
+                # allows the peer ASN to be 123 or anything in the range 64512-65534.
+                # This field is only advisory. Although the API accepts other ranges, these
+                # are the ranges that we recommend.
+                &quot;max&quot;: 42,
+                &quot;min&quot;: 42,
+          &quot;customerRouterIpAddress&quot;: &quot;A String&quot;, # Output only. [Output Only] IPv4 address + prefix length to be configured on the customer
+              # router subinterface for this interconnect attachment.
+          &quot;customerRouterIpv6Address&quot;: &quot;A String&quot;, # Output only. [Output Only] IPv6 address + prefix length to be configured on the
+              # customer router subinterface for this interconnect attachment.
+          &quot;dataplaneVersion&quot;: 42, # Output only. [Output Only] Dataplane version for this InterconnectAttachment. This
+              # field is only present for Dataplane version 2 and higher. Absence of this
+              # field in the API output indicates that the Dataplane is version 1.
+              # For improved reliability, customers should configure a pair of attachments,
+              # one per availability domain. The selected availability domain will be
+              # provided to the Partner via the pairing key, so that the provisioned
+              # circuit will lie in the specified domain. If not specified, the value will
+              # default to AVAILABILITY_DOMAIN_ANY.
+              #    - NONE - This is the default value, which means that the
+              #    VLAN attachment carries unencrypted traffic. VMs are able to send
+              #    traffic that is encrypted by an IPsec device, such as an HA VPN gateway or
+              #    third-party IPsec VPN. VMs cannot directly send traffic to, or receive
+          &quot;googleReferenceId&quot;: &quot;A String&quot;, # Output only. [Output Only] Google reference ID, to be used when raising support tickets
+              # with Google or otherwise to debug backend connectivity issues.
+              # [Deprecated] This field is not used.
+              # option as IPSEC. The addresses must be regional internal IP address ranges.
+              # When creating an HA VPN gateway over the VLAN attachment, if the attachment
+              # is configured to use a regional internal IP address, then the VPN gateway&#x27;s
+              # IP address is allocated from the IP address range specified here. For
+              # example, if the HA VPN gateway&#x27;s interface 0 is paired to this VLAN
+              # attachment, then a regional internal IP address for the VPN gateway
+              # VPN gateway&#x27;s IP address is allocated from the regional external IP address
+              # pool.
+          &quot;kind&quot;: &quot;compute#interconnectAttachment&quot;, # Output only. [Output Only] Type of the resource. Alwayscompute#interconnectAttachment for interconnect attachments.
+          &quot;labelFingerprint&quot;: &quot;A String&quot;, # A fingerprint for the labels being applied to this InterconnectAttachment,
+              # retrieve an InterconnectAttachment.
+          &quot;mtu&quot;: 42, # Maximum Transmission Unit (MTU), in bytes, of packets passing through this
+              # interconnect attachment.
+              # Valid values are 1440, 1460, 1500, and 8896. If not specified,
+              # the value will default to 1440.
+          &quot;operationalStatus&quot;: &quot;A String&quot;, # Output only. [Output Only] The current status of whether or not this interconnect
+              # attachment is functional, which can take one of the following values:
+              #    - OS_ACTIVE: The attachment has been turned up and is ready to
+              #    use.
+              #    - OS_UNPROVISIONED: The attachment is not ready to use yet,
+              #    because turnup is not complete.
+          &quot;params&quot;: { # Additional interconnect attachment parameters. # Input only. [Input Only] Additional params passed with the request, but not persisted
+          &quot;privateInterconnectInfo&quot;: { # Information for an interconnect attachment when this belongs to an # Output only. [Output Only] Information specific to an InterconnectAttachment.
+              # This property is populated if the interconnect that
+              # this is attached to is of type DEDICATED.
+              # interconnect of type DEDICATED.
+            &quot;tag8021q&quot;: 42, # [Output Only] 802.1q encapsulation tag to be used for traffic between
+                # Google and the customer, going to and from this network and region.
+          &quot;region&quot;: &quot;A String&quot;, # Output only. [Output Only] URL of the region where the regional interconnect attachment
+              # resides.
+          &quot;remoteService&quot;: &quot;A String&quot;, # Output only. [Output Only]
+              # If the attachment is on a Cross-Cloud Interconnect connection, this field
+              # contains the interconnect&#x27;s remote location service provider. Example
+              # values: &quot;Amazon Web Services&quot; &quot;Microsoft Azure&quot;.
+              # The field is set only for attachments on Cross-Cloud Interconnect
+              # connections. Its value is copied from the InterconnectRemoteLocation
+              # remoteService field.
+          &quot;router&quot;: &quot;A String&quot;, # URL of the Cloud Router to be used for dynamic routing. This router must be
+              # in the same region as this InterconnectAttachment. The
+          &quot;state&quot;: &quot;A String&quot;, # Output only. [Output Only] The current state of this attachment&#x27;s functionality.
+              # Enum values ACTIVE and UNPROVISIONED are shared by DEDICATED/PRIVATE,
+              # PARTNER, and PARTNER_PROVIDER interconnect attachments, while enum values
+              # PENDING_PARTNER, PARTNER_REQUEST_RECEIVED, and PENDING_CUSTOMER are used
+              # for only PARTNER and PARTNER_PROVIDER interconnect attachments.
+              # This state can take one of the following values:
+              #    - ACTIVE: The attachment has been turned up and is ready to use.
+              #    - UNPROVISIONED: The attachment is not ready to use yet, because turnup
+              #    is not complete.
+              #    - PENDING_PARTNER: A newly-created PARTNER attachment that has not yet
+              #    been configured on the Partner side.
+              #    - PARTNER_REQUEST_RECEIVED: A PARTNER attachment is in the process of
+              #    provisioning after a PARTNER_PROVIDER attachment was created that
+              #    references it.
+              #    - PENDING_CUSTOMER: A PARTNER or PARTNER_PROVIDER
+              #    attachment that is waiting for a customer to activate it.
+              #    - DEFUNCT:
+              #    The attachment was deleted externally and is no longer functional. This
+              #    could be because the associated Interconnect was removed, or because the
+              #    other side of a Partner attachment was deleted.
+              # - L2_DEDICATED: a L2 attachment to a Dedicated Interconnect.
+      &quot;warning&quot;: { # Informational warning which replaces the list of addresses when
+  &quot;kind&quot;: &quot;compute#interconnectAttachmentAggregatedList&quot;, # Output only. [Output Only] Type of resource. Alwayscompute#interconnectAttachmentAggregatedList for aggregated
+      # lists of interconnect attachments.
+    <code class="details" id="delete">delete(project, region, interconnectAttachment, requestId=None, x__xgafv=None)</code>
+  <pre>Deletes the specified interconnect attachment.
+  interconnectAttachment: string, Name of the interconnect attachment to delete. (required)
+    <code class="details" id="get">get(project, region, interconnectAttachment, x__xgafv=None)</code>
+  <pre>Returns the specified interconnect attachment.
+  interconnectAttachment: string, Name of the interconnect attachment to return. (required)
+    <code class="details" id="getIamPolicy">getIamPolicy(project, region, resource, optionsRequestedPolicyVersion=None, x__xgafv=None)</code>
+    <code class="details" id="insert">insert(project, region, body=None, requestId=None, validateOnly=None, x__xgafv=None)</code>
+  <pre>Creates an InterconnectAttachment in the specified project using the data
+  validateOnly: boolean, If true, the request will not be committed.
+  <pre>Retrieves the list of interconnect attachments contained within
+    { # Response to the list request, and contains a list of interconnect
+    # attachments.
+  &quot;items&quot;: [ # A list of InterconnectAttachment resources.
+  &quot;kind&quot;: &quot;compute#interconnectAttachmentList&quot;, # Output only. [Output Only] Type of resource. Alwayscompute#interconnectAttachmentList for lists of interconnect
+    <code class="details" id="patch">patch(project, region, interconnectAttachment, body=None, requestId=None, x__xgafv=None)</code>
+  <pre>Updates the specified interconnect attachment with the data included in the
+  interconnectAttachment: string, Name of the interconnect attachment to patch. (required)
+    <code class="details" id="setIamPolicy">setIamPolicy(project, region, resource, body=None, x__xgafv=None)</code>
+  <pre>Sets the labels on an InterconnectAttachment. To learn more about labels,

@@ -1,0 +1,47 @@
+<!-- WebURL Config Panel - Form content only, no dialog chrome -->
+      placeholder="Enter a title for this part"
+  <!-- URL -->
+    <label for="webUrl">
+      URL
+    <div class="input-with-action">
+        id="webUrl"
+        [(ngModel)]="url"
+        placeholder="https://example.com"
+        [class.error]="urlError">
+      @if (showUrlPreview) {
+          class="input-action-btn"
+          (click)="previewUrl()"
+          title="Preview in new tab">
+    @if (urlError) {
+      <span class="form-error">{{ urlError }}</span>
+    @if (!urlError) {
+        Enter the full URL including https://
+  <!-- Security Mode -->
+      Security Mode
+    <div class="radio-group">
+      <label class="radio-option" [class.selected]="sandboxMode === 'standard'">
+          name="sandboxMode"
+          value="standard"
+          [(ngModel)]="sandboxMode"
+          (change)="onSandboxModeChange()">
+        <span class="radio-content">
+          <span class="radio-label">Standard</span>
+          <span class="radio-badge recommended">Recommended</span>
+      <label class="radio-option" [class.selected]="sandboxMode === 'strict'">
+          value="strict"
+          <span class="radio-label">Strict</span>
+          <span class="radio-badge secure">Most Secure</span>
+      <label class="radio-option" [class.selected]="sandboxMode === 'permissive'">
+          value="permissive"
+          <span class="radio-label">Permissive</span>
+          <span class="radio-badge warning">Least Secure</span>
+    <span class="form-hint">{{ getSandboxModeDescription() }}</span>
+      Options
+      <label class="checkbox-option">
+          [(ngModel)]="allowFullscreen"
+        <span class="checkbox-content">
+          <span class="checkbox-label">Allow Fullscreen</span>
+          <span class="checkbox-desc">Enable fullscreen mode for the embedded content</span>
+          [(ngModel)]="refreshOnResize"
+          <span class="checkbox-label">Refresh on Resize</span>
+          <span class="checkbox-desc">Reload the page when the part is resized</span>

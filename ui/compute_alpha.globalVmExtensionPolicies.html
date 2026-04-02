@@ -1,0 +1,165 @@
+<h1><a href="compute_alpha.html">Compute Engine API</a> . <a href="compute_alpha.globalVmExtensionPolicies.html">globalVmExtensionPolicies</a></h1>
+<p class="firstline">Retrieves the list of all VM Extension Policy resources</p>
+  <code><a href="#delete">delete(project, globalVmExtensionPolicy, body=None, requestId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Purge scoped resources (zonal policies) from a global VM extension</p>
+  <code><a href="#get">get(project, globalVmExtensionPolicy, x__xgafv=None)</a></code></p>
+<p class="firstline">Gets details of a global VM extension policy.</p>
+  <code><a href="#getVmExtension">getVmExtension(project, extensionName, x__xgafv=None)</a></code></p>
+<p class="firstline">Retrieves details of a specific VM extension.</p>
+<p class="firstline">Creates a new project level GlobalVmExtensionPolicy.</p>
+<p class="firstline">Lists global VM extension policies.</p>
+  <code><a href="#listVmExtensions">listVmExtensions(project, filter=None, maxResults=None, orderBy=None, pageToken=None, returnPartialSuccess=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Lists all VM extensions within a specific zone for a project.</p>
+  <code><a href="#listVmExtensions_next">listVmExtensions_next()</a></code></p>
+  <code><a href="#update">update(project, globalVmExtensionPolicy, body=None, requestId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Updates a global VM extension policy.</p>
+  <pre>Retrieves the list of all VM Extension Policy resources
+To prevent failure, it&#x27;s recommended that you set the
+    { # Response for the aggregated list of VM extension policies.
+  &quot;items&quot;: { # A list of VmExtensionPoliciesScopedList resources.
+    &quot;a_key&quot;: { # Name of the scope containing this set of VmExtensionPolicies.
+      &quot;vmExtensionPolicies&quot;: [ # List of VmExtensionPolicy resources contained in this scope.
+        { # Represents a VM extension policy.
+          &quot;description&quot;: &quot;A String&quot;, # An optional description of this resource.
+          &quot;extensionPolicies&quot;: { # Required. A map of extension names (for example, &quot;ops-agent&quot;) to their corresponding
+              # policy configurations.
+            &quot;a_key&quot;: { # Configuration for a specific VM extension.
+              &quot;pinnedVersion&quot;: &quot;A String&quot;, # Optional. The specific version of the extension to install. If not set, the latest
+                  # version is used.
+              &quot;stringConfig&quot;: &quot;A String&quot;, # Optional. String-based configuration data for the extension.
+          &quot;globalResourceLink&quot;: &quot;A String&quot;, # Optional. Output only. [Output Only] Link to the global policy that manages this zone policy, if
+              # applicable.
+          &quot;instanceSelectors&quot;: [ # Optional. Selectors to target VMs for this policy. VMs are selected if they match
+              # *any* of the provided selectors (logical OR). If this list is empty, the
+              # policy applies to all VMs.
+            { # Defines how to select VMs to apply a zone VM extension policy.
+              &quot;labelSelector&quot;: { # A LabelSelector is applied to a VM only if it matches all the specified # Optional. LabelSelector selects VMs based on their labels.
+                  # labels.
+                &quot;inclusionLabels&quot;: { # Optional. A map of key-value pairs representing VM labels.
+                    # VMs must have all of the labels specified in this map to be selected
+                    # (logical AND).
+                    # e.g. If the `inclusion_labels` are {(&quot;key1&quot;, &quot;value1&quot;), (&quot;key2&quot;,
+                    # &quot;value2&quot;)}, the VM labels must contain both (&quot;key1&quot;, &quot;value1&quot;) and
+                    # (&quot;key2&quot;, &quot;value2&quot;) to be selected. If the VM labels are (&quot;key1&quot;,
+                    # &quot;value1&quot;) and (&quot;something&quot;, &quot;else&quot;), it will not be selected.
+                    # If the map is empty, it&#x27;s considered a match.
+          &quot;kind&quot;: &quot;compute#vmExtensionPolicy&quot;, # Output only. [Output Only] Type of the resource. Alwayscompute#vmExtensionPolicy.
+          &quot;managedByGlobal&quot;: True or False, # Optional. Output only. [Output Only] Indicates if this policy is managed by a global policy.
+          &quot;priority&quot;: 42, # Optional. Priority of this policy. Used to resolve conflicts when multiple policies
+              # apply to the same extension.
+              # The policy priority is an integer from 0 to 65535, inclusive. Lower
+              # integers indicate higher priorities. If you do not specify a priority when
+              # creating a rule, it is assigned a priority of 1000. If priorities are
+              # equal, the policy with the most recent creation timestamp takes precedence.
+          &quot;state&quot;: &quot;A String&quot;, # Optional. Output only. [Output Only] Current state of the policy: ACTIVE or DELETING.
+          &quot;updateTimestamp&quot;: &quot;A String&quot;, # Output only. [Output Only] Update timestamp inRFC3339
+  &quot;kind&quot;: &quot;compute#VmExtensionPolicyAggregatedList&quot;, # Output only. [Output Only] Type of resource. Alwayscompute#VmExtensionPolicyAggregatedList for lists of
+      # VmExtensionPolicies.
+    <code class="details" id="delete">delete(project, globalVmExtensionPolicy, body=None, requestId=None, x__xgafv=None)</code>
+  <pre>Purge scoped resources (zonal policies) from a global VM extension
+policy, and then delete the global VM extension policy. Purge of the scoped
+resources is a pre-condition of the global VM extension policy deletion.
+The deletion of the global VM extension policy happens after the purge
+rollout is done, so it&#x27;s not a part of the LRO. It&#x27;s an automatic process
+that triggers in the backend.
+  globalVmExtensionPolicy: string, Name of the global VM extension policy to purge scoped resources for. (required)
+  &quot;conflictBehavior&quot;: &quot;A String&quot;, # Optional. Specifies the behavior of the rollout if a conflict is detected in a
+      # project during a rollout. This only applies to `insert` and `update`
+      # methods.
+      # A conflict occurs in the following cases:
+      # * `insert` method: If the zonal policy already exists when the insert
+      #   happens.
+      # * `update` method: If the zonal policy was modified by a zonal API call
+      #   outside of this rollout.
+      # Possible values are the following:
+      # * `&quot;&quot;` (empty string): If a conflict occurs, the local value is not
+      #   overwritten. This is the default behavior.
+      # * `&quot;overwrite&quot;`: If a conflict occurs, the local value is overwritten
+      #   with the rollout value.
+  &quot;name&quot;: &quot;A String&quot;, # Optional. The name of the rollout plan.
+      # projects//locations/global/rolloutPlans/.
+  &quot;predefinedRolloutPlan&quot;: &quot;A String&quot;, # Optional. Specifies the predefined rollout plan for the policy. Valid values
+      # are `SLOW_ROLLOUT` and `FAST_ROLLOUT`. The recommended value is
+      # `SLOW_ROLLOUT` for progressive rollout. For more information, see Rollout
+      # plans for global policies.
+  &quot;retryUuid&quot;: &quot;A String&quot;, # Optional. The UUID that identifies a policy rollout retry attempt for update and
+      # delete operations. Set this field only when retrying a rollout for an
+      # existing extension policy.
+      # * `update` method: Lets you retry policy rollout without changes.
+      # An error occurs if you set retry_uuid but the policy is modified.
+      # * `delete` method: Lets you retry policy deletion rollout if the
+      # previous deletion rollout is not finished and the policy is in the
+      # DELETING state. If you set this field when the policy is not in the
+      # DELETING state, an error occurs.
+    <code class="details" id="get">get(project, globalVmExtensionPolicy, x__xgafv=None)</code>
+  <pre>Gets details of a global VM extension policy.
+  globalVmExtensionPolicy: string, Name of the GlobalVmExtensionPolicy resource to return. (required)
+    { # Message describing GlobalVmExtensionPolicy object.
+  &quot;extensionPolicies&quot;: { # Required. Map from extension (eg: &quot;cloudops&quot;) to its policy configuration.
+      # The key is the name of the extension.
+    &quot;a_key&quot;: { # Policy for a single extension.
+      &quot;pinnedVersion&quot;: &quot;A String&quot;, # Optional. The version pinning for the extension.
+          # If empty, the extension will be installed with the latest version
+          # released by the extension producer.
+      &quot;stringConfig&quot;: &quot;A String&quot;, # Optional. String configuration. Any string payload that the extension
+          # understands.
+  &quot;instanceSelectors&quot;: [ # Optional. Selector to target VMs for a policy.
+      # There is a logical &quot;AND&quot; between instance_selectors.
+    { # Selector to target VMs for a zone VM extension policy.
+      &quot;labelSelector&quot;: { # A LabelSelector is applicable for a VM only if it matches all labels in # Optional. Labels within the LabelSelector are OR&#x27;d.
+          # the LabelSelector.
+        &quot;inclusionLabels&quot;: { # Optional. Labels as key value pairs.
+            # A VM should contain all the pairs specified in this map to be selected;
+            # Labels within the LabelSelector are OR&#x27;ed.
+  &quot;kind&quot;: &quot;compute#globalVmExtensionPolicy&quot;, # Output only. [Output Only] Type of the resource. Alwayscompute#globalVmExtensionPolicy for globalVmExtensionPolicies.
+  &quot;priority&quot;: 42, # Optional. Used to resolve conflicts when multiple policies are active for the same
+      # extension. Defaults to 0.
+      # Larger the number, higher the priority. When the priority is the same,
+      # the policy with the newer create time has higher priority.
+  &quot;rolloutOperation&quot;: { # Represents the rollout operation # Required. The rollout strategy and status.
+    &quot;rolloutInput&quot;: { # Required. The rollout input which defines the rollout plan.
+    &quot;rolloutStatus&quot;: { # Output only. [Output Only] The rollout status of the policy.
+      &quot;currentRollouts&quot;: [ # Output only. [Output Only] The current rollouts for the latest version of the
+          # resource. There should be only one current rollout, but for
+          # scalability, we make it repeated.
+          &quot;locationRolloutStatus&quot;: { # Output only. [Output Only] The rollout status for each location. The list of the
+              # locations is the same as the list of locations in the rollout plan.
+              &quot;state&quot;: &quot;A String&quot;, # Output only. [Output Only] The state of the location rollout.
+          &quot;rollout&quot;: &quot;A String&quot;, # Output only. [Output Only] The name of the rollout.
+              # Ex. projects//locations/global/rollouts/.
+          &quot;rolloutPlan&quot;: &quot;A String&quot;, # Output only. [Output Only] The name of the rollout plan.
+          &quot;state&quot;: &quot;A String&quot;, # Output only. [Output Only] The overall state of the rollout.
+      &quot;previousRollout&quot;: { # Output only. [Output Only] The last completed rollout resource. This field will not
+          # be populated until the first rollout is completed.
+  &quot;scopedResourceStatus&quot;: &quot;A String&quot;, # Output only. [Output Only] The scoped resource status. It&#x27;s only for tracking the
+      # purging status of the policy.
+    <code class="details" id="getVmExtension">getVmExtension(project, extensionName, x__xgafv=None)</code>
+  <pre>Retrieves details of a specific VM extension.
+  extensionName: string, A parameter (required)
+  &quot;versions&quot;: [
+  <pre>Creates a new project level GlobalVmExtensionPolicy.
+  <pre>Lists global VM extension policies.
+    { # Response to list global VM extension policy resources.
+  &quot;items&quot;: [ # A list of GlobalVmExtensionPolicy resources.
+  &quot;kind&quot;: &quot;compute#globalVmExtensionPolicyList&quot;, # Output only. Type of resource.
+    <code class="details" id="listVmExtensions">listVmExtensions(project, filter=None, maxResults=None, orderBy=None, pageToken=None, returnPartialSuccess=None, x__xgafv=None)</code>
+  <pre>Lists all VM extensions within a specific zone for a project.
+This is a read-only API.
+  project: string, Required. Project ID for this request. (required)
+  &quot;etag&quot;: &quot;A String&quot;, # Output only. Fingerprint of this resource. A hash of the contents stored
+      # in this object. This field is used in optimistic locking. This field will
+      # be ignored when inserting a VmExtensionPolicy. An up-to-date
+      # fingerprint must be provided in order to update the VmExtensionPolicy.
+      # To see the latest value of the fingerprint, make a get() request to
+      # retrieve a VmExtensionPolicy.
+  &quot;id&quot;: &quot;A String&quot;, # Output only. Unique identifier for the resource; defined by the server.
+  &quot;items&quot;: [ # Output only. A list of VM extensions.
+  &quot;kind&quot;: &quot;compute#globalVmExtensionList&quot;, # Output only. Type of resource.
+  &quot;nextPageToken&quot;: &quot;A String&quot;, # Output only. This token allows you to get the next page of results for
+  &quot;selfLink&quot;: &quot;A String&quot;, # Output only. Server-defined URL for this resource.
+  &quot;unreachables&quot;: [ # Output only. Unreachable resources.
+  &quot;warning&quot;: { # Output only. Informational warning message.
+    <code class="details" id="listVmExtensions_next">listVmExtensions_next()</code>
+    <code class="details" id="update">update(project, globalVmExtensionPolicy, body=None, requestId=None, x__xgafv=None)</code>
+  <pre>Updates a global VM extension policy.
+  globalVmExtensionPolicy: string, Name of the global VM extension policy to update. (required)

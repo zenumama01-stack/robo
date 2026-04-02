@@ -1,0 +1,10 @@
+<h1><a href="firebaseappdistribution_v1.html">Firebase App Distribution API</a> . <a href="firebaseappdistribution_v1.media.html">media</a></h1>
+  <code><a href="#upload">upload(app, body=None, media_body=None, media_mime_type=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Uploads a binary. Uploading a binary can result in a new release being created, an update to an existing release, or a no-op if a release with the same binary already exists.</p>
+    <code class="details" id="upload">upload(app, body=None, media_body=None, media_mime_type=None, x__xgafv=None)</code>
+  <pre>Uploads a binary. Uploading a binary can result in a new release being created, an update to an existing release, or a no-op if a release with the same binary already exists.
+  app: string, Required. The name of the app resource. Format: `projects/{project_number}/apps/{app}` (required)
+{ # Request message for `UploadRelease`.
+  &quot;blob&quot;: { # A reference to data stored on the filesystem, on GFS or in blobstore. # Binary to upload
+      &quot;downloadExternalReadToken&quot;: &quot;A String&quot;, # A serialized External Read Token passed from Bigstore -&gt; Scotty for a GCS download. This field must never be consumed outside of Bigstore, and is not applicable to non-GCS media uploads.
+      &quot;uploadFragmentListCreationInfo&quot;: &quot;A String&quot;, # A serialized Object Fragment List Creation Info passed from Bigstore -&gt; Scotty for a GCS upload. This field must never be consumed outside of Bigstore, and is not applicable to non-GCS media uploads.

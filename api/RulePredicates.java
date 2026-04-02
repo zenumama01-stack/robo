@@ -1,0 +1,69 @@
+ * This class add support for prefixes for {@link Rule} UIDs and provide default predicates for prefixes and tags.
+ * @author Victor Toni - Initial contribution
+public class RulePredicates {
+     * Constant defining separator between prefix and UID.
+    public static final String PREFIX_SEPARATOR = ":";
+     * Gets the prefix of the {@link Rule}'s UID, if any exist. The UID is either set automatically when the
+     * {@link Rule} is added or by the creating party. It's an optional property.
+     * <br/>
+     * Implementation note:
+     * The name space is part of the UID and the prefix thereof.
+     * If the UID does not contain a {@link #PREFIX_SEPARATOR} {@code null} will be returned.
+     * If the UID does contain a {@link #PREFIX_SEPARATOR} the prefix until the first occurrence will be returned.
+     * If the prefix would have a zero length {@code null} will be returned.
+     * @return prefix of this {@link Rule}, or {@code null} if no prefix or an empty prefix is found.
+    public static @Nullable String getPrefix(@Nullable Rule rule) {
+        if (null != rule) {
+            final String uid = rule.getUID();
+            final int index = uid.indexOf(PREFIX_SEPARATOR);
+            // only when a delimiter was found and the prefix is not empty
+            if (0 < index) {
+                return uid.substring(0, index);
+     * Creates a {@link Predicate} which can be used to filter {@link Rule}s for a given prefix or {@code null} prefix.
+     * @param prefix to search for.
+     * @return created {@link Predicate}.
+    public static Predicate<Rule> hasPrefix(final @Nullable String prefix) {
+        if (null == prefix) {
+            return r -> null == getPrefix(r);
+            return r -> prefix.equals(getPrefix(r));
+     * Creates a {@link Predicate} which can be used to match {@link Rule}s for any of the given prefixes and even
+     * {@code null} prefix.
+     * @param prefixes to search for.
+    public static Predicate<Rule> hasAnyOfPrefixes(String... prefixes) {
+        final HashSet<String> namespaceSet = new HashSet<>(prefixes.length);
+        namespaceSet.addAll(Arrays.asList(prefixes));
+        // this will even work for null namespace
+        return r -> namespaceSet.contains(getPrefix(r));
+     * Creates a {@link Predicate} which can be used to match {@link Rule}s with one or more tags.
+    public static Predicate<Rule> hasTags() {
+        // everything with a tag is matching
+        // Rule.getTags() is never null
+        return r -> !r.getTags().isEmpty();
+     * Creates a {@link Predicate} which can be used to match {@link Rule}s without tags.
+    public static Predicate<Rule> hasNoTags() {
+        return r -> r.getTags().isEmpty();
+     * Creates a {@link Predicate} which can be used to match {@link Rule}s with all given tags or no tags at all.
+     * All given tags must match, (the matched {@code Rule} might contain more).
+     * @param tags to search for.
+    public static Predicate<Rule> hasAllTags(final @Nullable Collection<String> tags) {
+        if (tags == null || tags.isEmpty()) {
+            return (Predicate<Rule>) r -> true;
+            final Set<String> tagSet = new HashSet<>(tags);
+            // everything containing _all_ given tags is matching
+            // (Rule might might have more tags than the given set)
+            return r -> r.getTags().containsAll(tagSet);
+     * Creates a {@link Predicate} which can be used to match {@link Rule}s for all given tags or no tags at all.
+    public static Predicate<Rule> hasAllTags(final String @Nullable... tags) {
+        return hasAllTags(tags == null ? null : Arrays.asList(tags));
+     * Creates a {@link Predicate} which can be used to match {@link Rule}s for any of the given tags or {@link Rule}s
+     * without tags.
+    public static Predicate<Rule> hasAnyOfTags(final @Nullable Collection<String> tags) {
+        if (null == tags || tags.isEmpty()) {
+            // everything without a tag is matching
+            return hasNoTags();
+            // everything containing _any_ of the given tags is matching (more than one tag might match)
+            // if the collections are NOT disjoint, they have something in common
+            return r -> !Collections.disjoint(r.getTags(), tagSet);
+    public static Predicate<Rule> hasAnyOfTags(final String @Nullable... tags) {
+        if (null == tags || 0 == tags.length) {
+            return hasAnyOfTags(Arrays.asList(tags));

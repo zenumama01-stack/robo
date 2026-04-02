@@ -1,0 +1,22 @@
+<h1><a href="apigeeregistry_v1.html">Apigee Registry API</a> . <a href="apigeeregistry_v1.projects.html">projects</a> . <a href="apigeeregistry_v1.projects.locations.html">locations</a> . <a href="apigeeregistry_v1.projects.locations.instances.html">instances</a></h1>
+  <code><a href="#create">create(parent, body=None, instanceId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Provisions instance resources for the Registry.</p>
+<p class="firstline">Deletes the Registry instance.</p>
+    <code class="details" id="create">create(parent, body=None, instanceId=None, x__xgafv=None)</code>
+  <pre>Provisions instance resources for the Registry.
+  parent: string, Required. Parent resource of the Instance, of the form: `projects/*/locations/*` (required)
+{ # An Instance represents the instance resources of the Registry. Currently, only one instance is allowed for each project.
+  &quot;build&quot;: { # Build information of the Instance if it&#x27;s in `ACTIVE` state. # Output only. Build info of the Instance if it&#x27;s in `ACTIVE` state.
+    &quot;commitId&quot;: &quot;A String&quot;, # Output only. Commit ID of the latest commit in the build.
+    &quot;commitTime&quot;: &quot;A String&quot;, # Output only. Commit time of the latest commit in the build.
+    &quot;repo&quot;: &quot;A String&quot;, # Output only. Path of the open source repository: github.com/apigee/registry.
+  &quot;config&quot;: { # Available configurations to provision an Instance. # Required. Config of the Instance.
+    &quot;cmekKeyName&quot;: &quot;A String&quot;, # Required. The Customer Managed Encryption Key (CMEK) used for data encryption. The CMEK name should follow the format of `projects/([^/]+)/locations/([^/]+)/keyRings/([^/]+)/cryptoKeys/([^/]+)`, where the `location` must match InstanceConfig.location.
+    &quot;location&quot;: &quot;A String&quot;, # Output only. The GCP location where the Instance resides.
+  &quot;name&quot;: &quot;A String&quot;, # Format: `projects/*/locations/*/instance`. Currently only `locations/global` is supported.
+  &quot;state&quot;: &quot;A String&quot;, # Output only. The current state of the Instance.
+  &quot;stateMessage&quot;: &quot;A String&quot;, # Output only. Extra information of Instance.State if the state is `FAILED`.
+  instanceId: string, Required. Identifier to assign to the Instance. Must be unique within scope of the parent resource.
+  <pre>Deletes the Registry instance.
+  name: string, Required. The name of the Instance to delete. Format: `projects/*/locations/*/instances/*`. (required)
+  name: string, Required. The name of the Instance to retrieve. Format: `projects/*/locations/*/instances/*`. (required)

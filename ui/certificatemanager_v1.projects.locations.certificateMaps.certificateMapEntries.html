@@ -1,0 +1,35 @@
+<h1><a href="certificatemanager_v1.html">Certificate Manager API</a> . <a href="certificatemanager_v1.projects.html">projects</a> . <a href="certificatemanager_v1.projects.locations.html">locations</a> . <a href="certificatemanager_v1.projects.locations.certificateMaps.html">certificateMaps</a> . <a href="certificatemanager_v1.projects.locations.certificateMaps.certificateMapEntries.html">certificateMapEntries</a></h1>
+  <code><a href="#create">create(parent, body=None, certificateMapEntryId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Creates a new CertificateMapEntry in a given project and location.</p>
+<p class="firstline">Deletes a single CertificateMapEntry.</p>
+<p class="firstline">Gets details of a single CertificateMapEntry.</p>
+<p class="firstline">Lists CertificateMapEntries in a given project and location.</p>
+<p class="firstline">Updates a CertificateMapEntry.</p>
+    <code class="details" id="create">create(parent, body=None, certificateMapEntryId=None, x__xgafv=None)</code>
+  <pre>Creates a new CertificateMapEntry in a given project and location.
+  parent: string, Required. The parent resource of the certificate map entry. Must be in the format `projects/*/locations/*/certificateMaps/*`. (required)
+{ # Defines a certificate map entry.
+  &quot;certificates&quot;: [ # Optional. A set of Certificates defines for the given `hostname`. There can be defined up to four certificates in each Certificate Map Entry. Each certificate must match pattern `projects/*/locations/*/certificates/*`.
+  &quot;createTime&quot;: &quot;A String&quot;, # Output only. The creation timestamp of a Certificate Map Entry.
+  &quot;description&quot;: &quot;A String&quot;, # Optional. One or more paragraphs of text description of a certificate map entry.
+  &quot;hostname&quot;: &quot;A String&quot;, # A Hostname (FQDN, e.g. `example.com`) or a wildcard hostname expression (`*.example.com`) for a set of hostnames with common suffix. Used as Server Name Indication (SNI) for selecting a proper certificate.
+  &quot;labels&quot;: { # Optional. Set of labels associated with a Certificate Map Entry.
+  &quot;matcher&quot;: &quot;A String&quot;, # A predefined matcher for particular cases, other than SNI selection.
+  &quot;name&quot;: &quot;A String&quot;, # Identifier. A user-defined name of the Certificate Map Entry. Certificate Map Entry names must be unique globally and match pattern `projects/*/locations/*/certificateMaps/*/certificateMapEntries/*`.
+  &quot;state&quot;: &quot;A String&quot;, # Output only. A serving state of this Certificate Map Entry.
+  &quot;updateTime&quot;: &quot;A String&quot;, # Output only. The update timestamp of a Certificate Map Entry.
+  certificateMapEntryId: string, Required. A user-provided name of the certificate map entry.
+  <pre>Deletes a single CertificateMapEntry.
+  name: string, Required. A name of the certificate map entry to delete. Must be in the format `projects/*/locations/*/certificateMaps/*/certificateMapEntries/*`. (required)
+  <pre>Gets details of a single CertificateMapEntry.
+  name: string, Required. A name of the certificate map entry to describe. Must be in the format `projects/*/locations/*/certificateMaps/*/certificateMapEntries/*`. (required)
+  <pre>Lists CertificateMapEntries in a given project and location.
+  parent: string, Required. The project, location and certificate map from which the certificate map entries should be listed, specified in the format `projects/*/locations/*/certificateMaps/*`. (required)
+  filter: string, Optional. Filter expression to restrict the returned Certificate Map Entries.
+  orderBy: string, Optional. A list of Certificate Map Entry field names used to specify the order of the returned results. The default sorting order is ascending. To specify descending order for a field, add a suffix `&quot; desc&quot;`.
+  pageSize: integer, Optional. Maximum number of certificate map entries to return. The service may return fewer than this value. If unspecified, at most 50 certificate map entries will be returned. The maximum value is 1000; values above 1000 will be coerced to 1000.
+  pageToken: string, Optional. The value returned by the last `ListCertificateMapEntriesResponse`. Indicates that this is a continuation of a prior `ListCertificateMapEntries` call, and that the system should return the next page of data.
+    { # Response for the `ListCertificateMapEntries` method.
+  &quot;certificateMapEntries&quot;: [ # A list of certificate map entries for the parent resource.
+  <pre>Updates a CertificateMapEntry.
+  name: string, Identifier. A user-defined name of the Certificate Map Entry. Certificate Map Entry names must be unique globally and match pattern `projects/*/locations/*/certificateMaps/*/certificateMapEntries/*`. (required)

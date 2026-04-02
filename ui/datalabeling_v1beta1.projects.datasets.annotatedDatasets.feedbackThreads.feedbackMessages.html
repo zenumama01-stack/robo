@@ -1,0 +1,23 @@
+<h1><a href="datalabeling_v1beta1.html">Data Labeling API</a> . <a href="datalabeling_v1beta1.projects.html">projects</a> . <a href="datalabeling_v1beta1.projects.datasets.html">datasets</a> . <a href="datalabeling_v1beta1.projects.datasets.annotatedDatasets.html">annotatedDatasets</a> . <a href="datalabeling_v1beta1.projects.datasets.annotatedDatasets.feedbackThreads.html">feedbackThreads</a> . <a href="datalabeling_v1beta1.projects.datasets.annotatedDatasets.feedbackThreads.feedbackMessages.html">feedbackMessages</a></h1>
+<p class="firstline">Create a FeedbackMessage object.</p>
+<p class="firstline">Delete a FeedbackMessage.</p>
+<p class="firstline">Get a FeedbackMessage object.</p>
+<p class="firstline">List FeedbackMessages with pagination.</p>
+  <pre>Create a FeedbackMessage object.
+  parent: string, Required. FeedbackMessage resource parent, format: projects/{project_id}/datasets/{dataset_id}/annotatedDatasets/{annotated_dataset_id}/feedbackThreads/{feedback_thread_id}. (required)
+{ # A feedback message inside a feedback thread.
+  &quot;body&quot;: &quot;A String&quot;, # String content of the feedback. Maximum of 10000 characters.
+  &quot;createTime&quot;: &quot;A String&quot;, # Create time.
+  &quot;image&quot;: &quot;A String&quot;, # The image storing this feedback if the feedback is an image representing operator&#x27;s comments.
+  &quot;name&quot;: &quot;A String&quot;, # Name of the feedback message in a feedback thread. Format: &#x27;project/{project_id}/datasets/{dataset_id}/annotatedDatasets/{annotated_dataset_id}/feedbackThreads/{feedback_thread_id}/feedbackMessage/{feedback_message_id}&#x27;
+  &quot;operatorFeedbackMetadata&quot;: { # Metadata describing the feedback from the operator.
+  &quot;requesterFeedbackMetadata&quot;: { # Metadata describing the feedback from the labeling task requester.
+  <pre>Delete a FeedbackMessage.
+  name: string, Required. Name of the FeedbackMessage that is going to be deleted. Format: &#x27;projects/{project_id}/datasets/{dataset_id}/annotatedDatasets/{annotated_dataset_id}/feedbackThreads/{feedback_thread_id}/feedbackMessages/{feedback_message_id}&#x27;. (required)
+  <pre>Get a FeedbackMessage object.
+  name: string, Required. Name of the feedback. Format: &#x27;projects/{project_id}/datasets/{dataset_id}/annotatedDatasets/{annotated_dataset_id}/feedbackThreads/{feedback_thread_id}/feedbackMessages/{feedback_message_id}&#x27;. (required)
+  <pre>List FeedbackMessages with pagination.
+  parent: string, Required. FeedbackMessage resource parent. Format: &quot;projects/{project_id}/datasets/{dataset_id}/annotatedDatasets/{annotated_dataset_id}/feedbackThreads/{feedback_thread_id}&quot; (required)
+  pageToken: string, Optional. A token identifying a page of results for the server to return. Typically obtained by ListFeedbackMessages.next_page_token of the previous [DataLabelingService.ListFeedbackMessages] call. Return first page if empty.
+    { # Results for listing FeedbackMessages.
+  &quot;feedbackMessages&quot;: [ # The list of feedback messages to return.

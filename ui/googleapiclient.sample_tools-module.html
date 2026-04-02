@@ -1,0 +1,40 @@
+  <title>googleapiclient.sample_tools</title>
+        Module&nbsp;sample_tools
+            >]&nbsp;|&nbsp;<a href="googleapiclient.sample_tools-module.html"
+<h1 class="epydoc">Module sample_tools</h1><p class="nomargin-top"><span class="codelink"><a href="googleapiclient.sample_tools-pysrc.html">source&nbsp;code</a></span></p>
+<p>Utilities for making samples.</p>
+  <p>Consolidates a lot of code commonly repeated in sample 
+  applications.</p>
+          <td><span class="summary-sig"><a href="googleapiclient.sample_tools-module.html#init" class="summary-sig-name">init</a>(<span class="summary-sig-arg">argv</span>,
+        <span class="summary-sig-arg">doc</span>,
+        <span class="summary-sig-arg">filename</span>,
+        <span class="summary-sig-arg">scope</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">parents</span>=<span class="summary-sig-default">[]</span>,
+        <span class="summary-sig-arg">discovery_filename</span>=<span class="summary-sig-default">None</span>)</span><br />
+      A common initialization routine for samples.</td>
+            <span class="codelink"><a href="googleapiclient.sample_tools-pysrc.html#init">source&nbsp;code</a></span>
+<a name="init"></a>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">init</span>(<span class="sig-arg">argv</span>,
+        <span class="sig-arg">doc</span>,
+        <span class="sig-arg">filename</span>,
+        <span class="sig-arg">scope</span>=<span class="sig-default">None</span>,
+        <span class="sig-arg">parents</span>=<span class="sig-default">[]</span>,
+        <span class="sig-arg">discovery_filename</span>=<span class="sig-default">None</span>)</span>
+    ><span class="codelink"><a href="googleapiclient.sample_tools-pysrc.html#init">source&nbsp;code</a></span>&nbsp;
+A common initialization routine for samples.
+Many of the sample applications do the same initialization, which has now
+been consolidated into this function. This function uses common idioms found
+in almost all the samples, i.e. for an API with name 'apiname', the
+credentials are stored in a file named apiname.dat, and the
+client_secrets.json file is stored in the same directory as the application
+main file.
+  argv: list of string, the command-line parameters of the application.
+  name: string, name of the API.
+  version: string, version of the API.
+  doc: string, description of the application. Usually set to __doc__.
+  file: string, filename of the application. Usually set to __file__.
+  parents: list of argparse.ArgumentParser, additional command-line flags.
+  scope: string, The OAuth scope used.
+  discovery_filename: string, name of local discovery file (JSON). Use when discovery doc not available via URL.
+  A tuple of (service, flags), where service is the service object and flags
+  is the parsed command-line flags.

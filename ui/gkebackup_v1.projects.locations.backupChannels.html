@@ -1,0 +1,37 @@
+<h1><a href="gkebackup_v1.html">Backup for GKE API</a> . <a href="gkebackup_v1.projects.html">projects</a> . <a href="gkebackup_v1.projects.locations.html">locations</a> . <a href="gkebackup_v1.projects.locations.backupChannels.html">backupChannels</a></h1>
+  <code><a href="gkebackup_v1.projects.locations.backupChannels.backupPlanBindings.html">backupPlanBindings()</a></code>
+<p class="firstline">Returns the backupPlanBindings Resource.</p>
+  <code><a href="#create">create(parent, backupChannelId=None, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Creates a new BackupChannel in a given location.</p>
+<p class="firstline">Deletes an existing BackupChannel.</p>
+<p class="firstline">Retrieve the details of a single BackupChannel.</p>
+<p class="firstline">Lists BackupChannels in a given location.</p>
+<p class="firstline">Update a BackupChannel.</p>
+    <code class="details" id="create">create(parent, backupChannelId=None, body=None, x__xgafv=None)</code>
+  <pre>Creates a new BackupChannel in a given location.
+  parent: string, Required. The location within which to create the BackupChannel. Format: `projects/*/locations/*` (required)
+{ # A BackupChannel imposes constraints on where clusters can be backed up. The BackupChannel should be in the same project and region as the cluster being backed up. The backup can be created only in destination_project.
+  &quot;createTime&quot;: &quot;A String&quot;, # Output only. The timestamp when this BackupChannel resource was created.
+  &quot;description&quot;: &quot;A String&quot;, # Optional. User specified descriptive string for this BackupChannel.
+  &quot;destinationProject&quot;: &quot;A String&quot;, # Required. Immutable. The project where Backups are allowed to be stored. The format is `projects/{projectId}` or `projects/{projectNumber}`.
+  &quot;destinationProjectId&quot;: &quot;A String&quot;, # Output only. The project_id where Backups are allowed to be stored. Example Project ID: &quot;my-project-id&quot;. This will be an OUTPUT_ONLY field to return the project_id of the destination project.
+  &quot;etag&quot;: &quot;A String&quot;, # Output only. `etag` is used for optimistic concurrency control as a way to help prevent simultaneous updates of a BackupChannel from overwriting each other. It is strongly suggested that systems make use of the &#x27;etag&#x27; in the read-modify-write cycle to perform BackupChannel updates in order to avoid race conditions: An `etag` is returned in the response to `GetBackupChannel`, and systems are expected to put that etag in the request to `UpdateBackupChannel` or `DeleteBackupChannel` to ensure that their change will be applied to the same version of the resource.
+  &quot;labels&quot;: { # Optional. A set of custom labels supplied by user.
+  &quot;name&quot;: &quot;A String&quot;, # Identifier. The fully qualified name of the BackupChannel. `projects/*/locations/*/backupChannels/*`
+  &quot;uid&quot;: &quot;A String&quot;, # Output only. Server generated global unique identifier of [UUID](https://en.wikipedia.org/wiki/Universally_unique_identifier) format.
+  &quot;updateTime&quot;: &quot;A String&quot;, # Output only. The timestamp when this BackupChannel resource was last updated.
+  backupChannelId: string, Optional. The client-provided short name for the BackupChannel resource. This name must: - be between 1 and 63 characters long (inclusive) - consist of only lower-case ASCII letters, numbers, and dashes - start with a lower-case letter - end with a lower-case letter or number - be unique within the set of BackupChannels in this location If the user does not provide a name, a uuid will be used as the name.
+  <pre>Deletes an existing BackupChannel.
+  name: string, Required. Fully qualified BackupChannel name. Format: `projects/*/locations/*/backupChannels/*` (required)
+  etag: string, Optional. If provided, this value must match the current value of the target BackupChannel&#x27;s etag field or the request is rejected.
+  force: boolean, Optional. If set to true, any BackupPlanAssociations below this BackupChannel will also be deleted. Otherwise, the request will only succeed if the BackupChannel has no BackupPlanAssociations.
+  <pre>Retrieve the details of a single BackupChannel.
+  <pre>Lists BackupChannels in a given location.
+  parent: string, Required. The location that contains the BackupChannels to list. Format: `projects/*/locations/*` (required)
+  pageToken: string, Optional. The value of next_page_token received from a previous `ListBackupChannels` call. Provide this to retrieve the subsequent page in a multi-page list of results. When paginating, all other parameters provided to `ListBackupChannels` must match the call that provided the page token.
+    { # Response message for ListBackupChannels.
+  &quot;backupChannels&quot;: [ # The list of BackupChannels matching the given criteria.
+  &quot;nextPageToken&quot;: &quot;A String&quot;, # A token which may be sent as page_token in a subsequent `ListBackupChannels` call to retrieve the next page of results. If this field is omitted or empty, then there are no more results to return.
+  <pre>Update a BackupChannel.
+  name: string, Identifier. The fully qualified name of the BackupChannel. `projects/*/locations/*/backupChannels/*` (required)
+  updateMask: string, Optional. This is used to specify the fields to be overwritten in the BackupChannel targeted for update. The values for each of these updated fields will be taken from the `backup_channel` provided with this request. Field names are relative to the root of the resource (e.g., `description`, `labels`, etc.) If no `update_mask` is provided, all fields in `backup_channel` will be written to the target BackupChannel resource. Note that OUTPUT_ONLY and IMMUTABLE fields in `backup_channel` are ignored and are not used to update the target BackupChannel.

@@ -1,0 +1,48 @@
+<h1><a href="licensing_v1.html">Enterprise License Manager API</a> . <a href="licensing_v1.licenseAssignments.html">licenseAssignments</a></h1>
+  <code><a href="#delete">delete(productId, skuId, userId, x__xgafv=None)</a></code></p>
+<p class="firstline">Revoke a license.</p>
+  <code><a href="#get">get(productId, skuId, userId, x__xgafv=None)</a></code></p>
+<p class="firstline">Get a specific user's license by product SKU.</p>
+  <code><a href="#insert">insert(productId, skuId, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Assign a license.</p>
+  <code><a href="#listForProduct">listForProduct(productId, customerId, maxResults=None, pageToken=None, x__xgafv=None)</a></code></p>
+<p class="firstline">List all users assigned licenses for a specific product SKU.</p>
+  <code><a href="#listForProductAndSku">listForProductAndSku(productId, skuId, customerId, maxResults=None, pageToken=None, x__xgafv=None)</a></code></p>
+  <code><a href="#listForProductAndSku_next">listForProductAndSku_next()</a></code></p>
+  <code><a href="#listForProduct_next">listForProduct_next()</a></code></p>
+  <code><a href="#patch">patch(productId, skuId, userId, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Reassign a user's product SKU with a different SKU in the same product. This method supports patch semantics.</p>
+  <code><a href="#update">update(productId, skuId, userId, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Reassign a user's product SKU with a different SKU in the same product.</p>
+    <code class="details" id="delete">delete(productId, skuId, userId, x__xgafv=None)</code>
+  <pre>Revoke a license.
+  productId: string, A product&#x27;s unique identifier. For more information about products in this version of the API, see Products and SKUs. (required)
+  skuId: string, A product SKU&#x27;s unique identifier. For more information about available SKUs in this version of the API, see Products and SKUs. (required)
+  userId: string, The user&#x27;s current primary email address. If the user&#x27;s email address changes, use the new email address in your API requests. Since a `userId` is subject to change, do not use a `userId` value as a key for persistent data. This key could break if the current user&#x27;s email address changes. If the `userId` is suspended, the license status changes. (required)
+    <code class="details" id="get">get(productId, skuId, userId, x__xgafv=None)</code>
+  <pre>Get a specific user&#x27;s license by product SKU.
+    { # Representation of a license assignment.
+  &quot;kind&quot;: &quot;licensing#licenseAssignment&quot;, # Identifies the resource as a LicenseAssignment, which is `licensing#licenseAssignment`.
+  &quot;productId&quot;: &quot;A String&quot;, # A product&#x27;s unique identifier. For more information about products in this version of the API, see Product and SKU IDs.
+  &quot;productName&quot;: &quot;A String&quot;, # Display Name of the product.
+  &quot;skuId&quot;: &quot;A String&quot;, # A product SKU&#x27;s unique identifier. For more information about available SKUs in this version of the API, see Products and SKUs.
+  &quot;skuName&quot;: &quot;A String&quot;, # Display Name of the sku of the product.
+  &quot;userId&quot;: &quot;A String&quot;, # The user&#x27;s current primary email address. If the user&#x27;s email address changes, use the new email address in your API requests. Since a `userId` is subject to change, do not use a `userId` value as a key for persistent data. This key could break if the current user&#x27;s email address changes. If the `userId` is suspended, the license status changes.
+    <code class="details" id="insert">insert(productId, skuId, body=None, x__xgafv=None)</code>
+  <pre>Assign a license.
+  &quot;userId&quot;: &quot;A String&quot;, # Email id of the user
+    <code class="details" id="listForProduct">listForProduct(productId, customerId, maxResults=None, pageToken=None, x__xgafv=None)</code>
+  <pre>List all users assigned licenses for a specific product SKU.
+  customerId: string, The customer&#x27;s unique ID as defined in the Admin console, such as `C00000000`. If the customer is suspended, the server returns an error. (required)
+  maxResults: integer, The `maxResults` query string determines how many entries are returned on each page of a large response. This is an optional parameter. The value must be a positive number.
+  pageToken: string, Token to fetch the next page of data. The `maxResults` query string is related to the `pageToken` since `maxResults` determines how many entries are returned on each page. This is an optional query string. If not specified, the server returns the first page.
+  &quot;items&quot;: [ # The LicenseAssignments in this page of results.
+  &quot;kind&quot;: &quot;licensing#licenseAssignmentList&quot;, # Identifies the resource as a collection of LicenseAssignments.
+  &quot;nextPageToken&quot;: &quot;A String&quot;, # The token that you must submit in a subsequent request to retrieve additional license results matching your query parameters. The `maxResults` query string is related to the `nextPageToken` since `maxResults` determines how many entries are returned on each next page.
+    <code class="details" id="listForProductAndSku">listForProductAndSku(productId, skuId, customerId, maxResults=None, pageToken=None, x__xgafv=None)</code>
+    <code class="details" id="listForProductAndSku_next">listForProductAndSku_next()</code>
+    <code class="details" id="listForProduct_next">listForProduct_next()</code>
+    <code class="details" id="patch">patch(productId, skuId, userId, body=None, x__xgafv=None)</code>
+  <pre>Reassign a user&#x27;s product SKU with a different SKU in the same product. This method supports patch semantics.
+    <code class="details" id="update">update(productId, skuId, userId, body=None, x__xgafv=None)</code>
+  <pre>Reassign a user&#x27;s product SKU with a different SKU in the same product.

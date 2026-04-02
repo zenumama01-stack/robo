@@ -1,0 +1,53 @@
+<h1><a href="cloudkms_v1.html">Cloud Key Management Service (KMS) API</a> . <a href="cloudkms_v1.projects.html">projects</a> . <a href="cloudkms_v1.projects.locations.html">locations</a> . <a href="cloudkms_v1.projects.locations.ekmConnections.html">ekmConnections</a></h1>
+  <code><a href="#create">create(parent, body=None, ekmConnectionId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Creates a new EkmConnection in a given Project and Location.</p>
+<p class="firstline">Returns metadata for a given EkmConnection.</p>
+<p class="firstline">Lists EkmConnections.</p>
+<p class="firstline">Updates an EkmConnection's metadata.</p>
+  <code><a href="#verifyConnectivity">verifyConnectivity(name, x__xgafv=None)</a></code></p>
+<p class="firstline">Verifies that Cloud KMS can successfully connect to the external key manager specified by an EkmConnection. If there is an error connecting to the EKM, this method returns a FAILED_PRECONDITION status containing structured information as described at https://cloud.google.com/kms/docs/reference/ekm_errors.</p>
+    <code class="details" id="create">create(parent, body=None, ekmConnectionId=None, x__xgafv=None)</code>
+  <pre>Creates a new EkmConnection in a given Project and Location.
+  parent: string, Required. The resource name of the location associated with the EkmConnection, in the format `projects/*/locations/*`. (required)
+{ # An EkmConnection represents an individual EKM connection. It can be used for creating CryptoKeys and CryptoKeyVersions with a ProtectionLevel of EXTERNAL_VPC, as well as performing cryptographic operations using keys created within the EkmConnection.
+  &quot;createTime&quot;: &quot;A String&quot;, # Output only. The time at which the EkmConnection was created.
+  &quot;cryptoSpacePath&quot;: &quot;A String&quot;, # Optional. Identifies the EKM Crypto Space that this EkmConnection maps to. Note: This field is required if KeyManagementMode is CLOUD_KMS.
+  &quot;etag&quot;: &quot;A String&quot;, # Optional. Etag of the currently stored EkmConnection.
+  &quot;keyManagementMode&quot;: &quot;A String&quot;, # Optional. Describes who can perform control plane operations on the EKM. If unset, this defaults to MANUAL.
+  &quot;name&quot;: &quot;A String&quot;, # Output only. The resource name for the EkmConnection in the format `projects/*/locations/*/ekmConnections/*`.
+  &quot;serviceResolvers&quot;: [ # Optional. A list of ServiceResolvers where the EKM can be reached. There should be one ServiceResolver per EKM replica. Currently, only a single ServiceResolver is supported.
+    { # A ServiceResolver represents an EKM replica that can be reached within an EkmConnection.
+      &quot;endpointFilter&quot;: &quot;A String&quot;, # Optional. The filter applied to the endpoints of the resolved service. If no filter is specified, all endpoints will be considered. An endpoint will be chosen arbitrarily from the filtered list for each request. For endpoint filter syntax and examples, see https://cloud.google.com/service-directory/docs/reference/rpc/google.cloud.servicedirectory.v1#resolveservicerequest.
+      &quot;hostname&quot;: &quot;A String&quot;, # Required. The hostname of the EKM replica used at TLS and HTTP layers.
+      &quot;serverCertificates&quot;: [ # Required. A list of leaf server certificates used to authenticate HTTPS connections to the EKM replica. Currently, a maximum of 10 Certificate is supported.
+        { # A Certificate represents an X.509 certificate used to authenticate HTTPS connections to EKM replicas.
+          &quot;issuer&quot;: &quot;A String&quot;, # Output only. The issuer distinguished name in RFC 2253 format. Only present if parsed is true.
+          &quot;notAfterTime&quot;: &quot;A String&quot;, # Output only. The certificate is not valid after this time. Only present if parsed is true.
+          &quot;notBeforeTime&quot;: &quot;A String&quot;, # Output only. The certificate is not valid before this time. Only present if parsed is true.
+          &quot;parsed&quot;: True or False, # Output only. True if the certificate was parsed successfully.
+          &quot;rawDer&quot;: &quot;A String&quot;, # Required. The raw certificate bytes in DER format.
+          &quot;serialNumber&quot;: &quot;A String&quot;, # Output only. The certificate serial number as a hex string. Only present if parsed is true.
+          &quot;sha256Fingerprint&quot;: &quot;A String&quot;, # Output only. The SHA-256 certificate fingerprint as a hex string. Only present if parsed is true.
+          &quot;subject&quot;: &quot;A String&quot;, # Output only. The subject distinguished name in RFC 2253 format. Only present if parsed is true.
+          &quot;subjectAlternativeDnsNames&quot;: [ # Output only. The subject Alternative DNS names. Only present if parsed is true.
+      &quot;serviceDirectoryService&quot;: &quot;A String&quot;, # Required. The resource name of the Service Directory service pointing to an EKM replica, in the format `projects/*/locations/*/namespaces/*/services/*`.
+  ekmConnectionId: string, Required. It must be unique within a location and match the regular expression `[a-zA-Z0-9_-]{1,63}`.
+  <pre>Returns metadata for a given EkmConnection.
+  name: string, Required. The name of the EkmConnection to get. (required)
+  <pre>Lists EkmConnections.
+  parent: string, Required. The resource name of the location associated with the EkmConnections to list, in the format `projects/*/locations/*`. (required)
+  filter: string, Optional. Only include resources that match the filter in the response. For more information, see [Sorting and filtering list results](https://cloud.google.com/kms/docs/sorting-and-filtering).
+  orderBy: string, Optional. Specify how the results should be sorted. If not specified, the results will be sorted in the default order. For more information, see [Sorting and filtering list results](https://cloud.google.com/kms/docs/sorting-and-filtering).
+  pageSize: integer, Optional. Optional limit on the number of EkmConnections to include in the response. Further EkmConnections can subsequently be obtained by including the ListEkmConnectionsResponse.next_page_token in a subsequent request. If unspecified, the server will pick an appropriate default.
+  pageToken: string, Optional. Optional pagination token, returned earlier via ListEkmConnectionsResponse.next_page_token.
+    { # Response message for EkmService.ListEkmConnections.
+  &quot;ekmConnections&quot;: [ # The list of EkmConnections.
+  &quot;nextPageToken&quot;: &quot;A String&quot;, # A token to retrieve next page of results. Pass this value in ListEkmConnectionsRequest.page_token to retrieve the next page of results.
+  &quot;totalSize&quot;: 42, # The total number of EkmConnections that matched the query. This field is not populated if ListEkmConnectionsRequest.filter is applied.
+  <pre>Updates an EkmConnection&#x27;s metadata.
+  name: string, Output only. The resource name for the EkmConnection in the format `projects/*/locations/*/ekmConnections/*`. (required)
+  updateMask: string, Required. List of fields to be updated in this request.
+    <code class="details" id="verifyConnectivity">verifyConnectivity(name, x__xgafv=None)</code>
+  <pre>Verifies that Cloud KMS can successfully connect to the external key manager specified by an EkmConnection. If there is an error connecting to the EKM, this method returns a FAILED_PRECONDITION status containing structured information as described at https://cloud.google.com/kms/docs/reference/ekm_errors.
+  name: string, Required. The name of the EkmConnection to verify. (required)
+    { # Response message for EkmService.VerifyConnectivity.

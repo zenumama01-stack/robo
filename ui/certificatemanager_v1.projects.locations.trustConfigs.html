@@ -1,0 +1,46 @@
+<h1><a href="certificatemanager_v1.html">Certificate Manager API</a> . <a href="certificatemanager_v1.projects.html">projects</a> . <a href="certificatemanager_v1.projects.locations.html">locations</a> . <a href="certificatemanager_v1.projects.locations.trustConfigs.html">trustConfigs</a></h1>
+  <code><a href="#create">create(parent, body=None, trustConfigId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Creates a new TrustConfig in a given project and location.</p>
+<p class="firstline">Deletes a single TrustConfig.</p>
+<p class="firstline">Gets details of a single TrustConfig.</p>
+<p class="firstline">Lists TrustConfigs in a given project and location.</p>
+<p class="firstline">Updates a TrustConfig.</p>
+    <code class="details" id="create">create(parent, body=None, trustConfigId=None, x__xgafv=None)</code>
+  <pre>Creates a new TrustConfig in a given project and location.
+  parent: string, Required. The parent resource of the TrustConfig. Must be in the format `projects/*/locations/*`. (required)
+{ # Defines a trust config.
+  &quot;allowlistedCertificates&quot;: [ # Optional. A certificate matching an allowlisted certificate is always considered valid as long as the certificate is parseable, proof of private key possession is established, and constraints on the certificate&#x27;s SAN field are met.
+    { # Defines an allowlisted certificate.
+      &quot;pemCertificate&quot;: &quot;A String&quot;, # Required. PEM certificate that is allowlisted. The certificate can be up to 5k bytes, and must be a parseable X.509 certificate.
+  &quot;createTime&quot;: &quot;A String&quot;, # Output only. The creation timestamp of a TrustConfig.
+  &quot;description&quot;: &quot;A String&quot;, # Optional. One or more paragraphs of text description of a TrustConfig.
+  &quot;etag&quot;: &quot;A String&quot;, # This checksum is computed by the server based on the value of other fields, and may be sent on update and delete requests to ensure the client has an up-to-date value before proceeding.
+  &quot;labels&quot;: { # Optional. Set of labels associated with a TrustConfig.
+  &quot;name&quot;: &quot;A String&quot;, # Identifier. A user-defined name of the trust config. TrustConfig names must be unique globally and match pattern `projects/*/locations/*/trustConfigs/*`.
+  &quot;spiffeTrustStores&quot;: { # Optional. Defines a mapping from a trust domain to a TrustStore. This is used for SPIFFE certificate validation.
+    &quot;a_key&quot;: { # Defines a trust store.
+      &quot;intermediateCas&quot;: [ # Optional. Set of intermediate CA certificates used for the path building phase of chain validation. The field is currently not supported if TrustConfig is used for the workload certificate feature.
+        { # Defines an intermediate CA.
+          &quot;pemCertificate&quot;: &quot;A String&quot;, # PEM intermediate certificate used for building up paths for validation. Each certificate provided in PEM format may occupy up to 5kB.
+      &quot;trustAnchors&quot;: [ # Optional. List of Trust Anchors to be used while performing validation against a given TrustStore.
+        { # Defines a trust anchor.
+          &quot;pemCertificate&quot;: &quot;A String&quot;, # PEM root certificate of the PKI used for validation. Each certificate provided in PEM format may occupy up to 5kB.
+  &quot;trustStores&quot;: [ # Optional. Set of trust stores to perform validation against. This field is supported when TrustConfig is configured with Load Balancers, currently not supported for SPIFFE certificate validation. Only one TrustStore specified is currently allowed.
+    { # Defines a trust store.
+  &quot;updateTime&quot;: &quot;A String&quot;, # Output only. The last update timestamp of a TrustConfig.
+  trustConfigId: string, Required. A user-provided name of the TrustConfig. Must match the regexp `[a-z0-9-]{1,63}`.
+  <pre>Deletes a single TrustConfig.
+  name: string, Required. A name of the TrustConfig to delete. Must be in the format `projects/*/locations/*/trustConfigs/*`. (required)
+  etag: string, Optional. The current etag of the TrustConfig. If an etag is provided and does not match the current etag of the resource, deletion will be blocked and an ABORTED error will be returned.
+  <pre>Gets details of a single TrustConfig.
+  name: string, Required. A name of the TrustConfig to describe. Must be in the format `projects/*/locations/*/trustConfigs/*`. (required)
+  <pre>Lists TrustConfigs in a given project and location.
+  parent: string, Required. The project and location from which the TrustConfigs should be listed, specified in the format `projects/*/locations/*`. (required)
+  filter: string, Optional. Filter expression to restrict the TrustConfigs returned.
+  orderBy: string, Optional. A list of TrustConfig field names used to specify the order of the returned results. The default sorting order is ascending. To specify descending order for a field, add a suffix `&quot; desc&quot;`.
+  pageSize: integer, Optional. Maximum number of TrustConfigs to return per call.
+  pageToken: string, Optional. The value returned by the last `ListTrustConfigsResponse`. Indicates that this is a continuation of a prior `ListTrustConfigs` call, and that the system should return the next page of data.
+    { # Response for the `ListTrustConfigs` method.
+  &quot;trustConfigs&quot;: [ # A list of TrustConfigs for the parent resource.
+  <pre>Updates a TrustConfig.
+  name: string, Identifier. A user-defined name of the trust config. TrustConfig names must be unique globally and match pattern `projects/*/locations/*/trustConfigs/*`. (required)

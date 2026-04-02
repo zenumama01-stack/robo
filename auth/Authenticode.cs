@@ -1,0 +1,246 @@
+using Microsoft.Security.Extensions;
+using System.Management.Automation.Win32Native;
+    /// Defines the options that control what data is embedded in the
+    /// signature blob.
+    public enum SigningOption
+        /// Embeds only the signer's certificate.
+        AddOnlyCertificate,
+        /// Embeds the entire certificate chain.
+        AddFullCertificateChain,
+        /// Embeds the entire certificate chain, except for the root
+        AddFullCertificateChainExceptRoot,
+        /// Default: Embeds the entire certificate chain, except for the
+        /// root certificate.
+        Default = AddFullCertificateChainExceptRoot
+    /// Helper functions for signature functionality.
+    internal static class SignatureHelper
+        private static Guid WINTRUST_ACTION_GENERIC_VERIFY_V2 = new Guid("00AAC56B-CD44-11d0-8CC2-00C04FC295EE");
+        /// Tracer for SignatureHelper.
+        [Dbg.TraceSource("SignatureHelper",
+                          "tracer for SignatureHelper")]
+            Dbg.PSTraceSource.GetTracer("SignatureHelper",
+                          "tracer for SignatureHelper");
+        /// Sign a file.
+        /// <param name="option">Option that controls what gets embedded in the signature blob.</param>
+        /// <param name="fileName">Name of file to sign.</param>
+        /// <param name="certificate">Signing cert.</param>
+        /// <param name="timeStampServerUrl">URL of time stamping server.</param>
+        /// <param name="hashAlgorithm"> The name of the hash
+        /// algorithm to use.</param>
+        /// Thrown if argument fileName or certificate is null.
+        /// Thrown if
+        /// -- argument fileName is empty OR
+        /// -- the specified certificate is not suitable for
+        ///    signing code
+        /// <exception cref="System.IO.FileNotFoundException">
+        /// Thrown if the file specified by argument fileName is not found
+        internal static Signature SignFile(SigningOption option,
+                                           X509Certificate2 certificate,
+                                           string timeStampServerUrl,
+                                           string hashAlgorithm)
+            Signature signature = null;
+            IntPtr pSignInfo = IntPtr.Zero;
+            string hashOid = null;
+            Utils.CheckArgForNullOrEmpty(fileName, "fileName");
+            Utils.CheckArgForNull(certificate, "certificate");
+            // If given, TimeStamp server URLs must begin with http:// or https://
+            if (!string.IsNullOrEmpty(timeStampServerUrl))
+                if ((timeStampServerUrl.Length <= 7) || (
+                    !timeStampServerUrl.StartsWith("http://", StringComparison.OrdinalIgnoreCase) &&
+                    !timeStampServerUrl.StartsWith("https://", StringComparison.OrdinalIgnoreCase)))
+                        nameof(certificate),
+                        Authenticode.TimeStampUrlRequired);
+            // Validate that the hash algorithm is valid
+            if (!string.IsNullOrEmpty(hashAlgorithm))
+                IntPtr intptrAlgorithm = Marshal.StringToHGlobalUni(hashAlgorithm);
+                IntPtr oidPtr = NativeMethods.CryptFindOIDInfo(NativeConstants.CRYPT_OID_INFO_NAME_KEY,
+                        intptrAlgorithm,
+                // If we couldn't find an OID for the hash
+                // algorithm, it was invalid.
+                if (oidPtr == IntPtr.Zero)
+                        Authenticode.InvalidHashAlgorithm);
+                    NativeMethods.CRYPT_OID_INFO oidInfo =
+                        Marshal.PtrToStructure<NativeMethods.CRYPT_OID_INFO>(oidPtr);
+                    hashOid = oidInfo.pszOID;
+            if (!SecuritySupport.CertIsGoodForSigning(certificate))
+                        Authenticode.CertNotGoodForSigning);
+            SecuritySupport.CheckIfFileExists(fileName);
+            // SecurityUtils.CheckIfFileSmallerThan4Bytes(fileName);
+                // CryptUI is not documented either way, but does not
+                // support empty strings for the timestamp server URL.
+                // It expects null, only.  Instead, it randomly AVs if you
+                // try.
+                string timeStampServerUrlForCryptUI = null;
+                    timeStampServerUrlForCryptUI = timeStampServerUrl;
+                // first initialize the struct to pass to
+                // CryptUIWizDigitalSign() function
+                NativeMethods.CRYPTUI_WIZ_DIGITAL_SIGN_INFO si = NativeMethods.InitSignInfoStruct(fileName,
+                                                              certificate,
+                                                              timeStampServerUrlForCryptUI,
+                                                              hashOid,
+                                                              option);
+                pSignInfo = Marshal.AllocCoTaskMem(Marshal.SizeOf(si));
+                Marshal.StructureToPtr(si, pSignInfo, false);
+                // sign the file
+                // The GetLastWin32Error of this is checked, but PreSharp doesn't seem to be
+                // able to see that.
+                result = NativeMethods.CryptUIWizDigitalSign(
+                    (uint)NativeMethods.CryptUIFlags.CRYPTUI_WIZ_NO_UI,
+                    pSignInfo,
+                if (si.pSignExtInfo != IntPtr.Zero)
+                    Marshal.DestroyStructure<NativeMethods.CRYPTUI_WIZ_DIGITAL_SIGN_EXTENDED_INFO>(si.pSignExtInfo);
+                    Marshal.FreeCoTaskMem(si.pSignExtInfo);
+                    error = GetLastWin32Error();
+                    // ISSUE-2004/05/08-kumarp : there seems to be a bug
+                    // in CryptUIWizDigitalSign().
+                    // It returns 80004005 or 80070001
+                    // but it signs the file correctly. Mask this error
+                    // till we figure out this odd behavior.
+                    if ((error == 0x80004005) ||
+                        (error == 0x80070001) ||
+                        // CryptUIWizDigitalSign introduced a breaking change in Win8 to return this
+                        // error code (ERROR_INTERNET_NAME_NOT_RESOLVED) when you provide an invalid
+                        // timestamp server. It used to be 0x80070001.
+                        // Also masking this out so that we don't introduce a breaking change ourselves.
+                        (error == 0x80072EE7)
+                        if (error == Win32Errors.NTE_BAD_ALGID)
+                        s_tracer.TraceError("CryptUIWizDigitalSign: failed: {0:x}",
+                    signature = GetSignature(fileName, null);
+                    signature = new Signature(fileName, (uint)error);
+                Marshal.DestroyStructure<NativeMethods.CRYPTUI_WIZ_DIGITAL_SIGN_INFO>(pSignInfo);
+                Marshal.FreeCoTaskMem(pSignInfo);
+            return signature;
+        /// Get signature on the specified file.
+        /// <param name="fileName">Name of file to check.</param>
+        /// <param name="fileContent">Content of file to check.</param>
+        /// <returns>Signature object.</returns>
+        /// Thrown if argument fileName is empty.
+        /// Thrown if argument fileName is null
+        /// Thrown if the file specified by argument fileName is not found.
+        internal static Signature GetSignature(string fileName, byte[] fileContent)
+            if (fileContent == null)
+                // First, try to get the signature from the latest dotNet signing API.
+                signature = GetSignatureFromMSSecurityExtensions(fileName);
+            // If there is no signature or it is invalid, go by the file content
+            // with the older WinVerifyTrust APIs.
+            if ((signature == null) || (signature.Status != SignatureStatus.Valid))
+                signature = GetSignatureFromWinVerifyTrust(fileName, fileContent);
+        /// Gets the file signature using the dotNet Microsoft.Security.Extensions package.
+        /// This supports both Windows catalog file signatures and embedded file signatures.
+        /// But it is not supported on all Windows platforms/skus, noteably Win7 and nanoserver.
+        private static Signature GetSignatureFromMSSecurityExtensions(string filename)
+            if (Signature.CatalogApiAvailable.HasValue && !Signature.CatalogApiAvailable.Value)
+            Utils.CheckArgForNullOrEmpty(filename, "fileName");
+            SecuritySupport.CheckIfFileExists(filename);
+            FileSignatureInfo fileSigInfo;
+            using (FileStream fileStream = File.OpenRead(filename))
+                    fileSigInfo = FileSignatureInfo.GetFromFileStream(fileStream);
+                    System.Diagnostics.Debug.Assert(fileSigInfo is not null, "Returned FileSignatureInfo should never be null.");
+                    // For any API error, enable fallback to WinVerifyTrust APIs.
+                    Signature.CatalogApiAvailable = false;
+            uint error = GetErrorFromSignatureState(fileSigInfo.State);
+            if (fileSigInfo.SigningCertificate is null)
+                signature = new Signature(filename, error);
+                signature = fileSigInfo.TimestampCertificate is null ?
+                    new Signature(filename, error, fileSigInfo.SigningCertificate) :
+                    new Signature(filename, error, fileSigInfo.SigningCertificate, fileSigInfo.TimestampCertificate);
+            switch (fileSigInfo.Kind)
+                case SignatureKind.None:
+                    signature.SignatureType = SignatureType.None;
+                case SignatureKind.Embedded:
+                    signature.SignatureType = SignatureType.Authenticode;
+                case SignatureKind.Catalog:
+                    signature.SignatureType = SignatureType.Catalog;
+                    System.Diagnostics.Debug.Fail("Signature type can only be None, Authenticode or Catalog.");
+            signature.IsOSBinary = fileSigInfo.IsOSBinary;
+            if (signature.SignatureType == SignatureType.Catalog && !Signature.CatalogApiAvailable.HasValue)
+                Signature.CatalogApiAvailable = fileSigInfo.State != SignatureState.Invalid;
+        private static uint GetErrorFromSignatureState(SignatureState signatureState)
+            switch (signatureState)
+                case SignatureState.Unsigned:
+                    return Win32Errors.TRUST_E_NOSIGNATURE;
+                case SignatureState.SignedAndTrusted:
+                    return Win32Errors.NO_ERROR;
+                case SignatureState.SignedAndNotTrusted:
+                    return Win32Errors.TRUST_E_EXPLICIT_DISTRUST;
+                case SignatureState.Invalid:
+                    return Win32Errors.TRUST_E_BAD_DIGEST;
+                    System.Diagnostics.Debug.Fail("Should not get here - could not map FileSignatureInfo.State");
+        private static Signature GetSignatureFromWinVerifyTrust(string fileName, byte[] fileContent)
+            WinTrustMethods.WINTRUST_DATA wtd;
+            uint error = Win32Errors.E_FAIL;
+                error = GetWinTrustData(fileName, fileContent, out wtd);
+                if (error != Win32Errors.NO_ERROR)
+                    s_tracer.WriteLine("GetWinTrustData failed: {0:x}", error);
+                signature = GetSignatureFromWintrustData(fileName, error, wtd);
+                wtd.dwStateAction = WinTrustAction.WTD_STATEACTION_CLOSE;
+                error = WinTrustMethods.WinVerifyTrust(
+                    ref WINTRUST_ACTION_GENERIC_VERIFY_V2,
+                    ref wtd);
+                    s_tracer.WriteLine("DestroyWinTrustDataStruct failed: {0:x}", error);
+            catch (AccessViolationException)
+                signature = new Signature(fileName, Win32Errors.TRUST_E_NOSIGNATURE);
+        private static uint GetWinTrustData(
+            byte[] fileContent,
+            out WinTrustMethods.WINTRUST_DATA wtData)
+            wtData = new()
+                cbStruct = (uint)Marshal.SizeOf<WinTrustMethods.WINTRUST_DATA>(),
+                dwUIChoice = WinTrustUIChoice.WTD_UI_NONE,
+                dwStateAction = WinTrustAction.WTD_STATEACTION_VERIFY,
+                fixed (char* fileNamePtr = fileName)
+                        WinTrustMethods.WINTRUST_FILE_INFO wfi = new()
+                            cbStruct = (uint)Marshal.SizeOf<WinTrustMethods.WINTRUST_FILE_INFO>(),
+                            pcwszFilePath = fileNamePtr,
+                        wtData.dwUnionChoice = WinTrustUnionChoice.WTD_CHOICE_FILE;
+                        wtData.pChoice = &wfi;
+                        return WinTrustMethods.WinVerifyTrust(
+                            ref wtData);
+                    fixed (byte* contentPtr = fileContent)
+                        Guid pwshSIP = new("603BCC1F-4B59-4E08-B724-D2C6297EF351");
+                        WinTrustMethods.WINTRUST_BLOB_INFO wbi = new()
+                            cbStruct = (uint)Marshal.SizeOf<WinTrustMethods.WINTRUST_BLOB_INFO>(),
+                            gSubject = pwshSIP,
+                            pcwszDisplayName = fileNamePtr,
+                            cbMemObject = (uint)fileContent.Length,
+                            pbMemObject = contentPtr,
+                        wtData.dwUnionChoice = WinTrustUnionChoice.WTD_CHOICE_BLOB;
+                        wtData.pChoice = &wbi;
+        private static X509Certificate2 GetCertFromChain(IntPtr pSigner)
+                IntPtr pCert = WinTrustMethods.WTHelperGetProvCertFromChain(pSigner, 0);
+                NativeMethods.CRYPT_PROVIDER_CERT provCert =
+                    Marshal.PtrToStructure<NativeMethods.CRYPT_PROVIDER_CERT>(pCert);
+                return new X509Certificate2(provCert.pCert);
+                // We don't care about the Win32 error code here, so return
+                // null on a failure and let the caller handle it.
+        private static Signature GetSignatureFromWintrustData(
+            uint error,
+            WinTrustMethods.WINTRUST_DATA wtd)
+            s_tracer.WriteLine("GetSignatureFromWintrustData: error: {0}", error);
+            if (TryGetProviderSigner(wtd.hWVTStateData, out IntPtr pProvSigner, out X509Certificate2 timestamperCert))
+                // get cert of the signer
+                X509Certificate2 signerCert = GetCertFromChain(pProvSigner);
+                if (signerCert != null)
+                    if (timestamperCert != null)
+                        signature = new Signature(filePath,
+                                                  signerCert,
+                                                  timestamperCert);
+                                                  signerCert);
+            Diagnostics.Assert(error != 0 || signature != null, "GetSignatureFromWintrustData: general crypto failure");
+            if ((signature == null) && (error != 0))
+                signature = new Signature(filePath, error);
+        private static bool TryGetProviderSigner(IntPtr wvtStateData, out IntPtr pProvSigner, out X509Certificate2 timestamperCert)
+            pProvSigner = IntPtr.Zero;
+            timestamperCert = null;
+                IntPtr pProvData = WinTrustMethods.WTHelperProvDataFromStateData(wvtStateData);
+                pProvSigner = WinTrustMethods.WTHelperGetProvSignerFromChain(
+                    pProvData,
+                    signerIdx: 0,
+                    counterSigner: false,
+                    counterSignerIdx: 0);
+                NativeMethods.CRYPT_PROVIDER_SGNR provSigner =
+                    Marshal.PtrToStructure<NativeMethods.CRYPT_PROVIDER_SGNR>(pProvSigner);
+                if (provSigner.csCounterSigners == 1)
+                    // time stamper cert available
+                    timestamperCert = GetCertFromChain(provSigner.pasCounterSigners);
+        private static uint GetLastWin32Error()
+            return SecuritySupport.GetDWORDFromInt(error);

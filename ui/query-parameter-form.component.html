@@ -1,0 +1,64 @@
+<!-- Query Parameter Form - Slide-in Panel -->
+@if (IsOpen && ShowOverlay) {
+  <div class="param-form-overlay"
+    (click)="Cancel()">
+  <div class="param-form-panel"
+        <i class="fa-solid fa-sliders header-icon"></i>
+          <h3 class="header-title">Query Parameters</h3>
+      <button class="close-btn" (click)="Cancel()" title="Close">
+      <!-- No parameters message -->
+      @if (Fields.length === 0) {
+          <i class="fa-solid fa-check-circle no-params-icon"></i>
+          <p>This query has no parameters</p>
+          <button class="btn btn-primary" (click)="Submit()">
+            Run Query
+      <!-- Parameter fields -->
+      @if (Fields.length > 0) {
+        <div class="param-fields">
+          @for (field of Fields; track TrackByField($index, field)) {
+            <div class="param-field"
+              [class.has-error]="field.error && field.touched"
+              [class.required]="field.info.IsRequired">
+              <label class="field-label" [for]="'param-' + field.info.Name">
+                {{ field.info.Name }}
+                @if (field.info.IsRequired) {
+                <span class="field-type">({{ field.info.Type }})</span>
+              @if (field.info.Description) {
+                  {{ field.info.Description }}
+              <!-- String input -->
+              @if (field.info.Type === 'string') {
+                  [id]="'param-' + field.info.Name"
+                  [value]="GetStringValue(field.value)"
+                  [placeholder]="GetPlaceholder(field.info)"
+                  (input)="OnInputChange(field, $event)">
+              <!-- Number input -->
+              @if (field.info.Type === 'number') {
+                  [value]="GetNumberValue(field.value)"
+                  (input)="OnNumberInputChange(field, $event)">
+              <!-- Date input -->
+              @if (field.info.Type === 'date') {
+                  [value]="GetDateValue(field.value)"
+                  (input)="OnDateInputChange(field, $event)">
+              <!-- Boolean input -->
+              @if (field.info.Type === 'boolean') {
+                    [checked]="GetBooleanValue(field.value)"
+                    (change)="OnCheckboxChange(field, $event)">
+                  <label [for]="'param-' + field.info.Name" class="checkbox-label">
+                    {{ GetBooleanValue(field.value) ? 'Yes' : 'No' }}
+              <!-- Array input (comma-separated) -->
+              @if (field.info.Type === 'array') {
+                  [value]="GetArrayDisplayValue(field.value)"
+                  [placeholder]="GetPlaceholder(field.info) || 'Enter values separated by commas'"
+                  (input)="OnArrayInputChange(field, $event)">
+                <span class="field-hint">Enter multiple values separated by commas</span>
+              <!-- Error message -->
+              @if (field.error && field.touched) {
+                  {{ field.error }}
+              <!-- Sample value hint -->
+              @if (field.info.SampleValue && !field.error) {
+                <span class="field-sample">
+                  Example: {{ field.info.SampleValue }}
+        <button class="btn btn-secondary" (click)="Reset()" title="Reset to defaults">
+          <button class="btn btn-secondary" (click)="Cancel()">
+            [disabled]="!CanSubmit"
+            (click)="Submit()">

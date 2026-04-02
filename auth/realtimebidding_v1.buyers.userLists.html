@@ -1,0 +1,39 @@
+<h1><a href="realtimebidding_v1.html">Real-time Bidding API</a> . <a href="realtimebidding_v1.buyers.html">buyers</a> . <a href="realtimebidding_v1.buyers.userLists.html">userLists</a></h1>
+<p class="firstline">Changes the status of a user list to CLOSED. This prevents new users from being added to the user list.</p>
+<p class="firstline">Creates a new user list.</p>
+<p class="firstline">Gets a user list by its name.</p>
+<p class="firstline">Lists the user lists visible to the current user.</p>
+  <code><a href="#open">open(name, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Changes the status of a user list to OPEN. This allows new users to be added to the user list.</p>
+<p class="firstline">Updates the given user list. Only user lists with URLRestrictions can be updated.</p>
+  <pre>Changes the status of a user list to CLOSED. This prevents new users from being added to the user list.
+  name: string, Required. The name of the user list to close. See UserList.name (required)
+{ # A request to close a specified user list.
+    { # Represents an Authorized Buyers user list. Authorized Buyers can create/update/list user lists. Once a user list is created in the system, Authorized Buyers can add users to the user list using the bulk uploader API. Alternatively, users can be added by hosting a tag on the advertiser&#x27;s page.
+  &quot;description&quot;: &quot;A String&quot;, # The description for the user list.
+  &quot;displayName&quot;: &quot;A String&quot;, # Required. Display name of the user list. This must be unique across all user lists for a given account.
+  &quot;membershipDurationDays&quot;: &quot;A String&quot;, # Required. The number of days a user&#x27;s cookie stays on the user list. The field must be between 0 and 540 inclusive.
+  &quot;name&quot;: &quot;A String&quot;, # Output only. Name of the user list that must follow the pattern `buyers/{buyer}/userLists/{user_list}`, where `{buyer}` represents the account ID of the buyer who owns the user list. For a bidder accessing user lists on behalf of a child seat buyer, `{buyer}` represents the account ID of the child seat buyer. `{user_list}` is an int64 identifier assigned by Google to uniquely identify a user list.
+  &quot;status&quot;: &quot;A String&quot;, # Output only. The status of the user list. A new user list starts out as open.
+  &quot;urlRestriction&quot;: { # Deprecated. This will be removed in October 2023. For more information, see the release notes: https://developers.google.com/authorized-buyers/apis/relnotes#real-time-bidding-api Represents the URL restriction (for the URL captured by the pixel callback) for a user list. # Required. Deprecated. This will be removed in October 2023. For more information, see the release notes: https://developers.google.com/authorized-buyers/apis/relnotes#real-time-bidding-api The URL restriction for the user list.
+    &quot;endDate&quot;: { # Represents a whole or partial calendar date, such as a birthday. The time of day and time zone are either specified elsewhere or are insignificant. The date is relative to the Gregorian Calendar. This can represent one of the following: * A full date, with non-zero year, month, and day values. * A month and day, with a zero year (for example, an anniversary). * A year on its own, with a zero month and a zero day. * A year and month, with a zero day (for example, a credit card expiration date). Related types: * google.type.TimeOfDay * google.type.DateTime * google.protobuf.Timestamp # End date (if specified) of the URL restriction. End date should be later than the start date for the date range to be valid.
+    &quot;restrictionType&quot;: &quot;A String&quot;, # The restriction type for the specified URL.
+    &quot;startDate&quot;: { # Represents a whole or partial calendar date, such as a birthday. The time of day and time zone are either specified elsewhere or are insignificant. The date is relative to the Gregorian Calendar. This can represent one of the following: * A full date, with non-zero year, month, and day values. * A month and day, with a zero year (for example, an anniversary). * A year on its own, with a zero month and a zero day. * A year and month, with a zero day (for example, a credit card expiration date). Related types: * google.type.TimeOfDay * google.type.DateTime * google.protobuf.Timestamp # Start date (if specified) of the URL restriction.
+    &quot;url&quot;: &quot;A String&quot;, # Required. The URL to use for applying the restriction on the user list.
+  <pre>Creates a new user list.
+  parent: string, Required. The name of the parent buyer of the user list to be retrieved, which must follow the pattern `buyers/{buyerAccountId}`, where `{buyerAccountId}` represents the account ID of the buyer who owns the user list. For a bidder accessing user lists on behalf of a child seat buyer, `{buyerAccountId}` should represent the account ID of the child seat buyer. (required)
+  <pre>Gets a user list by its name.
+  name: string, Required. The name of the user list to be retrieved. See UserList.name. (required)
+  <pre>Lists the user lists visible to the current user.
+  parent: string, Required. The name of the parent buyer for the user lists to be returned that must follow the pattern `buyers/{buyerAccountId}`, where `{buyerAccountId}` represents the account ID of the buyer who owns user lists. For a bidder accessing user lists on behalf of a child seat buyer , `{buyerAccountId}` should represent the account ID of the child seat buyer. (required)
+  pageSize: integer, The number of results to return per page.
+  pageToken: string, Continuation page token as received from a previous response.
+    { # The list user list response.
+  &quot;nextPageToken&quot;: &quot;A String&quot;, # The continuation page token to send back to the server in a subsequent request. Due to a currently known issue, it is recommended that the caller keep invoking the list method until the time a next page token is not returned, even if the result set is empty.
+  &quot;userLists&quot;: [ # List of user lists from the search.
+    <code class="details" id="open">open(name, body=None, x__xgafv=None)</code>
+  <pre>Changes the status of a user list to OPEN. This allows new users to be added to the user list.
+  name: string, Required. The name of the user list to open. See UserList.name (required)
+{ # A request to open a specified user list.
+  <pre>Updates the given user list. Only user lists with URLRestrictions can be updated.
+  name: string, Output only. Name of the user list that must follow the pattern `buyers/{buyer}/userLists/{user_list}`, where `{buyer}` represents the account ID of the buyer who owns the user list. For a bidder accessing user lists on behalf of a child seat buyer, `{buyer}` represents the account ID of the child seat buyer. `{user_list}` is an int64 identifier assigned by Google to uniquely identify a user list. (required)

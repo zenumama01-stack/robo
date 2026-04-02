@@ -1,0 +1,122 @@
+<h1><a href="config_v1.html">Infrastructure Manager API</a> . <a href="config_v1.projects.html">projects</a> . <a href="config_v1.projects.locations.html">locations</a> . <a href="config_v1.projects.locations.deployments.html">deployments</a></h1>
+  <code><a href="config_v1.projects.locations.deployments.revisions.html">revisions()</a></code>
+  <code><a href="#create">create(parent, body=None, deploymentId=None, requestId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Creates a Deployment.</p>
+  <code><a href="#delete">delete(name, deletePolicy=None, force=None, requestId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Deletes a Deployment.</p>
+  <code><a href="#deleteState">deleteState(name, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Deletes Terraform state file in a given deployment.</p>
+  <code><a href="#exportLock">exportLock(name, x__xgafv=None)</a></code></p>
+<p class="firstline">Exports the lock info on a locked deployment.</p>
+  <code><a href="#exportState">exportState(parent, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Exports Terraform state file from a given deployment.</p>
+<p class="firstline">Gets details about a Deployment.</p>
+  <code><a href="#importState">importState(parent, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Imports Terraform state file in a given deployment. The state file does not take effect until the Deployment has been unlocked.</p>
+<p class="firstline">Lists Deployments in a given project and location.</p>
+  <code><a href="#lock">lock(name, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Locks a deployment.</p>
+<p class="firstline">Updates a Deployment.</p>
+  <code><a href="#unlock">unlock(name, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Unlocks a locked deployment.</p>
+    <code class="details" id="create">create(parent, body=None, deploymentId=None, requestId=None, x__xgafv=None)</code>
+  <pre>Creates a Deployment.
+  parent: string, Required. The parent in whose context the Deployment is created. The parent value is in the format: &#x27;projects/{project_id}/locations/{location}&#x27;. (required)
+{ # A Deployment is a group of resources and configs managed and provisioned by Infra Manager.
+  &quot;annotations&quot;: { # Optional. Arbitrary key-value metadata storage e.g. to help client tools identify deployments during automation. See https://google.aip.dev/148#annotations for details on format and size limitations.
+  &quot;artifactsGcsBucket&quot;: &quot;A String&quot;, # Optional. User-defined location of Cloud Build logs and artifacts in Google Cloud Storage. Format: `gs://{bucket}/{folder}` A default bucket will be bootstrapped if the field is not set or empty. Default bucket format: `gs://--blueprint-config` Constraints: - The bucket needs to be in the same project as the deployment - The path cannot be within the path of `gcs_source` - The field cannot be updated, including changing its presence
+  &quot;createTime&quot;: &quot;A String&quot;, # Output only. Time when the deployment was created.
+  &quot;deleteBuild&quot;: &quot;A String&quot;, # Output only. Cloud Build instance UUID associated with deleting this deployment.
+  &quot;deleteLogs&quot;: &quot;A String&quot;, # Output only. Location of Cloud Build logs in Google Cloud Storage, populated when deleting this deployment. Format: `gs://{bucket}/{object}`.
+  &quot;deleteResults&quot;: { # Outputs and artifacts from applying a deployment. # Output only. Location of artifacts from a DeleteDeployment operation.
+    &quot;artifacts&quot;: &quot;A String&quot;, # Location of artifacts (e.g. logs) in Google Cloud Storage. Format: `gs://{bucket}/{object}`
+    &quot;content&quot;: &quot;A String&quot;, # Location of a blueprint copy and other manifests in Google Cloud Storage. Format: `gs://{bucket}/{object}`
+    &quot;outputs&quot;: { # Map of output name to output info.
+      &quot;a_key&quot;: { # Describes a Terraform output.
+        &quot;sensitive&quot;: True or False, # Identifies whether Terraform has set this output as a potential sensitive value.
+        &quot;value&quot;: &quot;&quot;, # Value of output.
+  &quot;errorCode&quot;: &quot;A String&quot;, # Output only. Error code describing errors that may have occurred.
+  &quot;errorLogs&quot;: &quot;A String&quot;, # Output only. Location of Terraform error logs in Google Cloud Storage. Format: `gs://{bucket}/{object}`.
+  &quot;importExistingResources&quot;: True or False, # By default, Infra Manager will return a failure when Terraform encounters a 409 code (resource conflict error) during actuation. If this flag is set to true, Infra Manager will instead attempt to automatically import the resource into the Terraform state (for supported resource types) and continue actuation. Not all resource types are supported, refer to documentation.
+  &quot;labels&quot;: { # Optional. User-defined metadata for the deployment.
+  &quot;latestRevision&quot;: &quot;A String&quot;, # Output only. Revision name that was most recently applied. Format: `projects/{project}/locations/{location}/deployments/{deployment}/ revisions/{revision}`
+  &quot;lockState&quot;: &quot;A String&quot;, # Output only. Current lock state of the deployment.
+  &quot;name&quot;: &quot;A String&quot;, # Identifier. Resource name of the deployment. Format: `projects/{project}/locations/{location}/deployments/{deployment}`
+  &quot;providerConfig&quot;: { # ProviderConfig contains the provider configurations. # Optional. This field specifies the provider configurations.
+    &quot;sourceType&quot;: &quot;A String&quot;, # Optional. ProviderSource specifies the source type of the provider.
+  &quot;quotaValidation&quot;: &quot;A String&quot;, # Optional. Input to control quota checks for resources in terraform configuration files. There are limited resources on which quota validation applies.
+  &quot;serviceAccount&quot;: &quot;A String&quot;, # Required. User-specified Service Account (SA) credentials to be used when actuating resources. Format: `projects/{projectID}/serviceAccounts/{serviceAccount}`
+  &quot;state&quot;: &quot;A String&quot;, # Output only. Current state of the deployment.
+  &quot;stateDetail&quot;: &quot;A String&quot;, # Output only. Additional information regarding the current state.
+  &quot;terraformBlueprint&quot;: { # TerraformBlueprint describes the source of a Terraform root module which describes the resources and configs to be deployed. # A blueprint described using Terraform&#x27;s HashiCorp Configuration Language as a root module.
+    &quot;gcsSource&quot;: &quot;A String&quot;, # URI of an object in Google Cloud Storage. Format: `gs://{bucket}/{object}` URI may also specify an object version for zipped objects. Format: `gs://{bucket}/{object}#{version}`
+    &quot;gitSource&quot;: { # A set of files in a Git repository. # URI of a public Git repo.
+      &quot;directory&quot;: &quot;A String&quot;, # Optional. Subdirectory inside the repository. Example: &#x27;staging/my-package&#x27;
+      &quot;ref&quot;: &quot;A String&quot;, # Optional. Git reference (e.g. branch or tag).
+      &quot;repo&quot;: &quot;A String&quot;, # Optional. Repository URL. Example: &#x27;https://github.com/kubernetes/examples.git&#x27;
+    &quot;inputValues&quot;: { # Optional. Input variable values for the Terraform blueprint.
+      &quot;a_key&quot;: { # A Terraform input variable.
+        &quot;inputValue&quot;: &quot;&quot;, # Optional. Input variable value.
+  &quot;tfErrors&quot;: [ # Output only. Errors encountered when deleting this deployment. Errors are truncated to 10 entries, see `delete_results` and `error_logs` for full details.
+    { # Errors encountered during actuation using Terraform
+      &quot;error&quot;: { # The `Status` type defines a logical error model that is suitable for different programming environments, including REST APIs and RPC APIs. It is used by [gRPC](https://github.com/grpc). Each `Status` message contains three pieces of data: error code, error message, and error details. You can find out more about this error model and how to work with it in the [API Design Guide](https://cloud.google.com/apis/design/errors). # Output only. Original error response from underlying Google API, if available.
+      &quot;errorDescription&quot;: &quot;A String&quot;, # A human-readable error description.
+      &quot;httpResponseCode&quot;: 42, # HTTP response code returned from Google Cloud Platform APIs when Terraform fails to provision the resource. If unset or 0, no HTTP response code was returned by Terraform.
+      &quot;resourceAddress&quot;: &quot;A String&quot;, # Address of the resource associated with the error, e.g. `google_compute_network.vpc_network`.
+  &quot;tfVersion&quot;: &quot;A String&quot;, # Output only. The current Terraform version set on the deployment. It is in the format of &quot;Major.Minor.Patch&quot;, for example, &quot;1.3.10&quot;.
+  &quot;tfVersionConstraint&quot;: &quot;A String&quot;, # Optional. The user-specified Terraform version constraint. Example: &quot;=1.3.10&quot;.
+  &quot;updateTime&quot;: &quot;A String&quot;, # Output only. Time when the deployment was last modified.
+  &quot;workerPool&quot;: &quot;A String&quot;, # Optional. The user-specified Cloud Build worker pool resource in which the Cloud Build job will execute. Format: `projects/{project}/locations/{location}/workerPools/{workerPoolId}`. If this field is unspecified, the default Cloud Build worker pool will be used.
+  deploymentId: string, Required. The Deployment ID.
+    <code class="details" id="delete">delete(name, deletePolicy=None, force=None, requestId=None, x__xgafv=None)</code>
+  <pre>Deletes a Deployment.
+  name: string, Required. The name of the Deployment in the format: &#x27;projects/{project_id}/locations/{location}/deployments/{deployment}&#x27;. (required)
+  deletePolicy: string, Optional. Policy on how resources actuated by the deployment should be deleted. If unspecified, the default behavior is to delete the underlying resources.
+      DELETE_POLICY_UNSPECIFIED - Unspecified policy, resources will be deleted.
+      DELETE - Deletes resources actuated by the deployment.
+      ABANDON - Abandons resources and only deletes the deployment and its metadata.
+  force: boolean, Optional. If set to true, any revisions for this deployment will also be deleted. (Otherwise, the request will only work if the deployment has no revisions.)
+    <code class="details" id="deleteState">deleteState(name, body=None, x__xgafv=None)</code>
+  <pre>Deletes Terraform state file in a given deployment.
+  name: string, Required. The name of the deployment in the format: &#x27;projects/{project_id}/locations/{location}/deployments/{deployment}&#x27;. (required)
+{ # A request to delete a state file passed to a &#x27;DeleteStatefile&#x27; call.
+  &quot;lockId&quot;: &quot;A String&quot;, # Required. Lock ID of the lock file to verify that the user who is deleting the state file previously locked the Deployment.
+    <code class="details" id="exportLock">exportLock(name, x__xgafv=None)</code>
+  <pre>Exports the lock info on a locked deployment.
+    { # Details about the lock which locked the deployment.
+  &quot;createTime&quot;: &quot;A String&quot;, # Time that the lock was taken.
+  &quot;info&quot;: &quot;A String&quot;, # Extra information to store with the lock, provided by the caller.
+  &quot;lockId&quot;: &quot;A String&quot;, # Unique ID for the lock to be overridden with generation ID in the backend.
+  &quot;operation&quot;: &quot;A String&quot;, # Terraform operation, provided by the caller.
+  &quot;version&quot;: &quot;A String&quot;, # Terraform version
+  &quot;who&quot;: &quot;A String&quot;, # user@hostname when available
+    <code class="details" id="exportState">exportState(parent, body=None, x__xgafv=None)</code>
+  <pre>Exports Terraform state file from a given deployment.
+  parent: string, Required. The parent in whose context the statefile is listed. The parent value is in the format: &#x27;projects/{project_id}/locations/{location}/deployments/{deployment}&#x27;. (required)
+{ # A request to export a state file passed to a &#x27;ExportDeploymentStatefile&#x27; call.
+  &quot;draft&quot;: True or False, # Optional. If this flag is set to true, the exported deployment state file will be the draft state. This will enable the draft file to be validated before copying it over to the working state on unlock.
+    { # Contains info about a Terraform state file
+  &quot;signedUri&quot;: &quot;A String&quot;, # Output only. Cloud Storage signed URI used for downloading or uploading the state file.
+  <pre>Gets details about a Deployment.
+  name: string, Required. The name of the deployment. Format: &#x27;projects/{project_id}/locations/{location}/deployments/{deployment}&#x27;. (required)
+    <code class="details" id="importState">importState(parent, body=None, x__xgafv=None)</code>
+  <pre>Imports Terraform state file in a given deployment. The state file does not take effect until the Deployment has been unlocked.
+{ # A request to import a state file passed to a &#x27;ImportStatefile&#x27; call.
+  &quot;lockId&quot;: &quot;A String&quot;, # Required. Lock ID of the lock file to verify that the user who is importing the state file previously locked the Deployment.
+  <pre>Lists Deployments in a given project and location.
+  parent: string, Required. The parent in whose context the Deployments are listed. The parent value is in the format: &#x27;projects/{project_id}/locations/{location}&#x27;. (required)
+  filter: string, Lists the Deployments that match the filter expression. A filter expression filters the resources listed in the response. The expression must be of the form &#x27;{field} {operator} {value}&#x27; where operators: &#x27;&lt;&#x27;, &#x27;&gt;&#x27;, &#x27;&lt;=&#x27;, &#x27;&gt;=&#x27;, &#x27;!=&#x27;, &#x27;=&#x27;, &#x27;:&#x27; are supported (colon &#x27;:&#x27; represents a HAS operator which is roughly synonymous with equality). {field} can refer to a proto or JSON field, or a synthetic field. Field names can be camelCase or snake_case. Examples: - Filter by name: name = &quot;projects/foo/locations/us-central1/deployments/bar - Filter by labels: - Resources that have a key called &#x27;foo&#x27; labels.foo:* - Resources that have a key called &#x27;foo&#x27; whose value is &#x27;bar&#x27; labels.foo = bar - Filter by state: - Deployments in CREATING state. state=CREATING
+  pageSize: integer, When requesting a page of resources, &#x27;page_size&#x27; specifies number of resources to return. If unspecified, at most 500 will be returned. The maximum value is 1000.
+  pageToken: string, Token returned by previous call to &#x27;ListDeployments&#x27; which specifies the position in the list from where to continue listing the resources.
+  &quot;deployments&quot;: [ # List of Deployments.
+  &quot;nextPageToken&quot;: &quot;A String&quot;, # Token to be supplied to the next ListDeployments request via `page_token` to obtain the next set of results.
+    <code class="details" id="lock">lock(name, body=None, x__xgafv=None)</code>
+  <pre>Locks a deployment.
+{ # A request to lock a deployment passed to a &#x27;LockDeployment&#x27; call.
+  <pre>Updates a Deployment.
+  name: string, Identifier. Resource name of the deployment. Format: `projects/{project}/locations/{location}/deployments/{deployment}` (required)
+  updateMask: string, Optional. Field mask used to specify the fields to be overwritten in the Deployment resource by the update. The fields specified in the update_mask are relative to the resource, not the full request. A field will be overwritten if it is in the mask. If the user does not provide a mask then all fields will be overwritten.
+    <code class="details" id="unlock">unlock(name, body=None, x__xgafv=None)</code>
+  <pre>Unlocks a locked deployment.
+{ # A request to unlock a state file passed to a &#x27;UnlockDeployment&#x27; call.
+  &quot;lockId&quot;: &quot;A String&quot;, # Required. Lock ID of the lock file to be unlocked.

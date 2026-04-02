@@ -1,0 +1,72 @@
+<h1><a href="dlp_v2.html">Sensitive Data Protection (DLP)</a> . <a href="dlp_v2.organizations.html">organizations</a> . <a href="dlp_v2.organizations.locations.html">locations</a> . <a href="dlp_v2.organizations.locations.fileStoreDataProfiles.html">fileStoreDataProfiles</a></h1>
+<p class="firstline">Delete a FileStoreDataProfile. Will not prevent the profile from being regenerated if the resource is still included in a discovery configuration.</p>
+<p class="firstline">Gets a file store data profile.</p>
+<p class="firstline">Lists file store data profiles for an organization.</p>
+  <pre>Delete a FileStoreDataProfile. Will not prevent the profile from being regenerated if the resource is still included in a discovery configuration.
+  name: string, Required. Resource name of the file store data profile. (required)
+  <pre>Gets a file store data profile.
+  name: string, Required. Resource name, for example `organizations/12345/locations/us/fileStoreDataProfiles/53234423`. (required)
+    { # The profile for a file store. * Cloud Storage: maps 1:1 with a bucket. * Amazon S3: maps 1:1 with a bucket.
+  &quot;configSnapshot&quot;: { # Snapshot of the configurations used to generate the profile. # The snapshot of the configurations used to generate the profile.
+    &quot;dataProfileJob&quot;: { # Configuration for setting up a job to scan resources for profile generation. Only one data profile configuration may exist per organization, folder, or project. The generated data profiles are retained according to the [data retention policy] (https://cloud.google.com/sensitive-data-protection/docs/data-profiles#retention). # A copy of the configuration used to generate this profile. This is deprecated, and the DiscoveryConfig field is preferred moving forward. DataProfileJobConfig will still be written here for Discovery in BigQuery for backwards compatibility, but will not be updated with new fields, while DiscoveryConfig will.
+      &quot;dataProfileActions&quot;: [ # Actions to execute at the completion of the job.
+      &quot;inspectTemplates&quot;: [ # Detection logic for profile generation. Not all template features are used by profiles. FindingLimits, include_quote and exclude_info_types have no impact on data profiling. Multiple templates may be provided if there is data in multiple regions. At most one template must be specified per-region (including &quot;global&quot;). Each region is scanned using the applicable template. If no region-specific template is specified, but a &quot;global&quot; template is specified, it will be copied to that region and used instead. If no global or region-specific template is provided for a region with data, that region&#x27;s data will not be scanned. For more information, see https://cloud.google.com/sensitive-data-protection/docs/data-profiles#data-residency.
+      &quot;location&quot;: { # The data that will be profiled. # The data to scan.
+        &quot;folderId&quot;: &quot;A String&quot;, # The ID of the folder within an organization to scan.
+    &quot;discoveryConfig&quot;: { # Configuration for discovery to scan resources for profile generation. Only one discovery configuration may exist per organization, folder, or project. The generated data profiles are retained according to the [data retention policy] (https://cloud.google.com/sensitive-data-protection/docs/data-profiles#retention). # A copy of the configuration used to generate this profile.
+    &quot;inspectConfig&quot;: { # Configuration description of the scanning process. When used with redactContent only info_types and min_likelihood are currently used. # A copy of the inspection config used to generate this profile. This is a copy of the inspect_template specified in `DataProfileJobConfig`.
+    &quot;inspectTemplateModifiedTime&quot;: &quot;A String&quot;, # Timestamp when the template was modified
+    &quot;inspectTemplateName&quot;: &quot;A String&quot;, # Name of the inspection template used to generate this profile
+  &quot;createTime&quot;: &quot;A String&quot;, # The time the file store was first created.
+  &quot;dataRiskLevel&quot;: { # Score is a summary of all elements in the data profile. A higher number means more risk. # The data risk level of this resource.
+  &quot;dataSourceType&quot;: { # Message used to identify the type of resource being profiled. # The resource type that was profiled.
+  &quot;dataStorageLocations&quot;: [ # For resources that have multiple storage locations, these are those regions. For Cloud Storage this is the list of regions chosen for dual-region storage. `file_store_location` will normally be the corresponding multi-region for the list of individual locations. The first region is always picked as the processing and storage location for the data profile.
+  &quot;domains&quot;: [ # Domains associated with the profile.
+    { # A domain represents a thematic category that a data profile can fall under.
+      &quot;category&quot;: &quot;A String&quot;, # A domain category that this profile is related to.
+      &quot;signals&quot;: [ # The collection of signals that influenced selection of the category.
+  &quot;fileClusterSummaries&quot;: [ # FileClusterSummary per each cluster.
+    { # The file cluster summary.
+      &quot;dataRiskLevel&quot;: { # Score is a summary of all elements in the data profile. A higher number means more risk. # The data risk level of this cluster. RISK_LOW if nothing has been scanned.
+      &quot;errors&quot;: [ # A list of errors detected while scanning this cluster. The list is truncated to 10 per cluster.
+      &quot;fileClusterType&quot;: { # Message used to identify file cluster type being profiled. # The file cluster type.
+        &quot;cluster&quot;: &quot;A String&quot;, # Cluster type.
+      &quot;fileExtensionsScanned&quot;: [ # A sample of file types scanned in this cluster. Empty if no files were scanned. File extensions can be derived from the file name or the file content.
+        { # Information regarding the discovered file extension.
+          &quot;fileExtension&quot;: &quot;A String&quot;, # The file extension if set. (aka .pdf, .jpg, .txt)
+      &quot;fileExtensionsSeen&quot;: [ # A sample of file types seen in this cluster. Empty if no files were seen. File extensions can be derived from the file name or the file content.
+      &quot;fileStoreInfoTypeSummaries&quot;: [ # InfoTypes detected in this cluster.
+        { # Information regarding the discovered InfoType.
+          &quot;infoType&quot;: { # Type of information detected by the API. # The InfoType seen.
+      &quot;noFilesExist&quot;: True or False, # True if no files exist in this cluster. If the file store had more files than could be listed, this will be false even if no files for this cluster were seen and file_extensions_seen is empty.
+      &quot;sensitivityScore&quot;: { # Score is calculated from of all elements in the data profile. A higher level means the data is more sensitive. # The sensitivity score of this cluster. The score will be SENSITIVITY_LOW if nothing has been scanned.
+  &quot;fileStoreInfoTypeSummaries&quot;: [ # InfoTypes detected in this file store.
+  &quot;fileStoreIsEmpty&quot;: True or False, # The file store does not have any files. If the profiling operation failed, this is false.
+  &quot;fileStoreLocation&quot;: &quot;A String&quot;, # The location of the file store. * Cloud Storage: https://cloud.google.com/storage/docs/locations#available-locations * Amazon S3: https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints
+  &quot;fileStorePath&quot;: &quot;A String&quot;, # The file store path. * Cloud Storage: `gs://{bucket}` * Amazon S3: `s3://{bucket}` * Vertex AI dataset: `projects/{project_number}/locations/{location}/datasets/{dataset_id}`
+  &quot;fullResource&quot;: &quot;A String&quot;, # The resource name of the resource profiled. https://cloud.google.com/apis/design/resource_names#full_resource_name Example format of an S3 bucket full resource name: `//cloudasset.googleapis.com/organizations/{org_id}/otherCloudConnections/aws/arn:aws:s3:::{bucket_name}`
+  &quot;lastModifiedTime&quot;: &quot;A String&quot;, # The time the file store was last modified.
+  &quot;locationType&quot;: &quot;A String&quot;, # The location type of the file store (region, dual-region, multi-region, etc). If dual-region, expect data_storage_locations to be populated.
+  &quot;projectDataProfile&quot;: &quot;A String&quot;, # The resource name of the project data profile for this file store.
+  &quot;projectId&quot;: &quot;A String&quot;, # The Google Cloud project ID that owns the resource. For Amazon S3 buckets, this is the AWS Account Id.
+  &quot;relatedResources&quot;: [ # Resources related to this profile.
+    { # A related resource. Examples: * The source BigQuery table for a Vertex AI dataset. * The source Cloud Storage bucket for a Vertex AI dataset.
+      &quot;fullResource&quot;: &quot;A String&quot;, # The full resource name of the related resource.
+  &quot;resourceAttributes&quot;: { # Attributes of the resource being profiled. Currently used attributes: * customer_managed_encryption: boolean - true: the resource is encrypted with a customer-managed key. - false: the resource is encrypted with a provider-managed key.
+    &quot;a_key&quot;: { # Set of primitive values supported by the system. Note that for the purposes of inspection or transformation, the number of bytes considered to comprise a &#x27;Value&#x27; is based on its representation as a UTF-8 encoded string. For example, if &#x27;integer_value&#x27; is set to 123456789, the number of bytes would be counted as 9, even though an int64 only holds up to 8 bytes of data.
+  &quot;resourceLabels&quot;: { # The labels applied to the resource at the time the profile was generated.
+  &quot;resourceVisibility&quot;: &quot;A String&quot;, # How broadly a resource has been shared.
+  &quot;sampleFindingsTable&quot;: { # Message defining the location of a BigQuery table. A table is uniquely identified by its project_id, dataset_id, and table_name. Within a query a table is often referenced with a string in the format of: `:.` or `..`. # The BigQuery table to which the sample findings are written.
+  &quot;sensitivityScore&quot;: { # Score is calculated from of all elements in the data profile. A higher level means the data is more sensitive. # The sensitivity score of this resource.
+  &quot;tags&quot;: [ # The tags attached to the resource, including any tags attached during profiling.
+    { # A tag associated with a resource.
+      &quot;key&quot;: &quot;A String&quot;, # The key of a tag key-value pair. For Google Cloud resources, this is the resource name of the key, for example, &quot;tagKeys/123456&quot;.
+      &quot;namespacedTagValue&quot;: &quot;A String&quot;, # The namespaced name for the tag value to attach to Google Cloud resources. Must be in the format `{parent_id}/{tag_key_short_name}/{short_name}`, for example, &quot;123456/environment/prod&quot; for an organization parent, or &quot;my-project/environment/prod&quot; for a project parent. This is only set for Google Cloud resources.
+      &quot;value&quot;: &quot;A String&quot;, # The value of a tag key-value pair. For Google Cloud resources, this is the resource name of the value, for example, &quot;tagValues/123456&quot;.
+  <pre>Lists file store data profiles for an organization.
+  filter: string, Optional. Allows filtering. Supported syntax: * Filter expressions are made up of one or more restrictions. * Restrictions can be combined by `AND` or `OR` logical operators. A sequence of restrictions implicitly uses `AND`. * A restriction has the form of `{field} {operator} {value}`. * Supported fields: - `project_id`: The Google Cloud project ID - `account_id`: The AWS account ID - `file_store_path`: The path like &quot;gs://bucket&quot; - `data_source_type`: The profile&#x27;s data source type, like &quot;google/storage/bucket&quot; - `data_storage_location`: The location where the file store&#x27;s data is stored, like &quot;us-central1&quot; - `sensitivity_level`: HIGH|MODERATE|LOW - `data_risk_level`: HIGH|MODERATE|LOW - `resource_visibility`: PUBLIC|RESTRICTED - `status_code`: an RPC status code as defined in https://github.com/googleapis/googleapis/blob/master/google/rpc/code.proto - `profile_last_generated`: Date and time the profile was last generated * The operator must be `=` or `!=`. The `profile_last_generated` filter also supports `&lt;` and `&gt;`. The syntax is based on https://google.aip.dev/160. Examples: * `project_id = 12345 AND status_code = 1` * `project_id = 12345 AND sensitivity_level = HIGH` * `project_id = 12345 AND resource_visibility = PUBLIC` * `file_store_path = &quot;gs://mybucket&quot;` * `profile_last_generated &lt; &quot;2025-01-01T00:00:00.000Z&quot;` The length of this field should be no more than 500 characters.
+  orderBy: string, Optional. Comma-separated list of fields to order by, followed by `asc` or `desc` postfix. This list is case insensitive. The default sorting order is ascending. Redundant space characters are insignificant. Only one order field at a time is allowed. Examples: * `project_id asc` * `name` * `sensitivity_level desc` Supported fields are: - `project_id`: The Google Cloud project ID. - `sensitivity_level`: How sensitive the data in a table is, at most. - `data_risk_level`: How much risk is associated with this data. - `profile_last_generated`: When the profile was last updated in epoch seconds. - `last_modified`: The last time the resource was modified. - `resource_visibility`: Visibility restriction for this resource. - `name`: The name of the profile. - `create_time`: The time the file store was first created.
+  pageSize: integer, Optional. Size of the page. This value can be limited by the server. If zero, server returns a page of max size 100.
+  pageToken: string, Optional. Page token to continue retrieval.
+    { # List of file store data profiles generated for a given organization or project.
+  &quot;fileStoreDataProfiles&quot;: [ # List of data profiles.

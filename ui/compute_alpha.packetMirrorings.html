@@ -1,0 +1,95 @@
+<h1><a href="compute_alpha.html">Compute Engine API</a> . <a href="compute_alpha.packetMirrorings.html">packetMirrorings</a></h1>
+<p class="firstline">Retrieves an aggregated list of packetMirrorings.</p>
+  <code><a href="#delete">delete(project, region, packetMirroring, requestId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Deletes the specified PacketMirroring resource.</p>
+  <code><a href="#get">get(project, region, packetMirroring, x__xgafv=None)</a></code></p>
+<p class="firstline">Returns the specified PacketMirroring resource.</p>
+<p class="firstline">Creates a PacketMirroring resource in the specified project and region</p>
+<p class="firstline">Retrieves a list of PacketMirroring resources available to the specified</p>
+  <code><a href="#patch">patch(project, region, packetMirroring, body=None, requestId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Patches the specified PacketMirroring resource with the data included in</p>
+  <pre>Retrieves an aggregated list of packetMirrorings.
+    { # Contains a list of packetMirrorings.
+  &quot;items&quot;: { # A list of PacketMirroring resources.
+    &quot;a_key&quot;: { # Name of the scope containing this set of packetMirrorings.
+      &quot;packetMirrorings&quot;: [ # A list of packetMirrorings contained in this scope.
+        { # Represents a Packet Mirroring resource.
+            # Packet Mirroring clones the traffic of specified instances in your Virtual
+            # Private Cloud (VPC) network and forwards it to a collector destination,
+            # such as an instance group of an internal TCP/UDP load balancer, for analysis
+            # or examination.
+            # For more information about setting up Packet Mirroring, seeUsing Packet Mirroring.
+          &quot;collectorIlb&quot;: { # The Forwarding Rule resource of typeloadBalancingScheme=INTERNAL that will be used as collector
+              # for mirrored traffic.
+              # The specified forwarding rule must have isMirroringCollector
+              # set to true.
+            &quot;canonicalUrl&quot;: &quot;A String&quot;, # Output only. [Output Only] Unique identifier for the forwarding rule; defined by the
+                # server.
+            &quot;url&quot;: &quot;A String&quot;, # Resource URL to the forwarding rule representing the ILB
+                # configured as destination of the mirrored traffic.
+          &quot;enable&quot;: &quot;A String&quot;, # Indicates whether or not this packet mirroring takes effect.
+              # If set to FALSE, this packet mirroring policy will not be enforced on the
+              # The default is TRUE.
+          &quot;filter&quot;: { # Filter for mirrored traffic. If unspecified, all IPv4 traffic is mirrored.
+            &quot;IPProtocols&quot;: [ # Protocols that apply as filter on mirrored traffic.
+                # If no protocols are specified, all traffic that matches the specified
+                # CIDR ranges is mirrored.
+                # If neither cidrRanges nor IPProtocols is specified, all IPv4 traffic is
+                # mirrored.
+            &quot;cidrRanges&quot;: [ # One or more IPv4 or IPv6 CIDR ranges that apply as filters on the source
+                # (ingress) or destination (egress) IP in the IP header. If no ranges are
+                # specified, all IPv4 traffic that matches the specified IPProtocols is
+                # mirrored. If neither cidrRanges nor IPProtocols is specified, all IPv4
+                # traffic is mirrored. To mirror all IPv4 and IPv6 traffic, use
+                # &quot;0.0.0.0/0,::/0&quot;.
+            &quot;direction&quot;: &quot;A String&quot;, # Direction of traffic to mirror, either INGRESS, EGRESS, or BOTH.
+                # The default is BOTH.
+          &quot;kind&quot;: &quot;compute#packetMirroring&quot;, # Output only. [Output Only] Type of the resource. Alwayscompute#packetMirroring for packet mirrorings.
+          &quot;mirroredResources&quot;: { # PacketMirroring mirroredResourceInfos.
+              # MirroredResourceInfo specifies a set of mirrored VM instances, subnetworks
+              # and/or tags for which traffic from/to all VM instances will be mirrored.
+            &quot;instances&quot;: [ # A set of virtual machine instances that are being mirrored.
+                # They must live in zones contained in the same region as this
+                # packetMirroring.
+                # Note that this config will apply only to those network interfaces of the
+                # Instances that belong to the network specified in this packetMirroring.
+                # You may specify a maximum of 50 Instances.
+                &quot;canonicalUrl&quot;: &quot;A String&quot;, # Output only. [Output Only] Unique identifier for the instance; defined by the
+                &quot;url&quot;: &quot;A String&quot;, # Resource URL to the virtual machine instance which is being mirrored.
+            &quot;subnetworks&quot;: [ # A set of subnetworks for which traffic from/to all VM instances will be
+                # mirrored. They must live in the same region as this packetMirroring.
+                # You may specify a maximum of 5 subnetworks.
+                &quot;canonicalUrl&quot;: &quot;A String&quot;, # Output only. [Output Only] Unique identifier for the subnetwork; defined by the
+                &quot;url&quot;: &quot;A String&quot;, # Resource URL to the subnetwork for which
+                    # traffic from/to all VM instances will be mirrored.
+            &quot;tags&quot;: [ # A set of mirrored tags. Traffic from/to all VM instances that have one or
+                # more of these tags will be mirrored.
+          &quot;network&quot;: { # Specifies the mirrored VPC network. Only packets in this network will be
+              # mirrored. All mirrored VMs should have a NIC in the given network.
+              # All mirrored subnetworks should belong to the given network.
+            &quot;canonicalUrl&quot;: &quot;A String&quot;, # Output only. [Output Only] Unique identifier for the network; defined by the server.
+            &quot;url&quot;: &quot;A String&quot;, # URL of the network resource.
+          &quot;priority&quot;: 42, # The priority of applying this configuration. Priority is used to break ties
+              # in cases where there is more than one matching rule. In the case of two
+              # rules that apply for a given Instance, the one with the lowest-numbered
+              # priority value wins.
+              # Default value is 1000. Valid range is 0 through 65535.
+          &quot;region&quot;: &quot;A String&quot;, # [Output Only] URI of the region where the packetMirroring resides.
+      &quot;warning&quot;: { # Informational warning which replaces the list of packetMirrorings when the
+  &quot;kind&quot;: &quot;compute#packetMirroringAggregatedList&quot;, # Output only. Type of resource.
+    <code class="details" id="delete">delete(project, region, packetMirroring, requestId=None, x__xgafv=None)</code>
+  <pre>Deletes the specified PacketMirroring resource.
+  packetMirroring: string, Name of the PacketMirroring resource to delete. (required)
+    <code class="details" id="get">get(project, region, packetMirroring, x__xgafv=None)</code>
+  <pre>Returns the specified PacketMirroring resource.
+  packetMirroring: string, Name of the PacketMirroring resource to return. (required)
+  <pre>Creates a PacketMirroring resource in the specified project and region
+using the data included in the request.
+  <pre>Retrieves a list of PacketMirroring resources available to the specified
+    { # Contains a list of PacketMirroring resources.
+  &quot;items&quot;: [ # A list of PacketMirroring resources.
+  &quot;kind&quot;: &quot;compute#packetMirroringList&quot;, # Output only. [Output Only] Type of resource. Always compute#packetMirroring
+      # for packetMirrorings.
+    <code class="details" id="patch">patch(project, region, packetMirroring, body=None, requestId=None, x__xgafv=None)</code>
+  <pre>Patches the specified PacketMirroring resource with the data included in
+  packetMirroring: string, Name of the PacketMirroring resource to patch. (required)

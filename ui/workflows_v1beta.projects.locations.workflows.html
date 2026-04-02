@@ -1,0 +1,22 @@
+<h1><a href="workflows_v1beta.html">Workflows API</a> . <a href="workflows_v1beta.projects.html">projects</a> . <a href="workflows_v1beta.projects.locations.html">locations</a> . <a href="workflows_v1beta.projects.locations.workflows.html">workflows</a></h1>
+<p class="firstline">Creates a new workflow. If a workflow with the specified name already exists in the specified project and location, the long running operation will return ALREADY_EXISTS error.</p>
+<p class="firstline">Gets details of a single Workflow.</p>
+<p class="firstline">Lists Workflows in a given project and location. The default order is not specified.</p>
+<p class="firstline">Updates an existing workflow. Running this method has no impact on already running executions of the workflow. A new revision of the workflow may be created as a result of a successful update operation. In that case, such revision will be used in new workflow executions.</p>
+  <pre>Creates a new workflow. If a workflow with the specified name already exists in the specified project and location, the long running operation will return ALREADY_EXISTS error.
+  &quot;createTime&quot;: &quot;A String&quot;, # Output only. The timestamp of when the workflow was created.
+  &quot;description&quot;: &quot;A String&quot;, # Description of the workflow provided by the user. Must be at most 1000 unicode characters long.
+  &quot;labels&quot;: { # Labels associated with this workflow. Labels can contain at most 64 entries. Keys and values can be no longer than 63 characters and can only contain lowercase letters, numeric characters, underscores and dashes. Label keys must start with a letter. International characters are allowed.
+  &quot;name&quot;: &quot;A String&quot;, # The resource name of the workflow. Format: projects/{project}/locations/{location}/workflows/{workflow}
+  &quot;revisionCreateTime&quot;: &quot;A String&quot;, # Output only. The timestamp that the latest revision of the workflow was created.
+  &quot;revisionId&quot;: &quot;A String&quot;, # Output only. The revision of the workflow. A new revision of a workflow is created as a result of updating the following properties of a workflow: - Service account - Workflow code to be executed The format is &quot;000001-a4d&quot;, where the first 6 characters define the zero-padded revision ordinal number. They are followed by a hyphen and 3 hexadecimal random characters.
+  &quot;updateTime&quot;: &quot;A String&quot;, # Output only. The last update timestamp of the workflow.
+  <pre>Gets details of a single Workflow.
+  name: string, Required. Name of the workflow which information should be retrieved. Format: projects/{project}/locations/{location}/workflows/{workflow} (required)
+  <pre>Lists Workflows in a given project and location. The default order is not specified.
+  filter: string, Filter to restrict results to specific workflows.
+  orderBy: string, Comma-separated list of fields that that specify the order of the results. Default sorting order for a field is ascending. To specify descending order for a field, append a &quot; desc&quot; suffix. If not specified, the results will be returned in an unspecified order.
+  pageSize: integer, Maximum number of workflows to return per call. The service may return fewer than this value. If the value is not specified, a default value of 500 will be used. The maximum permitted value is 1000 and values greater than 1000 will be coerced down to 1000.
+  &quot;workflows&quot;: [ # The workflows which match the request.
+  <pre>Updates an existing workflow. Running this method has no impact on already running executions of the workflow. A new revision of the workflow may be created as a result of a successful update operation. In that case, such revision will be used in new workflow executions.
+  name: string, The resource name of the workflow. Format: projects/{project}/locations/{location}/workflows/{workflow} (required)

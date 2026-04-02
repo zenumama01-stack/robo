@@ -1,0 +1,18 @@
+<h1><a href="content_v2_1.html">Content API for Shopping</a> . <a href="content_v2_1.repricingrules.html">repricingrules</a> . <a href="content_v2_1.repricingrules.repricingreports.html">repricingreports</a></h1>
+  <code><a href="#list">list(merchantId, ruleId, endDate=None, pageSize=None, pageToken=None, startDate=None, x__xgafv=None)</a></code></p>
+<p class="firstline">*Deprecated*: New merchants can't start using this service. Lists the metrics report for a given Repricing rule.</p>
+    <code class="details" id="list">list(merchantId, ruleId, endDate=None, pageSize=None, pageToken=None, startDate=None, x__xgafv=None)</code>
+  <pre>*Deprecated*: New merchants can&#x27;t start using this service. Lists the metrics report for a given Repricing rule.
+  ruleId: string, Required. Id of the Repricing rule. (required)
+  endDate: string, Gets Repricing reports on and before this date in the merchant&#x27;s timezone. You can only retrieve data up to 7 days ago (default) or earlier. Format: YYYY-MM-DD.
+  pageSize: integer, Maximum number of daily reports to return. Each report includes data from a single 24-hour period. The page size defaults to 50 and values above 1000 are coerced to 1000. This service may return fewer days than this value, for example, if the time between your start and end date is less than page size.
+  startDate: string, Gets Repricing reports on and after this date in the merchant&#x27;s timezone, up to one year ago. Do not use a start date later than 7 days ago (default). Format: YYYY-MM-DD.
+    { # Response message for the ListRepricingRuleReports method.
+  &quot;repricingRuleReports&quot;: [ # Daily reports for the given Repricing rule.
+    { # Resource that represents a daily Repricing rule report. Next ID: 11
+      &quot;buyboxWinningRuleStats&quot;: { # Stats specific to buybox winning rules for rule report. # Stats specific to buybox winning rules for rule report (deprecated).
+        &quot;buyboxWonProductCount&quot;: 42, # Number of unique products that won the buybox with this rule during this period of time.
+      &quot;impactedProducts&quot;: [ # List of product ids that are impacted by this rule during this reporting period. Out of stock products and products not searched for by customers are examples of non-impacted products.
+      &quot;inapplicabilityDetails&quot;: [ # List of all reasons the rule did not apply to the inapplicable products during the specified reporting period.
+      &quot;inapplicableProducts&quot;: [ # List of product ids that are inapplicable to this rule during this reporting period. To get the inapplicable reason for a specific product, see RepricingProductReport.
+      &quot;ruleId&quot;: &quot;A String&quot;, # Id of the Repricing rule for this report.

@@ -1,0 +1,32 @@
+<h1><a href="netapp_v1.html">NetApp API</a> . <a href="netapp_v1.projects.html">projects</a> . <a href="netapp_v1.projects.locations.html">locations</a> . <a href="netapp_v1.projects.locations.backupVaults.html">backupVaults</a> . <a href="netapp_v1.projects.locations.backupVaults.backups.html">backups</a></h1>
+<p class="firstline">Creates a backup from the volume specified in the request The backup can be created from the given snapshot if specified in the request. If no snapshot specified, there'll be a new snapshot taken to initiate the backup creation.</p>
+<p class="firstline">Warning! This operation will permanently delete the backup.</p>
+<p class="firstline">Returns the description of the specified backup</p>
+<p class="firstline">Returns descriptions of all backups for a backupVault.</p>
+<p class="firstline">Update backup with full spec.</p>
+  <pre>Creates a backup from the volume specified in the request The backup can be created from the given snapshot if specified in the request. If no snapshot specified, there&#x27;ll be a new snapshot taken to initiate the backup creation.
+  parent: string, Required. The NetApp backupVault to create the backups of, in the format `projects/*/locations/*/backupVaults/{backup_vault_id}` (required)
+{ # A NetApp Backup.
+  &quot;backupRegion&quot;: &quot;A String&quot;, # Output only. Region in which backup is stored. Format: `projects/{project_id}/locations/{location}`
+  &quot;backupType&quot;: &quot;A String&quot;, # Output only. Type of backup, manually created or created by a backup policy.
+  &quot;chainStorageBytes&quot;: &quot;A String&quot;, # Output only. Total size of all backups in a chain in bytes = baseline backup size + sum(incremental backup size)
+  &quot;enforcedRetentionEndTime&quot;: &quot;A String&quot;, # Output only. The time until which the backup is not deletable.
+  &quot;name&quot;: &quot;A String&quot;, # Identifier. The resource name of the backup. Format: `projects/{project_id}/locations/{location}/backupVaults/{backup_vault_id}/backups/{backup_id}`.
+  &quot;satisfiesPzi&quot;: True or False, # Output only. Reserved for future use
+  &quot;satisfiesPzs&quot;: True or False, # Output only. Reserved for future use
+  &quot;sourceSnapshot&quot;: &quot;A String&quot;, # If specified, backup will be created from the given snapshot. If not specified, there will be a new snapshot taken to initiate the backup creation. Format: `projects/{project_id}/locations/{location}/volumes/{volume_id}/snapshots/{snapshot_id}`
+  &quot;sourceVolume&quot;: &quot;A String&quot;, # Volume full name of this backup belongs to. Either source_volume or ontap_source should be provided. Format: `projects/{projects_id}/locations/{location}/volumes/{volume_id}`
+  &quot;volumeRegion&quot;: &quot;A String&quot;, # Output only. Region of the volume from which the backup was created. Format: `projects/{project_id}/locations/{location}`
+  &quot;volumeUsageBytes&quot;: &quot;A String&quot;, # Output only. Size of the file system when the backup was created. When creating a new volume from the backup, the volume capacity will have to be at least as big.
+  backupId: string, Required. The ID to use for the backup. The ID must be unique within the specified backupVault. Must contain only letters, numbers and hyphen, with the first character a letter, the last a letter or a number, and a 63 character maximum.
+  <pre>Warning! This operation will permanently delete the backup.
+  name: string, Required. The backup resource name, in the format `projects/{project_id}/locations/{location}/backupVaults/{backup_vault_id}/backups/{backup_id}` (required)
+  <pre>Returns the description of the specified backup
+  <pre>Returns descriptions of all backups for a backupVault.
+  parent: string, Required. The backupVault for which to retrieve backup information, in the format `projects/{project_id}/locations/{location}/backupVaults/{backup_vault_id}`. To retrieve backup information for all locations, use &quot;-&quot; for the `{location}` value. To retrieve backup information for all backupVaults, use &quot;-&quot; for the `{backup_vault_id}` value. To retrieve backup information for a volume, use &quot;-&quot; for the `{backup_vault_id}` value and specify volume full name with the filter. (required)
+  filter: string, The standard list filter. If specified, backups will be returned based on the attribute name that matches the filter expression. If empty, then no backups are filtered out. See https://google.aip.dev/160
+  pageSize: integer, The maximum number of items to return. The service may return fewer than this value. The maximum value is 1000; values above 1000 will be coerced to 1000.
+  &quot;backups&quot;: [ # A list of backups in the project.
+  <pre>Update backup with full spec.
+  name: string, Identifier. The resource name of the backup. Format: `projects/{project_id}/locations/{location}/backupVaults/{backup_vault_id}/backups/{backup_id}`. (required)
+  updateMask: string, Required. Field mask is used to specify the fields to be overwritten in the Backup resource to be updated. The fields specified in the update_mask are relative to the resource, not the full request. A field will be overwritten if it is in the mask. If the user does not provide a mask then all fields will be overwritten.

@@ -1,0 +1,28 @@
+<h1><a href="mybusinessbusinessinformation_v1.html">My Business Business Information API</a> . <a href="mybusinessbusinessinformation_v1.locations.html">locations</a></h1>
+  <code><a href="mybusinessbusinessinformation_v1.locations.attributes.html">attributes()</a></code>
+<p class="firstline">Deletes a location. If this location cannot be deleted using the API and it is marked so in the `google.mybusiness.businessinformation.v1.LocationState`, use the [Google Business Profile](https://business.google.com/manage/) website.</p>
+<p class="firstline">Returns the specified location.</p>
+  <code><a href="#getAttributes">getAttributes(name, x__xgafv=None)</a></code></p>
+<p class="firstline">Looks up all the attributes set for a given location.</p>
+  <code><a href="#getGoogleUpdated">getGoogleUpdated(name, readMask=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Updates the specified location.</p>
+  <code><a href="#updateAttributes">updateAttributes(name, attributeMask=None, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Update attributes for a given location.</p>
+  <pre>Deletes a location. If this location cannot be deleted using the API and it is marked so in the `google.mybusiness.businessinformation.v1.LocationState`, use the [Google Business Profile](https://business.google.com/manage/) website.
+  name: string, Required. The name of the location to delete. (required)
+  <pre>Returns the specified location.
+  name: string, Required. The name of the location to fetch. (required)
+    <code class="details" id="getAttributes">getAttributes(name, x__xgafv=None)</code>
+  <pre>Looks up all the attributes set for a given location.
+    <code class="details" id="getGoogleUpdated">getGoogleUpdated(name, readMask=None, x__xgafv=None)</code>
+    { # Represents a location that was modified by Google.
+  &quot;diffMask&quot;: &quot;A String&quot;, # The fields that Google updated.
+  &quot;location&quot;: { # A location. See the [help center article] (https://support.google.com/business/answer/3038177) for a detailed description of these fields, or the [category endpoint](/my-business/reference/rest/v4/categories) for a list of valid business categories. # The Google-updated version of this location.
+  &quot;pendingMask&quot;: &quot;A String&quot;, # The fields that have pending edits that haven&#x27;t yet been pushed to Maps and Search.
+  <pre>Updates the specified location.
+  name: string, Google identifier for this location in the form: `locations/{location_id}`. (required)
+  updateMask: string, Required. The specific fields to update.
+  validateOnly: boolean, Optional. If true, the request is validated without actually updating the location. When this field is set, we will only return validation errors if there were any. The response will be empty if no errors were found.
+    <code class="details" id="updateAttributes">updateAttributes(name, attributeMask=None, body=None, x__xgafv=None)</code>
+  <pre>Update attributes for a given location.
+  attributeMask: string, Required. Attribute name of attributes that you&#x27;d like to update. Represented by `attributes/{attribute}`. Updates: All attributes provided in the attributes field that you would like to update must be set in the `attribute_mask`. Attributes set in the above list but not in the `attribute_mask` will be ignored. Deletes: If you&#x27;d like to delete certain attributes, they must be specified in the `attribute_mask` with no matching entry in the attributes list. If you&#x27;d like to delete all attributes set on a location, you should look up all the applicable attributes for the location and then add them to the `attribute_mask` with an empty attributes field.

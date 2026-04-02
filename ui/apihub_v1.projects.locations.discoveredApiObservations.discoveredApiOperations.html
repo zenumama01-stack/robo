@@ -1,0 +1,41 @@
+<h1><a href="apihub_v1.html">API hub API</a> . <a href="apihub_v1.projects.html">projects</a> . <a href="apihub_v1.projects.locations.html">locations</a> . <a href="apihub_v1.projects.locations.discoveredApiObservations.html">discoveredApiObservations</a> . <a href="apihub_v1.projects.locations.discoveredApiObservations.discoveredApiOperations.html">discoveredApiOperations</a></h1>
+<p class="firstline">Gets a DiscoveredAPIOperation in a given project, location, ApiObservation and ApiOperation.</p>
+<p class="firstline">Lists all the DiscoveredAPIOperations in a given project, location and ApiObservation.</p>
+  <pre>Gets a DiscoveredAPIOperation in a given project, location, ApiObservation and ApiOperation.
+  name: string, Required. The name of the DiscoveredApiOperation to retrieve. Format: projects/{project}/locations/{location}/discoveredApiObservations/{discovered_api_observation}/discoveredApiOperations/{discovered_api_operation} (required)
+    { # DiscoveredApiOperation represents an API Operation observed in one of the sources.
+  &quot;classification&quot;: &quot;A String&quot;, # Output only. The classification of the discovered API operation.
+  &quot;count&quot;: &quot;A String&quot;, # Optional. The number of occurrences of this API Operation.
+  &quot;createTime&quot;: &quot;A String&quot;, # Output only. Create time stamp of the discovered API operation in API Hub.
+  &quot;firstSeenTime&quot;: &quot;A String&quot;, # Optional. First seen time stamp
+  &quot;httpOperation&quot;: { # An HTTP-based API Operation, sometimes called a &quot;REST&quot; Operation. # Optional. An HTTP Operation.
+    &quot;httpOperation&quot;: { # The HTTP Operation. # Required. An HTTP Operation.
+    &quot;pathParams&quot;: [ # Optional. Path params of HttpOperation
+      { # HTTP Path parameter.
+        &quot;dataType&quot;: &quot;A String&quot;, # Optional. Data type of path param
+        &quot;position&quot;: 42, # Optional. Segment location in the path, 1-indexed
+    &quot;queryParams&quot;: { # Optional. Query params of HttpOperation
+      &quot;a_key&quot;: { # An aggregation of HTTP query parameter occurrences.
+        &quot;count&quot;: &quot;A String&quot;, # Optional. The number of occurrences of this query parameter across transactions.
+        &quot;name&quot;: &quot;A String&quot;, # Required. Name of query param
+    &quot;request&quot;: { # An aggregation of HTTP requests. # Optional. Request metadata.
+      &quot;headers&quot;: { # Optional. Unordered map from header name to header metadata
+        &quot;a_key&quot;: { # An aggregation of HTTP header occurrences.
+          &quot;count&quot;: &quot;A String&quot;, # The number of occurrences of this Header across transactions.
+          &quot;dataType&quot;: &quot;A String&quot;, # Data type of header
+          &quot;name&quot;: &quot;A String&quot;, # Header name.
+    &quot;response&quot;: { # An aggregation of HTTP responses. # Optional. Response metadata.
+      &quot;responseCodes&quot;: { # Optional. Map of status code to observed count
+  &quot;lastSeenTime&quot;: &quot;A String&quot;, # Optional. Last seen time stamp
+  &quot;matchResults&quot;: [ # Output only. The list of matched results for the discovered API operation. This will be populated only if the classification is known. The current usecase is for a single match. Keeping it repeated to support multiple matches in future.
+    { # MatchResult represents the result of matching a discovered API operation with a catalog API operation.
+      &quot;name&quot;: &quot;A String&quot;, # Output only. The name of the matched API Operation. Format: `projects/{project}/locations/{location}/apis/{api}/versions/{version}/operations/{operation}`
+  &quot;name&quot;: &quot;A String&quot;, # Identifier. The name of the discovered API Operation. Format: `projects/{project}/locations/{location}/discoveredApiObservations/{discovered_api_observation}/discoveredApiOperations/{discovered_api_operation}`
+  &quot;sourceMetadata&quot;: { # SourceMetadata represents the metadata for a resource at the source. # Output only. The metadata of the source from which the api operation was collected.
+  &quot;updateTime&quot;: &quot;A String&quot;, # Output only. Update time stamp of the discovered API operation in API Hub.
+  <pre>Lists all the DiscoveredAPIOperations in a given project, location and ApiObservation.
+  parent: string, Required. The parent, which owns this collection of DiscoveredApiOperations. Format: projects/{project}/locations/{location}/discoveredApiObservations/{discovered_api_observation} (required)
+  pageSize: integer, Optional. DiscoveredApiOperations will be returned. The maximum value is 1000; values above 1000 will be coerced to 1000.
+  pageToken: string, Optional. A page token, received from a previous `ListDiscoveredApiApiOperations` call. Provide this to retrieve the subsequent page. When paginating, all other parameters provided to `ListDiscoveredApiApiOperations` must match the call that provided the page token.
+    { # Message for response to listing DiscoveredApiOperations
+  &quot;discoveredApiOperations&quot;: [ # The DiscoveredApiOperations from the specified project, location and DiscoveredApiObservation.

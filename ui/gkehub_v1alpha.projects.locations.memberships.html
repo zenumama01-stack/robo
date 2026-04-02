@@ -1,0 +1,45 @@
+<h1><a href="gkehub_v1alpha.html">GKE Hub API</a> . <a href="gkehub_v1alpha.projects.html">projects</a> . <a href="gkehub_v1alpha.projects.locations.html">locations</a> . <a href="gkehub_v1alpha.projects.locations.memberships.html">memberships</a></h1>
+  <code><a href="gkehub_v1alpha.projects.locations.memberships.bindings.html">bindings()</a></code>
+  <code><a href="gkehub_v1alpha.projects.locations.memberships.rbacrolebindings.html">rbacrolebindings()</a></code>
+  <code><a href="#generateExclusivityManifest">generateExclusivityManifest(name, crManifest=None, crdManifest=None, x__xgafv=None)</a></code></p>
+<p class="firstline">GenerateExclusivityManifest generates the manifests to update the exclusivity artifacts in the cluster if needed. Exclusivity artifacts include the Membership custom resource definition (CRD) and the singleton Membership custom resource (CR). Combined with ValidateExclusivity, exclusivity artifacts guarantee that a Kubernetes cluster is only registered to a single GKE Hub. The Membership CRD is versioned, and may require conversion when the GKE Hub API server begins serving a newer version of the CRD and corresponding CR. The response will be the converted CRD and CR if there are any differences between the versions.</p>
+  <code><a href="#listAdmin">listAdmin(parent, filter=None, orderBy=None, pageSize=None, pageToken=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Lists Memberships of admin clusters in a given project and location. **This method is only used internally**.</p>
+  <code><a href="#listAdmin_next">listAdmin_next()</a></code></p>
+  <code><a href="#validateCreate">validateCreate(parent, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">ValidateCreateMembership is a preflight check for CreateMembership. It checks the following: 1. Caller has the required `gkehub.memberships.create` permission. 2. The membership_id is still available.</p>
+  <code><a href="#validateExclusivity">validateExclusivity(parent, crManifest=None, intendedMembership=None, x__xgafv=None)</a></code></p>
+<p class="firstline">ValidateExclusivity validates the state of exclusivity in the cluster. The validation does not depend on an existing Hub membership resource.</p>
+    <code class="details" id="generateExclusivityManifest">generateExclusivityManifest(name, crManifest=None, crdManifest=None, x__xgafv=None)</code>
+  <pre>GenerateExclusivityManifest generates the manifests to update the exclusivity artifacts in the cluster if needed. Exclusivity artifacts include the Membership custom resource definition (CRD) and the singleton Membership custom resource (CR). Combined with ValidateExclusivity, exclusivity artifacts guarantee that a Kubernetes cluster is only registered to a single GKE Hub. The Membership CRD is versioned, and may require conversion when the GKE Hub API server begins serving a newer version of the CRD and corresponding CR. The response will be the converted CRD and CR if there are any differences between the versions.
+  crManifest: string, Optional. The YAML manifest of the membership CR retrieved by `kubectl get memberships membership`. Leave empty if the resource does not exist.
+  crdManifest: string, Optional. The YAML manifest of the membership CRD retrieved by `kubectl get customresourcedefinitions membership`. Leave empty if the resource does not exist.
+    { # The response of the exclusivity artifacts manifests for the client to apply.
+  &quot;crManifest&quot;: &quot;A String&quot;, # The YAML manifest of the membership CR to apply if a new version of the CR is available. Empty if no update needs to be applied.
+  &quot;crdManifest&quot;: &quot;A String&quot;, # The YAML manifest of the membership CRD to apply if a newer version of the CRD is available. Empty if no update needs to be applied.
+    <code class="details" id="listAdmin">listAdmin(parent, filter=None, orderBy=None, pageSize=None, pageToken=None, x__xgafv=None)</code>
+  <pre>Lists Memberships of admin clusters in a given project and location. **This method is only used internally**.
+  parent: string, Required. The parent (project and location) where the Memberships of admin cluster will be listed. Specified in the format `projects/*/locations/*`. (required)
+  filter: string, Optional. Lists Memberships of admin clusters that match the filter expression.
+  pageToken: string, Optional. Token returned by previous call to `ListAdminClusterMemberships` which specifies the position in the list from where to continue listing the resources.
+    { # Response message for the `GkeHub.ListAdminClusterMemberships` method.
+  &quot;adminClusterMemberships&quot;: [ # The list of matching Memberships of admin clusters.
+  &quot;nextPageToken&quot;: &quot;A String&quot;, # A token to request the next page of resources from the `ListAdminClusterMemberships` method. The value of an empty string means that there are no more resources to return.
+    <code class="details" id="listAdmin_next">listAdmin_next()</code>
+    <code class="details" id="validateCreate">validateCreate(parent, body=None, x__xgafv=None)</code>
+  <pre>ValidateCreateMembership is a preflight check for CreateMembership. It checks the following: 1. Caller has the required `gkehub.memberships.create` permission. 2. The membership_id is still available.
+{ # Request message for the `GkeHub.ValidateCreateMembership` method.
+  &quot;membership&quot;: { # Membership contains information about a member cluster. # Required. Membership resource to be created.
+  &quot;membershipId&quot;: &quot;A String&quot;, # Required. Client chosen membership id.
+    { # Response message for the `GkeHub.ValidateCreateMembership` method.
+  &quot;validationResults&quot;: [ # Wraps all the validator results.
+    { # ValidationResults are results set by each validator running during ValidateCreateMembership.
+      &quot;result&quot;: &quot;A String&quot;, # Additional information for the validation.
+      &quot;success&quot;: True or False, # Whether the validation is passed or not.
+      &quot;validator&quot;: &quot;A String&quot;, # Validator type to validate membership with.
+    <code class="details" id="validateExclusivity">validateExclusivity(parent, crManifest=None, intendedMembership=None, x__xgafv=None)</code>
+  <pre>ValidateExclusivity validates the state of exclusivity in the cluster. The validation does not depend on an existing Hub membership resource.
+  crManifest: string, Optional. The YAML of the membership CR in the cluster. Empty if the membership CR does not exist.
+  intendedMembership: string, Required. The intended membership name under the `parent`. This method only does validation in anticipation of a CreateMembership call with the same name.
+    { # The response of exclusivity artifacts validation result status.
+  &quot;status&quot;: { # The `Status` type defines a logical error model that is suitable for different programming environments, including REST APIs and RPC APIs. It is used by [gRPC](https://github.com/grpc). Each `Status` message contains three pieces of data: error code, error message, and error details. You can find out more about this error model and how to work with it in the [API Design Guide](https://cloud.google.com/apis/design/errors). # The validation result. * `OK` means that exclusivity is validated, assuming the manifest produced by GenerateExclusivityManifest is successfully applied. * `ALREADY_EXISTS` means that the Membership CRD is already owned by another Hub. See `status.message` for more information.

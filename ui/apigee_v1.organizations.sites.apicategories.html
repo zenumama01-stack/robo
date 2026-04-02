@@ -1,0 +1,28 @@
+<h1><a href="apigee_v1.html">Apigee API</a> . <a href="apigee_v1.organizations.html">organizations</a> . <a href="apigee_v1.organizations.sites.html">sites</a> . <a href="apigee_v1.organizations.sites.apicategories.html">apicategories</a></h1>
+<p class="firstline">Creates a new API category.</p>
+<p class="firstline">Deletes an API category.</p>
+<p class="firstline">Gets an API category.</p>
+<p class="firstline">Returns the API categories associated with a portal.</p>
+<p class="firstline">Updates an API category.</p>
+  <pre>Creates a new API category.
+  parent: string, Required. Name of the portal. Use the following structure in your request: `organizations/{org}/sites/{site}` (required)
+{ # `ApiCategory` represents an API category. [Catalog items](/apigee/docs/reference/apis/apigee/rest/v1/organizations.sites.apidocs) can be tagged with API categories; users viewing the API catalog in the portal will have the option to browse the catalog by category.
+  &quot;id&quot;: &quot;A String&quot;, # ID of the category (a UUID).
+  &quot;name&quot;: &quot;A String&quot;, # Name of the category.
+  &quot;siteId&quot;: &quot;A String&quot;, # Name of the portal.
+  &quot;updateTime&quot;: &quot;A String&quot;, # Time the category was last modified in milliseconds since epoch.
+    { # The API category resource wrapped with response status, error_code, etc.
+  &quot;data&quot;: { # `ApiCategory` represents an API category. [Catalog items](/apigee/docs/reference/apis/apigee/rest/v1/organizations.sites.apidocs) can be tagged with API categories; users viewing the API catalog in the portal will have the option to browse the catalog by category. # The API category resource.
+  &quot;errorCode&quot;: &quot;A String&quot;, # Unique error code for the request, if any.
+  &quot;message&quot;: &quot;A String&quot;, # Description of the operation.
+  &quot;requestId&quot;: &quot;A String&quot;, # Unique ID of the request.
+  &quot;status&quot;: &quot;A String&quot;, # Status of the operation.
+  <pre>Deletes an API category.
+  name: string, Required. Name of the category. Use the following structure in your request: `organizations/{org}/sites/{site}/apicategories/{apicategory}` (required)
+    { # Response for certain delete operations.
+  &quot;gcpResource&quot;: &quot;A String&quot;, # Google Cloud name of deleted resource.
+  <pre>Gets an API category.
+  <pre>Returns the API categories associated with a portal.
+    { # The response for `ListApiCategoriesRequest`. Next ID: 6
+  &quot;data&quot;: [ # The API category resources.
+  <pre>Updates an API category.

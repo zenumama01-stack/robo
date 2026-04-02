@@ -1,0 +1,45 @@
+<h1><a href="networkconnectivity_v1.html">Network Connectivity API</a> . <a href="networkconnectivity_v1.projects.html">projects</a> . <a href="networkconnectivity_v1.projects.locations.html">locations</a> . <a href="networkconnectivity_v1.projects.locations.global_.html">global_</a> . <a href="networkconnectivity_v1.projects.locations.global_.policyBasedRoutes.html">policyBasedRoutes</a></h1>
+  <code><a href="#create">create(parent, body=None, policyBasedRouteId=None, requestId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Creates a new policy-based route in a given project and location.</p>
+<p class="firstline">Deletes a single policy-based route.</p>
+<p class="firstline">Gets details of a single policy-based route.</p>
+<p class="firstline">Lists policy-based routes in a given project and location.</p>
+    <code class="details" id="create">create(parent, body=None, policyBasedRouteId=None, requestId=None, x__xgafv=None)</code>
+  <pre>Creates a new policy-based route in a given project and location.
+  parent: string, Required. The parent resource&#x27;s name of the PolicyBasedRoute. (required)
+{ # Policy-based routes route L4 network traffic based on not just destination IP address, but also source IP address, protocol, and more. If a policy-based route conflicts with other types of routes, the policy-based route always takes precedence.
+  &quot;createTime&quot;: &quot;A String&quot;, # Output only. Time when the policy-based route was created.
+  &quot;description&quot;: &quot;A String&quot;, # Optional. An optional description of this resource. Provide this field when you create the resource.
+  &quot;filter&quot;: { # Filter matches L4 traffic. # Required. The filter to match L4 traffic.
+    &quot;destRange&quot;: &quot;A String&quot;, # Optional. The destination IP range of outgoing packets that this policy-based route applies to. Default is &quot;0.0.0.0/0&quot; if protocol version is IPv4 and &quot;::/0&quot; if protocol version is IPv6.
+    &quot;ipProtocol&quot;: &quot;A String&quot;, # Optional. The IP protocol that this policy-based route applies to. Valid values are &#x27;TCP&#x27;, &#x27;UDP&#x27;, and &#x27;ALL&#x27;. Default is &#x27;ALL&#x27;.
+    &quot;protocolVersion&quot;: &quot;A String&quot;, # Required. Internet protocol versions this policy-based route applies to. IPV4 and IPV6 is supported.
+    &quot;srcRange&quot;: &quot;A String&quot;, # Optional. The source IP range of outgoing packets that this policy-based route applies to. Default is &quot;0.0.0.0/0&quot; if protocol version is IPv4 and &quot;::/0&quot; if protocol version is IPv6.
+  &quot;interconnectAttachment&quot;: { # InterconnectAttachment that this route applies to. # Optional. The interconnect attachments that this policy-based route applies to.
+    &quot;region&quot;: &quot;A String&quot;, # Optional. Cloud region to install this policy-based route on interconnect attachment. Use `all` to install it on all interconnect attachments.
+  &quot;kind&quot;: &quot;A String&quot;, # Output only. Type of this resource. Always networkconnectivity#policyBasedRoute for policy-based Route resources.
+  &quot;labels&quot;: { # User-defined labels.
+  &quot;name&quot;: &quot;A String&quot;, # Immutable. Identifier. A unique name of the resource in the form of `projects/{project_number}/locations/global/PolicyBasedRoutes/{policy_based_route_id}`
+  &quot;network&quot;: &quot;A String&quot;, # Required. Fully-qualified URL of the network that this route applies to, for example: projects/my-project/global/networks/my-network.
+  &quot;nextHopIlbIp&quot;: &quot;A String&quot;, # Optional. The IP address of a global-access-enabled L4 ILB that is the next hop for matching packets. For this version, only nextHopIlbIp is supported.
+  &quot;nextHopOtherRoutes&quot;: &quot;A String&quot;, # Optional. Other routes that will be referenced to determine the next hop of the packet.
+  &quot;priority&quot;: 42, # Optional. The priority of this policy-based route. Priority is used to break ties in cases where there are more than one matching policy-based routes found. In cases where multiple policy-based routes are matched, the one with the lowest-numbered priority value wins. The default value is 1000. The priority value must be from 1 to 65535, inclusive.
+  &quot;selfLink&quot;: &quot;A String&quot;, # Output only. Server-defined fully-qualified URL for this resource.
+  &quot;updateTime&quot;: &quot;A String&quot;, # Output only. Time when the policy-based route was updated.
+  &quot;virtualMachine&quot;: { # VM instances that this policy-based route applies to. # Optional. VM instances that this policy-based route applies to.
+    &quot;tags&quot;: [ # Optional. A list of VM instance tags that this policy-based route applies to. VM instances that have ANY of tags specified here installs this PBR.
+  &quot;warnings&quot;: [ # Output only. If potential misconfigurations are detected for this route, this field will be populated with warning messages.
+    { # Informational warning message.
+      &quot;code&quot;: &quot;A String&quot;, # Output only. A warning code, if applicable.
+      &quot;data&quot;: { # Output only. Metadata about this warning in key: value format. The key should provides more detail on the warning being returned. For example, for warnings where there are no results in a list request for a particular zone, this key might be scope and the key value might be the zone name. Other examples might be a key indicating a deprecated resource and a suggested replacement.
+      &quot;warningMessage&quot;: &quot;A String&quot;, # Output only. A human-readable description of the warning code.
+  policyBasedRouteId: string, Required. Unique id for the policy-based route to create. Provided by the client when the resource is created. The name must comply with https://google.aip.dev/122#resource-id-segments. Specifically, the name must be 1-63 characters long and match the regular expression [a-z]([a-z0-9-]*[a-z0-9])?. The first character must be a lowercase letter, and all following characters (except for the last character) must be a dash, lowercase letter, or digit. The last character must be a lowercase letter or digit.
+  requestId: string, Optional. An optional request ID to identify requests. Specify a unique request ID so that if you must retry your request, the server knows to ignore the request if it has already been completed. The server guarantees that for at least 60 minutes since the first request. For example, consider a situation where you make an initial request and the request times out. If you make the request again with the same request ID, the server can check if original operation with the same request ID was received, and if so, ignores the second request. This prevents clients from accidentally creating duplicate commitments. The request ID must be a valid UUID with the exception that zero UUID is not supported (00000000-0000-0000-0000-000000000000).
+  <pre>Deletes a single policy-based route.
+  name: string, Required. Name of the policy-based route resource to delete. (required)
+  requestId: string, Optional. An optional request ID to identify requests. Specify a unique request ID so that if you must retry your request, the server knows to ignore the request if it has already been completed. The server guarantees that for at least 60 minutes after the first request. For example, consider a situation where you make an initial request and the request times out. If you make the request again with the same request ID, the server can check if original operation with the same request ID was received, and if so, ignores the second request. This prevents clients from accidentally creating duplicate commitments. The request ID must be a valid UUID with the exception that zero UUID is not supported (00000000-0000-0000-0000-000000000000).
+  <pre>Gets details of a single policy-based route.
+  name: string, Required. Name of the PolicyBasedRoute resource to get. (required)
+  <pre>Lists policy-based routes in a given project and location.
+    { # Response for PolicyBasedRoutingService.ListPolicyBasedRoutes method.
+  &quot;policyBasedRoutes&quot;: [ # Policy-based routes to be returned.

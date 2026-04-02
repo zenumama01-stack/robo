@@ -1,0 +1,41 @@
+<h1><a href="beyondcorp_v1alpha.html">BeyondCorp API</a> . <a href="beyondcorp_v1alpha.organizations.html">organizations</a> . <a href="beyondcorp_v1alpha.organizations.locations.html">locations</a> . <a href="beyondcorp_v1alpha.organizations.locations.subscriptions.html">subscriptions</a></h1>
+  <code><a href="#cancel">cancel(name, requestId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Cancels an existing BeyondCorp Enterprise Subscription in a given organization. Location will always be global as BeyondCorp subscriptions are per organization. Returns the timestamp for when the cancellation will become effective</p>
+<p class="firstline">Creates a new BeyondCorp Enterprise Subscription in a given organization. Location will always be global as BeyondCorp subscriptions are per organization.</p>
+<p class="firstline">Gets details of a single Subscription.</p>
+<p class="firstline">Lists Subscriptions in a given organization and location.</p>
+<p class="firstline">Updates an existing BeyondCorp Enterprise Subscription in a given organization. Location will always be global as BeyondCorp subscriptions are per organization.</p>
+  <code><a href="#restart">restart(name, requestId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Restarts an existing BeyondCorp Enterprise Subscription in a given organization, that is scheduled for cancellation. Location will always be global as BeyondCorp subscriptions are per organization. Returns the timestamp for when the cancellation will become effective</p>
+    <code class="details" id="cancel">cancel(name, requestId=None, x__xgafv=None)</code>
+  <pre>Cancels an existing BeyondCorp Enterprise Subscription in a given organization. Location will always be global as BeyondCorp subscriptions are per organization. Returns the timestamp for when the cancellation will become effective
+    { # Response message for BeyondCorp.CancelSubscription
+  &quot;effectiveCancellationTime&quot;: &quot;A String&quot;, # Time when the cancellation will become effective
+  <pre>Creates a new BeyondCorp Enterprise Subscription in a given organization. Location will always be global as BeyondCorp subscriptions are per organization.
+  parent: string, Required. The resource name of the subscription location using the form: `organizations/{organization_id}/locations/{location}` (required)
+{ # A BeyondCorp Subscription resource represents BeyondCorp Enterprise Subscription. BeyondCorp Enterprise Subscription enables BeyondCorp Enterprise permium features for an organization.
+  &quot;autoRenewEnabled&quot;: True or False, # Output only. Represents that, if subscription will renew or end when the term ends.
+  &quot;billingAccount&quot;: &quot;A String&quot;, # Optional. Name of the billing account in the format. e.g. billingAccounts/123456-123456-123456 Required if Subscription is of Paid type.
+  &quot;createTime&quot;: &quot;A String&quot;, # Output only. Create time of the subscription.
+  &quot;csgCustomer&quot;: True or False, # Optional. Whether the subscription is being created as part of the Citrix flow. If this field is set to true, the subscription should have both the start_time and end_time set in the request and the billing account used will be the Citrix master billing account regardless of what its set to in the request. This field can only be set to true in create requests.
+  &quot;endTime&quot;: &quot;A String&quot;, # Optional. End time of the subscription.
+  &quot;name&quot;: &quot;A String&quot;, # Identifier. Unique resource name of the Subscription. The name is ignored when creating a subscription.
+  &quot;seatCount&quot;: &quot;A String&quot;, # Optional. Number of seats in the subscription.
+  &quot;sku&quot;: &quot;A String&quot;, # Required. SKU of subscription.
+  &quot;startTime&quot;: &quot;A String&quot;, # Optional. Start time of the subscription.
+  &quot;state&quot;: &quot;A String&quot;, # Output only. The current state of the subscription.
+  &quot;subscriberType&quot;: &quot;A String&quot;, # Output only. Type of subscriber.
+  &quot;type&quot;: &quot;A String&quot;, # Required. Type of subscription.
+  <pre>Gets details of a single Subscription.
+  name: string, Required. The resource name of Subscription using the form: `organizations/{organization_id}/locations/{location}/subscriptions/{subscription_id}` (required)
+  <pre>Lists Subscriptions in a given organization and location.
+  parent: string, Required. The resource name of Subscription using the form: `organizations/{organization_id}/locations/{location}` (required)
+  pageToken: string, Optional. The next_page_token value returned from a previous ListSubscriptionsRequest, if any.
+    { # Response message for BeyondCorp.ListSubscriptions.
+  &quot;subscriptions&quot;: [ # A list of BeyondCorp Subscriptions in the organization.
+  <pre>Updates an existing BeyondCorp Enterprise Subscription in a given organization. Location will always be global as BeyondCorp subscriptions are per organization.
+  name: string, Identifier. Unique resource name of the Subscription. The name is ignored when creating a subscription. (required)
+  updateMask: string, Required. Field mask is used to specify the fields to be overwritten in the Subscription resource by the update. The fields specified in the update_mask are relative to the resource, not the full request. A field will be overwritten if it is in the mask. Mutable fields: seat_count.
+    <code class="details" id="restart">restart(name, requestId=None, x__xgafv=None)</code>
+  <pre>Restarts an existing BeyondCorp Enterprise Subscription in a given organization, that is scheduled for cancellation. Location will always be global as BeyondCorp subscriptions are per organization. Returns the timestamp for when the cancellation will become effective
+    { # Response message for BeyondCorp.RestartSubscription

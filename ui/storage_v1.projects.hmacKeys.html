@@ -1,0 +1,50 @@
+<h1><a href="storage_v1.html">Cloud Storage JSON API</a> . <a href="storage_v1.projects.html">projects</a> . <a href="storage_v1.projects.hmacKeys.html">hmacKeys</a></h1>
+  <code><a href="#create">create(projectId, serviceAccountEmail, userProject=None)</a></code></p>
+<p class="firstline">Creates a new HMAC key for the specified service account.</p>
+  <code><a href="#delete">delete(projectId, accessId, userProject=None)</a></code></p>
+<p class="firstline">Deletes an HMAC key.</p>
+  <code><a href="#get">get(projectId, accessId, userProject=None)</a></code></p>
+<p class="firstline">Retrieves an HMAC key's metadata</p>
+  <code><a href="#list">list(projectId, maxResults=None, pageToken=None, serviceAccountEmail=None, showDeletedKeys=None, userProject=None)</a></code></p>
+<p class="firstline">Retrieves a list of HMAC keys matching the criteria.</p>
+  <code><a href="#update">update(projectId, accessId, body=None, userProject=None)</a></code></p>
+<p class="firstline">Updates the state of an HMAC key. See the [HMAC Key resource descriptor](https://cloud.google.com/storage/docs/json_api/v1/projects/hmacKeys/update#request-body) for valid states.</p>
+    <code class="details" id="create">create(projectId, serviceAccountEmail, userProject=None)</code>
+  <pre>Creates a new HMAC key for the specified service account.
+  projectId: string, Project ID owning the service account. (required)
+  serviceAccountEmail: string, Email address of the service account. (required)
+    { # JSON template to produce a JSON-style HMAC Key resource for Create responses.
+  &quot;kind&quot;: &quot;storage#hmacKey&quot;, # The kind of item this is. For HMAC keys, this is always storage#hmacKey.
+  &quot;metadata&quot;: { # JSON template to produce a JSON-style HMAC Key metadata resource. # Key metadata.
+    &quot;accessId&quot;: &quot;A String&quot;, # The ID of the HMAC Key.
+    &quot;etag&quot;: &quot;A String&quot;, # HTTP 1.1 Entity tag for the HMAC key.
+    &quot;id&quot;: &quot;A String&quot;, # The ID of the HMAC key, including the Project ID and the Access ID.
+    &quot;kind&quot;: &quot;storage#hmacKeyMetadata&quot;, # The kind of item this is. For HMAC Key metadata, this is always storage#hmacKeyMetadata.
+    &quot;projectId&quot;: &quot;A String&quot;, # Project ID owning the service account to which the key authenticates.
+    &quot;selfLink&quot;: &quot;A String&quot;, # The link to this resource.
+    &quot;serviceAccountEmail&quot;: &quot;A String&quot;, # The email address of the key&#x27;s associated service account.
+    &quot;state&quot;: &quot;A String&quot;, # The state of the key. Can be one of ACTIVE, INACTIVE, or DELETED.
+    &quot;timeCreated&quot;: &quot;A String&quot;, # The creation time of the HMAC key in RFC 3339 format.
+    &quot;updated&quot;: &quot;A String&quot;, # The last modification time of the HMAC key metadata in RFC 3339 format.
+  &quot;secret&quot;: &quot;A String&quot;, # HMAC secret key material.
+    <code class="details" id="delete">delete(projectId, accessId, userProject=None)</code>
+  <pre>Deletes an HMAC key.
+  projectId: string, Project ID owning the requested key (required)
+  accessId: string, Name of the HMAC key to be deleted. (required)
+    <code class="details" id="get">get(projectId, accessId, userProject=None)</code>
+  <pre>Retrieves an HMAC key&#x27;s metadata
+  projectId: string, Project ID owning the service account of the requested key. (required)
+  accessId: string, Name of the HMAC key. (required)
+    { # JSON template to produce a JSON-style HMAC Key metadata resource.
+    <code class="details" id="list">list(projectId, maxResults=None, pageToken=None, serviceAccountEmail=None, showDeletedKeys=None, userProject=None)</code>
+  <pre>Retrieves a list of HMAC keys matching the criteria.
+  projectId: string, Name of the project in which to look for HMAC keys. (required)
+  maxResults: integer, Maximum number of items to return in a single page of responses. The service uses this parameter or 250 items, whichever is smaller. The max number of items per page will also be limited by the number of distinct service accounts in the response. If the number of service accounts in a single response is too high, the page will truncated and a next page token will be returned.
+  serviceAccountEmail: string, If present, only keys for the given service account are returned.
+  showDeletedKeys: boolean, Whether or not to show keys in the DELETED state.
+    { # A list of hmacKeys.
+  &quot;kind&quot;: &quot;storage#hmacKeysMetadata&quot;, # The kind of item this is. For lists of hmacKeys, this is always storage#hmacKeysMetadata.
+    <code class="details" id="update">update(projectId, accessId, body=None, userProject=None)</code>
+  <pre>Updates the state of an HMAC key. See the [HMAC Key resource descriptor](https://cloud.google.com/storage/docs/json_api/v1/projects/hmacKeys/update#request-body) for valid states.
+  projectId: string, Project ID owning the service account of the updated key. (required)
+  accessId: string, Name of the HMAC key being updated. (required)

@@ -1,0 +1,101 @@
+    /// Implements the help provider for alias help.
+    /// Unlike other help providers, AliasHelpProvider directly inherits from HelpProvider
+    /// instead of HelpProviderWithCache. This is because alias can be created/removed/updated
+    /// in a Microsoft Command Shell session. And thus caching may result in old alias being cached.
+    /// The real information for alias is stored in command help. To retrieve the real
+    /// help information, help forwarding is needed.
+    internal class AliasHelpProvider : HelpProvider
+        /// Initializes a new instance of AliasHelpProvider class.
+        internal AliasHelpProvider(HelpSystem helpSystem) : base(helpSystem)
+            _sessionState = helpSystem.ExecutionContext.SessionState;
+            _commandDiscovery = helpSystem.ExecutionContext.CommandDiscovery;
+            _context = helpSystem.ExecutionContext;
+        /// Session state for current Microsoft Command Shell session.
+        /// _sessionState is mainly used for alias help search in the case
+        /// of wildcard search patterns. This is currently not achievable
+        /// through _commandDiscovery.
+        /// Command Discovery object for current session.
+        /// _commandDiscovery is mainly used for exact match help for alias.
+        /// The AliasInfo object returned from _commandDiscovery is essential
+        /// in creating AliasHelpInfo.
+        private readonly CommandDiscovery _commandDiscovery;
+        #region Common Properties
+        /// Name of alias help provider.
+        /// <value>Name of alias help provider</value>
+        internal override string Name
+                return "Alias Help Provider";
+        /// Help category of alias help provider, which is a constant: HelpCategory.Alias.
+        /// <value>Help category of alias help provider.</value>
+        #region Help Provider Interface
+        /// Exact match an alias help target.
+        /// This will
+        ///     a. use _commandDiscovery object to retrieve AliasInfo object.
+        ///     b. Create AliasHelpInfo object based on AliasInfo object
+        /// <param name="helpRequest">Help request object.</param>
+        /// <returns>Help info found.</returns>
+        internal override IEnumerable<HelpInfo> ExactMatchHelp(HelpRequest helpRequest)
+            CommandInfo commandInfo = null;
+                commandInfo = _commandDiscovery.LookupCommandInfo(helpRequest.Target);
+                // CommandNotFoundException is expected here if target doesn't match any
+                // commandlet. Just ignore this exception and bail out.
+            if ((commandInfo != null) && (commandInfo.CommandType == CommandTypes.Alias))
+                AliasInfo aliasInfo = (AliasInfo)commandInfo;
+                HelpInfo helpInfo = AliasHelpInfo.GetHelpInfo(aliasInfo);
+                if (helpInfo != null)
+                    yield return helpInfo;
+        /// Search an alias help target.
+        /// This will,
+        ///     a. use _sessionState object to get a list of alias that match the target.
+        ///     b. for each alias, retrieve help info as in ExactMatchHelp.
+        /// <param name="searchOnlyContent">
+        /// If true, searches for pattern in the help content. Individual
+        /// provider can decide which content to search in.
+        /// If false, searches for pattern in the command names.
+        /// <returns>A IEnumerable of helpinfo object.</returns>
+        internal override IEnumerable<HelpInfo> SearchHelp(HelpRequest helpRequest, bool searchOnlyContent)
+            // aliases do not have help content...so doing nothing in that case
+            if (!searchOnlyContent)
+                string target = helpRequest.Target;
+                string pattern = target;
+                var allAliases = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+                if (!WildcardPattern.ContainsWildcardCharacters(target))
+                    pattern += "*";
+                WildcardPattern matcher = WildcardPattern.Get(pattern, WildcardOptions.IgnoreCase);
+                IDictionary<string, AliasInfo> aliasTable = _sessionState.Internal.GetAliasTable();
+                foreach (string name in aliasTable.Keys)
+                    if (matcher.IsMatch(name))
+                        HelpRequest exactMatchHelpRequest = helpRequest.Clone();
+                        exactMatchHelpRequest.Target = name;
+                        // Duplicates??
+                        foreach (HelpInfo helpInfo in ExactMatchHelp(exactMatchHelpRequest))
+                            // Component/Role/Functionality match is done only for SearchHelp
+                            // as "get-help * -category alias" should not forward help to
+                            // CommandHelpProvider..(ExactMatchHelp does forward help to
+                            // CommandHelpProvider)
+                            if (!Match(helpInfo, helpRequest))
+                            if (allAliases.Contains(name))
+                            allAliases.Add(name);
+                            SearchResolutionOptions.ResolveAliasPatterns, CommandTypes.Alias,
+                while (searcher.MoveNext())
+                    if (_context.CurrentPipelineStopping)
+                    AliasInfo alias = current as AliasInfo;
+                        string name = alias.Name;
+                foreach (CommandInfo current in ModuleUtils.GetMatchingCommands(pattern, _context, helpRequest.CommandOrigin))
+                        HelpInfo helpInfo = AliasHelpInfo.GetHelpInfo(alias);
+        private static bool Match(HelpInfo helpInfo, HelpRequest helpRequest)
+            if (helpRequest == null)
+            if ((helpRequest.HelpCategory & helpInfo.HelpCategory) == 0)
+            if (!Match(helpInfo.Component, helpRequest.Component))
+            if (!Match(helpInfo.Role, helpRequest.Role))
+            if (!Match(helpInfo.Functionality, helpRequest.Functionality))
+        private static bool Match(string target, string[] patterns)
+            // patterns should never be null as shell never accepts
+            // empty inputs. Keeping this check as a safe measure.
+            if (patterns == null || patterns.Length == 0)
+                if (Match(target, pattern))
+                    // we have a match so return true
+            // We dont have a match so far..so return false
+        private static bool Match(string target, string pattern)
+            if (string.IsNullOrEmpty(target))
+                target = string.Empty;
+            return matcher.IsMatch(target);

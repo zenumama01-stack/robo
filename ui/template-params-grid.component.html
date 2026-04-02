@@ -1,0 +1,85 @@
+<div class="template-params-grid">
+    <h3><i class="fa-solid fa-sliders"></i> Template Parameters</h3>
+    <p class="params-description">
+      Define the parameters that can be used within this template. Parameters allow dynamic content injection at runtime.
+  <kendo-grid
+    [data]="templateParams"
+    [loading]="isLoading"
+    [pageable]="false"
+    [sortable]="true"
+    (add)="addHandler($event)"
+    (edit)="editHandler($event)"
+    (cancel)="cancelHandler($event)"
+    (save)="saveHandler($event)"
+    (remove)="removeHandler($event)">
+    @if (editMode) {
+      <kendo-grid-toolbar>
+        <button kendoGridAddCommand type="button" class="k-button k-button-md k-rounded-md k-button-solid k-button-solid-primary">
+      </kendo-grid-toolbar>
+    <kendo-grid-column field="Name" title="Parameter Name" [width]="200">
+      <ng-template kendoGridCellTemplate let-dataItem>
+          <strong>{{ dataItem.Name }}</strong>
+          @if (dataItem.IsRequired) {
+            <span class="required-badge">
+              <i class="fa-solid fa-asterisk"></i> Required
+      <ng-template kendoGridEditTemplate let-dataItem="dataItem" let-formGroup="formGroup">
+          [formControl]="formGroup.get('name')"
+          placeholder="Enter parameter name..."
+          [style.width.%]="100">
+        @if (formGroup.get('name')?.touched && formGroup.get('name')?.errors?.['required']) {
+          <span class="k-invalid-msg">
+            Parameter name is required
+    </kendo-grid-column>
+    <kendo-grid-column field="Type" title="Type" [width]="140">
+        <div class="param-type">
+          <i class="fa-solid {{ getTypeIcon(dataItem.Type) }}"></i>
+          {{ dataItem.Type }}
+          [formControl]="formGroup.get('type')"
+          [data]="typeOptions"
+    <kendo-grid-column field="IsRequired" title="Required" [width]="100">
+        <div class="text-center">
+            <i class="fa-solid fa-check text-success"></i>
+          @if (!dataItem.IsRequired) {
+            <i class="fa-solid fa-times text-muted"></i>
+        <kendo-switch [formControl]="formGroup.get('isRequired')"></kendo-switch>
+    <kendo-grid-column field="Description" title="Description" [width]="300">
+        <div class="param-description">
+          {{ dataItem.Description || '(No description)' }}
+          [formControl]="formGroup.get('description')"
+          placeholder="Enter parameter description..."
+    <kendo-grid-column field="DefaultValue" title="Default Value" [width]="200">
+        @if (dataItem.DefaultValue) {
+          <code class="default-value">{{ dataItem.DefaultValue }}</code>
+        @if (!dataItem.DefaultValue) {
+          <span class="text-muted">(No default)</span>
+          [formControl]="formGroup.get('defaultValue')"
+          placeholder="Enter default value..."
+      <kendo-grid-column title="Actions" [width]="120">
+        <ng-template kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+          @if (!isInEditMode(rowIndex)) {
+              kendoGridEditCommand
+              class="k-button k-button-md k-rounded-md k-button-solid k-button-solid-base"
+              title="Edit parameter">
+              kendoGridRemoveCommand
+              title="Delete parameter">
+          @if (isInEditMode(rowIndex)) {
+              kendoGridSaveCommand
+              class="k-button k-button-md k-rounded-md k-button-solid k-button-solid-primary"
+              title="Save changes">
+              kendoGridCancelCommand
+              title="Cancel changes">
+    <ng-template kendoGridNoRecordsTemplate>
+      <div class="no-params-message">
+        <p>No parameters defined for this template.</p>
+          <p>Click "Add Parameter" to create your first parameter.</p>
+  </kendo-grid>
+  <!-- Help Section -->
+    <div class="params-help">
+      <h4><i class="fa-solid fa-question-circle"></i> Parameter Types</h4>
+        <li><strong>Scalar:</strong> Single value like text, number, or boolean</li>
+        <li><strong>Array:</strong> List of values</li>
+        <li><strong>Object:</strong> JSON object with multiple properties</li>
+        <li><strong>Record:</strong> Single record from a MemberJunction entity</li>
+        <li><strong>Entity:</strong> Multiple records from a MemberJunction entity (can be filtered)</li>
+      <p class="help-note">
+        Use parameters in your template with the syntax: <code>{{ '{{' }} parameterName {{ '}}' }}</code>

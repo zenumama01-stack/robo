@@ -1,0 +1,126 @@
+<h1><a href="compute_alpha.html">Compute Engine API</a> . <a href="compute_alpha.firewalls.html">firewalls</a></h1>
+  <code><a href="#delete">delete(project, firewall, requestId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Deletes the specified firewall.</p>
+  <code><a href="#get">get(project, firewall, x__xgafv=None)</a></code></p>
+<p class="firstline">Returns the specified firewall.</p>
+<p class="firstline">Creates a firewall rule in the specified project using the data</p>
+<p class="firstline">Retrieves the list of firewall rules available to the specified</p>
+  <code><a href="#patch">patch(project, firewall, body=None, requestId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Updates the specified firewall rule with the data included in the</p>
+  <code><a href="#update">update(project, firewall, body=None, requestId=None, x__xgafv=None)</a></code></p>
+    <code class="details" id="delete">delete(project, firewall, requestId=None, x__xgafv=None)</code>
+  <pre>Deletes the specified firewall.
+  firewall: string, Name of the firewall rule to delete. (required)
+    <code class="details" id="get">get(project, firewall, x__xgafv=None)</code>
+  <pre>Returns the specified firewall.
+  firewall: string, Name of the firewall rule to return. (required)
+    { # Represents a Firewall Rule resource.
+    # Firewall rules allow or deny ingress traffic to, and egress traffic from your
+    # instances. For more information, readFirewall rules.
+  &quot;allowed&quot;: [ # The list of ALLOW rules specified by this firewall. Each rule specifies a
+      # protocol and port-range tuple that describes a permitted connection.
+      &quot;IPProtocol&quot;: &quot;A String&quot;, # The IP protocol to which this rule applies. The protocol type is
+          # required when creating a firewall rule. This value can either be one of the
+          # following well known protocol strings (tcp, udp,icmp, esp, ah, ipip,sctp) or the IP protocol number.
+      &quot;ports&quot;: [ # An optional list of ports to which this rule applies.
+          # This field is only applicable for the UDP or TCP protocol.
+          # Each entry must be either an integer or a range.
+          # If not specified, this rule applies to connections through any port.
+          # Example inputs include: [&quot;22&quot;], [&quot;80&quot;,&quot;443&quot;],
+          # and [&quot;12345-12349&quot;].
+  &quot;denied&quot;: [ # The list of DENY rules specified by this firewall. Each rule specifies a
+      # protocol and port-range tuple that describes a denied connection.
+  &quot;destinationRanges&quot;: [ # If destination ranges are specified, the firewall rule applies only to
+      # traffic that has destination IP address in these ranges. These ranges must
+      # be expressed inCIDR format. Both IPv4 and IPv6 are supported.
+  &quot;direction&quot;: &quot;A String&quot;, # Direction of traffic to which this firewall applies, either `INGRESS` or
+      # `EGRESS`. The default is `INGRESS`. For `EGRESS` traffic, you cannot
+      # specify the sourceTags fields.
+  &quot;disabled&quot;: True or False, # Denotes whether the firewall rule is disabled. When set to true, the
+      # firewall rule is not enforced and the network behaves as if it did not
+      # exist. If this is unspecified, the firewall rule will be enabled.
+  &quot;enableLogging&quot;: True or False, # Deprecated in favor of enable in LogConfig.
+      # This field denotes whether to enable logging for a particular
+      # firewall rule. If logging is enabled, logs will be exported t
+      # Cloud Logging.
+  &quot;kind&quot;: &quot;compute#firewall&quot;, # Output only. [Output Only] Type of the resource. Always compute#firewall
+      # for firewall rules.
+  &quot;logConfig&quot;: { # The available logging options for a firewall rule. # This field denotes the logging options for a particular firewall rule. If
+      # logging is enabled, logs will be exported to Cloud Logging.
+    &quot;enable&quot;: True or False, # This field denotes whether to enable logging for a particular firewall
+    &quot;metadata&quot;: &quot;A String&quot;, # This field can only be specified for a particular firewall rule if
+        # logging is enabled for that rule. This field denotes whether to include
+        # or exclude metadata for firewall logs.
+  &quot;network&quot;: &quot;A String&quot;, # URL of the network resource for this firewall rule. If not
+      # specified when creating a firewall rule, the default network
+      # is used:
+      # global/networks/default
+      # If you choose to specify this field, you can specify the network as a full
+      # or partial URL. For example, the following are all valid URLs:
+      #    https://www.googleapis.com/compute/v1/projects/myproject/global/networks/my-network
+      #    - projects/myproject/global/networks/my-network
+      #    - global/networks/default
+  &quot;params&quot;: { # Additional firewall parameters. # Input only. [Input Only] Additional params passed with the request, but not persisted
+  &quot;priority&quot;: 42, # Priority for this rule.
+      # This is an integer between `0` and `65535`, both inclusive.
+      # The default value is `1000`.
+      # Relative priorities determine which rule takes effect if multiple rules
+      # apply. Lower values indicate higher priority. For example, a rule with
+      # priority `0` has higher precedence than a rule with priority `1`.
+      # DENY rules take precedence over ALLOW rules if they have equal priority.
+      # Note that VPC networks have implied
+      # rules with a priority of `65535`. To avoid conflicts with the implied
+      # rules, use a priority number less than `65535`.
+  &quot;sourceRanges&quot;: [ # If source ranges are specified, the firewall rule applies only to traffic
+      # that has a source IP address in these ranges. These ranges must be
+      # expressed inCIDR format. One or both of sourceRanges
+      # and sourceTags may be set.
+      # If both fields are set, the rule applies to traffic that has a
+      # source IP address within sourceRanges OR a source IP
+      # from a resource with a matching tag listed in thesourceTags field. The connection does not need to match
+      # both fields for the rule to
+      # apply. Both IPv4 and IPv6 are supported.
+  &quot;sourceServiceAccounts&quot;: [ # If source service accounts are specified, the firewall rules apply only to
+      # traffic originating from an instance with a service account in this list.
+      # Source service accounts cannot be used to control traffic to an instance&#x27;s
+      # external IP address because service accounts are associated with an
+      # instance, not an IP address.sourceRanges can be set at the same time assourceServiceAccounts.
+      # If both are set, the firewall applies to traffic that
+      # has a source IP address within the sourceRanges OR a source
+      # IP that belongs to an instance with service account listed insourceServiceAccount. The connection does not need to match
+      # both fields for the firewall to apply.sourceServiceAccounts cannot be used at the same time assourceTags or targetTags.
+  &quot;sourceTags&quot;: [ # If source tags are specified, the firewall rule applies only to traffic
+      # with source IPs that match the primary network interfaces of VM instances
+      # that have the tag and are in the same VPC network.
+      # Source tags cannot be used to control traffic to an instance&#x27;s external IP
+      # address, it only applies to traffic between instances in the same virtual
+      # network. Because tags are associated with instances, not IP addresses.
+      # One or both of sourceRanges and sourceTags may be
+      # set. If both fields are set, the firewall applies to traffic that has a
+      # source IP address within sourceRanges OR a source IP from a
+      # resource with a matching tag listed in the sourceTags
+      # field. The connection does not need to match both fields for the
+      # firewall to apply.
+  &quot;targetServiceAccounts&quot;: [ # A list of service accounts indicating sets of instances located in the
+      # network that may make network connections as specified inallowed[].targetServiceAccounts cannot be used at the same time astargetTags or sourceTags.
+      # If neither targetServiceAccounts nor targetTags
+      # are specified, the firewall rule applies to all instances on the specified
+      # network.
+  &quot;targetTags&quot;: [ # A list of tags that controls which instances the firewall rule
+      # applies to. If targetTags are specified, then the firewall
+      # rule applies only to instances in the VPC network that have one of those
+      # tags. If no targetTags are specified, the firewall rule
+      # applies to all instances on the specified network.
+  <pre>Creates a firewall rule in the specified project using the data
+  <pre>Retrieves the list of firewall rules available to the specified
+    { # Contains a list of firewalls.
+  &quot;items&quot;: [ # A list of Firewall resources.
+  &quot;kind&quot;: &quot;compute#firewallList&quot;, # Output only. [Output Only] Type of resource. Always compute#firewallList
+      # for lists of firewalls.
+    <code class="details" id="patch">patch(project, firewall, body=None, requestId=None, x__xgafv=None)</code>
+  <pre>Updates the specified firewall rule with the data included in the
+  firewall: string, Name of the firewall rule to patch. (required)
+    <code class="details" id="update">update(project, firewall, body=None, requestId=None, x__xgafv=None)</code>
+Note that all fields will be updated if using PUT, even fields that are not
+specified. To update individual fields, please use PATCH instead.
+  firewall: string, Name of the firewall rule to update. (required)

@@ -1,0 +1,76 @@
+<div class="data-context-viewer">
+            <mj-loading text="Loading data context..." size="large"></mj-loading>
+        <div class="data-context-header">
+                    <i class="fa-solid fa-layer-group header-icon"></i>
+                    <h2>{{ dataContextRecord?.Name || 'Data Context' }}</h2>
+                @if (dataContextRecord && dataContextRecord.Description) {
+                    <p class="header-description">{{ dataContextRecord.Description }}</p>
+                        ID: {{ dataContextRecord?.ID }}
+                        <button class="copy-btn" (click)="copyToClipboard(dataContextRecord?.ID || '', 'context-id')" title="Copy ID">
+                            <i class="fa-solid" [class.fa-copy]="copiedField !== 'context-id'" [class.fa-check]="copiedField === 'context-id'"></i>
+                        {{ itemCount }} {{ itemCount === 1 ? 'item' : 'items' }}
+                <button kendoButton look="flat" (click)="refresh()" title="Refresh">
+                <button kendoButton look="flat" (click)="exportToCSV()" title="Export to CSV">
+                (ngModelChange)="onSearchChange()"
+                placeholder="Search items by type, SQL, entity name, or description..."
+                    <i class="fa-solid fa-magnifying-glass search-icon"></i>
+        <!-- Data Context Items as Cards -->
+        <div class="items-container">
+            @for (item of filteredItems; track item.ID; let i = $index) {
+                <div class="data-context-card" [class.expanded]="expandedItems[item.ID]">
+                    <div class="card-header" (click)="toggleItemExpansion(item.ID)">
+                        <div class="card-header-left">
+                            <div class="type-badge" [style.background-color]="getTypeColor(item.Type) + '20'" [style.color]="getTypeColor(item.Type)">
+                                <i [class]="getTypeIcon(item.Type)"></i>
+                                <span>{{ item.Type }}</span>
+                            @if (item.Description) {
+                                <span class="card-description">{{ item.Description }}</span>
+                            <i class="fa-solid" [class.fa-chevron-down]="!expandedItems[item.ID]" [class.fa-chevron-up]="expandedItems[item.ID]"></i>
+                        <!-- SQL Section -->
+                        @if (item.SQL) {
+                                    <h4><i class="fa-solid fa-code"></i> SQL Query</h4>
+                                    <div class="sql-actions">
+                                        <button class="action-btn" (click)="copyToClipboard(item.SQL, 'sql-' + item.ID)" title="Copy SQL">
+                                            <i class="fa-solid" [class.fa-copy]="copiedField !== 'sql-' + item.ID" [class.fa-check]="copiedField === 'sql-' + item.ID"></i>
+                                            {{ copiedField === 'sql-' + item.ID ? 'Copied!' : 'Copy' }}
+                                        <button class="action-btn" (click)="previewSQLCode(item.SQL)" title="Expand">
+                                            Expand
+                                <pre class="sql-code"><code>{{ item.SQL }}</code></pre>
+                        <div class="metadata-section">
+                                @if (item.EntityID) {
+                                        <span class="metadata-label">Entity</span>
+                                        <div class="metadata-value">
+                                            <span>{{ getEntityName(item.EntityID) || 'Unknown' }}</span>
+                                            <button class="link-btn" (click)="navigateToEntity(item.EntityID)" title="View entity">
+                                @if (item.ViewID) {
+                                        <span class="metadata-label">View</span>
+                                            <span title="{{ item.ViewID }}">{{ item.ViewID | slice:0:20 }}{{ item.ViewID.length > 20 ? '...' : '' }}</span>
+                                            <button class="link-btn" (click)="navigateToView(item.ViewID)" title="View details">
+                                @if (item.QueryID) {
+                                        <span class="metadata-label">Query</span>
+                                            <span title="{{ item.QueryID }}">{{ item.QueryID | slice:0:20 }}{{ item.QueryID.length > 20 ? '...' : '' }}</span>
+                                            <button class="link-btn" (click)="navigateToQuery(item.QueryID)" title="View query">
+                                @if (item.RecordID) {
+                                        <span class="metadata-label">Record ID</span>
+                                            <code>{{ item.RecordID }}</code>
+                                            <button class="link-btn" (click)="copyToClipboard(item.RecordID, 'record-' + item.ID)" title="Copy">
+                                                <i class="fa-solid" [class.fa-copy]="copiedField !== 'record-' + item.ID" [class.fa-check]="copiedField === 'record-' + item.ID"></i>
+                            <span class="timestamp">
+                                Created {{ item.__mj_CreatedAt | date:'short' }}
+                            @if (item.__mj_UpdatedAt && item.__mj_UpdatedAt !== item.__mj_CreatedAt) {
+                                    Updated {{ item.__mj_UpdatedAt | date:'short' }}
+            @if (filteredItems.length === 0) {
+                    <p>No items found</p>
+    <!-- SQL Preview Dialog -->
+    @if (showSQLPreview) {
+        <div class="sql-preview-overlay" (click)="closeSQLPreview()">
+            <div class="sql-preview-dialog" (click)="$event.stopPropagation()">
+                <div class="sql-preview-header">
+                    <h3>SQL Preview</h3>
+                    <button class="close-btn" (click)="closeSQLPreview()">
+                <div class="sql-preview-content">
+                    <pre><code>{{ previewSQL }}</code></pre>
+                <div class="sql-preview-actions">
+                    <button kendoButton (click)="copyToClipboard(previewSQL, 'preview-sql')">
+                        <i class="fa-solid" [class.fa-copy]="copiedField !== 'preview-sql'" [class.fa-check]="copiedField === 'preview-sql'"></i>
+                        {{ copiedField === 'preview-sql' ? 'Copied!' : 'Copy SQL' }}

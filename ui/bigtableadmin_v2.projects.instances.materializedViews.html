@@ -1,0 +1,38 @@
+<h1><a href="bigtableadmin_v2.html">Cloud Bigtable Admin API</a> . <a href="bigtableadmin_v2.projects.html">projects</a> . <a href="bigtableadmin_v2.projects.instances.html">instances</a> . <a href="bigtableadmin_v2.projects.instances.materializedViews.html">materializedViews</a></h1>
+  <code><a href="#create">create(parent, body=None, materializedViewId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Creates a materialized view within an instance.</p>
+<p class="firstline">Deletes a materialized view from an instance.</p>
+<p class="firstline">Gets information about a materialized view.</p>
+<p class="firstline">Lists information about materialized views in an instance.</p>
+<p class="firstline">Updates a materialized view within an instance.</p>
+    <code class="details" id="create">create(parent, body=None, materializedViewId=None, x__xgafv=None)</code>
+  <pre>Creates a materialized view within an instance.
+  parent: string, Required. The parent instance where this materialized view will be created. Format: `projects/{project}/instances/{instance}`. (required)
+{ # A materialized view object that can be referenced in SQL queries.
+  &quot;clusterStates&quot;: { # Output only. Map from cluster ID to per-cluster materialized view state. If it could not be determined whether or not the materialized view has data in a particular cluster (for example, if its zone is unavailable), then there will be an entry for the cluster with `STATE_NOT_KNOWN` state. Views: `REPLICATION_VIEW`, `FULL`.
+    &quot;a_key&quot;: { # The state of a materialized view&#x27;s data in a particular cluster.
+      &quot;replicationState&quot;: &quot;A String&quot;, # Output only. The state of the materialized view in this cluster.
+  &quot;deletionProtection&quot;: True or False, # Set to true to make the MaterializedView protected against deletion. Views: `SCHEMA_VIEW`, `REPLICATION_VIEW`, `FULL`.
+  &quot;etag&quot;: &quot;A String&quot;, # Optional. The etag for this materialized view. This may be sent on update requests to ensure that the client has an up-to-date value before proceeding. The server returns an ABORTED error on a mismatched etag. Views: `SCHEMA_VIEW`, `REPLICATION_VIEW`, `FULL`.
+  &quot;name&quot;: &quot;A String&quot;, # Identifier. The unique name of the materialized view. Format: `projects/{project}/instances/{instance}/materializedViews/{materialized_view}` Views: `SCHEMA_VIEW`, `REPLICATION_VIEW`, `FULL`.
+  &quot;query&quot;: &quot;A String&quot;, # Required. Immutable. The materialized view&#x27;s select query. Views: `SCHEMA_VIEW`, `FULL`.
+  materializedViewId: string, Required. The ID to use for the materialized view, which will become the final component of the materialized view&#x27;s resource name.
+  <pre>Deletes a materialized view from an instance.
+  name: string, Required. The unique name of the materialized view to be deleted. Format: `projects/{project}/instances/{instance}/materializedViews/{materialized_view}`. (required)
+  etag: string, Optional. The current etag of the materialized view. If an etag is provided and does not match the current etag of the materialized view, deletion will be blocked and an ABORTED error will be returned.
+  <pre>Gets information about a materialized view.
+  name: string, Required. The unique name of the requested materialized view. Values are of the form `projects/{project}/instances/{instance}/materializedViews/{materialized_view}`. (required)
+  view: string, Optional. Describes which of the materialized view&#x27;s fields should be populated in the response. Defaults to SCHEMA_VIEW.
+      VIEW_UNSPECIFIED - Uses the default view for each method as documented in its request.
+      SCHEMA_VIEW - Only populates fields related to the materialized view&#x27;s schema.
+      REPLICATION_VIEW - Only populates fields related to the materialized view&#x27;s replication state.
+      FULL - Populates all fields.
+  <pre>Lists information about materialized views in an instance.
+  parent: string, Required. The unique name of the instance for which the list of materialized views is requested. Values are of the form `projects/{project}/instances/{instance}`. (required)
+  pageSize: integer, Optional. The maximum number of materialized views to return. The service may return fewer than this value
+  pageToken: string, Optional. A page token, received from a previous `ListMaterializedViews` call. Provide this to retrieve the subsequent page. When paginating, all other parameters provided to `ListMaterializedViews` must match the call that provided the page token.
+  view: string, Optional. Describes which of the materialized view&#x27;s fields should be populated in the response. For now, only the default value SCHEMA_VIEW is supported.
+    { # Response message for BigtableInstanceAdmin.ListMaterializedViews.
+  &quot;materializedViews&quot;: [ # The list of requested materialized views.
+  <pre>Updates a materialized view within an instance.
+  name: string, Identifier. The unique name of the materialized view. Format: `projects/{project}/instances/{instance}/materializedViews/{materialized_view}` Views: `SCHEMA_VIEW`, `REPLICATION_VIEW`, `FULL`. (required)

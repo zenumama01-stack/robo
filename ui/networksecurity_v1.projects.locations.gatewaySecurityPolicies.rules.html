@@ -1,0 +1,31 @@
+<h1><a href="networksecurity_v1.html">Network Security API</a> . <a href="networksecurity_v1.projects.html">projects</a> . <a href="networksecurity_v1.projects.locations.html">locations</a> . <a href="networksecurity_v1.projects.locations.gatewaySecurityPolicies.html">gatewaySecurityPolicies</a> . <a href="networksecurity_v1.projects.locations.gatewaySecurityPolicies.rules.html">rules</a></h1>
+  <code><a href="#create">create(parent, body=None, gatewaySecurityPolicyRuleId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Deletes a single GatewaySecurityPolicyRule.</p>
+<p class="firstline">Gets details of a single GatewaySecurityPolicyRule.</p>
+<p class="firstline">Lists GatewaySecurityPolicyRules in a given project and location.</p>
+<p class="firstline">Updates the parameters of a single GatewaySecurityPolicyRule.</p>
+    <code class="details" id="create">create(parent, body=None, gatewaySecurityPolicyRuleId=None, x__xgafv=None)</code>
+  parent: string, Required. The parent where this rule will be created. Format : projects/{project}/location/{location}/gatewaySecurityPolicies/* (required)
+{ # The GatewaySecurityPolicyRule resource is in a nested collection within a GatewaySecurityPolicy and represents a traffic matching condition and associated action to perform.
+  &quot;applicationMatcher&quot;: &quot;A String&quot;, # Optional. CEL expression for matching on L7/application level criteria.
+  &quot;basicProfile&quot;: &quot;A String&quot;, # Required. Profile which tells what the primitive action should be.
+  &quot;createTime&quot;: &quot;A String&quot;, # Output only. Time when the rule was created.
+  &quot;enabled&quot;: True or False, # Required. Whether the rule is enforced.
+  &quot;name&quot;: &quot;A String&quot;, # Required. Immutable. Name of the resource. ame is the full resource name so projects/{project}/locations/{location}/gatewaySecurityPolicies/{gateway_security_policy}/rules/{rule} rule should match the pattern: (^[a-z]([a-z0-9-]{0,61}[a-z0-9])?$).
+  &quot;priority&quot;: 42, # Required. Priority of the rule. Lower number corresponds to higher precedence.
+  &quot;sessionMatcher&quot;: &quot;A String&quot;, # Required. CEL expression for matching on session criteria.
+  &quot;tlsInspectionEnabled&quot;: True or False, # Optional. Flag to enable TLS inspection of traffic matching on , can only be true if the parent GatewaySecurityPolicy references a TLSInspectionConfig.
+  &quot;updateTime&quot;: &quot;A String&quot;, # Output only. Time when the rule was updated.
+  gatewaySecurityPolicyRuleId: string, The ID to use for the rule, which will become the final component of the rule&#x27;s resource name. This value should be 4-63 characters, and valid characters are /a-z-/.
+  <pre>Deletes a single GatewaySecurityPolicyRule.
+  name: string, Required. A name of the GatewaySecurityPolicyRule to delete. Must be in the format `projects/{project}/locations/{location}/gatewaySecurityPolicies/{gatewaySecurityPolicy}/rules/*`. (required)
+  <pre>Gets details of a single GatewaySecurityPolicyRule.
+  name: string, Required. The name of the GatewaySecurityPolicyRule to retrieve. Format: projects/{project}/location/{location}/gatewaySecurityPolicies/*/rules/* (required)
+  <pre>Lists GatewaySecurityPolicyRules in a given project and location.
+  parent: string, Required. The project, location and GatewaySecurityPolicy from which the GatewaySecurityPolicyRules should be listed, specified in the format `projects/{project}/locations/{location}/gatewaySecurityPolicies/{gatewaySecurityPolicy}`. (required)
+  pageSize: integer, Maximum number of GatewaySecurityPolicyRules to return per call.
+  pageToken: string, The value returned by the last &#x27;ListGatewaySecurityPolicyRulesResponse&#x27; Indicates that this is a continuation of a prior &#x27;ListGatewaySecurityPolicyRules&#x27; call, and that the system should return the next page of data.
+    { # Response returned by the ListGatewaySecurityPolicyRules method.
+  &quot;gatewaySecurityPolicyRules&quot;: [ # List of GatewaySecurityPolicyRule resources.
+  <pre>Updates the parameters of a single GatewaySecurityPolicyRule.
+  name: string, Required. Immutable. Name of the resource. ame is the full resource name so projects/{project}/locations/{location}/gatewaySecurityPolicies/{gateway_security_policy}/rules/{rule} rule should match the pattern: (^[a-z]([a-z0-9-]{0,61}[a-z0-9])?$). (required)

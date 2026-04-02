@@ -1,0 +1,20 @@
+    <!-- Provider Identification Section -->
+        SectionKey="providerIdentification"
+        SectionName="Provider Identification"
+    <!-- Driver Configuration Section -->
+        SectionKey="driverConfiguration"
+        SectionName="Driver Configuration"
+            FieldName="ServerDriverKey"
+            FieldName="ClientDriverKey"
+    <!-- Selection & Availability Section -->
+        SectionKey="selectionAvailability"
+        SectionName="Selection & Availability"
+            FieldName="SupportsSearch"
+    <!-- Authentication & Access Section -->
+        SectionKey="authenticationAccess"
+        SectionName="Authentication & Access"
+            FieldName="RequiresOAuth"
+                [Params]="BuildRelationshipViewParamsByEntityName('MJ: Files','ProviderID')"
+                [Params]="BuildRelationshipViewParamsByEntityName('MJ: File Storage Accounts','ProviderID')"
+                [Params]="BuildRelationshipViewParamsByEntityName('MJ: AI Configurations','DefaultStorageProviderID')"
+                [Params]="BuildRelationshipViewParamsByEntityName('MJ: AI Agents','AttachmentStorageProviderID')"

@@ -1,0 +1,32 @@
+<h1><a href="dataplex_v1.html">Cloud Dataplex API</a> . <a href="dataplex_v1.projects.html">projects</a> . <a href="dataplex_v1.projects.locations.html">locations</a> . <a href="dataplex_v1.projects.locations.dataTaxonomies.html">dataTaxonomies</a></h1>
+  <code><a href="dataplex_v1.projects.locations.dataTaxonomies.attributes.html">attributes()</a></code>
+  <code><a href="#create">create(parent, body=None, dataTaxonomyId=None, validateOnly=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Create a DataTaxonomy resource.</p>
+<p class="firstline">Deletes a DataTaxonomy resource. All attributes within the DataTaxonomy must be deleted before the DataTaxonomy can be deleted.</p>
+<p class="firstline">Retrieves a DataTaxonomy resource.</p>
+<p class="firstline">Lists DataTaxonomy resources in a project and location.</p>
+<p class="firstline">Updates a DataTaxonomy resource.</p>
+    <code class="details" id="create">create(parent, body=None, dataTaxonomyId=None, validateOnly=None, x__xgafv=None)</code>
+  <pre>Create a DataTaxonomy resource.
+{ # DataTaxonomy represents a set of hierarchical DataAttributes resources, grouped with a common theme Eg: &#x27;SensitiveDataTaxonomy&#x27; can have attributes to manage PII data. It is defined at project level.
+  &quot;attributeCount&quot;: 42, # Output only. The number of attributes in the DataTaxonomy.
+  &quot;classCount&quot;: 42, # Output only. The number of classes in the DataTaxonomy.
+  &quot;createTime&quot;: &quot;A String&quot;, # Output only. The time when the DataTaxonomy was created.
+  &quot;description&quot;: &quot;A String&quot;, # Optional. Description of the DataTaxonomy.
+  &quot;labels&quot;: { # Optional. User-defined labels for the DataTaxonomy.
+  &quot;name&quot;: &quot;A String&quot;, # Output only. The relative resource name of the DataTaxonomy, of the form: projects/{project_number}/locations/{location_id}/dataTaxonomies/{data_taxonomy_id}.
+  &quot;uid&quot;: &quot;A String&quot;, # Output only. System generated globally unique ID for the dataTaxonomy. This ID will be different if the DataTaxonomy is deleted and re-created with the same name.
+  &quot;updateTime&quot;: &quot;A String&quot;, # Output only. The time when the DataTaxonomy was last updated.
+  dataTaxonomyId: string, Required. DataTaxonomy identifier. * Must contain only lowercase letters, numbers and hyphens. * Must start with a letter. * Must be between 1-63 characters. * Must end with a number or a letter. * Must be unique within the Project.
+  <pre>Deletes a DataTaxonomy resource. All attributes within the DataTaxonomy must be deleted before the DataTaxonomy can be deleted.
+  name: string, Required. The resource name of the DataTaxonomy: projects/{project_number}/locations/{location_id}/dataTaxonomies/{data_taxonomy_id} (required)
+  etag: string, Optional. If the client provided etag value does not match the current etag value,the DeleteDataTaxonomy method returns an ABORTED error.
+  <pre>Retrieves a DataTaxonomy resource.
+  <pre>Lists DataTaxonomy resources in a project and location.
+  parent: string, Required. The resource name of the DataTaxonomy location, of the form: projects/{project_number}/locations/{location_id} where location_id refers to a Google Cloud region. (required)
+  pageSize: integer, Optional. Maximum number of DataTaxonomies to return. The service may return fewer than this value. If unspecified, at most 10 DataTaxonomies will be returned. The maximum value is 1000; values above 1000 will be coerced to 1000.
+  pageToken: string, Optional. Page token received from a previous ListDataTaxonomies call. Provide this to retrieve the subsequent page. When paginating, all other parameters provided to ListDataTaxonomies must match the call that provided the page token.
+    { # List DataTaxonomies response.
+  &quot;dataTaxonomies&quot;: [ # DataTaxonomies under the given parent location.
+  <pre>Updates a DataTaxonomy resource.
+  name: string, Output only. The relative resource name of the DataTaxonomy, of the form: projects/{project_number}/locations/{location_id}/dataTaxonomies/{data_taxonomy_id}. (required)

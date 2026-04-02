@@ -1,0 +1,32 @@
+<h1><a href="netapp_v1.html">NetApp API</a> . <a href="netapp_v1.projects.html">projects</a> . <a href="netapp_v1.projects.locations.html">locations</a> . <a href="netapp_v1.projects.locations.volumes.html">volumes</a> . <a href="netapp_v1.projects.locations.volumes.quotaRules.html">quotaRules</a></h1>
+  <code><a href="#create">create(parent, body=None, quotaRuleId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Creates a new quota rule.</p>
+<p class="firstline">Deletes a quota rule.</p>
+<p class="firstline">Returns details of the specified quota rule.</p>
+<p class="firstline">Returns list of all quota rules in a location.</p>
+<p class="firstline">Updates a quota rule.</p>
+    <code class="details" id="create">create(parent, body=None, quotaRuleId=None, x__xgafv=None)</code>
+  <pre>Creates a new quota rule.
+  parent: string, Required. Parent value for CreateQuotaRuleRequest (required)
+{ # QuotaRule specifies the maximum disk space a user or group can use within a volume. They can be used for creating default and individual quota rules.
+  &quot;createTime&quot;: &quot;A String&quot;, # Output only. Create time of the quota rule
+  &quot;description&quot;: &quot;A String&quot;, # Optional. Description of the quota rule
+  &quot;diskLimitMib&quot;: 42, # Required. The maximum allowed disk space in MiB.
+  &quot;labels&quot;: { # Optional. Labels of the quota rule
+  &quot;name&quot;: &quot;A String&quot;, # Identifier. The resource name of the quota rule. Format: `projects/{project_number}/locations/{location_id}/volumes/volumes/{volume_id}/quotaRules/{quota_rule_id}`.
+  &quot;state&quot;: &quot;A String&quot;, # Output only. State of the quota rule
+  &quot;stateDetails&quot;: &quot;A String&quot;, # Output only. State details of the quota rule
+  &quot;target&quot;: &quot;A String&quot;, # Optional. The quota rule applies to the specified user or group, identified by a Unix UID/GID, Windows SID, or null for default.
+  &quot;type&quot;: &quot;A String&quot;, # Required. The type of quota rule.
+  quotaRuleId: string, Required. ID of the quota rule to create. Must be unique within the parent resource. Must contain only letters, numbers, underscore and hyphen, with the first character a letter or underscore, the last a letter or underscore or a number, and a 63 character maximum.
+  <pre>Deletes a quota rule.
+  name: string, Required. Name of the quota rule. (required)
+  <pre>Returns details of the specified quota rule.
+  name: string, Required. Name of the quota rule (required)
+  <pre>Returns list of all quota rules in a location.
+  parent: string, Required. Parent value for ListQuotaRulesRequest (required)
+    { # ListQuotaRulesResponse is the response to a ListQuotaRulesRequest.
+  &quot;quotaRules&quot;: [ # List of quota rules
+  <pre>Updates a quota rule.
+  name: string, Identifier. The resource name of the quota rule. Format: `projects/{project_number}/locations/{location_id}/volumes/volumes/{volume_id}/quotaRules/{quota_rule_id}`. (required)
+  updateMask: string, Optional. Field mask is used to specify the fields to be overwritten in the Quota Rule resource by the update. The fields specified in the update_mask are relative to the resource, not the full request. A field will be overwritten if it is in the mask. If the user does not provide a mask then all fields will be overwritten.

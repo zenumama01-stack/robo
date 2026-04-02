@@ -1,0 +1,68 @@
+<h1><a href="migrationcenter_v1.html">Migration Center API</a> . <a href="migrationcenter_v1.projects.html">projects</a> . <a href="migrationcenter_v1.projects.locations.html">locations</a> . <a href="migrationcenter_v1.projects.locations.importJobs.html">importJobs</a></h1>
+  <code><a href="migrationcenter_v1.projects.locations.importJobs.importDataFiles.html">importDataFiles()</a></code>
+<p class="firstline">Returns the importDataFiles Resource.</p>
+  <code><a href="#create">create(parent, body=None, importJobId=None, requestId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Creates an import job.</p>
+<p class="firstline">Deletes an import job.</p>
+<p class="firstline">Gets the details of an import job.</p>
+<p class="firstline">Lists all import jobs.</p>
+<p class="firstline">Updates an import job.</p>
+<p class="firstline">Runs an import job.</p>
+<p class="firstline">Validates an import job.</p>
+    <code class="details" id="create">create(parent, body=None, importJobId=None, requestId=None, x__xgafv=None)</code>
+  <pre>Creates an import job.
+{ # A resource that represents the background job that imports asset frames.
+  &quot;assetSource&quot;: &quot;A String&quot;, # Required. Reference to a source.
+  &quot;completeTime&quot;: &quot;A String&quot;, # Output only. The timestamp when the import job was completed.
+  &quot;createTime&quot;: &quot;A String&quot;, # Output only. The timestamp when the import job was created.
+  &quot;displayName&quot;: &quot;A String&quot;, # Optional. User-friendly display name. Maximum length is 256 characters.
+  &quot;executionReport&quot;: { # A resource that reports result of the import job execution. # Output only. The report with the results of running the import job.
+    &quot;executionErrors&quot;: { # A resource that aggregates errors across import job files. # Validation errors encountered during the execution of the import job.
+      &quot;fileValidations&quot;: [ # List of errors found in files.
+        { # A resource that aggregates the validation errors found in an import job file.
+          &quot;fileErrors&quot;: [ # List of file level errors.
+            { # A resource that reports the errors encountered while processing an import job.
+              &quot;errorDetails&quot;: &quot;A String&quot;, # The error information.
+              &quot;severity&quot;: &quot;A String&quot;, # The severity of the error.
+          &quot;fileName&quot;: &quot;A String&quot;, # The name of the file.
+          &quot;partialReport&quot;: True or False, # Flag indicating that processing was aborted due to maximum number of errors.
+          &quot;rowErrors&quot;: [ # Partial list of rows that encountered validation error.
+            { # A resource that reports the import job errors at row level.
+              &quot;archiveError&quot;: { # Error details for an archive file. # Error details for an archive file.
+                &quot;csvError&quot;: { # Error details for a CSV file. # Error details for a CSV file.
+                  &quot;rowNumber&quot;: 42, # The row number where the error was detected.
+                &quot;filePath&quot;: &quot;A String&quot;, # Output only. The file path inside the archive where the error was detected.
+              &quot;assetTitle&quot;: &quot;A String&quot;, # Output only. The asset title.
+              &quot;errors&quot;: [ # The list of errors detected in the row.
+              &quot;vmName&quot;: &quot;A String&quot;, # The name of the VM in the row.
+              &quot;vmUuid&quot;: &quot;A String&quot;, # The VM UUID.
+              &quot;xlsxError&quot;: { # Error details for an XLSX file. # Error details for an XLSX file.
+                &quot;sheet&quot;: &quot;A String&quot;, # The name of the sheet where the error was detected.
+      &quot;jobErrors&quot;: [ # List of job level errors.
+    &quot;framesReported&quot;: 42, # Total number of asset frames reported for the import job.
+    &quot;totalRowsCount&quot;: 42, # Output only. Total number of rows in the import job.
+  &quot;name&quot;: &quot;A String&quot;, # Output only. The full name of the import job.
+  &quot;state&quot;: &quot;A String&quot;, # Output only. The state of the import job.
+  &quot;updateTime&quot;: &quot;A String&quot;, # Output only. The timestamp when the import job was last updated.
+  &quot;validationReport&quot;: { # A resource that aggregates errors across import job files. # Output only. The report with the validation results of the import job.
+  importJobId: string, Required. ID of the import job.
+  <pre>Deletes an import job.
+  force: boolean, Optional. If set to `true`, any `ImportDataFiles` of this job will also be deleted If set to `false`, the request only works if the job has no data files.
+  <pre>Gets the details of an import job.
+  view: string, Optional. The level of details of the import job. Default value is FULL.
+      IMPORT_JOB_VIEW_UNSPECIFIED - The import job view is not specified. The API displays the basic view by default.
+      IMPORT_JOB_VIEW_BASIC - The import job view includes basic metadata of an import job. This view does not include payload information.
+      IMPORT_JOB_VIEW_FULL - The import job view includes all metadata of an import job.
+  <pre>Lists all import jobs.
+  parent: string, Required. Parent value for `ListImportJobsRequest`. (required)
+  view: string, Optional. The level of details of each import job. Default value is BASIC.
+    { # A response for listing import jobs.
+  &quot;importJobs&quot;: [ # The list of import jobs.
+  <pre>Updates an import job.
+  name: string, Output only. The full name of the import job. (required)
+  <pre>Runs an import job.
+  name: string, Required. The name of the import job to run. (required)
+{ # A request to run an import job.
+  <pre>Validates an import job.
+  name: string, Required. The name of the import job to validate. (required)
+{ # A request to validate an import job.

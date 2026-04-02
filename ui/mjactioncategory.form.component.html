@@ -1,0 +1,16 @@
+    <!-- Category Details Section -->
+        SectionKey="categoryDetails"
+        SectionName="Category Details"
+    <!-- Hierarchy Information Section -->
+        SectionKey="hierarchyInformation"
+        SectionName="Hierarchy Information"
+    <!-- Action Categories Section -->
+        SectionKey="actionCategories"
+        SectionName="Action Categories"
+        [BadgeCount]="GetSectionRowCount('actionCategories')"
+                [Params]="BuildRelationshipViewParamsByEntityName('MJ: Action Categories','ParentID')"
+                [NewRecordValues]="NewRecordValues('MJ: Action Categories')"
+                [AllowLoad]="IsSectionExpanded('actionCategories')"
+                (AfterDataLoad)="SetSectionRowCount('actionCategories', $event.totalRowCount)"
+                [Params]="BuildRelationshipViewParamsByEntityName('MJ: Actions','CategoryID')"
+                [Params]="BuildRelationshipViewParamsByEntityName('MJ: MCP Server Tools','GeneratedActionCategoryID')"

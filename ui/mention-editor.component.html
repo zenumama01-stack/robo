@@ -1,0 +1,48 @@
+<div class="mention-editor-container"
+  [class.drag-over]="isDragOver"
+  (click)="onContainerClick($event)"
+  (dragleave)="onDragLeave($event)"
+  (drop)="onDrop($event)">
+  <!-- Pending Attachments Preview -->
+  @if (pendingAttachments.length > 0) {
+    <div class="pending-attachments">
+      @for (attachment of pendingAttachments; track attachment) {
+        <div class="attachment-thumbnail"
+          (click)="onAttachmentClick(attachment)">
+          @if (attachment.thumbnailUrl) {
+              [src]="attachment.thumbnailUrl"
+              [alt]="attachment.fileName"
+              class="thumbnail-image">
+          @if (!attachment.thumbnailUrl) {
+            <div class="thumbnail-placeholder">
+              <i class="fa-solid fa-file"></i>
+              <span class="file-name">{{ attachment.fileName }}</span>
+          <button class="remove-attachment"
+            (click)="removeAttachment(attachment.id); $event.stopPropagation()"
+            title="Remove attachment">
+    #editor
+    class="mention-editor"
+    contenteditable="true"
+    [attr.contenteditable]="!disabled"
+    [attr.data-placeholder]="placeholder"
+    (input)="onInput()"
+    (keydown)="onKeyDown($event)"
+    (blur)="onBlur()"
+    (paste)="onPaste($event)"
+  <!-- Drag & Drop Overlay -->
+  @if (isDragOver) {
+    <div class="drop-overlay">
+      <div class="drop-message">
+        <i class="fa-solid fa-cloud-arrow-up"></i>
+        <span>Drop files here</span>
+  <!-- Mention Dropdown -->
+  @if (showMentionDropdown && enableMentions) {
+    <mj-mention-dropdown
+      [suggestions]="mentionSuggestions"
+      [position]="mentionDropdownPosition"
+      [showAbove]="mentionDropdownShowAbove"
+      [useFixedPositioning]="true"
+      [visible]="true"
+      (suggestionSelected)="onMentionSelected($event)"
+      (closed)="closeMentionDropdown()">
+    </mj-mention-dropdown>

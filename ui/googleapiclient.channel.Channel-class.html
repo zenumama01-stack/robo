@@ -1,0 +1,61 @@
+  <title>googleapiclient.channel.Channel</title>
+        <a href="googleapiclient.channel-module.html">Module&nbsp;channel</a> ::
+        Class&nbsp;Channel
+            >]&nbsp;|&nbsp;<a href="googleapiclient.channel.Channel-class.html"
+<h1 class="epydoc">Class Channel</h1><p class="nomargin-top"><span class="codelink"><a href="googleapiclient.channel-pysrc.html#Channel">source&nbsp;code</a></span></p>
+<pre class="base-tree">
+object --+
+        <strong class="uidshort">Channel</strong>
+Usually not constructed directly, instead it is returned from helper
+functions like new_webhook_channel().
+Attributes:
+  type: str, The type of delivery mechanism used by this channel. For
+    example, 'web_hook'.
+  id: str, A UUID for the channel.
+    is delivered to the target address with each event delivered
+  address: str, The address of the receiving entity where events are
+    delivered. Specific to the channel type.
+  expiration: int, The time, in milliseconds from the epoch, when this
+    channel will expire.
+  params: dict, A dictionary of string to string, with additional parameters
+    controlling delivery channel behavior.
+  resource_id: str, An opaque id that identifies the resource that is
+    being watched. Stable across different API versions.
+  resource_uri: str, The canonicalized ID of the watched resource.
+          <td><span class="summary-sig"><a href="googleapiclient.channel.Channel-class.html#__init__" class="summary-sig-name">__init__</a>(<span class="summary-sig-arg">*args</span>,
+      Create a new Channel.</td>
+            <span class="codelink"><a href="googleapiclient.channel-pysrc.html#Channel.__init__">source&nbsp;code</a></span>
+          <td><span class="summary-sig"><a href="googleapiclient.channel.Channel-class.html#body" class="summary-sig-name">body</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Build a body from the Channel.</td>
+            <span class="codelink"><a href="googleapiclient.channel-pysrc.html#Channel.body">source&nbsp;code</a></span>
+          <td><span class="summary-sig"><a href="googleapiclient.channel.Channel-class.html#update" class="summary-sig-name">update</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">resp</span>)</span><br />
+      Update a channel with information from the response of watch().</td>
+            <span class="codelink"><a href="googleapiclient.channel-pysrc.html#Channel.update">source&nbsp;code</a></span>
+<a name="__init__"></a>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">__init__</span>(<span class="sig-arg">*args</span>,
+    <br /><em class="fname">(Constructor)</em>
+    ><span class="codelink"><a href="googleapiclient.channel-pysrc.html#Channel.__init__">source&nbsp;code</a></span>&nbsp;
+Create a new Channel.
+In user code, this Channel constructor will not typically be called
+manually since there are functions for creating channels for each specific
+type with a more customized set of arguments to pass.
+  address: str,  The address of the receiving entity where events are
+        <li><code>@util.positional(5)</code></li>
+        object.__init__
+<a name="body"></a>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">body</span>(<span class="sig-arg">self</span>)</span>
+    ><span class="codelink"><a href="googleapiclient.channel-pysrc.html#Channel.body">source&nbsp;code</a></span>&nbsp;
+Build a body from the Channel.
+Constructs a dictionary that's appropriate for passing into watch()
+methods as the value of body argument.
+  A dictionary representation of the channel.
+<a name="update"></a>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">update</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">resp</span>)</span>
+    ><span class="codelink"><a href="googleapiclient.channel-pysrc.html#Channel.update">source&nbsp;code</a></span>&nbsp;
+Update a channel with information from the response of watch().
+When a request is sent to watch() a resource, the response returned
+from the watch() request is a dictionary with updated channel information,
+such as the resource_id, which is needed when stopping a subscription.
+  resp: dict, The response from a watch() method.

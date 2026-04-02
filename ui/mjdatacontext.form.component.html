@@ -1,0 +1,25 @@
+    <!-- Identifiers Section -->
+        SectionKey="identifiers"
+        SectionName="Identifiers"
+    <!-- Context Details Section -->
+        SectionKey="contextDetails"
+        SectionName="Context Details"
+            FieldName="LastRefreshedAt"
+    <!-- Data Context Items Section -->
+        SectionKey="dataContextItems"
+        SectionName="Data Context Items"
+        [BadgeCount]="GetSectionRowCount('dataContextItems')"
+                [Params]="BuildRelationshipViewParamsByEntityName('MJ: Data Context Items','DataContextID')"
+                [NewRecordValues]="NewRecordValues('MJ: Data Context Items')"
+                [AllowLoad]="IsSectionExpanded('dataContextItems')"
+                (AfterDataLoad)="SetSectionRowCount('dataContextItems', $event.totalRowCount)"
+                [Params]="BuildRelationshipViewParamsByEntityName('MJ: Reports','DataContextID')"
+    <!-- Conversations Section -->
+        SectionKey="conversations"
+        SectionName="Conversations"
+        Icon="fa-regular fa-comments"
+        [BadgeCount]="GetSectionRowCount('conversations')"
+                [Params]="BuildRelationshipViewParamsByEntityName('MJ: Conversations','DataContextID')"
+                [NewRecordValues]="NewRecordValues('MJ: Conversations')"
+                [AllowLoad]="IsSectionExpanded('conversations')"
+                (AfterDataLoad)="SetSectionRowCount('conversations', $event.totalRowCount)"

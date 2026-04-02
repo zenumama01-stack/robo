@@ -1,0 +1,126 @@
+<div class="shell-container" [class.hidden]="loading" [class.tabs-visible]="tabBarVisible" kendoDialogContainer>
+  <header class="shell-header">
+    <!-- MJ Logo -->
+    <div class="mj-logo" title="MemberJunction"></div>
+    <!-- Mobile Hamburger Button -->
+    <button class="hamburger-btn" (click)="toggleMobileNav()" title="Menu">
+    <!-- Nav Bar Apps: Left of App Switcher -->
+    @if (leftOfSwitcherApps.length > 0) {
+      <div class="nav-bar-apps left-of-switcher">
+        @for (app of leftOfSwitcherApps; track app) {
+            class="nav-bar-app-btn"
+            [class.active]="app.ID === activeApp?.ID"
+            [title]="app.Name"
+            [style.--app-color]="app.GetColor()"
+            (click)="onNavBarAppClick(app, $event)"
+            (dblclick)="onNavBarAppDblClick(app, $event)">
+            <i [class]="app.Icon"></i>
+    <!-- App Switcher -->
+    <mj-app-switcher
+      [activeApp]="activeApp"
+      [isViewingSystemTab]="isViewingSystemTab"
+      [loadingAppId]="loadingAppId"
+      (appSelected)="onAppSwitch($event)">
+    </mj-app-switcher>
+    <!-- App Navigation (desktop only) -->
+    @if (activeApp) {
+      <mj-app-nav
+        class="desktop-nav"
+        [app]="activeApp"
+        (navItemClick)="onNavItemClick($event)"
+        (navItemDismiss)="onNavItemDismiss($event)">
+      </mj-app-nav>
+    <!-- Spacer -->
+    <div class="spacer"></div>
+    <!-- Actions (search, notifications, user menu) -->
+      <button class="icon-btn desktop-only search-toggle-btn" title="Search" (click)="toggleSearch()">
+      <button class="icon-btn desktop-only notification-btn" title="Notifications" (click)="showNotifications()">
+        @if (unreadNotificationCount > 0) {
+          <span class="notification-badge">
+            {{ unreadNotificationCount > 99 ? '99+' : unreadNotificationCount }}
+      <!-- Nav Bar Apps: Left of User Menu -->
+      @if (leftOfUserMenuApps.length > 0) {
+        <div class="nav-bar-apps left-of-user-menu">
+          @for (app of leftOfUserMenuApps; track app) {
+      <div class="user-menu">
+        <button class="avatar-btn" (click)="toggleUserMenu($event)">
+          @if (userImageURL) {
+            <img [src]="userImageURL" alt="User avatar" class="avatar-img" />
+            <div class="icon-fallback">
+              <i [class]="userIconClass || 'fa-solid fa-user'"></i>
+        <!-- User Context Menu (Dynamic) -->
+        @if (userMenuVisible) {
+          <div class="user-context-menu"
+            [class.menu-fade]="getUserMenuOptions()?.animationStyle === 'fade'"
+            [class.menu-slide]="getUserMenuOptions()?.animationStyle === 'slide'">
+            <!-- User Header -->
+            @if (getUserMenuOptions()?.showUserName) {
+              <div class="user-menu-header">
+                  <span class="user-name">{{ getUserDisplayInfo()?.name || userName }}</span>
+                  @if (getUserMenuOptions()?.showUserEmail && getUserDisplayInfo()?.email) {
+                    <span class="user-email">
+                      {{ getUserDisplayInfo()?.email }}
+              <div class="user-menu-divider"></div>
+            <!-- Dynamic Menu Items -->
+            @for (element of userMenuElements; track element) {
+              <!-- Divider -->
+              @if (isMenuDivider(element)) {
+              <!-- Menu Item -->
+              @if (!isMenuDivider(element)) {
+                @if (asMenuItem(element); as item) {
+                  <div class="user-menu-item"
+                    [class.disabled]="!item.enabled"
+                    [class.danger]="item.cssClass === 'danger'"
+                    [style.color]="item.color || null"
+                    [title]="item.tooltip || ''"
+                    (click)="item.enabled && onUserMenuItemClick(item.id)">
+                    <span class="menu-label">{{ item.label }}</span>
+                    @if (item.shortcut) {
+                      <span class="menu-shortcut">{{ item.shortcut }}</span>
+  <!-- Search Popup -->
+  @if (isSearchOpen) {
+    <div class="search-popup-overlay" (click)="closeSearch()"></div>
+  <div class="search-popup" [class.open]="isSearchOpen">
+    <div class="search-popup-content" (click)="$event.stopPropagation()">
+        [data]="searchableEntities"
+        class="search-entity-dropdown"
+        [(ngModel)]="selectedEntity">
+        (keydown.enter)="onSearch($event)"
+      <button class="search-submit-btn" (click)="onSearch($event)" title="Search">
+  <!-- Mobile Navigation Drawer -->
+  @if (mobileNavOpen) {
+    <div class="mobile-nav-overlay" (click)="closeMobileNav()"></div>
+  <div class="mobile-nav-drawer" [class.open]="mobileNavOpen">
+    <div class="mobile-nav-header">
+      <span>Navigation</span>
+      <button class="close-btn" (click)="closeMobileNav()">
+      <div class="mobile-nav-content">
+        <div class="mobile-nav-section-title">{{ activeApp.Name }}</div>
+    <div class="mobile-nav-footer">
+      <button class="mobile-nav-action" title="Search" (click)="toggleSearch(); closeMobileNav()">
+        <span>Search</span>
+      <button class="mobile-nav-action" title="Notifications" (click)="showNotifications(); closeMobileNav()">
+        <span>Notifications</span>
+          <span class="notification-badge-mobile">
+  <!-- Tab Container - with dynamic tab bar visibility -->
+  <mj-tab-container
+    [class.hide-tab-bar]="!tabBarVisible"
+    (firstResourceLoadComplete)="onFirstResourceLoadComplete()"
+    (layoutInitError)="handleLayoutError()">
+  </mj-tab-container>
+  <div class="shell-loading">
+    <mj-loading
+      [text]="currentLoadingText"
+      [textColor]="currentLoadingTextColor"
+      [logoColor]="currentLoadingColor"
+      [logoGradient]="currentLoadingGradient"
+      [animation]="currentLoadingAnimation"
+      size="large">
+    </mj-loading>
+<!-- App Access Error Dialog -->
+<mj-app-access-dialog
+  #appAccessDialog
+  (result)="onAppAccessDialogResult($event)">
+</mj-app-access-dialog>
+<!-- Command Palette -->
+<mj-command-palette (AppSelected)="onAppSwitch($event)"></mj-command-palette>

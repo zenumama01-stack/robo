@@ -1,0 +1,20 @@
+<div class="message-input-box-container" (click)="onContainerClick($event)">
+    <mj-mention-editor
+      #mentionEditor
+      [enableMentions]="enableMentions"
+      (enterPressed)="onEnterPressed($event)"
+      (mentionSelected)="onMentionSelected($event)"
+      (attachmentsChanged)="onAttachmentsChanged($event)"
+      (attachmentError)="onAttachmentError($event)"
+    </mj-mention-editor>
+    <!-- Attach Button - Positioned over editor -->
+    @if (enableAttachments) {
+        class="attach-button-icon"
+        (click)="openFilePicker(); $event.stopPropagation()"
+        title="Attach file"
+        <i class="fa-solid fa-paperclip"></i>
+    <!-- Send Button (Icon Only) - Positioned over editor -->
+      class="send-button-icon"
+      [disabled]="!canSend"
+      (click)="onSendClick()"
+      title="Send message (Enter)"

@@ -1,0 +1,30 @@
+<h1><a href="networkconnectivity_v1.html">Network Connectivity API</a> . <a href="networkconnectivity_v1.projects.html">projects</a> . <a href="networkconnectivity_v1.projects.locations.html">locations</a> . <a href="networkconnectivity_v1.projects.locations.regionalEndpoints.html">regionalEndpoints</a></h1>
+  <code><a href="#create">create(parent, body=None, regionalEndpointId=None, requestId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Creates a new RegionalEndpoint in a given project and location.</p>
+<p class="firstline">Deletes a single RegionalEndpoint.</p>
+<p class="firstline">Gets details of a single RegionalEndpoint.</p>
+<p class="firstline">Lists RegionalEndpoints in a given project and location.</p>
+    <code class="details" id="create">create(parent, body=None, regionalEndpointId=None, requestId=None, x__xgafv=None)</code>
+  <pre>Creates a new RegionalEndpoint in a given project and location.
+  parent: string, Required. The parent resource&#x27;s name of the RegionalEndpoint. (required)
+{ # The RegionalEndpoint resource.
+  &quot;accessType&quot;: &quot;A String&quot;, # Required. The access type of this regional endpoint. This field is reflected in the PSC Forwarding Rule configuration to enable global access.
+  &quot;address&quot;: &quot;A String&quot;, # Optional. The IP Address of the Regional Endpoint. When no address is provided, an IP from the subnetwork is allocated. Use one of the following formats: * IPv4 address as in `10.0.0.1` * Address resource URI as in `projects/{project}/regions/{region}/addresses/{address_name}` for an IPv4 or IPv6 address.
+  &quot;createTime&quot;: &quot;A String&quot;, # Output only. Time when the RegionalEndpoint was created.
+  &quot;ipAddress&quot;: &quot;A String&quot;, # Output only. The literal IP address of the PSC Forwarding Rule created on behalf of the customer. This field is deprecated. Use address instead.
+  &quot;name&quot;: &quot;A String&quot;, # Output only. The name of a RegionalEndpoint. Pattern: `projects/{project}/locations/{location}/regionalEndpoints/^[-a-z0-9](?:[-a-z0-9]{0,44})[a-z0-9]$`.
+  &quot;network&quot;: &quot;A String&quot;, # Optional. The name of the VPC network for this private regional endpoint. Format: `projects/{project}/global/networks/{network}`
+  &quot;pscForwardingRule&quot;: &quot;A String&quot;, # Output only. The resource reference of the PSC Forwarding Rule created on behalf of the customer. Format: `//compute.googleapis.com/projects/{project}/regions/{region}/forwardingRules/{forwarding_rule_name}`
+  &quot;subnetwork&quot;: &quot;A String&quot;, # Optional. The name of the subnetwork from which the IP address will be allocated. Format: `projects/{project}/regions/{region}/subnetworks/{subnetwork}`
+  &quot;targetGoogleApi&quot;: &quot;A String&quot;, # Required. The service endpoint this private regional endpoint connects to. Format: `{apiname}.{region}.p.rep.googleapis.com` Example: &quot;cloudkms.us-central1.p.rep.googleapis.com&quot;.
+  &quot;updateTime&quot;: &quot;A String&quot;, # Output only. Time when the RegionalEndpoint was updated.
+  regionalEndpointId: string, Required. Unique id of the Regional Endpoint to be created. @pattern: ^[-a-z0-9](?:[-a-z0-9]{0,44})[a-z0-9]$
+  requestId: string, Optional. An optional request ID to identify requests. Specify a unique request ID so that if you must retry your request, the server knows to ignore the request if it has already been completed. The server guarantees that for at least 60 minutes since the first request. For example, consider a situation where you make an initial request and the request times out. If you make the request again with the same request ID, the server can check if the original operation with the same request ID was received, and if so, ignores the second request. This prevents clients from accidentally creating duplicate commitments. The request ID must be a valid UUID with the exception that zero UUID is not supported (00000000-0000-0000-0000-000000000000).
+  <pre>Deletes a single RegionalEndpoint.
+  name: string, Required. The name of the RegionalEndpoint to delete. (required)
+  <pre>Gets details of a single RegionalEndpoint.
+  name: string, Required. Name of the RegionalEndpoint resource to get. Format: `projects/{project}/locations/{location}/regionalEndpoints/{regional_endpoint}` (required)
+  <pre>Lists RegionalEndpoints in a given project and location.
+  pageToken: string, A page token.
+    { # Response for ListRegionalEndpoints.
+  &quot;regionalEndpoints&quot;: [ # Regional endpoints to be returned.

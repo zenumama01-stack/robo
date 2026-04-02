@@ -1,0 +1,23 @@
+    <!-- Content Classification Section -->
+        SectionKey="contentClassification"
+        SectionName="Content Classification"
+    <!-- Connection Details Section -->
+        SectionKey="connectionDetails"
+        SectionName="Connection Details"
+                [Params]="BuildRelationshipViewParamsByEntityName('MJ: Content Items','ContentSourceID')"
+    <!-- Content Process Runs Section -->
+        SectionKey="contentProcessRuns"
+        SectionName="Content Process Runs"
+        [BadgeCount]="GetSectionRowCount('contentProcessRuns')"
+                [Params]="BuildRelationshipViewParamsByEntityName('MJ: Content Process Runs','SourceID')"
+                [NewRecordValues]="NewRecordValues('MJ: Content Process Runs')"
+                [AllowLoad]="IsSectionExpanded('contentProcessRuns')"
+                (AfterDataLoad)="SetSectionRowCount('contentProcessRuns', $event.totalRowCount)"
+    <!-- Content Source Params Section -->
+        SectionKey="contentSourceParams"
+        SectionName="Content Source Params"
+        [BadgeCount]="GetSectionRowCount('contentSourceParams')"
+                [Params]="BuildRelationshipViewParamsByEntityName('MJ: Content Source Params','ContentSourceID')"
+                [NewRecordValues]="NewRecordValues('MJ: Content Source Params')"
+                [AllowLoad]="IsSectionExpanded('contentSourceParams')"
+                (AfterDataLoad)="SetSectionRowCount('contentSourceParams', $event.totalRowCount)"

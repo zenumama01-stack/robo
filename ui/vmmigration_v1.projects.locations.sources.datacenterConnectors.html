@@ -1,0 +1,53 @@
+<h1><a href="vmmigration_v1.html">VM Migration API</a> . <a href="vmmigration_v1.projects.html">projects</a> . <a href="vmmigration_v1.projects.locations.html">locations</a> . <a href="vmmigration_v1.projects.locations.sources.html">sources</a> . <a href="vmmigration_v1.projects.locations.sources.datacenterConnectors.html">datacenterConnectors</a></h1>
+  <code><a href="#create">create(parent, body=None, datacenterConnectorId=None, requestId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Creates a new DatacenterConnector in a given Source.</p>
+<p class="firstline">Deletes a single DatacenterConnector.</p>
+<p class="firstline">Gets details of a single DatacenterConnector.</p>
+<p class="firstline">Lists DatacenterConnectors in a given Source.</p>
+  <code><a href="#upgradeAppliance">upgradeAppliance(datacenterConnector, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Upgrades the appliance relate to this DatacenterConnector to the in-place updateable version.</p>
+    <code class="details" id="create">create(parent, body=None, datacenterConnectorId=None, requestId=None, x__xgafv=None)</code>
+  <pre>Creates a new DatacenterConnector in a given Source.
+  parent: string, Required. The DatacenterConnector&#x27;s parent. Required. The Source in where the new DatacenterConnector will be created. For example: `projects/my-project/locations/us-central1/sources/my-source` (required)
+{ # DatacenterConnector message describes a connector between the Source and Google Cloud, which is installed on a vmware datacenter (an OVA vm installed by the user) to connect the Datacenter to Google Cloud and support vm migration data transfer.
+  &quot;applianceInfrastructureVersion&quot;: &quot;A String&quot;, # Output only. Appliance OVA version. This is the OVA which is manually installed by the user and contains the infrastructure for the automatically updatable components on the appliance.
+  &quot;applianceSoftwareVersion&quot;: &quot;A String&quot;, # Output only. Appliance last installed update bundle version. This is the version of the automatically updatable components on the appliance.
+  &quot;availableVersions&quot;: { # Holds information about the available versions for upgrade. # Output only. The available versions for updating this appliance.
+    &quot;inPlaceUpdate&quot;: { # Describes an appliance version. # The latest version for in place update. The current appliance can be updated to this version using the API or m4c CLI.
+      &quot;critical&quot;: True or False, # Determine whether it&#x27;s critical to upgrade the appliance to this version.
+      &quot;releaseNotesUri&quot;: &quot;A String&quot;, # Link to a page that contains the version release notes.
+      &quot;uri&quot;: &quot;A String&quot;, # A link for downloading the version.
+      &quot;version&quot;: &quot;A String&quot;, # The appliance version.
+    &quot;newDeployableAppliance&quot;: { # Describes an appliance version. # The newest deployable version of the appliance. The current appliance can&#x27;t be updated into this version, and the owner must manually deploy this OVA to a new appliance.
+  &quot;bucket&quot;: &quot;A String&quot;, # Output only. The communication channel between the datacenter connector and Google Cloud.
+  &quot;createTime&quot;: &quot;A String&quot;, # Output only. The time the connector was created (as an API call, not when it was actually installed).
+  &quot;error&quot;: { # The `Status` type defines a logical error model that is suitable for different programming environments, including REST APIs and RPC APIs. It is used by [gRPC](https://github.com/grpc). Each `Status` message contains three pieces of data: error code, error message, and error details. You can find out more about this error model and how to work with it in the [API Design Guide](https://cloud.google.com/apis/design/errors). # Output only. Provides details on the state of the Datacenter Connector in case of an error.
+  &quot;name&quot;: &quot;A String&quot;, # Output only. The connector&#x27;s name.
+  &quot;registrationId&quot;: &quot;A String&quot;, # Immutable. A unique key for this connector. This key is internal to the OVA connector and is supplied with its creation during the registration process and can not be modified.
+  &quot;serviceAccount&quot;: &quot;A String&quot;, # The service account to use in the connector when communicating with the cloud.
+  &quot;state&quot;: &quot;A String&quot;, # Output only. State of the DatacenterConnector, as determined by the health checks.
+  &quot;stateTime&quot;: &quot;A String&quot;, # Output only. The time the state was last set.
+  &quot;updateTime&quot;: &quot;A String&quot;, # Output only. The last time the connector was updated with an API call.
+  &quot;upgradeStatus&quot;: { # UpgradeStatus contains information about upgradeAppliance operation. # Output only. The status of the current / last upgradeAppliance operation.
+    &quot;error&quot;: { # The `Status` type defines a logical error model that is suitable for different programming environments, including REST APIs and RPC APIs. It is used by [gRPC](https://github.com/grpc). Each `Status` message contains three pieces of data: error code, error message, and error details. You can find out more about this error model and how to work with it in the [API Design Guide](https://cloud.google.com/apis/design/errors). # Output only. Provides details on the state of the upgrade operation in case of an error.
+    &quot;previousVersion&quot;: &quot;A String&quot;, # The version from which we upgraded.
+    &quot;startTime&quot;: &quot;A String&quot;, # The time the operation was started.
+    &quot;state&quot;: &quot;A String&quot;, # The state of the upgradeAppliance operation.
+    &quot;version&quot;: &quot;A String&quot;, # The version to upgrade to.
+  &quot;version&quot;: &quot;A String&quot;, # The version running in the DatacenterConnector. This is supplied by the OVA connector during the registration process and can not be modified.
+  datacenterConnectorId: string, Required. The datacenterConnector identifier.
+  <pre>Deletes a single DatacenterConnector.
+  name: string, Required. The DatacenterConnector name. (required)
+  <pre>Gets details of a single DatacenterConnector.
+  name: string, Required. The name of the DatacenterConnector. (required)
+  <pre>Lists DatacenterConnectors in a given Source.
+  parent: string, Required. The parent, which owns this collection of connectors. (required)
+  pageSize: integer, Optional. The maximum number of connectors to return. The service may return fewer than this value. If unspecified, at most 500 sources will be returned. The maximum value is 1000; values above 1000 will be coerced to 1000.
+  pageToken: string, Required. A page token, received from a previous `ListDatacenterConnectors` call. Provide this to retrieve the subsequent page. When paginating, all other parameters provided to `ListDatacenterConnectors` must match the call that provided the page token.
+    { # Response message for &#x27;ListDatacenterConnectors&#x27; request.
+  &quot;datacenterConnectors&quot;: [ # Output only. The list of sources response.
+    <code class="details" id="upgradeAppliance">upgradeAppliance(datacenterConnector, body=None, x__xgafv=None)</code>
+  <pre>Upgrades the appliance relate to this DatacenterConnector to the in-place updateable version.
+  datacenterConnector: string, Required. The DatacenterConnector name. (required)
+{ # Request message for &#x27;UpgradeAppliance&#x27; request.
+  &quot;requestId&quot;: &quot;A String&quot;, # A request ID to identify requests. Specify a unique request ID so that if you must retry your request, the server will know to ignore the request if it has already been completed. The server will guarantee that for at least 60 minutes after the first request. For example, consider a situation where you make an initial request and the request times out. If you make the request again with the same request ID, the server can check if original operation with the same request ID was received, and if so, will ignore the second request. This prevents clients from accidentally creating duplicate commitments. The request ID must be a valid UUID with the exception that zero UUID is not supported (00000000-0000-0000-0000-000000000000).

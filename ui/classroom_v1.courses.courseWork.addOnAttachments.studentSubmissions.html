@@ -1,0 +1,16 @@
+<h1><a href="classroom_v1.html">Google Classroom API</a> . <a href="classroom_v1.courses.html">courses</a> . <a href="classroom_v1.courses.courseWork.html">courseWork</a> . <a href="classroom_v1.courses.courseWork.addOnAttachments.html">addOnAttachments</a> . <a href="classroom_v1.courses.courseWork.addOnAttachments.studentSubmissions.html">studentSubmissions</a></h1>
+  <code><a href="#get">get(courseId, itemId, attachmentId, submissionId, postId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Returns a student submission for an add-on attachment. This method returns the following error codes: * `PERMISSION_DENIED` for access errors. * `INVALID_ARGUMENT` if the request is malformed. * `NOT_FOUND` if one of the identified resources does not exist.</p>
+  <code><a href="#patch">patch(courseId, itemId, attachmentId, submissionId, body=None, postId=None, updateMask=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Updates data associated with an add-on attachment submission. Requires the add-on to have been the original creator of the attachment and the attachment to have a positive `max_points` value set. This method returns the following error codes: * `PERMISSION_DENIED` for access errors. * `INVALID_ARGUMENT` if the request is malformed. * `NOT_FOUND` if one of the identified resources does not exist.</p>
+    <code class="details" id="get">get(courseId, itemId, attachmentId, submissionId, postId=None, x__xgafv=None)</code>
+  <pre>Returns a student submission for an add-on attachment. This method returns the following error codes: * `PERMISSION_DENIED` for access errors. * `INVALID_ARGUMENT` if the request is malformed. * `NOT_FOUND` if one of the identified resources does not exist.
+  submissionId: string, Required. Identifier of the student’s submission. (required)
+    { # Payload for grade update requests.
+  &quot;pointsEarned&quot;: 3.14, # Student grade on this attachment. If unset, no grade was set.
+  &quot;postSubmissionState&quot;: &quot;A String&quot;, # Submission state of add-on attachment&#x27;s parent post (i.e. assignment).
+  &quot;userId&quot;: &quot;A String&quot;, # Identifier for the student that owns this submission. Requires the user to be a teacher in the course and have permission to read student submissions. Read-only.
+    <code class="details" id="patch">patch(courseId, itemId, attachmentId, submissionId, body=None, postId=None, updateMask=None, x__xgafv=None)</code>
+  <pre>Updates data associated with an add-on attachment submission. Requires the add-on to have been the original creator of the attachment and the attachment to have a positive `max_points` value set. This method returns the following error codes: * `PERMISSION_DENIED` for access errors. * `INVALID_ARGUMENT` if the request is malformed. * `NOT_FOUND` if one of the identified resources does not exist.
+  submissionId: string, Required. Identifier of the student&#x27;s submission. (required)
+  updateMask: string, Required. Mask that identifies which fields on the attachment to update. The update fails if invalid fields are specified. If a field supports empty values, it can be cleared by specifying it in the update mask and not in the `AddOnAttachmentStudentSubmission` object. The following fields may be specified by teachers: * `points_earned`

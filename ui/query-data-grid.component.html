@@ -1,0 +1,59 @@
+<!-- Query Data Grid Component -->
+<div class="query-data-grid-container" [ngClass]="GetContainerClasses()" [style.height]="Height">
+    <div class="grid-toolbar">
+        <!-- Row count -->
+        @if (ShowRowCount) {
+            {{ RowCount | number }} {{ RowCount === 1 ? 'row' : 'rows' }}
+        <!-- Selection count -->
+        @if (ShowSelectionCount && SelectionCount > 0) {
+            {{ SelectionCount }} selected
+            <button class="clear-selection-btn" (click)="ClearSelection()" title="Clear selection">
+        @if (ShowRefresh) {
+            (click)="Refresh()"
+            [disabled]="IsLoading"
+            class="toolbar-btn icon-only">
+            <i class="fa-solid fa-sync-alt" [class.fa-spin]="IsLoading"></i>
+        <!-- Export button -->
+        @if (ShowExport) {
+            [disabled]="RowCount === 0"
+            title="Export data"
+            class="toolbar-btn"
+            (click)="OpenExportDialog()">
+    <div class="loading-overlay" @fadeIn>
+      <mj-loading text="Loading query results..."></mj-loading>
+  <!-- AG Grid -->
+  <div class="grid-wrapper" [class.loading]="IsLoading">
+      class="query-grid"
+      [theme]="Theme"
+      [rowData]="Data"
+      [columnDefs]="ColumnDefs"
+      [defaultColDef]="DefaultColDef"
+      [gridOptions]="GridOptions"
+      [rowSelection]="GetRowSelectionConfig()"
+      [getRowId]="GetRowId"
+      (gridReady)="OnGridReady($event)"
+      (rowClicked)="OnRowClicked($event)"
+      (rowDoubleClicked)="OnRowDoubleClicked($event)"
+      (selectionChanged)="OnSelectionChanged($event)"
+      (sortChanged)="OnSortChanged($event)"
+      (columnResized)="OnColumnResized($event)"
+      (columnMoved)="OnColumnMoved($event)">
+  @if (!IsLoading && RowCount === 0) {
+    <div class="empty-state" @fadeIn>
+      <p class="empty-message">No results</p>
+      <p class="empty-hint">Run the query to see results</p>
+  [visible]="ShowExportDialog"
+  [config]="ExportDialogConfig"
+  (closed)="OnExportDialogClosed($event)">
+<!-- Row Detail Panel -->
+<mj-query-row-detail
+  [RowData]="RowDetailData"
+  [Columns]="Columns"
+  [QueryInfo]="QueryInfo"
+  [Visible]="ShowRowDetailPanel"
+  [RowIndex]="RowDetailIndex"
+  [TotalRows]="RowCount"
+  (Close)="CloseRowDetailPanel()"
+  (EntityLinkClick)="OnRowDetailEntityLinkClick($event)"
+  (NavigateRow)="NavigateRowDetail($event)">
+</mj-query-row-detail>

@@ -1,0 +1,52 @@
+import { defer, listen } from './spec-helpers';
+export const kOneKiloByte = 1024;
+export const kOneMegaByte = kOneKiloByte * kOneKiloByte;
+export function randomBuffer (size: number, start: number = 0, end: number = 255) {
+  const range = 1 + end - start;
+  const buffer = Buffer.allocUnsafe(size);
+  for (let i = 0; i < size; ++i) {
+    buffer[i] = start + Math.floor(Math.random() * range);
+export function randomString (length: number) {
+  const buffer = randomBuffer(length, '0'.charCodeAt(0), 'z'.charCodeAt(0));
+  return buffer.toString();
+export async function getResponse (urlRequest: Electron.ClientRequest) {
+  return new Promise<Electron.IncomingMessage>((resolve, reject) => {
+    urlRequest.on('error', reject);
+    urlRequest.on('abort', reject);
+    urlRequest.on('response', (response) => resolve(response));
+export async function collectStreamBody (response: Electron.IncomingMessage | http.IncomingMessage) {
+  return (await collectStreamBodyBuffer(response)).toString();
+export function collectStreamBodyBuffer (response: Electron.IncomingMessage | http.IncomingMessage) {
+  return new Promise<Buffer>((resolve, reject) => {
+    response.on('error', reject);
+    (response as NodeJS.EventEmitter).on('aborted', reject);
+    const data: Buffer[] = [];
+    response.on('end', (chunk?: Buffer) => {
+      resolve(Buffer.concat(data));
+export async function respondNTimes (fn: http.RequestListener, n: number): Promise<string> {
+    fn(request, response);
+    // don't close if a redirect was returned
+    if ((response.statusCode < 300 || response.statusCode >= 399) && n <= 0) {
+  const sockets: Socket[] = [];
+  server.on('connection', s => sockets.push(s));
+    for (const socket of sockets) {
+  return (await listen(server)).url;
+export function respondOnce (fn: http.RequestListener) {
+  return respondNTimes(fn, 1);
+respondNTimes.toRoutes = (routes: Record<string, http.RequestListener>, n: number) => {
+  return respondNTimes((request, response) => {
+    if (Object.hasOwn(routes, request.url || '')) {
+        await Promise.resolve(routes[request.url || ''](request, response));
+      })().catch((err) => {
+        respondNTimes.routeFailure = true;
+        console.error('Route handler failed, this is probably why your test failed', err);
+        response.statusCode = 500;
+      expect.fail(`Unexpected URL: ${request.url}`);
+  }, n);
+respondOnce.toRoutes = (routes: Record<string, http.RequestListener>) => respondNTimes.toRoutes(routes, 1);
+respondNTimes.toURL = (url: string, fn: http.RequestListener, n: number) => {
+  return respondNTimes.toRoutes({ [url]: fn }, n);
+respondOnce.toURL = (url: string, fn: http.RequestListener) => respondNTimes.toURL(url, fn, 1);
+respondNTimes.toSingleURL = (fn: http.RequestListener, n: number) => {
+  return respondNTimes.toURL(requestUrl, fn, n).then(url => `${url}${requestUrl}`);
+respondOnce.toSingleURL = (fn: http.RequestListener) => respondNTimes.toSingleURL(fn, 1);

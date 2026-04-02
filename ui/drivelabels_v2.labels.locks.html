@@ -1,0 +1,17 @@
+<h1><a href="drivelabels_v2.html">Drive Labels API</a> . <a href="drivelabels_v2.labels.html">labels</a> . <a href="drivelabels_v2.labels.locks.html">locks</a></h1>
+<p class="firstline">Lists the label locks on a label.</p>
+  <pre>Lists the label locks on a label.
+  parent: string, Required. Label on which locks are applied. Format: `labels/{label}`. (required)
+  pageSize: integer, Maximum number of locks to return per page. Default: 100. Max: 200.
+    { # The response to a `ListLabelLocksRequest`.
+  &quot;labelLocks&quot;: [ # Label locks.
+    { # A lock that can be applied to a label, field, or choice.
+      &quot;capabilities&quot;: { # A description of a user&#x27;s capabilities on a label lock. # Output only. The user&#x27;s capabilities on this label lock.
+        &quot;canViewPolicy&quot;: True or False, # True if the user is authorized to view the policy.
+      &quot;choiceId&quot;: &quot;A String&quot;, # The ID of the selection field choice that should be locked. If present, `field_id` must also be present.
+      &quot;createTime&quot;: &quot;A String&quot;, # Output only. The time this label lock was created.
+      &quot;creator&quot;: { # Information about a user. # Output only. The user whose credentials were used to create the label lock. Not present if no user was responsible for creating the label lock.
+      &quot;deleteTime&quot;: &quot;A String&quot;, # Output only. A timestamp indicating when this label lock was scheduled for deletion. Present only if this label lock is in the `DELETING` state.
+      &quot;fieldId&quot;: &quot;A String&quot;, # The ID of the field that should be locked. Empty if the whole label should be locked.
+      &quot;name&quot;: &quot;A String&quot;, # Output only. Resource name of this label lock.
+      &quot;state&quot;: &quot;A String&quot;, # Output only. This label lock&#x27;s state.

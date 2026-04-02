@@ -1,0 +1,82 @@
+<h1><a href="migrationcenter_v1.html">Migration Center API</a> . <a href="migrationcenter_v1.projects.html">projects</a> . <a href="migrationcenter_v1.projects.locations.html">locations</a> . <a href="migrationcenter_v1.projects.locations.reportConfigs.html">reportConfigs</a> . <a href="migrationcenter_v1.projects.locations.reportConfigs.reports.html">reports</a></h1>
+  <code><a href="#create">create(parent, body=None, reportId=None, requestId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Deletes a Report.</p>
+<p class="firstline">Gets details of a single Report.</p>
+<p class="firstline">Lists Reports in a given ReportConfig.</p>
+    <code class="details" id="create">create(parent, body=None, reportId=None, requestId=None, x__xgafv=None)</code>
+{ # Report represents a point-in-time rendering of the ReportConfig results.
+  &quot;state&quot;: &quot;A String&quot;, # Report creation state.
+  &quot;summary&quot;: { # Describes the Summary view of a Report, which contains aggregated values for all the groups and preference sets included in this Report. # Output only. Summary view of the Report.
+    &quot;allAssetsStats&quot;: { # Aggregate statistics for a collection of assets. # Aggregate statistics for all the assets across all the groups.
+      &quot;coreCountHistogram&quot;: { # A Histogram Chart shows a distribution of values into buckets, showing a count of values which fall into a bucket. # Histogram showing a distribution of logical CPU core counts.
+            &quot;lowerBound&quot;: &quot;A String&quot;, # Lower bound - inclusive.
+            &quot;upperBound&quot;: &quot;A String&quot;, # Upper bound - exclusive.
+      &quot;memoryBytesHistogram&quot;: { # A Histogram Chart shows a distribution of values into buckets, showing a count of values which fall into a bucket. # Histogram showing a distribution of memory sizes.
+      &quot;memoryUtilizationChart&quot;: { # Utilization Chart is a specific type of visualization which displays a metric classified into &quot;Used&quot; and &quot;Free&quot; buckets. # Total memory split into Used/Free buckets.
+        &quot;free&quot;: &quot;A String&quot;, # Aggregate value which falls into the &quot;Free&quot; bucket.
+        &quot;used&quot;: &quot;A String&quot;, # Aggregate value which falls into the &quot;Used&quot; bucket.
+      &quot;operatingSystem&quot;: { # Describes a collection of data points rendered as a Chart. # Count of assets grouped by Operating System families.
+        &quot;dataPoints&quot;: [ # Each data point in the chart is represented as a name-value pair with the name being the x-axis label, and the value being the y-axis value.
+          { # Describes a single data point in the Chart.
+            &quot;label&quot;: &quot;A String&quot;, # The X-axis label for this data point.
+            &quot;value&quot;: 3.14, # The Y-axis value for this data point.
+      &quot;softwareInstances&quot;: { # Describes a collection of data points rendered as a Chart. # Output only. Count of assets grouped by software name. Only present for virtual machines.
+      &quot;storageBytesHistogram&quot;: { # A Histogram Chart shows a distribution of values into buckets, showing a count of values which fall into a bucket. # Histogram showing a distribution of storage sizes.
+      &quot;storageUtilizationChart&quot;: { # Utilization Chart is a specific type of visualization which displays a metric classified into &quot;Used&quot; and &quot;Free&quot; buckets. # Total memory split into Used/Free buckets.
+      &quot;totalAssets&quot;: &quot;A String&quot;, # Count of the number of unique assets in this collection.
+      &quot;totalCores&quot;: &quot;A String&quot;, # Sum of the CPU core count of all the assets in this collection.
+      &quot;totalMemoryBytes&quot;: &quot;A String&quot;, # Sum of the memory in bytes of all the assets in this collection.
+      &quot;totalStorageBytes&quot;: &quot;A String&quot;, # Sum of persistent storage in bytes of all the assets in this collection.
+    &quot;groupFindings&quot;: [ # Findings for each Group included in this report.
+      { # Summary Findings for a specific Group.
+        &quot;assetAggregateStats&quot;: { # Aggregate statistics for a collection of assets. # Summary statistics for all the assets in this group.
+        &quot;description&quot;: &quot;A String&quot;, # Description for the Group.
+        &quot;displayName&quot;: &quot;A String&quot;, # Display Name for the Group.
+        &quot;overlappingAssetCount&quot;: &quot;A String&quot;, # This field is deprecated, do not rely on it having a value.
+        &quot;preferenceSetFindings&quot;: [ # Findings for each of the PreferenceSets for this group.
+          { # Summary Findings for a specific Group/PreferenceSet combination.
+            &quot;computeEngineFinding&quot;: { # A set of findings that applies to assets destined for Compute Engine. # A set of findings that applies to Compute Engine machines in the input.
+              &quot;allocatedAssetCount&quot;: &quot;A String&quot;, # Count of assets which were allocated.
+              &quot;allocatedDiskTypes&quot;: [ # Set of disk types allocated to assets.
+              &quot;allocatedRegions&quot;: [ # Set of regions in which the assets were allocated.
+              &quot;machineSeriesAllocations&quot;: [ # Distribution of assets based on the Machine Series.
+                { # Represents a data point tracking the count of assets allocated for a specific Machine Series.
+                  &quot;allocatedAssetCount&quot;: &quot;A String&quot;, # Count of assets allocated to this machine series.
+                  &quot;machineSeries&quot;: { # A machine series, for a target product (e.g. Compute Engine, Google Cloud VMware Engine). # The Machine Series (e.g. &quot;E2&quot;, &quot;N2&quot;)
+            &quot;description&quot;: &quot;A String&quot;, # Description for the Preference Set.
+            &quot;displayName&quot;: &quot;A String&quot;, # Display Name of the Preference Set
+            &quot;machinePreferences&quot;: { # VirtualMachinePreferences enables you to create sets of assumptions, for example, a geographical location and pricing track, for your migrated virtual machines. The set of preferences influence recommendations for migrating virtual machine assets. # A set of preferences that applies to all machines in the context.
+            &quot;monthlyCostCompute&quot;: { # Represents an amount of money with its currency type. # Compute monthly cost for this preference set.
+            &quot;monthlyCostNetworkEgress&quot;: { # Represents an amount of money with its currency type. # Network Egress monthly cost for this preference set.
+            &quot;monthlyCostOsLicense&quot;: { # Represents an amount of money with its currency type. # Licensing monthly cost for this preference set.
+            &quot;monthlyCostOther&quot;: { # Represents an amount of money with its currency type. # Miscellaneous monthly cost for this preference set.
+            &quot;monthlyCostStorage&quot;: { # Represents an amount of money with its currency type. # Storage monthly cost for this preference set.
+            &quot;monthlyCostTotal&quot;: { # Represents an amount of money with its currency type. # Total monthly cost for this preference set.
+            &quot;soleTenantFinding&quot;: { # A set of findings that applies to assets destined for Sole-Tenant nodes. # A set of findings that applies to Sole-Tenant machines in the input.
+              &quot;allocatedAssetCount&quot;: &quot;A String&quot;, # Count of assets which are allocated
+              &quot;allocatedRegions&quot;: [ # Set of regions in which the assets are allocated
+              &quot;nodeAllocations&quot;: [ # Set of per-nodetype allocation records
+                { # Represents the assets allocated to a specific Sole-Tenant node type.
+                  &quot;allocatedAssetCount&quot;: &quot;A String&quot;, # Count of assets allocated to these nodes
+                  &quot;node&quot;: { # A Sole Tenant node type. # Sole Tenant node type, e.g. &quot;m3-node-128-3904&quot;
+                  &quot;nodeCount&quot;: &quot;A String&quot;, # Count of this node type to be provisioned
+            &quot;vmwareEngineFinding&quot;: { # A set of findings that applies to assets destined for VMWare Engine. # A set of findings that applies to VMWare machines in the input.
+              &quot;allocatedRegions&quot;: [ # Set of regions in which the assets were allocated
+                { # Represents assets allocated to a specific VMWare Node type.
+                  &quot;vmwareNode&quot;: { # A VMWare Engine Node # VMWare node type, e.g. &quot;ve1-standard-72&quot;
+                    &quot;code&quot;: &quot;A String&quot;, # Code to identify VMware Engine node series, e.g. &quot;ve1-standard-72&quot;. Based on the displayName of cloud.google.com/vmware-engine/docs/reference/rest/v1/projects.locations.nodeTypes
+  reportId: string, Required. User specified id for the report. It will become the last component of the report name. The id must be unique within the project, must conform with RFC-1034, is restricted to lower-cased letters, and has a maximum length of 63 characters. The id must match the regular expression: [a-z]([a-z0-9-]{0,61}[a-z0-9])?.
+  <pre>Deletes a Report.
+  <pre>Gets details of a single Report.
+  view: string, Determines what information to retrieve for the Report.
+      REPORT_VIEW_UNSPECIFIED - The report view is not specified. The API displays the basic view by default.
+      REPORT_VIEW_BASIC - The report view includes only basic metadata of the Report. Useful for list views.
+      REPORT_VIEW_FULL - The report view includes all the metadata of the Report. Useful for preview.
+      REPORT_VIEW_STANDARD - The report view includes the standard metadata of an report. Useful for detail view.
+  <pre>Lists Reports in a given ReportConfig.
+  parent: string, Required. Parent value for `ListReportsRequest`. (required)
+  pageSize: integer, Requested page size. The server may return fewer items than requested. If unspecified, the server will pick an appropriate default value.
+  pageToken: string, A token identifying a page of results that the server should return.
+  view: string, Determines what information to retrieve for each Report.
+    { # Response message for listing Reports.
+  &quot;reports&quot;: [ # The list of Reports.

@@ -1,0 +1,29 @@
+<h1><a href="analyticsadmin_v1alpha.html">Google Analytics Admin API</a> . <a href="analyticsadmin_v1alpha.properties.html">properties</a> . <a href="analyticsadmin_v1alpha.properties.dataStreams.html">dataStreams</a> . <a href="analyticsadmin_v1alpha.properties.dataStreams.eventEditRules.html">eventEditRules</a></h1>
+<p class="firstline">Creates an EventEditRule.</p>
+<p class="firstline">Deletes an EventEditRule.</p>
+<p class="firstline">Lookup for a single EventEditRule.</p>
+<p class="firstline">Lists EventEditRules on a web data stream.</p>
+<p class="firstline">Updates an EventEditRule.</p>
+  <code><a href="#reorder">reorder(parent, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Changes the processing order of event edit rules on the specified stream.</p>
+  <pre>Creates an EventEditRule.
+{ # An Event Edit Rule defines conditions that will trigger the creation of an entirely new event based upon matched criteria of a source event. Additional mutations of the parameters from the source event can be defined. Unlike Event Create rules, Event Edit Rules are applied in their defined order. Event Edit rules can&#x27;t be used to modify an event created from an Event Create rule.
+  &quot;displayName&quot;: &quot;A String&quot;, # Required. The display name of this event edit rule. Maximum of 255 characters.
+  &quot;eventConditions&quot;: [ # Required. Conditions on the source event must match for this rule to be applied. Must have at least one condition, and can have up to 10 max.
+  &quot;name&quot;: &quot;A String&quot;, # Identifier. Resource name for this EventEditRule resource. Format: properties/{property}/dataStreams/{data_stream}/eventEditRules/{event_edit_rule}
+  &quot;parameterMutations&quot;: [ # Required. Parameter mutations define parameter behavior on the new event, and are applied in order. A maximum of 20 mutations can be applied.
+  &quot;processingOrder&quot;: &quot;A String&quot;, # Output only. The order for which this rule will be processed. Rules with an order value lower than this will be processed before this rule, rules with an order value higher than this will be processed after this rule. New event edit rules will be assigned an order value at the end of the order. This value does not apply to event create rules.
+  <pre>Deletes an EventEditRule.
+  name: string, Required. Example format: properties/123/dataStreams/456/eventEditRules/789 (required)
+  <pre>Lookup for a single EventEditRule.
+  name: string, Required. The name of the EventEditRule to get. Example format: properties/123/dataStreams/456/eventEditRules/789 (required)
+  <pre>Lists EventEditRules on a web data stream.
+  pageToken: string, Optional. A page token, received from a previous `ListEventEditRules` call. Provide this to retrieve the subsequent page. When paginating, all other parameters provided to `ListEventEditRules` must match the call that provided the page token.
+    { # Response message for ListEventEditRules RPC.
+  &quot;eventEditRules&quot;: [ # List of EventEditRules. These will be ordered stably, but in an arbitrary order.
+  <pre>Updates an EventEditRule.
+  name: string, Identifier. Resource name for this EventEditRule resource. Format: properties/{property}/dataStreams/{data_stream}/eventEditRules/{event_edit_rule} (required)
+    <code class="details" id="reorder">reorder(parent, body=None, x__xgafv=None)</code>
+  <pre>Changes the processing order of event edit rules on the specified stream.
+{ # Request message for ReorderEventEditRules RPC.
+  &quot;eventEditRules&quot;: [ # Required. EventEditRule resource names for the specified data stream, in the needed processing order. All EventEditRules for the stream must be present in the list.

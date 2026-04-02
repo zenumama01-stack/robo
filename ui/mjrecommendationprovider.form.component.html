@@ -1,0 +1,12 @@
+    <!-- Provider Information Section -->
+        SectionKey="providerInformation"
+        SectionName="Provider Information"
+    <!-- Recommendation Runs Section -->
+        SectionKey="recommendationRuns"
+        SectionName="Recommendation Runs"
+        Icon="fa fa-rocket"
+        [BadgeCount]="GetSectionRowCount('recommendationRuns')"
+                [Params]="BuildRelationshipViewParamsByEntityName('MJ: Recommendation Runs','RecommendationProviderID')"
+                [NewRecordValues]="NewRecordValues('MJ: Recommendation Runs')"
+                [AllowLoad]="IsSectionExpanded('recommendationRuns')"
+                (AfterDataLoad)="SetSectionRowCount('recommendationRuns', $event.totalRowCount)"

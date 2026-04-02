@@ -1,0 +1,19 @@
+<h1><a href="apphub_v1.html">App Hub API</a> . <a href="apphub_v1.projects.html">projects</a> . <a href="apphub_v1.projects.locations.html">locations</a> . <a href="apphub_v1.projects.locations.serviceProjectAttachments.html">serviceProjectAttachments</a></h1>
+  <code><a href="#create">create(parent, body=None, requestId=None, serviceProjectAttachmentId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Attaches a service project to the host project.</p>
+<p class="firstline">Deletes a service project attachment.</p>
+<p class="firstline">Gets a service project attachment.</p>
+<p class="firstline">Lists service projects attached to the host project.</p>
+    <code class="details" id="create">create(parent, body=None, requestId=None, serviceProjectAttachmentId=None, x__xgafv=None)</code>
+  <pre>Attaches a service project to the host project.
+  parent: string, Required. Host project ID and location to which service project is being attached. Only global location is supported. Expected format: `projects/{project}/locations/{location}`. (required)
+{ # ServiceProjectAttachment represents an attachment from a service project to a host project. Service projects contain the underlying cloud infrastructure resources, and expose these resources to the host project through a ServiceProjectAttachment. With the attachments, the host project can provide an aggregated view of resources across all service projects.
+  serviceProjectAttachmentId: string, Required. The service project attachment identifier must contain the project id of the service project specified in the service_project_attachment.service_project field.
+  <pre>Deletes a service project attachment.
+  name: string, Required. Fully qualified name of the service project attachment to delete. Expected format: `projects/{project}/locations/{location}/serviceProjectAttachments/{serviceProjectAttachment}`. (required)
+  <pre>Gets a service project attachment.
+  name: string, Required. Fully qualified name of the service project attachment to retrieve. Expected format: `projects/{project}/locations/{location}/serviceProjectAttachments/{serviceProjectAttachment}`. (required)
+  <pre>Lists service projects attached to the host project.
+  parent: string, Required. Host project ID and location to list service project attachments. Only global location is supported. Expected format: `projects/{project}/locations/{location}`. (required)
+    { # Response for ListServiceProjectAttachments.
+  &quot;serviceProjectAttachments&quot;: [ # List of service project attachments.

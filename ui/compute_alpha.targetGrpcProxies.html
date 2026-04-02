@@ -1,0 +1,45 @@
+<h1><a href="compute_alpha.html">Compute Engine API</a> . <a href="compute_alpha.targetGrpcProxies.html">targetGrpcProxies</a></h1>
+  <code><a href="#delete">delete(project, targetGrpcProxy, requestId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Deletes the specified TargetGrpcProxy in the given scope</p>
+  <code><a href="#get">get(project, targetGrpcProxy, x__xgafv=None)</a></code></p>
+<p class="firstline">Returns the specified TargetGrpcProxy resource in the given scope.</p>
+<p class="firstline">Creates a TargetGrpcProxy in the specified project in the given scope</p>
+<p class="firstline">Lists the TargetGrpcProxies for a project in the given scope.</p>
+  <code><a href="#patch">patch(project, targetGrpcProxy, body=None, requestId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Patches the specified TargetGrpcProxy resource with the data included in</p>
+    <code class="details" id="delete">delete(project, targetGrpcProxy, requestId=None, x__xgafv=None)</code>
+  <pre>Deletes the specified TargetGrpcProxy in the given scope
+  targetGrpcProxy: string, Name of the TargetGrpcProxy resource to delete. (required)
+    <code class="details" id="get">get(project, targetGrpcProxy, x__xgafv=None)</code>
+  <pre>Returns the specified TargetGrpcProxy resource in the given scope.
+  targetGrpcProxy: string, Name of the TargetGrpcProxy resource to return. (required)
+    { # Represents a Target gRPC Proxy resource.
+    # A target gRPC proxy is a component of load balancers intended for
+    # load balancing gRPC traffic. Only global forwarding rules with load balancing
+    # scheme INTERNAL_SELF_MANAGED can reference a target gRPC proxy. The target
+    # gRPC Proxy references a URL map that specifies how traffic is routed to
+    # gRPC backend services.
+      # inserting a TargetGrpcProxy. An up-to-date fingerprint must
+      # be provided in order to patch/update the TargetGrpcProxy; otherwise, the
+      # TargetGrpcProxy.
+  &quot;kind&quot;: &quot;compute#targetGrpcProxy&quot;, # Output only. [Output Only] Type of the resource. Alwayscompute#targetGrpcProxy for target grpc proxies.
+  &quot;urlMap&quot;: &quot;A String&quot;, # URL to the UrlMap resource that defines the mapping from URL to the
+      # BackendService. The protocol field in the BackendService must be set to
+      # GRPC.
+  &quot;validateForProxyless&quot;: True or False, # If true, indicates that the BackendServices referenced by the urlMap may be
+      # accessed by gRPC applications without using a sidecar proxy. This will
+      # enable configuration checks on urlMap and its referenced BackendServices to
+      # not allow unsupported features. A gRPC application must use
+      # &quot;xds:///&quot; scheme in the target URI of the service it is
+      # connecting to.
+      # If false, indicates that the BackendServices referenced by the urlMap will
+      # be accessed by gRPC applications via a sidecar proxy. In this case, a gRPC
+      # application must not use &quot;xds:///&quot; scheme in the target URI of
+      # the service it is connecting to
+  <pre>Creates a TargetGrpcProxy in the specified project in the given scope
+  <pre>Lists the TargetGrpcProxies for a project in the given scope.
+  &quot;items&quot;: [ # A list of TargetGrpcProxy resources.
+  &quot;kind&quot;: &quot;compute#targetGrpcProxyList&quot;, # Output only. [Output Only] Type of the resource. Alwayscompute#targetGrpcProxy for target grpc proxies.
+    <code class="details" id="patch">patch(project, targetGrpcProxy, body=None, requestId=None, x__xgafv=None)</code>
+  <pre>Patches the specified TargetGrpcProxy resource with the data included in
+  targetGrpcProxy: string, Name of the TargetGrpcProxy resource to patch. (required)

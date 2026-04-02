@@ -1,0 +1,82 @@
+<h1><a href="appengine_v1beta4.html">App Engine Admin API</a> . <a href="appengine_v1beta4.apps.html">apps</a> . <a href="appengine_v1beta4.apps.modules.html">modules</a> . <a href="appengine_v1beta4.apps.modules.versions.html">versions</a></h1>
+  <code><a href="appengine_v1beta4.apps.modules.versions.instances.html">instances()</a></code>
+  <code><a href="#create">create(appsId, modulesId, body=None, x__xgafv=None)</a></code></p>
+  <code><a href="#delete">delete(appsId, modulesId, versionsId, x__xgafv=None)</a></code></p>
+<p class="firstline">Deletes an existing version.</p>
+  <code><a href="#get">get(appsId, modulesId, versionsId, view=None, x__xgafv=None)</a></code></p>
+  <code><a href="#list">list(appsId, modulesId, pageSize=None, pageToken=None, view=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Lists the versions of a module.</p>
+  <code><a href="#patch">patch(appsId, modulesId, versionsId, body=None, mask=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Updates the specified Version resource. You can specify the following fields depending on the App Engine environment and type of scaling that the version resource uses:</p>
+    <code class="details" id="create">create(appsId, modulesId, body=None, x__xgafv=None)</code>
+{ # A Version resource is a specific set of source code and configuration files that are deployed into a module.
+  &quot;apiConfig&quot;: { # Google Cloud Endpoints (https://cloud.google.com/appengine/docs/python/endpoints/) configuration for API handlers. # Serving configuration for Google Cloud Endpoints (https://cloud.google.com/appengine/docs/python/endpoints/).Only returned in GET requests if view=FULL is set.
+  &quot;automaticScaling&quot;: { # Automatic scaling is based on request rate, response latencies, and other application metrics. # Automatic scaling is based on request rate, response latencies, and other application metrics.
+    &quot;diskUtilization&quot;: { # Target scaling by disk usage. Only applicable for VM runtimes. # Target scaling by disk usage.
+      &quot;targetReadBytesPerSec&quot;: 42, # Target bytes read per second.
+      &quot;targetReadOpsPerSec&quot;: 42, # Target ops read per second.
+      &quot;targetWriteBytesPerSec&quot;: 42, # Target bytes written per second.
+      &quot;targetWriteOpsPerSec&quot;: 42, # Target ops written per second.
+    &quot;maxTotalInstances&quot;: 42, # Maximum number of instances that should be started to handle requests.
+    &quot;minIdleInstances&quot;: 42, # Minimum number of idle instances that should be maintained for this version. Only applicable for the default version of a module.
+    &quot;minTotalInstances&quot;: 42, # Minimum number of instances that should be maintained for this version.
+    &quot;networkUtilization&quot;: { # Target scaling by network usage. Only applicable for VM runtimes. # Target scaling by network usage.
+      &quot;targetReceivedBytesPerSec&quot;: 42, # Target bytes received per second.
+      &quot;targetReceivedPacketsPerSec&quot;: 42, # Target packets received per second.
+      &quot;targetSentBytesPerSec&quot;: 42, # Target bytes sent per second.
+      &quot;targetSentPacketsPerSec&quot;: 42, # Target packets sent per second.
+    &quot;requestUtilization&quot;: { # Target scaling by request utilization. Only applicable for VM runtimes. # Target scaling by request utilization.
+      &quot;targetRequestCountPerSec&quot;: 42, # Target requests per second.
+  &quot;basicScaling&quot;: { # A module with basic scaling will create an instance when the application receives a request. The instance will be turned down when the app becomes idle. Basic scaling is ideal for work that is intermittent or driven by user activity. # A module with basic scaling will create an instance when the application receives a request. The instance will be turned down when the app becomes idle. Basic scaling is ideal for work that is intermittent or driven by user activity.
+  &quot;creationTime&quot;: &quot;A String&quot;, # Time that this version was created.@OutputOnly
+  &quot;defaultExpiration&quot;: &quot;A String&quot;, # Duration that static files should be cached by web proxies and browsers. Only applicable if the corresponding StaticFilesHandler (https://cloud.google.com/appengine/docs/admin-api/reference/rest/v1/apps.services.versions#staticfileshandler) does not specify its own expiration time.Only returned in GET requests if view=FULL is set.
+  &quot;deployer&quot;: &quot;A String&quot;, # Email address of the user who created this version.@OutputOnly
+        &quot;sourceUrl&quot;: &quot;A String&quot;, # URL source to use to fetch this file. Must be a URL to a resource in Google Cloud Storage in the form &#x27;http(s)://storage.googleapis.com/&lt;bucket&gt;/&lt;object&gt;&#x27;.
+    &quot;sourceReferences&quot;: [ # Origin of the source code for this deployment. There can be more than one source reference per version if source code is distributed among multiple repositories.
+      { # Reference to a particular snapshot of the source tree used to build and deploy the application.
+        &quot;repository&quot;: &quot;A String&quot;, # URI string identifying the repository. Example: &quot;https://source.developers.google.com/p/app-123/r/default&quot;
+        &quot;revisionId&quot;: &quot;A String&quot;, # The canonical, persistent identifier of the deployed revision. Aliases that include tags or branch names are not allowed. Example (git): &quot;2198322f89e0bb2e25021667c2ed489d1fd34e6b&quot;
+  &quot;endpointsApiService&quot;: { # Cloud Endpoints (https://cloud.google.com/endpoints) configuration. The Endpoints API Service provides tooling for serving Open API and gRPC endpoints via an NGINX proxy. Only valid for App Engine Flexible environment deployments..The fields here refer to the name and configuration id of a &quot;service&quot; resource in the Service Management API (https://cloud.google.com/service-management/overview). # Cloud Endpoints configuration.If endpoints_api_service is set, the Cloud Endpoints Extensible Service Proxy will be provided to serve the API implemented by the app.
+    &quot;configId&quot;: &quot;A String&quot;, # Endpoints service configuration id as specified by the Service Management API. For example &quot;2016-09-19r1&quot;By default, the Endpoints service configuration id is fixed and config_id must be specified. To keep the Endpoints service configuration id updated with each rollout, specify RolloutStrategy.MANAGED and omit config_id.
+  &quot;env&quot;: &quot;A String&quot;, # App Engine execution environment to use for this version.Defaults to 1.
+  &quot;envVariables&quot;: { # Environment variables made available to the application.Only returned in GET requests if view=FULL is set.
+    { # URL pattern and description of how the URL should be handled. App Engine can handle URLs by executing application code, or by serving static files uploaded with the version, such as images, CSS, or JavaScript.
+      &quot;login&quot;: &quot;A String&quot;, # Level of login required to access this resource.
+      &quot;script&quot;: { # Executes a script to handle the request that matches the URL pattern. # Executes a script to handle the request that matches this URL pattern.
+      &quot;staticDirectory&quot;: { # Files served directly to the user for a given URL, such as images, CSS stylesheets, or JavaScript source files. Static directory handlers make it easy to serve the entire contents of a directory as static files. # Serves the entire contents of a directory as static files.This attribute is deprecated. You can mimic the behavior of static directories using static files.
+        &quot;applicationReadable&quot;: True or False, # Whether files should also be uploaded as code data. By default, files declared in static directory handlers are uploaded as static data and are only served to end users; they cannot be read by the application. If enabled, uploads are charged against both your code and static data storage resource quotas.
+        &quot;directory&quot;: &quot;A String&quot;, # Path to the directory containing the static files from the application root directory. Everything after the end of the matched URL pattern is appended to static_dir to form the full path to the requested file.
+        &quot;expiration&quot;: &quot;A String&quot;, # Time a static file served by this handler should be cached.
+        &quot;mimeType&quot;: &quot;A String&quot;, # MIME type used to serve all files served by this handler. Defaults to file-specific MIME types, which are direved from each file&#x27;s filename extension.
+        &quot;mimeType&quot;: &quot;A String&quot;, # MIME type used to serve all files served by this handler. Defaults to file-specific MIME types, which are derived from each file&#x27;s filename extension.
+      &quot;urlRegex&quot;: &quot;A String&quot;, # A URL prefix. Uses regular expression syntax, which means regexp special characters must be escaped, but should not contain groupings. All URLs that begin with this prefix are handled by this handler, using the portion of the URL after the prefix as part of the file path.
+  &quot;healthCheck&quot;: { # Health checking configuration for VM instances. Unhealthy instances are killed and replaced with new instances. Only applicable for instances in App Engine flexible environment. # Configures health checking for VM instances. Unhealthy instances are stopped and replaced with new instances. Only applicable for VM runtimes.Only returned in GET requests if view=FULL is set.
+  &quot;id&quot;: &quot;A String&quot;, # Relative name of the version within the module. Example: v1. Version names can contain only lowercase letters, numbers, or hyphens. Reserved names: &quot;default&quot;, &quot;latest&quot;, and any name with the prefix &quot;ah-&quot;.
+  &quot;instanceClass&quot;: &quot;A String&quot;, # Instance class that is used to run this version. Valid values are:
+      # AutomaticScaling: F1, F2, F4, F4_1G
+      # ManualScaling or BasicScaling: B1, B2, B4, B8, B4_1GDefaults to F1 for AutomaticScaling and B1 for ManualScaling or BasicScaling.
+  &quot;libraries&quot;: [ # Configuration for third-party Python runtime libraries required by the application.Only returned in GET requests if view=FULL is set.
+  &quot;manualScaling&quot;: { # A module with manual scaling runs continuously, allowing you to perform complex initialization and rely on the state of its memory over time. # A module with manual scaling runs continuously, allowing you to perform complex initialization and rely on the state of its memory over time.
+    &quot;instances&quot;: 42, # Number of instances to assign to the module at the start. This number can later be altered by using the Modules API (https://cloud.google.com/appengine/docs/python/modules/functions) set_num_instances() function.
+  &quot;name&quot;: &quot;A String&quot;, # Full path to the Version resource in the API. Example: apps/myapp/modules/default/versions/v1.@OutputOnly
+  &quot;network&quot;: { # Extra network settings. Only applicable for VM runtimes. # Extra network settings. Only applicable for VM runtimes.
+    &quot;forwardedPorts&quot;: [ # List of ports, or port pairs, to forward from the virtual machine to the application container.
+    &quot;instanceTag&quot;: &quot;A String&quot;, # Tag to apply to the VM instance during creation.
+    &quot;name&quot;: &quot;A String&quot;, # Google Cloud Platform network where the virtual machines are created. Specify the short name, not the resource path.Defaults to default.
+  &quot;resources&quot;: { # Machine resources for a version. # Machine resources for this version. Only applicable for VM runtimes.
+      { # Volumes mounted within the app container. Only applicable for VM runtimes.
+  &quot;runtimeApiVersion&quot;: &quot;A String&quot;, # The version of the API in the given runtime environment. Please see the app.yaml reference for valid values at https://cloud.google.com/appengine/docs/standard/&lt;language&gt;/config/appref
+    <code class="details" id="delete">delete(appsId, modulesId, versionsId, x__xgafv=None)</code>
+  <pre>Deletes an existing version.
+  appsId: string, Part of `name`. Name of the resource requested. Example: apps/myapp/modules/default/versions/v1. (required)
+    <code class="details" id="get">get(appsId, modulesId, versionsId, view=None, x__xgafv=None)</code>
+    <code class="details" id="list">list(appsId, modulesId, pageSize=None, pageToken=None, view=None, x__xgafv=None)</code>
+  <pre>Lists the versions of a module.
+  &quot;versions&quot;: [ # The versions belonging to the requested module.
+    <code class="details" id="patch">patch(appsId, modulesId, versionsId, body=None, mask=None, x__xgafv=None)</code>
+  <pre>Updates the specified Version resource. You can specify the following fields depending on the App Engine environment and type of scaling that the version resource uses:
+serving_status (https://cloud.google.com/appengine/docs/admin-api/reference/rest/v1beta4/apps.modules.versions#Version.FIELDS.serving_status):  For Version resources that use basic scaling, manual scaling, or run in  the App Engine flexible environment.
+instance_class (https://cloud.google.com/appengine/docs/admin-api/reference/rest/v1beta4/apps.modules.versions#Version.FIELDS.instance_class):  For Version resources that run in the App Engine standard environment.
+automatic_scaling.min_idle_instances (https://cloud.google.com/appengine/docs/admin-api/reference/rest/v1beta4/apps.modules.versions#Version.FIELDS.automatic_scaling):  For Version resources that use automatic scaling and run in the App  Engine standard environment.
+automatic_scaling.max_idle_instances (https://cloud.google.com/appengine/docs/admin-api/reference/rest/v1beta4/apps.modules.versions#Version.FIELDS.automatic_scaling):  For Version resources that use automatic scaling and run in the App  Engine standard environment.
+  appsId: string, Part of `name`. Name of the resource to update. Example: apps/myapp/modules/default/versions/1. (required)

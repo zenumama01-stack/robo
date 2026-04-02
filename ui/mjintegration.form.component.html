@@ -1,0 +1,19 @@
+    <!-- Integration Overview Section -->
+        SectionKey="integrationOverview"
+        SectionName="Integration Overview"
+            FieldName="NavigationBaseURL"
+    <!-- Technical Settings Section -->
+        SectionKey="technicalSettings"
+        SectionName="Technical Settings"
+            FieldName="ImportPath"
+            FieldName="BatchMaxRequestCount"
+            FieldName="BatchRequestWaitTime"
+                [Params]="BuildRelationshipViewParamsByEntityName('MJ: Company Integrations','IntegrationName')"
+    <!-- URL Formats Section -->
+        SectionKey="uRLFormats"
+        SectionName="URL Formats"
+        [BadgeCount]="GetSectionRowCount('uRLFormats')"
+                [Params]="BuildRelationshipViewParamsByEntityName('MJ: Integration URL Formats','IntegrationID')"
+                [AllowLoad]="IsSectionExpanded('uRLFormats')"
+                (AfterDataLoad)="SetSectionRowCount('uRLFormats', $event.totalRowCount)"
+                [Params]="BuildRelationshipViewParamsByEntityName('MJ: Record Changes','IntegrationID')"

@@ -1,0 +1,76 @@
+<div class="new-agent-dialog">
+  <form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <!-- Parent Agent Info (if creating sub-agent) -->
+    @if (config.parentAgentId) {
+      <div class="parent-info">
+        <span>Creating sub-agent for: <strong>{{ config.parentAgentName || 'Parent Agent' }}</strong></span>
+        <div class="spinner">Loading...</div>
+    <!-- Form Fields -->
+    <div class="form-fields">
+      <!-- Agent Name -->
+        <label class="required">Agent Name</label>
+          placeholder="Enter a descriptive name for your agent"
+          [clearButton]="true"
+        @if (form.get('name')?.invalid && form.get('name')?.touched) {
+            <i class="fa-solid fa-exclamation-circle"></i>
+            Agent name is required
+      <!-- Description -->
+        <label>Description</label>
+          placeholder="Describe what this agent does..."
+      <!-- AI Model Selection -->
+        <label class="required">AI Model</label>
+          formControlName="modelId"
+          [data]="models$ | async"
+          placeholder="Select an AI model..."
+            <div class="model-item">
+              <div class="model-icon">
+              <div class="model-details">
+                <span class="model-name">{{ dataItem.Name }}</span>
+                <span class="model-vendor">{{ dataItem.Vendor }}</span>
+        @if (form.get('modelId')?.invalid && form.get('modelId')?.touched) {
+            Please select an AI model
+      <!-- System Prompt -->
+        <label>System Prompt</label>
+          formControlName="systemPrompt" 
+          placeholder="Define the agent's behavior and personality..."
+          [rows]="4"
+        <div class="field-hint">
+          This sets the agent's context and behavior
+      <!-- Advanced Settings -->
+      <div class="advanced-settings">
+          Advanced Settings
+        <div class="advanced-grid">
+          <!-- Temperature -->
+          <div class="setting-group">
+            <label>Temperature</label>
+            <div class="slider-container">
+              <kendo-slider 
+                formControlName="temperature"
+                [max]="2"
+                [smallStep]="0.1"
+                [showButtons]="true"
+                class="temperature-slider">
+              </kendo-slider>
+              <span class="slider-value">{{ form.get('temperature')?.value }}</span>
+            <div class="field-hint">Higher values make output more creative</div>
+          <!-- Max Tokens -->
+            <label>Max Tokens</label>
+              formControlName="maxTokens"
+              [max]="8000"
+              [step]="100"
+              [format]="'n0'"
+            <div class="field-hint">Maximum response length</div>
+          <!-- Enable Streaming -->
+          <div class="setting-group checkbox-group">
+              <input type="checkbox" formControlName="enableStreaming" kendoCheckBox />
+              <span>Enable Response Streaming</span>
+            <div class="field-hint">Stream responses in real-time</div>
+        type="button" 
+        (click)="onCancel()"
+        [disabled]="isSubmitting">
+        type="submit" 
+        [disabled]="form.invalid || isSubmitting">
+        @if (isSubmitting) {
+          <span class="spinner-small"></span>
+          <span>Creating...</span>
+          <span>Create Agent</span>

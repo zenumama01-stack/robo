@@ -1,0 +1,23 @@
+        icon="fa fa-tag"
+    <!-- Pricing & Inventory Section -->
+        sectionKey="pricingInventory"
+        sectionName="Pricing & Inventory"
+        icon="fa fa-dollar-sign"
+    <!-- Meetings Section -->
+        sectionKey="meetings"
+        sectionName="Meetings"
+        icon="fa fa-calendar"
+        [badgeCount]="GetSectionRowCount('meetings')"
+                [Params]="BuildRelationshipViewParamsByEntityName('Meetings','ID')"
+                [NewRecordValues]="NewRecordValues('Meetings')"
+                [AllowLoad]="IsSectionExpanded('meetings')"
+                (AfterDataLoad)="SetSectionRowCount('meetings', $event.totalRowCount)"
+    <!-- Publications Section -->
+        sectionKey="publications"
+        sectionName="Publications"
+        icon="fa fa-book"
+        [badgeCount]="GetSectionRowCount('publications')"
+                [Params]="BuildRelationshipViewParamsByEntityName('Publications','ID')"
+                [NewRecordValues]="NewRecordValues('Publications')"
+                [AllowLoad]="IsSectionExpanded('publications')"
+                (AfterDataLoad)="SetSectionRowCount('publications', $event.totalRowCount)"

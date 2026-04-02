@@ -1,0 +1,42 @@
+<h1><a href="dataform_v1.html">Dataform API</a> . <a href="dataform_v1.projects.html">projects</a> . <a href="dataform_v1.projects.locations.html">locations</a> . <a href="dataform_v1.projects.locations.repositories.html">repositories</a> . <a href="dataform_v1.projects.locations.repositories.workflowConfigs.html">workflowConfigs</a></h1>
+  <code><a href="#create">create(parent, body=None, workflowConfigId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Creates a new WorkflowConfig in a given Repository.</p>
+<p class="firstline">Deletes a single WorkflowConfig.</p>
+<p class="firstline">Fetches a single WorkflowConfig.</p>
+<p class="firstline">Lists WorkflowConfigs in a given Repository.</p>
+<p class="firstline">Updates a single WorkflowConfig. **Note:** *This method does not fully implement [AIP/134](https://google.aip.dev/134). The wildcard entry (\*) is treated as a bad request, and when the `field_mask` is omitted, the request is treated as a full update on all modifiable fields.*</p>
+    <code class="details" id="create">create(parent, body=None, workflowConfigId=None, x__xgafv=None)</code>
+  <pre>Creates a new WorkflowConfig in a given Repository.
+  parent: string, Required. The repository in which to create the workflow config. Must be in the format `projects/*/locations/*/repositories/*`. (required)
+{ # Represents a Dataform workflow configuration.
+  &quot;createTime&quot;: &quot;A String&quot;, # Output only. The timestamp of when the WorkflowConfig was created.
+  &quot;cronSchedule&quot;: &quot;A String&quot;, # Optional. Optional schedule (in cron format) for automatic execution of this workflow config.
+  &quot;disabled&quot;: True or False, # Optional. Disables automatic creation of workflow invocations.
+  &quot;invocationConfig&quot;: { # Includes various configuration options for a workflow invocation. If both `included_targets` and `included_tags` are unset, all actions will be included. # Optional. If left unset, a default InvocationConfig will be used.
+    &quot;fullyRefreshIncrementalTablesEnabled&quot;: True or False, # Optional. When set to true, any incremental tables will be fully refreshed.
+    &quot;includedTags&quot;: [ # Optional. The set of tags to include.
+    &quot;includedTargets&quot;: [ # Optional. The set of action identifiers to include.
+    &quot;queryPriority&quot;: &quot;A String&quot;, # Optional. Specifies the priority for query execution in BigQuery. More information can be found at https://cloud.google.com/bigquery/docs/running-queries#queries.
+    &quot;transitiveDependenciesIncluded&quot;: True or False, # Optional. When set to true, transitive dependencies of included actions will be executed.
+    &quot;transitiveDependentsIncluded&quot;: True or False, # Optional. When set to true, transitive dependents of included actions will be executed.
+  &quot;name&quot;: &quot;A String&quot;, # Identifier. The workflow config&#x27;s name.
+  &quot;recentScheduledExecutionRecords&quot;: [ # Output only. Records of the 10 most recent scheduled execution attempts, ordered in descending order of `execution_time`. Updated whenever automatic creation of a workflow invocation is triggered by cron_schedule.
+    { # A record of an attempt to create a workflow invocation for this workflow config.
+      &quot;errorStatus&quot;: { # The `Status` type defines a logical error model that is suitable for different programming environments, including REST APIs and RPC APIs. It is used by [gRPC](https://github.com/grpc). Each `Status` message contains three pieces of data: error code, error message, and error details. You can find out more about this error model and how to work with it in the [API Design Guide](https://cloud.google.com/apis/design/errors). # The error status encountered upon this attempt to create the workflow invocation, if the attempt was unsuccessful.
+      &quot;executionTime&quot;: &quot;A String&quot;, # Output only. The timestamp of this execution attempt.
+      &quot;workflowInvocation&quot;: &quot;A String&quot;, # The name of the created workflow invocation, if one was successfully created. Must be in the format `projects/*/locations/*/repositories/*/workflowInvocations/*`.
+  &quot;releaseConfig&quot;: &quot;A String&quot;, # Required. The name of the release config whose release_compilation_result should be executed. Must be in the format `projects/*/locations/*/repositories/*/releaseConfigs/*`.
+  &quot;updateTime&quot;: &quot;A String&quot;, # Output only. The timestamp of when the WorkflowConfig was last updated.
+  workflowConfigId: string, Required. The ID to use for the workflow config, which will become the final component of the workflow config&#x27;s resource name.
+  <pre>Deletes a single WorkflowConfig.
+  name: string, Required. The workflow config&#x27;s name. (required)
+  <pre>Fetches a single WorkflowConfig.
+  <pre>Lists WorkflowConfigs in a given Repository.
+  parent: string, Required. The repository in which to list workflow configs. Must be in the format `projects/*/locations/*/repositories/*`. (required)
+  pageSize: integer, Optional. Maximum number of workflow configs to return. The server may return fewer items than requested. If unspecified, the server will pick an appropriate default.
+  pageToken: string, Optional. Page token received from a previous `ListWorkflowConfigs` call. Provide this to retrieve the subsequent page. When paginating, all other parameters provided to `ListWorkflowConfigs`, with the exception of `page_size`, must match the call that provided the page token.
+    { # `ListWorkflowConfigs` response message.
+  &quot;workflowConfigs&quot;: [ # List of workflow configs.
+  <pre>Updates a single WorkflowConfig. **Note:** *This method does not fully implement [AIP/134](https://google.aip.dev/134). The wildcard entry (\*) is treated as a bad request, and when the `field_mask` is omitted, the request is treated as a full update on all modifiable fields.*
+  name: string, Identifier. The workflow config&#x27;s name. (required)
+  updateMask: string, Optional. Specifies the fields to be updated in the workflow config. If left unset, all fields will be updated.

@@ -1,0 +1,18 @@
+<h1><a href="apigee_v1.html">Apigee API</a> . <a href="apigee_v1.organizations.html">organizations</a> . <a href="apigee_v1.organizations.environments.html">environments</a> . <a href="apigee_v1.organizations.environments.references.html">references</a></h1>
+<p class="firstline">Creates a Reference in the specified environment.</p>
+<p class="firstline">Deletes a Reference from an environment. Returns the deleted Reference resource.</p>
+<p class="firstline">Gets a Reference resource.</p>
+<p class="firstline">Updates an existing Reference. Note that this operation has PUT semantics; it will replace the entirety of the existing Reference with the resource in the request body.</p>
+  <pre>Creates a Reference in the specified environment.
+  parent: string, Required. The parent environment name under which the Reference will be created. Must be of the form `organizations/{org}/environments/{env}`. (required)
+{ # A Reference configuration. References must refer to a keystore that also exists in the parent environment.
+  &quot;description&quot;: &quot;A String&quot;, # Optional. A human-readable description of this reference.
+  &quot;name&quot;: &quot;A String&quot;, # Required. The resource id of this reference. Values must match the regular expression [\w\s\-.]+.
+  &quot;refers&quot;: &quot;A String&quot;, # Required. The id of the resource to which this reference refers. Must be the id of a resource that exists in the parent environment and is of the given resource_type.
+  &quot;resourceType&quot;: &quot;A String&quot;, # The type of resource referred to by this reference. Valid values are &#x27;KeyStore&#x27; or &#x27;TrustStore&#x27;.
+  <pre>Deletes a Reference from an environment. Returns the deleted Reference resource.
+  name: string, Required. The name of the Reference to delete. Must be of the form `organizations/{org}/environments/{env}/references/{ref}`. (required)
+  <pre>Gets a Reference resource.
+  name: string, Required. The name of the Reference to get. Must be of the form `organizations/{org}/environments/{env}/references/{ref}`. (required)
+  <pre>Updates an existing Reference. Note that this operation has PUT semantics; it will replace the entirety of the existing Reference with the resource in the request body.
+  name: string, Required. The name of the Reference to update. Must be of the form `organizations/{org}/environments/{env}/references/{ref}`. (required)

@@ -1,0 +1,145 @@
+import javax.servlet.ServletRequest;
+ * The proxy servlet is used by image and video widgets. As its name suggests, it proxies the content, so
+ * that it is possible to include resources (images/videos) from the LAN in the web UI. This is
+ * especially useful for webcams as you would not want to make them directly available to the internet.
+ * The servlet registers as "/proxy" and expects the two parameters "sitemap" and "widgetId". It will
+ * hence provide the data of the url specified in the according widget. Note that it does NOT allow
+ * general access to any servers in the LAN - only urls that are specified in a sitemap are accessible.
+ * However, if the Image or Video widget is associated with an item whose current State is a StringType,
+ * it will attempt to use the state of the item as the url to proxy, or fall back to the url= attribute
+ * if the state is not a valid url, so you must make sure that the item's state cannot be set to an
+ * internal image or video url that you do not wish to proxy out of your network. If you are concerned
+ * with the security aspect of using item= to proxy image or video URLs, then do not use item= with those
+ * widgets in your sitemaps.
+ * It is also possible to use credentials in a url, e.g. "http://user:pwd@localserver/image.jpg" -
+ * the proxy servlet will be able to access the content and provide it to the web UIs through the
+ * standard web authentication mechanism (if enabled).
+ * This servlet also supports data streams, such as a webcam video stream etc.
+ * @author John Cocula - added optional Image/Video item= support; refactored to allow use of later spec servlet
+@Component(immediate = true, property = { "service.pid=org.openhab.proxy" })
+public class ProxyServletService extends HttpServlet {
+    /** the alias for this servlet */
+    public static final String PROXY_ALIAS = "proxy";
+    private static final long serialVersionUID = -4716754591953017793L;
+    private static final String CONFIG_MAX_THREADS = "maxThreads";
+    private static final int DEFAULT_MAX_THREADS = 8;
+    public static final String ATTR_URI = ProxyServletService.class.getName() + ".URI";
+    public static final String ATTR_SERVLET_EXCEPTION = ProxyServletService.class.getName() + ".ProxyServletException";
+    private final Logger logger = LoggerFactory.getLogger(ProxyServletService.class);
+    private @Nullable Servlet impl;
+    protected final HttpService httpService;
+    protected final ItemUIRegistry itemUIRegistry;
+    protected final SitemapRegistry sitemapRegistry;
+    public ProxyServletService(@Reference HttpService httpService, @Reference ItemUIRegistry itemUIRegistry,
+            @Reference SitemapRegistry sitemapRegistry, Map<String, Object> config) {
+        this.httpService = httpService;
+        Servlet servlet = getImpl();
+        logger.debug("Starting up '{}' servlet  at /{}", servlet.getServletInfo(), PROXY_ALIAS);
+            httpService.registerServlet("/" + PROXY_ALIAS, servlet, propsFromConfig(config, servlet),
+                    httpService.createDefaultHttpContext());
+        } catch (NamespaceException | ServletException e) {
+            logger.error("Error during servlet startup: {}", e.getMessage());
+            httpService.unregister("/" + PROXY_ALIAS);
+            // ignore, had not been registered before
+     * Return the async in preference to the blocking proxy servlet, if possible.
+     * Supported OSGi containers might only support Servlet API 2.4 (blocking only).
+    private Servlet getImpl() {
+        Servlet servlet = impl;
+        if (servlet == null) {
+                ServletRequest.class.getMethod("startAsync");
+                servlet = new AsyncProxyServlet(this);
+                servlet = new BlockingProxyServlet(this);
+            impl = servlet;
+        return servlet;
+     * Copy the ConfigAdminManager's config to the init parameters of the servlet.
+     * @param config the OSGi config, may be <code>null</code>
+     * @return properties to pass to servlet for initialization
+    private Hashtable<String, @Nullable String> propsFromConfig(Map<String, Object> config, Servlet servlet) {
+        Hashtable<String, @Nullable String> props = new Hashtable<>();
+        for (Entry<String, Object> entry : config.entrySet()) {
+            props.put(entry.getKey(), entry.getValue().toString());
+        // must specify for Jetty proxy servlet, per http://stackoverflow.com/a/27625380
+        if (props.get(CONFIG_MAX_THREADS) == null) {
+            props.put(CONFIG_MAX_THREADS,
+                    String.valueOf(Math.max(DEFAULT_MAX_THREADS, Runtime.getRuntime().availableProcessors())));
+        if (servlet instanceof AsyncProxyServlet) {
+            props.put("async-supported", "true");
+     * Encapsulate the HTTP status code and message in an exception.
+    static class ProxyServletException extends Exception {
+        static final long serialVersionUID = -1L;
+        private final int code;
+        public ProxyServletException(int code, String message) {
+            this.code = code;
+        public int getCode() {
+     * Determine which URI to address based on the request contents.
+     * @param request the servlet request. New attributes may be added to the request in order to cache the result for
+     *            future calls.
+     * @return the URI indicated by the request, or <code>null</code> if not possible
+    /* default */ @Nullable
+    URI uriFromRequest(HttpServletRequest request) {
+            // Return any URI we've already saved for this request
+            URI uri = (URI) request.getAttribute(ATTR_URI);
+                ProxyServletException pse = (ProxyServletException) request.getAttribute(ATTR_SERVLET_EXCEPTION);
+                if (pse != null) {
+                    // If we errored on this request before, there is no point continuing
+            String sitemapName = request.getParameter("sitemap");
+            if (sitemapName == null) {
+                throw new ProxyServletException(HttpServletResponse.SC_BAD_REQUEST,
+                        "Parameter 'sitemap' must be provided!");
+            String widgetId = request.getParameter("widgetId");
+            if (widgetId == null) {
+                        "Parameter 'widgetId' must be provided!");
+                throw new ProxyServletException(HttpServletResponse.SC_NOT_FOUND,
+                        String.format("Sitemap '%s' could not be found!", sitemapName));
+            Widget widget = itemUIRegistry.getWidget(sitemap, widgetId);
+                        String.format("Widget '%s' could not be found!", widgetId));
+            String uriString;
+            if (widget instanceof Image image) {
+                uriString = image.getUrl();
+            } else if (widget instanceof Video video) {
+                uriString = video.getUrl();
+                throw new ProxyServletException(HttpServletResponse.SC_FORBIDDEN,
+                        String.format("Widget type '%s' is not supported!", widget.getClass().getName()));
+                State state = itemUIRegistry.getItemState(itemName);
+                if (state instanceof StringType) {
+                        uri = createURIFromString(state.toString());
+                        request.setAttribute(ATTR_URI, uri);
+                    } catch (MalformedURLException | URISyntaxException ex) {
+                        // fall thru
+                uri = createURIFromString(uriString);
+                throw new ProxyServletException(HttpServletResponse.SC_INTERNAL_SERVER_ERROR,
+                        String.format("URL '%s' is not a valid URL.", uriString));
+        } catch (ProxyServletException pse) {
+            request.setAttribute(ATTR_SERVLET_EXCEPTION, pse);
+    private URI createURIFromString(@Nullable String url) throws MalformedURLException, URISyntaxException {
+        if (url == null) {
+            throw new MalformedURLException();
+        URI uri = new URI(url);
+        // URI in this context should be valid URL. Therefore before returning URI, create URL,
+        // which validates the string.
+            uri.toURL();
+     * If the URI contains user info in the form <code>user[:pass]@</code>, attempt to preempt the server
+     * returning a 401 by providing Basic Authentication support in the initial request to the server.
+     * @param uri the URI which may contain user info
+     * @param request the outgoing request to which an authorization header may be added
+    void maybeAppendAuthHeader(@Nullable URI uri, Request request) {
+        if (uri != null && uri.getUserInfo() != null) {
+            if (userInfo.length >= 1) {
+                String password = userInfo.length >= 2 ? userInfo[1] : null;
+                String authString = password != null ? user + ":" + password : user + ":";
+                String basicAuthentication = "Basic " + Base64.getEncoder().encodeToString(authString.getBytes());
+     * Determine if the request is relative to a video widget.
+     * @param request the servlet request
+     * @return true if the request is relative to a video widget
+    boolean proxyingVideoWidget(HttpServletRequest request) {
+            if (widget instanceof Image) {
+            } else if (widget instanceof Video) {
+     * Send the most specific error back to the client.
+     * @param request the request which may be marked with an error
+     * @param response the reponse to which to send the error
+    void sendError(HttpServletRequest request, HttpServletResponse response) {
+        ProxyServletException pse = (ProxyServletException) request
+                .getAttribute(ProxyServletService.ATTR_SERVLET_EXCEPTION);
+                response.sendError(pse.getCode(), pse.getMessage());
+                response.setStatus(pse.getCode());
+            response.setStatus(HttpServletResponse.SC_FORBIDDEN);

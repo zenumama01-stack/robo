@@ -1,0 +1,44 @@
+<h1><a href="sqladmin_v1.html">Cloud SQL Admin API</a> . <a href="sqladmin_v1.backupRuns.html">backupRuns</a></h1>
+  <code><a href="#delete">delete(project, instance, id, x__xgafv=None)</a></code></p>
+<p class="firstline">Deletes the backup taken by a backup run.</p>
+  <code><a href="#get">get(project, instance, id, x__xgafv=None)</a></code></p>
+<p class="firstline">Retrieves a resource containing information about a backup run.</p>
+  <code><a href="#insert">insert(project, instance, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Creates a new backup run on demand.</p>
+  <code><a href="#list">list(project, instance, maxResults=None, pageToken=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Lists all backup runs associated with the project or a given instance and configuration in the reverse chronological order of the backup initiation time.</p>
+    <code class="details" id="delete">delete(project, instance, id, x__xgafv=None)</code>
+  <pre>Deletes the backup taken by a backup run.
+  project: string, Project ID of the project that contains the instance. (required)
+  instance: string, Cloud SQL instance ID. This does not include the project ID. (required)
+  id: string, The ID of the backup run to delete. To find a backup run ID, use the [list](https://cloud.google.com/sql/docs/mysql/admin-api/rest/v1/backupRuns/list) method. (required)
+    <code class="details" id="get">get(project, instance, id, x__xgafv=None)</code>
+  <pre>Retrieves a resource containing information about a backup run.
+  id: string, The ID of this backup run. (required)
+    { # A BackupRun resource.
+  &quot;backupKind&quot;: &quot;A String&quot;, # Specifies the kind of backup, PHYSICAL or DEFAULT_SNAPSHOT.
+  &quot;databaseVersion&quot;: &quot;A String&quot;, # Output only. The instance database version at the time this backup was made.
+  &quot;description&quot;: &quot;A String&quot;, # The description of this run, only applicable to on-demand backups.
+  &quot;diskEncryptionConfiguration&quot;: { # Disk encryption configuration for an instance. # Encryption configuration specific to a backup.
+  &quot;diskEncryptionStatus&quot;: { # Disk encryption status for an instance. # Encryption status specific to a backup.
+  &quot;endTime&quot;: &quot;A String&quot;, # The time the backup operation completed in UTC timezone in [RFC 3339](https://tools.ietf.org/html/rfc3339) format, for example `2012-11-15T16:19:00.094Z`.
+  &quot;enqueuedTime&quot;: &quot;A String&quot;, # The time the run was enqueued in UTC timezone in [RFC 3339](https://tools.ietf.org/html/rfc3339) format, for example `2012-11-15T16:19:00.094Z`.
+  &quot;error&quot;: { # Database instance operation error. # Information about why the backup operation failed. This is only present if the run has the FAILED status.
+  &quot;id&quot;: &quot;A String&quot;, # The identifier for this backup run. Unique only for a specific Cloud SQL instance.
+  &quot;kind&quot;: &quot;A String&quot;, # This is always `sql#backupRun`.
+  &quot;location&quot;: &quot;A String&quot;, # Location of the backups.
+  &quot;startTime&quot;: &quot;A String&quot;, # The time the backup operation actually started in UTC timezone in [RFC 3339](https://tools.ietf.org/html/rfc3339) format, for example `2012-11-15T16:19:00.094Z`.
+  &quot;status&quot;: &quot;A String&quot;, # The status of this run.
+  &quot;timeZone&quot;: &quot;A String&quot;, # Backup time zone to prevent restores to an instance with a different time zone. Now relevant only for SQL Server.
+  &quot;type&quot;: &quot;A String&quot;, # The type of this run; can be either &quot;AUTOMATED&quot; or &quot;ON_DEMAND&quot; or &quot;FINAL&quot;. This field defaults to &quot;ON_DEMAND&quot; and is ignored, when specified for insert requests.
+  &quot;windowStartTime&quot;: &quot;A String&quot;, # The start time of the backup window during which this the backup was attempted in [RFC 3339](https://tools.ietf.org/html/rfc3339) format, for example `2012-11-15T16:19:00.094Z`.
+    <code class="details" id="insert">insert(project, instance, body=None, x__xgafv=None)</code>
+  <pre>Creates a new backup run on demand.
+    <code class="details" id="list">list(project, instance, maxResults=None, pageToken=None, x__xgafv=None)</code>
+  <pre>Lists all backup runs associated with the project or a given instance and configuration in the reverse chronological order of the backup initiation time.
+  instance: string, Cloud SQL instance ID, or &quot;-&quot; for all instances. This does not include the project ID. (required)
+  maxResults: integer, Maximum number of backup runs per response.
+  pageToken: string, A previously-returned page token representing part of the larger set of results to view.
+    { # Backup run list results.
+  &quot;items&quot;: [ # A list of backup runs in reverse chronological order of the enqueued time.
+  &quot;kind&quot;: &quot;A String&quot;, # This is always `sql#backupRunsList`.

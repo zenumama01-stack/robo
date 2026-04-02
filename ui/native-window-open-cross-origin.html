@@ -1,0 +1,7 @@
+  const popup = window.open('http://127.0.0.1')
+  const intervalID = setInterval(function () {
+      if (popup.location.toString() !== 'about:blank') {
+        clearInterval(intervalID)
+        ipcRenderer.send('answer', `Did not throw error accessing location: ${popup.location}`)
+      ipcRenderer.send('answer', error.message)
+  }, 10)

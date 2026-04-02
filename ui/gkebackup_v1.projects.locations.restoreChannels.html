@@ -1,0 +1,34 @@
+<h1><a href="gkebackup_v1.html">Backup for GKE API</a> . <a href="gkebackup_v1.projects.html">projects</a> . <a href="gkebackup_v1.projects.locations.html">locations</a> . <a href="gkebackup_v1.projects.locations.restoreChannels.html">restoreChannels</a></h1>
+  <code><a href="gkebackup_v1.projects.locations.restoreChannels.restorePlanBindings.html">restorePlanBindings()</a></code>
+<p class="firstline">Returns the restorePlanBindings Resource.</p>
+  <code><a href="#create">create(parent, body=None, restoreChannelId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Creates a new RestoreChannel in a given location.</p>
+<p class="firstline">Deletes an existing RestoreChannel.</p>
+<p class="firstline">Retrieve the details of a single RestoreChannel.</p>
+<p class="firstline">Lists RestoreChannels in a given location.</p>
+<p class="firstline">Update a RestoreChannel.</p>
+    <code class="details" id="create">create(parent, body=None, restoreChannelId=None, x__xgafv=None)</code>
+  <pre>Creates a new RestoreChannel in a given location.
+  parent: string, Required. The location within which to create the RestoreChannel. Format: `projects/*/locations/*` (required)
+{ # A RestoreChannel imposes constraints on where backups can be restored. The RestoreChannel should be in the same project and region as the backups. The backups can only be restored in the `destination_project`.
+  &quot;createTime&quot;: &quot;A String&quot;, # Output only. The timestamp when this RestoreChannel was created.
+  &quot;description&quot;: &quot;A String&quot;, # Optional. User specified descriptive string for this RestoreChannel.
+  &quot;destinationProject&quot;: &quot;A String&quot;, # Required. Immutable. The project into which the backups will be restored. The format is `projects/{projectId}` or `projects/{projectNumber}`.
+  &quot;destinationProjectId&quot;: &quot;A String&quot;, # Output only. The project_id where backups will be restored. Example Project ID: &quot;my-project-id&quot;. This will be an OUTPUT_ONLY field to return the project_id of the destination project.
+  &quot;etag&quot;: &quot;A String&quot;, # Output only. `etag` is used for optimistic concurrency control as a way to help prevent simultaneous updates of a RestoreChannel from overwriting each other. It is strongly suggested that systems make use of the &#x27;etag&#x27; in the read-modify-write cycle to perform RestoreChannel updates in order to avoid race conditions: An `etag` is returned in the response to `GetRestoreChannel`, and systems are expected to put that etag in the request to `UpdateRestoreChannel` or `DeleteRestoreChannel` to ensure that their change will be applied to the same version of the resource.
+  &quot;name&quot;: &quot;A String&quot;, # Identifier. The fully qualified name of the RestoreChannel. `projects/*/locations/*/restoreChannels/*`
+  &quot;updateTime&quot;: &quot;A String&quot;, # Output only. The timestamp when this RestoreChannel was last updated.
+  restoreChannelId: string, Optional. The client-provided short name for the RestoreChannel resource. This name must: - be between 1 and 63 characters long (inclusive) - consist of only lower-case ASCII letters, numbers, and dashes - start with a lower-case letter - end with a lower-case letter or number - be unique within the set of RestoreChannels in this location If the user does not provide a name, a uuid will be used as the name.
+  <pre>Deletes an existing RestoreChannel.
+  name: string, Required. Fully qualified RestoreChannel name. Format: `projects/*/locations/*/restoreChannels/*` (required)
+  etag: string, Optional. If provided, this value must match the current value of the target RestoreChannel&#x27;s etag field or the request is rejected.
+  <pre>Retrieve the details of a single RestoreChannel.
+  <pre>Lists RestoreChannels in a given location.
+  parent: string, Required. The location that contains the RestoreChannels to list. Format: `projects/*/locations/*` (required)
+  pageToken: string, Optional. The value of next_page_token received from a previous `ListRestoreChannels` call. Provide this to retrieve the subsequent page in a multi-page list of results. When paginating, all other parameters provided to `ListRestoreChannels` must match the call that provided the page token.
+    { # Response message for ListRestoreChannels.
+  &quot;nextPageToken&quot;: &quot;A String&quot;, # A token which may be sent as page_token in a subsequent `ListRestoreChannels` call to retrieve the next page of results. If this field is omitted or empty, then there are no more results to return.
+  &quot;restoreChannels&quot;: [ # The list of RestoreChannels matching the given criteria.
+  <pre>Update a RestoreChannel.
+  name: string, Identifier. The fully qualified name of the RestoreChannel. `projects/*/locations/*/restoreChannels/*` (required)
+  updateMask: string, Optional. This is used to specify the fields to be overwritten in the RestoreChannel targeted for update. The values for each of these updated fields will be taken from the `restore_channel` provided with this request. Field names are relative to the root of the resource (e.g., `description`, `destination_project_id`, etc.) If no `update_mask` is provided, all fields in `restore_channel` will be written to the target RestoreChannel resource. Note that OUTPUT_ONLY and IMMUTABLE fields in `restore_channel` are ignored and are not used to update the target RestoreChannel.

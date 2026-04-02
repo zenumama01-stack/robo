@@ -1,0 +1,30 @@
+<h1><a href="servicenetworking_v1.html">Service Networking API</a> . <a href="servicenetworking_v1.services.html">services</a> . <a href="servicenetworking_v1.services.dnsRecordSets.html">dnsRecordSets</a></h1>
+<p class="firstline">Service producers can use this method to add DNS record sets to private DNS zones in the shared producer host project.</p>
+  <code><a href="#list">list(parent, consumerNetwork=None, x__xgafv=None, zone=None)</a></code></p>
+<p class="firstline">Producers can use this method to retrieve a list of available DNS RecordSets available inside the private zone on the tenant host project accessible from their network.</p>
+  <code><a href="#remove">remove(parent, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Service producers can use this method to remove DNS record sets from private DNS zones in the shared producer host project.</p>
+  <code><a href="#update">update(parent, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Service producers can use this method to update DNS record sets from private DNS zones in the shared producer host project.</p>
+  <pre>Service producers can use this method to add DNS record sets to private DNS zones in the shared producer host project.
+{ # Request to add a record set to a private managed DNS zone in the shared producer host project.
+  &quot;consumerNetwork&quot;: &quot;A String&quot;, # Required. The network that the consumer is using to connect with services. Must be in the form of projects/{project}/global/networks/{network} {project} is the project number, as in &#x27;12345&#x27; {network} is the network name.
+  &quot;dnsRecordSet&quot;: { # Represents a DNS record set resource. # Required. The DNS record set to add.
+  &quot;zone&quot;: &quot;A String&quot;, # Required. The name of the private DNS zone in the shared producer host project to which the record set will be added.
+  type: string, Required. RecordSet Type eg. type=&#x27;A&#x27;. See the list of [Supported DNS Types](https://cloud.google.com/dns/records/json-record).
+    <code class="details" id="list">list(parent, consumerNetwork=None, x__xgafv=None, zone=None)</code>
+  <pre>Producers can use this method to retrieve a list of available DNS RecordSets available inside the private zone on the tenant host project accessible from their network.
+  consumerNetwork: string, Required. The network that the consumer is using to connect with services. Must be in the form of projects/{project}/global/networks/{network} {project} is the project number, as in &#x27;12345&#x27; {network} is the network name.
+  zone: string, Required. The name of the private DNS zone in the shared producer host project from which the record set will be removed.
+    { # Represents all DNS RecordSets associated with the producer network
+  &quot;dnsRecordSets&quot;: [ # DNS record Set Resource
+    <code class="details" id="remove">remove(parent, body=None, x__xgafv=None)</code>
+  <pre>Service producers can use this method to remove DNS record sets from private DNS zones in the shared producer host project.
+{ # Request to remove a record set from a private managed DNS zone in the shared producer host project. The name, type, ttl, and data values must all exactly match an existing record set in the specified zone.
+  &quot;dnsRecordSet&quot;: { # Represents a DNS record set resource. # Required. The DNS record set to remove.
+  &quot;zone&quot;: &quot;A String&quot;, # Required. The name of the private DNS zone in the shared producer host project from which the record set will be removed.
+    <code class="details" id="update">update(parent, body=None, x__xgafv=None)</code>
+  <pre>Service producers can use this method to update DNS record sets from private DNS zones in the shared producer host project.
+{ # Request to update a record set from a private managed DNS zone in the shared producer host project. The name, type, ttl, and data values of the existing record set must all exactly match an existing record set in the specified zone.
+  &quot;existingDnsRecordSet&quot;: { # Represents a DNS record set resource. # Required. The existing DNS record set to update.
+  &quot;newDnsRecordSet&quot;: { # Represents a DNS record set resource. # Required. The new values that the DNS record set should be updated to hold.

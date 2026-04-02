@@ -1,0 +1,174 @@
+<div class="record-form-container ai-agent-run-form">
+            @if (agent && agent.LogoURL) {
+              <img [src]="agent.LogoURL" [alt]="agent.Name || 'Agent'" class="agent-logo" />
+            @if (agent && !agent.LogoURL && agent.IconClass) {
+              <i class="fas" [ngClass]="agent.IconClass"></i>
+            @if (!agent || (!agent.LogoURL && !agent.IconClass)) {
+            <h2>AI Agent Run</h2>
+              @if (agent) {
+                <span class="agent-name">
+                  <a href="javascript:void(0)" class="entity-link" (click)="openEntityRecord('MJ: AI Agents', record.AgentID)">
+                    {{ agent.Name }}
+              <span class="run-id">{{ record.ID }}</span>
+              @if (record.ParentRunID) {
+                <span class="parent-run">
+                  <i class="fas fa-level-up-alt"></i>
+                  <a (click)="navigateToParentRun()" class="parent-link">Parent Run</a>
+              <!-- Conversation Link Pill -->
+              @if (record.ConversationID) {
+                <span class="conversation-pill" (click)="navigateToConversation()" title="Open conversation in Chat app">
+                  <span>Conversation</span>
+          <div class="status-badge" [attr.data-status]="record.Status">
+            <i class="fas" [ngClass]="getStatusIcon(record.Status || '')"></i>
+            <button class="btn-icon" (click)="refreshData()" title="Refresh">
+              <i class="fas fa-sync-alt"></i>
+          <span class="value">{{ record.StartedAt | date:'medium' }}</span>
+            <span class="label">Completed</span>
+            <span class="value">{{ record.CompletedAt | date:'medium' }}</span>
+            <span class="label">Duration</span>
+            <span class="value">{{ calculateDuration(record.StartedAt, record.CompletedAt) }}</span>
+        @if (record.Success !== null && record.CompletedAt !== null) {
+            <span class="label">Result</span>
+            <span class="value" [class.success]="record.Success" [class.error]="!record.Success">
+              {{ record.Success ? 'Success' : 'Failed' }}
+        @if (costMetrics && (costMetrics.totalTokensInput + costMetrics.totalTokensOutput) > 0) {
+            <span class="label">Tokens</span>
+            @if (!costMetrics.isLoading) {
+              <span class="value">{{ (costMetrics.totalTokensInput + costMetrics.totalTokensOutput) | number:'1.0-0' }}</span>
+            @if (costMetrics.isLoading) {
+              <span class="value loading"><i class="fas fa-spinner fa-spin"></i></span>
+        @if (costMetrics && costMetrics.totalCost > 0) {
+            <span class="label">Cost</span>
+              <span class="value">${{ costMetrics.totalCost | number:'1.2-4' }}</span>
+            <span class="label">Effort Level</span>
+            <span class="value">{{ record.EffortLevel }}</span>
+      <!-- Configuration Bar (shown below header stats when ConfigurationID exists) -->
+        <div class="configuration-bar">
+            <div class="config-content">
+              <div class="config-label">Configuration</div>
+              <div class="config-value">
+                <a href="javascript:void(0)" class="entity-link" (click)="openEntityRecord('MJ: AI Configurations', record.ConfigurationID)">
+    <div class="tabs">
+      <button class="tab" [class.active]="activeTab === 'timeline'" (click)="changeTab('timeline')">
+        <i class="fas fa-stream"></i> Timeline
+      <button class="tab" [class.active]="activeTab === 'visualization'" (click)="changeTab('visualization')">
+        <i class="fas fa-diagram-project"></i> Visualization
+      <button class="tab" [class.active]="activeTab === 'analytics'" (click)="changeTab('analytics')">
+      <button class="tab" [class.active]="activeTab === 'details'" (click)="changeTab('details')">
+    <!-- Content -->
+      <!-- Timeline Tab -->
+      @if (activeTab === 'timeline') {
+        <div class="tab-content" style="height: 100%;">
+          <kendo-splitter style="height: 100%;" orientation="horizontal">
+            <!-- Timeline Pane -->
+            <kendo-splitter-pane [min]="'400px'">
+                [aiAgentRunId]="record.ID"
+                [dataHelper]="dataHelper"
+                [autoRefresh]="record.Status === 'Running'"
+                [refreshInterval]="30000"
+                (itemSelected)="selectTimelineItem($event)"
+                (navigateToEntity)="navigateToEntityRecord($event)"
+                (agentRunCompleted)="onAgentRunCompleted($event)">
+            <!-- JSON Detail Pane -->
+            <kendo-splitter-pane [size]="'45%'" [min]="'300px'" [collapsed]="!selectedTimelineItem">
+                [selectedTimelineItem]="selectedTimelineItem"
+                (closePanel)="closeJsonPanel()"
+      <!-- Visualization Tab -->
+      @if (activeTab === 'visualization') {
+          @if (visualizationLoaded) {
+            <mj-ai-agent-run-visualization
+              #visualizationComponent
+            </mj-ai-agent-run-visualization>
+          @if (analyticsLoaded) {
+            <mj-ai-agent-run-analytics
+              #analyticsComponent
+              [agentRunId]="record.ID"
+            </mj-ai-agent-run-analytics>
+            <kendo-panelbar-item title="General Information" [expanded]="true">
+                        {{ agent?.Name || 'N/A' }}
+                    <label>Parent Run ID</label>
+                        <a href="javascript:void(0)" class="entity-link" (click)="openEntityRecord('MJ: AI Agent Runs', record.ParentRunID)">
+                          {{ record.ParentRunID }}
+                      @if (!record.ParentRunID) {
+                        <span>None (Root)</span>
+                    <label>Last Run ID</label>
+                      @if (record.LastRunID) {
+                        <a href="javascript:void(0)" class="entity-link" (click)="openEntityRecord('MJ: AI Agent Runs', record.LastRunID)">
+                          {{ record.LastRunID }}
+                      @if (!record.LastRunID) {
+                        <span>None</span>
+                    <label>Conversation ID</label>
+                        <a href="javascript:void(0)" class="entity-link" (click)="openEntityRecord('MJ: Conversations', record.ConversationID)">
+                          {{ record.ConversationID }}
+                      @if (!record.ConversationID) {
+                        <span>N/A</span>
+                    <label>User</label>
+                      @if (record.UserID) {
+                        <a href="javascript:void(0)" class="entity-link" (click)="openEntityRecord('MJ: Users', record.UserID)">
+                          {{ record.User || 'N/A' }}
+                      @if (!record.UserID) {
+            <kendo-panelbar-item title="Execution Settings">
+                    <label>Override Model</label>
+                      @if (record.OverrideModelID) {
+                        <a href="javascript:void(0)" class="entity-link" (click)="openEntityRecord('MJ: AI Models', record.OverrideModelID)">
+                          {{ record.OverrideModel || 'N/A' }}
+                      @if (!record.OverrideModelID) {
+                    <label>Override Vendor</label>
+                      @if (record.OverrideVendorID) {
+                        <a href="javascript:void(0)" class="entity-link" (click)="openEntityRecord('MJ: AI Vendors', record.OverrideVendorID)">
+                          {{ record.OverrideVendor || 'N/A' }}
+                      @if (!record.OverrideVendorID) {
+                    <label>Verbose Logging</label>
+                    <span>{{ record.Verbose ? 'Yes' : 'No' }}</span>
+            <kendo-panelbar-item title="Execution Status">
+                    <span class="status-badge" [attr.data-status]="record.Status">
+                    <label>Success</label>
+                    @if (record.Success === null) {
+                      <span>In Progress</span>
+                    @else if (record.Success) {
+                    <span class="success">Yes</span>
+                  @else {
+                  <span class="error-message">No</span>
+                <div class="detail-item full-width">
+                  <label>Message</label>
+                  <div class="message">{{ record.Message }}</div>
+                  <label>Error Message</label>
+                  <div class="error-message">{{ record.ErrorMessage }}</div>
+        <kendo-panelbar-item title="Usage & Cost">
+                <label>Total Tokens Used</label>
+                <span>{{ record.TotalTokensUsed ? (record.TotalTokensUsed | number:'1.0-0') : 'N/A' }}</span>
+                <label>Prompt Tokens</label>
+                <span>{{ record.TotalPromptTokensUsed ? (record.TotalPromptTokensUsed | number:'1.0-0') : 'N/A' }}</span>
+                <label>Completion Tokens</label>
+                <span>{{ record.TotalCompletionTokensUsed ? (record.TotalCompletionTokensUsed | number:'1.0-0') : 'N/A' }}</span>
+                <label>Total Cost</label>
+                <span>{{ record.TotalCost != null ? ('$' + (record.TotalCost | number:'1.2-4')) : 'N/A' }}</span>
+                <label>Total Prompt Iterations</label>
+                <span>{{ record.TotalPromptIterations != null ? (record.TotalPromptIterations | number:'1.0-0') : 'N/A' }}</span>
+        @if (record.Result) {
+          <kendo-panelbar-item title="Result">
+              <div class="result-viewer">
+                @if (isParsingComplete) {
+                    [ngModel]="parsedResult"
+                  <div style="padding: 20px; text-align: center; color: #666;">
+                    <i class="fas fa-spinner fa-spin"></i> Loading result data...
+        @if (record.StartingPayload) {
+          <kendo-panelbar-item title="Starting Payload">
+                    [ngModel]="parsedStartingPayload"
+                    <i class="fas fa-spinner fa-spin"></i> Loading payload data...
+        @if (record.Data) {
+          <kendo-panelbar-item title="Execution Data">
+                    [ngModel]="parsedData"
+                    <i class="fas fa-spinner fa-spin"></i> Loading execution data...
+        @if (record.FinalPayload) {
+          <kendo-panelbar-item title="Final Payload">
+                    [ngModel]="parsedFinalPayload"
+                    <i class="fas fa-spinner fa-spin"></i> Loading final payload data...
+        @if (showPayloadDiff) {
+          <kendo-panelbar-item title="Payload Diff">
+              <div style="padding: 20px; background: #f8f9fa;">
+                    [oldValue]="startingPayloadObject"
+                    [newValue]="finalPayloadObject"
+                    [maxDepth]="10"
+                    [maxStringLength]="200"
+                    <i class="fas fa-spinner fa-spin"></i> Loading payload diff...

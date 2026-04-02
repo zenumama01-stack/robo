@@ -1,0 +1,31 @@
+<h1><a href="networksecurity_v1.html">Network Security API</a> . <a href="networksecurity_v1.projects.html">projects</a> . <a href="networksecurity_v1.projects.locations.html">locations</a> . <a href="networksecurity_v1.projects.locations.dnsThreatDetectors.html">dnsThreatDetectors</a></h1>
+  <code><a href="#create">create(parent, body=None, dnsThreatDetectorId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Creates a new DnsThreatDetector in a given project and location.</p>
+<p class="firstline">Deletes a single DnsThreatDetector.</p>
+<p class="firstline">Gets the details of a single DnsThreatDetector.</p>
+<p class="firstline">Lists DnsThreatDetectors in a given project and location.</p>
+<p class="firstline">Updates a single DnsThreatDetector.</p>
+    <code class="details" id="create">create(parent, body=None, dnsThreatDetectorId=None, x__xgafv=None)</code>
+  <pre>Creates a new DnsThreatDetector in a given project and location.
+  parent: string, Required. The value for the parent of the DnsThreatDetector resource. (required)
+{ # A DNS threat detector sends DNS query logs to a _provider_ that then analyzes the logs to identify threat events in the DNS queries. By default, all VPC networks in your projects are included. You can exclude specific networks by supplying `excluded_networks`.
+  &quot;excludedNetworks&quot;: [ # Optional. A list of network resource names which aren&#x27;t monitored by this DnsThreatDetector. Example: `projects/PROJECT_ID/global/networks/NETWORK_NAME`.
+  &quot;labels&quot;: { # Optional. Any labels associated with the DnsThreatDetector, listed as key value pairs.
+  &quot;name&quot;: &quot;A String&quot;, # Immutable. Identifier. Name of the DnsThreatDetector resource.
+  &quot;provider&quot;: &quot;A String&quot;, # Required. The provider used for DNS threat analysis.
+  &quot;updateTime&quot;: &quot;A String&quot;, # Output only. Update time stamp.
+  dnsThreatDetectorId: string, Optional. The ID of the requesting DnsThreatDetector object. If this field is not supplied, the service generates an identifier.
+  <pre>Deletes a single DnsThreatDetector.
+  name: string, Required. Name of the DnsThreatDetector resource. (required)
+  <pre>Gets the details of a single DnsThreatDetector.
+  <pre>Lists DnsThreatDetectors in a given project and location.
+  parent: string, Required. The parent value for `ListDnsThreatDetectorsRequest`. (required)
+  pageSize: integer, Optional. The requested page size. The server may return fewer items than requested. If unspecified, the server picks an appropriate default.
+  pageToken: string, Optional. A page token received from a previous `ListDnsThreatDetectorsRequest` call. Provide this to retrieve the subsequent page.
+    { # The response message to requesting a list of DnsThreatDetectors.
+  &quot;dnsThreatDetectors&quot;: [ # The list of DnsThreatDetector resources.
+  &quot;nextPageToken&quot;: &quot;A String&quot;, # A token, which can be sent as `page_token`, to retrieve the next page.
+  &quot;unreachable&quot;: [ # Unordered list. Unreachable `DnsThreatDetector` resources.
+  <pre>Updates a single DnsThreatDetector.
+  name: string, Immutable. Identifier. Name of the DnsThreatDetector resource. (required)
+  updateMask: string, Optional. The field mask is used to specify the fields to be overwritten in the DnsThreatDetector resource by the update. The fields specified in the update_mask are relative to the resource, not the full request. A field will be overwritten if it is in the mask. If the mask is not provided then all fields present in the request will be overwritten.

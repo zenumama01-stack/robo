@@ -1,0 +1,35 @@
+<h1><a href="run_v2.html">Cloud Run Admin API</a> . <a href="run_v2.projects.html">projects</a> . <a href="run_v2.projects.locations.html">locations</a> . <a href="run_v2.projects.locations.jobs.html">jobs</a> . <a href="run_v2.projects.locations.jobs.executions.html">executions</a> . <a href="run_v2.projects.locations.jobs.executions.tasks.html">tasks</a></h1>
+<p class="firstline">Gets information about a Task.</p>
+<p class="firstline">Lists Tasks from an Execution of a Job.</p>
+  <pre>Gets information about a Task.
+  name: string, Required. The full name of the Task. Format: projects/{project}/locations/{location}/jobs/{job}/executions/{execution}/tasks/{task} (required)
+  &quot;completionTime&quot;: &quot;A String&quot;, # Output only. Represents time when the Task was completed. It is not guaranteed to be set in happens-before order across separate operations.
+  &quot;conditions&quot;: [ # Output only. The Condition of this Task, containing its readiness status, and detailed error information in case it did not reach the desired state.
+  &quot;createTime&quot;: &quot;A String&quot;, # Output only. Represents time when the task was created by the system. It is not guaranteed to be set in happens-before order across separate operations.
+  &quot;encryptionKey&quot;: &quot;A String&quot;, # Output only. A reference to a customer managed encryption key (CMEK) to use to encrypt this container image. For more information, go to https://cloud.google.com/run/docs/securing/using-cmek
+  &quot;execution&quot;: &quot;A String&quot;, # Output only. The name of the parent Execution.
+  &quot;executionEnvironment&quot;: &quot;A String&quot;, # The execution environment being used to host this Task.
+  &quot;gpuZonalRedundancyDisabled&quot;: True or False, # Optional. Output only. True if GPU zonal redundancy is disabled on this task.
+  &quot;index&quot;: 42, # Output only. Index of the Task, unique per execution, and beginning at 0.
+  &quot;lastAttemptResult&quot;: { # Result of a task attempt. # Output only. Result of the last attempt of this Task.
+    &quot;exitCode&quot;: 42, # Output only. The exit code of this attempt. This may be unset if the container was unable to exit cleanly with a code due to some other failure. See status field for possible failure details. At most one of exit_code or term_signal will be set.
+    &quot;status&quot;: { # The `Status` type defines a logical error model that is suitable for different programming environments, including REST APIs and RPC APIs. It is used by [gRPC](https://github.com/grpc). Each `Status` message contains three pieces of data: error code, error message, and error details. You can find out more about this error model and how to work with it in the [API Design Guide](https://cloud.google.com/apis/design/errors). # Output only. The status of this attempt. If the status code is OK, then the attempt succeeded.
+    &quot;termSignal&quot;: 42, # Output only. Termination signal of the container. This is set to non-zero if the container is terminated by the system. At most one of exit_code or term_signal will be set.
+  &quot;maxRetries&quot;: 42, # Number of retries allowed per Task, before marking this Task failed.
+  &quot;name&quot;: &quot;A String&quot;, # Output only. The unique name of this Task.
+  &quot;nodeSelector&quot;: { # Hardware constraints configuration. # Output only. The node selector for the task.
+  &quot;observedGeneration&quot;: &quot;A String&quot;, # Output only. The generation of this Task. See comments in `Job.reconciling` for additional information on reconciliation process in Cloud Run.
+  &quot;retried&quot;: 42, # Output only. The number of times this Task was retried. Tasks are retried when they fail up to the maxRetries limit.
+  &quot;scheduledTime&quot;: &quot;A String&quot;, # Output only. Represents time when the task was scheduled to run by the system. It is not guaranteed to be set in happens-before order across separate operations.
+  &quot;serviceAccount&quot;: &quot;A String&quot;, # Email address of the IAM service account associated with the Task of a Job. The service account represents the identity of the running task, and determines what permissions the task has. If not provided, the task will use the project&#x27;s default service account.
+  &quot;startTime&quot;: &quot;A String&quot;, # Output only. Represents time when the task started to run. It is not guaranteed to be set in happens-before order across separate operations.
+  &quot;timeout&quot;: &quot;A String&quot;, # Max allowed time duration the Task may be active before the system will actively try to mark it failed and kill associated containers. This applies per attempt of a task, meaning each retry can run for the full timeout.
+  &quot;uid&quot;: &quot;A String&quot;, # Output only. Server assigned unique identifier for the Task. The value is a UUID4 string and guaranteed to remain unchanged until the resource is deleted.
+  &quot;vpcAccess&quot;: { # VPC Access settings. For more information on sending traffic to a VPC network, visit https://cloud.google.com/run/docs/configuring/connecting-vpc. # Output only. VPC Access configuration to use for this Task. For more information, visit https://cloud.google.com/run/docs/configuring/connecting-vpc.
+  <pre>Lists Tasks from an Execution of a Job.
+  parent: string, Required. The Execution from which the Tasks should be listed. To list all Tasks across Executions of a Job, use &quot;-&quot; instead of Execution name. To list all Tasks across Jobs, use &quot;-&quot; instead of Job name. Format: projects/{project}/locations/{location}/jobs/{job}/executions/{execution} (required)
+  pageSize: integer, Maximum number of Tasks to return in this call.
+  pageToken: string, A page token received from a previous call to ListTasks. All other parameters must match.
+    { # Response message containing a list of Tasks.
+  &quot;nextPageToken&quot;: &quot;A String&quot;, # A token indicating there are more items than page_size. Use it in the next ListTasks request to continue.
+  &quot;tasks&quot;: [ # The resulting list of Tasks.

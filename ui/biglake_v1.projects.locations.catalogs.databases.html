@@ -1,0 +1,35 @@
+<h1><a href="biglake_v1.html">BigLake API</a> . <a href="biglake_v1.projects.html">projects</a> . <a href="biglake_v1.projects.locations.html">locations</a> . <a href="biglake_v1.projects.locations.catalogs.html">catalogs</a> . <a href="biglake_v1.projects.locations.catalogs.databases.html">databases</a></h1>
+  <code><a href="biglake_v1.projects.locations.catalogs.databases.tables.html">tables()</a></code>
+  <code><a href="#create">create(parent, body=None, databaseId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Creates a new database.</p>
+<p class="firstline">Deletes an existing database specified by the database ID.</p>
+<p class="firstline">Gets the database specified by the resource name.</p>
+<p class="firstline">List all databases in a specified catalog.</p>
+<p class="firstline">Updates an existing database specified by the database ID.</p>
+    <code class="details" id="create">create(parent, body=None, databaseId=None, x__xgafv=None)</code>
+  <pre>Creates a new database.
+  parent: string, Required. The parent resource where this database will be created. Format: projects/{project_id_or_number}/locations/{location_id}/catalogs/{catalog_id} (required)
+{ # Database is the container of tables.
+  &quot;createTime&quot;: &quot;A String&quot;, # Output only. The creation time of the database.
+  &quot;deleteTime&quot;: &quot;A String&quot;, # Output only. The deletion time of the database. Only set after the database is deleted.
+  &quot;expireTime&quot;: &quot;A String&quot;, # Output only. The time when this database is considered expired. Only set after the database is deleted.
+  &quot;hiveOptions&quot;: { # Options of a Hive database. # Options of a Hive database.
+    &quot;locationUri&quot;: &quot;A String&quot;, # Cloud Storage folder URI where the database data is stored, starting with &quot;gs://&quot;.
+    &quot;parameters&quot;: { # Stores user supplied Hive database parameters.
+  &quot;name&quot;: &quot;A String&quot;, # Output only. The resource name. Format: projects/{project_id_or_number}/locations/{location_id}/catalogs/{catalog_id}/databases/{database_id}
+  &quot;type&quot;: &quot;A String&quot;, # The database type.
+  &quot;updateTime&quot;: &quot;A String&quot;, # Output only. The last modification time of the database.
+  databaseId: string, Required. The ID to use for the database, which will become the final component of the database&#x27;s resource name.
+  <pre>Deletes an existing database specified by the database ID.
+  name: string, Required. The name of the database to delete. Format: projects/{project_id_or_number}/locations/{location_id}/catalogs/{catalog_id}/databases/{database_id} (required)
+  <pre>Gets the database specified by the resource name.
+  name: string, Required. The name of the database to retrieve. Format: projects/{project_id_or_number}/locations/{location_id}/catalogs/{catalog_id}/databases/{database_id} (required)
+  <pre>List all databases in a specified catalog.
+  parent: string, Required. The parent, which owns this collection of databases. Format: projects/{project_id_or_number}/locations/{location_id}/catalogs/{catalog_id} (required)
+  pageSize: integer, The maximum number of databases to return. The service may return fewer than this value. If unspecified, at most 50 databases will be returned. The maximum value is 1000; values above 1000 will be coerced to 1000.
+  pageToken: string, A page token, received from a previous `ListDatabases` call. Provide this to retrieve the subsequent page. When paginating, all other parameters provided to `ListDatabases` must match the call that provided the page token.
+    { # Response message for the ListDatabases method.
+  &quot;databases&quot;: [ # The databases from the specified catalog.
+  <pre>Updates an existing database specified by the database ID.
+  name: string, Output only. The resource name. Format: projects/{project_id_or_number}/locations/{location_id}/catalogs/{catalog_id}/databases/{database_id} (required)
+  updateMask: string, The list of fields to update. For the `FieldMask` definition, see https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#fieldmask If not set, defaults to all of the fields that are allowed to update.

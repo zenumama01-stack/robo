@@ -1,0 +1,25 @@
+        [width]="DialogWidth"
+        [height]="DialogHeight"
+        <mj-find-record
+            [EntityName]="EntityName"
+            [DisplayFields]="DisplayFields"
+            (OnRecordSelected)="BubbleOnRecordSelected($event)"
+        </mj-find-record>
+            <button kendoButton (click)="OnOK()" themeColor="primary">OK</button>
+        (close)="HandleCancelClick()"
+            @if(ShowOKButton) {
+                <button kendoButton (click)="HandleOKClick()" themeColor="primary">{{OKButtonText}}</button>
+            @if(ShowCancelButton) {
+                <button kendoButton (click)="HandleCancelClick()">{{CancelButtonText}}</button>
+            <!-- Named slot for custom actions/buttons -->
+            <ng-content select="[custom-actions]"></ng-content>
+            @if(!ShowOKButton && !ShowCancelButton && !HasCustomActions) {
+                <span>No actions available - enable built-in actions or add custom actions</span>
+        <mj-record-selector
+            [AvailableRecords]="AvailableRecords"
+            [DisplayField]="DisplayField"
+            [SelectedRecords]="SelectedRecords"
+            [ToolbarSettings]="ToolbarSettings"
+            [DisplayIconField]="DisplayIconField"
+            [UnselectedRecords]="UnselectedRecords"
+        </mj-record-selector>

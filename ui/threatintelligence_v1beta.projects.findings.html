@@ -1,0 +1,38 @@
+<h1><a href="threatintelligence_v1beta.html">Threat Intelligence API</a> . <a href="threatintelligence_v1beta.projects.html">projects</a> . <a href="threatintelligence_v1beta.projects.findings.html">findings</a></h1>
+<p class="firstline">Get a finding by name. The `name` field should have the format: `projects/{project}/findings/{finding}`</p>
+<p class="firstline">Get a list of findings that meet the filter criteria. The `parent` field in ListFindingsRequest should have the format: projects/{project}</p>
+<p class="firstline">SearchFindings is a more powerful version of ListFindings that supports complex queries like "findings for alerts" using functions such as `has_alert` in the query string. The `parent` field in SearchFindingsRequest should have the format: projects/{project} Example to search for findings for a specific issue: `has_alert("name=\"projects/gti-12345/alerts/alert-12345\"")`</p>
+  <pre>Get a finding by name. The `name` field should have the format: `projects/{project}/findings/{finding}`
+  name: string, Required. Name of the finding to get. (required)
+    { # A ‘stateless’ and a point in time event that a check produced a result of interest.
+  &quot;alert&quot;: &quot;A String&quot;, # Optional. Name of the alert that this finding is bound to.
+  &quot;audit&quot;: { # Tracks basic CRUD facts. # Output only. Audit data about the finding.
+  &quot;configurations&quot;: [ # Optional. Configuration names that are bound to this finding.
+  &quot;detail&quot;: { # Wrapper class that contains the union struct for all the various findings detail specific classes. # Required. Holder of the domain specific details of the finding.
+    &quot;dataLeak&quot;: { # A detail object for a Data Leak finding. # Data Leak finding detail type.
+      &quot;documentId&quot;: &quot;A String&quot;, # Required. The unique identifier of the document that triggered the Data Leak finding. This ID can be used to retrieve the content of the document for further analysis.
+      &quot;matchScore&quot;: 3.14, # Required. Reference to the match score of the Data Leak finding. This is a float value greater than 0 and less than or equal to 1 calculated by the matching engine based on the similarity of the document and the user provided configurations.
+      &quot;severity&quot;: &quot;A String&quot;, # Required. The severity of the Data Leak finding. This indicates the potential impact of the threat.
+    &quot;initialAccessBroker&quot;: { # A detail object for an Initial Access Broker (IAB) finding. # Initial Access Broker finding detail type.
+      &quot;documentId&quot;: &quot;A String&quot;, # Required. The unique identifier of the document that triggered the IAB finding. This ID can be used to retrieve the content of the document for further analysis.
+      &quot;matchScore&quot;: 3.14, # Required. Reference to the match score of the IAB finding. This is a float value between 0 and 1 calculated by the matching engine based on the similarity of the document and the user provided configurations.
+      &quot;severity&quot;: &quot;A String&quot;, # Required. The severity of the IAB finding. This indicates the potential impact of the threat.
+    &quot;insiderThreat&quot;: { # A detail object for a InsiderThreat finding. # Insider Threat finding detail type.
+      &quot;documentId&quot;: &quot;A String&quot;, # Required. The unique identifier of the document that triggered the InsiderThreat finding. This ID can be used to retrieve the content of the document for further analysis.
+      &quot;matchScore&quot;: 3.14, # Required. Reference to the match score of the InsiderThreat finding. This is a float value greater than 0 and less than or equal to 1 calculated by the matching engine based on the similarity of the document and the user provided configurations.
+      &quot;severity&quot;: &quot;A String&quot;, # Required. The severity of the InsiderThreat finding. This indicates the potential impact of the threat.
+  &quot;displayName&quot;: &quot;A String&quot;, # Required. A short descriptive title for the finding &lt;= 250 chars. EX: &quot;Actor &#x27;baddy&#x27; offering $1000 for credentials of &#x27;goodguy&#x27;&quot;.
+  &quot;name&quot;: &quot;A String&quot;, # Identifier. Server generated name for the finding (leave clear during creation). Format: projects/{project}/findings/{finding}
+  &quot;provider&quot;: &quot;A String&quot;, # Required. Logical source of this finding (name of the sub-engine).
+  &quot;relevanceAnalysis&quot;: { # Structured relevance analysis for a threat. # Output only. High-Precision Relevance Analysis verdict for the finding.
+  &quot;reoccurrenceTimes&quot;: [ # Output only. When identical finding (same labels and same details) has re-occurred.
+  &quot;severity&quot;: 3.14, # Optional. Deprecated: Use the `severity_analysis` field instead. Base severity score from the finding source.
+  &quot;severityAnalysis&quot;: { # Structured severity analysis for a threat. # Output only. High-Precision Severity Analysis verdict for the finding.
+  <pre>Get a list of findings that meet the filter criteria. The `parent` field in ListFindingsRequest should have the format: projects/{project}
+  parent: string, Required. Parent of the findings. (required)
+    { # Response message for ListFindings.
+  &quot;findings&quot;: [ # List of findings.
+  <pre>SearchFindings is a more powerful version of ListFindings that supports complex queries like &quot;findings for alerts&quot; using functions such as `has_alert` in the query string. The `parent` field in SearchFindingsRequest should have the format: projects/{project} Example to search for findings for a specific issue: `has_alert(&quot;name=\&quot;projects/gti-12345/alerts/alert-12345\&quot;&quot;)`
+  parent: string, Required. Parent of the findings. Format: vaults/{vault} (required)
+  query: string, Optional. Query on what findings will be returned. This supports the same filter criteria as FindingService.ListFindings as well as the following relationship query `has_alert`. Example: - `has_alert(&quot;name=\&quot;projects/gti-12345/alerts/alert-12345\&quot;&quot;)`
+    { # Response message for SearchFindings.

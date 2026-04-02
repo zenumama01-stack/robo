@@ -1,0 +1,36 @@
+<h1><a href="monitoring_v1.html">Cloud Monitoring API</a> . <a href="monitoring_v1.projects.html">projects</a> . <a href="monitoring_v1.projects.location.html">location</a> . <a href="monitoring_v1.projects.location.prometheus.html">prometheus</a> . <a href="monitoring_v1.projects.location.prometheus.api.html">api</a> . <a href="monitoring_v1.projects.location.prometheus.api.v1.html">v1</a></h1>
+  <code><a href="monitoring_v1.projects.location.prometheus.api.v1.label.html">label()</a></code>
+<p class="firstline">Returns the label Resource.</p>
+  <code><a href="monitoring_v1.projects.location.prometheus.api.v1.metadata.html">metadata()</a></code>
+  <code><a href="#labels">labels(name, location, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Lists labels for metrics.</p>
+  <code><a href="#query">query(name, location, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Evaluate a PromQL query at a single point in time.</p>
+  <code><a href="#query_exemplars">query_exemplars(name, location, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Lists exemplars relevant to a given PromQL query,</p>
+  <code><a href="#query_range">query_range(name, location, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Evaluate a PromQL query with start, end time range.</p>
+  <code><a href="#series">series(name, location, body=None, x__xgafv=None)</a></code></p>
+    <code class="details" id="labels">labels(name, location, body=None, x__xgafv=None)</code>
+  <pre>Lists labels for metrics.
+  location: string, Location of the resource information. Has to be &quot;global&quot; now. (required)
+{ # QueryLabelsRequest holds all parameters of the Prometheus upstream API for returning a list of label names.
+  &quot;end&quot;: &quot;A String&quot;, # The end time to evaluate the query for. Either floating point UNIX seconds or RFC3339 formatted timestamp.
+  &quot;match&quot;: &quot;A String&quot;, # A list of matchers encoded in the Prometheus label matcher format to constrain the values to series that satisfy them.
+  &quot;start&quot;: &quot;A String&quot;, # The start time to evaluate the query for. Either floating point UNIX seconds or RFC3339 formatted timestamp.
+    <code class="details" id="query">query(name, location, body=None, x__xgafv=None)</code>
+  <pre>Evaluate a PromQL query at a single point in time.
+  name: string, Required. The project on which to execute the request. Data associcated with the project&#x27;s workspace stored under the The format is: projects/PROJECT_ID_OR_NUMBER. Open source API but used as a request path prefix to distinguish different virtual Prometheus instances of Google Prometheus Engine. (required)
+{ # QueryInstantRequest holds all parameters of the Prometheus upstream instant query API plus GCM specific parameters.
+  &quot;query&quot;: &quot;A String&quot;, # A PromQL query string. Query language documentation: https://prometheus.io/docs/prometheus/latest/querying/basics/.
+  &quot;time&quot;: &quot;A String&quot;, # The single point in time to evaluate the query for. Either floating point UNIX seconds or RFC3339 formatted timestamp.
+  &quot;timeout&quot;: &quot;A String&quot;, # An upper bound timeout for the query. Either a Prometheus duration string (https://prometheus.io/docs/prometheus/latest/querying/basics/#time-durations) or floating point seconds. This non-standard encoding must be used for compatibility with the open source API. Clients may still implement timeouts at the connection level while ignoring this field.
+    <code class="details" id="query_exemplars">query_exemplars(name, location, body=None, x__xgafv=None)</code>
+  <pre>Lists exemplars relevant to a given PromQL query,
+{ # QueryExemplarsRequest holds all parameters of the Prometheus upstream API for querying exemplars.
+    <code class="details" id="query_range">query_range(name, location, body=None, x__xgafv=None)</code>
+  <pre>Evaluate a PromQL query with start, end time range.
+{ # QueryRangeRequest holds all parameters of the Prometheus upstream range query API plus GCM specific parameters.
+  &quot;step&quot;: &quot;A String&quot;, # The resolution of query result. Either a Prometheus duration string (https://prometheus.io/docs/prometheus/latest/querying/basics/#time-durations) or floating point seconds. This non-standard encoding must be used for compatibility with the open source API. Clients may still implement timeouts at the connection level while ignoring this field.
+    <code class="details" id="series">series(name, location, body=None, x__xgafv=None)</code>
+{ # QuerySeries holds all parameters of the Prometheus upstream API for querying series.

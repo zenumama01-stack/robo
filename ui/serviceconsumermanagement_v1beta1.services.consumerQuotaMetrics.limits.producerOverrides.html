@@ -1,0 +1,29 @@
+<h1><a href="serviceconsumermanagement_v1beta1.html">Service Consumer Management API</a> . <a href="serviceconsumermanagement_v1beta1.services.html">services</a> . <a href="serviceconsumermanagement_v1beta1.services.consumerQuotaMetrics.html">consumerQuotaMetrics</a> . <a href="serviceconsumermanagement_v1beta1.services.consumerQuotaMetrics.limits.html">limits</a> . <a href="serviceconsumermanagement_v1beta1.services.consumerQuotaMetrics.limits.producerOverrides.html">producerOverrides</a></h1>
+  <code><a href="#create">create(parent, body=None, force=None, forceJustification=None, forceOnly=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Creates a producer override. A producer override is applied by the owner or administrator of a service to increase or decrease the amount of quota a consumer of the service is allowed to use. To create multiple overrides at once, use ImportProducerOverrides instead. If an override with the specified dimensions already exists, this call will fail. To overwrite an existing override if one is already present ("upsert" semantics), use ImportProducerOverrides instead.</p>
+  <code><a href="#delete">delete(name, force=None, forceJustification=None, forceOnly=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Deletes a producer override.</p>
+<p class="firstline">Lists all producer overrides on this limit.</p>
+  <code><a href="#patch">patch(name, body=None, force=None, forceJustification=None, forceOnly=None, updateMask=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Updates a producer override.</p>
+    <code class="details" id="create">create(parent, body=None, force=None, forceJustification=None, forceOnly=None, x__xgafv=None)</code>
+  <pre>Creates a producer override. A producer override is applied by the owner or administrator of a service to increase or decrease the amount of quota a consumer of the service is allowed to use. To create multiple overrides at once, use ImportProducerOverrides instead. If an override with the specified dimensions already exists, this call will fail. To overwrite an existing override if one is already present (&quot;upsert&quot; semantics), use ImportProducerOverrides instead.
+  parent: string, The resource name of the parent quota limit, returned by a ListConsumerQuotaMetrics or GetConsumerQuotaMetric call. An example name would be: `services/compute.googleapis.com/projects/123/consumerQuotaMetrics/compute.googleapis.com%2Fcpus/limits/%2Fproject%2Fregion` (required)
+  force: boolean, Whether to force the creation of the quota override. Setting the force parameter to &#x27;true&#x27; ignores all quota safety checks that would fail the request. QuotaSafetyCheck lists all such validations.
+  forceJustification: string, If force option is set to true, force_justification is suggested to be set to log the reason in audit logs.
+  forceOnly: string, The list of quota safety checks to ignore before the override mutation. Unlike &#x27;force&#x27; field that ignores all the quota safety checks, the &#x27;force_only&#x27; field ignores only the specified checks; other checks are still enforced. The &#x27;force&#x27; and &#x27;force_only&#x27; fields cannot both be set. (repeated)
+      QUOTA_SAFETY_CHECK_UNSPECIFIED - Unspecified quota safety check.
+      LIMIT_DECREASE_BELOW_USAGE - Validates that a quota mutation would not cause the consumer&#x27;s effective limit to be lower than the consumer&#x27;s quota usage.
+      LIMIT_DECREASE_PERCENTAGE_TOO_HIGH - Validates that a quota mutation would not cause the consumer&#x27;s effective limit to decrease by more than 10 percent.
+    <code class="details" id="delete">delete(name, force=None, forceJustification=None, forceOnly=None, x__xgafv=None)</code>
+  <pre>Deletes a producer override.
+  name: string, The resource name of the override to delete. An example name would be: `services/compute.googleapis.com/projects/123/consumerQuotaMetrics/compute.googleapis.com%2Fcpus/limits/%2Fproject%2Fregion/producerOverrides/4a3f2c1d` (required)
+  force: boolean, Whether to force the deletion of the quota override. Setting the force parameter to &#x27;true&#x27; ignores all quota safety checks that would fail the request. QuotaSafetyCheck lists all such validations.
+  <pre>Lists all producer overrides on this limit.
+    { # Response message for ListProducerOverrides.
+  &quot;overrides&quot;: [ # Producer overrides on this limit.
+    <code class="details" id="patch">patch(name, body=None, force=None, forceJustification=None, forceOnly=None, updateMask=None, x__xgafv=None)</code>
+  <pre>Updates a producer override.
+  name: string, The resource name of the override to update. An example name would be: `services/compute.googleapis.com/projects/123/consumerQuotaMetrics/compute.googleapis.com%2Fcpus/limits/%2Fproject%2Fregion/producerOverrides/4a3f2c1d` (required)
+  force: boolean, Whether to force the update of the quota override. Setting the force parameter to &#x27;true&#x27; ignores all quota safety checks that would fail the request. QuotaSafetyCheck lists all such validations.
+  updateMask: string, Update only the specified fields. If unset, all modifiable fields will be updated.

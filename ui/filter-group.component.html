@@ -1,0 +1,50 @@
+<div class="filter-group" [class.root]="isRoot" [class.disabled]="disabled" [attr.data-depth]="depth">
+  <!-- Group Header -->
+    <div class="logic-toggle">
+        class="logic-btn"
+        [class.active]="filter.logic === 'and'"
+        (click)="setLogic('and')"
+        title="Match ALL conditions">
+        AND
+        [class.active]="filter.logic === 'or'"
+        (click)="setLogic('or')"
+        title="Match ANY condition">
+        (click)="addRule()"
+        title="Add filter condition">
+        <span>Add Condition</span>
+      @if (canAddGroup()) {
+          class="add-btn add-group"
+          (click)="addGroup()"
+          title="Add nested group">
+          <span>Add Group</span>
+      @if (!isRoot) {
+          class="delete-group-btn"
+          (click)="onDelete()"
+          title="Remove this group">
+  <!-- Filters Container -->
+  <div class="filters-container">
+    @for (item of filter.filters; track trackByIndex($index); let i = $index; let isLast = $last) {
+      <div class="filter-item">
+        <!-- Logic connector between items -->
+        @if (i > 0) {
+          <div class="logic-connector">
+            <span class="connector-line"></span>
+            <span class="connector-label">{{ filter.logic | uppercase }}</span>
+        @if (isGroup(item)) {
+          <!-- Nested Group -->
+            [filter]="asGroup(item)"
+            [isRoot]="false"
+            [depth]="depth + 1"
+            (filterChange)="onGroupChange(i, $event)"
+            (delete)="deleteFilter(i)">
+          <!-- Simple Rule -->
+          <mj-filter-rule
+            [filter]="asRule(item)"
+            [showDelete]="filter.filters.length > 1 || !isRoot"
+            (filterChange)="onRuleChange(i, $event)"
+          </mj-filter-rule>
+  @if (!filter.filters || filter.filters.length === 0) {
+      <p>No filter conditions defined.</p>
+        class="add-btn primary"
+        [disabled]="disabled">
+        <span>Add your first condition</span>

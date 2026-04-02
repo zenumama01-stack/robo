@@ -1,0 +1,4 @@
+from .chat_completion_custom_tool_param import ChatCompletionCustomToolParam
+from .chat_completion_function_tool_param import ChatCompletionFunctionToolParam
+__all__ = ["ChatCompletionToolUnionParam"]
+ChatCompletionToolUnionParam: TypeAlias = Union[ChatCompletionFunctionToolParam, ChatCompletionCustomToolParam]

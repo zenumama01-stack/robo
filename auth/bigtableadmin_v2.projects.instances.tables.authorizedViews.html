@@ -1,0 +1,43 @@
+<h1><a href="bigtableadmin_v2.html">Cloud Bigtable Admin API</a> . <a href="bigtableadmin_v2.projects.html">projects</a> . <a href="bigtableadmin_v2.projects.instances.html">instances</a> . <a href="bigtableadmin_v2.projects.instances.tables.html">tables</a> . <a href="bigtableadmin_v2.projects.instances.tables.authorizedViews.html">authorizedViews</a></h1>
+  <code><a href="#create">create(parent, authorizedViewId=None, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Creates a new AuthorizedView in a table.</p>
+<p class="firstline">Permanently deletes a specified AuthorizedView.</p>
+<p class="firstline">Gets information from a specified AuthorizedView.</p>
+<p class="firstline">Lists all AuthorizedViews from a specific table.</p>
+<p class="firstline">Updates an AuthorizedView in a table.</p>
+    <code class="details" id="create">create(parent, authorizedViewId=None, body=None, x__xgafv=None)</code>
+  <pre>Creates a new AuthorizedView in a table.
+  parent: string, Required. This is the name of the table the AuthorizedView belongs to. Values are of the form `projects/{project}/instances/{instance}/tables/{table}`. (required)
+{ # An Authorized View of a Cloud Bigtable Table.
+  &quot;deletionProtection&quot;: True or False, # Set to true to make the AuthorizedView protected against deletion. The parent Table and containing Instance cannot be deleted if an AuthorizedView has this bit set.
+  &quot;etag&quot;: &quot;A String&quot;, # The etag for this AuthorizedView. If this is provided on update, it must match the server&#x27;s etag. The server returns ABORTED error on a mismatched etag.
+  &quot;name&quot;: &quot;A String&quot;, # Identifier. The name of this AuthorizedView. Values are of the form `projects/{project}/instances/{instance}/tables/{table}/authorizedViews/{authorized_view}`
+  &quot;subsetView&quot;: { # Defines a simple AuthorizedView that is a subset of the underlying Table. # An AuthorizedView permitting access to an explicit subset of a Table.
+    &quot;familySubsets&quot;: { # Map from column family name to the columns in this family to be included in the AuthorizedView.
+      &quot;a_key&quot;: { # Subsets of a column family that are included in this AuthorizedView.
+        &quot;qualifierPrefixes&quot;: [ # Prefixes for qualifiers to be included in the AuthorizedView. Every qualifier starting with one of these prefixes is included in the AuthorizedView. To provide access to all qualifiers, include the empty string as a prefix (&quot;&quot;).
+        &quot;qualifiers&quot;: [ # Individual exact column qualifiers to be included in the AuthorizedView.
+    &quot;rowPrefixes&quot;: [ # Row prefixes to be included in the AuthorizedView. To provide access to all rows, include the empty string as a prefix (&quot;&quot;).
+  authorizedViewId: string, Required. The id of the AuthorizedView to create. This AuthorizedView must not already exist. The `authorized_view_id` appended to `parent` forms the full AuthorizedView name of the form `projects/{project}/instances/{instance}/tables/{table}/authorizedView/{authorized_view}`.
+  <pre>Permanently deletes a specified AuthorizedView.
+  name: string, Required. The unique name of the AuthorizedView to be deleted. Values are of the form `projects/{project}/instances/{instance}/tables/{table}/authorizedViews/{authorized_view}`. (required)
+  etag: string, Optional. The current etag of the AuthorizedView. If an etag is provided and does not match the current etag of the AuthorizedView, deletion will be blocked and an ABORTED error will be returned.
+  <pre>Gets information from a specified AuthorizedView.
+  name: string, Required. The unique name of the requested AuthorizedView. Values are of the form `projects/{project}/instances/{instance}/tables/{table}/authorizedViews/{authorized_view}`. (required)
+  view: string, Optional. The resource_view to be applied to the returned AuthorizedView&#x27;s fields. Default to BASIC.
+      RESPONSE_VIEW_UNSPECIFIED - Uses the default view for each method as documented in the request.
+      NAME_ONLY - Only populates `name`.
+      BASIC - Only populates the AuthorizedView&#x27;s basic metadata. This includes: name, deletion_protection, etag.
+      FULL - Populates every fields.
+  <pre>Lists all AuthorizedViews from a specific table.
+  parent: string, Required. The unique name of the table for which AuthorizedViews should be listed. Values are of the form `projects/{project}/instances/{instance}/tables/{table}`. (required)
+  pageSize: integer, Optional. Maximum number of results per page. A page_size of zero lets the server choose the number of items to return. A page_size which is strictly positive will return at most that many items. A negative page_size will cause an error. Following the first request, subsequent paginated calls are not required to pass a page_size. If a page_size is set in subsequent calls, it must match the page_size given in the first request.
+  pageToken: string, Optional. The value of `next_page_token` returned by a previous call.
+  view: string, Optional. The resource_view to be applied to the returned AuthorizedViews&#x27; fields. Default to NAME_ONLY.
+    { # Response message for google.bigtable.admin.v2.BigtableTableAdmin.ListAuthorizedViews
+  &quot;authorizedViews&quot;: [ # The AuthorizedViews present in the requested table.
+  &quot;nextPageToken&quot;: &quot;A String&quot;, # Set if not all tables could be returned in a single response. Pass this value to `page_token` in another request to get the next page of results.
+  <pre>Updates an AuthorizedView in a table.
+  name: string, Identifier. The name of this AuthorizedView. Values are of the form `projects/{project}/instances/{instance}/tables/{table}/authorizedViews/{authorized_view}` (required)
+  ignoreWarnings: boolean, Optional. If true, ignore the safety checks when updating the AuthorizedView.
+  updateMask: string, Optional. The list of fields to update. A mask specifying which fields in the AuthorizedView resource should be updated. This mask is relative to the AuthorizedView resource, not to the request message. A field will be overwritten if it is in the mask. If empty, all fields set in the request will be overwritten. A special value `*` means to overwrite all fields (including fields not set in the request).

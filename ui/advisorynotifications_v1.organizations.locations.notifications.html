@@ -1,0 +1,44 @@
+<h1><a href="advisorynotifications_v1.html">Advisory Notifications API</a> . <a href="advisorynotifications_v1.organizations.html">organizations</a> . <a href="advisorynotifications_v1.organizations.locations.html">locations</a> . <a href="advisorynotifications_v1.organizations.locations.notifications.html">notifications</a></h1>
+  <code><a href="#get">get(name, languageCode=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Gets a notification.</p>
+  <code><a href="#list">list(parent, languageCode=None, pageSize=None, pageToken=None, view=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Lists notifications under a given parent.</p>
+    <code class="details" id="get">get(name, languageCode=None, x__xgafv=None)</code>
+  <pre>Gets a notification.
+  name: string, Required. A name of the notification to retrieve. Format: organizations/{organization}/locations/{location}/notifications/{notification} or projects/{projects}/locations/{location}/notifications/{notification}. (required)
+  languageCode: string, ISO code for requested localization language. If unset, will be interpereted as &quot;en&quot;. If the requested language is valid, but not supported for this notification, English will be returned with an &quot;Not applicable&quot; LocalizationState. If the ISO code is invalid (i.e. not a real language), this RPC will throw an error.
+    { # A notification object for notifying customers about security and privacy issues.
+  &quot;createTime&quot;: &quot;A String&quot;, # Output only. Time the notification was created.
+  &quot;messages&quot;: [ # A list of messages in the notification.
+    { # A message which contains notification details.
+      &quot;attachments&quot;: [ # The attachments to download.
+        { # Attachment with specific information about the issue.
+          &quot;csv&quot;: { # A representation of a CSV file attachment, as a list of column headers and a list of data rows. # A CSV file attachment. Max size is 10 MB.
+            &quot;dataRows&quot;: [ # The list of data rows in a CSV file, as string arrays rather than as a single comma-separated string.
+              { # A representation of a single data row in a CSV file.
+                &quot;entries&quot;: [ # The data entries in a CSV file row, as a string array rather than a single comma-separated string.
+            &quot;headers&quot;: [ # The list of headers for data columns in a CSV file.
+          &quot;displayName&quot;: &quot;A String&quot;, # The title of the attachment.
+      &quot;body&quot;: { # A message body containing text. # The message content.
+        &quot;text&quot;: { # A text object containing the English text and its localized copies. # The text content of the message body.
+          &quot;enText&quot;: &quot;A String&quot;, # The English copy.
+          &quot;localizationState&quot;: &quot;A String&quot;, # Status of the localization.
+          &quot;localizedText&quot;: &quot;A String&quot;, # The requested localized copy (if applicable).
+      &quot;createTime&quot;: &quot;A String&quot;, # The Message creation timestamp.
+      &quot;localizationTime&quot;: &quot;A String&quot;, # Time when Message was localized
+  &quot;name&quot;: &quot;A String&quot;, # The resource name of the notification. Format: organizations/{organization}/locations/{location}/notifications/{notification} or projects/{project}/locations/{location}/notifications/{notification}.
+  &quot;notificationType&quot;: &quot;A String&quot;, # Type of notification
+  &quot;subject&quot;: { # A subject line of a notification. # The subject line of the notification.
+    &quot;text&quot;: { # A text object containing the English text and its localized copies. # The text content.
+    <code class="details" id="list">list(parent, languageCode=None, pageSize=None, pageToken=None, view=None, x__xgafv=None)</code>
+  <pre>Lists notifications under a given parent.
+  parent: string, Required. The parent, which owns this collection of notifications. Must be of the form &quot;organizations/{organization}/locations/{location}&quot; or &quot;projects/{project}/locations/{location}&quot;. (required)
+  pageSize: integer, The maximum number of notifications to return. The service may return fewer than this value. If unspecified or equal to 0, at most 50 notifications will be returned. The maximum value is 50; values above 50 will be coerced to 50.
+  pageToken: string, A page token returned from a previous request. When paginating, all other parameters provided in the request must match the call that returned the page token.
+  view: string, Specifies which parts of the notification resource should be returned in the response.
+      NOTIFICATION_VIEW_UNSPECIFIED - Not specified, equivalent to BASIC.
+      BASIC - Server responses only include title, creation time and Notification ID. Note: for internal use responses also include the last update time, the latest message text and whether notification has attachments.
+      FULL - Include everything.
+    { # Response of ListNotifications endpoint.
+  &quot;notifications&quot;: [ # List of notifications under a given parent.
+  &quot;totalSize&quot;: 42, # Estimation of a total number of notifications.

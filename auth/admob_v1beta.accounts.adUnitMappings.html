@@ -1,0 +1,19 @@
+<h1><a href="admob_v1beta.html">AdMob API</a> . <a href="admob_v1beta.accounts.html">accounts</a> . <a href="admob_v1beta.accounts.adUnitMappings.html">adUnitMappings</a></h1>
+  <code><a href="#batchCreate">batchCreate(parent, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Batch create the ad unit mappings under the specific AdMob account. The maximum allowed batch size is 100. This method has limited access. If you see a 403 permission denied error, please reach out to your account manager for access.</p>
+    <code class="details" id="batchCreate">batchCreate(parent, body=None, x__xgafv=None)</code>
+  <pre>Batch create the ad unit mappings under the specific AdMob account. The maximum allowed batch size is 100. This method has limited access. If you see a 403 permission denied error, please reach out to your account manager for access.
+  parent: string, Required. The AdMob account which owns this collection of ad unit mappings. Format: accounts/{publisher_id} See https://support.google.com/admob/answer/2784578 for instructions on how to find your AdMob publisher ID. (required)
+{ # Request to create a batch of ad unit mappings under the specific AdMob account.
+  &quot;requests&quot;: [ # Required. The request message specifying the ad unit mappings to create. A maximum of 100 ad unit mappings can be created in a batch. If the number of ad unit mappings in the batch request exceed 100, the entire request will be rejected and no ad unit mappings will be created.
+    { # Request to create an ad unit mapping under the specific AdMob account and ad unit.
+      &quot;adUnitMapping&quot;: { # Settings to map an AdMob ad unit to a 3rd party ad unit. # Required. The ad unit mapping to create.
+        &quot;adUnitConfigurations&quot;: { # Settings for the specified ad unit to make an ad request to 3rd party ad network. Key-value pairs with values set by the user for the keys requested by the ad network. Please see https://support.google.com/admob/answer/3245073 for details on how to configure the network settings.
+        &quot;adapterId&quot;: &quot;A String&quot;, # The ID of mediation ad source adapter used by this ad unit mapping. The adapter determines the information needed in the ad_network_settings.
+        &quot;displayName&quot;: &quot;A String&quot;, # Optional. The display name of this ad unit mapping instance.
+        &quot;name&quot;: &quot;A String&quot;, # Resource name of this ad unit mapping. Format is: accounts/{publisher_id}/adUnits/{ad_unit_id_fragment}/adUnitMappings/{ad_unit_mapping_id} Example: accounts/pub-1234567890123456/adUnits/0123456789/adUnitMappings/987654321
+        &quot;state&quot;: &quot;A String&quot;, # Output only. The status of this ad unit mapping.
+      &quot;parent&quot;: &quot;A String&quot;, # Required. The parent which owns the ad unit mapping. Format: accounts/{publisher_id}/adUnits/{ad_unit_id}
+    { # Response containing a batch of created ad unit mappings.
+  &quot;adUnitMappings&quot;: [ # The Ad units mappings created under the requested account.
+    { # Settings to map an AdMob ad unit to a 3rd party ad unit.

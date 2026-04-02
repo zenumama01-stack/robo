@@ -1,0 +1,53 @@
+<h1><a href="dfareporting_v3_3.html">Campaign Manager 360 API</a> . <a href="dfareporting_v3_3.floodlightConfigurations.html">floodlightConfigurations</a></h1>
+<p class="firstline">Gets one floodlight configuration by ID.</p>
+  <code><a href="#list">list(profileId, ids=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Retrieves a list of floodlight configurations, possibly filtered.</p>
+<p class="firstline">Updates an existing floodlight configuration. This method supports patch semantics.</p>
+<p class="firstline">Updates an existing floodlight configuration.</p>
+  <pre>Gets one floodlight configuration by ID.
+  id: string, Floodlight configuration ID. (required)
+    { # Contains properties of a Floodlight configuration.
+  &quot;accountId&quot;: &quot;A String&quot;, # Account ID of this floodlight configuration. This is a read-only field that can be left blank.
+  &quot;advertiserId&quot;: &quot;A String&quot;, # Advertiser ID of the parent advertiser of this floodlight configuration.
+  &quot;analyticsDataSharingEnabled&quot;: True or False, # Whether advertiser data is shared with Google Analytics.
+  &quot;customViewabilityMetric&quot;: { # Custom Viewability Metric # Custom Viewability metric for the floodlight configuration.
+    &quot;configuration&quot;: { # The attributes, like playtime and percent onscreen, that define the Custom Viewability Metric. # Configuration of the custom viewability metric.
+      &quot;audible&quot;: True or False, # Whether the video must be audible to count an impression.
+      &quot;timeMillis&quot;: 42, # The time in milliseconds the video must play for the Custom Viewability Metric to count an impression. If both this and timePercent are specified, the earlier of the two will be used.
+      &quot;timePercent&quot;: 42, # The percentage of video that must play for the Custom Viewability Metric to count an impression. If both this and timeMillis are specified, the earlier of the two will be used.
+      &quot;viewabilityPercent&quot;: 42, # The percentage of video that must be on screen for the Custom Viewability Metric to count an impression.
+    &quot;id&quot;: &quot;A String&quot;, # ID of the custom viewability metric.
+    &quot;name&quot;: &quot;A String&quot;, # Name of the custom viewability metric.
+  &quot;exposureToConversionEnabled&quot;: True or False, # Whether the exposure-to-conversion report is enabled. This report shows detailed pathway information on up to 10 of the most recent ad exposures seen by a user before converting.
+  &quot;firstDayOfWeek&quot;: &quot;A String&quot;, # Day that will be counted as the first day of the week in reports. This is a required field.
+  &quot;id&quot;: &quot;A String&quot;, # ID of this floodlight configuration. This is a read-only, auto-generated field.
+  &quot;idDimensionValue&quot;: { # Represents a DimensionValue resource. # Dimension value for the ID of this floodlight configuration. This is a read-only, auto-generated field.
+  &quot;inAppAttributionTrackingEnabled&quot;: True or False, # Whether in-app attribution tracking is enabled.
+  &quot;kind&quot;: &quot;A String&quot;, # Identifies what kind of resource this is. Value: the fixed string &quot;dfareporting#floodlightConfiguration&quot;.
+  &quot;lookbackConfiguration&quot;: { # Lookback configuration settings. # Lookback window settings for this floodlight configuration.
+  &quot;naturalSearchConversionAttributionOption&quot;: &quot;A String&quot;, # Types of attribution options for natural search conversions.
+  &quot;omnitureSettings&quot;: { # Omniture Integration Settings. # Settings for Campaign Manager Omniture integration.
+    &quot;omnitureCostDataEnabled&quot;: True or False, # Whether placement cost data will be sent to Omniture. This property can be enabled only if omnitureIntegrationEnabled is true.
+    &quot;omnitureIntegrationEnabled&quot;: True or False, # Whether Omniture integration is enabled. This property can be enabled only when the &quot;Advanced Ad Serving&quot; account setting is enabled.
+  &quot;subaccountId&quot;: &quot;A String&quot;, # Subaccount ID of this floodlight configuration. This is a read-only field that can be left blank.
+  &quot;tagSettings&quot;: { # Dynamic and Image Tag Settings. # Configuration settings for dynamic and image floodlight tags.
+    &quot;dynamicTagEnabled&quot;: True or False, # Whether dynamic floodlight tags are enabled.
+    &quot;imageTagEnabled&quot;: True or False, # Whether image tags are enabled.
+  &quot;thirdPartyAuthenticationTokens&quot;: [ # List of third-party authentication tokens enabled for this configuration.
+    { # Third Party Authentication Token
+      &quot;name&quot;: &quot;A String&quot;, # Name of the third-party authentication token.
+      &quot;value&quot;: &quot;A String&quot;, # Value of the third-party authentication token. This is a read-only, auto-generated field.
+  &quot;userDefinedVariableConfigurations&quot;: [ # List of user defined variables enabled for this configuration.
+    { # User Defined Variable configuration.
+      &quot;dataType&quot;: &quot;A String&quot;, # Data type for the variable. This is a required field.
+      &quot;reportName&quot;: &quot;A String&quot;, # User-friendly name for the variable which will appear in reports. This is a required field, must be less than 64 characters long, and cannot contain the following characters: &quot;&quot;&lt;&gt;&quot;.
+      &quot;variableType&quot;: &quot;A String&quot;, # Variable name in the tag. This is a required field.
+    <code class="details" id="list">list(profileId, ids=None, x__xgafv=None)</code>
+  <pre>Retrieves a list of floodlight configurations, possibly filtered.
+  ids: string, Set of IDs of floodlight configurations to retrieve. Required field; otherwise an empty list will be returned. (repeated)
+    { # Floodlight Configuration List Response
+  &quot;floodlightConfigurations&quot;: [ # Floodlight configuration collection.
+  &quot;kind&quot;: &quot;A String&quot;, # Identifies what kind of resource this is. Value: the fixed string &quot;dfareporting#floodlightConfigurationsListResponse&quot;.
+  <pre>Updates an existing floodlight configuration. This method supports patch semantics.
+  id: string, FloodlightConfiguration ID. (required)
+  <pre>Updates an existing floodlight configuration.

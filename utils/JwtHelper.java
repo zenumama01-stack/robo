@@ -1,0 +1,81 @@
+import org.jose4j.jwa.AlgorithmConstraints.ConstraintType;
+import org.jose4j.jwk.JsonWebKey;
+import org.jose4j.jwk.JsonWebKey.OutputControlLevel;
+import org.jose4j.jwk.RsaJsonWebKey;
+import org.jose4j.jwk.RsaJwkGenerator;
+import org.jose4j.jws.AlgorithmIdentifiers;
+import org.jose4j.jws.JsonWebSignature;
+import org.jose4j.jwt.JwtClaims;
+import org.jose4j.jwt.MalformedClaimException;
+import org.jose4j.jwt.consumer.InvalidJwtException;
+import org.jose4j.jwt.consumer.JwtConsumer;
+import org.jose4j.jwt.consumer.JwtConsumerBuilder;
+import org.jose4j.lang.JoseException;
+ * This class helps with JWT tokens' building, signing, verifying and parsing.
+@Component(immediate = true, service = JwtHelper.class)
+public class JwtHelper {
+    private final Logger logger = LoggerFactory.getLogger(JwtHelper.class);
+    private static final String KEY_FILE_PATH = OpenHAB.getUserDataFolder() + File.separator + "secrets"
+            + File.separator + "rsa_json_web_key.json";
+    private static final String ISSUER_NAME = "openhab";
+    private static final String AUDIENCE = "openhab";
+    private RsaJsonWebKey jwtWebKey;
+    public JwtHelper() {
+            jwtWebKey = loadOrGenerateKey();
+            logger.error("Error while initializing the JWT helper", e);
+            throw new IllegalStateException(e.getMessage(), e);
+    private RsaJsonWebKey generateNewKey() throws JoseException, IOException {
+        RsaJsonWebKey newKey = RsaJwkGenerator.generateJwk(2048);
+        File file = new File(KEY_FILE_PATH);
+        file.getParentFile().mkdirs();
+        String keyJson = newKey.toJson(OutputControlLevel.INCLUDE_PRIVATE);
+        Files.writeString(file.toPath(), keyJson, StandardCharsets.UTF_8);
+        return newKey;
+    private RsaJsonWebKey loadOrGenerateKey() throws JoseException, IOException {
+        try (final BufferedReader reader = Files.newBufferedReader(Path.of(KEY_FILE_PATH))) {
+            return (RsaJsonWebKey) JsonWebKey.Factory.newJwk(reader.readLine());
+        } catch (IOException | JoseException e) {
+            RsaJsonWebKey key = generateNewKey();
+            logger.debug("Created JWT signature key in {}", KEY_FILE_PATH);
+     * Builds a new access token.
+     * @param user the user (subject) to build the token, it will also add the roles as claims
+     * @param clientId the client ID the token is for
+     * @param scope the scope the token is valid for
+     * @param tokenLifetime the lifetime of the token in minutes before it expires
+     * @return a base64-encoded signed JWT token to be passed as a bearer token in API requests
+    public String getJwtAccessToken(User user, String clientId, String scope, int tokenLifetime) {
+            JwtClaims jwtClaims = new JwtClaims();
+            jwtClaims.setIssuer(ISSUER_NAME);
+            jwtClaims.setAudience(AUDIENCE);
+            jwtClaims.setExpirationTimeMinutesInTheFuture(tokenLifetime);
+            jwtClaims.setGeneratedJwtId();
+            jwtClaims.setIssuedAtToNow();
+            jwtClaims.setNotBeforeMinutesInThePast(2);
+            jwtClaims.setSubject(user.getName());
+            jwtClaims.setClaim("client_id", clientId);
+            jwtClaims.setClaim("scope", scope);
+            jwtClaims.setStringListClaim("role", new ArrayList<>(user.getRoles() != null ? user.getRoles() : Set.of()));
+            JsonWebSignature jws = new JsonWebSignature();
+            jws.setPayload(jwtClaims.toJson());
+            jws.setKey(jwtWebKey.getPrivateKey());
+            jws.setKeyIdHeaderValue(jwtWebKey.getKeyId());
+            jws.setAlgorithmHeaderValue(AlgorithmIdentifiers.RSA_USING_SHA256);
+            return jws.getCompactSerialization();
+        } catch (JoseException e) {
+            throw new IllegalStateException("Error while writing JWT token", e);
+     * Performs verifications on a JWT token, then parses it into an {@link AuthenticationException} instance
+     * @param jwt the base64-encoded JWT token from the request
+     * @return the {@link Authentication} derived from the information in the token
+     * @throws AuthenticationException
+    public Authentication verifyAndParseJwtAccessToken(String jwt) throws AuthenticationException {
+        JwtConsumer jwtConsumer = new JwtConsumerBuilder().setRequireExpirationTime().setAllowedClockSkewInSeconds(30)
+                .setRequireSubject().setExpectedIssuer(ISSUER_NAME).setExpectedAudience(AUDIENCE)
+                .setVerificationKey(jwtWebKey.getKey())
+                .setJwsAlgorithmConstraints(ConstraintType.PERMIT, AlgorithmIdentifiers.RSA_USING_SHA256).build();
+            JwtClaims jwtClaims = jwtConsumer.processToClaims(jwt);
+            String username = jwtClaims.getSubject();
+            List<String> roles = jwtClaims.getStringListClaimValue("role");
+            String scope = jwtClaims.getStringClaimValue("scope");
+            return new Authentication(username, roles.toArray(new String[roles.size()]), scope);
+        } catch (InvalidJwtException | MalformedClaimException e) {
+            throw new AuthenticationException("Error while processing JWT token", e);

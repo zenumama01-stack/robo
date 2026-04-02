@@ -1,0 +1,153 @@
+<div class="component-studio" [class.resizing]="IsResizing" kendoDialogContainer>
+  <!-- ============================================================
+       TOOLBAR — Unified bar with integrated breadcrumb
+       Left: hamburger + breadcrumb context
+       Right: Save | Export | divider | AI | Keyboard | Refresh
+       ============================================================ -->
+    <div class="toolbar-context">
+      <!-- Toggle left panel -->
+      <button class="tb-btn icon-only" title="Toggle browser panel" (click)="ToggleLeftPanel()">
+      @if (state.SelectedComponent) {
+        <span class="breadcrumb-type">
+          {{ state.GetComponentType(state.SelectedComponent) || 'Component' }}
+        <span class="breadcrumb-sep"><i class="fa-solid fa-chevron-right"></i></span>
+        <span class="component-label">{{ state.GetComponentName(state.SelectedComponent) }}</span>
+        @if (state.IsRunning) {
+          <span class="running-badge">
+            <span class="running-dot-small"></span>
+            Running
+        @if (state.HasUnsavedChanges) {
+          <span class="unsaved-dot" title="Unsaved changes"></span>
+    <div class="toolbar-actions">
+      <!-- Save Version -->
+        <button class="tb-btn primary" (click)="SaveVersion()" title="Save version (Ctrl+S)">
+          <i class="fa-solid fa-save"></i> Save
+      <!-- Refresh Component -->
+      @if (state.SelectedComponent && state.IsRunning) {
+        <button class="tb-btn" (click)="RefreshComponent()" title="Refresh component">
+          <i class="fa-solid fa-arrows-rotate"></i> Refresh
+      <!-- Export -->
+        <div class="header-dropdown" [class.open]="exportDropdownOpen">
+          <button class="tb-btn" (click)="ToggleExportDropdown()">
+            <i class="fa-solid fa-file-export"></i> Export
+            <i class="fa-solid fa-chevron-down dropdown-icon"></i>
+          @if (exportDropdownOpen) {
+            <div class="dropdown-menu">
+              <button class="dropdown-item" (click)="ExportToArtifact()">
+                <i class="fa-solid fa-save"></i> To Artifact
+              <button class="dropdown-item" (click)="ExportToFile()">
+                <i class="fa-solid fa-file"></i> To File
+              <button class="dropdown-item" (click)="ExportToClipboard()">
+                <i class="fa-solid fa-clipboard"></i> To Clipboard
+      <span class="toolbar-divider"></span>
+      <!-- AI Panel Toggle -->
+      <button class="tb-btn icon-only" [class.active-toggle]="!state.IsAIPanelCollapsed"
+              (click)="ToggleAIPanel()"
+              [title]="state.IsAIPanelCollapsed ? 'Show AI Assistant' : 'Hide AI Assistant'">
+      <!-- Keyboard Shortcuts -->
+      <button class="tb-btn icon-only" (click)="ShowKeyboardShortcuts = !ShowKeyboardShortcuts"
+              title="Keyboard shortcuts (?)">
+      <!-- Refresh -->
+      <button class="tb-btn icon-only" (click)="RefreshData()" [disabled]="state.IsLoading" title="Refresh data">
+        <i class="fa-solid fa-arrows-rotate"></i>
+    <!-- Hidden file input -->
+    <input #fileInput type="file" accept=".json" (change)="HandleFileSelect($event)" style="display: none;" />
+  <div class="studio-body">
+    <!-- Left Panel: Component Browser (collapsible) -->
+    @if (!IsLeftPanelCollapsed) {
+      <div class="panel panel-left" [style.width.px]="leftPanelWidth">
+        <mj-component-browser
+          (NewComponent)="OnNewComponent()"
+          (ImportFromFile)="ImportFromFile()"
+          (ImportFromText)="ImportFromText()"
+          (ImportFromArtifact)="ImportFromArtifact()">
+        </mj-component-browser>
+      <!-- Resize Handle: Left <-> Center -->
+      <div class="resize-handle" (mousedown)="OnLeftResizeStart($event)"></div>
+    <!-- Center Panel: Workspace (side-by-side: Preview LEFT, Editor RIGHT) -->
+    <div class="panel panel-center">
+        <!-- Preview (left side) -->
+        <div class="workspace-preview" [class.full-width]="IsEditorPanelCollapsed" [style.flex]="IsEditorPanelCollapsed ? '1 1 100%' : previewFlex">
+          <div class="preview-sub-header">
+            <div class="preview-sub-left">
+              <span>Preview</span>
+            <div class="preview-sub-right">
+              <!-- Toggle editor panel -->
+              <button class="toggle-editors-btn" [class.active]="!IsEditorPanelCollapsed"
+                      (click)="ToggleEditorPanel()" title="Toggle editor panel">
+                <i class="fa-solid fa-columns"></i>
+          <div class="preview-body">
+            <mj-component-preview
+              (AskAIToFix)="OnAskAIToFix($event)">
+            </mj-component-preview>
+        <!-- Resize Handle: Preview <-> Editor (obvious center divider) -->
+        @if (!IsEditorPanelCollapsed) {
+          <div class="resize-handle center-divider" (mousedown)="OnCenterResizeStart($event)">
+            <div class="divider-grip"></div>
+        <!-- Editor Tabs (right side, collapsible) -->
+          <div class="workspace-editors" [style.flex]="editorFlex">
+            <mj-editor-tabs></mj-editor-tabs>
+        <!-- Enhanced Empty State -->
+          <div class="empty-state-content">
+              <i class="fa-solid fa-rocket"></i>
+            <h2>Ready to Build</h2>
+            <p>Select a component from the browser or create a new one to get started</p>
+            <div class="empty-state-actions">
+              <button kendoButton [themeColor]="'primary'" (click)="OnNewComponent()">
+                <span class="fa-solid fa-plus"></span> New Component
+              <button kendoButton [themeColor]="'base'" (click)="ImportFromFile()">
+                <span class="fa-solid fa-file-import"></span> Import
+            <div class="quick-start-templates">
+              <span class="quick-start-label">Quick start:</span>
+              <button class="quick-start-btn" (click)="OnQuickStart('dashboard')">
+                <i class="fa-solid fa-chart-line"></i> Dashboard
+              <button class="quick-start-btn" (click)="OnQuickStart('report')">
+                <i class="fa-solid fa-file-alt"></i> Report
+              <button class="quick-start-btn" (click)="OnQuickStart('chart')">
+                <i class="fa-solid fa-chart-pie"></i> Chart
+              <button class="quick-start-btn" (click)="OnQuickStart('form')">
+                <i class="fa-solid fa-edit"></i> Form
+    <!-- Resize Handle: Center <-> Right -->
+    @if (!state.IsAIPanelCollapsed) {
+      <div class="resize-handle" (mousedown)="OnRightResizeStart($event)"></div>
+    <!-- Right Panel: AI Assistant -->
+      <div class="panel panel-right" [style.width.px]="rightPanelWidth">
+        <mj-ai-assistant-panel></mj-ai-assistant-panel>
+    <div class="status-left">
+      <span class="status-item">
+        {{ state.FilteredComponents.length }} component{{ state.FilteredComponents.length !== 1 ? 's' : '' }}
+    <div class="status-right">
+      @if (LastSavedTime) {
+          Saved {{ LastSavedTime | date:'shortTime' }}
+      <span class="status-item shortcut-hint">
+        <kbd>?</kbd> Shortcuts
+  @if (ShowKeyboardShortcuts) {
+    <div class="shortcuts-overlay" (click)="ShowKeyboardShortcuts = false">
+      <div class="shortcuts-panel" (click)="$event.stopPropagation()">
+          <h3>Keyboard Shortcuts</h3>
+          <button class="shortcuts-close" (click)="ShowKeyboardShortcuts = false">
+        <div class="shortcuts-body">
+          <div class="shortcut-group">
+            <h4>General</h4>
+            <div class="shortcut-row">
+              <span class="shortcut-keys"><kbd>Ctrl</kbd> + <kbd>S</kbd></span>
+              <span class="shortcut-desc">Save version</span>
+              <span class="shortcut-keys"><kbd>Ctrl</kbd> + <kbd>N</kbd></span>
+              <span class="shortcut-desc">New component</span>
+              <span class="shortcut-keys"><kbd>?</kbd></span>
+              <span class="shortcut-desc">Toggle shortcuts</span>
+              <span class="shortcut-keys"><kbd>Esc</kbd></span>
+              <span class="shortcut-desc">Close overlay</span>
+       NEW COMPONENT DIALOG
+  @if (ShowNewComponentDialog) {
+    <mj-new-component-dialog
+      [Visible]="ShowNewComponentDialog"
+      (Close)="OnNewComponentDialogClose($event)">
+    </mj-new-component-dialog>
+  @if (ShowSaveVersionDialog) {
+    <mj-save-version-dialog
+      [Visible]="ShowSaveVersionDialog"
+      [CurrentVersion]="versionService.CurrentVersionNumber"
+      (Save)="OnSaveVersionConfirm($event)"
+      (Cancel)="ShowSaveVersionDialog = false">
+    </mj-save-version-dialog>

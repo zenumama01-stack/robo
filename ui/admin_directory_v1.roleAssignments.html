@@ -1,0 +1,31 @@
+<h1><a href="admin_directory_v1.html">Admin SDK API</a> . <a href="admin_directory_v1.roleAssignments.html">roleAssignments</a></h1>
+  <code><a href="#delete">delete(customer, roleAssignmentId, x__xgafv=None)</a></code></p>
+<p class="firstline">Deletes a role assignment.</p>
+  <code><a href="#get">get(customer, roleAssignmentId, x__xgafv=None)</a></code></p>
+<p class="firstline">Retrieves a role assignment.</p>
+<p class="firstline">Creates a role assignment.</p>
+  <code><a href="#list">list(customer, includeIndirectRoleAssignments=None, maxResults=None, pageToken=None, roleId=None, userKey=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Retrieves a paginated list of all roleAssignments.</p>
+    <code class="details" id="delete">delete(customer, roleAssignmentId, x__xgafv=None)</code>
+  <pre>Deletes a role assignment.
+  roleAssignmentId: string, Immutable ID of the role assignment. (required)
+    <code class="details" id="get">get(customer, roleAssignmentId, x__xgafv=None)</code>
+  <pre>Retrieves a role assignment.
+    { # Defines an assignment of a role.
+  &quot;assignedTo&quot;: &quot;A String&quot;, # The unique ID of the entity this role is assigned to—either the `user_id` of a user, the `group_id` of a group, or the `uniqueId` of a service account as defined in [Identity and Access Management (IAM)](https://cloud.google.com/iam/docs/reference/rest/v1/projects.serviceAccounts).
+  &quot;assigneeType&quot;: &quot;A String&quot;, # Output only. The type of the assignee (`USER` or `GROUP`).
+  &quot;condition&quot;: &quot;A String&quot;, # Optional. The condition associated with this role assignment. Note: Feature is available to Enterprise Standard, Enterprise Plus, Google Workspace for Education Plus and Cloud Identity Premium customers. A `RoleAssignment` with the `condition` field set will only take effect when the resource being accessed meets the condition. If `condition` is empty, the role (`role_id`) is applied to the actor (`assigned_to`) at the scope (`scope_type`) unconditionally. Currently, the following conditions are supported: - To make the `RoleAssignment` only applicable to [Security Groups](https://cloud.google.com/identity/docs/groups#group_types): `api.getAttribute(&#x27;cloudidentity.googleapis.com/groups.labels&#x27;, []).hasAny([&#x27;groups.security&#x27;]) &amp;&amp; resource.type == &#x27;cloudidentity.googleapis.com/Group&#x27;` - To make the `RoleAssignment` not applicable to [Security Groups](https://cloud.google.com/identity/docs/groups#group_types): `!api.getAttribute(&#x27;cloudidentity.googleapis.com/groups.labels&#x27;, []).hasAny([&#x27;groups.security&#x27;]) &amp;&amp; resource.type == &#x27;cloudidentity.googleapis.com/Group&#x27;` Currently, the condition strings have to be verbatim and they only work with the following [pre-built administrator roles](https://support.google.com/a/answer/2405986): - Groups Editor - Groups Reader The condition follows [Cloud IAM condition syntax](https://cloud.google.com/iam/docs/conditions-overview). - To make the `RoleAssignment` not applicable to [Locked Groups](https://cloud.google.com/identity/docs/groups#group_types): `!api.getAttribute(&#x27;cloudidentity.googleapis.com/groups.labels&#x27;, []).hasAny([&#x27;groups.locked&#x27;]) &amp;&amp; resource.type == &#x27;cloudidentity.googleapis.com/Group&#x27;` This condition can also be used in conjunction with a Security-related condition.
+  &quot;kind&quot;: &quot;admin#directory#roleAssignment&quot;, # The type of the API resource. This is always `admin#directory#roleAssignment`.
+  &quot;orgUnitId&quot;: &quot;A String&quot;, # If the role is restricted to an organization unit, this contains the ID for the organization unit the exercise of this role is restricted to.
+  &quot;roleAssignmentId&quot;: &quot;A String&quot;, # ID of this roleAssignment.
+  &quot;roleId&quot;: &quot;A String&quot;, # The ID of the role that is assigned.
+  &quot;scopeType&quot;: &quot;A String&quot;, # The scope in which this role is assigned.
+  <pre>Creates a role assignment.
+    <code class="details" id="list">list(customer, includeIndirectRoleAssignments=None, maxResults=None, pageToken=None, roleId=None, userKey=None, x__xgafv=None)</code>
+  <pre>Retrieves a paginated list of all roleAssignments.
+  includeIndirectRoleAssignments: boolean, When set to `true`, fetches indirect role assignments (i.e. role assignment via a group) as well as direct ones. Defaults to `false`. You must specify `user_key` or the indirect role assignments will not be included.
+  roleId: string, Immutable ID of a role. If included in the request, returns only role assignments containing this role ID.
+  userKey: string, The primary email address, alias email address, or unique user or group ID. If included in the request, returns role assignments only for this user or group.
+  &quot;items&quot;: [ # A list of RoleAssignment resources.
+  &quot;kind&quot;: &quot;admin#directory#roleAssignments&quot;, # The type of the API resource. This is always `admin#directory#roleAssignments`.
+  &quot;nextPageToken&quot;: &quot;A String&quot;,

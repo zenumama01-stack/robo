@@ -1,0 +1,28 @@
+<h1><a href="logging_v2.html">Cloud Logging API</a> . <a href="logging_v2.folders.html">folders</a> . <a href="logging_v2.folders.locations.html">locations</a> . <a href="logging_v2.folders.locations.logScopes.html">logScopes</a></h1>
+  <code><a href="#create">create(parent, body=None, logScopeId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Creates a log scope.</p>
+<p class="firstline">Deletes a log scope.</p>
+<p class="firstline">Gets a log scope.</p>
+<p class="firstline">Lists log scopes.</p>
+<p class="firstline">Updates a log scope.</p>
+    <code class="details" id="create">create(parent, body=None, logScopeId=None, x__xgafv=None)</code>
+  <pre>Creates a log scope.
+  parent: string, Required. The parent resource in which to create the log scope: &quot;projects/[PROJECT_ID]/locations/[LOCATION_ID]&quot; &quot;organizations/[ORGANIZATION_ID]/locations/[LOCATION_ID]&quot; &quot;folders/[FOLDER_ID]/locations/[LOCATION_ID]&quot; For example:&quot;projects/my-project/locations/global&quot; (required)
+{ # Describes a group of resources to read log entries from.
+  &quot;createTime&quot;: &quot;A String&quot;, # Output only. The creation timestamp of the log scope.
+  &quot;description&quot;: &quot;A String&quot;, # Optional. Describes this log scope.The maximum length of the description is 8000 characters.
+  &quot;name&quot;: &quot;A String&quot;, # Output only. The resource name of the log scope.Log scopes are only available in the global location. For example:projects/my-project/locations/global/logScopes/my-log-scope
+  &quot;resourceNames&quot;: [ # Required. Names of one or more parent resources (organizations and folders are not supported.): projects/[PROJECT_ID]May alternatively be one or more views: projects/[PROJECT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]/views/[VIEW_ID]A log scope can include a maximum of 5 projects and a maximum of 100 resources in total.
+  &quot;updateTime&quot;: &quot;A String&quot;, # Output only. The last update timestamp of the log scope.
+  logScopeId: string, Required. A client-assigned identifier such as &quot;log-scope&quot;. Identifiers are limited to 100 characters and can include only letters, digits, underscores, hyphens, and periods. First character has to be alphanumeric.
+  <pre>Deletes a log scope.
+  name: string, Required. The resource name of the log scope to delete: &quot;projects/[PROJECT_ID]/locations/[LOCATION_ID]&quot; &quot;organizations/[ORGANIZATION_ID]/locations/[LOCATION_ID]&quot; &quot;folders/[FOLDER_ID]/locations/[LOCATION_ID]&quot; For example:&quot;projects/my-project/locations/global/logScopes/my-log-scope&quot; (required)
+  <pre>Gets a log scope.
+  name: string, Required. The resource name of the log scope: &quot;projects/[PROJECT_ID]/locations/[LOCATION_ID]&quot; &quot;organizations/[ORGANIZATION_ID]/locations/[LOCATION_ID]&quot; &quot;folders/[FOLDER_ID]/locations/[LOCATION_ID]&quot; For example:&quot;projects/my-project/locations/global/logScopes/my-log-scope&quot; (required)
+  <pre>Lists log scopes.
+  parent: string, Required. The parent resource whose log scopes are to be listed: &quot;projects/[PROJECT_ID]/locations/[LOCATION_ID]&quot;  (required)
+    { # The response from ListLogScopes. Every project has a _Default log scope that cannot be modified or deleted.
+  &quot;logScopes&quot;: [ # A list of log scopes.
+  <pre>Updates a log scope.
+  name: string, Output only. The resource name of the log scope.Log scopes are only available in the global location. For example:projects/my-project/locations/global/logScopes/my-log-scope (required)
+  updateMask: string, Optional. Field mask that specifies the fields in log_scope that need an update. A field will be overwritten if, and only if, it is in the update mask. name and output only fields cannot be updated.For a detailed FieldMask definition, see https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#google.protobuf.FieldMaskFor example: updateMask=description

@@ -1,0 +1,85 @@
+<h1><a href="dataplex_v1.html">Cloud Dataplex API</a> . <a href="dataplex_v1.projects.html">projects</a> . <a href="dataplex_v1.projects.locations.html">locations</a> . <a href="dataplex_v1.projects.locations.lakes.html">lakes</a> . <a href="dataplex_v1.projects.locations.lakes.tasks.html">tasks</a></h1>
+  <code><a href="dataplex_v1.projects.locations.lakes.tasks.jobs.html">jobs()</a></code>
+  <code><a href="#create">create(parent, body=None, taskId=None, validateOnly=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Creates a task resource within a lake.</p>
+<p class="firstline">Delete the task resource.</p>
+<p class="firstline">Get task resource.</p>
+<p class="firstline">Lists tasks under the given lake.</p>
+<p class="firstline">Update the task resource.</p>
+<p class="firstline">Run an on demand execution of a Task.</p>
+    <code class="details" id="create">create(parent, body=None, taskId=None, validateOnly=None, x__xgafv=None)</code>
+  <pre>Creates a task resource within a lake.
+{ # A task represents a user-visible job.
+  &quot;createTime&quot;: &quot;A String&quot;, # Output only. The time when the task was created.
+  &quot;description&quot;: &quot;A String&quot;, # Optional. Description of the task.
+  &quot;executionSpec&quot;: { # Execution related settings, like retry and service_account. # Required. Spec related to how a task is executed.
+    &quot;args&quot;: { # Optional. The arguments to pass to the task. The args can use placeholders of the format ${placeholder} as part of key/value string. These will be interpolated before passing the args to the driver. Currently supported placeholders: - ${task_id} - ${job_time} To pass positional args, set the key as TASK_ARGS. The value should be a comma-separated string of all the positional arguments. To use a delimiter other than comma, refer to https://cloud.google.com/sdk/gcloud/reference/topic/escaping. In case of other keys being present in the args, then TASK_ARGS will be passed as the last argument.
+    &quot;kmsKey&quot;: &quot;A String&quot;, # Optional. The Cloud KMS key to use for encryption, of the form: projects/{project_number}/locations/{location_id}/keyRings/{key-ring-name}/cryptoKeys/{key-name}.
+    &quot;maxJobExecutionLifetime&quot;: &quot;A String&quot;, # Optional. The maximum duration after which the job execution is expired.
+    &quot;project&quot;: &quot;A String&quot;, # Optional. The project in which jobs are run. By default, the project containing the Lake is used. If a project is provided, the ExecutionSpec.service_account must belong to this project.
+    &quot;serviceAccount&quot;: &quot;A String&quot;, # Required. Service account to use to execute a task. If not provided, the default Compute service account for the project is used.
+  &quot;executionStatus&quot;: { # Status of the task execution (e.g. Jobs). # Output only. Status of the latest task executions.
+    &quot;latestJob&quot;: { # A job represents an instance of a task. # Output only. latest job execution
+      &quot;endTime&quot;: &quot;A String&quot;, # Output only. The time when the job ended.
+      &quot;executionSpec&quot;: { # Execution related settings, like retry and service_account. # Output only. Spec related to how a task is executed.
+      &quot;labels&quot;: { # Output only. User-defined labels for the task.
+      &quot;name&quot;: &quot;A String&quot;, # Output only. The relative resource name of the job, of the form: projects/{project_number}/locations/{location_id}/lakes/{lake_id}/tasks/{task_id}/jobs/{job_id}.
+      &quot;retryCount&quot;: 42, # Output only. The number of times the job has been retried (excluding the initial attempt).
+      &quot;service&quot;: &quot;A String&quot;, # Output only. The underlying service running a job.
+      &quot;serviceJob&quot;: &quot;A String&quot;, # Output only. The full resource name for the job run under a particular service.
+      &quot;startTime&quot;: &quot;A String&quot;, # Output only. The time when the job was started.
+      &quot;state&quot;: &quot;A String&quot;, # Output only. Execution state for the job.
+      &quot;trigger&quot;: &quot;A String&quot;, # Output only. Job execution trigger.
+      &quot;uid&quot;: &quot;A String&quot;, # Output only. System generated globally unique ID for the job.
+    &quot;updateTime&quot;: &quot;A String&quot;, # Output only. Last update time of the status.
+  &quot;labels&quot;: { # Optional. User-defined labels for the task.
+  &quot;name&quot;: &quot;A String&quot;, # Output only. The relative resource name of the task, of the form: projects/{project_number}/locations/{location_id}/lakes/{lake_id}/ tasks/{task_id}.
+  &quot;notebook&quot;: { # Config for running scheduled notebooks. # Config related to running scheduled Notebooks.
+    &quot;archiveUris&quot;: [ # Optional. Cloud Storage URIs of archives to be extracted into the working directory of each executor. Supported file types: .jar, .tar, .tar.gz, .tgz, and .zip.
+    &quot;fileUris&quot;: [ # Optional. Cloud Storage URIs of files to be placed in the working directory of each executor.
+    &quot;infrastructureSpec&quot;: { # Configuration for the underlying infrastructure used to run workloads. # Optional. Infrastructure specification for the execution.
+      &quot;batch&quot;: { # Batch compute resources associated with the task. # Compute resources needed for a Task when using Dataproc Serverless.
+        &quot;executorsCount&quot;: 42, # Optional. Total number of job executors. Executor Count should be between 2 and 100. Default=2
+        &quot;maxExecutorsCount&quot;: 42, # Optional. Max configurable executors. If max_executors_count &gt; executors_count, then auto-scaling is enabled. Max Executor Count should be between 2 and 1000. Default=1000
+      &quot;containerImage&quot;: { # Container Image Runtime Configuration used with Batch execution. # Container Image Runtime Configuration.
+        &quot;image&quot;: &quot;A String&quot;, # Optional. Container image to use.
+        &quot;javaJars&quot;: [ # Optional. A list of Java JARS to add to the classpath. Valid input includes Cloud Storage URIs to Jar binaries. For example, gs://bucket-name/my/path/to/file.jar
+        &quot;properties&quot;: { # Optional. Override to common configuration of open source components installed on the Dataproc cluster. The properties to set on daemon config files. Property keys are specified in prefix:property format, for example core:hadoop.tmp.dir. For more information, see Cluster properties (https://cloud.google.com/dataproc/docs/concepts/cluster-properties).
+        &quot;pythonPackages&quot;: [ # Optional. A list of python packages to be installed. Valid formats include Cloud Storage URI to a PIP installable library. For example, gs://bucket-name/my/path/to/lib.tar.gz
+      &quot;vpcNetwork&quot;: { # Cloud VPC Network used to run the infrastructure. # Vpc network.
+        &quot;network&quot;: &quot;A String&quot;, # Optional. The Cloud VPC network in which the job is run. By default, the Cloud VPC network named Default within the project is used.
+        &quot;networkTags&quot;: [ # Optional. List of network tags to apply to the job.
+        &quot;subNetwork&quot;: &quot;A String&quot;, # Optional. The Cloud VPC sub-network in which the job is run.
+    &quot;notebook&quot;: &quot;A String&quot;, # Required. Path to input notebook. This can be the Cloud Storage URI of the notebook file or the path to a Notebook Content. The execution args are accessible as environment variables (TASK_key=value).
+  &quot;spark&quot;: { # User-specified config for running a Spark task. # Config related to running custom Spark tasks.
+    &quot;mainClass&quot;: &quot;A String&quot;, # The name of the driver&#x27;s main class. The jar file that contains the class must be in the default CLASSPATH or specified in jar_file_uris. The execution args are passed in as a sequence of named process arguments (--key=value).
+    &quot;mainJarFileUri&quot;: &quot;A String&quot;, # The Cloud Storage URI of the jar file that contains the main class. The execution args are passed in as a sequence of named process arguments (--key=value).
+    &quot;pythonScriptFile&quot;: &quot;A String&quot;, # The Gcloud Storage URI of the main Python file to use as the driver. Must be a .py file. The execution args are passed in as a sequence of named process arguments (--key=value).
+    &quot;sqlScript&quot;: &quot;A String&quot;, # The query text. The execution args are used to declare a set of script variables (set key=&quot;value&quot;;).
+    &quot;sqlScriptFile&quot;: &quot;A String&quot;, # A reference to a query file. This should be the Cloud Storage URI of the query file. The execution args are used to declare a set of script variables (set key=&quot;value&quot;;).
+  &quot;state&quot;: &quot;A String&quot;, # Output only. Current state of the task.
+  &quot;triggerSpec&quot;: { # Task scheduling and trigger settings. # Required. Spec related to how often and when a task should be triggered.
+    &quot;disabled&quot;: True or False, # Optional. Prevent the task from executing. This does not cancel already running tasks. It is intended to temporarily disable RECURRING tasks.
+    &quot;maxRetries&quot;: 42, # Optional. Number of retry attempts before aborting. Set to zero to never attempt to retry a failed task.
+    &quot;schedule&quot;: &quot;A String&quot;, # Optional. Cron schedule (https://en.wikipedia.org/wiki/Cron) for running tasks periodically. To explicitly set a timezone to the cron tab, apply a prefix in the cron tab: &quot;CRON_TZ=${IANA_TIME_ZONE}&quot; or &quot;TZ=${IANA_TIME_ZONE}&quot;. The ${IANA_TIME_ZONE} may only be a valid string from IANA time zone database. For example, CRON_TZ=America/New_York 1 * * * *, or TZ=America/New_York 1 * * * *. This field is required for RECURRING tasks.
+    &quot;startTime&quot;: &quot;A String&quot;, # Optional. The first run of the task will be after this time. If not specified, the task will run shortly after being submitted if ON_DEMAND and based on the schedule if RECURRING.
+    &quot;type&quot;: &quot;A String&quot;, # Required. Immutable. Trigger type of the user-specified Task.
+  &quot;uid&quot;: &quot;A String&quot;, # Output only. System generated globally unique ID for the task. This ID will be different if the task is deleted and re-created with the same name.
+  &quot;updateTime&quot;: &quot;A String&quot;, # Output only. The time when the task was last updated.
+  taskId: string, Required. Task identifier.
+  <pre>Delete the task resource.
+  name: string, Required. The resource name of the task: projects/{project_number}/locations/{location_id}/lakes/{lake_id}/task/{task_id}. (required)
+  <pre>Get task resource.
+  name: string, Required. The resource name of the task: projects/{project_number}/locations/{location_id}/lakes/{lake_id}/tasks/{tasks_id}. (required)
+  <pre>Lists tasks under the given lake.
+  pageSize: integer, Optional. Maximum number of tasks to return. The service may return fewer than this value. If unspecified, at most 10 tasks will be returned. The maximum value is 1000; values above 1000 will be coerced to 1000.
+  pageToken: string, Optional. Page token received from a previous ListZones call. Provide this to retrieve the subsequent page. When paginating, all other parameters provided to ListZones must match the call that provided the page token.
+    { # List tasks response.
+  &quot;tasks&quot;: [ # Tasks under the given parent lake.
+  <pre>Update the task resource.
+  name: string, Output only. The relative resource name of the task, of the form: projects/{project_number}/locations/{location_id}/lakes/{lake_id}/ tasks/{task_id}. (required)
+  <pre>Run an on demand execution of a Task.
+  name: string, Required. The resource name of the task: projects/{project_number}/locations/{location_id}/lakes/{lake_id}/tasks/{task_id}. (required)
+  &quot;args&quot;: { # Optional. Execution spec arguments. If the map is left empty, the task will run with existing execution spec args from task definition. If the map contains an entry with a new key, the same will be added to existing set of args. If the map contains an entry with an existing arg key in task definition, the task will run with new arg value for that entry. Clearing an existing arg will require arg value to be explicitly set to a hyphen &quot;-&quot;. The arg value cannot be empty.
+  &quot;labels&quot;: { # Optional. User-defined labels for the task. If the map is left empty, the task will run with existing labels from task definition. If the map contains an entry with a new key, the same will be added to existing set of labels. If the map contains an entry with an existing label key in task definition, the task will run with new label value for that entry. Clearing an existing label will require label value to be explicitly set to a hyphen &quot;-&quot;. The label value cannot be empty.
+  &quot;job&quot;: { # A job represents an instance of a task. # Jobs created by RunTask API.

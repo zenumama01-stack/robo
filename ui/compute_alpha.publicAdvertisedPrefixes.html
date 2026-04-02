@@ -1,0 +1,76 @@
+<h1><a href="compute_alpha.html">Compute Engine API</a> . <a href="compute_alpha.publicAdvertisedPrefixes.html">publicAdvertisedPrefixes</a></h1>
+  <code><a href="#announce">announce(project, publicAdvertisedPrefix, requestId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Announces the specified PublicAdvertisedPrefix</p>
+  <code><a href="#delete">delete(project, publicAdvertisedPrefix, requestId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Deletes the specified PublicAdvertisedPrefix</p>
+  <code><a href="#get">get(project, publicAdvertisedPrefix, x__xgafv=None)</a></code></p>
+<p class="firstline">Returns the specified PublicAdvertisedPrefix resource.</p>
+<p class="firstline">Creates a PublicAdvertisedPrefix in the specified project</p>
+<p class="firstline">Lists the PublicAdvertisedPrefixes for a project.</p>
+  <code><a href="#patch">patch(project, publicAdvertisedPrefix, body=None, requestId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Patches the specified Router resource with the data included in the</p>
+  <code><a href="#withdraw">withdraw(project, publicAdvertisedPrefix, requestId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Withdraws the specified PublicAdvertisedPrefix</p>
+    <code class="details" id="announce">announce(project, publicAdvertisedPrefix, requestId=None, x__xgafv=None)</code>
+  <pre>Announces the specified PublicAdvertisedPrefix
+  publicAdvertisedPrefix: string, The name of the public advertised prefix. It should comply with RFC1035. (required)
+    <code class="details" id="delete">delete(project, publicAdvertisedPrefix, requestId=None, x__xgafv=None)</code>
+  <pre>Deletes the specified PublicAdvertisedPrefix
+  publicAdvertisedPrefix: string, Name of the PublicAdvertisedPrefix resource to delete. (required)
+    <code class="details" id="get">get(project, publicAdvertisedPrefix, x__xgafv=None)</code>
+  <pre>Returns the specified PublicAdvertisedPrefix resource.
+  publicAdvertisedPrefix: string, Name of the PublicAdvertisedPrefix resource to return. (required)
+    { # A public advertised prefix represents an aggregated IP prefix or netblock
+    # which customers bring to cloud. The IP prefix is a single unit of route
+    # advertisement and is announced globally to the internet.
+  &quot;dnsVerificationIp&quot;: &quot;A String&quot;, # The address to be used for reverse DNS verification.
+      # inserting a new PublicAdvertisedPrefix. An up-to-date
+      # fingerprint must be provided in order to update thePublicAdvertisedPrefix, otherwise the request will fail with
+      # retrieve a PublicAdvertisedPrefix.
+  &quot;ipCidrRange&quot;: &quot;A String&quot;, # The address range, in CIDR format, represented by this public advertised
+      # prefix.
+  &quot;ipv6AccessType&quot;: &quot;A String&quot;, # The internet access type for IPv6 Public Advertised Prefixes.
+  &quot;kind&quot;: &quot;compute#publicAdvertisedPrefix&quot;, # Output only. [Output Only] Type of the resource. Alwayscompute#publicAdvertisedPrefix for public advertised prefixes.
+  &quot;networkTier&quot;: &quot;A String&quot;, # Network tier to be used for this prefix. All child delegated prefixes will
+      # inherit this field. If this field is not specified, it defaults to the
+      # network tier of the project that the PublicAdvertisedPrefix belongs to.
+  &quot;pdpScope&quot;: &quot;A String&quot;, # Specifies how child public delegated prefix will be scoped. It could
+      # be one of following values:
+      #      - `REGIONAL`: The public delegated prefix is regional only. The
+      #      provisioning will take a few minutes.
+      #      - `GLOBAL`: The public delegated prefix is global only. The
+      #      provisioning will take ~4 weeks.
+      #      - `GLOBAL_AND_REGIONAL` [output only]: The public delegated prefixes is
+      #       BYOIP V1 legacy prefix. This is output only value and no longer
+      #       supported in BYOIP V2.
+  &quot;publicDelegatedPrefixs&quot;: [ # Output only. [Output Only] The list of public delegated prefixes that exist for this
+      # public advertised prefix.
+    { # Represents a CIDR range which can be used to assign addresses.
+      &quot;ipRange&quot;: &quot;A String&quot;, # The IP address range of the public delegated prefix
+      &quot;name&quot;: &quot;A String&quot;, # The name of the public delegated prefix
+      &quot;project&quot;: &quot;A String&quot;, # The project number of the public delegated prefix
+      &quot;region&quot;: &quot;A String&quot;, # The region of the public delegated prefix if it is regional. If absent,
+          # the prefix is global.
+      &quot;status&quot;: &quot;A String&quot;, # The status of the public delegated prefix. Possible values are:
+          #   INITIALIZING: The public delegated prefix is being initialized and
+          #     addresses cannot be created yet.
+          #   ANNOUNCED: The public delegated prefix is active.
+  &quot;sharedSecret&quot;: &quot;A String&quot;, # [Output Only] The shared secret to be used for reverse DNS verification.
+  &quot;status&quot;: &quot;A String&quot;, # The status of the public advertised prefix. Possible values include:
+      #      - `INITIAL`: RPKI validation is complete.
+      #      - `PTR_CONFIGURED`: User has configured the PTR.
+      #      - `VALIDATED`: Reverse DNS lookup is successful.
+      #      - `REVERSE_DNS_LOOKUP_FAILED`: Reverse DNS lookup failed.
+      #      - `PREFIX_CONFIGURATION_IN_PROGRESS`: The prefix is being
+      #      configured.
+      #      - `PREFIX_CONFIGURATION_COMPLETE`: The prefix is fully configured.
+      #      - `PREFIX_REMOVAL_IN_PROGRESS`: The prefix is being removed.
+  <pre>Creates a PublicAdvertisedPrefix in the specified project
+  <pre>Lists the PublicAdvertisedPrefixes for a project.
+  &quot;items&quot;: [ # A list of PublicAdvertisedPrefix resources.
+  &quot;kind&quot;: &quot;compute#publicAdvertisedPrefixList&quot;, # Output only. [Output Only] Type of the resource. Alwayscompute#publicAdvertisedPrefix for public advertised prefixes.
+    <code class="details" id="patch">patch(project, publicAdvertisedPrefix, body=None, requestId=None, x__xgafv=None)</code>
+  <pre>Patches the specified Router resource with the data included in the
+  publicAdvertisedPrefix: string, Name of the PublicAdvertisedPrefix resource to patch. (required)
+    <code class="details" id="withdraw">withdraw(project, publicAdvertisedPrefix, requestId=None, x__xgafv=None)</code>
+  <pre>Withdraws the specified PublicAdvertisedPrefix

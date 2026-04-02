@@ -1,0 +1,30 @@
+<h1><a href="youtube_v3.html">YouTube Data API v3</a> . <a href="youtube_v3.members.html">members</a></h1>
+  <code><a href="#list">list(part, filterByMemberChannelId=None, hasAccessToLevel=None, maxResults=None, mode=None, pageToken=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Retrieves a list of members that match the request criteria for a channel.</p>
+    <code class="details" id="list">list(part, filterByMemberChannelId=None, hasAccessToLevel=None, maxResults=None, mode=None, pageToken=None, x__xgafv=None)</code>
+  <pre>Retrieves a list of members that match the request criteria for a channel.
+  part: string, The *part* parameter specifies the member resource parts that the API response will include. Set the parameter value to snippet. (required) (repeated)
+  filterByMemberChannelId: string, Comma separated list of channel IDs. Only data about members that are part of this list will be included in the response.
+  hasAccessToLevel: string, Filter members in the results set to the ones that have access to a level.
+  mode: string, Parameter that specifies which channel members to return.
+      listMembersModeUnknown - 
+      updates - Return only members that joined after the first call with this mode was made.
+      all_current - Return all current members, from newest to oldest.
+  &quot;items&quot;: [ # A list of members that match the request criteria.
+    { # A *member* resource represents a member for a YouTube channel. A member provides recurring monetary support to a creator and receives special benefits.
+      &quot;kind&quot;: &quot;youtube#member&quot;, # Identifies what kind of resource this is. Value: the fixed string &quot;youtube#member&quot;.
+      &quot;snippet&quot;: { # The snippet object contains basic details about the member.
+        &quot;creatorChannelId&quot;: &quot;A String&quot;, # The id of the channel that&#x27;s offering memberships.
+        &quot;memberDetails&quot;: { # Details about the member.
+        &quot;membershipsDetails&quot;: { # Details about the user&#x27;s membership.
+          &quot;accessibleLevels&quot;: [ # Ids of all levels that the user has access to. This includes the currently active level and all other levels that are included because of a higher purchase.
+          &quot;highestAccessibleLevel&quot;: &quot;A String&quot;, # Id of the highest level that the user has access to at the moment.
+          &quot;highestAccessibleLevelDisplayName&quot;: &quot;A String&quot;, # Display name for the highest level that the user has access to at the moment.
+          &quot;membershipsDuration&quot;: { # Data about memberships duration without taking into consideration pricing levels.
+            &quot;memberSince&quot;: &quot;A String&quot;, # The date and time when the user became a continuous member across all levels.
+            &quot;memberTotalDurationMonths&quot;: 42, # The cumulative time the user has been a member across all levels in complete months (the time is rounded down to the nearest integer).
+          &quot;membershipsDurationAtLevels&quot;: [ # Data about memberships duration on particular pricing levels.
+              &quot;level&quot;: &quot;A String&quot;, # Pricing level ID.
+              &quot;memberSince&quot;: &quot;A String&quot;, # The date and time when the user became a continuous member for the given level.
+              &quot;memberTotalDurationMonths&quot;: 42, # The cumulative time the user has been a member for the given level in complete months (the time is rounded down to the nearest integer).
+  &quot;kind&quot;: &quot;youtube#memberListResponse&quot;, # Identifies what kind of resource this is. Value: the fixed string &quot;youtube#memberListResponse&quot;.

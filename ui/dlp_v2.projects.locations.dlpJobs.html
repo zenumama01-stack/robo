@@ -1,0 +1,21 @@
+<h1><a href="dlp_v2.html">Sensitive Data Protection (DLP)</a> . <a href="dlp_v2.projects.html">projects</a> . <a href="dlp_v2.projects.locations.html">locations</a> . <a href="dlp_v2.projects.locations.dlpJobs.html">dlpJobs</a></h1>
+  <code><a href="#finish">finish(name, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Finish a running hybrid DlpJob. Triggers the finalization steps and running of any enabled actions that have not yet run.</p>
+  <code><a href="#hybridInspect">hybridInspect(name, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Inspect hybrid content and store findings to a job. To review the findings, inspect the job. Inspection will occur asynchronously.</p>
+    <code class="details" id="finish">finish(name, body=None, x__xgafv=None)</code>
+  <pre>Finish a running hybrid DlpJob. Triggers the finalization steps and running of any enabled actions that have not yet run.
+  name: string, Required. The name of the DlpJob resource to be finished. (required)
+{ # The request message for finishing a DLP hybrid job.
+    <code class="details" id="hybridInspect">hybridInspect(name, body=None, x__xgafv=None)</code>
+  <pre>Inspect hybrid content and store findings to a job. To review the findings, inspect the job. Inspection will occur asynchronously.
+  name: string, Required. Resource name of the job to execute a hybrid inspect on, for example `projects/dlp-test-project/dlpJob/53234423`. (required)
+{ # Request to search for potentially sensitive info in a custom location.
+  &quot;hybridItem&quot;: { # An individual hybrid item to inspect. Will be stored temporarily during processing. # The item to inspect.
+    &quot;findingDetails&quot;: { # Populate to associate additional data with each finding. # Supplementary information that will be added to each finding.
+      &quot;containerDetails&quot;: { # Represents a container that may contain DLP findings. Examples of a container include a file, table, or database record. # Details about the container where the content being inspected is from.
+      &quot;fileOffset&quot;: &quot;A String&quot;, # Offset in bytes of the line, from the beginning of the file, where the finding is located. Populate if the item being scanned is only part of a bigger item, such as a shard of a file and you want to track the absolute position of the finding.
+      &quot;labels&quot;: { # Labels to represent user provided metadata about the data being inspected. If configured by the job, some key values may be required. The labels associated with `Finding`&#x27;s produced by hybrid inspection. Label keys must be between 1 and 63 characters long and must conform to the following regular expression: `[a-z]([-a-z0-9]*[a-z0-9])?`. Label values must be between 0 and 63 characters long and must conform to the regular expression `([a-z]([-a-z0-9]*[a-z0-9])?)?`. No more than 10 labels can be associated with a given finding. Examples: * `&quot;environment&quot; : &quot;production&quot;` * `&quot;pipeline&quot; : &quot;etl&quot;`
+      &quot;rowOffset&quot;: &quot;A String&quot;, # Offset of the row for tables. Populate if the row(s) being scanned are part of a bigger dataset and you want to keep track of their absolute position.
+      &quot;tableOptions&quot;: { # Instructions regarding the table content being inspected. # If the container is a table, additional information to make findings meaningful such as the columns that are primary keys. If not known ahead of time, can also be set within each inspect hybrid call and the two will be merged. Note that identifying_fields will only be stored to BigQuery, and only if the BigQuery action has been included.
+    { # Quota exceeded errors will be thrown once quota has been met.

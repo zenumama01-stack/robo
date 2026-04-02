@@ -1,0 +1,57 @@
+<h1><a href="vmmigration_v1.html">VM Migration API</a> . <a href="vmmigration_v1.projects.html">projects</a> . <a href="vmmigration_v1.projects.locations.html">locations</a> . <a href="vmmigration_v1.projects.locations.sources.html">sources</a> . <a href="vmmigration_v1.projects.locations.sources.diskMigrationJobs.html">diskMigrationJobs</a></h1>
+<p class="firstline">Cancels the disk migration job.</p>
+  <code><a href="#create">create(parent, body=None, diskMigrationJobId=None, requestId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Creates a new disk migration job in a given Source.</p>
+<p class="firstline">Deletes a single DiskMigrationJob.</p>
+<p class="firstline">Gets details of a single DiskMigrationJob.</p>
+<p class="firstline">Lists DiskMigrationJobs in a given Source.</p>
+<p class="firstline">Updates the parameters of a single DiskMigrationJob.</p>
+<p class="firstline">Runs the disk migration job.</p>
+  <pre>Cancels the disk migration job.
+  name: string, Required. The name of the DiskMigrationJob. (required)
+{ # Request message for &#x27;CancelDiskMigrationJob&#x27; request.
+    <code class="details" id="create">create(parent, body=None, diskMigrationJobId=None, requestId=None, x__xgafv=None)</code>
+  <pre>Creates a new disk migration job in a given Source.
+  parent: string, Required. The DiskMigrationJob&#x27;s parent. (required)
+{ # Describes the disk which will be migrated from the source environment. The source disk has to be unattached.
+  &quot;awsSourceDiskDetails&quot;: { # Represents the source AWS Disk details. # Details of the unattached AWS source disk.
+    &quot;diskType&quot;: &quot;A String&quot;, # Optional. Output only. Disk type.
+    &quot;sizeGib&quot;: &quot;A String&quot;, # Output only. Size in GiB.
+    &quot;tags&quot;: { # Optional. Output only. A map of AWS volume tags.
+    &quot;volumeId&quot;: &quot;A String&quot;, # Required. AWS volume ID.
+  &quot;createTime&quot;: &quot;A String&quot;, # Output only. The time the DiskMigrationJob resource was created.
+  &quot;errors&quot;: [ # Output only. Provides details on the errors that led to the disk migration job&#x27;s state in case of an error.
+  &quot;name&quot;: &quot;A String&quot;, # Output only. Identifier. The identifier of the DiskMigrationJob.
+  &quot;state&quot;: &quot;A String&quot;, # Output only. State of the DiskMigrationJob.
+  &quot;steps&quot;: [ # Output only. The disk migration steps list representing its progress.
+    { # DiskMigrationStep holds information about the disk migration step progress.
+      &quot;copyingSourceDiskSnapshot&quot;: { # CopyingSourceDiskSnapshotStep contains specific step details. # Copying source disk snapshot step.
+      &quot;creatingSourceDiskSnapshot&quot;: { # CreatingSourceDiskSnapshotStep contains specific step details. # Creating source disk snapshot step.
+      &quot;provisioningTargetDisk&quot;: { # ProvisioningTargetDiskStep contains specific step details. # Creating target disk step.
+  &quot;targetDetails&quot;: { # Details of the target disk in Compute Engine. # Required. Details of the target Disk in Compute Engine.
+    &quot;encryption&quot;: { # Encryption message describes the details of the applied encryption. # Optional. The encryption to apply to the disk. If the DiskMigrationJob parent Source resource has an encryption, this field must be set to the same encryption key.
+    &quot;labels&quot;: { # Optional. A map of labels to associate with the disk.
+    &quot;targetDisk&quot;: { # Compute Engine disk target details. # Required. The target disk.
+      &quot;diskId&quot;: &quot;A String&quot;, # Optional. Target Compute Engine Disk ID. This is the resource ID segment of the Compute Engine Disk to create. In the resource name compute/v1/projects/{project}/zones/{zone}/disks/disk1 &quot;disk1&quot; is the resource ID for the disk.
+      &quot;diskType&quot;: &quot;A String&quot;, # Required. The disk type to use.
+      &quot;replicaZones&quot;: [ # Optional. Replication zones of the regional disk. Should be of the form: projects/{target-project}/locations/{replica-zone} Currently only one replica zone is supported.
+      &quot;zone&quot;: &quot;A String&quot;, # Required. The Compute Engine zone in which to create the disk. Should be of the form: projects/{target-project}/locations/{zone}
+    &quot;targetProject&quot;: &quot;A String&quot;, # Required. The name of the resource of type TargetProject which represents the Compute Engine project in which to create the disk. Should be of the form: projects/{project}/locations/global/targetProjects/{target-project}
+  &quot;updateTime&quot;: &quot;A String&quot;, # Output only. The last time the DiskMigrationJob resource was updated.
+  diskMigrationJobId: string, Required. The DiskMigrationJob identifier. The maximum length of this value is 63 characters. Valid characters are lower case Latin letters, digits and hyphen. It must start with a Latin letter and must not end with a hyphen.
+  requestId: string, Optional. A request ID to identify requests. Specify a unique request ID so that if you must retry your request, the server will know to ignore the request if it has already been completed. The server will guarantee that for at least 60 minutes since the first request. For example, consider a situation where you make an initial request and the request timed out. If you make the request again with the same request ID, the server can check if original operation with the same request ID was received, and if so, will ignore the second request. This prevents clients from accidentally creating duplicate commitments. The request ID must be a valid UUID with the exception that zero UUID is not supported (00000000-0000-0000-0000-000000000000).
+  <pre>Deletes a single DiskMigrationJob.
+  <pre>Gets details of a single DiskMigrationJob.
+  <pre>Lists DiskMigrationJobs in a given Source.
+  parent: string, Required. The parent, which owns this collection of DiskMigrationJobs. (required)
+  orderBy: string, Optional. Ordering of the result list.
+  pageSize: integer, Optional. The maximum number of disk migration jobs to return. The service may return fewer than this value. If unspecified, at most 500 disk migration jobs will be returned. The maximum value is 1000; values above 1000 will be coerced to 1000.
+  pageToken: string, Optional. A page token, received from a previous `ListDiskMigrationJobs` call. Provide this to retrieve the subsequent page. When paginating, all parameters provided to `ListDiskMigrationJobs` except `page_size` must match the call that provided the page token.
+    { # Response message for &#x27;ListDiskMigrationJobs&#x27; request.
+  &quot;diskMigrationJobs&quot;: [ # Output only. The list of the disk migration jobs.
+  &quot;nextPageToken&quot;: &quot;A String&quot;, # Optional. Output only. A token, which can be sent as `page_token` to retrieve the next page. If this field is omitted, there are no subsequent pages.
+  <pre>Updates the parameters of a single DiskMigrationJob.
+  name: string, Output only. Identifier. The identifier of the DiskMigrationJob. (required)
+  updateMask: string, Optional. Field mask is used to specify the fields to be overwritten in the DiskMigrationJob resource by the update. The fields specified in the update_mask are relative to the resource, not the full request. A field will be overwritten if it is in the mask. If the user does not provide a mask, then a mask equivalent to all fields that are populated (have a non-empty value), will be implied.
+  <pre>Runs the disk migration job.
+{ # Request message for &#x27;RunDiskMigrationJobRequest&#x27; request.

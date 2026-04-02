@@ -1,0 +1,35 @@
+<h1><a href="dfareporting_v4.html">Campaign Manager 360 API</a> . <a href="dfareporting_v4.billingProfiles.html">billingProfiles</a></h1>
+<p class="firstline">Gets one billing profile by ID.</p>
+  <code><a href="#list">list(profileId, currency_code=None, ids=None, maxResults=None, name=None, onlySuggestion=None, pageToken=None, sortField=None, sortOrder=None, status=None, subaccountIds=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Retrieves a list of billing profiles, possibly filtered. This method supports paging.</p>
+<p class="firstline">Updates an existing billing profile.</p>
+  <pre>Gets one billing profile by ID.
+  id: string, Billing Profile ID. (required)
+    { # Contains properties of a Campaign Manager Billing Profile.
+  &quot;consolidatedInvoice&quot;: True or False, # Consolidated invoice option for this billing profile. Used to get a single, consolidated invoice across the chosen invoice level.
+  &quot;countryCode&quot;: &quot;A String&quot;, # Country code of this billing profile.This is a read-only field.
+  &quot;currencyCode&quot;: &quot;A String&quot;, # Billing currency code in ISO 4217 format.This is a read-only field.
+  &quot;id&quot;: &quot;A String&quot;, # ID of this billing profile. This is a read-only, auto-generated field.
+  &quot;invoiceLevel&quot;: &quot;A String&quot;, # Invoice level for this billing profile. Used to group fees into separate invoices by account, advertiser, or campaign.
+  &quot;isDefault&quot;: True or False, # True if the billing profile is the account default profile. This is a read-only field.
+  &quot;kind&quot;: &quot;A String&quot;, # Identifies what kind of resource this is. Value: the fixed string &quot;dfareporting#billingProfile&quot;.
+  &quot;name&quot;: &quot;A String&quot;, # Name of this billing profile. This is a required field and must be less than 256 characters long and must be unique among billing profile in the same account.
+  &quot;paymentsAccountId&quot;: &quot;A String&quot;, # The ID of the payment account the billing profile belongs to. This is a read-only field.
+  &quot;paymentsCustomerId&quot;: &quot;A String&quot;, # The ID of the payment customer the billing profile belongs to. This is a read-only field.
+  &quot;purchaseOrder&quot;: &quot;A String&quot;, # Purchase order (PO) for this billing profile. This PO number is used in the invoices for all of the advertisers in this billing profile.
+  &quot;secondaryPaymentsCustomerId&quot;: &quot;A String&quot;, # The ID of the secondary payment customer the billing profile belongs to. This is a read-only field.
+  &quot;status&quot;: &quot;A String&quot;, # Status of this billing profile.This is a read-only field.
+    <code class="details" id="list">list(profileId, currency_code=None, ids=None, maxResults=None, name=None, onlySuggestion=None, pageToken=None, sortField=None, sortOrder=None, status=None, subaccountIds=None, x__xgafv=None)</code>
+  <pre>Retrieves a list of billing profiles, possibly filtered. This method supports paging.
+  currency_code: string, Select only billing profile with currency.
+  ids: string, Select only billing profile with these IDs. (repeated)
+  name: string, Allows searching for billing profiles by name. Wildcards (*) are allowed. For example, &quot;profile*2020&quot; will return objects with names like &quot;profile June 2020&quot;, &quot;profile April 2020&quot;, or simply &quot;profile 2020&quot;. Most of the searches also add wildcards implicitly at the start and the end of the search string. For example, a search string of &quot;profile&quot; will match objects with name &quot;my profile&quot;, &quot;profile 2021&quot;, or simply &quot;profile&quot;.
+  onlySuggestion: boolean, Select only billing profile which is suggested for the currency_code &amp; subaccount_id using the Billing Suggestion API.
+  status: string, Select only billing profile with the specified status. (repeated)
+      UNDER_REVIEW - 
+      ARCHIVED - 
+  subaccountIds: string, Select only billing profile with the specified subaccount.When only_suggestion is true, only a single subaccount_id is supported. (repeated)
+    { # Billing profile List Response
+  &quot;billingProfiles&quot;: [ # Billing profiles collection.
+  &quot;kind&quot;: &quot;A String&quot;, # Identifies what kind of resource this is. Value: the fixed string &quot;dfareporting#billingProfilesListResponse&quot;.
+  <pre>Updates an existing billing profile.

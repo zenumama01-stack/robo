@@ -1,0 +1,44 @@
+<div class="thread-panel-overlay" (click)="onClose()"></div>
+<div class="thread-panel">
+  <div class="thread-header">
+    <div class="thread-title">
+      <span>Thread</span>
+    <button class="close-btn" (click)="onClose()" title="Close thread">
+    <div class="thread-loading">
+      <span>Loading thread...</span>
+  @if (errorMessage && !isLoading) {
+    <div class="thread-error">
+  @if (!isLoading && !errorMessage && parentMessage) {
+    <div class="thread-content">
+      <!-- Parent Message -->
+      <div class="parent-message">
+          <span class="message-sender">{{ getSenderName(parentMessage) }}</span>
+          <span class="message-time">{{ getMessageTime(parentMessage) }}</span>
+          {{ getMessageText(parentMessage) }}
+        <div class="reply-count">
+          <span>{{ replyCountText }}</span>
+      <!-- Replies List -->
+      <div class="replies-container">
+        @if (replies.length === 0) {
+          <div class="no-replies">
+            <span>No replies yet. Be the first to reply!</span>
+        @for (reply of replies; track reply.ID) {
+          <div class="reply-item" [class.ai-reply]="reply.Role === 'AI'">
+            <div class="reply-header">
+              <span class="reply-sender">{{ getSenderName(reply) }}</span>
+              <span class="reply-time">{{ getMessageTime(reply) }}</span>
+            <div class="reply-body">
+              {{ getMessageText(reply) }}
+    <!-- Reply Input -->
+    <div class="reply-input-container">
+        class="reply-input"
+        [(ngModel)]="replyText"
+        [disabled]="isSending"
+        placeholder="Reply to thread..."
+        (keydown.control.enter)="onSendReply()"
+        (keydown.meta.enter)="onSendReply()">
+      <div class="reply-actions">
+          class="btn-send-reply"
+          [disabled]="!canSendReply"
+          (click)="onSendReply()">
+          <span>{{ isSending ? 'Sending...' : 'Reply' }}</span>

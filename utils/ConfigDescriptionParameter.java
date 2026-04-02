@@ -1,0 +1,289 @@
+ * The {@link ConfigDescriptionParameter} class contains the description of a
+ * concrete configuration parameter. Such parameter descriptions are collected
+ * within the {@link ConfigDescription} and can be retrieved from the {@link ConfigDescriptionRegistry}.
+ * This class defines available configuration parameter types in {@link ConfigDescriptionParameter.Type},
+ * it defines available unit types in {@link ConfigDescriptionParameter#UNITS} and available
+ * contexts (see {@link ConfigDescriptionParameter#getContext()}).
+ * @author Alex Tugarev - Added options, filter criteria, and more parameter
+ *         attributes
+ * @author Chris Jackson - Added groupId, limitToOptions, advanced,
+ *         multipleLimit, verify attributes
+ * @author Christoph Knauf - Added default constructor, changed Boolean
+ *         getter to return primitive types
+ * @author Thomas Höfer - Added unit
+ * @author Laurent Garnier - Removed constraint on unit value
+public class ConfigDescriptionParameter {
+     * The {@link Type} defines an enumeration of all supported data types a
+     * configuration parameter can take.
+    public enum Type {
+         * The data type for a UTF8 text value.
+        TEXT,
+         * The data type for a signed integer value in the range of [ {@link Integer#MIN_VALUE},
+         * {@link Integer#MAX_VALUE}].
+        INTEGER,
+         * The data type for a signed floating point value (IEEE 754) in the
+         * range of [{@link Float#MIN_VALUE}, {@link Float#MAX_VALUE}].
+        DECIMAL,
+         * The data type for a boolean ({@code true} or {@code false}).
+        BOOLEAN
+    private @NonNullByDefault({}) Type type;
+    private @Nullable String groupName;
+    private @Nullable BigDecimal min;
+    private @Nullable BigDecimal max;
+    private @Nullable BigDecimal step;
+    private @Nullable String pattern;
+    private boolean readOnly = false;
+    private boolean multiple = false;
+    private @Nullable Integer multipleLimit;
+    private @Nullable String unit;
+    private @Nullable String unitLabel;
+    private @Nullable String context;
+    @SerializedName("default")
+    private List<ParameterOption> options = new ArrayList<>();
+    private List<FilterCriteria> filterCriteria = new ArrayList<>();
+    private boolean limitToOptions = true;
+    private boolean advanced = false;
+    private boolean verify = false;
+    private static final Set<String> UNITS = Set.of("A", "cd", "K", "kg", "m", "mol", "s", "g", "rad", "sr", "Hz", "N",
+            "Pa", "J", "W", "C", "V", "F", "Ω", "S", "Wb", "T", "H", "Cel", "lm", "lx", "Bq", "Gy", "Sv", "kat", "m/s2",
+            "m2v", "m3", "kph", "%", "l", "ms", "min", "h", "d", "week", "y");
+     * Default constructor.
+    public ConfigDescriptionParameter() {
+     * @param name the name of the configuration parameter (must not be empty)
+     * @param type the data type of the configuration parameter
+     * @param minimum the minimal value for numeric types, or the minimal length of
+     *            strings, or the minimal number of selected options
+     * @param maximum the maximal value for numeric types, or the maximal length of
+     *            strings, or the maximal number of selected options
+     * @param stepsize the value granularity for a numeric value
+     * @param pattern the regular expression for a text type
+     * @param required specifies whether the value is required
+     * @param readOnly specifies whether the value is read-only
+     * @param multiple specifies whether multiple selections of options are allowed
+     * @param context the context of the configuration parameter (can be empty)
+     * @param defaultValue the default value of the configuration parameter
+     * @param label a human-readable label for the configuration parameter (can be empty)
+     * @param description a human-readable description for the configuration parameter (can be empty)
+     * @param filterCriteria a list of filter criteria for values of a dynamic selection list
+     * @param options a list of element definitions of a static selection list
+     * @param groupName a string used to group parameters together into logical blocks
+     *            so that the UI can display them together
+     * @param advanced specifies if this is an advanced parameter. An advanced
+     *            parameter can be hidden in the UI to focus the user on
+     *            important configuration
+     * @param limitToOptions specifies that the users input is limited to the options list.
+     *            When set to true without options, this should have no affect.
+     *            When set to true with options, the user can only select the
+     *            options from the list When set to false with options, the user
+     *            can enter values other than those in the list
+     * @param multipleLimit specifies the maximum number of options that can be selected
+     *            when multiple is true
+     * @param unit specifies the unit of measurements for the configuration parameter
+     * @param unitLabel specifies the unit label for the configuration parameter. This attribute can also be used to
+     *            provide
+     *            natural language units as iterations, runs, etc.
+     * @param verify specifies whether the parameter should be considered dangerous
+     *             <li>if the name is null or empty, or the type is null</li>
+     *             <li>if a unit or a unit label is provided for a parameter having type text or boolean</li>
+     *             <li>if an invalid unit was given (cp.
+     *             https://openhab.org/documentation/development/bindings/xml-reference.html for the list
+     *             of valid units)</li>
+     * @deprecated Use {@link ConfigDescriptionParameterBuilder} instead.
+    ConfigDescriptionParameter(String name, Type type, @Nullable BigDecimal minimum, @Nullable BigDecimal maximum,
+            @Nullable BigDecimal stepsize, @Nullable String pattern, @Nullable Boolean required,
+            @Nullable Boolean readOnly, @Nullable Boolean multiple, @Nullable String context,
+            @Nullable String defaultValue, @Nullable String label, @Nullable String description,
+            @Nullable List<ParameterOption> options, @Nullable List<FilterCriteria> filterCriteria,
+            @Nullable String groupName, @Nullable Boolean advanced, @Nullable Boolean limitToOptions,
+            @Nullable Integer multipleLimit, @Nullable String unit, @Nullable String unitLabel,
+            @Nullable Boolean verify) throws IllegalArgumentException {
+        if ((name == null) || (name.isEmpty())) {
+            throw new IllegalArgumentException("The type must not be null!");
+        if ((type == Type.TEXT || type == Type.BOOLEAN) && (unit != null || unitLabel != null)) {
+                    "Unit or unit label must only be set for integer or decimal configuration parameters");
+        this.groupName = groupName;
+        this.min = minimum;
+        this.max = maximum;
+        this.step = stepsize;
+        this.pattern = pattern;
+        this.context = context;
+        this.multipleLimit = multipleLimit;
+        this.unit = unit;
+        this.unitLabel = unitLabel;
+        if (verify != null) {
+            this.verify = verify;
+        if (readOnly != null) {
+            this.readOnly = readOnly;
+        if (multiple != null) {
+            this.multiple = multiple;
+        if (advanced != null) {
+            this.advanced = advanced;
+        if (required != null) {
+        if (limitToOptions != null) {
+            this.limitToOptions = limitToOptions;
+        if (options != null) {
+            this.options = Collections.unmodifiableList(options);
+            this.options = List.of();
+        if (filterCriteria != null) {
+            this.filterCriteria = Collections.unmodifiableList(filterCriteria);
+            this.filterCriteria = List.of();
+     * Returns the name of the configuration parameter.
+     * @return the name of the configuration parameter (not empty)
+     * Returns the data type of the configuration parameter.
+     * @return the data type of the configuration parameter
+    public Type getType() {
+        return this.type;
+     * @return the minimal value for numeric types, or the minimal length of
+     *         strings, or the minimal number of selected options
+    public @Nullable BigDecimal getMinimum() {
+     * @return the maximal value for numeric types, or the maximal length of
+     *         strings, or the maximal number of selected options
+    public @Nullable BigDecimal getMaximum() {
+        return max;
+     * Returns the value granularity for a numeric value.
+     * By setting the step size to <code>0</code>, any granularity is allowed, i.e. any number of decimals is accepted.
+     * @return the value granularity for a numeric value
+    public @Nullable BigDecimal getStepSize() {
+     * @return the regular expression for a text type
+    public @Nullable String getPattern() {
+     * @return true if the value is required, otherwise false.
+    public boolean isReadOnly() {
+        return readOnly;
+     * @return true if multiple selections of options are allowed, otherwise
+     *         false.
+    public boolean isMultiple() {
+        return multiple;
+     * @return the maximum number of options that can be selected from the options list
+    public @Nullable Integer getMultipleLimit() {
+        return multipleLimit;
+     * Returns the context of the configuration parameter.
+     * A context is a hint for user interfaces and input validators.
+     * Any non empty string can be used, but the following have a special meaning, and will be suggested first by the IDE:
+     * </p>
+     * <!-- @formatter:off -->
+     * <li><b>channel</b>: A valid channel UID. A UI would probably show a channel selection widget.</li>
+     * <li><b>channel-type</b>: A valid channel type UID. A UI would probably show a channel type selection widget.</li>
+     * <li><b>color</b>: This value represents an RGB color value like #000000 - #ffffff or 12,12,12.</li>
+     * <li><b>cronexpression</b>: A cron expression like "* * * * *". A user interface would probably show a cron expression generator.</li>
+     * <li><b>date</b>: A date string in the format "YYYY-MM-DD"</li>
+     * <li><b>datetime</b>: A date and time string in the format "YYYY-MM-DD'T'hh:mm:ss", e.g. "2019-12-31T23:59:59"</li>
+     * <li><b>dayOfWeek</b>: A day of week [MON, TUE, WED, THU, FRI, SAT, SUN]</li>
+     * <li><b>email</b>: The configuration value represents an email address, e.g. username@domain.com</li>
+     * <li><b>group</b>: A valid group item "name". A UI would probably show an item selection widget.</li>
+     * <li><b>item</b>: A valid item "name". A UI would probably show an item selection widget.</li>
+     * <li><b>location</b>: A latitude,longitude[,altitude] GPS location. A UI would probably render a world map for selection.</li>
+     * <li><b>mac-address</b>: The configuration value represents a MAC address.</li>
+     * <li><b>month</b>: A month of year [1-12]</li>
+     * <li><b>network-address</b>: The configuration value represents an IPv4 or IPv6 address or domain name.</li>
+     * <li><b>network-interface</b>: The configuration value represents a network interface name, e.g. eth0, wlan0.</li>
+     * <li><b>page</b>: A valid page UID. A UI would probably show a page selection widget.</li>
+     * <li><b>password</b>: An alphanumeric password value (a UI might obscure the visible value)</li>
+     * <li><b>password-create</b>: An alphanumeric password generator widget might be shown</li>
+     * <li><b>persistence-service</b>: A valid persistence service ID. A UI would probably show a persistence service selection widget.</li>
+     * <li><b>props</b>: A set of name = value properties.</li>
+     * <li><b>qrcode</b>: A text that is presented as a QR-Code image</li>
+     * <li><b>rule</b>: A valid rule uid. A UI would probably show a rule selection widget.</li>
+     * <li><b>script</b>: The configuration value represents a script (JavaScript, Python etc). A UI would probably render a multi line editor.</li>
+     * <li><b>serial-port</b>: The configuration value represents a serial port name, e.g. COM1, /dev/ttyS0.</li>
+     * <li><b>service</b>: A valid service ID. A UI would probably show a service selection widget.</li>
+     * <li><b>tag</b>: One tag or multiple tags separated by comma.</li>
+     * <li><b>telephone</b>: A tel no</li>
+     * <li><b>thing</b>: A valid thing UID. A UI would probably show a thing selection widget.</li>
+     * <li><b>time</b>: A time string in the format "hh:mm:ss" or as milliseconds since epoch</li>
+     * <li><b>url</b>: A web address</li>
+     * <li><b>week</b>: A week of year [0-52]</li>
+     * <li><b>widget</b>: A valid widget UID. A UI would probably show a widget selection widget.</li>
+     * <!-- @formatter:on -->
+     * @return the context of the configuration parameter (could be null)
+    public @Nullable String getContext() {
+        return this.context;
+     * Returns {@code true} if the configuration parameter has to be set,
+     * otherwise {@code false}.
+     * @return true if the configuration parameter has to be set, otherwise
+     *         false
+     * Returns the default value of the configuration parameter.
+     * @return the default value of the configuration parameter
+    public @Nullable String getDefault() {
+     * Returns a human-readable label for the configuration parameter.
+     * @return a human-readable label for the configuration parameter (could be empty)
+     * Returns the group for this configuration parameter.
+     * @return a group for the configuration parameter (could be empty)
+    public @Nullable String getGroupName() {
+        return groupName;
+     * Returns true is the value for this parameter must be limited to the
+     * values in the options list.
+     * @return true if the value is limited to the options list
+    public boolean getLimitToOptions() {
+        return limitToOptions;
+     * Returns true is the parameter is considered an advanced option.
+     * @return true if the value is an advanced option
+    public boolean isAdvanced() {
+        return advanced;
+     * Returns a human-readable description for the configuration parameter.
+     * @return a human-readable description for the configuration parameter (could be empty)
+     * Returns a static selection list for the value of this parameter.
+     * @return static selection list for the value of this parameter
+    public List<ParameterOption> getOptions() {
+     * Returns a list of filter criteria for a dynamically created selection
+     * list.
+     * The clients should consider the relation between the filter criteria and the parameter's context.
+     * @return list of filter criteria for a dynamically created selection list
+    public List<FilterCriteria> getFilterCriteria() {
+        return filterCriteria;
+     * Returns the unit of measurements of this parameter.
+     * @return the unit of measurements of this parameter
+    public @Nullable String getUnit() {
+     * Returns the unit label of this parameter.
+     * @return the unit label of this parameter
+    public @Nullable String getUnitLabel() {
+        return unitLabel;
+     * Returns the verify flag for this parameter. Verify parameters are considered dangerous and the user should be
+     * alerted with an "Are you sure" flag in the UI.
+     * @return true if the parameter requires verification in the UI
+    public boolean isVerifyable() {
+        return verify;
+        sb.append(" [name=");
+        sb.append(name);
+        sb.append(", ");
+        sb.append("type=");
+        sb.append(type);
+        if (groupName != null) {
+            sb.append("groupName=");
+            sb.append(groupName);
+        if (min != null) {
+            sb.append("min=");
+            sb.append(min);
+        if (max != null) {
+            sb.append("max=");
+            sb.append(max);
+            sb.append("step=");
+            sb.append(step);
+        if (pattern != null) {
+            sb.append("pattern=");
+            sb.append(pattern);
+        sb.append("readOnly=");
+        sb.append(readOnly);
+        sb.append("required=");
+        sb.append(required);
+        sb.append("verify=");
+        sb.append(verify);
+        sb.append("multiple=");
+        sb.append(multiple);
+        sb.append("multipleLimit=");
+        sb.append(multipleLimit);
+            sb.append("context=");
+            sb.append(context);
+        if (label != null) {
+            sb.append("label=");
+            sb.append(label);
+        if (description != null) {
+            sb.append("description=");
+            sb.append(description);
+        if (defaultValue != null) {
+            sb.append("defaultValue=");
+            sb.append(defaultValue);
+            sb.append("unit=");
+            sb.append(unit);
+        if (unitLabel != null) {
+            sb.append("unitLabel=");
+            sb.append(unitLabel);

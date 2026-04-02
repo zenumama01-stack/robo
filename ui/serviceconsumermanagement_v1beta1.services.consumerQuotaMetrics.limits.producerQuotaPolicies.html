@@ -1,0 +1,24 @@
+<h1><a href="serviceconsumermanagement_v1beta1.html">Service Consumer Management API</a> . <a href="serviceconsumermanagement_v1beta1.services.html">services</a> . <a href="serviceconsumermanagement_v1beta1.services.consumerQuotaMetrics.html">consumerQuotaMetrics</a> . <a href="serviceconsumermanagement_v1beta1.services.consumerQuotaMetrics.limits.html">limits</a> . <a href="serviceconsumermanagement_v1beta1.services.consumerQuotaMetrics.limits.producerQuotaPolicies.html">producerQuotaPolicies</a></h1>
+  <code><a href="#create">create(parent, body=None, force=None, forceJustification=None, validateOnly=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Creates a producer quota policy. A producer quota policy is applied by the owner or administrator of a service at an org or folder node to set the default quota limit for all consumers under the node where the policy is created. To create multiple policies at once, use ImportProducerQuotaPolicies instead. If a policy with the specified dimensions already exists, this call will fail. To overwrite an existing policy if one is already present ("upsert" semantics), use ImportProducerQuotaPolicies instead.</p>
+  <code><a href="#delete">delete(name, force=None, forceJustification=None, validateOnly=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Deletes a producer quota policy.</p>
+<p class="firstline">Lists all producer policies created at current consumer node for a limit.</p>
+  <code><a href="#patch">patch(name, body=None, force=None, forceJustification=None, updateMask=None, validateOnly=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Updates a producer quota policy.</p>
+    <code class="details" id="create">create(parent, body=None, force=None, forceJustification=None, validateOnly=None, x__xgafv=None)</code>
+  <pre>Creates a producer quota policy. A producer quota policy is applied by the owner or administrator of a service at an org or folder node to set the default quota limit for all consumers under the node where the policy is created. To create multiple policies at once, use ImportProducerQuotaPolicies instead. If a policy with the specified dimensions already exists, this call will fail. To overwrite an existing policy if one is already present (&quot;upsert&quot; semantics), use ImportProducerQuotaPolicies instead.
+  parent: string, Required. The resource name of the parent quota limit. An example name would be: `services/compute.googleapis.com/organizations/123/consumerQuotaMetrics/compute.googleapis.com%2Fcpus/limits/%2Fproject%2Fregion` (required)
+  force: boolean, Whether to force the creation of the quota policy. If the policy creation would decrease the default limit of any consumer tier by more than 10 percent, the call is rejected, as a safety measure to avoid accidentally decreasing quota too quickly. Setting the force parameter to true ignores this restriction.
+  validateOnly: boolean, If set to true, validate the request, but do not actually update.
+    <code class="details" id="delete">delete(name, force=None, forceJustification=None, validateOnly=None, x__xgafv=None)</code>
+  <pre>Deletes a producer quota policy.
+  name: string, Required. The resource name of the policy to delete. An example name would be: `services/compute.googleapis.com/organizations/123/consumerQuotaMetrics/compute.googleapis.com%2Fcpus/limits/%2Fproject%2Fregion/producerQuotaPolicies/4a3f2c1d` (required)
+  force: boolean, Whether to force the deletion of the quota policy. If the policy deletion would decrease the default limit of any consumer tier by more than 10 percent, the call is rejected, as a safety measure to avoid accidentally decreasing quota too quickly. Setting the force parameter to true ignores this restriction.
+  <pre>Lists all producer policies created at current consumer node for a limit.
+    { # Response message for ListProducerQuotaPolicies.
+  &quot;producerQuotaPolicies&quot;: [ # Producer policies on this limit.
+    <code class="details" id="patch">patch(name, body=None, force=None, forceJustification=None, updateMask=None, validateOnly=None, x__xgafv=None)</code>
+  <pre>Updates a producer quota policy.
+  name: string, The resource name of the producer policy. An example name would be: `services/compute.googleapis.com/organizations/123/consumerQuotaMetrics/compute.googleapis.com%2Fcpus/limits/%2Fproject%2Fregion/producerQuotaPolicies/4a3f2c1d` (required)
+  force: boolean, Whether to force the update of the quota policy. If the policy update would decrease the default limit of any consumer tier by more than 10 percent, the call is rejected, as a safety measure to avoid accidentally decreasing quota too quickly. Setting the force parameter to true ignores this restriction.

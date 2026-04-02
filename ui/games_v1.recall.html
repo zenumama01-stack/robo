@@ -1,0 +1,56 @@
+<h1><a href="games_v1.html">Google Play Games Services API</a> . <a href="games_v1.recall.html">recall</a></h1>
+  <code><a href="#gamesPlayerTokens">gamesPlayerTokens(sessionId, applicationIds=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Retrieve the Recall tokens from all requested games that is associated with the PGS Player encoded in the provided recall session id. The API is only available for users that have an active PGS Player profile.</p>
+  <code><a href="#lastTokenFromAllDeveloperGames">lastTokenFromAllDeveloperGames(sessionId, x__xgafv=None)</a></code></p>
+<p class="firstline">Retrieve the last Recall token from all developer games that is associated with the PGS Player encoded in the provided recall session id. The API is only available for users that have active PGS Player profile.</p>
+  <code><a href="#linkPersona">linkPersona(body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Associate the PGS Player principal encoded in the provided recall session id with an in-game account</p>
+  <code><a href="#resetPersona">resetPersona(body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Delete all Recall tokens linking the given persona to any player (with or without a profile).</p>
+  <code><a href="#retrieveTokens">retrieveTokens(sessionId, x__xgafv=None)</a></code></p>
+<p class="firstline">Retrieve all Recall tokens associated with the PGS Player encoded in the provided recall session id. The API is only available for users that have active PGS Player profile.</p>
+  <code><a href="#unlinkPersona">unlinkPersona(body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Delete a Recall token linking the PGS Player principal identified by the Recall session and an in-game account identified either by the 'persona' or by the token value.</p>
+    <code class="details" id="gamesPlayerTokens">gamesPlayerTokens(sessionId, applicationIds=None, x__xgafv=None)</code>
+  <pre>Retrieve the Recall tokens from all requested games that is associated with the PGS Player encoded in the provided recall session id. The API is only available for users that have an active PGS Player profile.
+  sessionId: string, Required. Opaque server-generated string that encodes all the necessary information to identify the PGS player / Google user and application. (required)
+    { # A list of recall token data returned from the RetrieveGamesPlayerTokens RPC
+  &quot;gamePlayerTokens&quot;: [ # The requested applications along with the recall tokens for the player. If the player does not have recall tokens for an application, that application is not included in the response.
+    { # Recall tokens for a game.
+      &quot;recallToken&quot;: { # Recall token data returned from RetrievePlayerTokens RPC # Recall token data.
+        &quot;expireTime&quot;: &quot;A String&quot;, # Optional. Optional expiration time of the token
+        &quot;multiPlayerPersona&quot;: True or False, # Required. Whether the persona identified by the token is linked to multiple PGS Players
+        &quot;token&quot;: &quot;A String&quot;, # Required. Value of the Recall token as it is provided by the client via LinkPersona RPC
+    <code class="details" id="lastTokenFromAllDeveloperGames">lastTokenFromAllDeveloperGames(sessionId, x__xgafv=None)</code>
+  <pre>Retrieve the last Recall token from all developer games that is associated with the PGS Player encoded in the provided recall session id. The API is only available for users that have active PGS Player profile.
+    { # Recall token data returned from for the RetrieveDeveloperGamesLastPlayerToken RPC
+  &quot;gamePlayerToken&quot;: { # Recall tokens for a game. # The recall token associated with the requested PGS Player principal. It can be unset if there is no recall token associated with the requested principal.
+    <code class="details" id="linkPersona">linkPersona(body=None, x__xgafv=None)</code>
+  <pre>Associate the PGS Player principal encoded in the provided recall session id with an in-game account
+{ # Request to link an in-game account with a PGS principal (encoded in the session id).
+  &quot;cardinalityConstraint&quot;: &quot;A String&quot;, # Required. Cardinality constraint to observe when linking a persona to a player in the scope of a game.
+  &quot;conflictingLinksResolutionPolicy&quot;: &quot;A String&quot;, # Required. Resolution policy to apply when the linking of a persona to a player would result in violating the specified cardinality constraint.
+  &quot;expireTime&quot;: &quot;A String&quot;, # Input only. Optional expiration time.
+  &quot;persona&quot;: &quot;A String&quot;, # Required. Stable identifier of the in-game account. Please refrain from re-using the same persona for different games.
+  &quot;sessionId&quot;: &quot;A String&quot;, # Required. Opaque server-generated string that encodes all the necessary information to identify the PGS player / Google user and application.
+  &quot;token&quot;: &quot;A String&quot;, # Required. Value of the token to create. Opaque to Play Games and assumed to be non-stable (encrypted with key rotation).
+  &quot;ttl&quot;: &quot;A String&quot;, # Input only. Optional time-to-live.
+    { # Outcome of a persona linking attempt.
+  &quot;state&quot;: &quot;A String&quot;, # Output only. State of a persona linking attempt.
+    <code class="details" id="resetPersona">resetPersona(body=None, x__xgafv=None)</code>
+  <pre>Delete all Recall tokens linking the given persona to any player (with or without a profile).
+{ # Request to remove all Recall tokens associated with a persona for an app.
+  &quot;persona&quot;: &quot;A String&quot;, # Value of the &#x27;persona&#x27; field as it was provided by the client in LinkPersona RPC
+    { # Response for the ResetPersona RPC
+  &quot;unlinked&quot;: True or False, # Required. Whether any tokens were unlinked as a result of this request.
+    <code class="details" id="retrieveTokens">retrieveTokens(sessionId, x__xgafv=None)</code>
+  <pre>Retrieve all Recall tokens associated with the PGS Player encoded in the provided recall session id. The API is only available for users that have active PGS Player profile.
+    { # Response for the RetrievePlayerTokens RPC
+  &quot;tokens&quot;: [ # Required. Recall tokens associated with the requested PGS Player principal
+    { # Recall token data returned from RetrievePlayerTokens RPC
+    <code class="details" id="unlinkPersona">unlinkPersona(body=None, x__xgafv=None)</code>
+  <pre>Delete a Recall token linking the PGS Player principal identified by the Recall session and an in-game account identified either by the &#x27;persona&#x27; or by the token value.
+{ # Request to remove a Recall token linking PGS principal and an in-game account
+  &quot;token&quot;: &quot;A String&quot;, # Value of the Recall token as it was provided by the client in LinkPersona RPC
+    { # Response for the UnlinkPersona RPC
+  &quot;unlinked&quot;: True or False, # Required. Whether a Recall token specified by the request was deleted. Can be &#x27;false&#x27; when there were no Recall tokens satisfied the criteria from the request.

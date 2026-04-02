@@ -1,0 +1,36 @@
+<h1><a href="bigquerydatapolicy_v2.html">BigQuery Data Policy API</a> . <a href="bigquerydatapolicy_v2.projects.html">projects</a> . <a href="bigquerydatapolicy_v2.projects.locations.html">locations</a> . <a href="bigquerydatapolicy_v2.projects.locations.dataPolicies.html">dataPolicies</a></h1>
+  <code><a href="#addGrantees">addGrantees(dataPolicy, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Adds new grantees to a data policy. The new grantees will be added to the existing grantees. If the request contains a duplicate grantee, the grantee will be ignored. If the request contains a grantee that already exists, the grantee will be ignored.</p>
+<p class="firstline">Creates a new data policy under a project with the given `data_policy_id` (used as the display name), and data policy type.</p>
+  <code><a href="#removeGrantees">removeGrantees(dataPolicy, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Removes grantees from a data policy. The grantees will be removed from the existing grantees. If the request contains a grantee that does not exist, the grantee will be ignored.</p>
+    <code class="details" id="addGrantees">addGrantees(dataPolicy, body=None, x__xgafv=None)</code>
+  <pre>Adds new grantees to a data policy. The new grantees will be added to the existing grantees. If the request contains a duplicate grantee, the grantee will be ignored. If the request contains a grantee that already exists, the grantee will be ignored.
+  dataPolicy: string, Required. Resource name of this data policy, in the format of `projects/{project_number}/locations/{location_id}/dataPolicies/{data_policy_id}`. (required)
+{ # Request message for the AddGrantees method.
+  &quot;grantees&quot;: [ # Required. IAM principal that should be granted Fine Grained Access to the underlying data goverened by the data policy. The target data policy is determined by the `data_policy` field. Uses the [IAM V2 principal syntax](https://cloud.google.com/iam/docs/principal-identifiers#v2). Supported principal types: * User * Group * Service account
+  &quot;dataMaskingPolicy&quot;: { # The policy used to specify data masking rule. # Optional. The data masking policy that specifies the data masking rule to use. It must be set if the data policy type is DATA_MASKING_POLICY.
+    &quot;predefinedExpression&quot;: &quot;A String&quot;, # Optional. A predefined masking expression.
+    &quot;routine&quot;: &quot;A String&quot;, # Optional. The name of the BigQuery routine that contains the custom masking routine, in the format of `projects/{project_number}/datasets/{dataset_id}/routines/{routine_id}`.
+  &quot;dataPolicyId&quot;: &quot;A String&quot;, # Output only. User-assigned (human readable) ID of the data policy that needs to be unique within a project. Used as {data_policy_id} in part of the resource name.
+  &quot;dataPolicyType&quot;: &quot;A String&quot;, # Required. Type of data policy.
+  &quot;etag&quot;: &quot;A String&quot;, # The etag for this Data Policy. This field is used for UpdateDataPolicy calls. If Data Policy exists, this field is required and must match the server&#x27;s etag. It will also be populated in the response of GetDataPolicy, CreateDataPolicy, and UpdateDataPolicy calls.
+  &quot;grantees&quot;: [ # Optional. The list of IAM principals that have Fine Grained Access to the underlying data goverened by this data policy. Uses the [IAM V2 principal syntax](https://cloud.google.com/iam/docs/principal-identifiers#v2) Only supports principal types users, groups, serviceaccounts, cloudidentity. This field is supported in V2 Data Policy only. In case of V1 data policies (i.e. verion = 1 and policy_tag is set), this field is not populated.
+  &quot;name&quot;: &quot;A String&quot;, # Identifier. Resource name of this data policy, in the format of `projects/{project_number}/locations/{location_id}/dataPolicies/{data_policy_id}`.
+  &quot;policyTag&quot;: &quot;A String&quot;, # Output only. Policy tag resource name, in the format of `projects/{project_number}/locations/{location_id}/taxonomies/{taxonomy_id}/policyTags/{policyTag_id}`. policy_tag is supported only for V1 data policies.
+  &quot;version&quot;: &quot;A String&quot;, # Output only. The version of the Data Policy resource.
+  <pre>Creates a new data policy under a project with the given `data_policy_id` (used as the display name), and data policy type.
+{ # Request message for the CreateDataPolicy method.
+  &quot;dataPolicy&quot;: { # Represents the label-policy binding. # Required. The data policy to create. The `name` field does not need to be provided for the data policy creation.
+  &quot;dataPolicyId&quot;: &quot;A String&quot;, # Required. User-assigned (human readable) ID of the data policy that needs to be unique within a project. Used as {data_policy_id} in part of the resource name.
+  name: string, Required. Resource name of the data policy to delete. Format is `projects/{project_number}/locations/{location_id}/dataPolicies/{id}`. (required)
+  name: string, Required. Resource name of the requested data policy. Format is `projects/{project_number}/locations/{location_id}/dataPolicies/{id}`. (required)
+  filter: string, Optional. Filters the data policies by policy tags that they are associated with. Currently filter only supports &quot;policy_tag&quot; based filtering and OR based predicates. Sample filter can be &quot;policy_tag: projects/1/locations/us/taxonomies/2/policyTags/3&quot;. You may also use wildcard such as &quot;policy_tag: projects/1/locations/us/taxonomies/2*&quot;. Please note that OR predicates cannot be used with wildcard filters.
+  pageSize: integer, Optional. The maximum number of data policies to return. Must be a value between 1 and 1000. If not set, defaults to 50.
+  pageToken: string, Optional. The `nextPageToken` value returned from a previous list request, if any. If not set, defaults to an empty string.
+  name: string, Identifier. Resource name of this data policy, in the format of `projects/{project_number}/locations/{location_id}/dataPolicies/{data_policy_id}`. (required)
+  updateMask: string, Optional. The update mask applies to the resource. For the `FieldMask` definition, see https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#fieldmask If not set, defaults to all of the fields that are allowed to update. Updates to the `name` and `dataPolicyId` fields are not allowed.
+    <code class="details" id="removeGrantees">removeGrantees(dataPolicy, body=None, x__xgafv=None)</code>
+  <pre>Removes grantees from a data policy. The grantees will be removed from the existing grantees. If the request contains a grantee that does not exist, the grantee will be ignored.
+{ # Request message for the RemoveGrantees method.
+  &quot;grantees&quot;: [ # Required. IAM principal that should be revoked from Fine Grained Access to the underlying data goverened by the data policy. The target data policy is determined by the `data_policy` field. Uses the [IAM V2 principal syntax](https://cloud.google.com/iam/docs/principal-identifiers#v2). Supported principal types: * User * Group * Service account

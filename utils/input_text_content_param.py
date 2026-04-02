@@ -1,0 +1,2 @@
+from ..responses.response_input_text_param import ResponseInputTextParam
+InputTextContentParam = ResponseInputTextParam

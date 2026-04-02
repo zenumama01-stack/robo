@@ -1,0 +1,13 @@
+<h1><a href="datalabeling_v1beta1.html">Data Labeling API</a> . <a href="datalabeling_v1beta1.projects.html">projects</a> . <a href="datalabeling_v1beta1.projects.datasets.html">datasets</a> . <a href="datalabeling_v1beta1.projects.datasets.image.html">image</a></h1>
+  <code><a href="#label">label(parent, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline"> Starts a labeling task for image. The type of image labeling task is configured by feature in the request.</p>
+    <code class="details" id="label">label(parent, body=None, x__xgafv=None)</code>
+  <pre> Starts a labeling task for image. The type of image labeling task is configured by feature in the request.
+  parent: string, Required. Name of the dataset to request labeling task, format: projects/{project_id}/datasets/{dataset_id} (required)
+{ #  Request message for starting an image labeling task.
+  &quot;basicConfig&quot;: { # Configuration for how human labeling task should be done. # Required. Basic human annotation config.
+  &quot;boundingPolyConfig&quot;: { # Config for image bounding poly (and bounding box) human labeling task. # Configuration for bounding box and bounding poly task. One of image_classification_config, bounding_poly_config, polyline_config and segmentation_config are required.
+  &quot;feature&quot;: &quot;A String&quot;, # Required. The type of image labeling task.
+  &quot;imageClassificationConfig&quot;: { # Config for image classification human labeling task. # Configuration for image classification task. One of image_classification_config, bounding_poly_config, polyline_config and segmentation_config are required.
+  &quot;polylineConfig&quot;: { # Config for image polyline human labeling task. # Configuration for polyline task. One of image_classification_config, bounding_poly_config, polyline_config and segmentation_config are required.
+  &quot;segmentationConfig&quot;: { # Config for image segmentation # Configuration for segmentation task. One of image_classification_config, bounding_poly_config, polyline_config and segmentation_config are required.

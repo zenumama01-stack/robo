@@ -1,0 +1,287 @@
+  <title>View Creation Flow - MJ Prototype</title>
+      --primary: #5c6bc0;
+      --primary-hover: #4a59b0;
+      --primary-light: #e8eaf6;
+      --success: #43a047;
+      --success-light: #e8f5e9;
+      --danger: #e53935;
+      --danger-light: #ffebee;
+      --warning: #f57c00;
+      --warning-light: #fff3e0;
+      --text: #333;
+      --text-secondary: #666;
+      --text-muted: #999;
+      --border: #e0e0e0;
+      --bg: #f5f5f5;
+      --bg-white: #fff;
+      --shadow: 0 4px 24px rgba(0,0,0,0.12);
+      --shadow-sm: 0 2px 8px rgba(0,0,0,0.08);
+      --radius: 8px;
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+      background: var(--bg);
+      color: var(--text);
+    /* ===== PAGE LAYOUT ===== */
+      background: var(--primary);
+    .page-header h1 { font-size: 18px; font-weight: 600; }
+    .page-header p { opacity: 0.8; font-size: 13px; margin-top: 4px; }
+    .scenarios {
+      gap: 48px;
+    .scenario {
+      background: var(--bg-white);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow-sm);
+    .scenario-header {
+      border-bottom: 1px solid var(--border);
+    .scenario-header .badge {
+    .scenario-header .badge.current {
+      background: var(--danger);
+    .scenario-header h2 { font-size: 16px; font-weight: 600; }
+    .scenario-header p { font-size: 13px; color: var(--text-secondary); margin-left: auto; }
+    .scenario-body {
+    .flow-steps {
+    .flow-step {
+    .flow-step .step-num {
+      margin: 0 auto 8px;
+    .flow-step .step-label {
+    .flow-arrow {
+    /* ===== MOCK UI COMPONENTS ===== */
+    /* Data Explorer Header Bar */
+    .mock-header {
+      border: 1px solid var(--border);
+    .mock-header .entity-name {
+    .mock-header .separator {
+      color: var(--border);
+    .mock-header .record-count {
+    /* View Selector Area (Current) */
+    .view-selector-current {
+    .view-selector-current .view-dropdown {
+    .view-selector-current .view-dropdown:hover {
+      border-color: var(--primary);
+    /* Quick Save Dialog (NEW - Proposed) */
+    .overlay {
+      top: 0; left: 0; right: 0; bottom: 0;
+    .quick-save-dialog {
+      animation: dialogIn 0.2s ease-out;
+    @keyframes dialogIn {
+    .dialog-header .icon-circle {
+      background: var(--primary-light);
+      color: var(--primary);
+    .dialog-header .close-btn {
+    .form-group textarea { resize: vertical; min-height: 60px; }
+    .toggle-row {
+    .toggle-row .toggle-label {
+    .toggle-row .toggle-desc {
+      border-radius: 11px;
+      background: var(--border);
+    .toggle.on { background: var(--primary); }
+    .toggle::after {
+    .toggle.on::after { transform: translateX(18px); }
+    /* View Summary Preview */
+    .view-summary {
+    .view-summary h4 {
+    .summary-item i { color: var(--primary); font-size: 12px; }
+    /* Advanced Options Toggle */
+    .advanced-toggle:hover { color: var(--primary-hover); }
+      border-top: 1px solid var(--border);
+    .btn-primary:hover { background: var(--primary-hover); }
+      border-color: var(--border);
+    .btn-secondary:hover { background: var(--border); }
+    .btn-ghost:hover { background: var(--bg); }
+    .ml-auto { margin-left: auto; }
+    /* Toast Notification */
+      background: var(--text);
+      animation: toastIn 0.3s ease-out;
+    .toast.success { background: var(--success); }
+    .toast.error { background: var(--danger); }
+    @keyframes toastIn {
+      from { transform: translateY(20px); opacity: 0; }
+      background: var(--warning-light);
+    /* Save Buttons in Header */
+    .save-actions {
+    /* Section Labels */
+    .section-label {
+      margin: 24px 0 12px;
+      border-bottom: 2px solid var(--primary-light);
+    .comparison {
+    .comparison-side {
+    .comparison-side.before { border-color: var(--danger); }
+    .comparison-side.after { border-color: var(--success); }
+    .comparison-label {
+    .comparison-side.before .comparison-label {
+      background: var(--danger-light);
+      color: var(--danger);
+    .comparison-side.after .comparison-label {
+      background: var(--success-light);
+    .annotation {
+      border-left: 3px solid var(--warning);
+      border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+    .annotation strong { color: var(--warning); }
+    /* Inline Edit */
+    .inline-edit {
+    .inline-edit .view-name-display {
+    .inline-edit .view-name-display:hover {
+    .inline-edit .edit-icon {
+    .inline-edit:hover .edit-icon { opacity: 1; }
+  <h1>View Creation & Save Flow - UX Prototype</h1>
+  <p>Comparing current (problematic) flow with proposed (streamlined) flow</p>
+<div class="scenarios">
+  <!-- ===== SCENARIO 1: CURRENT FLOW ===== -->
+  <div class="scenario">
+    <div class="scenario-header">
+      <span class="badge current">Current</span>
+      <h2>Current "Create New View" Flow</h2>
+      <p>7+ clicks, scattered across multiple UI surfaces</p>
+    <div class="scenario-body">
+      <div class="flow-steps">
+        <div class="flow-step">
+          <div class="step-num">1</div>
+          <div class="step-label">Click View Selector dropdown</div>
+        <div class="flow-arrow"><i class="fa-solid fa-arrow-right"></i></div>
+          <div class="step-num">2</div>
+          <div class="step-label">Click "Save As New" in dropdown</div>
+          <div class="step-num">3</div>
+          <div class="step-label">Config panel slides open (intent lost)</div>
+          <div class="step-num">4</div>
+          <div class="step-label">Navigate to Settings tab</div>
+          <div class="step-num">5</div>
+          <div class="step-label">Enter view name & description</div>
+          <div class="step-num">6</div>
+          <div class="step-label">Scroll to find "Save As New" button</div>
+          <div class="step-num">7</div>
+          <div class="step-label">Click save (no feedback on result)</div>
+      <div class="annotation">
+        <strong>Problems:</strong> User intent ("save as new") is forgotten when config panel opens.
+        View name is buried in Settings tab. No validation. No success/error feedback.
+        Panel closes even on save failure, losing all configuration.
+      <!-- Current Header Mock -->
+      <div class="section-label">Current Header Bar</div>
+      <div class="mock-header">
+        <span class="entity-name">Contacts</span>
+        <span class="record-count">1,247 records</span>
+        <div class="view-selector-current">
+          <div class="view-dropdown">
+            <i class="fa-solid fa-table-list" style="color: var(--primary)"></i>
+            <span>(Default)</span>
+            <i class="fa-solid fa-chevron-down" style="font-size: 10px; color: var(--text-muted)"></i>
+  <!-- ===== SCENARIO 2: PROPOSED QUICK SAVE ===== -->
+      <span class="badge">Proposed</span>
+      <h2>Quick Save Dialog</h2>
+      <p>2-3 clicks, focused modal, clear feedback</p>
+          <div class="step-label">Click "Save View" button or Ctrl+S</div>
+          <div class="step-label">Quick Save dialog opens with preview</div>
+          <div class="step-label">Enter name, click Create (toast confirms)</div>
+      <!-- Proposed Header Mock -->
+      <div class="section-label">Proposed Header Bar (with save actions)</div>
+            <span>Active West Coast</span>
+          <span class="modified-badge">
+            <i class="fa-solid fa-circle" style="font-size: 6px"></i>
+        <div class="save-actions">
+          <button class="btn btn-sm btn-primary" title="Save current view">
+            <i class="fa-solid fa-floppy-disk"></i> Save
+          <button class="btn btn-sm btn-secondary btn-icon" title="Save as new view">
+          <button class="btn btn-sm btn-ghost btn-icon" title="Revert changes">
+        <strong>Key changes:</strong> Save/SaveAs/Revert buttons always visible in header when changes exist.
+        "Modified" badge tells user they have unsaved changes. Revert button lets them undo.
+      <!-- Quick Save Dialog Mock -->
+      <div class="section-label">Quick Save Dialog (appears on "+" or "Save As New")</div>
+      <div style="position: relative; height: 620px; background: rgba(0,0,0,0.05); border-radius: var(--radius); overflow: hidden;">
+        <div style="display: flex; align-items: center; justify-content: center; height: 100%;">
+          <div class="quick-save-dialog" style="position: relative; animation: none;">
+                <h3>Save as New View</h3>
+                <div style="font-size: 13px; color: var(--text-secondary);">Contacts</div>
+              <button class="close-btn"><i class="fa-solid fa-xmark"></i></button>
+                <label>View Name <span style="color: var(--danger)">*</span></label>
+                <input type="text" placeholder="e.g., Active West Coast Contacts" value="Active West Coast">
+                <label>Description <span style="color: var(--text-muted); font-weight: 400">(optional)</span></label>
+                <textarea placeholder="What does this view show?">Active contacts in CA, OR, WA with recent activity</textarea>
+              <!-- View Summary -->
+              <div class="view-summary">
+                <h4>This view includes</h4>
+                    <span class="count">8</span> columns visible
+                    <span class="count">3</span> filters active
+                    Sorted by <span class="count">Name ASC</span>
+                    <span class="count">1</span> aggregate
+              <div class="toggle-row">
+                  <div class="toggle-label">Share with others</div>
+                  <div class="toggle-desc">Other users can see and use this view</div>
+                <div class="toggle"></div>
+              <button class="advanced-toggle">
+                Customize columns, filters & sorting before saving
+                <i class="fa-solid fa-chevron-right" style="font-size: 10px"></i>
+              <button class="btn btn-primary">
+                <i class="fa-solid fa-plus"></i> Create View
+              <button class="btn btn-secondary">Cancel</button>
+      <!-- Success Toast -->
+      <div class="section-label">Success Feedback (toast notification)</div>
+      <div style="position: relative; height: 60px;">
+        <div class="toast success" style="position: relative; bottom: auto; right: auto; display: inline-flex;">
+          View "Active West Coast" created successfully
+      <!-- Error Toast -->
+        <div class="toast error" style="position: relative; bottom: auto; right: auto; display: inline-flex;">
+          Failed to save view. Please try again.
+  <!-- ===== SCENARIO 3: SAVING EXISTING VIEW ===== -->
+      <h2>Saving Changes to Existing View</h2>
+      <p>Clear "modified" state with easy save/revert</p>
+      <div class="comparison">
+        <div class="comparison-side before">
+          <div class="comparison-label">Before (Current)</div>
+            <div class="mock-header" style="margin-top: 0">
+              <div class="view-selector-current" style="margin-left: auto">
+                  <span style="width: 6px; height: 6px; border-radius: 50%; background: var(--warning);"></span>
+            <div class="annotation" style="margin-bottom: 0">
+              Tiny orange dot is the only indicator. Must open config panel, navigate to footer, find "Save" button. No way to revert changes.
+        <div class="comparison-side after">
+          <div class="comparison-label">After (Proposed)</div>
+                <button class="btn btn-sm btn-primary">
+                <button class="btn btn-sm btn-secondary btn-icon" title="Save as new">
+                <button class="btn btn-sm btn-ghost btn-icon" title="Revert">
+              Clear "Modified" badge. One-click Save. Plus button for Save As New. Revert button to undo changes. All visible without opening panels.
+  <!-- ===== SCENARIO 4: INLINE VIEW RENAME ===== -->
+      <h2>Inline View Rename</h2>
+      <p>Double-click view name to edit directly - no config panel needed</p>
+      <div class="section-label">Click view name to enter edit mode</div>
+          <div class="inline-edit">
+            <span class="view-name-display" style="border-color: var(--primary); background: var(--primary-light);">
+              Active West Coast
+            <i class="fa-solid fa-pencil edit-icon" style="opacity: 1"></i>
+        <strong>How it works:</strong> Click the view name to toggle into edit mode.
+        Press Enter or click away to save. Press Escape to cancel.
+        No need to open the config panel just to rename.
+  <!-- ===== SCENARIO 5: CONFIRMATION FOR SHARED VIEWS ===== -->
+      <h2>Shared View Modification Warning</h2>
+      <p>Prevent accidental modification of views used by others</p>
+      <div style="display: flex; justify-content: center; margin-top: 16px;">
+        <div class="quick-save-dialog" style="width: 440px; animation: none;">
+            <div class="icon-circle" style="background: var(--warning-light); color: var(--warning);">
+            <h3>Shared View</h3>
+            <p style="font-size: 14px; color: var(--text-secondary); margin-bottom: 16px;">
+              <strong>"Active West Coast"</strong> is shared with other users. Changes you save will affect everyone who uses this view.
+            <div style="background: var(--warning-light); border-radius: var(--radius-sm); padding: 10px 14px; font-size: 13px; color: var(--warning); display: flex; gap: 8px; align-items: flex-start;">
+              <i class="fa-solid fa-triangle-exclamation" style="margin-top: 2px"></i>
+              <span>3 other users have used this view in the past week.</span>
+              <i class="fa-solid fa-floppy-disk"></i> Update Shared View
+            <button class="btn btn-secondary">
+              <i class="fa-solid fa-plus"></i> Save As My Copy
+            <button class="btn btn-ghost ml-auto">Cancel</button>
+  <!-- ===== SCENARIO 6: SMART FILTER FEEDBACK ===== -->
+      <h2>Smart Filter with AI Explanation</h2>
+      <p>Show users what the AI actually generated</p>
+      <div style="max-width: 500px;">
+          <label><i class="fa-solid fa-wand-magic-sparkles" style="color: var(--primary); margin-right: 4px;"></i> Smart Filter</label>
+          <textarea style="min-height: 44px;" placeholder="Describe what you want to see...">active customers in California with revenue over 1 million</textarea>
+        <!-- AI Explanation (currently hidden, proposing to show) -->
+        <div style="background: var(--primary-light); border-radius: var(--radius-sm); padding: 12px 16px; margin-bottom: 16px;">
+          <div style="display: flex; align-items: center; gap: 6px; margin-bottom: 8px;">
+            <i class="fa-solid fa-robot" style="color: var(--primary); font-size: 12px;"></i>
+            <span style="font-size: 12px; font-weight: 600; color: var(--primary);">AI Interpretation</span>
+          <p style="font-size: 13px; color: var(--text-secondary); margin-bottom: 8px;">
+            Filtering for records where:
+          <ul style="font-size: 13px; color: var(--text); padding-left: 20px; margin: 0;">
+            <li>Status = 'Active'</li>
+            <li>State = 'CA' (California)</li>
+            <li>AnnualRevenue > 1,000,000</li>
+          <div style="margin-top: 8px; font-size: 12px; color: var(--text-muted);">
+            <span style="font-weight: 500;">Result:</span> 47 records match
+        <strong>Currently:</strong> smartFilterExplanation is computed by the AI but never displayed to the user.
+        <br><strong>Proposed:</strong> Show the explanation inline so users can verify the AI understood their intent
+        and see the actual filter criteria being applied.

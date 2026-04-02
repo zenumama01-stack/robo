@@ -1,0 +1,16 @@
+<h1><a href="keep_v1.html">Google Keep API</a> . <a href="keep_v1.notes.html">notes</a> . <a href="keep_v1.notes.permissions.html">permissions</a></h1>
+<p class="firstline">Creates one or more permissions on the note. Only permissions with the `WRITER` role may be created. If adding any permission fails, then the entire request fails and no changes are made.</p>
+<p class="firstline">Deletes one or more permissions on the note. The specified entities will immediately lose access. A permission with the `OWNER` role can't be removed. If removing a permission fails, then the entire request fails and no changes are made. Returns a 400 bad request error if a specified permission does not exist on the note.</p>
+  <pre>Creates one or more permissions on the note. Only permissions with the `WRITER` role may be created. If adding any permission fails, then the entire request fails and no changes are made.
+  parent: string, The parent resource shared by all Permissions being created. Format: `notes/{note}` If this is set, the parent field in the CreatePermission messages must either be empty or match this field. (required)
+{ # The request to add one or more permissions on the note. Currently, only the `WRITER` role may be specified. If adding a permission fails, then the entire request fails and no changes are made.
+  &quot;requests&quot;: [ # The request message specifying the resources to create.
+    { # The request to add a single permission on the note.
+      &quot;parent&quot;: &quot;A String&quot;, # Required. The parent note where this permission will be created. Format: `notes/{note}`
+      &quot;permission&quot;: { # A single permission on the note. Associates a `member` with a `role`. # Required. The permission to create. One of Permission.email, User.email or Group.email must be supplied.
+    { # The response for creating permissions on a note.
+  &quot;permissions&quot;: [ # Permissions created.
+  <pre>Deletes one or more permissions on the note. The specified entities will immediately lose access. A permission with the `OWNER` role can&#x27;t be removed. If removing a permission fails, then the entire request fails and no changes are made. Returns a 400 bad request error if a specified permission does not exist on the note.
+  parent: string, The parent resource shared by all permissions being deleted. Format: `notes/{note}` If this is set, the parent of all of the permissions specified in the DeletePermissionRequest messages must match this field. (required)
+{ # The request to remove one or more permissions from a note. A permission with the `OWNER` role can&#x27;t be removed. If removing a permission fails, then the entire request fails and no changes are made. Returns a 400 bad request error if a specified permission does not exist on the note.
+  &quot;names&quot;: [ # Required. The names of the permissions to delete. Format: `notes/{note}/permissions/{permission}`

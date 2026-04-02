@@ -1,0 +1,46 @@
+<h1><a href="firebasehosting_v1beta1.html">Firebase Hosting API</a> . <a href="firebasehosting_v1beta1.projects.html">projects</a> . <a href="firebasehosting_v1beta1.projects.sites.html">sites</a></h1>
+  <code><a href="firebasehosting_v1beta1.projects.sites.channels.html">channels()</a></code>
+  <code><a href="firebasehosting_v1beta1.projects.sites.customDomains.html">customDomains()</a></code>
+  <code><a href="firebasehosting_v1beta1.projects.sites.domains.html">domains()</a></code>
+  <code><a href="firebasehosting_v1beta1.projects.sites.releases.html">releases()</a></code>
+  <code><a href="firebasehosting_v1beta1.projects.sites.versions.html">versions()</a></code>
+  <code><a href="#create">create(parent, body=None, siteId=None, validateOnly=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Creates a new Hosting Site in the specified parent Firebase project. Note that Hosting sites can take several minutes to propagate through Firebase systems.</p>
+<p class="firstline">Deletes the specified Hosting Site from the specified parent Firebase project.</p>
+<p class="firstline">Gets the specified Hosting Site.</p>
+<p class="firstline">Gets the Hosting metadata for a specific site.</p>
+<p class="firstline">Lists each Hosting Site associated with the specified parent Firebase project.</p>
+<p class="firstline">Updates attributes of the specified Hosting Site.</p>
+<p class="firstline">Sets the Hosting metadata for a specific site.</p>
+    <code class="details" id="create">create(parent, body=None, siteId=None, validateOnly=None, x__xgafv=None)</code>
+  <pre>Creates a new Hosting Site in the specified parent Firebase project. Note that Hosting sites can take several minutes to propagate through Firebase systems.
+  parent: string, Required. The Firebase project in which to create a Hosting site, in the format: projects/PROJECT_IDENTIFIER Refer to the `Site` [`name`](../projects#Site.FIELDS.name) field for details about PROJECT_IDENTIFIER values. (required)
+{ # A `Site` represents a Firebase Hosting site.
+  &quot;appId&quot;: &quot;A String&quot;, # Optional. The [ID of a Web App](https://firebase.google.com/docs/reference/firebase-management/rest/v1beta1/projects.webApps#WebApp.FIELDS.app_id) associated with the Hosting site.
+  &quot;defaultUrl&quot;: &quot;A String&quot;, # Output only. The default URL for the Hosting site.
+  &quot;labels&quot;: { # Optional. User-specified labels for the Hosting site.
+  &quot;name&quot;: &quot;A String&quot;, # Output only. The fully-qualified resource name of the Hosting site, in the format: projects/PROJECT_IDENTIFIER/sites/SITE_ID PROJECT_IDENTIFIER: the Firebase project&#x27;s [`ProjectNumber`](https://firebase.google.com/docs/reference/firebase-management/rest/v1beta1/projects#FirebaseProject.FIELDS.project_number) ***(recommended)*** or its [`ProjectId`](https://firebase.google.com/docs/reference/firebase-management/rest/v1beta1/projects#FirebaseProject.FIELDS.project_id). Learn more about using project identifiers in Google&#x27;s [AIP 2510 standard](https://google.aip.dev/cloud/2510).
+  &quot;type&quot;: &quot;A String&quot;, # Output only. The type of Hosting site. Every Firebase project has a `DEFAULT_SITE`, which is created when Hosting is provisioned for the project. All additional sites are `USER_SITE`.
+  siteId: string, Required. Immutable. A globally unique identifier for the Hosting site. This identifier is used to construct the Firebase-provisioned subdomains for the site, so it must also be a valid domain name label.
+  validateOnly: boolean, Optional. If set, validates that the site_id is available and that the request would succeed, returning the expected resulting site or error.
+  <pre>Deletes the specified Hosting Site from the specified parent Firebase project.
+  name: string, Required. The fully-qualified resource name for the Hosting site, in the format: projects/PROJECT_IDENTIFIER/sites/SITE_ID Refer to the `Site` [`name`](../projects#Site.FIELDS.name) field for details about PROJECT_IDENTIFIER values. (required)
+  <pre>Gets the specified Hosting Site.
+  name: string, Required. The fully-qualified resource name for the Hosting site, in the format: projects/PROJECT_IDENTIFIER/sites/SITE_ID Refer to the `Site` [`name`](../projects#Site.FIELDS.name) field for details about PROJECT_IDENTIFIER values. Since a SITE_ID is a globally unique identifier, you can also use the unique sub-collection resource access pattern, in the format: projects/-/sites/SITE_ID (required)
+  <pre>Gets the Hosting metadata for a specific site.
+  name: string, Required. The site for which to get the SiteConfig, in the format: sites/ site-name/config (required)
+    { # A `SiteConfig` contains metadata associated with a specific site that controls Firebase Hosting serving behavior
+  &quot;cloudLoggingEnabled&quot;: True or False, # Whether or not web requests made by site visitors are logged via Cloud Logging.
+  &quot;maxVersions&quot;: &quot;A String&quot;, # The number of FINALIZED versions that will be held for a site before automatic deletion. When a new version is deployed, content for versions in storage in excess of this number will be deleted, and will no longer be billed for storage usage. Oldest versions will be deleted first; sites are created with an unlimited number of max_versions by default.
+  <pre>Lists each Hosting Site associated with the specified parent Firebase project.
+  parent: string, Required. The Firebase project for which to list sites, in the format: projects/PROJECT_IDENTIFIER Refer to the `Site` [`name`](../projects#Site.FIELDS.name) field for details about PROJECT_IDENTIFIER values. (required)
+  pageSize: integer, Optional. The maximum number of sites to return. The service may return a lower number if fewer sites exist than this maximum number. If unspecified, defaults to 40.
+  pageToken: string, Optional. A token from a previous call to `ListSites` that tells the server where to resume listing.
+  &quot;nextPageToken&quot;: &quot;A String&quot;, # The pagination token, if more results exist beyond the ones in this response. Include this token in your next call to `ListSites`. Page tokens are short-lived and should not be stored.
+  &quot;sites&quot;: [ # A list of Site objects associated with the specified Firebase project.
+  <pre>Updates attributes of the specified Hosting Site.
+  name: string, Output only. The fully-qualified resource name of the Hosting site, in the format: projects/PROJECT_IDENTIFIER/sites/SITE_ID PROJECT_IDENTIFIER: the Firebase project&#x27;s [`ProjectNumber`](https://firebase.google.com/docs/reference/firebase-management/rest/v1beta1/projects#FirebaseProject.FIELDS.project_number) ***(recommended)*** or its [`ProjectId`](https://firebase.google.com/docs/reference/firebase-management/rest/v1beta1/projects#FirebaseProject.FIELDS.project_id). Learn more about using project identifiers in Google&#x27;s [AIP 2510 standard](https://google.aip.dev/cloud/2510). (required)
+  updateMask: string, A set of field names from your Site that you want to update.
+  <pre>Sets the Hosting metadata for a specific site.
+  name: string, Required. The site for which to update the SiteConfig, in the format: sites/ site-name/config (required)
+  updateMask: string, A set of field names from your [site configuration](../sites.SiteConfig) that you want to update. A field will be overwritten if, and only if, it&#x27;s in the mask. If a mask is not provided then a default mask of only [`max_versions`](../sites.SiteConfig.max_versions) will be used.

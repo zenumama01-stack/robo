@@ -1,0 +1,24 @@
+<h1><a href="cloudbilling_v1beta.html">Cloud Billing API</a> . <a href="cloudbilling_v1beta.billingAccounts.html">billingAccounts</a> . <a href="cloudbilling_v1beta.billingAccounts.skus.html">skus</a></h1>
+  <code><a href="cloudbilling_v1beta.billingAccounts.skus.price.html">price()</a></code>
+<p class="firstline">Returns the price Resource.</p>
+  <code><a href="cloudbilling_v1beta.billingAccounts.skus.prices.html">prices()</a></code>
+<p class="firstline">Returns the prices Resource.</p>
+<p class="firstline">Gets a SKU visible to a billing account.</p>
+<p class="firstline">Lists SKUs visible to a billing account.</p>
+  <pre>Gets a SKU visible to a billing account.
+  name: string, Required. The name of the billing account SKU to retrieve. Format: billingAccounts/{billing_account}/skus/{sku} (required)
+    { # Encapsulates a stock keeping unit (SKU) visible to a billing account. A SKU distinctly identifies a resource that you can purchase. For a list of available SKUs, see [SKUs](https://cloud.google.com/skus).
+  &quot;billingAccountService&quot;: &quot;A String&quot;, # BillingAccountService that the BillingAccountSku belongs to.
+  &quot;displayName&quot;: &quot;A String&quot;, # Description of the BillingAccountSku. Example: &quot;A2 Instance Core running in Hong Kong&quot;.
+  &quot;geoTaxonomy&quot;: { # Encapsulates geographic metadata, such as regions and multi-regions like `us-east4` or `European Union`. # Geographic metadata that applies to the BillingAccountSku.
+    &quot;type&quot;: &quot;A String&quot;, # Type of geographic taxonomy associated with the billing account SKU.
+  &quot;name&quot;: &quot;A String&quot;, # Resource name for the BillingAccountSku. Example: &quot;billingAccounts/012345-567890-ABCDEF/skus/AA95-CD31-42FE&quot;.
+  &quot;productTaxonomy&quot;: { # Encapsulates product categories, such as `Serverless`, `Cloud Run`, `TaskQueue`, and others. # List of product categories that apply to the BillingAccountSku.
+    &quot;taxonomyCategories&quot;: [ # All product categories that the billing account SKU belong to.
+  <pre>Lists SKUs visible to a billing account.
+  parent: string, Required. The billing account to list billing account SKU from. Format: billingAccounts/{billing_account} (required)
+  filter: string, Options for how to filter the billing account SKUs. Currently, only filter on `billing_account_service` is supported. Only !=, = operators are supported. Examples: - billing_account_service = &quot;billingAccounts/012345-567890-ABCDEF/services/DA34-426B-A397&quot;
+  pageSize: integer, Maximum number of billing account SKUs to return. Results may return fewer than this value. Default value is 50 and maximum value is 5000.
+  pageToken: string, Page token received from a previous ListBillingAccountSkus call to retrieve the next page of results. If this field is empty, the first page is returned.
+    { # Response message for ListBillingAccountSkus.
+  &quot;billingAccountSkus&quot;: [ # The returned billing account SKUs.

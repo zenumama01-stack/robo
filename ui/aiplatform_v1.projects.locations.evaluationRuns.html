@@ -1,0 +1,149 @@
+<h1><a href="aiplatform_v1.html">Vertex AI API</a> . <a href="aiplatform_v1.projects.html">projects</a> . <a href="aiplatform_v1.projects.locations.html">locations</a> . <a href="aiplatform_v1.projects.locations.evaluationRuns.html">evaluationRuns</a></h1>
+<p class="firstline">Cancels an Evaluation Run. Attempts to cancel a running Evaluation Run asynchronously. Status of run can be checked via GetEvaluationRun.</p>
+<p class="firstline">Creates an Evaluation Run.</p>
+<p class="firstline">Deletes an Evaluation Run.</p>
+<p class="firstline">Gets an Evaluation Run.</p>
+<p class="firstline">Lists Evaluation Runs.</p>
+  <pre>Cancels an Evaluation Run. Attempts to cancel a running Evaluation Run asynchronously. Status of run can be checked via GetEvaluationRun.
+  name: string, Required. The name of the EvaluationRun resource to be cancelled. Format: `projects/{project}/locations/{location}/evaluationRuns/{evaluation_run}` (required)
+{ # Request message for EvaluationManagementService.CancelEvaluationRun.
+  <pre>Creates an Evaluation Run.
+  parent: string, Required. The resource name of the Location to create the Evaluation Run in. Format: `projects/{project}/locations/{location}` (required)
+{ # EvaluationRun is a resource that represents a single evaluation run, which includes a set of prompts, model responses, evaluation configuration and the resulting metrics.
+  &quot;completionTime&quot;: &quot;A String&quot;, # Output only. Time when the evaluation run was completed.
+  &quot;createTime&quot;: &quot;A String&quot;, # Output only. Time when the evaluation run was created.
+  &quot;dataSource&quot;: { # The data source for the evaluation run. # Required. The data source for the evaluation run.
+    &quot;bigqueryRequestSet&quot;: { # The request set for the evaluation run. # Evaluation data in bigquery.
+      &quot;candidateResponseColumns&quot;: { # Optional. Map of candidate name to candidate response column name. The column will be in evaluation_item.CandidateResponse format.
+      &quot;promptColumn&quot;: &quot;A String&quot;, # Optional. The name of the column that contains the requests to evaluate. This will be in evaluation_item.EvalPrompt format.
+      &quot;rubricsColumn&quot;: &quot;A String&quot;, # Optional. The name of the column that contains the rubrics. This is in evaluation_rubric.RubricGroup format.
+      &quot;samplingConfig&quot;: { # The sampling config. # Optional. The sampling config for the bigquery resource.
+        &quot;samplingCount&quot;: 42, # Optional. The total number of logged data to import. If available data is less than the sampling count, all data will be imported. Default is 100.
+        &quot;samplingDuration&quot;: &quot;A String&quot;, # Optional. How long to wait before sampling data from the BigQuery table. If not specified, defaults to 0.
+        &quot;samplingMethod&quot;: &quot;A String&quot;, # Optional. The sampling method to use.
+      &quot;uri&quot;: &quot;A String&quot;, # Required. The URI of a BigQuery table. e.g. bq://projectId.bqDatasetId.bqTableId
+    &quot;evaluationSet&quot;: &quot;A String&quot;, # The EvaluationSet resource name. Format: `projects/{project}/locations/{location}/evaluationSets/{evaluation_set}`
+  &quot;displayName&quot;: &quot;A String&quot;, # Required. The display name of the Evaluation Run.
+  &quot;error&quot;: { # The `Status` type defines a logical error model that is suitable for different programming environments, including REST APIs and RPC APIs. It is used by [gRPC](https://github.com/grpc). Each `Status` message contains three pieces of data: error code, error message, and error details. You can find out more about this error model and how to work with it in the [API Design Guide](https://cloud.google.com/apis/design/errors). # Output only. Only populated when the evaluation run&#x27;s state is FAILED or CANCELLED.
+  &quot;evaluationConfig&quot;: { # The Evalution configuration used for the evaluation run. # Required. The configuration used for the evaluation.
+    &quot;autoraterConfig&quot;: { # The autorater config used for the evaluation run. # Optional. The autorater config for the evaluation run.
+      &quot;autoraterModel&quot;: &quot;A String&quot;, # Optional. The fully qualified name of the publisher model or tuned autorater endpoint to use. Publisher model format: `projects/{project}/locations/{location}/publishers/*/models/*` Tuned model endpoint format: `projects/{project}/locations/{location}/endpoints/{endpoint}`
+      &quot;generationConfig&quot;: { # Configuration for content generation. This message contains all the parameters that control how the model generates content. It allows you to influence the randomness, length, and structure of the output. # Optional. Configuration options for model generation and outputs.
+      &quot;sampleCount&quot;: 42, # Optional. Number of samples for each instance in the dataset. If not specified, the default is 4. Minimum value is 1, maximum value is 32.
+    &quot;datasetCustomMetrics&quot;: [ # Optional. Specifications for custom dataset-level aggregations.
+      { # Defines a custom dataset-level aggregation.
+        &quot;aggregationFunction&quot;: &quot;A String&quot;, # Required. The Python code string containing the aggregation function. Expected function signature: `def aggregate(instances: list[dict[str, Any]]) -&gt; dict[str, float]:` The `instances` argument is a list of dictionaries, where each dictionary represents a single evaluation result item. The structure of each dictionary corresponds to the fields in the `EvaluationResult` message. This includes: - `&quot;request&quot;`: Contains the original input data and model inputs (from `EvaluationResult.EvaluationRequest`). - `&quot;candidate_results&quot;`: Contains the results of any instance-level metrics (from `EvaluationResult.CandidateResults`). Example of a single item in the `instances` list: { &quot;request&quot;: { &quot;prompt&quot;: {&quot;text&quot;: &quot;What is the capital of France?&quot;}, &quot;golden_response&quot;: {&quot;text&quot;: &quot;Paris&quot;}, &quot;candidate_responses&quot;: [{&quot;candidate&quot;: &quot;model-v1&quot;, &quot;text&quot;: &quot;Paris&quot;}] }, &quot;candidate_results&quot;: [ {&quot;metric&quot;: &quot;exact_match&quot;, &quot;score&quot;: 1.0}, {&quot;metric&quot;: &quot;bleu&quot;, &quot;score&quot;: 0.9} ] }
+        &quot;displayName&quot;: &quot;A String&quot;, # Optional. A display name for this custom summary metric. Used to prefix keys in the output summaryMetrics map. If not provided, a default name like &quot;dataset_custom_metric_1&quot;, &quot;dataset_custom_metric_2&quot;, etc., will be generated based on the order in the repeated field.
+    &quot;metrics&quot;: [ # Required. The metrics to be calculated in the evaluation run.
+      { # The metric used for evaluation runs.
+        &quot;computationBasedMetricSpec&quot;: { # Specification for a computation based metric. # Spec for a computation based metric.
+          &quot;parameters&quot;: { # Optional. A map of parameters for the metric, e.g. {&quot;rouge_type&quot;: &quot;rougeL&quot;}.
+          &quot;type&quot;: &quot;A String&quot;, # Required. The type of the computation based metric.
+        &quot;llmBasedMetricSpec&quot;: { # Specification for an LLM based metric. # Spec for an LLM based metric.
+          &quot;additionalConfig&quot;: { # Optional. Optional additional configuration for the metric.
+          &quot;judgeAutoraterConfig&quot;: { # The autorater config used for the evaluation run. # Optional. Optional configuration for the judge LLM (Autorater).
+          &quot;metricPromptTemplate&quot;: &quot;A String&quot;, # Required. Template for the prompt sent to the judge model.
+          &quot;predefinedRubricGenerationSpec&quot;: { # Specification for a pre-defined metric. # Dynamically generate rubrics using a predefined spec.
+            &quot;metricSpecName&quot;: &quot;A String&quot;, # Required. The name of a pre-defined metric, such as &quot;instruction_following_v1&quot; or &quot;text_quality_v1&quot;.
+            &quot;parameters&quot;: { # Optional. The parameters needed to run the pre-defined metric.
+          &quot;rubricGenerationSpec&quot;: { # Specification for how rubrics should be generated. # Dynamically generate rubrics using this specification.
+            &quot;metricResourceName&quot;: &quot;A String&quot;, # Optional. Resource name of the metric definition.
+            &quot;modelConfig&quot;: { # The autorater config used for the evaluation run. # Optional. Configuration for the model used in rubric generation. Configs including sampling count and base model can be specified here. Flipping is not supported for rubric generation.
+            &quot;promptTemplate&quot;: &quot;A String&quot;, # Optional. Template for the prompt used to generate rubrics. The details should be updated based on the most-recent recipe requirements.
+            &quot;rubricContentType&quot;: &quot;A String&quot;, # Optional. The type of rubric content to be generated.
+            &quot;rubricTypeOntology&quot;: [ # Optional. An optional, pre-defined list of allowed types for generated rubrics. If this field is provided, it implies `include_rubric_type` should be true, and the generated rubric types should be chosen from this ontology.
+          &quot;rubricGroupKey&quot;: &quot;A String&quot;, # Use a pre-defined group of rubrics associated with the input. Refers to a key in the rubric_groups map of EvaluationInstance.
+          &quot;systemInstruction&quot;: &quot;A String&quot;, # Optional. System instructions for the judge model.
+        &quot;metric&quot;: &quot;A String&quot;, # Required. The name of the metric.
+        &quot;metricConfig&quot;: { # The metric used for running evaluations. # The metric config.
+          &quot;aggregationMetrics&quot;: [ # Optional. The aggregation metrics to use.
+          &quot;bleuSpec&quot;: { # Spec for bleu score metric - calculates the precision of n-grams in the prediction as compared to reference - returns a score ranging between 0 to 1. # Spec for bleu metric.
+            &quot;useEffectiveOrder&quot;: True or False, # Optional. Whether to use_effective_order to compute bleu score.
+          &quot;customCodeExecutionSpec&quot;: { # Specificies a metric that is populated by evaluating user-defined Python code. # Spec for Custom Code Execution metric.
+            &quot;evaluationFunction&quot;: &quot;A String&quot;, # Required. Python function. Expected user to define the following function, e.g.: def evaluate(instance: dict[str, Any]) -&gt; float: Please include this function signature in the code snippet. Instance is the evaluation instance, any fields populated in the instance are available to the function as instance[field_name]. Example: Example input: ``` instance= EvaluationInstance( response=EvaluationInstance.InstanceData(text=&quot;The answer is 4.&quot;), reference=EvaluationInstance.InstanceData(text=&quot;4&quot;) ) ``` Example converted input: ``` { &#x27;response&#x27;: {&#x27;text&#x27;: &#x27;The answer is 4.&#x27;}, &#x27;reference&#x27;: {&#x27;text&#x27;: &#x27;4&#x27;} } ``` Example python function: ``` def evaluate(instance: dict[str, Any]) -&gt; float: if instance&#x27;response&#x27; == instance&#x27;reference&#x27;: return 1.0 return 0.0 ``` CustomCodeExecutionSpec is also supported in Batch Evaluation (EvalDataset RPC) and Tuning Evaluation. Each line in the input jsonl file will be converted to dict[str, Any] and passed to the evaluation function.
+          &quot;exactMatchSpec&quot;: { # Spec for exact match metric - returns 1 if prediction and reference exactly matches, otherwise 0. # Spec for exact match metric.
+            &quot;judgeAutoraterConfig&quot;: { # The configs for autorater. This is applicable to both EvaluateInstances and EvaluateDataset. # Optional. Optional configuration for the judge LLM (Autorater).
+              &quot;flipEnabled&quot;: True or False, # Optional. Default is true. Whether to flip the candidate and baseline responses. This is only applicable to the pairwise metric. If enabled, also provide PairwiseMetricSpec.candidate_response_field_name and PairwiseMetricSpec.baseline_response_field_name. When rendering PairwiseMetricSpec.metric_prompt_template, the candidate and baseline fields will be flipped for half of the samples to reduce bias.
+              &quot;samplingCount&quot;: 42, # Optional. Number of samples for each instance in the dataset. If not specified, the default is 4. Minimum value is 1, maximum value is 32.
+            &quot;predefinedRubricGenerationSpec&quot;: { # The spec for a pre-defined metric. # Dynamically generate rubrics using a predefined spec.
+              &quot;metricSpecParameters&quot;: { # Optional. The parameters needed to run the pre-defined metric.
+              &quot;modelConfig&quot;: { # The configs for autorater. This is applicable to both EvaluateInstances and EvaluateDataset. # Configuration for the model used in rubric generation. Configs including sampling count and base model can be specified here. Flipping is not supported for rubric generation.
+              &quot;promptTemplate&quot;: &quot;A String&quot;, # Template for the prompt used to generate rubrics. The details should be updated based on the most-recent recipe requirements.
+              &quot;rubricContentType&quot;: &quot;A String&quot;, # The type of rubric content to be generated.
+          &quot;metadata&quot;: { # Metadata about the metric, used for visualization and organization. # Optional. Metadata about the metric, used for visualization and organization.
+            &quot;otherMetadata&quot;: { # Optional. Flexible metadata for user-defined attributes.
+            &quot;scoreRange&quot;: { # The range of possible scores for this metric, used for plotting. # Optional. The range of possible scores for this metric, used for plotting.
+              &quot;description&quot;: &quot;A String&quot;, # Optional. The description of the score explaining the directionality etc.
+              &quot;max&quot;: 3.14, # Required. The maximum value of the score range (inclusive).
+              &quot;min&quot;: 3.14, # Required. The minimum value of the score range (inclusive).
+              &quot;step&quot;: 3.14, # Optional. The distance between discrete steps in the range. If unset, the range is assumed to be continuous.
+            &quot;title&quot;: &quot;A String&quot;, # Optional. The user-friendly name for the metric. If not set for a registered metric, it will default to the metric&#x27;s display name.
+          &quot;pairwiseMetricSpec&quot;: { # Spec for pairwise metric. # Spec for pairwise metric.
+            &quot;baselineResponseFieldName&quot;: &quot;A String&quot;, # Optional. The field name of the baseline response.
+            &quot;candidateResponseFieldName&quot;: &quot;A String&quot;, # Optional. The field name of the candidate response.
+            &quot;customOutputFormatConfig&quot;: { # Spec for custom output format configuration. # Optional. CustomOutputFormatConfig allows customization of metric output. When this config is set, the default output is replaced with the raw output string. If a custom format is chosen, the `pairwise_choice` and `explanation` fields in the corresponding metric result will be empty.
+              &quot;returnRawOutput&quot;: True or False, # Optional. Whether to return raw output.
+            &quot;metricPromptTemplate&quot;: &quot;A String&quot;, # Required. Metric prompt template for pairwise metric.
+            &quot;systemInstruction&quot;: &quot;A String&quot;, # Optional. System instructions for pairwise metric.
+          &quot;pointwiseMetricSpec&quot;: { # Spec for pointwise metric. # Spec for pointwise metric.
+            &quot;customOutputFormatConfig&quot;: { # Spec for custom output format configuration. # Optional. CustomOutputFormatConfig allows customization of metric output. By default, metrics return a score and explanation. When this config is set, the default output is replaced with either: - The raw output string. - A parsed output based on a user-defined schema. If a custom format is chosen, the `score` and `explanation` fields in the corresponding metric result will be empty.
+            &quot;metricPromptTemplate&quot;: &quot;A String&quot;, # Required. Metric prompt template for pointwise metric.
+            &quot;systemInstruction&quot;: &quot;A String&quot;, # Optional. System instructions for pointwise metric.
+          &quot;predefinedMetricSpec&quot;: { # The spec for a pre-defined metric. # The spec for a pre-defined metric.
+          &quot;rougeSpec&quot;: { # Spec for rouge score metric - calculates the recall of n-grams in prediction as compared to reference - returns a score ranging between 0 and 1. # Spec for rouge metric.
+            &quot;rougeType&quot;: &quot;A String&quot;, # Optional. Supported rouge types are rougen[1-9], rougeL, and rougeLsum.
+            &quot;splitSummaries&quot;: True or False, # Optional. Whether to split summaries while using rougeLsum.
+            &quot;useStemmer&quot;: True or False, # Optional. Whether to use stemmer to compute rouge score.
+        &quot;metricResourceName&quot;: &quot;A String&quot;, # Optional. The resource name of the metric definition.
+        &quot;predefinedMetricSpec&quot;: { # Specification for a pre-defined metric. # Spec for a pre-defined metric.
+        &quot;rubricBasedMetricSpec&quot;: { # Specification for a metric that is based on rubrics. # Spec for rubric based metric.
+          &quot;inlineRubrics&quot;: { # Defines a list of rubrics, used when providing rubrics inline. # Use rubrics provided directly in the spec.
+            &quot;rubrics&quot;: [ # The list of rubrics.
+          &quot;judgeAutoraterConfig&quot;: { # The autorater config used for the evaluation run. # Optional. Optional configuration for the judge LLM (Autorater). The definition of AutoraterConfig needs to be provided.
+          &quot;metricPromptTemplate&quot;: &quot;A String&quot;, # Optional. Template for the prompt used by the judge model to evaluate against rubrics.
+          &quot;rubricGenerationSpec&quot;: { # Specification for how rubrics should be generated. # Dynamically generate rubrics for evaluation using this specification.
+          &quot;rubricGroupKey&quot;: &quot;A String&quot;, # Use a pre-defined group of rubrics associated with the input content. This refers to a key in the `rubric_groups` map of `RubricEnhancedContents`.
+    &quot;outputConfig&quot;: { # The output config for the evaluation run. # Optional. The output config for the evaluation run.
+      &quot;bigqueryDestination&quot;: { # The BigQuery location for the output content. # BigQuery destination for evaluation output.
+      &quot;gcsDestination&quot;: { # The Google Cloud Storage location where the output is to be written to. # Cloud Storage destination for evaluation output.
+    &quot;promptTemplate&quot;: { # Prompt template used for inference. # The prompt template used for inference. The values for variables in the prompt template are defined in EvaluationItem.EvaluationPrompt.PromptTemplateData.values.
+      &quot;gcsUri&quot;: &quot;A String&quot;, # Prompt template stored in Cloud Storage. Format: &quot;gs://my-bucket/file-name.txt&quot;.
+      &quot;promptTemplate&quot;: &quot;A String&quot;, # Inline prompt template. Template variables should be in the format &quot;{var_name}&quot;. Example: &quot;Translate the following from {source_lang} to {target_lang}: {text}&quot;
+    &quot;rubricConfigs&quot;: [ # Optional. The rubric configs for the evaluation run. They are used to generate rubrics which can be used by rubric-based metrics. Multiple rubric configs can be specified for rubric generation but only one rubric config can be used for a rubric-based metric. If more than one rubric config is provided, the evaluation metric must specify a rubric group key. Note that if a generation spec is specified on both a rubric config and an evaluation metric, the rubrics generated for the metric will be used for evaluation.
+      { # Configuration for a rubric group to be generated/saved for evaluation.
+        &quot;rubricGroupKey&quot;: &quot;A String&quot;, # Required. The key used to save the generated rubrics. If a generation spec is provided, this key will be used for the name of the generated rubric group. Otherwise, this key will be used to look up the existing rubric group on the evaluation item. Note that if a rubric group key is specified on both a rubric config and an evaluation metric, the key from the metric will be used to select the rubrics for evaluation.
+  &quot;evaluationResults&quot;: { # The results of the evaluation run. # Output only. The results of the evaluation run. Only populated when the evaluation run&#x27;s state is SUCCEEDED.
+    &quot;evaluationSet&quot;: &quot;A String&quot;, # The evaluation set where item level results are stored.
+    &quot;summaryMetrics&quot;: { # The summary metrics for the evaluation run. # Optional. The summary metrics for the evaluation run.
+      &quot;failedItems&quot;: 42, # Optional. The number of items that failed to be evaluated.
+      &quot;metrics&quot;: { # Optional. Map of metric name to metric value.
+      &quot;totalItems&quot;: 42, # Optional. The total number of items that were evaluated.
+  &quot;evaluationSetSnapshot&quot;: &quot;A String&quot;, # Output only. The specific evaluation set of the evaluation run. For runs with an evaluation set input, this will be that same set. For runs with BigQuery input, it&#x27;s the sampled BigQuery dataset.
+  &quot;inferenceConfigs&quot;: { # Optional. The candidate to inference config map for the evaluation run. The candidate can be up to 128 characters long and can consist of any UTF-8 characters.
+    &quot;a_key&quot;: { # Defines the configuration for a candidate model or agent being evaluated. `InferenceConfig` encapsulates all the necessary information to invoke or scrape the candidate during the evaluation run. This includes direct model inference parameters, agent execution settings, and multi-turn scraping configurations (such as user simulators). It serves as the primary representation of the candidate across different stages of the evaluation process.
+      &quot;agentRunConfig&quot;: { # Configuration for Agent Run. # Optional. Agent run config.
+        &quot;agentEngine&quot;: &quot;A String&quot;, # Optional. The resource name of the Agent Engine. Format: projects/{project}/locations/{location}/reasoningEngines/{reasoning_engine} For example: projects/123/locations/us-central1/reasoningEngines/456
+        &quot;sessionInput&quot;: { # Session input to run an Agent. # Optional. The session input to get agent running results.
+          &quot;parameters&quot;: { # Optional. Additional parameters for the session, like app_name, etc. For example, {&quot;app_name&quot;: &quot;my-app&quot;}.
+          &quot;sessionState&quot;: { # Optional. Session specific memory which stores key conversation points.
+          &quot;userId&quot;: &quot;A String&quot;, # Optional. The user id for the agent session. The ID can be up to 128 characters long.
+        &quot;userSimulatorConfig&quot;: { # Used for multi-turn agent scraping. Contains configuration for a user simulator that uses an LLM to generate messages on behalf of the user. # The configuration for a user simulator that uses an LLM to generate messages on behalf of the user.
+          &quot;maxTurn&quot;: 42, # Maximum number of invocations allowed by the multi-turn agent scraping. This property allows us to stop a run-off conversation, where the agent and the user simulator get into a never ending loop. The initial fixed prompt is also counted as an invocation.
+          &quot;modelConfig&quot;: { # Configuration for content generation. This message contains all the parameters that control how the model generates content. It allows you to influence the randomness, length, and structure of the output. # The configuration for the model.
+          &quot;modelName&quot;: &quot;A String&quot;, # The model name to use for multi-turn agent scraping to get next user message, e.g. &quot;gemini-3-flash-preview&quot;.
+      &quot;model&quot;: &quot;A String&quot;, # Optional. The fully qualified name of the publisher model or endpoint to use. Anthropic and Llama third-party models are also supported through Model Garden. Publisher model format: `projects/{project}/locations/{location}/publishers/*/models/*` Third-party model formats: `projects/{project}/locations/{location}/publishers/anthropic/models/{model}` or `projects/{project}/locations/{location}/publishers/llama/models/{model}` Endpoint format: `projects/{project}/locations/{location}/endpoints/{endpoint}`
+  &quot;labels&quot;: { # Optional. Labels for the evaluation run.
+  &quot;metadata&quot;: &quot;&quot;, # Optional. Metadata about the evaluation run, can be used by the caller to store additional tracking information about the evaluation run.
+  &quot;name&quot;: &quot;A String&quot;, # Identifier. The resource name of the EvaluationRun. This is a unique identifier. Format: `projects/{project}/locations/{location}/evaluationRuns/{evaluation_run}`
+  &quot;state&quot;: &quot;A String&quot;, # Output only. The state of the evaluation run.
+  <pre>Deletes an Evaluation Run.
+  name: string, Required. The name of the EvaluationRun resource to be deleted. Format: `projects/{project}/locations/{location}/evaluationRuns/{evaluation_run}` (required)
+  <pre>Gets an Evaluation Run.
+  name: string, Required. The name of the EvaluationRun resource. Format: `projects/{project}/locations/{location}/evaluationRuns/{evaluation_run}` (required)
+  <pre>Lists Evaluation Runs.
+  parent: string, Required. The resource name of the Location from which to list the Evaluation Runs. Format: `projects/{project}/locations/{location}` (required)
+  filter: string, Optional. Filter expression that matches a subset of the EvaluationRuns to show. For field names both snake_case and camelCase are supported. For more information about filter syntax, see [AIP-160](https://google.aip.dev/160).
+  pageSize: integer, Optional. The maximum number of Evaluation Runs to return.
+  pageToken: string, Optional. A page token, received from a previous `ListEvaluationRuns` call. Provide this to retrieve the subsequent page.
+    { # Response message for EvaluationManagementService.ListEvaluationRuns.
+  &quot;evaluationRuns&quot;: [ # List of EvaluationRuns in the requested page.

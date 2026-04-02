@@ -1,0 +1,33 @@
+    <!-- Ownership & Context Section -->
+        SectionKey="ownershipContext"
+        SectionName="Ownership & Context"
+            FieldName="EnvironmentID"
+    <!-- Artifact Core Section -->
+        SectionKey="artifactCore"
+        SectionName="Artifact Core"
+            FieldName="Visibility"
+    <!-- MJ: Artifact Versions Section -->
+        SectionKey="mJArtifactVersions"
+        SectionName="MJ: Artifact Versions"
+        [BadgeCount]="GetSectionRowCount('mJArtifactVersions')"
+                [Params]="BuildRelationshipViewParamsByEntityName('MJ: Artifact Versions','ArtifactID')"
+                [NewRecordValues]="NewRecordValues('MJ: Artifact Versions')"
+                [AllowLoad]="IsSectionExpanded('mJArtifactVersions')"
+                (AfterDataLoad)="SetSectionRowCount('mJArtifactVersions', $event.totalRowCount)"
+    <!-- MJ: Collection Artifacts Section -->
+        SectionKey="mJCollectionArtifacts"
+        SectionName="MJ: Collection Artifacts"
+        Icon="fa fa-folder-open"
+        [BadgeCount]="GetSectionRowCount('mJCollectionArtifacts')"
+                [Params]="BuildRelationshipViewParamsByEntityName('MJ: Collection Artifacts','ArtifactID')"
+                [NewRecordValues]="NewRecordValues('MJ: Collection Artifacts')"
+                [AllowLoad]="IsSectionExpanded('mJCollectionArtifacts')"
+                (AfterDataLoad)="SetSectionRowCount('mJCollectionArtifacts', $event.totalRowCount)"
+    <!-- MJ: Artifact Permissions Section -->
+        SectionKey="mJArtifactPermissions"
+        SectionName="MJ: Artifact Permissions"
+        [BadgeCount]="GetSectionRowCount('mJArtifactPermissions')"
+                [Params]="BuildRelationshipViewParamsByEntityName('MJ: Artifact Permissions','ArtifactID')"
+                [NewRecordValues]="NewRecordValues('MJ: Artifact Permissions')"
+                [AllowLoad]="IsSectionExpanded('mJArtifactPermissions')"
+                (AfterDataLoad)="SetSectionRowCount('mJArtifactPermissions', $event.totalRowCount)"

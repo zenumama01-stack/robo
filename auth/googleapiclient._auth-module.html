@@ -1,0 +1,59 @@
+  <title>googleapiclient._auth</title>
+        Module&nbsp;_auth
+            >]&nbsp;|&nbsp;<a href="googleapiclient._auth-module.html"
+<!-- ==================== MODULE DESCRIPTION ==================== -->
+<h1 class="epydoc">Module _auth</h1><p class="nomargin-top"><span class="codelink"><a href="googleapiclient._auth-pysrc.html">source&nbsp;code</a></span></p>
+<p>Helpers for authentication using oauth2client or google-auth.</p>
+<!-- ==================== FUNCTIONS ==================== -->
+<a name="section-Functions"></a>
+        <td align="left"><span class="table-header">Functions</span></td>
+         ><span class="options">[<a href="#section-Functions"
+          <td><span class="summary-sig"><a name="credentials_from_file"></a><span class="summary-sig-name">credentials_from_file</span>(<span class="summary-sig-arg">filename</span>,
+        <span class="summary-sig-arg">scopes</span>=<span class="summary-sig-default">None</span>,
+        <span class="summary-sig-arg">quota_project_id</span>=<span class="summary-sig-default">None</span>)</span><br />
+      Returns credentials loaded from a file.</td>
+            <span class="codelink"><a href="googleapiclient._auth-pysrc.html#credentials_from_file">source&nbsp;code</a></span>
+          <td><span class="summary-sig"><a name="default_credentials"></a><span class="summary-sig-name">default_credentials</span>(<span class="summary-sig-arg">scopes</span>=<span class="summary-sig-default">None</span>,
+      Returns Application Default Credentials.</td>
+            <span class="codelink"><a href="googleapiclient._auth-pysrc.html#default_credentials">source&nbsp;code</a></span>
+          <td><span class="summary-sig"><a href="googleapiclient._auth-module.html#with_scopes" class="summary-sig-name">with_scopes</a>(<span class="summary-sig-arg">credentials</span>,
+        <span class="summary-sig-arg">scopes</span>)</span><br />
+      Scopes the credentials if necessary.</td>
+            <span class="codelink"><a href="googleapiclient._auth-pysrc.html#with_scopes">source&nbsp;code</a></span>
+          <td><span class="summary-sig"><a href="googleapiclient._auth-module.html#authorized_http" class="summary-sig-name">authorized_http</a>(<span class="summary-sig-arg">credentials</span>)</span><br />
+      Returns an http client that is authorized with the given credentials.</td>
+            <span class="codelink"><a href="googleapiclient._auth-pysrc.html#authorized_http">source&nbsp;code</a></span>
+          <td><span class="summary-sig"><a name="refresh_credentials"></a><span class="summary-sig-name">refresh_credentials</span>(<span class="summary-sig-arg">credentials</span>)</span></td>
+            <span class="codelink"><a href="googleapiclient._auth-pysrc.html#refresh_credentials">source&nbsp;code</a></span>
+          <td><span class="summary-sig"><a name="apply_credentials"></a><span class="summary-sig-name">apply_credentials</span>(<span class="summary-sig-arg">credentials</span>,
+        <span class="summary-sig-arg">headers</span>)</span></td>
+            <span class="codelink"><a href="googleapiclient._auth-pysrc.html#apply_credentials">source&nbsp;code</a></span>
+          <td><span class="summary-sig"><a name="is_valid"></a><span class="summary-sig-name">is_valid</span>(<span class="summary-sig-arg">credentials</span>)</span></td>
+            <span class="codelink"><a href="googleapiclient._auth-pysrc.html#is_valid">source&nbsp;code</a></span>
+          <td><span class="summary-sig"><a name="get_credentials_from_http"></a><span class="summary-sig-name">get_credentials_from_http</span>(<span class="summary-sig-arg">http</span>)</span></td>
+            <span class="codelink"><a href="googleapiclient._auth-pysrc.html#get_credentials_from_http">source&nbsp;code</a></span>
+        <a name="HAS_GOOGLE_AUTH"></a><span class="summary-name">HAS_GOOGLE_AUTH</span> = <code title="False">False</code>
+        <a name="google_auth_httplib2"></a><span class="summary-name">google_auth_httplib2</span> = <code title="None">None</code>
+        <a name="HAS_OAUTH2CLIENT"></a><span class="summary-name">HAS_OAUTH2CLIENT</span> = <code title="False">False</code>
+<!-- ==================== FUNCTION DETAILS ==================== -->
+<a name="section-FunctionDetails"></a>
+        <td align="left"><span class="table-header">Function Details</span></td>
+         ><span class="options">[<a href="#section-FunctionDetails"
+<a name="with_scopes"></a>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">with_scopes</span>(<span class="sig-arg">credentials</span>,
+        <span class="sig-arg">scopes</span>)</span>
+    ><span class="codelink"><a href="googleapiclient._auth-pysrc.html#with_scopes">source&nbsp;code</a></span>&nbsp;
+Scopes the credentials if necessary.
+    credentials (Union[
+        google.auth.credentials.Credentials,
+        oauth2client.client.Credentials]): The credentials to scope.
+    scopes (Sequence[str]): The list of scopes.
+    Union[google.auth.credentials.Credentials,
+        oauth2client.client.Credentials]: The scoped credentials.
+<a name="authorized_http"></a>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">authorized_http</span>(<span class="sig-arg">credentials</span>)</span>
+    ><span class="codelink"><a href="googleapiclient._auth-pysrc.html#authorized_http">source&nbsp;code</a></span>&nbsp;
+Returns an http client that is authorized with the given credentials.
+        oauth2client.client.Credentials]): The credentials to use.
+    Union[httplib2.Http, google_auth_httplib2.AuthorizedHttp]: An
+        authorized http client.

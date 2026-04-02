@@ -1,0 +1,29 @@
+<h1><a href="iam_v1.html">Identity and Access Management (IAM) API</a> . <a href="iam_v1.locations.html">locations</a> . <a href="iam_v1.locations.workforcePools.html">workforcePools</a> . <a href="iam_v1.locations.workforcePools.providers.html">providers</a> . <a href="iam_v1.locations.workforcePools.providers.scimTenants.html">scimTenants</a> . <a href="iam_v1.locations.workforcePools.providers.scimTenants.tokens.html">tokens</a></h1>
+  <code><a href="#create">create(parent, body=None, workforcePoolProviderScimTokenId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Gemini Enterprise only. Creates a new WorkforcePoolProviderScimToken in a WorkforcePoolProviderScimTenant. You cannot reuse the name of a deleted SCIM token until 30 days after deletion.</p>
+<p class="firstline">Gemini Enterprise only. Deletes a WorkforcePoolProviderScimToken. You can undelete a SCIM token for 30 days. After 30 days, the SCIM token is permanently deleted. You cannot update deleted SCIM tokens, however, you can view and list them.</p>
+<p class="firstline">Gemini Enterprise only. Gets an individual WorkforcePoolProviderScimToken.</p>
+<p class="firstline">Gemini Enterprise only. Lists all non-deleted WorkforcePoolProviderScimTokenss in a WorkforcePoolProviderScimTenant. If `show_deleted` is set to `true`, then deleted SCIM tokens are also listed.</p>
+<p class="firstline">Gemini Enterprise only. Updates an existing WorkforcePoolProviderScimToken.</p>
+    <code class="details" id="create">create(parent, body=None, workforcePoolProviderScimTokenId=None, x__xgafv=None)</code>
+  <pre>Gemini Enterprise only. Creates a new WorkforcePoolProviderScimToken in a WorkforcePoolProviderScimTenant. You cannot reuse the name of a deleted SCIM token until 30 days after deletion.
+  parent: string, Required. Gemini Enterprise only. The parent tenant to create SCIM token. Format: &#x27;locations/{location}/workforcePools/{workforce_pool}/providers/{provider}/scimTenants/{scim_tenant}&#x27; (required)
+{ # Gemini Enterprise only. Represents a token for the WorkforcePoolProviderScimTenant. Used for authenticating SCIM provisioning requests.
+  &quot;displayName&quot;: &quot;A String&quot;, # Optional. Gemini Enterprise only. The display name of the SCIM token. Cannot exceed 32 characters.
+  &quot;name&quot;: &quot;A String&quot;, # Identifier. Gemini Enterprise only. The resource name of the SCIM Token. Format: `locations/{location}/workforcePools/{workforce_pool}/providers/ {workforce_pool_provider}/scimTenants/{scim_tenant}/tokens/{token}`
+  &quot;securityToken&quot;: &quot;A String&quot;, # Output only. Gemini Enterprise only. The token string. Provide this to the IdP for authentication. Will be set only during creation.
+  &quot;state&quot;: &quot;A String&quot;, # Output only. Gemini Enterprise only. The state of the token.
+  workforcePoolProviderScimTokenId: string, Required. Gemini Enterprise only. The ID to use for the SCIM token, which becomes the final component of the resource name. This value should be 4-32 characters and follow the pattern: `([a-z]([a-z0-9\\-]{2,30}[a-z0-9]))`
+  <pre>Gemini Enterprise only. Deletes a WorkforcePoolProviderScimToken. You can undelete a SCIM token for 30 days. After 30 days, the SCIM token is permanently deleted. You cannot update deleted SCIM tokens, however, you can view and list them.
+  name: string, Required. Gemini Enterprise only. The name of the SCIM token to delete. Format: `locations/{location}/workforcePools/{workforce_pool}/providers/{provider}/scimTenants/{scim_tenant}/tokens/{token}` (required)
+  <pre>Gemini Enterprise only. Gets an individual WorkforcePoolProviderScimToken.
+  name: string, Required. Gemini Enterprise only. The name of the SCIM token to retrieve. Format: `locations/{location}/workforcePools/{workforce_pool}/providers/{provider}/scimTenants/{scim_tenant}/tokens/{token}` (required)
+  <pre>Gemini Enterprise only. Lists all non-deleted WorkforcePoolProviderScimTokenss in a WorkforcePoolProviderScimTenant. If `show_deleted` is set to `true`, then deleted SCIM tokens are also listed.
+  parent: string, Required. Gemini Enterprise only. The parent to list SCIM tokens. Format: &#x27;locations/{location}/workforcePools/{workforce_pool}/providers/{provider}/scimTenants/{scim_tenant}&#x27; (required)
+  pageSize: integer, Optional. Gemini Enterprise only. The maximum number of SCIM tokens to return. If unspecified, at most 2 SCIM tokens will be returned.
+  pageToken: string, Optional. Gemini Enterprise only. A page token, received from a previous `ListWorkforcePoolProviderScimTokens` call. Provide this to retrieve the subsequent page.
+  showDeleted: boolean, Optional. Gemini Enterprise only. Whether to return soft-deleted SCIM tokens.
+    { # Gemini Enterprise only. Response message for ListWorkforcePoolProviderScimTokens.
+  &quot;workforcePoolProviderScimTokens&quot;: [ # Output only. Gemini Enterprise only. A list of SCIM tokens.
+  <pre>Gemini Enterprise only. Updates an existing WorkforcePoolProviderScimToken.
+  name: string, Identifier. Gemini Enterprise only. The resource name of the SCIM Token. Format: `locations/{location}/workforcePools/{workforce_pool}/providers/ {workforce_pool_provider}/scimTenants/{scim_tenant}/tokens/{token}` (required)

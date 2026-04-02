@@ -1,0 +1,38 @@
+<h1><a href="apigee_v1.html">Apigee API</a> . <a href="apigee_v1.organizations.html">organizations</a> . <a href="apigee_v1.organizations.securityProfilesV2.html">securityProfilesV2</a></h1>
+  <code><a href="#create">create(parent, body=None, securityProfileV2Id=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Create a security profile v2.</p>
+<p class="firstline">Delete a security profile v2.</p>
+<p class="firstline">Get a security profile v2.</p>
+  <code><a href="#list">list(parent, pageSize=None, pageToken=None, riskAssessmentType=None, x__xgafv=None)</a></code></p>
+<p class="firstline">List security profiles v2.</p>
+<p class="firstline">Update a security profile V2.</p>
+    <code class="details" id="create">create(parent, body=None, securityProfileV2Id=None, x__xgafv=None)</code>
+  <pre>Create a security profile v2.
+{ # Security profile for risk assessment version 2.
+  &quot;createTime&quot;: &quot;A String&quot;, # Output only. The time of the security profile creation.
+  &quot;description&quot;: &quot;A String&quot;, # Optional. The description of the security profile.
+  &quot;googleDefined&quot;: True or False, # Output only. Whether the security profile is google defined.
+  &quot;name&quot;: &quot;A String&quot;, # Identifier. Name of the security profile v2 resource. Format: organizations/{org}/securityProfilesV2/{profile}
+  &quot;profileAssessmentConfigs&quot;: { # Required. The configuration for each assessment in this profile. Key is the name/id of the assessment.
+    &quot;a_key&quot;: { # The configuration definition for a specific assessment.
+      &quot;include&quot;: { # Message for the array of API Hub Gateway Types. # Include only these Gateway Types.
+        &quot;gatewayTypes&quot;: [ # Required. The array of API Hub Gateway Types.
+      &quot;weight&quot;: &quot;A String&quot;, # The weight of the assessment.
+  &quot;riskAssessmentType&quot;: &quot;A String&quot;, # Optional. The risk assessment type of the security profile. Defaults to ADVANCED_API_SECURITY.
+  &quot;updateTime&quot;: &quot;A String&quot;, # Output only. The time of the security profile update.
+  securityProfileV2Id: string, Required. The security profile id.
+  <pre>Delete a security profile v2.
+  name: string, Required. The name of the security profile v2 to delete. Format: `organizations/{org}/securityProfilesV2/{profile}` (required)
+  riskAssessmentType: string, Optional. The risk assessment type of the security profile. Defaults to ADVANCED_API_SECURITY.
+  <pre>Get a security profile v2.
+  name: string, Required. The name of the security profile v2 to get. Format: `organizations/{org}/securityProfilesV2/{profile}` (required)
+    <code class="details" id="list">list(parent, pageSize=None, pageToken=None, riskAssessmentType=None, x__xgafv=None)</code>
+  <pre>List security profiles v2.
+  pageSize: integer, Optional. The maximum number of profiles to return
+  pageToken: string, Optional. A page token, received from a previous `ListSecurityProfilesV2` call. Provide this to retrieve the subsequent page.
+  riskAssessmentType: string, Optional. The risk assessment type of the security profiles. Defaults to ADVANCED_API_SECURITY.
+    { # Response for ListSecurityProfilesV2.
+  &quot;securityProfilesV2&quot;: [ # List of security profiles in the organization.
+  <pre>Update a security profile V2.
+  name: string, Identifier. Name of the security profile v2 resource. Format: organizations/{org}/securityProfilesV2/{profile} (required)
+  updateMask: string, Optional. The list of fields to update. Valid fields to update are `description` and `profileAssessmentConfigs`.

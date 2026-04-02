@@ -1,0 +1,31 @@
+<h1><a href="managedkafka_v1.html">Managed Service for Apache Kafka API</a> . <a href="managedkafka_v1.projects.html">projects</a> . <a href="managedkafka_v1.projects.locations.html">locations</a> . <a href="managedkafka_v1.projects.locations.schemaRegistries.html">schemaRegistries</a></h1>
+  <code><a href="managedkafka_v1.projects.locations.schemaRegistries.compatibility.html">compatibility()</a></code>
+  <code><a href="managedkafka_v1.projects.locations.schemaRegistries.config.html">config()</a></code>
+  <code><a href="managedkafka_v1.projects.locations.schemaRegistries.contexts.html">contexts()</a></code>
+  <code><a href="managedkafka_v1.projects.locations.schemaRegistries.mode.html">mode()</a></code>
+  <code><a href="managedkafka_v1.projects.locations.schemaRegistries.schemas.html">schemas()</a></code>
+  <code><a href="managedkafka_v1.projects.locations.schemaRegistries.subjects.html">subjects()</a></code>
+<p class="firstline">Create a schema registry instance.</p>
+<p class="firstline">Delete a schema registry instance.</p>
+<p class="firstline">Get the schema registry instance.</p>
+<p class="firstline">List schema registries.</p>
+  <pre>Create a schema registry instance.
+  parent: string, Required. The parent whose schema registry instance is to be created. Structured like: `projects/{project}/locations/{location}` (required)
+{ # Request to create a schema registry instance.
+  &quot;schemaRegistry&quot;: { # SchemaRegistry is a schema registry instance. # Required. The schema registry instance to create. The name field is ignored.
+    &quot;contexts&quot;: [ # Output only. The contexts of the schema registry instance.
+    &quot;name&quot;: &quot;A String&quot;, # Identifier. The name of the schema registry instance. Structured like: `projects/{project}/locations/{location}/schemaRegistries/{schema_registry}` The instance name {schema_registry} can contain the following: * Up to 255 characters. * Letters (uppercase or lowercase), numbers, and underscores.
+  &quot;schemaRegistryId&quot;: &quot;A String&quot;, # Required. The schema registry instance ID to use for this schema registry. The ID must contain only letters (a-z, A-Z), numbers (0-9), and underscores (-). The maximum length is 63 characters. The ID must not start with a number.
+    { # SchemaRegistry is a schema registry instance.
+  <pre>Delete a schema registry instance.
+  name: string, Required. The name of the schema registry instance to delete. Structured like: `projects/{project}/locations/{location}/schemaRegistries/{schema_registry}` (required)
+  <pre>Get the schema registry instance.
+  name: string, Required. The name of the schema registry instance to return. Structured like: `projects/{project}/locations/{location}/schemaRegistries/{schema_registry}` (required)
+  <pre>List schema registries.
+  parent: string, Required. The parent whose schema registry instances are to be listed. Structured like: `projects/{project}/locations/{location}` (required)
+  view: string, Optional. Specifies the view to return for the schema registry instances. If not specified, the default view is SCHEMA_REGISTRY_VIEW_BASIC.
+      SCHEMA_REGISTRY_VIEW_UNSPECIFIED - The unset value. The API will default to SCHEMA_REGISTRY_VIEW_BASIC.
+      SCHEMA_REGISTRY_VIEW_BASIC - If SchemaRegistryView is not specified, this is the default value. Returns only the name of the schema registry. The contexts associated with it are not included.
+      SCHEMA_REGISTRY_VIEW_FULL - Returns the name of the schema registry and all the contexts associated with it.
+    { # Request for ListSchemaRegistries.
+  &quot;schemaRegistries&quot;: [ # The schema registry instances.

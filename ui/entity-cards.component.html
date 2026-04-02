@@ -1,0 +1,51 @@
+<div class="cards-view-wrapper">
+  @if (isLoading && effectiveRecords.length === 0) {
+      <mj-loading text="Loading records..."></mj-loading>
+      @for (record of effectiveRecords; track getRecordTrackId(record, $index)) {
+      class="data-card"
+      [class.selected]="isSelected(record)"
+      (click)="onCardClick(record)">
+      <!-- Card Header with Avatar/Icon -->
+        @switch (getThumbnailType(record)) {
+          @case ('image') {
+            <div class="card-thumbnail">
+              <img [src]="getThumbnailUrl(record)" alt="" />
+          @case ('icon') {
+            <div class="card-avatar" [style.background-color]="getRecordColor(record)">
+              <i [class]="getThumbnailUrl(record)"></i>
+              {{ getInitials(record) }}
+        <div class="card-header-content">
+          <h3 class="card-title" [innerHTML]="highlightMatch(getFieldValue(record, effectiveTemplate?.titleField ?? null))"></h3>
+          @if (effectiveTemplate?.subtitleField; as subField) {
+            @if (subtitleIsPill) {
+              <mj-pill [value]="getFieldValue(record, subField)"></mj-pill>
+              <span class="card-subtitle" [innerHTML]="highlightMatch(getFieldValue(record, subField))"></span>
+        <button class="card-open-btn" (click)="onOpenClick($event, record)" title="Open Record">
+        @if (effectiveTemplate?.descriptionField; as descField) {
+          <p class="card-description" [innerHTML]="highlightMatch(getTextValue(record, descField, 100))"></p>
+        <!-- Display Fields -->
+        @if (effectiveTemplate && effectiveTemplate.displayFields.length > 0) {
+          <div class="card-fields">
+            @for (field of effectiveTemplate.displayFields; track field.name) {
+              <div class="field-item" [class.field-boolean]="field.type === 'boolean'" [class.field-text]="field.type === 'text'">
+                @switch (field.type) {
+                  @case ('boolean') {
+                    <i class="field-icon" [class.fa-solid]="true"
+                       [class.fa-check]="getBooleanValue(record, field.name)"
+                       [class.fa-minus]="!getBooleanValue(record, field.name)"
+                       [class.bool-true]="getBooleanValue(record, field.name)"
+                       [class.bool-false]="!getBooleanValue(record, field.name)"></i>
+                    <span class="field-label">{{ field.label }}</span>
+                    <span class="field-value">{{ getNumericValue(record, field.name) }}</span>
+                  @case ('date') {
+                    <span class="field-value field-date">{{ getDateValue(record, field.name) }}</span>
+                    <span class="field-text-value" [innerHTML]="highlightMatch(getTextValue(record, field.name, 40))"></span>
+      <!-- Card Footer with Badge -->
+      @if (effectiveTemplate?.badgeField; as badgeField) {
+          <mj-pill [value]="getFieldValue(record, badgeField)"></mj-pill>
+      <!-- Hidden field match indicator -->
+      @if (hasHiddenFieldMatch(record)) {
+        <div class="hidden-match-indicator" [title]="'Matched in: ' + getHiddenMatchFieldName(record)">
+          <span>{{ getHiddenMatchFieldName(record) }}</span>
+    @if (effectiveRecords.length === 0) {
+        <p>No records to display</p>

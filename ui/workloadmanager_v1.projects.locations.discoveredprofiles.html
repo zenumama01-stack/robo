@@ -1,0 +1,35 @@
+<h1><a href="workloadmanager_v1.html">Workload Manager API</a> . <a href="workloadmanager_v1.projects.html">projects</a> . <a href="workloadmanager_v1.projects.locations.html">locations</a> . <a href="workloadmanager_v1.projects.locations.discoveredprofiles.html">discoveredprofiles</a></h1>
+  <code><a href="workloadmanager_v1.projects.locations.discoveredprofiles.health.html">health()</a></code>
+<p class="firstline">Returns the health Resource.</p>
+<p class="firstline">Gets details of a discovered workload profile.</p>
+<p class="firstline">List discovered workload profiles</p>
+  <pre>Gets details of a discovered workload profile.
+    { # Workload resource.
+  &quot;labels&quot;: { # Optional. such as name, description, version. More example can be found in deployment
+  &quot;name&quot;: &quot;A String&quot;, # Identifier. name of resource names have the form &#x27;projects/{project_id}/locations/{location}/workloadProfiles/{workload_id}&#x27;
+  &quot;refreshedTime&quot;: &quot;A String&quot;, # Required. time when the workload data was refreshed
+  &quot;sapWorkload&quot;: { # The body of sap workload # The sap workload content
+    &quot;application&quot;: { # The component of sap workload # Output only. application component
+      &quot;databaseProperties&quot;: { # Database Properties. # Output only. All instance properties.
+        &quot;backupProperties&quot;: { # Backup properties. # Output only. Backup properties.
+          &quot;latestBackupStatus&quot;: &quot;A String&quot;, # Output only. The state of the latest backup.
+          &quot;latestBackupTime&quot;: &quot;A String&quot;, # The time when the latest backup was performed.
+        &quot;databaseType&quot;: &quot;A String&quot;, # Output only. Type of the database. `HANA`, `DB2`, etc.
+      &quot;haHosts&quot;: [ # List of host URIs that are part of the HA configuration if present. An empty list indicates the component is not configured for HA.
+      &quot;resources&quot;: [ # Output only. resources in the component
+        { # The resource on GCP
+      &quot;sid&quot;: &quot;A String&quot;, # Output only. sid is the sap component identificator
+      &quot;topologyType&quot;: &quot;A String&quot;, # The detected topology of the component.
+    &quot;architecture&quot;: &quot;A String&quot;, # Output only. The architecture.
+    &quot;database&quot;: { # The component of sap workload # Output only. database component
+    &quot;metadata&quot;: { # Output only. The metadata for SAP workload.
+    &quot;products&quot;: [ # Output only. The products on this workload.
+      { # Contains the details of a product.
+        &quot;name&quot;: &quot;A String&quot;, # Optional. Name of the product.
+        &quot;version&quot;: &quot;A String&quot;, # Optional. Version of the product.
+  &quot;workloadType&quot;: &quot;A String&quot;, # Required. The type of the workload
+  <pre>List discovered workload profiles
+  parent: string, Required. Parent value for ListDiscoveredProfilesRequest (required)
+    { # List discovered profile Response returns discovered profiles from agents
+  &quot;nextPageToken&quot;: &quot;A String&quot;, # Output only. A token identifying a page of results the server should return
+  &quot;workloadProfiles&quot;: [ # Output only. The list of workload profiles

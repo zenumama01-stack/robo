@@ -1,0 +1,26 @@
+<h1><a href="run_v1.html">Cloud Run Admin API</a> . <a href="run_v1.namespaces.html">namespaces</a> . <a href="run_v1.namespaces.revisions.html">revisions</a></h1>
+<p class="firstline">Delete a revision.</p>
+<p class="firstline">Get information about a revision.</p>
+<p class="firstline">List revisions. Results are sorted by creation time, descending.</p>
+  <pre>Delete a revision.
+  name: string, The name of the revision to delete. For Cloud Run (fully managed), replace {namespace} with the project ID or number. It takes the form namespaces/{namespace}. For example: namespaces/PROJECT_ID (required)
+  propagationPolicy: string, Specifies the propagation policy of delete. Cloud Run currently ignores this setting, and deletes in the background.
+  <pre>Get information about a revision.
+  name: string, The name of the revision to retrieve. For Cloud Run (fully managed), replace {namespace} with the project ID or number. It takes the form namespaces/{namespace}. For example: namespaces/PROJECT_ID (required)
+    { # Revision is an immutable snapshot of code and configuration. A revision references one or more container images. Revisions are created by updates to a Service.
+  &quot;kind&quot;: &quot;A String&quot;, # The kind of this resource, in this case &quot;Revision&quot;.
+  &quot;metadata&quot;: { # google.cloud.run.meta.v1.ObjectMeta is metadata that all persisted resources must have, which includes all objects users must create. # Metadata associated with this Revision, including name, namespace, labels, and annotations.
+  &quot;spec&quot;: { # RevisionSpec holds the desired state of the Revision (from the client). # Spec holds the desired state of the Revision (from the client).
+  &quot;status&quot;: { # RevisionStatus communicates the observed state of the Revision (from the controller). # Status communicates the observed state of the Revision (from the controller).
+    &quot;conditions&quot;: [ # Conditions communicate information about ongoing/complete reconciliation processes that bring the &quot;spec&quot; inline with the observed state of the world. As a Revision is being prepared, it will incrementally update conditions. Revision-specific conditions include: * `ResourcesAvailable`: `True` when underlying resources have been provisioned. * `ContainerHealthy`: `True` when the Revision readiness check completes. * `Active`: `True` when the Revision may receive traffic.
+    &quot;desiredReplicas&quot;: 42, # Output only. The configured number of instances running this revision. For Cloud Run, this only includes instances provisioned using the minScale annotation. It does not include instances created by autoscaling.
+    &quot;imageDigest&quot;: &quot;A String&quot;, # ImageDigest holds the resolved digest for the image specified within .Spec.Container.Image. The digest is resolved during the creation of Revision. This field holds the digest value regardless of whether a tag or digest was originally specified in the Container object.
+    &quot;logUrl&quot;: &quot;A String&quot;, # Optional. Specifies the generated logging url for this particular revision based on the revision url template specified in the controller&#x27;s config.
+    &quot;observedGeneration&quot;: 42, # ObservedGeneration is the &#x27;Generation&#x27; of the Revision that was last processed by the controller. Clients polling for completed reconciliation should poll until observedGeneration = metadata.generation, and the Ready condition&#x27;s status is True or False.
+    &quot;serviceName&quot;: &quot;A String&quot;, # Not currently used by Cloud Run.
+  <pre>List revisions. Results are sorted by creation time, descending.
+  parent: string, The namespace from which the revisions should be listed. For Cloud Run (fully managed), replace {namespace} with the project ID or number. It takes the form namespaces/{namespace}. For example: namespaces/PROJECT_ID (required)
+    { # ListRevisionsResponse is a list of Revision resources.
+  &quot;items&quot;: [ # List of Revisions.
+  &quot;kind&quot;: &quot;A String&quot;, # The kind of this resource, in this case &quot;RevisionList&quot;.
+  &quot;metadata&quot;: { # Metadata for synthetic resources like List. In Cloud Run, all List Resources Responses will have a ListMeta instead of ObjectMeta. # Metadata associated with this revision list.

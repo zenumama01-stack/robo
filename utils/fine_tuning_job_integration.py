@@ -1,0 +1,1 @@
+FineTuningJobIntegration = FineTuningJobWandbIntegrationObject

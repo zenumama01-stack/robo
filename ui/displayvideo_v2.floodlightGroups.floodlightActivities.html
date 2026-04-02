@@ -1,0 +1,31 @@
+<h1><a href="displayvideo_v2.html">Display & Video 360 API</a> . <a href="displayvideo_v2.floodlightGroups.html">floodlightGroups</a> . <a href="displayvideo_v2.floodlightGroups.floodlightActivities.html">floodlightActivities</a></h1>
+  <code><a href="#get">get(floodlightGroupId, floodlightActivityId, partnerId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Gets a Floodlight activity.</p>
+  <code><a href="#list">list(floodlightGroupId, orderBy=None, pageSize=None, pageToken=None, partnerId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Lists Floodlight activities in a Floodlight group.</p>
+    <code class="details" id="get">get(floodlightGroupId, floodlightActivityId, partnerId=None, x__xgafv=None)</code>
+  <pre>Gets a Floodlight activity.
+  floodlightGroupId: string, Required. The ID of the parent Floodlight group to which the requested Floodlight activity belongs. (required)
+  floodlightActivityId: string, Required. The ID of the Floodlight activity to fetch. (required)
+  partnerId: string, Required. The ID of the partner through which the Floodlight activity is being accessed.
+    { # A single Floodlight activity.
+  &quot;advertiserIds&quot;: [ # Output only. IDs of the advertisers that have access to the parent Floodlight group. Only advertisers under the provided partner ID will be listed in this field.
+  &quot;displayName&quot;: &quot;A String&quot;, # Required. The display name of the Floodlight activity.
+  &quot;floodlightActivityId&quot;: &quot;A String&quot;, # Output only. The unique ID of the Floodlight activity. Assigned by the system.
+  &quot;floodlightGroupId&quot;: &quot;A String&quot;, # Required. Immutable. The ID of the parent Floodlight group.
+  &quot;name&quot;: &quot;A String&quot;, # Output only. The resource name of the Floodlight activity.
+  &quot;remarketingConfigs&quot;: [ # Output only. A list of configuration objects designating whether remarketing for this Floodlight Activity is enabled and available for a specifc advertiser. If enabled, this Floodlight Activity generates a remarketing user list that is able to be used in targeting under the advertiser.
+    { # Settings that control the whether remarketing is enabled for the given identified advertiser.
+      &quot;advertiserId&quot;: &quot;A String&quot;, # Output only. The ID of the advertiser.
+      &quot;remarketingEnabled&quot;: True or False, # Output only. Whether the Floodlight activity remarketing user list is available to the identified advertiser.
+  &quot;servingStatus&quot;: &quot;A String&quot;, # Optional. Whether the Floodlight activity is served.
+  &quot;sslRequired&quot;: True or False, # Output only. Whether tags are required to be compliant.
+    <code class="details" id="list">list(floodlightGroupId, orderBy=None, pageSize=None, pageToken=None, partnerId=None, x__xgafv=None)</code>
+  <pre>Lists Floodlight activities in a Floodlight group.
+  floodlightGroupId: string, Required. The ID of the parent Floodlight group to which the requested Floodlight activities belong. (required)
+  orderBy: string, Optional. Field by which to sort the list. Acceptable values are: * `displayName` (default) * `floodlightActivityId` The default sorting order is ascending. To specify descending order for a field, a suffix &quot;desc&quot; should be added to the field name. Example: `displayName desc`.
+  pageSize: integer, Optional. Requested page size. Must be between `1` and `200`. If unspecified will default to `100`. Returns error code `INVALID_ARGUMENT` if an invalid value is specified.
+  pageToken: string, Optional. A token identifying a page of results the server should return. Typically, this is the value of next_page_token returned from the previous call to `ListFloodlightActivities` method. If not specified, the first page of results will be returned.
+  partnerId: string, Required. The ID of the partner through which the Floodlight activities are being accessed.
+  &quot;floodlightActivities&quot;: [ # The list of Floodlight activities. This list will be absent if empty.
+  &quot;nextPageToken&quot;: &quot;A String&quot;, # A token to retrieve the next page of results. Pass this value in the page_token field in the subsequent call to `ListFloodlightActivities` method to retrieve the next page of results.

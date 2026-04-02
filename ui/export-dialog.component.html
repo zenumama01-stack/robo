@@ -1,0 +1,65 @@
+  <div class="mj-export-backdrop" (click)="onCancel()"></div>
+  <div class="mj-export-dialog" role="dialog" aria-modal="true" [attr.aria-labelledby]="'export-dialog-title'">
+    <div class="mj-export-header">
+      <h2 id="export-dialog-title">{{ dialogTitle }}</h2>
+      <button type="button" class="mj-export-close" (click)="onCancel()" aria-label="Close">
+    <div class="mj-export-content">
+      <!-- Format Selection -->
+      <div class="mj-export-section">
+        <label class="mj-export-label">Export Format</label>
+        <div class="mj-export-formats">
+          @for (format of availableFormats; track format) {
+              class="mj-export-format-btn"
+              [class.selected]="selectedFormat === format"
+              (click)="selectFormat(format)">
+              <span class="fa-solid {{ getFormatInfo(format).icon }} mj-export-format-icon"></span>
+              <span class="mj-export-format-label">{{ getFormatInfo(format).label }}</span>
+              <span class="mj-export-format-desc">{{ getFormatInfo(format).description }}</span>
+      <!-- File Name -->
+        <label class="mj-export-label" for="exportFileName">File Name</label>
+        <div class="mj-export-input-group">
+            id="exportFileName"
+            class="mj-export-input"
+            [(ngModel)]="fileName"
+            placeholder="Enter file name" />
+          <span class="mj-export-input-hint">Extension added automatically</span>
+      <!-- Include Headers -->
+      <div class="mj-export-section mj-export-checkbox-section">
+        <label class="mj-export-checkbox">
+          <input type="checkbox" [(ngModel)]="includeHeaders" />
+          <span class="mj-export-checkbox-mark"></span>
+          <span>Include column headers</span>
+      <!-- Row Selection (Sampling) -->
+      @if (showSamplingOptions) {
+          <label class="mj-export-label">Row Selection</label>
+          <div class="mj-export-sampling-row">
+            <select class="mj-export-select" [(ngModel)]="samplingMode">
+              @for (mode of samplingModes; track mode.mode) {
+                <option [value]="mode.mode">{{ mode.label }}</option>
+            @if (needsSampleCount) {
+                class="mj-export-number-input"
+                [(ngModel)]="sampleCount"
+                [max]="totalRows"
+                placeholder="Count" />
+            @if (needsSampleInterval) {
+                [(ngModel)]="sampleInterval"
+                placeholder="Interval" />
+          <div class="mj-export-sampling-desc">
+            {{ samplingDescription }}
+      <div class="mj-export-section mj-export-summary">
+        <div class="mj-export-summary-row">
+          <span class="mj-export-summary-label">Total rows available</span>
+          <span class="mj-export-summary-value">{{ totalRows | number }}</span>
+          <span class="mj-export-summary-label">Rows to export</span>
+          <span class="mj-export-summary-value mj-export-highlight">{{ estimatedRows | number }}</span>
+      @if (exportError) {
+        <div class="mj-export-error">
+          <span class="fa-solid fa-exclamation-circle"></span>
+          {{ exportError }}
+    <div class="mj-export-actions">
+        class="mj-export-btn mj-export-btn-primary"
+        @if (!isExporting) {
+          <span class="fa-solid fa-download"></span>
+          <span class="fa-solid fa-spinner fa-spin"></span>
+          Exporting...
+        class="mj-export-btn mj-export-btn-secondary"

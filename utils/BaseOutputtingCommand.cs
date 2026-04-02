@@ -1,0 +1,531 @@
+    /// OutCommand base implementation
+    /// it manages the formatting protocol and it writes to a generic
+    /// screen host.
+    internal class OutCommandInner : ImplementationCommandBase
+        [TraceSource("format_out_OutCommandInner", "OutCommandInner")]
+        internal static readonly PSTraceSource tracer = PSTraceSource.GetTracer("format_out_OutCommandInner", "OutCommandInner");
+            // hook up the event handlers for the context manager object
+            _ctxManager.contextCreation = new FormatMessagesContextManager.FormatContextCreationCallback(this.CreateOutputContext);
+            _ctxManager.fs = new FormatMessagesContextManager.FormatStartCallback(this.ProcessFormatStart);
+            _ctxManager.fe = new FormatMessagesContextManager.FormatEndCallback(this.ProcessFormatEnd);
+            _ctxManager.gs = new FormatMessagesContextManager.GroupStartCallback(this.ProcessGroupStart);
+            _ctxManager.ge = new FormatMessagesContextManager.GroupEndCallback(this.ProcessGroupEnd);
+            _ctxManager.payload = new FormatMessagesContextManager.PayloadCallback(this.ProcessPayload);
+        /// Execution entry point override
+        /// we assume that a LineOutput interface instance already has been acquired
+        /// IMPORTANT: it assumes the presence of a pre-processing formatting command.
+            // try to process the object
+            if (ProcessObject(so))
+            // send to the formatter for preprocessing
+            Array results = ApplyFormatting(so);
+            if (results != null)
+                foreach (object r in results)
+                    PSObject obj = PSObjectHelper.AsPSObject(r);
+                    obj.IsHelpObject = so.IsHelpObject;
+                    ProcessObject(obj);
+            if (_command != null)
+                // shut down the command processor, if we ever used it
+                Array results = _command.ShutDown();
+                    foreach (object o in results)
+                        ProcessObject(PSObjectHelper.AsPSObject(o));
+            if (this.LineOutput.RequiresBuffering)
+                // we need to notify the interface implementor that
+                // we are about to do the playback
+                LineOutput.DoPlayBackCall playBackCall = new LineOutput.DoPlayBackCall(this.DrainCache);
+                this.LineOutput.ExecuteBufferPlayBack(playBackCall);
+                // we drain the cache ourselves
+                DrainCache();
+        private void DrainCache()
+            if (_cache != null)
+                // drain the cache, since we are shutting down
+                List<PacketInfoData> unprocessedObjects = _cache.Drain();
+                if (unprocessedObjects != null)
+                    foreach (object obj in unprocessedObjects)
+                        _ctxManager.Process(obj);
+        private bool ProcessObject(PSObject so)
+            object o = _formatObjectDeserializer.Deserialize(so);
+            // Console.WriteLine("OutCommandInner.Execute() retrieved object {0}, of type {1}", o.ToString(), o.GetType());
+            if (NeedsPreprocessing(o))
+            // instantiate the cache if not done yet
+            _cache ??= new FormattedObjectsCache(this.LineOutput.RequiresBuffering);
+            // no need for formatting, just process the object
+            if (o is FormatStartData formatStart)
+                // get autosize flag from object
+                // turn on group caching
+                if (formatStart.autosizeInfo != null)
+                    FormattedObjectsCache.ProcessCachedGroupNotification callBack = new FormattedObjectsCache.ProcessCachedGroupNotification(ProcessCachedGroup);
+                    _cache.EnableGroupCaching(callBack, formatStart.autosizeInfo.objectCount);
+                    // If the format info doesn't define column widths, then auto-size based on the first ten elements
+                    if ((formatStart.shapeInfo is TableHeaderInfo headerInfo) &&
+                        (headerInfo.tableColumnInfoList.Count > 0) &&
+                        (headerInfo.tableColumnInfoList[0].width == 0))
+                        _cache.EnableGroupCaching(callBack, TimeSpan.FromMilliseconds(300));
+            // Console.WriteLine("OutCommandInner.Execute() calling ctxManager.Process({0})",o.ToString());
+            List<PacketInfoData> info = _cache.Add((PacketInfoData)o);
+            if (info != null)
+                for (int k = 0; k < info.Count; k++)
+                    _ctxManager.Process(info[k]);
+        /// Helper to return what shape we have to use to format the output.
+        private FormatShape ActiveFormattingShape
+                // we assume that the format context
+                // contains the information
+                const FormatShape shape = FormatShape.Table; // default
+                FormatOutputContext foc = this.FormatContext;
+                if (foc == null || foc.Data.shapeInfo == null)
+                    return shape;
+                if (foc.Data.shapeInfo is TableHeaderInfo)
+                    return FormatShape.Table;
+                if (foc.Data.shapeInfo is ListViewHeaderInfo)
+                    return FormatShape.List;
+                if (foc.Data.shapeInfo is WideViewHeaderInfo)
+                    return FormatShape.Wide;
+                if (foc.Data.shapeInfo is ComplexViewHeaderInfo)
+                    return FormatShape.Complex;
+                _command.Dispose();
+                _command = null;
+        /// Enum describing the state for the output finite state machine.
+        private enum FormattingState
+            /// We are in the clear state: no formatting in process.
+            Reset,
+            /// We received a Format Start message, but we are not inside a group.
+            Formatting,
+            /// We are inside a group because we received a Group Start.
+            InsideGroup
+        /// Toggle to signal if we are in a formatting sequence.
+        private FormattingState _currentFormattingState = FormattingState.Reset;
+        /// Instance of a command wrapper to execute the
+        /// default formatter when needed.
+        private CommandWrapper _command;
+        /// Enumeration to drive the preprocessing stage.
+        private enum PreprocessingState { raw, processed, error }
+        private const int DefaultConsoleWidth = 120;
+        private const int DefaultConsoleHeight = int.MaxValue;
+        internal const int StackAllocThreshold = 120;
+        /// Test if an object coming from the pipeline needs to be
+        /// preprocessed by the default formatter.
+        /// <param name="o">Object to examine for formatting.</param>
+        /// <returns>Whether the object needs to be shunted to preprocessing.</returns>
+        private bool NeedsPreprocessing(object o)
+            if (o is FormatEntryData fed)
+                // we got an already pre-processed object
+                if (!fed.outOfBand)
+                    // we allow out of band data in any state
+                    ValidateCurrentFormattingState(FormattingState.InsideGroup, o);
+            else if (o is FormatStartData)
+                // when encountering FormatStartDate out of sequence,
+                // pretend that the previous formatting directives were properly closed
+                if (_currentFormattingState == FormattingState.InsideGroup)
+                    this.BeginProcessing();
+                // we got a Fs message, we enter a sequence
+                ValidateCurrentFormattingState(FormattingState.Reset, o);
+                _currentFormattingState = FormattingState.Formatting;
+            else if (o is FormatEndData)
+                // we got a Fe message, we exit a sequence
+                ValidateCurrentFormattingState(FormattingState.Formatting, o);
+                _currentFormattingState = FormattingState.Reset;
+            else if (o is GroupStartData)
+                _currentFormattingState = FormattingState.InsideGroup;
+            else if (o is GroupEndData)
+            // this is a raw object
+        private void ValidateCurrentFormattingState(FormattingState expectedFormattingState, object obj)
+            // check if we are in the expected formatting state
+            if (_currentFormattingState != expectedFormattingState)
+                // we are not in the expected state, some message is out of sequence,
+                // need to abort the command
+                string violatingCommand = "format-*";
+                if (obj is StartData sdObj)
+                    if (sdObj.shapeInfo is WideViewHeaderInfo)
+                        violatingCommand = "format-wide";
+                    else if (sdObj.shapeInfo is TableHeaderInfo)
+                        violatingCommand = "format-table";
+                    else if (sdObj.shapeInfo is ListViewHeaderInfo)
+                        violatingCommand = "format-list";
+                    else if (sdObj.shapeInfo is ComplexViewHeaderInfo)
+                        violatingCommand = "format-complex";
+                string msg = StringUtil.Format(FormatAndOut_out_xxx.OutLineOutput_OutOfSequencePacket,
+                    obj.GetType().FullName, violatingCommand);
+                                                "ConsoleLineOutputOutOfSequencePacket",
+                this.TerminatingErrorContext.ThrowTerminatingError(errorRecord);
+        /// Shunt object to the formatting pipeline for preprocessing.
+        /// <param name="o">Object to be preprocessed.</param>
+        /// <returns>Array of objects returned by the preprocessing step.</returns>
+        private Array ApplyFormatting(object o)
+            if (_command == null)
+                _command = new CommandWrapper();
+                _command.Initialize(this.OuterCmdlet().Context, "format-default", typeof(FormatDefaultCommand));
+            return _command.Process(o);
+        /// Class factory for output context.
+        /// <param name="parentContext">Parent context in the stack.</param>
+        /// <param name="formatInfoData">Fromat info data received from the pipeline.</param>
+        private FormatMessagesContextManager.OutputContext CreateOutputContext(
+                                        FormatMessagesContextManager.OutputContext parentContext,
+                                        FormatInfoData formatInfoData)
+            // initialize the format context
+            if (formatInfoData is FormatStartData formatStartData)
+                FormatOutputContext foc = new FormatOutputContext(parentContext, formatStartData);
+                return foc;
+            // we are starting a group, initialize the group context
+            if (formatInfoData is GroupStartData gsd)
+                GroupOutputContext goc = null;
+                switch (ActiveFormattingShape)
+                    case FormatShape.Table:
+                            goc = new TableOutputContext(this, parentContext, gsd);
+                    case FormatShape.List:
+                            goc = new ListOutputContext(this, parentContext, gsd);
+                    case FormatShape.Wide:
+                            goc = new WideOutputContext(this, parentContext, gsd);
+                    case FormatShape.Complex:
+                            goc = new ComplexOutputContext(this, parentContext, gsd);
+                            Diagnostics.Assert(false, "Invalid shape. This should never happen");
+                goc.Initialize();
+                return goc;
+        /// Callback for Fs processing.
+        /// <param name="c">The context containing the Fs entry.</param>
+        private void ProcessFormatStart(FormatMessagesContextManager.OutputContext c)
+            // we just add an empty line to the display
+            this.LineOutput.WriteLine(string.Empty);
+        /// Callback for Fe processing.
+        /// <param name="fe">Fe notification message.</param>
+        /// <param name="c">Current context, with Fs in it.</param>
+        private void ProcessFormatEnd(FormatEndData fe, FormatMessagesContextManager.OutputContext c)
+            if (c is FormatOutputContext foContext
+                && foContext.Data.shapeInfo is ListViewHeaderInfo)
+                // Skip writing out a new line for List view, because we already wrote out
+                // an extra new line after displaying the last list entry.
+            // We just add an empty line to the display.
+            LineOutput.WriteLine(string.Empty);
+        /// Callback for Gs processing.
+        /// <param name="c">The context containing the Gs entry.</param>
+        private void ProcessGroupStart(FormatMessagesContextManager.OutputContext c)
+            // Console.WriteLine("ProcessGroupStart");
+            GroupOutputContext goc = (GroupOutputContext)c;
+            if (goc.Data.groupingEntry != null)
+                ComplexWriter writer = new ComplexWriter();
+                writer.Initialize(_lo, _lo.ColumnNumber);
+                writer.WriteObject(goc.Data.groupingEntry.formatValueList);
+                _lo.WriteLine(string.Empty);
+            goc.GroupStart();
+        /// Callback for Ge processing.
+        /// <param name="ge">Ge notification message.</param>
+        /// <param name="c">Current context, with Gs in it.</param>
+        private void ProcessGroupEnd(GroupEndData ge, FormatMessagesContextManager.OutputContext c)
+            // Console.WriteLine("ProcessGroupEnd");
+            goc.GroupEnd();
+        /// Process the current payload object.
+        /// <param name="fed">FormatEntryData to process.</param>
+        /// <param name="c">Currently active context.</param>
+        private void ProcessPayload(FormatEntryData fed, FormatMessagesContextManager.OutputContext c)
+            // we assume FormatEntryData as a standard wrapper
+            if (fed == null)
+                PSTraceSource.NewArgumentNullException(nameof(fed));
+            if (fed.formatEntryInfo == null)
+                PSTraceSource.NewArgumentNullException("fed.formatEntryInfo");
+            WriteStreamType oldWSState = _lo.WriteStream;
+                _lo.WriteStream = fed.writeStream;
+                if (c == null)
+                    ProcessOutOfBandPayload(fed);
+                    goc.ProcessPayload(fed);
+                _lo.WriteStream = oldWSState;
+        private void ProcessOutOfBandPayload(FormatEntryData fed)
+            // try if it is raw text
+            if (fed.formatEntryInfo is RawTextFormatEntry rte)
+                if (fed.isHelpObject)
+                    ComplexWriter complexWriter = new ComplexWriter();
+                    complexWriter.Initialize(_lo, _lo.ColumnNumber);
+                    complexWriter.WriteString(rte.text);
+                    // Write out raw text without any changes to it.
+                    _lo.WriteRawText(rte.text);
+            // try if it is a complex entry
+            if (fed.formatEntryInfo is ComplexViewEntry cve && cve.formatValueList != null)
+                complexWriter.Initialize(_lo, int.MaxValue);
+                complexWriter.WriteObject(cve.formatValueList);
+            // try if it is a list view
+            if (fed.formatEntryInfo is ListViewEntry lve && lve.listViewFieldList != null)
+                ListWriter listWriter = new ListWriter();
+                string[] properties = ListOutputContext.GetProperties(lve);
+                listWriter.Initialize(properties, _lo.ColumnNumber, _lo.DisplayCells);
+                string[] values = ListOutputContext.GetValues(lve);
+                listWriter.WriteProperties(values, _lo);
+        /// The screen host associated with this outputter.
+        private LineOutput _lo = null;
+        internal LineOutput LineOutput
+            get { return _lo; }
+            set { _lo = value; }
+        private ShapeInfo ShapeInfoOnFormatContext
+                if (foc == null)
+                return foc.Data.shapeInfo;
+        /// Retrieve the active FormatOutputContext on the stack
+        /// by walking up to the top of the stack.
+        private FormatOutputContext FormatContext
+                for (FormatMessagesContextManager.OutputContext oc = _ctxManager.ActiveOutputContext; oc != null; oc = oc.ParentContext)
+                    if (oc is FormatOutputContext foc)
+        /// Context manager instance to guide the message traversal.
+        private readonly FormatMessagesContextManager _ctxManager = new FormatMessagesContextManager();
+        private FormattedObjectsCache _cache = null;
+        /// Handler for processing the caching notification and responsible for
+        /// setting the value of the formatting hint.
+        /// <param name="formatStartData"></param>
+        /// <param name="objects"></param>
+        private void ProcessCachedGroup(FormatStartData formatStartData, List<PacketInfoData> objects)
+            _formattingHint = null;
+            if (formatStartData.shapeInfo is TableHeaderInfo thi)
+                ProcessCachedGroupOnTable(thi, objects);
+            if (formatStartData.shapeInfo is WideViewHeaderInfo wvhi)
+                ProcessCachedGroupOnWide(wvhi, objects);
+        private void ProcessCachedGroupOnTable(TableHeaderInfo thi, List<PacketInfoData> objects)
+            if (thi.tableColumnInfoList.Count == 0)
+            int[] widths = new int[thi.tableColumnInfoList.Count];
+            for (int k = 0; k < thi.tableColumnInfoList.Count; k++)
+                string label = thi.tableColumnInfoList[k].label;
+                if (string.IsNullOrEmpty(label))
+                    label = thi.tableColumnInfoList[k].propertyName;
+                    widths[k] = 0;
+                    widths[k] = _lo.DisplayCells.Length(label);
+            int cellCount; // scratch variable
+            foreach (PacketInfoData o in objects)
+                    TableRowEntry tre = fed.formatEntryInfo as TableRowEntry;
+                    int kk = 0;
+                    foreach (FormatPropertyField fpf in tre.formatPropertyFieldList)
+                        cellCount = _lo.DisplayCells.Length(fpf.propertyValue);
+                        if (widths[kk] < cellCount)
+                            widths[kk] = cellCount;
+                        kk++;
+            TableFormattingHint hint = new TableFormattingHint();
+            hint.columnWidths = widths;
+            _formattingHint = hint;
+        private void ProcessCachedGroupOnWide(WideViewHeaderInfo wvhi, List<PacketInfoData> objects)
+            if (wvhi.columns != 0)
+                // columns forced on the client
+            int maxLen = 0;
+                    WideViewEntry wve = fed.formatEntryInfo as WideViewEntry;
+                    FormatPropertyField fpf = wve.formatPropertyField as FormatPropertyField;
+                    if (!string.IsNullOrEmpty(fpf.propertyValue))
+                        if (cellCount > maxLen)
+                            maxLen = cellCount;
+            WideFormattingHint hint = new WideFormattingHint();
+            hint.maxWidth = maxLen;
+        /// Tables and Wides need to use spaces for padding to maintain table look even if console window is resized.
+        /// For all other output, we use int.MaxValue if the user didn't explicitly specify a width.
+        /// If we detect that int.MaxValue is used, first we try to get the current console window width.
+        /// However, if we can't read that (for example, implicit remoting has no console window), we default
+        /// to something reasonable: 120 columns.
+        private static int GetConsoleWindowWidth(int columnNumber)
+            if (InternalTestHooks.SetConsoleWidthToZero)
+                return DefaultConsoleWidth;
+            if (columnNumber == int.MaxValue)
+                    // if Console width is set to 0, the default width is returned so that the output string is not null.
+                    // This can happen in environments where TERM is not set.
+                    return (Console.WindowWidth != 0) ? Console.WindowWidth : DefaultConsoleWidth;
+            return columnNumber;
+        /// Return the console height.null  If not available (like when remoting), treat as Int.MaxValue.
+        private static int GetConsoleWindowHeight(int rowNumber)
+            if (InternalTestHooks.SetConsoleHeightToZero)
+                return DefaultConsoleHeight;
+            if (rowNumber <= 0)
+                    // if Console height is set to 0, the default height is returned.
+                    return (Console.WindowHeight > 0) ? Console.WindowHeight : DefaultConsoleHeight;
+            return rowNumber;
+        /// Base class for all the formatting hints.
+        private abstract class FormattingHint
+        /// Hint for format-table.
+        private sealed class TableFormattingHint : FormattingHint
+            internal int[] columnWidths = null;
+        /// Hint for format-wide.
+        private sealed class WideFormattingHint : FormattingHint
+            internal int maxWidth = 0;
+        /// Variable holding the autosize hint (set by the caching code and reset by the hint consumer.
+        private FormattingHint _formattingHint = null;
+        /// Helper for consuming the formatting hint.
+        private FormattingHint RetrieveFormattingHint()
+            FormattingHint fh = _formattingHint;
+            return fh;
+        /// Context for the outer scope of the format sequence.
+        private sealed class FormatOutputContext : FormatMessagesContextManager.OutputContext
+            /// Construct a context to push on the stack.
+            /// <param name="formatData">Format data to put in the context.</param>
+            internal FormatOutputContext(FormatMessagesContextManager.OutputContext parentContext, FormatStartData formatData)
+                : base(parentContext)
+                Data = formatData;
+            /// Retrieve the format data in the context.
+            internal FormatStartData Data { get; } = null;
+        /// Context for the currently active group.
+        private abstract class GroupOutputContext : FormatMessagesContextManager.OutputContext
+            internal GroupOutputContext(OutCommandInner cmd,
+                                    GroupStartData formatData)
+                InnerCommand = cmd;
+            /// Called at creation time, overrides will initialize here, e.g.
+            /// column widths, etc.
+            internal virtual void Initialize() { }
+            /// Called when a group of data is started, overridden will do
+            /// things such as headers, etc...
+            internal virtual void GroupStart() { }
+            /// Called when the end of a group is reached, overrides will do
+            /// things such as group footers.
+            internal virtual void GroupEnd() { }
+            /// Called when there is an entry to process, overrides will do
+            /// things such as writing a row in a table.
+            internal virtual void ProcessPayload(FormatEntryData fed) { }
+            internal GroupStartData Data { get; } = null;
+            protected OutCommandInner InnerCommand { get; }
+        private class TableOutputContextBase : GroupOutputContext
+            /// <param name="cmd">Reference to the OutCommandInner instance who owns this instance.</param>
+            internal TableOutputContextBase(OutCommandInner cmd,
+                : base(cmd, parentContext, formatData)
+            /// Get the table writer for this context.
+            protected TableWriter Writer { get { return _tableWriter; } }
+            /// Helper class to properly write a table using text output.
+            private readonly TableWriter _tableWriter = new TableWriter();
+        private sealed class TableOutputContext : TableOutputContextBase
+            private int _rowCount = 0;
+            private int _consoleHeight = -1;
+            private int _consoleWidth = -1;
+            private const int WhitespaceAndPagerLineCount = 2;
+            private readonly bool _repeatHeader = false;
+            internal TableOutputContext(OutCommandInner cmd,
+                if (parentContext is FormatOutputContext foc)
+                    if (foc.Data.shapeInfo is TableHeaderInfo thi)
+                        _repeatHeader = thi.repeatHeader;
+            /// Initialize column widths.
+            internal override void Initialize()
+                int[] columnWidthsHint = null;
+                // We expect that console width is less than 120.
+                if (this.InnerCommand.RetrieveFormattingHint() is TableFormattingHint tableHint)
+                    columnWidthsHint = tableHint.columnWidths;
+                _consoleHeight = GetConsoleWindowHeight(this.InnerCommand._lo.RowNumber);
+                _consoleWidth = GetConsoleWindowWidth(this.InnerCommand._lo.ColumnNumber);
+                int columns = this.CurrentTableHeaderInfo.tableColumnInfoList.Count;
+                if (columns == 0)
+                // create arrays for widths and alignment
+                Span<int> columnWidths = columns <= StackAllocThreshold ? stackalloc int[columns] : new int[columns];
+                Span<int> alignment = columns <= StackAllocThreshold ? stackalloc int[columns] : new int[columns];
+                Span<bool> headerMatchesProperty = columns <= StackAllocThreshold ? stackalloc bool[columns] : new bool[columns];
+                int k = 0;
+                foreach (TableColumnInfo tci in this.CurrentTableHeaderInfo.tableColumnInfoList)
+                    columnWidths[k] = (columnWidthsHint != null) ? columnWidthsHint[k] : tci.width;
+                    alignment[k] = tci.alignment;
+                    headerMatchesProperty[k] = tci.HeaderMatchesProperty;
+                    k++;
+                this.Writer.Initialize(0, _consoleWidth, columnWidths, alignment, headerMatchesProperty, this.CurrentTableHeaderInfo.hideHeader);
+            /// Write the headers.
+            internal override void GroupStart()
+                string[] properties = new string[columns];
+                    properties[k++] = tci.label ?? tci.propertyName;
+                _rowCount += this.Writer.GenerateHeader(properties, this.InnerCommand._lo);
+            /// Write a row into the table.
+            internal override void ProcessPayload(FormatEntryData fed)
+                int headerColumns = this.CurrentTableHeaderInfo.tableColumnInfoList.Count;
+                if (headerColumns == 0)
+                if (_repeatHeader && _rowCount >= _consoleHeight - WhitespaceAndPagerLineCount)
+                    this.InnerCommand._lo.WriteLine(string.Empty);
+                    _rowCount = this.Writer.GenerateHeader(null, this.InnerCommand._lo);
+                // need to make sure we have matching counts: the header count will have to prevail
+                string[] values = new string[headerColumns];
+                Span<int> alignment = headerColumns <= StackAllocThreshold ? stackalloc int[headerColumns] : new int[headerColumns];
+                int fieldCount = tre.formatPropertyFieldList.Count;
+                for (int k = 0; k < headerColumns; k++)
+                    if (k < fieldCount)
+                        values[k] = tre.formatPropertyFieldList[k].propertyValue;
+                        alignment[k] = tre.formatPropertyFieldList[k].alignment;
+                        values[k] = string.Empty;
+                        alignment[k] = TextAlignment.Left; // hard coded default
+                this.Writer.GenerateRow(values, this.InnerCommand._lo, tre.multiLine, alignment, InnerCommand._lo.DisplayCells, generatedRows: null);
+                _rowCount++;
+            private TableHeaderInfo CurrentTableHeaderInfo
+                    return (TableHeaderInfo)this.InnerCommand.ShapeInfoOnFormatContext;
+        private sealed class ListOutputContext : GroupOutputContext
+            internal ListOutputContext(OutCommandInner cmd,
+            private void InternalInitialize(ListViewEntry lve)
+                _properties = GetProperties(lve);
+                _listWriter.Initialize(_properties, this.InnerCommand._lo.ColumnNumber, InnerCommand._lo.DisplayCells);
+            internal static string[] GetProperties(ListViewEntry lve)
+                int count = lve.listViewFieldList.Count;
+                if (count == 0)
+                string[] result = new string[count];
+                for (int index = 0; index < result.Length; ++index)
+                    ListViewField lvf = lve.listViewFieldList[index];
+                    result[index] = lvf.label ?? lvf.propertyName;
+            internal static string[] GetValues(ListViewEntry lve)
+                    result[index] = lvf.formatPropertyField.propertyValue;
+            /// Write a row into the list.
+                ListViewEntry lve = fed.formatEntryInfo as ListViewEntry;
+                InternalInitialize(lve);
+                string[] values = GetValues(lve);
+                _listWriter.WriteProperties(values, this.InnerCommand._lo);
+            /// Property list currently active.
+            private string[] _properties = null;
+            /// Writer to do the actual formatting.
+            private readonly ListWriter _listWriter = new ListWriter();
+        private sealed class WideOutputContext : TableOutputContextBase
+            internal WideOutputContext(OutCommandInner cmd,
+            private StringValuesBuffer _buffer = null;
+                // set the hard wider default, to be used if no other info is available
+                int itemsPerRow = 2;
+                // get the header info
+                int columnsOnTheScreen = GetConsoleWindowWidth(this.InnerCommand._lo.ColumnNumber);
+                // give a preference to the hint, if there
+                if (this.InnerCommand.RetrieveFormattingHint() is WideFormattingHint hint && hint.maxWidth > 0)
+                    itemsPerRow = TableWriter.ComputeWideViewBestItemsPerRowFit(hint.maxWidth, columnsOnTheScreen);
+                else if (this.CurrentWideHeaderInfo.columns > 0)
+                    itemsPerRow = this.CurrentWideHeaderInfo.columns;
+                // create a buffer object to hold partial rows
+                _buffer = new StringValuesBuffer(itemsPerRow);
+                // initialize the writer
+                Span<int> columnWidths = itemsPerRow <= StackAllocThreshold ? stackalloc int[itemsPerRow] : new int[itemsPerRow];
+                Span<int> alignment = itemsPerRow <= StackAllocThreshold ? stackalloc int[itemsPerRow] : new int[itemsPerRow];
+                for (int k = 0; k < itemsPerRow; k++)
+                    columnWidths[k] = 0; // autosize
+                    alignment[k] = TextAlignment.Left;
+                this.Writer.Initialize(leftMarginIndent: 0, columnsOnTheScreen, columnWidths, alignment, headerMatchesProperty: null, suppressHeader: false, screenRows: GetConsoleWindowHeight(this.InnerCommand._lo.RowNumber));
+            /// Called when the end of a group is reached, flush the
+            /// write buffer.
+            internal override void GroupEnd()
+                WriteStringBuffer();
+                _buffer.Add(fpf.propertyValue);
+                if (_buffer.IsFull)
+            private WideViewHeaderInfo CurrentWideHeaderInfo
+                    return (WideViewHeaderInfo)this.InnerCommand.ShapeInfoOnFormatContext;
+            private void WriteStringBuffer()
+                if (_buffer.IsEmpty)
+                string[] values = new string[_buffer.Length];
+                for (int k = 0; k < values.Length; k++)
+                    if (k < _buffer.CurrentCount)
+                        values[k] = _buffer[k];
+                this.Writer.GenerateRow(values, this.InnerCommand._lo, false, null, InnerCommand._lo.DisplayCells, generatedRows: null);
+                _buffer.Reset();
+            /// Helper class to accumulate the display values so that when the end
+            /// of a line is reached, a full line can be composed.
+            private sealed class StringValuesBuffer
+                /// Construct the buffer.
+                /// <param name="size">Number of entries to cache.</param>
+                internal StringValuesBuffer(int size)
+                    _arr = new string[size];
+                /// Get the size of the buffer.
+                internal int Length { get { return _arr.Length; } }
+                /// Get the current number of entries in the buffer.
+                internal int CurrentCount { get { return _lastEmptySpot; } }
+                /// Check if the buffer is full.
+                internal bool IsFull
+                    get { return _lastEmptySpot == _arr.Length; }
+                /// Check if the buffer is empty.
+                internal bool IsEmpty
+                    get { return _lastEmptySpot == 0; }
+                /// Indexer to access the k-th item in the buffer.
+                internal string this[int k] { get { return _arr[k]; } }
+                /// Add an item to the buffer.
+                /// <param name="s">String to add.</param>
+                internal void Add(string s)
+                    _arr[_lastEmptySpot++] = s;
+                /// Reset the buffer.
+                internal void Reset()
+                    _lastEmptySpot = 0;
+                    for (int k = 0; k < _arr.Length; k++)
+                        _arr[k] = null;
+                private readonly string[] _arr;
+                private int _lastEmptySpot;
+        private sealed class ComplexOutputContext : GroupOutputContext
+            internal ComplexOutputContext(OutCommandInner cmd,
+                _writer.Initialize(this.InnerCommand._lo,
+                                    this.InnerCommand._lo.ColumnNumber);
+                if (fed.formatEntryInfo is ComplexViewEntry cve && cve.formatValueList is not null)
+                    _writer.WriteObject(cve.formatValueList);
+            private readonly ComplexWriter _writer = new ComplexWriter();

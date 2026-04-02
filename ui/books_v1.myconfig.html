@@ -1,0 +1,57 @@
+<h1><a href="books_v1.html">Books API</a> . <a href="books_v1.myconfig.html">myconfig</a></h1>
+  <code><a href="#getUserSettings">getUserSettings(country=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Gets the current settings for the user.</p>
+  <code><a href="#releaseDownloadAccess">releaseDownloadAccess(cpksver, volumeIds, locale=None, source=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Release downloaded content access restriction.</p>
+  <code><a href="#requestAccess">requestAccess(cpksver, nonce, source, volumeId, licenseTypes=None, locale=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Request concurrent and download access restrictions.</p>
+  <code><a href="#syncVolumeLicenses">syncVolumeLicenses(cpksver, nonce, source, features=None, includeNonComicsSeries=None, locale=None, showPreorders=None, volumeIds=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Request downloaded content access for specified volumes on the My eBooks shelf.</p>
+  <code><a href="#updateUserSettings">updateUserSettings(body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Sets the settings for the user. If a sub-object is specified, it will overwrite the existing sub-object stored in the server. Unspecified sub-objects will retain the existing value.</p>
+    <code class="details" id="getUserSettings">getUserSettings(country=None, x__xgafv=None)</code>
+  <pre>Gets the current settings for the user.
+  country: string, Unused. Added only to workaround TEX mandatory request template requirement
+  &quot;notesExport&quot;: { # User settings in sub-objects, each for different purposes.
+    &quot;folderName&quot;: &quot;A String&quot;,
+    &quot;isEnabled&quot;: True or False,
+  &quot;notification&quot;: {
+    &quot;matchMyInterests&quot;: {
+      &quot;opted_state&quot;: &quot;A String&quot;,
+    &quot;moreFromAuthors&quot;: {
+    &quot;moreFromSeries&quot;: {
+    &quot;priceDrop&quot;: {
+    &quot;rewardExpirations&quot;: {
+    <code class="details" id="releaseDownloadAccess">releaseDownloadAccess(cpksver, volumeIds, locale=None, source=None, x__xgafv=None)</code>
+  <pre>Release downloaded content access restriction.
+  cpksver: string, The device/version ID from which to release the restriction. (required)
+  volumeIds: string, The volume(s) to release restrictions for. (required) (repeated)
+  locale: string, ISO-639-1, ISO-3166-1 codes for message localization, i.e. en_US.
+  &quot;downloadAccessList&quot;: [ # A list of download access responses.
+    <code class="details" id="requestAccess">requestAccess(cpksver, nonce, source, volumeId, licenseTypes=None, locale=None, x__xgafv=None)</code>
+  <pre>Request concurrent and download access restrictions.
+  cpksver: string, The device/version ID from which to request the restrictions. (required)
+  nonce: string, The client nonce value. (required)
+  source: string, String to identify the originator of this request. (required)
+  volumeId: string, The volume to request concurrent/download restrictions for. (required)
+  licenseTypes: string, The type of access license to request. If not specified, the default is BOTH.
+      LICENSE_TYPES_UNDEFINED - 
+      BOTH - Both concurrent and download licenses.
+      CONCURRENT - Concurrent access license.
+      DOWNLOAD - Offline download access license.
+  &quot;concurrentAccess&quot;: { # A concurrent access response.
+    &quot;deviceAllowed&quot;: True or False, # Whether access is granted for this (user, device, volume).
+    &quot;maxConcurrentDevices&quot;: 42, # The maximum number of concurrent access licenses for this volume.
+    &quot;reasonCode&quot;: &quot;A String&quot;, # Error/warning reason code.
+    &quot;restricted&quot;: True or False, # Whether this volume has any concurrent access restrictions.
+    &quot;timeWindowSeconds&quot;: 42, # Time in seconds for license auto-expiration.
+  &quot;downloadAccess&quot;: { # A download access response.
+    <code class="details" id="syncVolumeLicenses">syncVolumeLicenses(cpksver, nonce, source, features=None, includeNonComicsSeries=None, locale=None, showPreorders=None, volumeIds=None, x__xgafv=None)</code>
+  <pre>Request downloaded content access for specified volumes on the My eBooks shelf.
+  features: string, List of features supported by the client, i.e., &#x27;RENTALS&#x27; (repeated)
+      FEATURES_UNDEFINED - 
+      RENTALS - Client supports rentals.
+  includeNonComicsSeries: boolean, Set to true to include non-comics series. Defaults to false.
+  volumeIds: string, The volume(s) to request download restrictions for. (repeated)
+    <code class="details" id="updateUserSettings">updateUserSettings(body=None, x__xgafv=None)</code>
+  <pre>Sets the settings for the user. If a sub-object is specified, it will overwrite the existing sub-object stored in the server. Unspecified sub-objects will retain the existing value.

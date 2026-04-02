@@ -1,0 +1,113 @@
+<h1><a href="language_v1.html">Cloud Natural Language API</a> . <a href="language_v1.documents.html">documents</a></h1>
+  <code><a href="#analyzeEntities">analyzeEntities(body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Finds named entities (currently proper names and common nouns) in the text along with entity types, salience, mentions for each entity, and other properties.</p>
+  <code><a href="#analyzeEntitySentiment">analyzeEntitySentiment(body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Finds entities, similar to AnalyzeEntities in the text and analyzes sentiment associated with each entity and its mentions.</p>
+  <code><a href="#analyzeSentiment">analyzeSentiment(body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Analyzes the sentiment of the provided text.</p>
+  <code><a href="#analyzeSyntax">analyzeSyntax(body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Analyzes the syntax of the text and provides sentence boundaries and tokenization along with part of speech tags, dependency trees, and other properties.</p>
+  <code><a href="#annotateText">annotateText(body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">A convenience method that provides all the features that analyzeSentiment, analyzeEntities, and analyzeSyntax provide in one call.</p>
+  <code><a href="#classifyText">classifyText(body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Classifies a document into categories.</p>
+  <code><a href="#moderateText">moderateText(body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Moderates a document for harmful and sensitive categories.</p>
+    <code class="details" id="analyzeEntities">analyzeEntities(body=None, x__xgafv=None)</code>
+  <pre>Finds named entities (currently proper names and common nouns) in the text along with entity types, salience, mentions for each entity, and other properties.
+{ # The entity analysis request message.
+  &quot;document&quot;: { # Represents the input to API methods. # Required. Input document.
+    &quot;content&quot;: &quot;A String&quot;, # The content of the input in string format. Cloud audit logging exempt since it is based on user data.
+    &quot;gcsContentUri&quot;: &quot;A String&quot;, # The Google Cloud Storage URI where the file content is located. This URI must be of the form: gs://bucket_name/object_name. For more details, see https://cloud.google.com/storage/docs/reference-uris. NOTE: Cloud Storage object versioning is not supported.
+    &quot;language&quot;: &quot;A String&quot;, # The language of the document (if not specified, the language is automatically detected). Both ISO and BCP-47 language codes are accepted. [Language Support](https://cloud.google.com/natural-language/docs/languages) lists currently supported languages for each API method. If the language (either specified by the caller or automatically detected) is not supported by the called API method, an `INVALID_ARGUMENT` error is returned.
+    &quot;type&quot;: &quot;A String&quot;, # Required. If the type is not set or is `TYPE_UNSPECIFIED`, returns an `INVALID_ARGUMENT` error.
+  &quot;encodingType&quot;: &quot;A String&quot;, # The encoding type used by the API to calculate offsets.
+    { # The entity analysis response message.
+  &quot;entities&quot;: [ # The recognized entities in the input document.
+    { # Represents a phrase in the text that is a known entity, such as a person, an organization, or location. The API associates information, such as salience and mentions, with entities.
+      &quot;mentions&quot;: [ # The mentions of this entity in the input document. The API currently supports proper noun mentions.
+        { # Represents a mention for an entity in the text. Currently, proper noun mentions are supported.
+          &quot;sentiment&quot;: { # Represents the feeling associated with the entire text or entities in the text. # For calls to AnalyzeEntitySentiment or if AnnotateTextRequest.Features.extract_entity_sentiment is set to true, this field will contain the sentiment expressed for this mention of the entity in the provided document.
+            &quot;magnitude&quot;: 3.14, # A non-negative number in the [0, +inf) range, which represents the absolute magnitude of sentiment regardless of score (positive or negative).
+            &quot;score&quot;: 3.14, # Sentiment score between -1.0 (negative sentiment) and 1.0 (positive sentiment).
+          &quot;text&quot;: { # Represents a text span in the input document. # The mention text.
+            &quot;beginOffset&quot;: 42, # The API calculates the beginning offset of the content in the original document according to the EncodingType specified in the API request.
+            &quot;content&quot;: &quot;A String&quot;, # The content of the text span, which is a substring of the document.
+      &quot;name&quot;: &quot;A String&quot;, # The representative name for the entity.
+      &quot;sentiment&quot;: { # Represents the feeling associated with the entire text or entities in the text. # For calls to AnalyzeEntitySentiment or if AnnotateTextRequest.Features.extract_entity_sentiment is set to true, this field will contain the aggregate sentiment expressed for this entity in the provided document.
+  &quot;language&quot;: &quot;A String&quot;, # The language of the text, which will be the same as the language specified in the request or, if not specified, the automatically-detected language. See Document.language field for more details.
+    <code class="details" id="analyzeEntitySentiment">analyzeEntitySentiment(body=None, x__xgafv=None)</code>
+  <pre>Finds entities, similar to AnalyzeEntities in the text and analyzes sentiment associated with each entity and its mentions.
+{ # The entity-level sentiment analysis request message.
+    { # The entity-level sentiment analysis response message.
+  &quot;entities&quot;: [ # The recognized entities in the input document with associated sentiments.
+    <code class="details" id="analyzeSentiment">analyzeSentiment(body=None, x__xgafv=None)</code>
+  <pre>Analyzes the sentiment of the provided text.
+{ # The sentiment analysis request message.
+  &quot;encodingType&quot;: &quot;A String&quot;, # The encoding type used by the API to calculate sentence offsets.
+    { # The sentiment analysis response message.
+  &quot;documentSentiment&quot;: { # Represents the feeling associated with the entire text or entities in the text. # The overall sentiment of the input document.
+  &quot;sentences&quot;: [ # The sentiment for all the sentences in the document.
+    { # Represents a sentence in the input document.
+      &quot;sentiment&quot;: { # Represents the feeling associated with the entire text or entities in the text. # For calls to AnalyzeSentiment or if AnnotateTextRequest.Features.extract_document_sentiment is set to true, this field will contain the sentiment for the sentence.
+      &quot;text&quot;: { # Represents a text span in the input document. # The sentence text.
+    <code class="details" id="analyzeSyntax">analyzeSyntax(body=None, x__xgafv=None)</code>
+  <pre>Analyzes the syntax of the text and provides sentence boundaries and tokenization along with part of speech tags, dependency trees, and other properties.
+{ # The syntax analysis request message.
+    { # The syntax analysis response message.
+  &quot;sentences&quot;: [ # Sentences in the input document.
+  &quot;tokens&quot;: [ # Tokens, along with their syntactic information, in the input document.
+    { # Represents the smallest syntactic building block of the text.
+      &quot;dependencyEdge&quot;: { # Represents dependency parse tree information for a token. (For more information on dependency labels, see http://www.aclweb.org/anthology/P13-2017 # Dependency tree parse for this token.
+        &quot;headTokenIndex&quot;: 42, # Represents the head of this token in the dependency tree. This is the index of the token which has an arc going to this token. The index is the position of the token in the array of tokens returned by the API method. If this token is a root token, then the `head_token_index` is its own index.
+        &quot;label&quot;: &quot;A String&quot;, # The parse label for the token.
+      &quot;lemma&quot;: &quot;A String&quot;, # [Lemma](https://en.wikipedia.org/wiki/Lemma_%28morphology%29) of the token.
+      &quot;partOfSpeech&quot;: { # Represents part of speech information for a token. Parts of speech are as defined in http://www.lrec-conf.org/proceedings/lrec2012/pdf/274_Paper.pdf # Parts of speech tag for this token.
+        &quot;aspect&quot;: &quot;A String&quot;, # The grammatical aspect.
+        &quot;case&quot;: &quot;A String&quot;, # The grammatical case.
+        &quot;form&quot;: &quot;A String&quot;, # The grammatical form.
+        &quot;gender&quot;: &quot;A String&quot;, # The grammatical gender.
+        &quot;mood&quot;: &quot;A String&quot;, # The grammatical mood.
+        &quot;number&quot;: &quot;A String&quot;, # The grammatical number.
+        &quot;person&quot;: &quot;A String&quot;, # The grammatical person.
+        &quot;proper&quot;: &quot;A String&quot;, # The grammatical properness.
+        &quot;reciprocity&quot;: &quot;A String&quot;, # The grammatical reciprocity.
+        &quot;tag&quot;: &quot;A String&quot;, # The part of speech tag.
+        &quot;tense&quot;: &quot;A String&quot;, # The grammatical tense.
+        &quot;voice&quot;: &quot;A String&quot;, # The grammatical voice.
+      &quot;text&quot;: { # Represents a text span in the input document. # The token text.
+    <code class="details" id="annotateText">annotateText(body=None, x__xgafv=None)</code>
+  <pre>A convenience method that provides all the features that analyzeSentiment, analyzeEntities, and analyzeSyntax provide in one call.
+{ # The request message for the text annotation API, which can perform multiple analysis types (sentiment, entities, and syntax) in one call.
+  &quot;features&quot;: { # All available features for sentiment, syntax, and semantic analysis. Setting each one to true will enable that specific analysis for the input. # Required. The enabled features.
+    &quot;classificationModelOptions&quot;: { # Model options available for classification requests. # Optional. The model options to use for classification. Defaults to v1 options if not specified. Only used if `classify_text` is set to true.
+      &quot;v1Model&quot;: { # Options for the V1 model. # Setting this field will use the V1 model and V1 content categories version. The V1 model is a legacy model; support for this will be discontinued in the future.
+      &quot;v2Model&quot;: { # Options for the V2 model. # Setting this field will use the V2 model with the appropriate content categories version. The V2 model is a better performing model.
+        &quot;contentCategoriesVersion&quot;: &quot;A String&quot;, # The content categories used for classification.
+    &quot;classifyText&quot;: True or False, # Classify the full document into categories.
+    &quot;extractDocumentSentiment&quot;: True or False, # Extract document-level sentiment.
+    &quot;extractEntities&quot;: True or False, # Extract entities.
+    &quot;extractEntitySentiment&quot;: True or False, # Extract entities and their associated sentiment.
+    &quot;extractSyntax&quot;: True or False, # Extract syntax information.
+    &quot;moderateText&quot;: True or False, # Moderate the document for harmful and sensitive categories.
+    { # The text annotations response message.
+  &quot;categories&quot;: [ # Categories identified in the input document.
+    { # Represents a category returned from the text classifier.
+      &quot;confidence&quot;: 3.14, # The classifier&#x27;s confidence of the category. Number represents how certain the classifier is that this category represents the given text.
+      &quot;name&quot;: &quot;A String&quot;, # The name of the category representing the document.
+  &quot;documentSentiment&quot;: { # Represents the feeling associated with the entire text or entities in the text. # The overall sentiment for the document. Populated if the user enables AnnotateTextRequest.Features.extract_document_sentiment.
+  &quot;entities&quot;: [ # Entities, along with their semantic information, in the input document. Populated if the user enables AnnotateTextRequest.Features.extract_entities.
+  &quot;moderationCategories&quot;: [ # Harmful and sensitive categories identified in the input document.
+  &quot;sentences&quot;: [ # Sentences in the input document. Populated if the user enables AnnotateTextRequest.Features.extract_syntax.
+  &quot;tokens&quot;: [ # Tokens, along with their syntactic information, in the input document. Populated if the user enables AnnotateTextRequest.Features.extract_syntax.
+    <code class="details" id="classifyText">classifyText(body=None, x__xgafv=None)</code>
+  <pre>Classifies a document into categories.
+{ # The document classification request message.
+  &quot;classificationModelOptions&quot;: { # Model options available for classification requests. # Optional. Model options to use for classification. Defaults to v1 options if not specified.
+    { # The document classification response message.
+  &quot;categories&quot;: [ # Categories representing the input document.
+    <code class="details" id="moderateText">moderateText(body=None, x__xgafv=None)</code>
+  <pre>Moderates a document for harmful and sensitive categories.
+{ # The document moderation request message.
+    { # The document moderation response message.
+  &quot;moderationCategories&quot;: [ # Harmful and sensitive categories representing the input document.

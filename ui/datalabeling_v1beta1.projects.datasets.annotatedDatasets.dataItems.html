@@ -1,0 +1,28 @@
+<h1><a href="datalabeling_v1beta1.html">Data Labeling API</a> . <a href="datalabeling_v1beta1.projects.html">projects</a> . <a href="datalabeling_v1beta1.projects.datasets.html">datasets</a> . <a href="datalabeling_v1beta1.projects.datasets.annotatedDatasets.html">annotatedDatasets</a> . <a href="datalabeling_v1beta1.projects.datasets.annotatedDatasets.dataItems.html">dataItems</a></h1>
+<p class="firstline">Gets a data item in a dataset by resource name. This API can be called after data are imported into dataset.</p>
+<p class="firstline">Lists data items in a dataset. This API can be called after data are imported into dataset. Pagination is supported.</p>
+  <pre>Gets a data item in a dataset by resource name. This API can be called after data are imported into dataset.
+  name: string, Required. The name of the data item to get, format: projects/{project_id}/datasets/{dataset_id}/dataItems/{data_item_id} (required)
+    { # DataItem is a piece of data, without annotation. For example, an image.
+  &quot;imagePayload&quot;: { # Container of information about an image. # The image payload, a container of the image bytes/uri.
+    &quot;imageThumbnail&quot;: &quot;A String&quot;, # A byte string of a thumbnail image.
+    &quot;imageUri&quot;: &quot;A String&quot;, # Image uri from the user bucket.
+    &quot;mimeType&quot;: &quot;A String&quot;, # Image format.
+    &quot;signedUri&quot;: &quot;A String&quot;, # Signed uri of the image file in the service bucket.
+  &quot;name&quot;: &quot;A String&quot;, # Output only. Name of the data item, in format of: projects/{project_id}/datasets/{dataset_id}/dataItems/{data_item_id}
+  &quot;textPayload&quot;: { # Container of information about a piece of text. # The text payload, a container of text content.
+    &quot;textContent&quot;: &quot;A String&quot;, # Text content.
+  &quot;videoPayload&quot;: { # Container of information of a video. # The video payload, a container of the video uri.
+    &quot;frameRate&quot;: 3.14, # FPS of the video.
+    &quot;mimeType&quot;: &quot;A String&quot;, # Video format.
+    &quot;signedUri&quot;: &quot;A String&quot;, # Signed uri of the video file in the service bucket.
+    &quot;videoThumbnails&quot;: [ # The list of video thumbnails.
+      { # Container of information of a video thumbnail.
+        &quot;thumbnail&quot;: &quot;A String&quot;, # A byte string of the video frame.
+        &quot;timeOffset&quot;: &quot;A String&quot;, # Time offset relative to the beginning of the video, corresponding to the video frame where the thumbnail has been extracted from.
+    &quot;videoUri&quot;: &quot;A String&quot;, # Video uri from the user bucket.
+  <pre>Lists data items in a dataset. This API can be called after data are imported into dataset. Pagination is supported.
+  parent: string, Required. Name of the dataset to list data items, format: projects/{project_id}/datasets/{dataset_id} (required)
+  pageToken: string, Optional. A token identifying a page of results for the server to return. Typically obtained by ListDataItemsResponse.next_page_token of the previous [DataLabelingService.ListDataItems] call. Return first page if empty.
+    { # Results of listing data items in a dataset.
+  &quot;dataItems&quot;: [ # The list of data items to return.

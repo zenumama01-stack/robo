@@ -1,0 +1,29 @@
+<h1><a href="run_v1.html">Cloud Run Admin API</a> . <a href="run_v1.namespaces.html">namespaces</a> . <a href="run_v1.namespaces.routes.html">routes</a></h1>
+<p class="firstline">Get information about a route.</p>
+<p class="firstline">List routes. Results are sorted by creation time, descending.</p>
+  <pre>Get information about a route.
+  name: string, The name of the route to retrieve. For Cloud Run (fully managed), replace {namespace} with the project ID or number. It takes the form namespaces/{namespace}. For example: namespaces/PROJECT_ID (required)
+    { # Route is responsible for configuring ingress over a collection of Revisions. Some of the Revisions a Route distributes traffic over may be specified by referencing the Configuration responsible for creating them; in these cases the Route is additionally responsible for monitoring the Configuration for &quot;latest ready&quot; revision changes, and smoothly rolling out latest revisions. Cloud Run currently supports referencing a single Configuration to automatically deploy the &quot;latest ready&quot; Revision from that Configuration.
+  &quot;kind&quot;: &quot;A String&quot;, # The kind of this resource, in this case always &quot;Route&quot;.
+  &quot;metadata&quot;: { # google.cloud.run.meta.v1.ObjectMeta is metadata that all persisted resources must have, which includes all objects users must create. # Metadata associated with this Route, including name, namespace, labels, and annotations.
+  &quot;spec&quot;: { # RouteSpec holds the desired state of the Route (from the client). # Spec holds the desired state of the Route (from the client).
+    &quot;traffic&quot;: [ # Traffic specifies how to distribute traffic over a collection of Knative Revisions and Configurations. Cloud Run currently supports a single configurationName.
+      { # TrafficTarget holds a single entry of the routing table for a Route.
+        &quot;configurationName&quot;: &quot;A String&quot;, # [Deprecated] Not supported in Cloud Run. It must be empty.
+        &quot;latestRevision&quot;: True or False, # Uses the &quot;status.latestReadyRevisionName&quot; of the Service to determine the traffic target. When it changes, traffic will automatically migrate from the prior &quot;latest ready&quot; revision to the new one. This field must be false if RevisionName is set. This field defaults to true otherwise. If the field is set to true on Status, this means that the Revision was resolved from the Service&#x27;s latest ready revision.
+        &quot;percent&quot;: 42, # Percent specifies percent of the traffic to this Revision or Configuration. This defaults to zero if unspecified.
+        &quot;revisionName&quot;: &quot;A String&quot;, # Points this traffic target to a specific Revision. This field is mutually exclusive with latest_revision.
+        &quot;tag&quot;: &quot;A String&quot;, # Tag is used to expose a dedicated url for referencing this target exclusively.
+        &quot;url&quot;: &quot;A String&quot;, # Output only. URL displays the URL for accessing tagged traffic targets. URL is displayed in status, and is disallowed on spec. URL must contain a scheme (e.g. https://) and a hostname, but may not contain anything else (e.g. basic auth, url path, etc.)
+  &quot;status&quot;: { # RouteStatus communicates the observed state of the Route (from the controller). # Status communicates the observed state of the Route (from the controller).
+    &quot;address&quot;: { # Information for connecting over HTTP(s). # Similar to url, information on where the service is available on HTTP.
+    &quot;conditions&quot;: [ # Conditions communicates information about ongoing/complete reconciliation processes that bring the &quot;spec&quot; inline with the observed state of the world.
+    &quot;observedGeneration&quot;: 42, # ObservedGeneration is the &#x27;Generation&#x27; of the Route that was last processed by the controller. Clients polling for completed reconciliation should poll until observedGeneration = metadata.generation and the Ready condition&#x27;s status is True or False. Note that providing a TrafficTarget that has latest_revision=True will result in a Route that does not increment either its metadata.generation or its observedGeneration, as new &quot;latest ready&quot; revisions from the Configuration are processed without an update to the Route&#x27;s spec.
+    &quot;traffic&quot;: [ # Traffic holds the configured traffic distribution. These entries will always contain RevisionName references. When ConfigurationName appears in the spec, this will hold the LatestReadyRevisionName that was last observed.
+    &quot;url&quot;: &quot;A String&quot;, # URL holds the url that will distribute traffic over the provided traffic targets. It generally has the form: `https://{route-hash}-{project-hash}-{cluster-level-suffix}.a.run.app`
+  <pre>List routes. Results are sorted by creation time, descending.
+  parent: string, The namespace from which the routes should be listed. For Cloud Run (fully managed), replace {namespace} with the project ID or number. It takes the form namespaces/{namespace}. For example: namespaces/PROJECT_ID (required)
+    { # ListRoutesResponse is a list of Route resources.
+  &quot;items&quot;: [ # List of Routes.
+  &quot;kind&quot;: &quot;A String&quot;, # The kind of this resource, in this case always &quot;RouteList&quot;.
+  &quot;metadata&quot;: { # Metadata for synthetic resources like List. In Cloud Run, all List Resources Responses will have a ListMeta instead of ObjectMeta. # Metadata associated with this Route list.

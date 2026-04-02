@@ -1,0 +1,32 @@
+    <!-- Core Architecture Section -->
+        SectionKey="coreArchitecture"
+        SectionName="Core Architecture"
+    <!-- Hierarchy Section -->
+        SectionKey="hierarchy"
+        SectionName="Hierarchy"
+            FieldName="ParentArchitectureID"
+            FieldName="RootParentArchitectureID"
+    <!-- Publication & References Section -->
+        SectionKey="publicationReferences"
+        SectionName="Publication & References"
+        Icon="fa fa-book"
+            FieldName="WikipediaURL"
+            FieldName="YearIntroduced"
+            FieldName="KeyPaper"
+    <!-- MJ: AI Architectures Section -->
+        SectionKey="mJAIArchitectures"
+        SectionName="MJ: AI Architectures"
+        [BadgeCount]="GetSectionRowCount('mJAIArchitectures')"
+                [Params]="BuildRelationshipViewParamsByEntityName('MJ: AI Architectures','ParentArchitectureID')"
+                [NewRecordValues]="NewRecordValues('MJ: AI Architectures')"
+                [AllowLoad]="IsSectionExpanded('mJAIArchitectures')"
+                (AfterDataLoad)="SetSectionRowCount('mJAIArchitectures', $event.totalRowCount)"
+    <!-- MJ: AI Model Architectures Section -->
+        SectionKey="mJAIModelArchitectures"
+        SectionName="MJ: AI Model Architectures"
+        Icon="fa fa-brain"
+        [BadgeCount]="GetSectionRowCount('mJAIModelArchitectures')"
+                [Params]="BuildRelationshipViewParamsByEntityName('MJ: AI Model Architectures','ArchitectureID')"
+                [NewRecordValues]="NewRecordValues('MJ: AI Model Architectures')"
+                [AllowLoad]="IsSectionExpanded('mJAIModelArchitectures')"
+                (AfterDataLoad)="SetSectionRowCount('mJAIModelArchitectures', $event.totalRowCount)"

@@ -1,0 +1,29 @@
+  <!-- View Name (click to edit) -->
+  <div class="view-name-container">
+        class="name-input"
+        [(ngModel)]="EditValue"
+        (keydown.enter)="ConfirmEdit()"
+        (keydown.escape)="CancelEdit()"
+        (blur)="ConfirmEdit()"
+        class="view-name"
+        [class.editable]="CanEdit"
+        (click)="StartEdit()"
+        [title]="CanEdit ? 'Click to rename' : ViewName">
+        {{ ViewName }}
+    <!-- Shared Indicator -->
+    @if (IsShared) {
+      <span class="shared-badge" title="Shared view">
+    <!-- Modified Badge -->
+    @if (IsModified) {
+      <span class="modified-badge">Modified</span>
+  <!-- Actions (shown when modified) -->
+  @if (IsModified && CanEdit) {
+    <div class="view-actions">
+        class="action-btn save-btn"
+        (click)="OnSave()"
+        class="action-btn save-as-btn"
+        (click)="OnSaveAsNew()"
+        title="Save as new view">
+        class="action-btn revert-btn"
+        (click)="OnRevert()"
+        title="Revert to saved state">

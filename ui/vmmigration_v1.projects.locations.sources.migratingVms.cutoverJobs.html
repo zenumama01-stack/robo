@@ -1,0 +1,54 @@
+<h1><a href="vmmigration_v1.html">VM Migration API</a> . <a href="vmmigration_v1.projects.html">projects</a> . <a href="vmmigration_v1.projects.locations.html">locations</a> . <a href="vmmigration_v1.projects.locations.sources.html">sources</a> . <a href="vmmigration_v1.projects.locations.sources.migratingVms.html">migratingVms</a> . <a href="vmmigration_v1.projects.locations.sources.migratingVms.cutoverJobs.html">cutoverJobs</a></h1>
+<p class="firstline">Initiates the cancellation of a running cutover job.</p>
+  <code><a href="#create">create(parent, body=None, cutoverJobId=None, requestId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Initiates a Cutover of a specific migrating VM. The returned LRO is completed when the cutover job resource is created and the job is initiated.</p>
+<p class="firstline">Gets details of a single CutoverJob.</p>
+<p class="firstline">Lists the CutoverJobs of a migrating VM. Only 25 most recent CutoverJobs are listed.</p>
+  <pre>Initiates the cancellation of a running cutover job.
+  name: string, Required. The cutover job id (required)
+{ # Request message for &#x27;CancelCutoverJob&#x27; request.
+    <code class="details" id="create">create(parent, body=None, cutoverJobId=None, requestId=None, x__xgafv=None)</code>
+  <pre>Initiates a Cutover of a specific migrating VM. The returned LRO is completed when the cutover job resource is created and the job is initiated.
+  parent: string, Required. The Cutover&#x27;s parent. (required)
+{ # CutoverJob message describes a cutover of a migrating VM. The CutoverJob is the operation of shutting down the VM, creating a snapshot and cloning the VM using the replicated snapshot.
+  &quot;createTime&quot;: &quot;A String&quot;, # Output only. The time the cutover job was created (as an API call, not when it was actually created in the target).
+  &quot;endTime&quot;: &quot;A String&quot;, # Output only. The time the cutover job had finished.
+  &quot;error&quot;: { # The `Status` type defines a logical error model that is suitable for different programming environments, including REST APIs and RPC APIs. It is used by [gRPC](https://github.com/grpc). Each `Status` message contains three pieces of data: error code, error message, and error details. You can find out more about this error model and how to work with it in the [API Design Guide](https://cloud.google.com/apis/design/errors). # Output only. Provides details for the errors that led to the Cutover Job&#x27;s state.
+  &quot;name&quot;: &quot;A String&quot;, # Output only. The name of the cutover job.
+  &quot;progressPercent&quot;: 42, # Output only. The current progress in percentage of the cutover job.
+  &quot;state&quot;: &quot;A String&quot;, # Output only. State of the cutover job.
+  &quot;stateMessage&quot;: &quot;A String&quot;, # Output only. A message providing possible extra details about the current state.
+  &quot;steps&quot;: [ # Output only. The cutover steps list representing its progress.
+    { # CutoverStep holds information about the cutover step progress.
+      &quot;finalSync&quot;: { # ReplicationCycle contains information about the current replication cycle status. # Final sync step.
+        &quot;cycleNumber&quot;: 42, # The cycle&#x27;s ordinal number.
+        &quot;endTime&quot;: &quot;A String&quot;, # The time the replication cycle has ended.
+        &quot;error&quot;: { # The `Status` type defines a logical error model that is suitable for different programming environments, including REST APIs and RPC APIs. It is used by [gRPC](https://github.com/grpc). Each `Status` message contains three pieces of data: error code, error message, and error details. You can find out more about this error model and how to work with it in the [API Design Guide](https://cloud.google.com/apis/design/errors). # Output only. Provides details on the state of the cycle in case of an error.
+        &quot;name&quot;: &quot;A String&quot;, # The identifier of the ReplicationCycle.
+        &quot;progressPercent&quot;: 42, # The current progress in percentage of this cycle. Was replaced by &#x27;steps&#x27; field, which breaks down the cycle progression more accurately.
+        &quot;startTime&quot;: &quot;A String&quot;, # The time the replication cycle has started.
+        &quot;state&quot;: &quot;A String&quot;, # State of the ReplicationCycle.
+        &quot;steps&quot;: [ # The cycle&#x27;s steps list representing its progress.
+          { # CycleStep holds information about a step progress.
+            &quot;endTime&quot;: &quot;A String&quot;, # The time the cycle step has ended.
+            &quot;initializingReplication&quot;: { # InitializingReplicationStep contains specific step details. # Initializing replication step.
+            &quot;postProcessing&quot;: { # PostProcessingStep contains specific step details. # Post processing step.
+            &quot;replicating&quot;: { # ReplicatingStep contains specific step details. # Replicating step.
+              &quot;lastThirtyMinutesAverageBytesPerSecond&quot;: &quot;A String&quot;, # The source disks replication rate for the last 30 minutes in bytes per second.
+              &quot;lastTwoMinutesAverageBytesPerSecond&quot;: &quot;A String&quot;, # The source disks replication rate for the last 2 minutes in bytes per second.
+              &quot;replicatedBytes&quot;: &quot;A String&quot;, # Replicated bytes in the step.
+              &quot;totalBytes&quot;: &quot;A String&quot;, # Total bytes to be handled in the step.
+            &quot;startTime&quot;: &quot;A String&quot;, # The time the cycle step has started.
+        &quot;totalPauseDuration&quot;: &quot;A String&quot;, # The accumulated duration the replication cycle was paused.
+        &quot;warnings&quot;: [ # Output only. Warnings that occurred during the cycle.
+      &quot;previousReplicationCycle&quot;: { # ReplicationCycle contains information about the current replication cycle status. # A replication cycle prior cutover step.
+      &quot;shuttingDownSourceVm&quot;: { # ShuttingDownSourceVMStep contains specific step details. # Shutting down VM step.
+  cutoverJobId: string, Required. The cutover job identifier.
+  <pre>Gets details of a single CutoverJob.
+  name: string, Required. The name of the CutoverJob. (required)
+  <pre>Lists the CutoverJobs of a migrating VM. Only 25 most recent CutoverJobs are listed.
+  parent: string, Required. The parent, which owns this collection of migrating VMs. (required)
+  pageSize: integer, Optional. The maximum number of cutover jobs to return. The service may return fewer than this value. If unspecified, at most 500 cutover jobs will be returned. The maximum value is 1000; values above 1000 will be coerced to 1000.
+  pageToken: string, Required. A page token, received from a previous `ListCutoverJobs` call. Provide this to retrieve the subsequent page. When paginating, all other parameters provided to `ListCutoverJobs` must match the call that provided the page token.
+    { # Response message for &#x27;ListCutoverJobs&#x27; request.
+  &quot;cutoverJobs&quot;: [ # Output only. The list of cutover jobs response.

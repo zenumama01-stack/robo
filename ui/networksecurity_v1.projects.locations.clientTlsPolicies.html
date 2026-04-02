@@ -1,0 +1,36 @@
+<h1><a href="networksecurity_v1.html">Network Security API</a> . <a href="networksecurity_v1.projects.html">projects</a> . <a href="networksecurity_v1.projects.locations.html">locations</a> . <a href="networksecurity_v1.projects.locations.clientTlsPolicies.html">clientTlsPolicies</a></h1>
+  <code><a href="#create">create(parent, body=None, clientTlsPolicyId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Creates a new ClientTlsPolicy in a given project and location.</p>
+<p class="firstline">Deletes a single ClientTlsPolicy.</p>
+<p class="firstline">Gets details of a single ClientTlsPolicy.</p>
+<p class="firstline">Lists ClientTlsPolicies in a given project and location.</p>
+<p class="firstline">Updates the parameters of a single ClientTlsPolicy.</p>
+    <code class="details" id="create">create(parent, body=None, clientTlsPolicyId=None, x__xgafv=None)</code>
+  <pre>Creates a new ClientTlsPolicy in a given project and location.
+  parent: string, Required. The parent resource of the ClientTlsPolicy. Must be in the format `projects/*/locations/{location}`. (required)
+{ # ClientTlsPolicy is a resource that specifies how a client should authenticate connections to backends of a service. This resource itself does not affect configuration unless it is attached to a backend service resource.
+  &quot;clientCertificate&quot;: { # Specification of certificate provider. Defines the mechanism to obtain the certificate and private key for peer to peer authentication. # Optional. Defines a mechanism to provision client identity (public and private keys) for peer to peer authentication. The presence of this dictates mTLS.
+    &quot;certificateProviderInstance&quot;: { # Specification of a TLS certificate provider instance. Workloads may have one or more CertificateProvider instances (plugins) and one of them is enabled and configured by specifying this message. Workloads use the values from this message to locate and load the CertificateProvider instance configuration. # The certificate provider instance specification that will be passed to the data plane, which will be used to load necessary credential information.
+      &quot;pluginInstance&quot;: &quot;A String&quot;, # Required. Plugin instance name, used to locate and load CertificateProvider instance configuration. Set to &quot;google_cloud_private_spiffe&quot; to use Certificate Authority Service certificate provider instance.
+    &quot;grpcEndpoint&quot;: { # Specification of the GRPC Endpoint. # gRPC specific configuration to access the gRPC server to obtain the cert and private key.
+      &quot;targetUri&quot;: &quot;A String&quot;, # Required. The target URI of the gRPC endpoint. Only UDS path is supported, and should start with &quot;unix:&quot;.
+  &quot;labels&quot;: { # Optional. Set of label tags associated with the resource.
+  &quot;name&quot;: &quot;A String&quot;, # Required. Name of the ClientTlsPolicy resource. It matches the pattern `projects/{project}/locations/{location}/clientTlsPolicies/{client_tls_policy}`
+  &quot;serverValidationCa&quot;: [ # Optional. Defines the mechanism to obtain the Certificate Authority certificate to validate the server certificate. If empty, client does not validate the server certificate.
+    { # Specification of ValidationCA. Defines the mechanism to obtain the Certificate Authority certificate to validate the peer certificate.
+      &quot;grpcEndpoint&quot;: { # Specification of the GRPC Endpoint. # gRPC specific configuration to access the gRPC server to obtain the CA certificate.
+  &quot;sni&quot;: &quot;A String&quot;, # Optional. Server Name Indication string to present to the server during TLS handshake. E.g: &quot;secure.example.com&quot;.
+  clientTlsPolicyId: string, Required. Short name of the ClientTlsPolicy resource to be created. This value should be 1-63 characters long, containing only letters, numbers, hyphens, and underscores, and should not start with a number. E.g. &quot;client_mtls_policy&quot;.
+  <pre>Deletes a single ClientTlsPolicy.
+  name: string, Required. A name of the ClientTlsPolicy to delete. Must be in the format `projects/*/locations/{location}/clientTlsPolicies/*`. (required)
+  <pre>Gets details of a single ClientTlsPolicy.
+  name: string, Required. A name of the ClientTlsPolicy to get. Must be in the format `projects/*/locations/{location}/clientTlsPolicies/*`. (required)
+  <pre>Lists ClientTlsPolicies in a given project and location.
+  parent: string, Required. The project and location from which the ClientTlsPolicies should be listed, specified in the format `projects/*/locations/{location}`. (required)
+  pageSize: integer, Maximum number of ClientTlsPolicies to return per call.
+  pageToken: string, The value returned by the last `ListClientTlsPoliciesResponse` Indicates that this is a continuation of a prior `ListClientTlsPolicies` call, and that the system should return the next page of data.
+    { # Response returned by the ListClientTlsPolicies method.
+  &quot;clientTlsPolicies&quot;: [ # List of ClientTlsPolicy resources.
+  <pre>Updates the parameters of a single ClientTlsPolicy.
+  name: string, Required. Name of the ClientTlsPolicy resource. It matches the pattern `projects/{project}/locations/{location}/clientTlsPolicies/{client_tls_policy}` (required)
+  updateMask: string, Optional. Field mask is used to specify the fields to be overwritten in the ClientTlsPolicy resource by the update. The fields specified in the update_mask are relative to the resource, not the full request. A field will be overwritten if it is in the mask. If the user does not provide a mask then all fields will be overwritten.

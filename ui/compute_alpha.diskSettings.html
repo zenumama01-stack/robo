@@ -1,0 +1,49 @@
+<h1><a href="compute_alpha.html">Compute Engine API</a> . <a href="compute_alpha.diskSettings.html">diskSettings</a></h1>
+  <code><a href="#get">get(project, zone, x__xgafv=None)</a></code></p>
+<p class="firstline">Get Zonal Disk Settings.</p>
+  <code><a href="#patch">patch(project, zone, body=None, requestId=None, updateMask=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Patch Zonal Disk Settings</p>
+    <code class="details" id="get">get(project, zone, x__xgafv=None)</code>
+  <pre>Get Zonal Disk Settings.
+  &quot;accessLocation&quot;: { # AccessLocation is only used for regional snapshot. It contains which # Policy of which locations are allowed to create regional
+      # snapshots.
+      # regions are allowed to create a regional snapshot from disks located in the
+      # given region/zone.
+      # It includes key-value pairs designed to store the following structure. The
+      # keys should match their corresponding values, which must be provided:
+      # access_location: {
+      #  locations {
+      #   us-central1 {
+      #    region: &quot;us-central1&quot;
+      #    },
+      #   asia-west2 {
+      #     region: &quot;asia-west2&quot;
+      #  }
+      # }
+    &quot;locations&quot;: { # List of regions that can create a regional
+        # snapshot from the current region
+      &quot;a_key&quot;: { # A structure for specifying an allowed target region to create snapshot.
+        &quot;region&quot;: &quot;A String&quot;, # Accessible region name
+    &quot;policy&quot;: &quot;A String&quot;, # Policy of which location is allowed to access snapshot.
+  &quot;defaultResourcePolicies&quot;: { # An optional parameter for storing the default resource policies that
+      # will be used for the Disks created in the given scope.
+      # The Key is a string type, provided by customers to uniquely identify the
+      # default Resource Policy entry.
+      # The Value is a Default ResourcePolicyDetails Object used to represent the
+      # detailed information of the Resource Policy entry.
+    &quot;a_key&quot;: { # This is the object for storing the detail information about the
+        # Resource Policy that will be set as default ones for the Disks
+        # that is using the DiskSettings.
+        # It contains:
+        # - one target Resource Policy referenced by its Fully-Qualified URL,
+        # - [output only] Disk Types that will be excluded from using this
+        #   Resource Policy,
+        # - Other filtering support (e.g. Label filtering) for Default Resource
+        #   Policy can be added here as well
+      &quot;excludedDiskTypes&quot;: [ # Output only. [Output Only] A list of Disk Types that will be excluded from applying
+          # the Resource Policy referenced here.
+          # If absent, Disks created in any DiskType can use the referenced
+          # default Resource Policy.
+      &quot;resourcePolicy&quot;: &quot;A String&quot;, # The target Resource Policies identified by their Fully-Qualified URL.
+    <code class="details" id="patch">patch(project, zone, body=None, requestId=None, updateMask=None, x__xgafv=None)</code>
+  <pre>Patch Zonal Disk Settings

@@ -1,0 +1,29 @@
+<h1><a href="aiplatform_v1beta1.html">Vertex AI API</a> . <a href="aiplatform_v1beta1.projects.html">projects</a> . <a href="aiplatform_v1beta1.projects.locations.html">locations</a> . <a href="aiplatform_v1beta1.projects.locations.pipelineJobs.html">pipelineJobs</a></h1>
+  <code><a href="aiplatform_v1beta1.projects.locations.pipelineJobs.operations.html">operations()</a></code>
+  &quot;originalPipelineJobId&quot;: &quot;A String&quot;, # Optional. The original pipeline job id if this pipeline job is a rerun of a previous pipeline job.
+  &quot;pipelineTaskRerunConfigs&quot;: [ # Optional. The rerun configs for each task in the pipeline job. By default, the rerun will: 1. Use the same input artifacts as the original run. 2. Use the same input parameters as the original run. 3. Skip all the tasks that are already succeeded in the original run. 4. Rerun all the tasks that are not succeeded in the original run. By providing this field, users can override the default behavior and specify the rerun config for each task.
+    { # User provided rerun config to submit a rerun pipelinejob. This includes 1. Which task to rerun 2. User override input parameters and artifacts.
+      &quot;inputs&quot;: { # Runtime inputs data of the task. # Optional. The runtime input of the task overridden by the user.
+        &quot;artifacts&quot;: { # Optional. Input artifacts.
+            &quot;artifacts&quot;: [ # Optional. A list of artifact metadata.
+              { # The definition of a runtime artifact.
+                &quot;customProperties&quot;: { # The custom properties of the artifact. Deprecated. Use RuntimeArtifact.metadata instead.
+                &quot;metadata&quot;: { # Properties of the Artifact.
+                &quot;name&quot;: &quot;A String&quot;, # The name of an artifact.
+                &quot;properties&quot;: { # The properties of the artifact. Deprecated. Use RuntimeArtifact.metadata instead.
+                &quot;type&quot;: { # The definition of a artifact type in MLMD. # The type of the artifact.
+                  &quot;instanceSchema&quot;: &quot;A String&quot;, # Contains a raw YAML string, describing the format of the properties of the type.
+                  &quot;schemaTitle&quot;: &quot;A String&quot;, # The name of the type. The format of the title must be: `.`. Examples: - `aiplatform.Model` - `acme.CustomModel` When this field is set, the type must be pre-registered in the MLMD store.
+                  &quot;schemaUri&quot;: &quot;A String&quot;, # Points to a YAML file stored on Cloud Storage describing the format. Deprecated. Use PipelineArtifactTypeSchema.schema_title or PipelineArtifactTypeSchema.instance_schema instead.
+                  &quot;schemaVersion&quot;: &quot;A String&quot;, # The schema version of the artifact. If the value is not set, it defaults to the latest version in the system.
+                &quot;uri&quot;: &quot;A String&quot;, # The URI of the artifact.
+        &quot;parameterValues&quot;: { # Optional. Input parameters.
+      &quot;skipDownstreamTasks&quot;: True or False, # Optional. Whether to skip downstream tasks. Default value is False.
+      &quot;skipTask&quot;: True or False, # Optional. Whether to skip this task. Default value is False.
+      &quot;taskId&quot;: &quot;A String&quot;, # Optional. The system generated ID of the task. Retrieved from original run.
+      &quot;taskName&quot;: &quot;A String&quot;, # Optional. The name of the task.
+    &quot;defaultRuntime&quot;: { # The default runtime for the PipelineJob. # Optional. The default runtime for the PipelineJob. If not set, Standard Vertex Custom Job(https://cloud.google.com/vertex-ai/docs/training/overview) is used as the runtime. If set, all pipeline tasks will run on the default runtime unless a task is a GCPC custom job component (https://cloud.google.com/vertex-ai/docs/pipelines/customjob-component) based task. If the task is based on a GCPC custom job component, it runs solely according to the component&#x27;s configuration.
+      &quot;persistentResourceRuntimeDetail&quot;: { # Persistent resource based runtime detail. For more information about persistent resource, refer to https://cloud.google.com/vertex-ai/docs/training/persistent-resource-overview # Persistent resource based runtime detail.
+        &quot;persistentResourceName&quot;: &quot;A String&quot;, # Persistent resource name. Format: `projects/{project}/locations/{location}/persistentResources/{persistent_resource}`
+        &quot;taskResourceUnavailableTimeoutBehavior&quot;: &quot;A String&quot;, # Specifies the behavior to take if the timeout is reached.
+        &quot;taskResourceUnavailableWaitTimeMs&quot;: &quot;A String&quot;, # The max time a pipeline task waits for the required CPU, memory, or accelerator resource to become available from the specified persistent resource. Default wait time is 0.

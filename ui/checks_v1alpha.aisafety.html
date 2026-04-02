@@ -1,0 +1,23 @@
+<h1><a href="checks_v1alpha.html">Checks API</a> . <a href="checks_v1alpha.aisafety.html">aisafety</a></h1>
+  <code><a href="#classifyContent">classifyContent(body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Analyze a piece of content with the provided set of policies.</p>
+    <code class="details" id="classifyContent">classifyContent(body=None, x__xgafv=None)</code>
+  <pre>Analyze a piece of content with the provided set of policies.
+{ # Request proto for ClassifyContent RPC.
+  &quot;classifierVersion&quot;: &quot;A String&quot;, # Optional. Version of the classifier to use. If not specified, the latest version will be used.
+  &quot;context&quot;: { # Context about the input that will be used to help on the classification. # Optional. Context about the input that will be used to help on the classification.
+    &quot;prompt&quot;: &quot;A String&quot;, # Optional. Prompt that generated the model response.
+  &quot;input&quot;: { # Content to be classified. # Required. Content to be classified.
+    &quot;textInput&quot;: { # Text input to be classified. # Content in text format.
+      &quot;content&quot;: &quot;A String&quot;, # Actual piece of text to be classified.
+      &quot;languageCode&quot;: &quot;A String&quot;, # Optional. Language of the text in ISO 639-1 format. If the language is invalid or not specified, the system will try to detect it.
+  &quot;policies&quot;: [ # Required. List of policies to classify against.
+    { # List of policies to classify against.
+      &quot;policyType&quot;: &quot;A String&quot;, # Required. Type of the policy.
+      &quot;threshold&quot;: 3.14, # Optional. Score threshold to use when deciding if the content is violative or non-violative. If not specified, the default 0.5 threshold for the policy will be used.
+    { # Response proto for ClassifyContent RPC.
+  &quot;policyResults&quot;: [ # Results of the classification for each policy.
+    { # Result for one policy against the corresponding input.
+      &quot;policyType&quot;: &quot;A String&quot;, # Type of the policy.
+      &quot;score&quot;: 3.14, # Final score for the results of this policy.
+      &quot;violationResult&quot;: &quot;A String&quot;, # Result of the classification for the policy.

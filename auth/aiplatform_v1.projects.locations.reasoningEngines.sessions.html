@@ -1,0 +1,43 @@
+<h1><a href="aiplatform_v1.html">Vertex AI API</a> . <a href="aiplatform_v1.projects.html">projects</a> . <a href="aiplatform_v1.projects.locations.html">locations</a> . <a href="aiplatform_v1.projects.locations.reasoningEngines.html">reasoningEngines</a> . <a href="aiplatform_v1.projects.locations.reasoningEngines.sessions.html">sessions</a></h1>
+  <code><a href="aiplatform_v1.projects.locations.reasoningEngines.sessions.events.html">events()</a></code>
+  <code><a href="aiplatform_v1.projects.locations.reasoningEngines.sessions.operations.html">operations()</a></code>
+  <code><a href="#appendEvent">appendEvent(name, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Appends an event to a given session.</p>
+  <code><a href="#create">create(parent, body=None, sessionId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Creates a new Session.</p>
+<p class="firstline">Deletes details of the specific Session.</p>
+<p class="firstline">Gets details of the specific Session.</p>
+<p class="firstline">Lists Sessions in a given reasoning engine.</p>
+<p class="firstline">Updates the specific Session.</p>
+    <code class="details" id="appendEvent">appendEvent(name, body=None, x__xgafv=None)</code>
+  <pre>Appends an event to a given session.
+  name: string, Required. The resource name of the session to append event to. Format: `projects/{project}/locations/{location}/reasoningEngines/{reasoning_engine}/sessions/{session}` (required)
+    { # Response message for SessionService.AppendEvent.
+    <code class="details" id="create">create(parent, body=None, sessionId=None, x__xgafv=None)</code>
+  <pre>Creates a new Session.
+  parent: string, Required. The resource name of the location to create the session in. Format: `projects/{project}/locations/{location}/reasoningEngines/{reasoning_engine}` (required)
+{ # A session contains a set of actions between users and Vertex agents.
+  &quot;createTime&quot;: &quot;A String&quot;, # Output only. Timestamp when the session was created.
+  &quot;displayName&quot;: &quot;A String&quot;, # Optional. The display name of the session.
+  &quot;expireTime&quot;: &quot;A String&quot;, # Optional. Timestamp of when this session is considered expired. This is *always* provided on output, regardless of what was sent on input. The minimum value is 24 hours from the time of creation.
+  &quot;labels&quot;: { # The labels with user-defined metadata to organize your Sessions. Label keys and values can be no longer than 64 characters (Unicode codepoints), can only contain lowercase letters, numeric characters, underscores and dashes. International characters are allowed. See https://goo.gl/xmQnxf for more information and examples of labels.
+  &quot;name&quot;: &quot;A String&quot;, # Identifier. The resource name of the session. Format: &#x27;projects/{project}/locations/{location}/reasoningEngines/{reasoning_engine}/sessions/{session}&#x27;.
+  &quot;ttl&quot;: &quot;A String&quot;, # Optional. Input only. The TTL for this session. The minimum value is 24 hours.
+  &quot;updateTime&quot;: &quot;A String&quot;, # Output only. Timestamp when the session was updated.
+  &quot;userId&quot;: &quot;A String&quot;, # Required. Immutable. String id provided by the user
+  sessionId: string, Optional. The user defined ID to use for session, which will become the final component of the session resource name. If not provided, Vertex AI will generate a value for this ID. This value may be up to 63 characters, and valid characters are `[a-z0-9-]`. The first and last characters must be a letter or number.
+  <pre>Deletes details of the specific Session.
+  name: string, Required. The resource name of the session. Format: `projects/{project}/locations/{location}/reasoningEngines/{reasoning_engine}/sessions/{session}` (required)
+  <pre>Gets details of the specific Session.
+  <pre>Lists Sessions in a given reasoning engine.
+  parent: string, Required. The resource name of the location to list sessions from. Format: `projects/{project}/locations/{location}/reasoningEngines/{reasoning_engine}` (required)
+  filter: string, Optional. The standard list filter. Supported fields: * `display_name` * `user_id` * `labels` Example: `display_name=&quot;abc&quot;`, `user_id=&quot;123&quot;`, `labels.key=&quot;value&quot;`.
+  orderBy: string, Optional. A comma-separated list of fields to order by, sorted in ascending order. Use &quot;desc&quot; after a field name for descending. Supported fields: * `create_time` * `update_time` Example: `create_time desc`.
+  pageSize: integer, Optional. The maximum number of sessions to return. The service may return fewer than this value. If unspecified, at most 100 sessions will be returned.
+  pageToken: string, Optional. The next_page_token value returned from a previous list SessionService.ListSessions call.
+    { # Response message for SessionService.ListSessions.
+  &quot;nextPageToken&quot;: &quot;A String&quot;, # A token, which can be sent as ListSessionsRequest.page_token to retrieve the next page. Absence of this field indicates there are no subsequent pages.
+  &quot;sessions&quot;: [ # A list of sessions matching the request.
+  <pre>Updates the specific Session.
+  name: string, Identifier. The resource name of the session. Format: &#x27;projects/{project}/locations/{location}/reasoningEngines/{reasoning_engine}/sessions/{session}&#x27;. (required)
+  updateMask: string, Optional. Field mask is used to control which fields get updated. If the mask is not present, all fields will be updated.

@@ -1,0 +1,234 @@
+<h1><a href="compute_alpha.html">Compute Engine API</a> . <a href="compute_alpha.globalNetworkEndpointGroups.html">globalNetworkEndpointGroups</a></h1>
+  <code><a href="#attachNetworkEndpoints">attachNetworkEndpoints(project, networkEndpointGroup, body=None, requestId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Attach a network endpoint to the specified network endpoint group.</p>
+  <code><a href="#delete">delete(project, networkEndpointGroup, requestId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Deletes the specified network endpoint group.Note that the NEG cannot be</p>
+  <code><a href="#detachNetworkEndpoints">detachNetworkEndpoints(project, networkEndpointGroup, body=None, requestId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Detach the network endpoint from the specified network endpoint group.</p>
+  <code><a href="#get">get(project, networkEndpointGroup, x__xgafv=None)</a></code></p>
+<p class="firstline">Returns the specified network endpoint group.</p>
+<p class="firstline">Creates a network endpoint group in the specified project using the</p>
+<p class="firstline">Retrieves the list of network endpoint groups that are located in the</p>
+  <code><a href="#listNetworkEndpoints">listNetworkEndpoints(project, networkEndpointGroup, filter=None, maxResults=None, orderBy=None, pageToken=None, returnPartialSuccess=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Lists the network endpoints in the specified network endpoint group.</p>
+  <code><a href="#listNetworkEndpoints_next">listNetworkEndpoints_next()</a></code></p>
+    <code class="details" id="attachNetworkEndpoints">attachNetworkEndpoints(project, networkEndpointGroup, body=None, requestId=None, x__xgafv=None)</code>
+  <pre>Attach a network endpoint to the specified network endpoint group.
+  networkEndpointGroup: string, The name of the network endpoint group where you are attaching network
+endpoints to. It should comply with RFC1035. (required)
+  &quot;networkEndpoints&quot;: [ # The list of network endpoints to be attached.
+    { # The network endpoint.
+      &quot;annotations&quot;: { # Optional metadata defined as annotations on the network endpoint.
+      &quot;clientDestinationPort&quot;: 42, # Represents the port number to which PSC consumer sends packets.
+          # Optional. Only valid for network endpoint groups created withGCE_VM_IP_PORTMAP endpoint type.
+      &quot;fqdn&quot;: &quot;A String&quot;, # Optional fully qualified domain name of network endpoint. This can only be
+          # specified when NetworkEndpointGroup.network_endpoint_type isNON_GCP_FQDN_PORT.
+      &quot;instance&quot;: &quot;A String&quot;, # The name or a URL of VM instance of this network endpoint.
+          # Optional, the field presence depends on the network endpoint type. The
+          # field is required for network endpoints of type GCE_VM_IP andGCE_VM_IP_PORT.
+          # The instance must be in the same zone of network endpoint group (for zonal
+          # NEGs) or in the zone within the region of the NEG (for regional NEGs).
+          # If the ipAddress is specified, it must belongs to the VM
+          # The name must be 1-63 characters long, and comply withRFC1035
+          # or be a valid URL pointing to an existing instance.
+      &quot;ipAddress&quot;: &quot;A String&quot;, # Optional IPv4 address of network endpoint. The IP address must belong to a
+          # VM in Compute Engine (either the primary IP or as part of an aliased IP
+          # range). If the IP address is not specified, then the primary IP address for
+          # the VM instance in the network that the network endpoint group belongs to
+          # will be used.
+          # This field is redundant and need not be set for network endpoints of typeGCE_VM_IP. If set, it must be set to the primary internal IP
+          # address of the attached VM instance that matches the subnetwork of the NEG.
+          # The primary internal IP address from any NIC of a multi-NIC VM instance can
+          # be added to a NEG as long as it matches the NEG subnetwork.
+      &quot;ipv6Address&quot;: &quot;A String&quot;, # Optional IPv6 address of network endpoint.
+      &quot;port&quot;: 42, # Optional port number of network endpoint. If not specified, the
+          # defaultPort for the network endpoint group will be used.
+          # This field can not be set for network endpoints of typeGCE_VM_IP.
+    <code class="details" id="delete">delete(project, networkEndpointGroup, requestId=None, x__xgafv=None)</code>
+  <pre>Deletes the specified network endpoint group.Note that the NEG cannot be
+deleted if there are backend services referencing it.
+  networkEndpointGroup: string, The name of the network endpoint group to delete. It should comply with
+RFC1035. (required)
+    <code class="details" id="detachNetworkEndpoints">detachNetworkEndpoints(project, networkEndpointGroup, body=None, requestId=None, x__xgafv=None)</code>
+  <pre>Detach the network endpoint from the specified network endpoint group.
+  networkEndpointGroup: string, The name of the network endpoint group where you are removing network
+endpoints. It should comply with RFC1035. (required)
+  &quot;networkEndpoints&quot;: [ # The list of network endpoints to be detached.
+    <code class="details" id="get">get(project, networkEndpointGroup, x__xgafv=None)</code>
+  <pre>Returns the specified network endpoint group.
+  networkEndpointGroup: string, The name of the network endpoint group. It should comply with RFC1035. (required)
+    { # Represents a collection of network endpoints.
+    # A network endpoint group (NEG) defines how a set of endpoints should be
+    # reached, whether they are reachable, and where they are located.
+    # For more information about using NEGs for different use cases, seeNetwork endpoint groups overview.
+    # Note: Use the following APIs to manage network endpoint groups:
+    #    To manage NEGs with zonal scope (such as zonal NEGs, hybrid connectivity
+    #    NEGs): zonal
+    #    API
+    #    To manage NEGs with regional scope (such as regional internet NEGs,
+    #    serverless NEGs, Private Service Connect NEGs): regional
+    #    To manage NEGs with global scope (such as global internet NEGs):global
+  &quot;annotations&quot;: { # Optional. Metadata defined as annotations on the network endpoint group.
+  &quot;appEngine&quot;: { # Configuration for an App Engine network endpoint group (NEG). # Optional. Only valid when networkEndpointType isSERVERLESS. Only one of cloudRun,appEngine or cloudFunction may be set.
+      # The service is optional, may be provided explicitly or in the
+      # URL mask. The version is optional and can only be provided
+      # explicitly or in the URL mask when service is present.
+      # Note: App Engine service must be in the same project and located in the
+      # same region as the Serverless NEG.
+    &quot;service&quot;: &quot;A String&quot;, # Optional serving service.
+        # The service name is case-sensitive and must be 1-63
+        # characters long.
+        # Example value: default, my-service.
+    &quot;urlMask&quot;: &quot;A String&quot;, # An URL
+        # mask is one of the main components of the Cloud Function.
+        # A template to parse service and version fields
+        # from a request URL. URL mask allows for routing to multiple App Engine
+        # services without having to create multiple Network Endpoint Groups and
+        # backend services.
+        # For example, the request URLsfoo1-dot-appname.appspot.com/v1 andfoo1-dot-appname.appspot.com/v2 can be backed by the same
+        # Serverless NEG with URL mask&lt;service&gt;-dot-appname.appspot.com/&lt;version&gt;.
+        # The URL mask will parse them to { service = &quot;foo1&quot;, version = &quot;v1&quot;
+        # } and { service = &quot;foo1&quot;, version = &quot;v2&quot; }
+        # respectively.
+    &quot;version&quot;: &quot;A String&quot;, # Optional serving version.
+        # The version name is case-sensitive and must be 1-100
+        # Example value: v1, v2.
+  &quot;cloudFunction&quot;: { # Configuration for a Cloud Function network endpoint group (NEG). # Optional. Only valid when networkEndpointType isSERVERLESS. Only one of cloudRun,appEngine or cloudFunction may be set.
+      # The function must be provided explicitly or in the URL mask.
+      # Note: Cloud Function must be in the same project and located in the same
+      # region as the Serverless NEG.
+    &quot;function&quot;: &quot;A String&quot;, # A user-defined name of the Cloud Function.
+        # The function name is case-sensitive and must be 1-63
+        # Example value: func1.
+        # A template to parse function field from a request URL. URL
+        # mask allows for routing to multiple Cloud Functions without having to
+        # create multiple Network Endpoint Groups and backend services.
+        # For example, request URLs mydomain.com/function1 andmydomain.com/function2 can be backed by the same
+        # Serverless NEG with URL mask /&lt;function&gt;. The URL
+        # mask will parse them to { function = &quot;function1&quot; } and{ function = &quot;function2&quot; } respectively.
+  &quot;cloudRun&quot;: { # Configuration for a Cloud Run network endpoint group (NEG). # Optional. Only valid when networkEndpointType isSERVERLESS. Only one of cloudRun,appEngine or cloudFunction may be set.
+      # The service must be provided explicitly or in the URL mask.
+      # The tag is optional, may be provided explicitly or in the URL
+      # mask.
+      # Note: Cloud Run service must be in the same project and located in the same
+    &quot;service&quot;: &quot;A String&quot;, # Cloud Run service is the main resource of Cloud Run.
+        # The service must be 1-63 characters long, and comply withRFC1035.
+        # Example value: &quot;run-service&quot;.
+    &quot;tag&quot;: &quot;A String&quot;, # Optional Cloud Run tag represents the &quot;named-revision&quot; to provide additional
+        # fine-grained traffic routing information.
+        # The tag must be 1-63 characters long, and comply withRFC1035.
+        # Example value: &quot;revision-0010&quot;.
+        # A template to parse &lt;service&gt; and&lt;tag&gt; fields from a request URL. URL mask allows for
+        # routing to multiple Run services without having to create multiple
+        # network endpoint groups and backend services.
+        # For example, request URLs foo1.domain.com/bar1 andfoo1.domain.com/bar2 can be backed by the same Serverless
+        # Network Endpoint Group (NEG) with URL mask&lt;tag&gt;.domain.com/&lt;service&gt;. The URL mask will
+        # parse them to { service=&quot;bar1&quot;, tag=&quot;foo1&quot; } and {
+        # service=&quot;bar2&quot;, tag=&quot;foo2&quot; } respectively.
+  &quot;defaultPort&quot;: 42, # The default port used if the port number is not specified in the network
+      # endpoint.
+      # Optional. If the network endpoint type is either GCE_VM_IP,SERVERLESS or PRIVATE_SERVICE_CONNECT, this
+      # field must not be specified.
+  &quot;kind&quot;: &quot;compute#networkEndpointGroup&quot;, # Output only. [Output Only] Type of the resource. Alwayscompute#networkEndpointGroup for network endpoint group.
+  &quot;loadBalancer&quot;: { # Load balancing specific fields for network endpoint group. # This field is only valid when the network endpoint group is used for load
+      # balancing.
+      # [Deprecated] This field is deprecated.
+        # If the network endpoint type is either GCE_VM_IP,SERVERLESS or PRIVATE_SERVICE_CONNECT, this
+    &quot;network&quot;: &quot;A String&quot;, # The URL of the network to which all network endpoints in the NEG belong.
+        # Uses default project network if unspecified.
+    &quot;subnetwork&quot;: &quot;A String&quot;, # Optional URL of the subnetwork to which all network endpoints in the NEG
+        # belong.
+    &quot;zone&quot;: &quot;A String&quot;, # Output only. [Output Only] The URL of thezone
+        # where the network endpoint group is located.
+  &quot;networkEndpointType&quot;: &quot;A String&quot;, # Type of network endpoints in this network endpoint group. Can be one ofGCE_VM_IP, GCE_VM_IP_PORT,NON_GCP_PRIVATE_IP_PORT, INTERNET_FQDN_PORT,INTERNET_IP_PORT, SERVERLESS,PRIVATE_SERVICE_CONNECT, GCE_VM_IP_PORTMAP.
+  &quot;pscData&quot;: { # All data that is specifically relevant to only network endpoint groups of # Optional. Only valid when networkEndpointType isPRIVATE_SERVICE_CONNECT.
+      # type PRIVATE_SERVICE_CONNECT.
+    &quot;consumerPscAddress&quot;: &quot;A String&quot;, # Output only. [Output Only] Address allocated from given subnetwork for PSC. This IP
+        # address acts as a VIP for a PSC NEG, allowing it to act as an endpoint in
+        # L7 PSC-XLB.
+    &quot;producerPort&quot;: 42, # The psc producer port is used to connect PSC NEG with specific port on
+        # the PSC Producer side; should only be used for the
+        # PRIVATE_SERVICE_CONNECT NEG type
+    &quot;pscConnectionId&quot;: &quot;A String&quot;, # Output only. [Output Only] The PSC connection id of the PSC Network Endpoint Group
+        # Consumer.
+    &quot;pscConnectionStatus&quot;: &quot;A String&quot;, # Output only. [Output Only] The connection status of the PSC Forwarding Rule.
+  &quot;pscTargetService&quot;: &quot;A String&quot;, # The target service url used to set up private service connection to
+      # a Google API or a PSC Producer Service Attachment.
+      # An example value is: asia-northeast3-cloudkms.googleapis.com.
+      # Optional. Only valid when networkEndpointType isPRIVATE_SERVICE_CONNECT.
+  &quot;region&quot;: &quot;A String&quot;, # Output only. [Output Only] The URL of theregion
+  &quot;serverlessDeployment&quot;: { # Configuration for a serverless network endpoint group (NEG). Theplatform must be provided. # Only valid when networkEndpointType isSERVERLESS. Only one of cloudRun,appEngine, cloudFunction orserverlessDeployment may be set.
+      # Note: The target backend service must be in the same project and located in
+      # the same region as the Serverless NEG.
+    &quot;platform&quot;: &quot;A String&quot;, # The platform of the backend target(s) of this NEG.
+        # The only supported value is
+        # API Gateway: apigateway.googleapis.com.
+    &quot;resource&quot;: &quot;A String&quot;, # The user-defined name of the workload/instance. This value must be
+        # provided explicitly or in the urlMask. The resource
+        # identified by this value is platform-specific and is as follows:
+        #      1. API Gateway: The gateway ID
+        #      2. App Engine: The service name
+        #      3. Cloud Functions: The function name
+        #      4. Cloud Run: The service name
+        # A template to parse platform-specific fields from a request URL. URL mask
+        # allows for routing to multiple resources on the same serverless platform
+        # without having to create multiple Network Endpoint Groups and backend
+        # resources. The fields parsed by this template are platform-specific and
+        # are as follows:
+        #      2. App Engine: The service and version
+        #      4. Cloud Run: The service and tag
+    &quot;version&quot;: &quot;A String&quot;, # The optional resource version. The version identified by this value is
+        # platform-specific and is follows:
+        #      1. API Gateway: Unused
+        #      2. App Engine: The service version
+        #      3. Cloud Functions: Unused
+        #      4. Cloud Run: The service tag
+  &quot;size&quot;: 42, # Output only. [Output only] Number of network endpoints in the network endpoint group.
+  &quot;type&quot;: &quot;A String&quot;, # Specify the type of this network endpoint group. OnlyLOAD_BALANCING is valid for now.
+  <pre>Creates a network endpoint group in the specified project using the
+parameters that are included in the request.
+Note: Use the following APIs to manage network endpoint groups:
+   - 
+   To manage NEGs with zonal scope (such as zonal NEGs, hybrid connectivity
+   NEGs): zonal
+   API
+   To manage NEGs with regional scope (such as regional internet NEGs,
+   serverless NEGs, Private Service Connect NEGs): regional
+   To manage NEGs with global scope (such as global internet NEGs):global
+  <pre>Retrieves the list of network endpoint groups that are located in the
+  &quot;items&quot;: [ # A list of NetworkEndpointGroup resources.
+  &quot;kind&quot;: &quot;compute#networkEndpointGroupList&quot;, # Output only. [Output Only] The resource type, which is alwayscompute#networkEndpointGroupList for network endpoint group
+      # lists.
+    <code class="details" id="listNetworkEndpoints">listNetworkEndpoints(project, networkEndpointGroup, filter=None, maxResults=None, orderBy=None, pageToken=None, returnPartialSuccess=None, x__xgafv=None)</code>
+  <pre>Lists the network endpoints in the specified network endpoint group.
+  networkEndpointGroup: string, The name of the network endpoint group from which you want to generate a
+list of included network endpoints. It should comply with RFC1035. (required)
+  &quot;items&quot;: [ # A list of NetworkEndpointWithHealthStatus resources.
+      &quot;healths&quot;: [ # Output only. [Output only] The health status of network endpoint.
+          # Optional. Displayed only if the network endpoint has centralized health
+          # checking configured.
+          &quot;backendService&quot;: { # URL of the backend service associated with the health state of the network
+            &quot;backendService&quot;: &quot;A String&quot;,
+          &quot;forwardingRule&quot;: { # URL of the forwarding rule associated with the health state of the network
+            &quot;forwardingRule&quot;: &quot;A String&quot;,
+          &quot;healthCheck&quot;: { # A full or valid partial URL to a health check. For example, the following are # URL of the health check associated with the health state of the network
+              # valid URLs:
+              #    - https://www.googleapis.com/compute/beta/projects/project-id/global/httpHealthChecks/health-check
+              #    - projects/project-id/global/httpHealthChecks/health-check
+              #    - global/httpHealthChecks/health-check
+            &quot;healthCheck&quot;: &quot;A String&quot;,
+          &quot;healthCheckService&quot;: { # A full or valid partial URL to a health check service. For example, the # URL of the health check service associated with the health state of the
+              # network endpoint.
+              # following are valid URLs:
+              #    - https://www.googleapis.com/compute/beta/projects/project-id/regions/us-west1/healthCheckServices/health-check-service
+              #    - projects/project-id/regions/us-west1/healthCheckServices/health-check-service
+              #    - regions/us-west1/healthCheckServices/health-check-service
+            &quot;healthCheckService&quot;: &quot;A String&quot;,
+          &quot;healthState&quot;: &quot;A String&quot;, # Health state of the network endpoint determined based on the health checks
+              # configured.
+          &quot;ipv6HealthState&quot;: &quot;A String&quot;, # Health state of the ipv6 network endpoint determined based on the health
+              # checks configured.
+      &quot;networkEndpoint&quot;: { # The network endpoint. # Output only. [Output only] The network endpoint.
+  &quot;kind&quot;: &quot;compute#networkEndpointGroupsListNetworkEndpoints&quot;, # Output only. [Output Only] The resource type, which is alwayscompute#networkEndpointGroupsListNetworkEndpoints for the list
+      # of network endpoints in the specified network endpoint group.
+    <code class="details" id="listNetworkEndpoints_next">listNetworkEndpoints_next()</code>

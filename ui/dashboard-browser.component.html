@@ -1,0 +1,223 @@
+<!-- Dashboard Browser Component -->
+<div class="dashboard-browser" [class.loading]="IsLoading">
+  <!-- Toolbar Row: Breadcrumb + Actions -->
+  <div class="browser-toolbar">
+      [CurrentCategoryId]="SelectedCategoryId"
+      [RootIcon]="IconClass"
+      [RootLabel]="Title"
+      [AllowDragDrop]="AllowDragDrop && (DraggingId !== null || IsSelectionMode)"
+      (Navigate)="NavigateToCategory($event.CategoryId)"
+      (DashboardDrop)="OnBreadcrumbDrop($event)">
+      <!-- Dashboard count -->
+      <span class="dashboard-count">{{ FilteredDashboards.length }} dashboards</span>
+          [class.active]="ViewMode === 'cards'"
+          (click)="SetViewMode('cards')"
+      <!-- Selection Mode Toggle & Bulk Actions -->
+      @if (AllowMultiSelect) {
+        <!-- Enter Selection Mode Button (when not in selection mode) -->
+        @if (!IsSelectionMode && FilteredDashboards.length > 0) {
+            class="select-mode-btn"
+            (click)="EnterSelectionMode()"
+            title="Select multiple dashboards">
+            <i class="fa-solid fa-check-double"></i>
+            Select
+        <!-- Selection Mode Toolbar (when in selection mode) -->
+        @if (IsSelectionMode) {
+            <span class="selected-count">{{ SelectedCount }} selected</span>
+            <button class="action-btn" (click)="SelectAll()" title="Select all">
+            <button class="action-btn" (click)="OnMoveSelected()" title="Move to folder" [disabled]="SelectedCount === 0">
+            <button class="action-btn danger" (click)="OnDeleteSelected()" title="Delete selected" [disabled]="!CanDeleteAnySelected">
+            <button class="action-btn" (click)="ExitSelectionMode()" title="Exit selection mode">
+      <!-- New Dropdown Button -->
+      @if (ShowCreateButton) {
+        <div class="new-dropdown">
+            (click)="ToggleNewMenu(); $event.stopPropagation()">
+            <i class="fa-solid fa-caret-down dropdown-caret"></i>
+          @if (ShowNewMenu) {
+              <button class="dropdown-item" (click)="OnCreateDashboard()">
+              <button class="dropdown-item" (click)="OpenCreateCategoryDialog()">
+  <!-- Click-away overlay for dropdown -->
+    <div class="dropdown-backdrop" (click)="CloseNewMenu()"></div>
+  <div class="browser-filters">
+        [(ngModel)]="SearchText"
+        placeholder="Search dashboards...">
+          class="clear-btn"
+          (click)="ClearSearch()">
+        class="clear-filters-btn"
+      <mj-loading text="Loading dashboards..."></mj-loading>
+  @if (ViewMode === 'cards' && (FilteredChildCategories.length > 0 || FilteredDashboards.length > 0)) {
+      <!-- Category Folders -->
+      @for (category of FilteredChildCategories; track TrackByCategory($index, category)) {
+          class="dashboard-card category-card"
+          [class.drop-target]="DragOverChildCategoryId === category.ID"
+          (click)="NavigateToCategory(category.ID)"
+          (dblclick)="$event.stopPropagation()"
+          (dragover)="OnDragOverChildCategory(category.ID, $event)"
+          (dragleave)="OnDragLeaveChildCategory()"
+          (drop)="OnDropOnChildCategory(category.ID, $event)">
+            <div class="card-icon folder-icon">
+                title="Delete category"
+                (click)="OnDeleteCategory(category, $event)">
+            <h3 class="card-title" [innerHTML]="HighlightMatch(category.Name)"></h3>
+              <p class="card-description" [innerHTML]="HighlightMatch(category.Description)">
+      <!-- Dashboard Cards -->
+      @for (dashboard of FilteredDashboards; track TrackByDashboard($index, dashboard)) {
+          class="dashboard-card"
+          [class.selected]="IsSelected(dashboard.ID)"
+          [class.dragging]="DraggingId === dashboard.ID"
+          [draggable]="AllowDragDrop"
+          (click)="OnDashboardClick(dashboard, $event)"
+          (dblclick)="OnDashboardDoubleClick(dashboard, $event)"
+          (dragstart)="OnDragStart(dashboard, $event)"
+          (dragend)="OnDragEnd()">
+          <!-- Selection checkbox in top-right corner -->
+              class="card-select-area"
+              (click)="ToggleSelection(dashboard.ID); $event.stopPropagation()">
+                [checked]="IsSelected(dashboard.ID)"
+                (change)="$event.stopPropagation()">
+              @if (CanEdit(dashboard.ID)) {
+                  (click)="OnEditDashboard(dashboard, $event)">
+              @if (CanDelete(dashboard.ID)) {
+                  (click)="OnDeleteDashboard(dashboard, $event)">
+            <h3 class="card-title">
+              <span [innerHTML]="HighlightMatch(dashboard.Name)"></span>
+              @if (IsShared(dashboard.ID)) {
+                <span class="shared-badge" title="Shared with you">
+              <p class="card-description" [innerHTML]="HighlightMatch(dashboard.Description)">
+                {{ FormatDate(dashboard.__mj_UpdatedAt) }}
+  @if (ViewMode === 'list' && (FilteredChildCategories.length > 0 || FilteredDashboards.length > 0)) {
+    <div class="dashboard-list">
+          <div class="list-col checkbox-col">
+              [checked]="SelectedCount === FilteredDashboards.length && FilteredDashboards.length > 0"
+              [indeterminate]="SelectedCount > 0 && SelectedCount < FilteredDashboards.length"
+              (change)="SelectedCount === FilteredDashboards.length ? ClearSelection() : SelectAll()">
+        <div class="list-col name-col">Name</div>
+        <div class="list-col type-col">Type</div>
+        <div class="list-col date-col">Modified</div>
+        <div class="list-col actions-col">Actions</div>
+      <!-- Category Rows -->
+          class="list-row category-row"
+              <!-- Empty placeholder for alignment -->
+          <div class="list-col name-col">
+            <i class="fa-solid fa-folder row-icon folder-icon"></i>
+            <span class="dashboard-name" [innerHTML]="HighlightMatch(category.Name)"></span>
+          <div class="list-col type-col">
+          <div class="list-col date-col">
+            <!-- No date for categories -->
+          <div class="list-col actions-col" (click)="$event.stopPropagation()">
+      <!-- Dashboard Rows -->
+            <div class="list-col checkbox-col" (click)="$event.stopPropagation()">
+                (change)="ToggleSelection(dashboard.ID)">
+            <i class="fa-solid fa-chart-line row-icon"></i>
+            <span class="dashboard-name" [innerHTML]="HighlightMatch(dashboard.Name)"></span>
+  @if (FilteredDashboards.length === 0 && FilteredChildCategories.length === 0 && !IsLoading) {
+        <!-- First-time user experience (no dashboards at all) -->
+        @if (IsAtRoot && Dashboards.length === 0) {
+          <div class="empty-illustration">
+            <div class="illustration-bg">
+              <i class="fa-solid fa-gauge-high main-icon"></i>
+            <div class="illustration-accent accent-1"><i class="fa-solid fa-chart-line"></i></div>
+            <div class="illustration-accent accent-2"><i class="fa-solid fa-chart-bar"></i></div>
+            <div class="illustration-accent accent-3"><i class="fa-solid fa-chart-pie"></i></div>
+          <h2 class="empty-title">Welcome to Dashboards</h2>
+          <p class="empty-description">
+            Create custom dashboards to visualize your data, track key metrics, and monitor important information all in one place.
+            <div class="empty-actions">
+              <button class="btn-primary large" (click)="OnCreateDashboard()">
+                Create Your First Dashboard
+          <div class="empty-features">
+              <span>Customizable layouts</span>
+              <span>Connect to your data</span>
+              <span>Share with your team</span>
+        <!-- Folder is empty -->
+        @if (!IsAtRoot && !SearchText) {
+          <div class="empty-icon folder-empty">
+          <h3 class="empty-title">This folder is empty</h3>
+            Add dashboards or create sub-folders to organize your content.
+              <button class="btn-primary" (click)="OnCreateDashboard()">
+                Create Dashboard
+        <!-- Root has dashboards but none uncategorized -->
+        @if (IsAtRoot && Dashboards.length > 0 && !SearchText) {
+          <h3 class="empty-title">No uncategorized dashboards</h3>
+            All your dashboards are organized into folders. Browse the folders above or create a new dashboard here.
+          <div class="empty-icon search-empty">
+          <h3 class="empty-title">No results found</h3>
+            No dashboards or folders match "<strong>{{ SearchText }}</strong>". Try a different search term.
+            <button class="btn-secondary" (click)="ClearSearch()">
+  <!-- Category Drop Zones (for drag and drop) -->
+  @if (DraggingId && Categories.length > 0) {
+    <div class="category-drop-zones">
+      <div class="drop-zone-header">Drop to move to category:</div>
+      <div class="drop-zones">
+          class="drop-zone"
+          [class.active]="DropTargetCategoryId === null"
+          (dragover)="OnDragOverCategory(null, $event)"
+          (dragleave)="OnDragLeaveCategory()"
+          (drop)="OnDropOnCategory(null, $event)">
+          Uncategorized
+        @for (cat of Categories; track TrackByCategory($index, cat)) {
+            [class.active]="DropTargetCategoryId === cat.ID"
+            (dragover)="OnDragOverCategory(cat.ID, $event)"
+            (drop)="OnDropOnCategory(cat.ID, $event)">
+            {{ cat.Name }}
+    [visible]="ShowDeleteConfirm"
+    title="Delete Dashboard{{ DashboardsPendingDelete.length > 1 ? 's' : '' }}"
+        [message]="DashboardsPendingDelete.length === 1
+            ? 'Are you sure you want to delete \'' + DashboardsPendingDelete[0].Name + '\'? This action cannot be undone.'
+            : 'Are you sure you want to delete ' + DashboardsPendingDelete.length + ' dashboards? This action cannot be undone.'"
+    confirmText="Delete"
+    (confirmed)="ConfirmDelete()"
+    (cancelled)="CloseDeleteConfirm()">
+  <!-- Move to Folder Dialog -->
+  @if (ShowMoveDialog) {
+    <div class="move-dialog-overlay" (click)="CloseMoveDialog()">
+      <div class="move-dialog" (click)="$event.stopPropagation()">
+          <h3>Move to Category</h3>
+          <button class="close-btn" (click)="CloseMoveDialog()">
+          <p>Move {{ SelectedCount }} dashboard{{ SelectedCount > 1 ? 's' : '' }} to:</p>
+              class="category-option"
+              (click)="ConfirmMove(null)">
+                (click)="ConfirmMove(cat.ID)">
+          <button class="btn-secondary" (click)="CloseMoveDialog()">Cancel</button>
+  <!-- Create Category Dialog -->
+  @if (ShowCreateCategoryDialog) {
+    <div class="create-category-dialog-overlay" (click)="CloseCreateCategoryDialog()">
+      <div class="create-category-dialog" (click)="$event.stopPropagation()">
+          <button class="close-btn" (click)="CloseCreateCategoryDialog()">
+            <label for="category-name">Name *</label>
+              id="category-name"
+              [(ngModel)]="NewCategoryName"
+              (keyup.enter)="ConfirmCreateCategory()">
+            <label for="category-description">Description</label>
+              id="category-description"
+              [(ngModel)]="NewCategoryDescription"
+            (click)="ConfirmCreateCategory()"
+            [disabled]="!NewCategoryName.trim()">
+          <button class="btn-secondary" (click)="CloseCreateCategoryDialog()">Cancel</button>
+  <!-- Delete Category Confirmation Dialog -->
+  @if (ShowDeleteCategoryConfirm) {
+    <div class="delete-category-dialog-overlay" (click)="CloseDeleteCategoryConfirm()">
+      <div class="delete-category-dialog" (click)="$event.stopPropagation()">
+        <div class="dialog-header danger">
+            Delete Category
+          <button class="close-btn" (click)="CloseDeleteCategoryConfirm()">
+        @if (CategoryPendingDelete) {
+            <div class="warning-message">
+                You are about to delete the category <strong>"{{ CategoryPendingDelete.Name }}"</strong>.
+              @if (GetCategoryContentCount(CategoryPendingDelete); as counts) {
+                @if (counts.dashboards > 0 || counts.categories > 0) {
+                  <p class="content-warning">
+                    <i class="fa-solid fa-warning"></i>
+                    This category contains:
+                  <ul class="content-list">
+                    @if (counts.dashboards > 0) {
+                        {{ counts.dashboards }} dashboard{{ counts.dashboards !== 1 ? 's' : '' }}
+                    @if (counts.categories > 0) {
+                        {{ counts.categories }} sub-categor{{ counts.categories !== 1 ? 'ies' : 'y' }}
+            <div class="confirmation-checkbox">
+                  [(ngModel)]="DeleteCategoryIncludeContents">
+                  I understand this will permanently delete this category and all its contents. This action cannot be undone.
+            class="btn-danger"
+            (click)="ConfirmDeleteCategory()"
+            [disabled]="!DeleteCategoryIncludeContents">
+          <button class="btn-secondary" (click)="CloseDeleteCategoryConfirm()">Cancel</button>

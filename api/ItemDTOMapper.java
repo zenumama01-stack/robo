@@ -1,0 +1,52 @@
+import org.openhab.core.internal.items.GroupFunctionHelper;
+ * The {@link ItemDTOMapper} is a utility class to map items into item data transfer objects (DTOs).
+ * @author Stefan Bußweiler - Moved to core and renamed class to DTO mapper
+ * @author Dennis Nobel - Removed dynamic data
+public class ItemDTOMapper {
+    private static final GroupFunctionHelper GROUP_FUNCTION_HELPER = new GroupFunctionHelper();
+     * Maps item DTO into item object.
+     * @param itemDTO the DTO
+     * @param itemBuilderFactory the item registry
+     * @return the item object
+    public static @Nullable Item map(ItemDTO itemDTO, ItemBuilderFactory itemBuilderFactory) {
+        if (!ItemUtil.isValidItemName(itemDTO.name)) {
+            throw new IllegalArgumentException("The item name '" + itemDTO.name + "' is invalid.");
+        if (itemDTO.type != null) {
+            ItemBuilder builder = itemBuilderFactory.newItemBuilder(itemDTO.type, itemDTO.name);
+            if (itemDTO instanceof GroupItemDTO groupItemDTO && GroupItem.TYPE.equals(itemDTO.type)) {
+                Item baseItem = null;
+                if (groupItemDTO.groupType != null && !groupItemDTO.groupType.isEmpty()) {
+                    baseItem = itemBuilderFactory.newItemBuilder(groupItemDTO.groupType, itemDTO.name).build();
+                    builder.withBaseItem(baseItem);
+                GroupFunction function = new GroupFunction.Equality();
+                if (groupItemDTO.function != null) {
+                    function = mapFunction(baseItem, groupItemDTO.function);
+                builder.withGroupFunction(function);
+            builder.withLabel(itemDTO.label);
+            builder.withCategory(itemDTO.category);
+            builder.withGroups(itemDTO.groupNames);
+            builder.withTags(itemDTO.tags);
+    public static GroupFunction mapFunction(@Nullable Item baseItem, GroupFunctionDTO function) {
+        return GROUP_FUNCTION_HELPER.createGroupFunction(function, baseItem);
+     * Maps item into item DTO object.
+    public static ItemDTO map(Item item) {
+        ItemDTO itemDTO = item instanceof GroupItem ? new GroupItemDTO() : new ItemDTO();
+        fillProperties(itemDTO, item);
+        return itemDTO;
+    private static void fillProperties(ItemDTO itemDTO, Item item) {
+            GroupItemDTO groupItemDTO = (GroupItemDTO) itemDTO;
+                groupItemDTO.groupType = baseItem.getType();
+                groupItemDTO.function = mapFunction(groupItem.getFunction());
+        itemDTO.name = item.getName();
+        itemDTO.type = item.getType();
+        itemDTO.label = item.getLabel();
+        itemDTO.tags = item.getTags();
+        itemDTO.category = item.getCategory();
+        itemDTO.groupNames = item.getGroupNames();
+    public static @Nullable GroupFunctionDTO mapFunction(@Nullable GroupFunction function) {
+        if (function == null) {
+        dto.name = function.getClass().getSimpleName().toUpperCase();
+        for (State param : function.getParameters()) {
+            params.add(param.toString());
+        if (!params.isEmpty()) {
+            dto.params = params.toArray(new String[params.size()]);

@@ -1,0 +1,81 @@
+<h1><a href="connectors_v2.html">Connectors API</a> . <a href="connectors_v2.projects.html">projects</a> . <a href="connectors_v2.projects.locations.html">locations</a> . <a href="connectors_v2.projects.locations.connections.html">connections</a></h1>
+  <code><a href="connectors_v2.projects.locations.connections.actions.html">actions()</a></code>
+<p class="firstline">Returns the actions Resource.</p>
+  <code><a href="connectors_v2.projects.locations.connections.entityTypes.html">entityTypes()</a></code>
+  <code><a href="connectors_v2.projects.locations.connections.resources.html">resources()</a></code>
+  <code><a href="connectors_v2.projects.locations.connections.tools.html">tools()</a></code>
+  <code><a href="#checkReadiness">checkReadiness(name, x__xgafv=None)</a></code></p>
+<p class="firstline">Reports readiness status of the connector. Similar logic to GetStatus but modified for kubernetes health check to understand.</p>
+  <code><a href="#checkStatus">checkStatus(name, executionConfig_headers=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Reports the status of the connection. Note that when the connection is in a state that is not ACTIVE, the implementation of this RPC method must return a Status with the corresponding State instead of returning a gRPC status code that is not "OK", which indicates that ConnectionStatus itself, not the connection, failed.</p>
+  <code><a href="#exchangeAuthCode">exchangeAuthCode(name, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">ExchangeAuthCode exchanges the OAuth authorization code (and other necessary data) for an access token (and associated credentials).</p>
+  <code><a href="#executeSqlQuery">executeSqlQuery(connection, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Executes a SQL statement specified in the body of the request. An example of this SQL statement in the case of Salesforce connector would be 'select * from Account a, Order o where a.Id = o.AccountId'.</p>
+  <code><a href="#generateConnectionToolspecOverride">generateConnectionToolspecOverride(name, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Generate toolspec override for the given list of toolNames.</p>
+  <code><a href="#listCustomToolNames">listCustomToolNames(name, x__xgafv=None)</a></code></p>
+<p class="firstline">Lists custom tool names.</p>
+  <code><a href="#refreshAccessToken">refreshAccessToken(name, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">RefreshAccessToken exchanges the OAuth refresh token (and other necessary data) for a new access token (and new associated credentials).</p>
+  <code><a href="#tools_next">tools_next()</a></code></p>
+    <code class="details" id="checkReadiness">checkReadiness(name, x__xgafv=None)</code>
+  <pre>Reports readiness status of the connector. Similar logic to GetStatus but modified for kubernetes health check to understand.
+  name: string, A parameter (required)
+    { # Response containing status of the connector for readiness prober.
+    <code class="details" id="checkStatus">checkStatus(name, executionConfig_headers=None, x__xgafv=None)</code>
+  <pre>Reports the status of the connection. Note that when the connection is in a state that is not ACTIVE, the implementation of this RPC method must return a Status with the corresponding State instead of returning a gRPC status code that is not &quot;OK&quot;, which indicates that ConnectionStatus itself, not the connection, failed.
+    { # The status of the connector.
+  &quot;description&quot;: &quot;A String&quot;, # When the connector is not in ACTIVE state, the description must be populated to specify the reason why it&#x27;s not in ACTIVE state.
+  &quot;state&quot;: &quot;A String&quot;, # State of the connector.
+    <code class="details" id="exchangeAuthCode">exchangeAuthCode(name, body=None, x__xgafv=None)</code>
+  <pre>ExchangeAuthCode exchanges the OAuth authorization code (and other necessary data) for an access token (and associated credentials).
+{ # ExchangeAuthCodeRequest currently includes the auth code data.
+  &quot;authCodeData&quot;: { # AuthCodeData contains the data the runtime plane will give the connector backend in exchange for access and refresh tokens. # Optional. AuthCodeData contains the data the runtime requires to exchange for access and refresh tokens. If the data is not provided, the runtime will read the data from the secret manager.
+    &quot;authCode&quot;: &quot;A String&quot;, # OAuth authorization code.
+    &quot;pkceVerifier&quot;: &quot;A String&quot;, # OAuth PKCE verifier, needed if PKCE is enabled for this particular connection.
+    &quot;redirectUri&quot;: &quot;A String&quot;, # OAuth redirect URI passed in during the auth code flow, required by some OAuth backends.
+    &quot;scopes&quot;: [ # Scopes the connection will request when the user performs the auth code flow.
+  &quot;executionConfig&quot;: { # ExecutionConfig contains the configuration for the execution of the request.
+  &quot;oauth2Config&quot;: { # OAuth2Config contains the OAuth2 config for the connection.
+    &quot;authUri&quot;: &quot;A String&quot;, # Authorization Server URL/Token Endpoint for Authorization Code Flow
+    &quot;clientId&quot;: &quot;A String&quot;, # Client ID for the OAuth2 flow.
+    &quot;clientSecret&quot;: &quot;A String&quot;, # Client secret for the OAuth2 flow.
+    { # ExchangeAuthCodeResponse includes the returned access token and its associated credentials.
+  &quot;accessCredentials&quot;: { # AccessCredentials includes the OAuth access token, and the other fields returned along with it.
+    &quot;accessToken&quot;: &quot;A String&quot;, # OAuth access token.
+    &quot;expiresIn&quot;: &quot;A String&quot;, # Duration till the access token expires.
+    &quot;refreshToken&quot;: &quot;A String&quot;, # OAuth refresh token.
+    <code class="details" id="executeSqlQuery">executeSqlQuery(connection, body=None, x__xgafv=None)</code>
+  <pre>Executes a SQL statement specified in the body of the request. An example of this SQL statement in the case of Salesforce connector would be &#x27;select * from Account a, Order o where a.Id = o.AccountId&#x27;.
+  connection: string, Required. Resource name of the Connection. Format: projects/{project}/locations/{location}/connections/{connection} (required)
+{ # An execute sql query request containing the query and the connection to execute it on.
+  &quot;query&quot;: { # A wrapper around the SQL query statement. This is needed so that the JSON representation of ExecuteSqlQueryRequest has the following format: `{&quot;query&quot;:&quot;select *&quot;}`. # Required. SQL statement passed by clients like Integration Platform, the query is passed as-is to the driver used for interfacing with external systems.
+    &quot;maxRows&quot;: &quot;A String&quot;, # Sets the limit for the maximum number of rows returned after the query execution.
+    &quot;query&quot;: &quot;A String&quot;, # Required. Sql query to execute.
+    &quot;queryParameters&quot;: [ # In the struct, the value corresponds to the value of query parameter and date type corresponds to the date type of the query parameter.
+      { # Query parameter definition
+        &quot;dataType&quot;: &quot;A String&quot;,
+        &quot;value&quot;: &quot;&quot;,
+    &quot;timeout&quot;: &quot;A String&quot;, # Sets the number of seconds the driver will wait for a query to execute.
+    { # A response returned by the connection after executing the sql query.
+  &quot;results&quot;: [ # In the case of successful execution of the query the response contains results returned by the external system. For example, the result rows of the query are contained in the &#x27;results&#x27; Struct list - &quot;results&quot;: [ { &quot;field1&quot;: &quot;val1&quot;, &quot;field2&quot;: &quot;val2&quot;,.. },.. ] Each Struct row can contain fields any type of like nested Structs or lists.
+    <code class="details" id="generateConnectionToolspecOverride">generateConnectionToolspecOverride(name, body=None, x__xgafv=None)</code>
+  <pre>Generate toolspec override for the given list of toolNames.
+  name: string, Required. Resource name of the Connection. Format: projects/{project}/locations/{location}/connections/{connection} (required)
+  &quot;toolNames&quot;: [ # list of tools to be generated.
+      &quot;entityName&quot;: &quot;A String&quot;, # Entity name for which the tool was generated.
+      &quot;name&quot;: &quot;A String&quot;, # Tool name that was generated in the list tools call.
+      &quot;operation&quot;: &quot;A String&quot;, # Operation for which the tool was generated.
+  &quot;toolSpec&quot;: { # tool spec that has tool_defitions array containing the tools for all sted tool_names.
+    &quot;toolDefinitions&quot;: [ # List of tool definitions.
+    &quot;toolSpecVersion&quot;: &quot;A String&quot;, # Version of the tool spec. Format: providerId/connectorId/versionId/toolSpecId
+    <code class="details" id="listCustomToolNames">listCustomToolNames(name, x__xgafv=None)</code>
+  <pre>Lists custom tool names.
+  &quot;toolNames&quot;: [ # List of custom tools.
+    <code class="details" id="refreshAccessToken">refreshAccessToken(name, body=None, x__xgafv=None)</code>
+  <pre>RefreshAccessToken exchanges the OAuth refresh token (and other necessary data) for a new access token (and new associated credentials).
+{ # RefreshAccessTokenRequest includes the refresh token.
+  &quot;refreshToken&quot;: &quot;A String&quot;, # Optional. Refresh Token String. If the Refresh Token is not provided, the runtime will read the data from the secret manager.
+    { # RefreshAccessTokenResponse includes the returned access token and its associated credentials.
+    <code class="details" id="tools_next">tools_next()</code>

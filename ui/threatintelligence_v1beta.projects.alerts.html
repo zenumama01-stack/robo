@@ -1,0 +1,122 @@
+<h1><a href="threatintelligence_v1beta.html">Threat Intelligence API</a> . <a href="threatintelligence_v1beta.projects.html">projects</a> . <a href="threatintelligence_v1beta.projects.alerts.html">alerts</a></h1>
+  <code><a href="threatintelligence_v1beta.projects.alerts.documents.html">documents()</a></code>
+  <code><a href="#benign">benign(name, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Marks an alert as benign - BENIGN.</p>
+  <code><a href="#duplicate">duplicate(name, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Marks an alert as a duplicate of another alert. - DUPLICATE.</p>
+  <code><a href="#enumerateFacets">enumerateFacets(parent, filter=None, x__xgafv=None)</a></code></p>
+<p class="firstline">EnumerateAlertFacets returns the facets and the number of alerts that meet the filter criteria and have that value for each facet.</p>
+<p class="firstline">Marks an alert as escalated - ESCALATED.</p>
+  <code><a href="#falsePositive">falsePositive(name, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Marks an alert as a false positive - FALSE_POSITIVE.</p>
+<p class="firstline">Get an alert by name.</p>
+<p class="firstline">Get a list of alerts that meet the filter criteria.</p>
+  <code><a href="#notActionable">notActionable(name, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Marks an alert as not actionable - NOT_ACTIONABLE.</p>
+  <code><a href="#read">read(name, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Marks an alert as read - READ.</p>
+<p class="firstline">Marks an alert to closed state - RESOLVED.</p>
+  <code><a href="#trackExternally">trackExternally(name, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Marks an alert as tracked externally - TRACKED_EXTERNALLY.</p>
+  <code><a href="#triage">triage(name, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Marks an alert as triaged - TRIAGED.</p>
+    <code class="details" id="benign">benign(name, body=None, x__xgafv=None)</code>
+  <pre>Marks an alert as benign - BENIGN.
+  name: string, Required. Name of the alert to mark as a benign. Format: projects/{project}/alerts/{alert} (required)
+{ # Request message for MarkAlertAsBenign.
+    { # Stateful object representing a group of Findings. Key feature to an Alert is that it expresses the user&#x27;s intent towards the findings of that group, even those that haven&#x27;t occurred yet.
+  &quot;aiSummary&quot;: &quot;A String&quot;, # Optional. AI summary of the finding.
+  &quot;audit&quot;: { # Tracks basic CRUD facts. # Output only. Audit information for the alert.
+    &quot;createTime&quot;: &quot;A String&quot;, # Output only. Time of creation.
+    &quot;creator&quot;: &quot;A String&quot;, # Output only. Agent that created or updated the record, could be a UserId or a JobId.
+    &quot;updateTime&quot;: &quot;A String&quot;, # Output only. Time of creation or last update.
+    &quot;updater&quot;: &quot;A String&quot;, # Output only. Agent that last updated the record, could be a UserId or a JobId.
+  &quot;configurations&quot;: [ # Output only. The resource names of the Configurations bound to this alert. Format: projects/{project}/configurations/{configuration}
+  &quot;detail&quot;: { # Container for different types of alert details. # Output only. Details object for the alert, not all alerts will have a details object.
+    &quot;dataLeak&quot;: { # Captures the specific details of Data Leak alert. # Data Leak alert detail type.
+      &quot;discoveryDocumentIds&quot;: [ # Required. Array of ids to accommodate multiple discovery documents
+      &quot;severity&quot;: &quot;A String&quot;, # Required. Data Leak specific severity This will be the string representation of the DataLeakFindingDetail.Severityenum. (e.g., &quot;LOW&quot;, &quot;MEDIUM&quot;, &quot;HIGH&quot;, &quot;CRITICAL&quot;)
+    &quot;detailType&quot;: &quot;A String&quot;, # Output only. Name of the detail type. Will be set by the server during creation to the name of the field that is set in the detail union.
+    &quot;initialAccessBroker&quot;: { # Captures the specific details of InitialAccessBroker (IAB) alert. # Initial Access Broker alert detail type.
+      &quot;severity&quot;: &quot;A String&quot;, # Required. IAB specific severity
+    &quot;insiderThreat&quot;: { # Captures the specific details of InsiderThreat alert. # Insider Threat alert detail type.
+      &quot;severity&quot;: &quot;A String&quot;, # Required. InsiderThreat specific severity This will be the string representation of the InsiderThreatFindingDetail.Severityenum. (e.g., &quot;LOW&quot;, &quot;MEDIUM&quot;, &quot;HIGH&quot;, &quot;CRITICAL&quot;)
+  &quot;displayName&quot;: &quot;A String&quot;, # Output only. A short title for the alert.
+  &quot;duplicateOf&quot;: &quot;A String&quot;, # Output only. alert name of the alert this alert is a duplicate of. Format: projects/{project}/alerts/{alert}
+  &quot;duplicatedBy&quot;: [ # Output only. alert names of the alerts that are duplicates of this alert. Format: projects/{project}/alerts/{alert}
+  &quot;etag&quot;: &quot;A String&quot;, # Optional. If included when updating an alert, this should be set to the current etag of the alert. If the etags do not match, the update will be rejected and an ABORTED error will be returned.
+  &quot;externalId&quot;: &quot;A String&quot;, # Output only. External ID for the alert. This is used internally to provide protection against out of order updates.
+  &quot;findingCount&quot;: &quot;A String&quot;, # Output only. The number of findings associated with this alert.
+  &quot;findings&quot;: [ # Output only. Findings that are covered by this alert.
+  &quot;name&quot;: &quot;A String&quot;, # Identifier. Server generated name for the alert. format is projects/{project}/alerts/{alert}
+  &quot;priorityAnalysis&quot;: { # Structured priority analysis for a threat. # Output only. High-Precision Priority Analysis for the alert.
+    &quot;confidence&quot;: &quot;A String&quot;, # The level of confidence in the given verdict.
+    &quot;priorityLevel&quot;: &quot;A String&quot;, # The level of Priority.
+    &quot;reasoning&quot;: &quot;A String&quot;, # Human-readable explanation from the model, detailing why a particular result is considered to have a certain priority.
+  &quot;relevanceAnalysis&quot;: { # Structured relevance analysis for a threat. # Output only. High-Precision Relevance Analysis verdict for the alert.
+    &quot;evidence&quot;: { # Details the evidence used to determine the relevance verdict. # Evidence supporting the verdict, including matched and unmatched items.
+      &quot;commonThemes&quot;: [ # A list of semantic themes or concepts found to be common, related, or aligned between the sources, supporting the verdict.
+      &quot;distinctThemes&quot;: [ # A list of semantic themes or descriptions unique to one source or semantically distant.
+    &quot;reasoning&quot;: &quot;A String&quot;, # Human-readable explanation from the matcher, detailing why a particular result is considered relevant or not relevant.
+    &quot;relevanceLevel&quot;: &quot;A String&quot;, # The level of relevance.
+    &quot;relevant&quot;: True or False, # Indicates whether the threat is considered relevant.
+  &quot;severityAnalysis&quot;: { # Structured severity analysis for a threat. # Output only. High-Precision Severity Analysis for the alert.
+    &quot;reasoning&quot;: &quot;A String&quot;, # Human-readable explanation from the model, detailing why a particular result is considered to have a certain severity.
+    &quot;severityLevel&quot;: &quot;A String&quot;, # The level of severity.
+  &quot;state&quot;: &quot;A String&quot;, # Output only. State of the alert.
+    <code class="details" id="duplicate">duplicate(name, body=None, x__xgafv=None)</code>
+  <pre>Marks an alert as a duplicate of another alert. - DUPLICATE.
+  name: string, Required. Name of the alert to mark as a duplicate. Format: projects/{project}/alerts/{alert} (required)
+{ # Request message for MarkAlertAsDuplicate.
+  &quot;duplicateOf&quot;: &quot;A String&quot;, # Optional. Name of the alert to mark as a duplicate of. Format: projects/{project}/alerts/{alert}
+    <code class="details" id="enumerateFacets">enumerateFacets(parent, filter=None, x__xgafv=None)</code>
+  <pre>EnumerateAlertFacets returns the facets and the number of alerts that meet the filter criteria and have that value for each facet.
+  parent: string, Required. Parent of the alerts. (required)
+  filter: string, Optional. Filter on what alerts will be enumerated.
+    { # Response message for EnumerateAlertFacets.
+  &quot;facets&quot;: [ # List of facets and the counts.
+    { # Facet represents a sub element of a resource for filtering. The results from this method are used to populate the filterable facets in the UI.
+      &quot;facet&quot;: &quot;A String&quot;, # Name of the facet. This is also the string that needs to be used in the filtering expression.
+      &quot;facetCounts&quot;: [ # List of counts for the facet (if categorical).
+        { # FacetCount represents a count of records with each facet value.
+          &quot;count&quot;: 42, # Count of records with the value.
+          &quot;value&quot;: &quot;A String&quot;, # Value of the facet stringified. Timestamps will be formatted using RFC3339.
+      &quot;facetType&quot;: &quot;A String&quot;, # The type of the facet. Options include &quot;string&quot;, &quot;int&quot;, &quot;float&quot;, &quot;bool&quot;, &quot;enum&quot;, &quot;timestamp&quot;, &quot;user&quot; and are useful to show the right sort of UI controls when building a AIP-160 style filtering string.
+      &quot;maxValue&quot;: &quot;A String&quot;, # Max value of the facet stringified based on type. Will be populated and formatted the same as min_value.
+      &quot;minValue&quot;: &quot;A String&quot;, # Min value of the facet stringified based on type. This is only populated for facets that have a clear ordering, for types like enum it will be left empty. Timestamps will be formatted using RFC3339.
+      &quot;totalCount&quot;: &quot;A String&quot;, # Total number of records that contain this facet with ANY value.
+  <pre>Marks an alert as escalated - ESCALATED.
+  name: string, Required. Name of the alert to mark as escalated. Format: projects/{project}/alerts/{alert} (required)
+{ # Request message for MarkAlertAsEscalated.
+    <code class="details" id="falsePositive">falsePositive(name, body=None, x__xgafv=None)</code>
+  <pre>Marks an alert as a false positive - FALSE_POSITIVE.
+  name: string, Required. Name of the alert to mark as a false positive. Format: projects/{project}/alerts/{alert} (required)
+{ # Request message for MarkAlertAsFalsePositive.
+  <pre>Get an alert by name.
+  name: string, Required. Name of the alert to get. Format: projects/{project}/alerts/{alert} (required)
+  <pre>Get a list of alerts that meet the filter criteria.
+  parent: string, Required. Parent of the alerts. Format: projects/{project} (required)
+  filter: string, Optional. Filter criteria.
+  orderBy: string, Optional. Order by criteria in the csv format: &quot;field1,field2 desc&quot; or &quot;field1,field2&quot; or &quot;field1 asc, field2&quot;.
+    { # Response message for ListAlerts.
+  &quot;alerts&quot;: [ # List of alerts.
+  &quot;nextPageToken&quot;: &quot;A String&quot;, # Page token.
+    <code class="details" id="notActionable">notActionable(name, body=None, x__xgafv=None)</code>
+  <pre>Marks an alert as not actionable - NOT_ACTIONABLE.
+  name: string, Required. Name of the alert to mark as a not actionable. Format: projects/{project}/alerts/{alert} (required)
+{ # Request message for MarkAlertAsNotActionable.
+    <code class="details" id="read">read(name, body=None, x__xgafv=None)</code>
+  <pre>Marks an alert as read - READ.
+  name: string, Required. Name of the alert to mark as read. Format: projects/{project}/alerts/{alert} (required)
+{ # Request message for MarkAlertAsRead.
+  <pre>Marks an alert to closed state - RESOLVED.
+  name: string, Required. Name of the alert to mark as resolved. Format: projects/{project}/alerts/{alert} (required)
+{ # Request message for MarkAlertAsResolved.
+    <code class="details" id="trackExternally">trackExternally(name, body=None, x__xgafv=None)</code>
+  <pre>Marks an alert as tracked externally - TRACKED_EXTERNALLY.
+  name: string, Required. Name of the alert to mark as tracked externally. Format: projects/{project}/alerts/{alert} (required)
+{ # Request message for MarkAlertAsTrackedExternally.
+    <code class="details" id="triage">triage(name, body=None, x__xgafv=None)</code>
+  <pre>Marks an alert as triaged - TRIAGED.
+  name: string, Required. Name of the alert to mark as a triaged. Format: projects/{project}/alerts/{alert} (required)
+{ # Request message for MarkAlertAsTriaged.

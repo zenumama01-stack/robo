@@ -1,0 +1,59 @@
+<h1><a href="migrationcenter_v1.html">Migration Center API</a> . <a href="migrationcenter_v1.projects.html">projects</a> . <a href="migrationcenter_v1.projects.locations.html">locations</a> . <a href="migrationcenter_v1.projects.locations.assetsExportJobs.html">assetsExportJobs</a></h1>
+  <code><a href="#create">create(parent, assetsExportJobId=None, body=None, requestId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Creates a new assets export job.</p>
+<p class="firstline">Deletes an assets export job.</p>
+<p class="firstline">Gets the details of an assets export job.</p>
+<p class="firstline">Lists all the assets export jobs in a given project and location.</p>
+<p class="firstline">Runs an assets export job, returning an AssetsExportJobExecution.</p>
+    <code class="details" id="create">create(parent, assetsExportJobId=None, body=None, requestId=None, x__xgafv=None)</code>
+  <pre>Creates a new assets export job.
+  parent: string, Required. The parent resource where the assts export job will be created. (required)
+{ # Assets export job message.
+  &quot;condition&quot;: { # Conditions for selecting assets to export. # Optional. Conditions for selecting assets to export.
+    &quot;filter&quot;: &quot;A String&quot;, # Optional. Assets filter, supports the same syntax as asset listing.
+  &quot;createTime&quot;: &quot;A String&quot;, # Output only. Resource creation time.
+  &quot;inventory&quot;: { # Configuration for asset inventory details exports. # Export asset inventory details.
+  &quot;labels&quot;: { # Optional. Labels as key value pairs. Labels must meet the following constraints: * Keys and values can contain only lowercase letters, numeric characters, underscores, and dashes. * All characters must use UTF-8 encoding, and international characters are allowed. * Keys must start with a lowercase letter or international character. * Each resource is limited to a maximum of 64 labels. Both keys and values are additionally constrained to be &lt;= 128 bytes.
+  &quot;name&quot;: &quot;A String&quot;, # Output only. Identifier. Resource name.
+  &quot;networkDependencies&quot;: { # Configuration for network dependencies exports. # Export data regarding asset network dependencies.
+  &quot;performanceData&quot;: { # Configuration for performance data exports. # Export asset with performance data.
+    &quot;maxDays&quot;: 42, # Optional. When this value is set to a positive integer, performance data will be returned for the most recent days for which data is available. When this value is unset (or set to zero), all available data is returned. The maximum value is 420; values above 420 will be coerced to 420. If unset (0 value) a default value of 40 will be used.
+  &quot;recentExecutions&quot;: [ # Output only. Recent non expired executions of the job.
+    { # Execution status of assets export job.
+      &quot;endTime&quot;: &quot;A String&quot;, # Output only. Completion time of the export.
+      &quot;executionId&quot;: &quot;A String&quot;, # Output only. Globally unique identifier of the execution.
+      &quot;expireTime&quot;: &quot;A String&quot;, # Output only. Expiration time for the export and artifacts.
+      &quot;requestedAssetCount&quot;: 42, # Output only. Number of assets requested for export after resolving the requested filters.
+      &quot;result&quot;: { # Contains the result of the assets export. # Output only. Result of the export execution.
+        &quot;error&quot;: { # The `Status` type defines a logical error model that is suitable for different programming environments, including REST APIs and RPC APIs. It is used by [gRPC](https://github.com/grpc). Each `Status` message contains three pieces of data: error code, error message, and error details. You can find out more about this error model and how to work with it in the [API Design Guide](https://cloud.google.com/apis/design/errors). # Output only. Error encountered during export.
+        &quot;outputFiles&quot;: { # Contains a list of output files. # Output only. List of output files.
+          &quot;entries&quot;: [ # Output only. List of output files.
+            { # Contains a single output file.
+              &quot;csvOutputFile&quot;: { # Contains a single output file of type CSV. # Output only. CSV output file.
+                &quot;columnsCount&quot;: 42, # Output only. Number of columns in the file.
+                &quot;rowCount&quot;: 42, # Output only. Number of rows in the file.
+                &quot;signedUri&quot;: { # Contains a signed URI. # Output only. Signed URI destination.
+                  &quot;file&quot;: &quot;A String&quot;, # Output only. Name of the file the Signed URI references.
+                  &quot;uri&quot;: &quot;A String&quot;, # Output only. Download URI for the file.
+              &quot;fileSizeBytes&quot;: &quot;A String&quot;, # Output only. File size in bytes.
+              &quot;xlsxOutputFile&quot;: { # Contains a single output file of type XLSX. # Output only. XLSX output file.
+        &quot;signedUris&quot;: { # Contains a list of Signed URIs. # Output only. Signed URLs for downloading export artifacts.
+          &quot;signedUris&quot;: [ # Output only. List of signed URIs.
+            { # Contains a signed URI.
+      &quot;startTime&quot;: &quot;A String&quot;, # Output only. Execution timestamp.
+  &quot;signedUriDestination&quot;: { # Signed URI destination configuration. # Export to Cloud Storage files downloadable using signed URIs.
+    &quot;fileFormat&quot;: &quot;A String&quot;, # Required. The file format to export.
+  &quot;updateTime&quot;: &quot;A String&quot;, # Output only. Resource update time.
+  assetsExportJobId: string, Required. The ID to use for the asset export job.
+  <pre>Deletes an assets export job.
+  name: string, Required. The name of the assets export job to delete. (required)
+  <pre>Gets the details of an assets export job.
+  <pre>Lists all the assets export jobs in a given project and location.
+  parent: string, Required. Parent resource. (required)
+  pageSize: integer, Optional. Requested page size. The server may return fewer items than requested. If unspecified, the server will pick an appropriate default value.
+  pageToken: string, Optional. A token identifying a page of results that the server should return.
+    { # Response message for listing assets export jobs.
+  &quot;assetsExportJobs&quot;: [ # Output only. The list of assets export jobs.
+  &quot;nextPageToken&quot;: &quot;A String&quot;, # Output only. A token identifying a page of results the server should return.
+  <pre>Runs an assets export job, returning an AssetsExportJobExecution.
+{ # A request to run an assets export job.

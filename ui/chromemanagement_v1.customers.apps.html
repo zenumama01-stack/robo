@@ -1,0 +1,55 @@
+<h1><a href="chromemanagement_v1.html">Chrome Management API</a> . <a href="chromemanagement_v1.customers.html">customers</a> . <a href="chromemanagement_v1.customers.apps.html">apps</a></h1>
+  <code><a href="chromemanagement_v1.customers.apps.android.html">android()</a></code>
+<p class="firstline">Returns the android Resource.</p>
+  <code><a href="chromemanagement_v1.customers.apps.chrome.html">chrome()</a></code>
+  <code><a href="chromemanagement_v1.customers.apps.web.html">web()</a></code>
+<p class="firstline">Returns the web Resource.</p>
+  <code><a href="#countChromeAppRequests">countChromeAppRequests(customer, orderBy=None, orgUnitId=None, pageSize=None, pageToken=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Generate summary of app installation requests.</p>
+  <code><a href="#countChromeAppRequests_next">countChromeAppRequests_next()</a></code></p>
+  <code><a href="#fetchDevicesRequestingExtension">fetchDevicesRequestingExtension(customer, extensionId=None, orgUnitId=None, pageSize=None, pageToken=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Get a list of devices that have requested to install an extension.</p>
+  <code><a href="#fetchDevicesRequestingExtension_next">fetchDevicesRequestingExtension_next()</a></code></p>
+  <code><a href="#fetchUsersRequestingExtension">fetchUsersRequestingExtension(customer, extensionId=None, orgUnitId=None, pageSize=None, pageToken=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Get a list of users that have requested to install an extension.</p>
+  <code><a href="#fetchUsersRequestingExtension_next">fetchUsersRequestingExtension_next()</a></code></p>
+    <code class="details" id="countChromeAppRequests">countChromeAppRequests(customer, orderBy=None, orgUnitId=None, pageSize=None, pageToken=None, x__xgafv=None)</code>
+  <pre>Generate summary of app installation requests.
+  customer: string, Required. Customer id or &quot;my_customer&quot; to use the customer associated to the account making the request. (required)
+  orderBy: string, Field used to order results. Supported fields: * request_count * latest_request_time
+  orgUnitId: string, The ID of the organizational unit.
+  pageSize: integer, Maximum number of results to return. Maximum and default are 50, anything above will be coerced to 50.
+  pageToken: string, Token to specify the page of the request to be returned.
+    { # Response containing summary of requested app installations.
+  &quot;requestedApps&quot;: [ # Count of requested apps matching request.
+    { # Details of an app installation request.
+      &quot;appDetails&quot;: &quot;A String&quot;, # Output only. Format: app_details=customers/{customer_id}/apps/chrome/{app_id}
+      &quot;appId&quot;: &quot;A String&quot;, # Output only. Unique store identifier for the app. Example: &quot;gmbmikajjgmnabiglmofipeabaddhgne&quot; for the Save to Google Drive Chrome extension.
+      &quot;latestRequestTime&quot;: &quot;A String&quot;, # Output only. The timestamp of the most recently made request for this app.
+      &quot;requestCount&quot;: &quot;A String&quot;, # Output only. Total count of requests for this app.
+  &quot;totalSize&quot;: 42, # Total number of matching app requests.
+    <code class="details" id="countChromeAppRequests_next">countChromeAppRequests_next()</code>
+    <code class="details" id="fetchDevicesRequestingExtension">fetchDevicesRequestingExtension(customer, extensionId=None, orgUnitId=None, pageSize=None, pageToken=None, x__xgafv=None)</code>
+  <pre>Get a list of devices that have requested to install an extension.
+  customer: string, Required. The customer ID or &quot;my_customer&quot; prefixed with &quot;customers/&quot;. (required)
+  extensionId: string, Required. The extension for which we want to find requesting devices.
+  orgUnitId: string, The ID of the organizational unit. Only consider devices that directly belong to this org unit, i.e. sub-orgunits are not counted. If omitted, all data will be returned.
+  pageSize: integer, Optional. Maximum number of results to return. Maximum and default are 50. Any page size larger than 50 will be coerced to 50.
+  pageToken: string, Optional. Token to specify the page of the request to be returned. Token expires after 1 day.
+    { # Response containing a list of devices that have requested the queried extension.
+  &quot;deviceDetails&quot;: [ # Details of devices that have requested the queried extension.
+    { # Details of a device requesting an extension, including the name of the device and the justification of the request.
+      &quot;deviceName&quot;: &quot;A String&quot;, # The name of a device that has requested the extension.
+      &quot;justification&quot;: &quot;A String&quot;, # Request justification as entered by the user.
+  &quot;nextPageToken&quot;: &quot;A String&quot;, # Optional. Token to specify the next page in the list. Token expires after 1 day.
+  &quot;totalSize&quot;: 42, # Optional. Total number of devices in response.
+    <code class="details" id="fetchDevicesRequestingExtension_next">fetchDevicesRequestingExtension_next()</code>
+    <code class="details" id="fetchUsersRequestingExtension">fetchUsersRequestingExtension(customer, extensionId=None, orgUnitId=None, pageSize=None, pageToken=None, x__xgafv=None)</code>
+  <pre>Get a list of users that have requested to install an extension.
+  extensionId: string, Required. The extension for which we want to find the requesting users.
+    { # Response containing a list of users that have requested the queried extension.
+  &quot;totalSize&quot;: 42, # Total number of users in response.
+  &quot;userDetails&quot;: [ # Details of users that have requested the queried extension.
+    { # Details of a user requesting an extension, including the email and the justification.
+      &quot;email&quot;: &quot;A String&quot;, # The e-mail address of a user that has requested the extension.
+    <code class="details" id="fetchUsersRequestingExtension_next">fetchUsersRequestingExtension_next()</code>

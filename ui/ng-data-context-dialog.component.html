@@ -1,0 +1,17 @@
+<div class="data-context-dialog-wrapper">
+        class="data-context-window"
+        [class.maximized]="isMaximized"
+        [width]="dialogWidth"
+        [height]="dialogHeight"
+        [resizable]="!isMaximized"
+        [draggable]="!isMaximized"
+        (close)="closeDialog()">
+                <i class="fa-solid fa-layer-group title-icon"></i>
+                <span>Data Context{{ dataContextName ? ': ' + dataContextName : '' }}</span>
+                    title="{{ isMaximized ? 'Restore' : 'Maximize' }}"
+                    <i class="fa-solid" [class.fa-maximize]="!isMaximized" [class.fa-compress]="isMaximized"></i>
+                    (click)="closeDialog()"
+            <mj-data-context 
+                [dataContextId]="dataContextId" 
+                [Provider]="Provider">
+            </mj-data-context>

@@ -1,0 +1,19 @@
+<h1><a href="retail_v2.html">Vertex AI Search for commerce API</a> . <a href="retail_v2.projects.html">projects</a> . <a href="retail_v2.projects.locations.html">locations</a> . <a href="retail_v2.projects.locations.catalogs.html">catalogs</a> . <a href="retail_v2.projects.locations.catalogs.generativeQuestion.html">generativeQuestion</a></h1>
+<p class="firstline">Allows management of multiple questions.</p>
+  <pre>Allows management of multiple questions.
+  parent: string, Optional. Resource name of the parent catalog. Format: projects/{project}/locations/{location}/catalogs/{catalog} (required)
+{ # Request for BatchUpdateGenerativeQuestionConfig method.
+  &quot;requests&quot;: [ # Required. The updates question configs.
+    { # Request for UpdateGenerativeQuestionConfig method.
+      &quot;generativeQuestionConfig&quot;: { # Configuration for a single generated question. # Required. The question to update.
+        &quot;allowedInConversation&quot;: True or False, # Optional. Whether the question is asked at serving time.
+        &quot;catalog&quot;: &quot;A String&quot;, # Required. Resource name of the catalog. Format: projects/{project}/locations/{location}/catalogs/{catalog}
+        &quot;exampleValues&quot;: [ # Output only. Values that can be used to answer the question.
+        &quot;facet&quot;: &quot;A String&quot;, # Required. The facet to which the question is associated.
+        &quot;finalQuestion&quot;: &quot;A String&quot;, # Optional. The question that will be used at serving time. Question can have a max length of 300 bytes. When not populated, generated_question should be used.
+        &quot;frequency&quot;: 3.14, # Output only. The ratio of how often a question was asked.
+        &quot;generatedQuestion&quot;: &quot;A String&quot;, # Output only. The LLM generated question.
+      &quot;updateMask&quot;: &quot;A String&quot;, # Optional. Indicates which fields in the provided GenerativeQuestionConfig to update. The following are NOT supported: * GenerativeQuestionConfig.frequency If not set or empty, all supported fields are updated.
+    { # Aggregated response for UpdateGenerativeQuestionConfig method.
+  &quot;generativeQuestionConfigs&quot;: [ # Optional. The updates question configs.
+    { # Configuration for a single generated question.

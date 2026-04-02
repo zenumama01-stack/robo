@@ -1,0 +1,29 @@
+<h1><a href="eventarc_v1.html">Eventarc API</a> . <a href="eventarc_v1.projects.html">projects</a> . <a href="eventarc_v1.projects.locations.html">locations</a> . <a href="eventarc_v1.projects.locations.channelConnections.html">channelConnections</a></h1>
+  <code><a href="#create">create(parent, body=None, channelConnectionId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Create a new ChannelConnection in a particular project and location.</p>
+<p class="firstline">Delete a single ChannelConnection.</p>
+<p class="firstline">Get a single ChannelConnection.</p>
+<p class="firstline">List channel connections.</p>
+    <code class="details" id="create">create(parent, body=None, channelConnectionId=None, x__xgafv=None)</code>
+  <pre>Create a new ChannelConnection in a particular project and location.
+  parent: string, Required. The parent collection in which to add this channel connection. (required)
+{ # A representation of the ChannelConnection resource. A ChannelConnection is a resource which event providers create during the activation process to establish a connection between the provider and the subscriber channel.
+  &quot;activationToken&quot;: &quot;A String&quot;, # Input only. Activation token for the channel. The token will be used during the creation of ChannelConnection to bind the channel with the provider project. This field will not be stored in the provider resource.
+  &quot;channel&quot;: &quot;A String&quot;, # Required. The name of the connected subscriber Channel. This is a weak reference to avoid cross project and cross accounts references. This must be in `projects/{project}/location/{location}/channels/{channel_id}` format.
+  &quot;createTime&quot;: &quot;A String&quot;, # Output only. The creation time.
+  &quot;labels&quot;: { # Optional. Resource labels.
+  &quot;name&quot;: &quot;A String&quot;, # Required. The name of the connection.
+  &quot;uid&quot;: &quot;A String&quot;, # Output only. Server assigned ID of the resource. The server guarantees uniqueness and immutability until deleted.
+  &quot;updateTime&quot;: &quot;A String&quot;, # Output only. The last-modified time.
+  channelConnectionId: string, Required. The user-provided ID to be assigned to the channel connection.
+  <pre>Delete a single ChannelConnection.
+  name: string, Required. The name of the channel connection to delete. (required)
+  <pre>Get a single ChannelConnection.
+  name: string, Required. The name of the channel connection to get. (required)
+  <pre>List channel connections.
+  parent: string, Required. The parent collection from which to list channel connections. (required)
+  pageSize: integer, The maximum number of channel connections to return on each page. Note: The service may send fewer responses.
+  pageToken: string, The page token; provide the value from the `next_page_token` field in a previous `ListChannelConnections` call to retrieve the subsequent page. When paginating, all other parameters provided to `ListChannelConnetions` match the call that provided the page token.
+    { # The response message for the `ListChannelConnections` method.
+  &quot;channelConnections&quot;: [ # The requested channel connections, up to the number specified in `page_size`.
+  &quot;nextPageToken&quot;: &quot;A String&quot;, # A page token that can be sent to `ListChannelConnections` to request the next page. If this is empty, then there are no more pages.

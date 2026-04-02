@@ -1,0 +1,19 @@
+<h1><a href="css_v1.html">CSS API</a> . <a href="css_v1.accounts.html">accounts</a> . <a href="css_v1.accounts.quotas.html">quotas</a></h1>
+<p class="firstline">Lists the daily call quota and usage per group for your CSS Center account.</p>
+  <pre>Lists the daily call quota and usage per group for your CSS Center account.
+  parent: string, Required. The CSS account that owns the collection of method quotas and resources. In most cases, this is the CSS domain. Format: accounts/{account} (required)
+  pageSize: integer, Optional. The maximum number of quotas to return in the response, used for paging. Defaults to 500; values above 1000 will be coerced to 1000.
+  pageToken: string, Optional. Token (if provided) to retrieve the subsequent page. All other parameters must match the original call that provided the page token.
+    { # Response message for the ListMethodGroups method.
+  &quot;quotaGroups&quot;: [ # The methods, current quota usage and limits per each group. The quota is shared between all methods in the group. The groups are sorted in descending order based on quota_usage.
+    { # The group information for methods in the CSS API. The quota is shared between all methods in the group. Even if none of the methods within the group have usage the information for the group is returned.
+      &quot;methodDetails&quot;: [ # Output only. List of all methods group quota applies to.
+        { # The method details per method in the CSS API.
+          &quot;method&quot;: &quot;A String&quot;, # Output only. The name of the method for example `cssproductsservice.listcssproducts`.
+          &quot;path&quot;: &quot;A String&quot;, # Output only. The path for the method such as `v1/cssproductsservice.listcssproducts`.
+          &quot;subapi&quot;: &quot;A String&quot;, # Output only. The sub-API that the method belongs to. In the CSS API, this is always `css`.
+          &quot;version&quot;: &quot;A String&quot;, # Output only. The API version that the method belongs to.
+      &quot;name&quot;: &quot;A String&quot;, # Identifier. The resource name of the quota group. Format: accounts/{account}/quotas/{group} Example: `accounts/12345678/quotas/css-products-insert` Note: The {group} part is not guaranteed to follow a specific pattern.
+      &quot;quotaLimit&quot;: &quot;A String&quot;, # Output only. The maximum number of calls allowed per day for the group.
+      &quot;quotaMinuteLimit&quot;: &quot;A String&quot;, # Output only. The maximum number of calls allowed per minute for the group.
+      &quot;quotaUsage&quot;: &quot;A String&quot;, # Output only. The current quota usage, meaning the number of calls already made on a given day to the methods in the group. The daily quota limits reset at at 12:00 PM midday UTC.

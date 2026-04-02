@@ -1,0 +1,9 @@
+    <!-- Report Categories Section -->
+        SectionKey="reportCategories"
+        SectionName="Report Categories"
+        [BadgeCount]="GetSectionRowCount('reportCategories')"
+                [Params]="BuildRelationshipViewParamsByEntityName('MJ: Report Categories','ParentID')"
+                [NewRecordValues]="NewRecordValues('MJ: Report Categories')"
+                [AllowLoad]="IsSectionExpanded('reportCategories')"
+                (AfterDataLoad)="SetSectionRowCount('reportCategories', $event.totalRowCount)"
+                [Params]="BuildRelationshipViewParamsByEntityName('MJ: Reports','CategoryID')"

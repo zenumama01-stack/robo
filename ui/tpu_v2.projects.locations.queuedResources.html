@@ -1,0 +1,53 @@
+<h1><a href="tpu_v2.html">Cloud TPU API</a> . <a href="tpu_v2.projects.html">projects</a> . <a href="tpu_v2.projects.locations.html">locations</a> . <a href="tpu_v2.projects.locations.queuedResources.html">queuedResources</a></h1>
+  <code><a href="#create">create(parent, body=None, queuedResourceId=None, requestId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Creates a QueuedResource TPU instance.</p>
+<p class="firstline">Deletes a QueuedResource TPU instance.</p>
+<p class="firstline">Gets details of a queued resource.</p>
+<p class="firstline">Lists queued resources.</p>
+<p class="firstline">Resets a QueuedResource TPU instance</p>
+    <code class="details" id="create">create(parent, body=None, queuedResourceId=None, requestId=None, x__xgafv=None)</code>
+  <pre>Creates a QueuedResource TPU instance.
+{ # A QueuedResource represents a request for resources that will be placed in a queue and fulfilled when the necessary resources are available.
+  &quot;createTime&quot;: &quot;A String&quot;, # Output only. The time when the QueuedResource was created.
+  &quot;guaranteed&quot;: { # Guaranteed tier definition. # Optional. The Guaranteed tier
+    &quot;minDuration&quot;: &quot;A String&quot;, # Optional. Defines the minimum duration of the guarantee. If specified, the requested resources will only be provisioned if they can be allocated for at least the given duration.
+  &quot;name&quot;: &quot;A String&quot;, # Output only. Immutable. The name of the QueuedResource.
+  &quot;queueingPolicy&quot;: { # Defines the policy of the QueuedRequest. # Optional. The queueing policy of the QueuedRequest.
+    &quot;validAfterDuration&quot;: &quot;A String&quot;, # Optional. A relative time after which resources may be created.
+    &quot;validAfterTime&quot;: &quot;A String&quot;, # Optional. An absolute time after which resources may be created.
+    &quot;validInterval&quot;: { # Represents a time interval, encoded as a Timestamp start (inclusive) and a Timestamp end (exclusive). The start must be less than or equal to the end. When the start equals the end, the interval is empty (matches no time). When both start and end are unspecified, the interval matches any time. # Optional. An absolute time interval within which resources may be created.
+    &quot;validUntilDuration&quot;: &quot;A String&quot;, # Optional. A relative time after which resources should not be created. If the request cannot be fulfilled by this time the request will be failed.
+    &quot;validUntilTime&quot;: &quot;A String&quot;, # Optional. An absolute time after which resources should not be created. If the request cannot be fulfilled by this time the request will be failed.
+  &quot;reservationName&quot;: &quot;A String&quot;, # Optional. Name of the reservation in which the resource should be provisioned. Format: projects/{project}/locations/{zone}/reservations/{reservation}
+  &quot;spot&quot;: { # Spot tier definition. # Optional. The Spot tier.
+  &quot;state&quot;: { # QueuedResourceState defines the details of the QueuedResource request. # Output only. State of the QueuedResource request.
+    &quot;acceptedData&quot;: { # Further data for the accepted state. # Output only. Further data for the accepted state.
+    &quot;activeData&quot;: { # Further data for the active state. # Output only. Further data for the active state.
+    &quot;creatingData&quot;: { # Further data for the creating state. # Output only. Further data for the creating state.
+    &quot;deletingData&quot;: { # Further data for the deleting state. # Output only. Further data for the deleting state.
+    &quot;failedData&quot;: { # Further data for the failed state. # Output only. Further data for the failed state.
+      &quot;error&quot;: { # The `Status` type defines a logical error model that is suitable for different programming environments, including REST APIs and RPC APIs. It is used by [gRPC](https://github.com/grpc). Each `Status` message contains three pieces of data: error code, error message, and error details. You can find out more about this error model and how to work with it in the [API Design Guide](https://cloud.google.com/apis/design/errors). # Output only. The error that caused the queued resource to enter the FAILED state.
+    &quot;provisioningData&quot;: { # Further data for the provisioning state. # Output only. Further data for the provisioning state.
+    &quot;state&quot;: &quot;A String&quot;, # Output only. State of the QueuedResource request.
+    &quot;stateInitiator&quot;: &quot;A String&quot;, # Output only. The initiator of the QueuedResources&#x27;s current state. Used to indicate whether the SUSPENDING/SUSPENDED state was initiated by the user or the service.
+    &quot;suspendedData&quot;: { # Further data for the suspended state. # Output only. Further data for the suspended state.
+    &quot;suspendingData&quot;: { # Further data for the suspending state. # Output only. Further data for the suspending state.
+  &quot;tpu&quot;: { # Details of the TPU resource(s) being requested. # Optional. Defines a TPU resource.
+    &quot;nodeSpec&quot;: [ # Optional. The TPU node(s) being requested.
+      { # Details of the TPU node(s) being requested. Users can request either a single node or multiple nodes. NodeSpec provides the specification for node(s) to be created.
+        &quot;multisliceParams&quot;: { # Parameters to specify for multislice QueuedResource requests. This message must be populated in case of multislice requests instead of node_id. # Optional. Fields to specify in case of multislice request.
+          &quot;nodeCount&quot;: 42, # Required. Number of nodes with this spec. The system will attempt to provision &quot;node_count&quot; nodes as part of the request. This needs to be &gt; 1.
+          &quot;nodeIdPrefix&quot;: &quot;A String&quot;, # Optional. Prefix of node_ids in case of multislice request. Should follow the `^[A-Za-z0-9_.~+%-]+$` regex format. If node_count = 3 and node_id_prefix = &quot;np&quot;, node ids of nodes created will be &quot;np-0&quot;, &quot;np-1&quot;, &quot;np-2&quot;. If this field is not provided we use queued_resource_id as the node_id_prefix.
+        &quot;node&quot;: { # A TPU instance. # Required. The node.
+        &quot;nodeId&quot;: &quot;A String&quot;, # Optional. The unqualified resource name. Should follow the `^[A-Za-z0-9_.~+%-]+$` regex format. This is only specified when requesting a single node. In case of multislice requests, multislice_params must be populated instead.
+        &quot;parent&quot;: &quot;A String&quot;, # Required. The parent resource name.
+  queuedResourceId: string, Optional. The unqualified resource name. Should follow the `^[A-Za-z0-9_.~+%-]+$` regex format.
+  <pre>Deletes a QueuedResource TPU instance.
+  force: boolean, Optional. If set to true, all running nodes belonging to this queued resource will be deleted first and then the queued resource will be deleted. Otherwise (i.e. force=false), the queued resource will only be deleted if its nodes have already been deleted or the queued resource is in the ACCEPTED, FAILED, or SUSPENDED state.
+  <pre>Gets details of a queued resource.
+  <pre>Lists queued resources.
+    { # Response for ListQueuedResources.
+  &quot;queuedResources&quot;: [ # The listed queued resources.
+  <pre>Resets a QueuedResource TPU instance
+  name: string, Required. The name of the queued resource. (required)
+{ # Request for ResetQueuedResource.

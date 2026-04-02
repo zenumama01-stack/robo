@@ -1,0 +1,30 @@
+<h1><a href="dfareporting_v3_3.html">Campaign Manager 360 API</a> . <a href="dfareporting_v3_3.creativeGroups.html">creativeGroups</a></h1>
+<p class="firstline">Gets one creative group by ID.</p>
+<p class="firstline">Inserts a new creative group.</p>
+  <code><a href="#list">list(profileId, advertiserIds=None, groupNumber=None, ids=None, maxResults=None, pageToken=None, searchString=None, sortField=None, sortOrder=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Retrieves a list of creative groups, possibly filtered. This method supports paging.</p>
+<p class="firstline">Updates an existing creative group. This method supports patch semantics.</p>
+<p class="firstline">Updates an existing creative group.</p>
+  <pre>Gets one creative group by ID.
+  id: string, Creative group ID. (required)
+    { # Contains properties of a creative group.
+  &quot;accountId&quot;: &quot;A String&quot;, # Account ID of this creative group. This is a read-only field that can be left blank.
+  &quot;advertiserId&quot;: &quot;A String&quot;, # Advertiser ID of this creative group. This is a required field on insertion.
+  &quot;groupNumber&quot;: 42, # Subgroup of the creative group. Assign your creative groups to a subgroup in order to filter or manage them more easily. This field is required on insertion and is read-only after insertion. Acceptable values are 1 to 2, inclusive.
+  &quot;id&quot;: &quot;A String&quot;, # ID of this creative group. This is a read-only, auto-generated field.
+  &quot;kind&quot;: &quot;A String&quot;, # Identifies what kind of resource this is. Value: the fixed string &quot;dfareporting#creativeGroup&quot;.
+  &quot;name&quot;: &quot;A String&quot;, # Name of this creative group. This is a required field and must be less than 256 characters long and unique among creative groups of the same advertiser.
+  &quot;subaccountId&quot;: &quot;A String&quot;, # Subaccount ID of this creative group. This is a read-only field that can be left blank.
+  <pre>Inserts a new creative group.
+    <code class="details" id="list">list(profileId, advertiserIds=None, groupNumber=None, ids=None, maxResults=None, pageToken=None, searchString=None, sortField=None, sortOrder=None, x__xgafv=None)</code>
+  <pre>Retrieves a list of creative groups, possibly filtered. This method supports paging.
+  advertiserIds: string, Select only creative groups that belong to these advertisers. (repeated)
+  groupNumber: integer, Select only creative groups that belong to this subgroup.
+  ids: string, Select only creative groups with these IDs. (repeated)
+  searchString: string, Allows searching for creative groups by name or ID. Wildcards (*) are allowed. For example, &quot;creativegroup*2015&quot; will return creative groups with names like &quot;creativegroup June 2015&quot;, &quot;creativegroup April 2015&quot;, or simply &quot;creativegroup 2015&quot;. Most of the searches also add wild-cards implicitly at the start and the end of the search string. For example, a search string of &quot;creativegroup&quot; will match creative groups with the name &quot;my creativegroup&quot;, &quot;creativegroup 2015&quot;, or simply &quot;creativegroup&quot;.
+    { # Creative Group List Response
+  &quot;creativeGroups&quot;: [ # Creative group collection.
+  &quot;kind&quot;: &quot;A String&quot;, # Identifies what kind of resource this is. Value: the fixed string &quot;dfareporting#creativeGroupsListResponse&quot;.
+  <pre>Updates an existing creative group. This method supports patch semantics.
+  id: string, CreativeGroup ID. (required)
+  <pre>Updates an existing creative group.

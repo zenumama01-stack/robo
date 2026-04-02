@@ -1,0 +1,18 @@
+    <!-- Model-Vendor Linkage Section -->
+        SectionKey="modelVendorLinkage"
+        SectionName="Model-Vendor Linkage"
+    <!-- Implementation Configuration Section -->
+        SectionKey="implementationConfiguration"
+        SectionName="Implementation Configuration"
+            FieldName="MaxInputTokens"
+            FieldName="MaxOutputTokens"
+            FieldName="SupportsStreaming"
+    <!-- MJ: AI Credential Bindings Section -->
+        SectionKey="mJAICredentialBindings"
+        SectionName="MJ: AI Credential Bindings"
+        Icon="fa fa-table"
+        [BadgeCount]="GetSectionRowCount('mJAICredentialBindings')"
+                [Params]="BuildRelationshipViewParamsByEntityName('MJ: AI Credential Bindings','AIModelVendorID')"
+                [NewRecordValues]="NewRecordValues('MJ: AI Credential Bindings')"
+                [AllowLoad]="IsSectionExpanded('mJAICredentialBindings')"
+                (AfterDataLoad)="SetSectionRowCount('mJAICredentialBindings', $event.totalRowCount)"

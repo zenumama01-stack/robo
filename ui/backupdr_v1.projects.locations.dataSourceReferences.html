@@ -1,0 +1,34 @@
+<h1><a href="backupdr_v1.html">Backup and DR Service API</a> . <a href="backupdr_v1.projects.html">projects</a> . <a href="backupdr_v1.projects.locations.html">locations</a> . <a href="backupdr_v1.projects.locations.dataSourceReferences.html">dataSourceReferences</a></h1>
+<p class="firstline">Fetch DataSourceReferences for a given project, location and resource type.</p>
+<p class="firstline">Gets details of a single DataSourceReference.</p>
+<p class="firstline">Lists DataSourceReferences for a given project and location.</p>
+  <pre>Fetch DataSourceReferences for a given project, location and resource type.
+  filter: string, Optional. A filter expression that filters the results fetched in the response. The expression must specify the field name, a comparison operator, and the value that you want to use for filtering. Supported fields: * data_source * data_source_gcp_resource_info.gcp_resourcename * data_source_backup_config_state * data_source_backup_count * data_source_backup_config_info.last_backup_state * data_source_gcp_resource_info.gcp_resourcename * data_source_gcp_resource_info.type * data_source_gcp_resource_info.location * data_source_gcp_resource_info.cloud_sql_instance_properties.instance_create_time
+  pageSize: integer, Optional. The maximum number of DataSourceReferences to return. The service may return fewer than this value. If unspecified, at most 50 DataSourceReferences will be returned. The maximum value is 100; values above 100 will be coerced to 100.
+  pageToken: string, Optional. A page token, received from a previous call of `FetchDataSourceReferencesForResourceType`. Provide this to retrieve the subsequent page. When paginating, all other parameters provided to `FetchDataSourceReferencesForResourceType` must match the call that provided the page token.
+    { # Response for the FetchDataSourceReferencesForResourceType method.
+  &quot;dataSourceReferences&quot;: [ # The DataSourceReferences from the specified parent.
+    { # DataSourceReference is a reference to a DataSource resource.
+      &quot;createTime&quot;: &quot;A String&quot;, # Output only. The time when the DataSourceReference was created.
+      &quot;dataSource&quot;: &quot;A String&quot;, # Output only. The resource name of the DataSource. Format: projects/{project}/locations/{location}/backupVaults/{backupVault}/dataSources/{dataSource}
+      &quot;dataSourceBackupConfigInfo&quot;: { # Information of backup configuration on the DataSource. # Output only. Information of backup configuration on the DataSource.
+        &quot;lastBackupState&quot;: &quot;A String&quot;, # Output only. The status of the last backup in this DataSource
+        &quot;lastSuccessfulBackupConsistencyTime&quot;: &quot;A String&quot;, # Output only. Timestamp of the last successful backup to this DataSource.
+      &quot;dataSourceBackupConfigState&quot;: &quot;A String&quot;, # Output only. The backup configuration state of the DataSource.
+      &quot;dataSourceBackupCount&quot;: &quot;A String&quot;, # Output only. Number of backups in the DataSource.
+      &quot;dataSourceGcpResourceInfo&quot;: { # The Google Cloud resource that the DataSource is associated with. # Output only. The Google Cloud resource that the DataSource is associated with.
+        &quot;alloyDbClusterProperties&quot;: { # AlloyDBClusterDataSourceReferenceProperties represents the properties of an AlloyDB cluster that are stored in the DataSourceReference. # Output only. The properties of the AlloyDB cluster.
+          &quot;name&quot;: &quot;A String&quot;, # Output only. Name of the AlloyDB cluster backed up by the datasource. Format: projects/{project}/locations/{location}/clusters/{cluster}
+        &quot;cloudSqlInstanceProperties&quot;: { # CloudSqlInstanceDataSourceReferenceProperties represents the properties of a Cloud SQL resource that are stored in the DataSourceReference. # Output only. The properties of the Cloud SQL instance.
+        &quot;gcpResourcename&quot;: &quot;A String&quot;, # Output only. The resource name of the Google Cloud resource. Ex: projects/{project}/zones/{zone}/instances/{instance}
+        &quot;location&quot;: &quot;A String&quot;, # Output only. The location of the Google Cloud resource. Ex: //&quot;global&quot;/&quot;unspecified&quot;
+        &quot;type&quot;: &quot;A String&quot;, # Output only. The type of the Google Cloud resource. Ex: compute.googleapis.com/Instance
+      &quot;name&quot;: &quot;A String&quot;, # Identifier. The resource name of the DataSourceReference. Format: projects/{project}/locations/{location}/dataSourceReferences/{data_source_reference}
+      &quot;totalStoredBytes&quot;: &quot;A String&quot;, # Output only. Total size of the storage used by all backup resources for the referenced datasource.
+  <pre>Gets details of a single DataSourceReference.
+  name: string, Required. The name of the DataSourceReference to retrieve. Format: projects/{project}/locations/{location}/dataSourceReferences/{data_source_reference} (required)
+  <pre>Lists DataSourceReferences for a given project and location.
+  filter: string, Optional. A filter expression that filters the results listed in the response. The expression must specify the field name, a comparison operator, and the value that you want to use for filtering. The following field and operator combinations are supported: * data_source_gcp_resource_info.gcp_resourcename with `=`, `!=` * data_source_gcp_resource_info.type with `=`, `!=`
+  orderBy: string, Optional. A comma-separated list of fields to order by, sorted in ascending order. Use &quot;desc&quot; after a field name for descending. Supported fields: * data_source * data_source_gcp_resource_info.gcp_resourcename
+  pageToken: string, Optional. A page token, received from a previous `ListDataSourceReferences` call. Provide this to retrieve the subsequent page. When paginating, all other parameters provided to `ListDataSourceReferences` must match the call that provided the page token.
+    { # Response for the ListDataSourceReferences method.

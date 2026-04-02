@@ -1,0 +1,56 @@
+<h1><a href="connectors_v1.html">Connectors API</a> . <a href="connectors_v1.projects.html">projects</a> . <a href="connectors_v1.projects.locations.html">locations</a> . <a href="connectors_v1.projects.locations.connections.html">connections</a> . <a href="connectors_v1.projects.locations.connections.eventSubscriptions.html">eventSubscriptions</a></h1>
+  <code><a href="#create">create(parent, body=None, eventSubscriptionId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Creates a new EventSubscription in a given project,location and connection.</p>
+<p class="firstline">Deletes a single EventSubscription.</p>
+<p class="firstline">Gets details of a single EventSubscription.</p>
+<p class="firstline">List EventSubscriptions in a given project,location and connection.</p>
+<p class="firstline">Updates the parameters of a single EventSubscription.</p>
+<p class="firstline">RetryEventSubscription retries the registration of Subscription.</p>
+    <code class="details" id="create">create(parent, body=None, eventSubscriptionId=None, x__xgafv=None)</code>
+  <pre>Creates a new EventSubscription in a given project,location and connection.
+  parent: string, Required. Parent resource of the EventSubscription, of the form: `projects/*/locations/*/connections/*` (required)
+{ # represents the Connector&#x27;s EventSubscription resource
+  &quot;destinations&quot;: { # Message for EventSubscription Destination to act on receiving an event # Optional. The destination to hit when we receive an event
+    &quot;endpoint&quot;: { # Endpoint message includes details of the Destination endpoint. # OPTION 1: Hit an endpoint when we receive an event.
+      &quot;endpointUri&quot;: &quot;A String&quot;, # Optional. The URI of the Endpoint.
+          &quot;key&quot;: &quot;A String&quot;, # Optional. Key of Header.
+          &quot;value&quot;: &quot;A String&quot;, # Optional. Value of Header.
+    &quot;pubsub&quot;: { # Pub/Sub message includes details of the Destination Pub/Sub topic. # OPTION 3: Write the event to Pub/Sub topic.
+      &quot;attributes&quot;: { # Optional. Pub/Sub message attributes to be added to the Pub/Sub message.
+      &quot;configVariables&quot;: [ # Optional. Configuration for configuring the trigger
+        { # ConfigVariable represents a configuration variable present in a Connection. or AuthConfig.
+          &quot;boolValue&quot;: True or False, # Optional. Value is a bool.
+          &quot;encryptionKeyValue&quot;: { # Encryption Key value. # Optional. Value is a Encryption Key.
+            &quot;kmsKeyName&quot;: &quot;A String&quot;, # Optional. The [KMS key name] with which the content of the Operation is encrypted. The expected format: `projects/*/locations/*/keyRings/*/cryptoKeys/*`. Will be empty string if google managed.
+            &quot;type&quot;: &quot;A String&quot;, # Optional. Specifies the type of the encryption key.
+          &quot;intValue&quot;: &quot;A String&quot;, # Optional. Value is an integer
+          &quot;key&quot;: &quot;A String&quot;, # Optional. Key of the config variable.
+          &quot;secretValue&quot;: { # Secret provides a reference to entries in Secret Manager. # Optional. Value is a secret.
+          &quot;stringValue&quot;: &quot;A String&quot;, # Optional. Value is a string.
+      &quot;projectId&quot;: &quot;A String&quot;, # Required. The project id which has the Pub/Sub topic.
+      &quot;topicId&quot;: &quot;A String&quot;, # Required. The topic id of the Pub/Sub topic.
+    &quot;serviceAccount&quot;: &quot;A String&quot;, # Optional. Service account needed for runtime plane to trigger IP workflow.
+    &quot;type&quot;: &quot;A String&quot;, # Optional. type of the destination
+  &quot;eventTypeId&quot;: &quot;A String&quot;, # Optional. Event type id of the event of current EventSubscription.
+  &quot;filter&quot;: &quot;A String&quot;, # Optional. Filter for the event subscription. Incoming events are filtered based on the filter expression.
+  &quot;jms&quot;: { # JMS message denotes the source of the event # Optional. JMS is the source for the event listener.
+    &quot;name&quot;: &quot;A String&quot;, # Optional. Name of the JMS source. i.e. queueName or topicName
+    &quot;type&quot;: &quot;A String&quot;, # Optional. Type of the JMS Source. i.e. Queue or Topic
+  &quot;name&quot;: &quot;A String&quot;, # Required. Identifier. Resource name of the EventSubscription. Format: projects/{project}/locations/{location}/connections/{connection}/eventSubscriptions/{event_subscription}
+  &quot;status&quot;: { # EventSubscription Status denotes the status of the EventSubscription resource. # Optional. Status indicates the status of the event subscription resource
+  &quot;subscriber&quot;: &quot;A String&quot;, # Optional. name of the Subscriber for the current EventSubscription.
+  &quot;subscriberLink&quot;: &quot;A String&quot;, # Optional. Link for Subscriber of the current EventSubscription.
+  &quot;triggerConfigVariables&quot;: [ # Optional. Configuration for configuring the trigger
+  eventSubscriptionId: string, Required. Identifier to assign to the Event Subscription. Must be unique within scope of the parent resource.
+  <pre>Deletes a single EventSubscription.
+  name: string, Required. Resource name of the form: `projects/*/locations/*/connections/*/eventsubscriptions/*` (required)
+  <pre>Gets details of a single EventSubscription.
+  name: string, Required. Resource name of the form: `projects/*/locations/*/connections/*/eventSubscriptions/*` (required)
+  <pre>List EventSubscriptions in a given project,location and connection.
+    { # Response message for ConnectorsService.ListEventSubscriptions
+  &quot;eventSubscriptions&quot;: [ # Subscriptions.
+  <pre>Updates the parameters of a single EventSubscription.
+  name: string, Required. Identifier. Resource name of the EventSubscription. Format: projects/{project}/locations/{location}/connections/{connection}/eventSubscriptions/{event_subscription} (required)
+  updateMask: string, Required. The list of fields to update. Fields are specified relative to the Subscription. A field will be overwritten if it is in the mask. You can modify only the fields listed below. To update the EventSubscription details: * `serviceAccount`
+  <pre>RetryEventSubscription retries the registration of Subscription.
+{ # Request message for ConnectorsService.RefreshEventSubscription

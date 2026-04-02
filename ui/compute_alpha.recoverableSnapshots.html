@@ -1,0 +1,68 @@
+<h1><a href="compute_alpha.html">Compute Engine API</a> . <a href="compute_alpha.recoverableSnapshots.html">recoverableSnapshots</a></h1>
+<p class="firstline">Retrieves an aggregated list of all of the RecoverableSnapshots in your</p>
+  <code><a href="#delete">delete(project, recoverableSnapshot, requestId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Deletes the specified RecoverableSnapshot. Deleting a recoverable snapshot</p>
+  <code><a href="#get">get(project, recoverableSnapshot, x__xgafv=None)</a></code></p>
+<p class="firstline">Returns the specified RecoverableSnapshot resource.</p>
+<p class="firstline">Retrieves a list of all of the RecoverableSnapshots in your project.</p>
+  <code><a href="#recover">recover(project, recoverableSnapshot, requestId=None, snapshotName=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Recovers the specified RecoverableSnapshot.</p>
+  <pre>Retrieves an aggregated list of all of the RecoverableSnapshots in your
+project across all regions and global scope.
+  &quot;items&quot;: { # A list of RecoverableSnapshotsScopedList resources.
+        # recoverablesnapshots.
+      &quot;recoverablesnapshots&quot;: [ # [Output Only] A list of recoverablesnapshots contained in this scope.
+        { # Represents a RecoverableSnapshot resource.
+            # A RecoverableSnapshot represents a snapshot in recycle bin.
+          &quot;description&quot;: &quot;A String&quot;, # Optional. An optional description of this resource.
+          &quot;kind&quot;: &quot;compute#recoverableSnapshot&quot;, # Output only. [Output Only] Type of the resource. Alwayscompute#recoverableSnapshot for RecoverableSnapshot
+          &quot;name&quot;: &quot;A String&quot;, # Output only. Identifier. Name of the recoverable snapshot generated on the deletion of the snapshot.
+              # The name will be 1-63 characters long, and comply withRFC1035.
+              # Specifically, the name will be 1-63 characters long and match the regular
+              # character will be a lowercase letter, and all following characters can be
+          &quot;originalResource&quot;: { # Output only. Output Only] The original snapshot resource.
+            &quot;autoCreatedBy&quot;: &quot;A String&quot;, # ResourceKey of the resource policy or flow which created this auto
+            &quot;deletionTimestamp&quot;: &quot;A String&quot;, # Output only. [Output Only] Purge timestamp of recoverable snapshot inRFC3339 text format.
+            &quot;full&quot;: True or False, # Indicates the created snapshot is a full snapshot.
+            &quot;id&quot;: &quot;A String&quot;, # Output only. [Output Only] The unique identifier for the original snapshot. This
+            &quot;licenseCodes&quot;: [ # Output only. [Output Only] Integer license codes indicating which licenses are
+                # attached to this snapshot.
+            &quot;name&quot;: &quot;A String&quot;, # Name of the original snapshot provided by the client. The name must be
+            &quot;region&quot;: &quot;A String&quot;, # Output only. [Output Only] URL of the region where the snapshot resides. Only
+                # applicable for regional snapshots.
+                # the snapshot will be encrypted using an automatically generated key and
+                # you do not need to provide a key to use the snapshot later.
+            &quot;sourceDiskId&quot;: &quot;A String&quot;, # Output only. [Output Only] The ID value of the disk used to create this snapshot
+            &quot;sourceInstantSnapshot&quot;: &quot;A String&quot;, # The source instant snapshot used to create this snapshot.
+                # snapshot. This value identifies the exact instant snapshot that was used
+                # to create this persistent disk. For example, if you created the
+                # persistent disk from an instant snapshot that was later deleted and
+                # recreated under the same name, the source instant snapshot ID would
+                # identify the exact instant snapshot that was used.
+            &quot;storageBytes&quot;: &quot;A String&quot;, # Output only. [Output Only] A size of the storage used by the snapshot.
+          &quot;purgeTimestamp&quot;: &quot;A String&quot;, # Output only. [Output Only] Purge timestamp of recoverable snapshot inRFC3339
+          &quot;status&quot;: &quot;A String&quot;, # Output only. [Output Only] Status of the recoverable snapshot.
+          # recoverablesnapshots when the list is empty.
+  &quot;kind&quot;: &quot;compute#recoverableSnapshotAggregatedList&quot;, # Output only. [Output Only] Type of resource. Alwayscompute#recoverableSnapshotAggregatedList for aggregated lists
+      # of recoverablesnapshots.
+    <code class="details" id="delete">delete(project, recoverableSnapshot, requestId=None, x__xgafv=None)</code>
+  <pre>Deletes the specified RecoverableSnapshot. Deleting a recoverable snapshot
+will delete the underlying PD snapshot and is irreversible.
+  recoverableSnapshot: string, Name of the recoverable Snapshot resource to delete. (required)
+    <code class="details" id="get">get(project, recoverableSnapshot, x__xgafv=None)</code>
+  <pre>Returns the specified RecoverableSnapshot resource.
+  recoverableSnapshot: string, Name of the Snapshot resource to return. (required)
+  <pre>Retrieves a list of all of the RecoverableSnapshots in your project.
+  &quot;items&quot;: [ # A list of RecoverableSnapshots resources.
+  &quot;kind&quot;: &quot;compute#recoverableSnapshotList&quot;, # Output only. [Output Only] Type of resource. Alwayscompute#recoverableSnapshotList for lists of
+    <code class="details" id="recover">recover(project, recoverableSnapshot, requestId=None, snapshotName=None, x__xgafv=None)</code>
+  <pre>Recovers the specified RecoverableSnapshot.
+  project: string, Project Id of the request (required)
+  recoverableSnapshot: string, Name of the recoverable resource to recover (required)
+  snapshotName: string, Optional. Name of the snapshot after the recovery
+The name will be 1-63 characters long, and comply withRFC1035.
+Specifically, the name will be 1-63 characters long and match the regular
+expression `[a-z]([-a-z0-9]*[a-z0-9])?` which means the first
+character will be a lowercase letter, and all following characters can be
+a dash, lowercase letter, or digit, except the last character, which cannot
+be a dash.

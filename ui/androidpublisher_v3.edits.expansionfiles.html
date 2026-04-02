@@ -1,0 +1,28 @@
+<h1><a href="androidpublisher_v3.html">Google Play Android Developer API</a> . <a href="androidpublisher_v3.edits.html">edits</a> . <a href="androidpublisher_v3.edits.expansionfiles.html">expansionfiles</a></h1>
+  <code><a href="#get">get(packageName, editId, apkVersionCode, expansionFileType, x__xgafv=None)</a></code></p>
+<p class="firstline">Fetches the expansion file configuration for the specified APK.</p>
+  <code><a href="#patch">patch(packageName, editId, apkVersionCode, expansionFileType, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Patches the APK's expansion file configuration to reference another APK's expansion file. To add a new expansion file use the Upload method.</p>
+  <code><a href="#update">update(packageName, editId, apkVersionCode, expansionFileType, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Updates the APK's expansion file configuration to reference another APK's expansion file. To add a new expansion file use the Upload method.</p>
+  <code><a href="#upload">upload(packageName, editId, apkVersionCode, expansionFileType, media_body=None, media_mime_type=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Uploads a new expansion file and attaches to the specified APK.</p>
+    <code class="details" id="get">get(packageName, editId, apkVersionCode, expansionFileType, x__xgafv=None)</code>
+  <pre>Fetches the expansion file configuration for the specified APK.
+  apkVersionCode: integer, The version code of the APK whose expansion file configuration is being read or modified. (required)
+  expansionFileType: string, The file type of the file configuration which is being read or modified. (required)
+      expansionFileTypeUnspecified - Unspecified expansion file type.
+      main - Main expansion file.
+      patch - Patch expansion file.
+    { # An expansion file. The resource for ExpansionFilesService.
+  &quot;fileSize&quot;: &quot;A String&quot;, # If set, this field indicates that this APK has an expansion file uploaded to it: this APK does not reference another APK&#x27;s expansion file. The field&#x27;s value is the size of the uploaded expansion file in bytes.
+  &quot;referencesVersion&quot;: 42, # If set, this APK&#x27;s expansion file references another APK&#x27;s expansion file. The file_size field will not be set.
+    <code class="details" id="patch">patch(packageName, editId, apkVersionCode, expansionFileType, body=None, x__xgafv=None)</code>
+  <pre>Patches the APK&#x27;s expansion file configuration to reference another APK&#x27;s expansion file. To add a new expansion file use the Upload method.
+  expansionFileType: string, The file type of the expansion file configuration which is being updated. (required)
+    <code class="details" id="update">update(packageName, editId, apkVersionCode, expansionFileType, body=None, x__xgafv=None)</code>
+  <pre>Updates the APK&#x27;s expansion file configuration to reference another APK&#x27;s expansion file. To add a new expansion file use the Upload method.
+    <code class="details" id="upload">upload(packageName, editId, apkVersionCode, expansionFileType, media_body=None, media_mime_type=None, x__xgafv=None)</code>
+  <pre>Uploads a new expansion file and attaches to the specified APK.
+    { # Response for uploading an expansion file.
+  &quot;expansionFile&quot;: { # An expansion file. The resource for ExpansionFilesService. # The uploaded expansion file configuration.

@@ -1,0 +1,34 @@
+<h1><a href="drive_v2.html">Google Drive API</a> . <a href="drive_v2.children.html">children</a></h1>
+  <code><a href="#delete">delete(folderId, childId, enforceSingleParent=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Removes a child from a folder.</p>
+  <code><a href="#get">get(folderId, childId, x__xgafv=None)</a></code></p>
+<p class="firstline">Gets a specific child reference.</p>
+  <code><a href="#insert">insert(folderId, body=None, enforceSingleParent=None, supportsAllDrives=None, supportsTeamDrives=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Inserts a file into a folder.</p>
+  <code><a href="#list">list(folderId, maxResults=None, orderBy=None, pageToken=None, q=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Lists a folder's children.</p>
+    <code class="details" id="delete">delete(folderId, childId, enforceSingleParent=None, x__xgafv=None)</code>
+  <pre>Removes a child from a folder.
+  folderId: string, The ID of the folder. (required)
+  childId: string, The ID of the child. (required)
+  enforceSingleParent: boolean, Deprecated: If an item is not in a shared drive and its last parent is removed, the item is placed under its owner&#x27;s root.
+    <code class="details" id="get">get(folderId, childId, x__xgafv=None)</code>
+  <pre>Gets a specific child reference.
+    { # A reference to a folder&#x27;s child. Some resource methods (such as `children.get`) require a `childId`. Use the `children.list` method to retrieve the ID of the child.
+  &quot;childLink&quot;: &quot;A String&quot;, # Output only. A link to the child.
+  &quot;id&quot;: &quot;A String&quot;, # The ID of the child.
+  &quot;kind&quot;: &quot;drive#childReference&quot;, # Output only. This is always `drive#childReference`.
+    <code class="details" id="insert">insert(folderId, body=None, enforceSingleParent=None, supportsAllDrives=None, supportsTeamDrives=None, x__xgafv=None)</code>
+  <pre>Inserts a file into a folder.
+  enforceSingleParent: boolean, Deprecated: Adding files to multiple folders is no longer supported. Use `shortcuts` instead.
+    <code class="details" id="list">list(folderId, maxResults=None, orderBy=None, pageToken=None, q=None, x__xgafv=None)</code>
+  <pre>Lists a folder&#x27;s children.
+  maxResults: integer, Maximum number of children to return.
+  orderBy: string, A comma-separated list of sort keys. Valid keys are `createdDate`, `folder`, `lastViewedByMeDate`, `modifiedByMeDate`, `modifiedDate`, `quotaBytesUsed`, `recency`, `sharedWithMeDate`, `starred`, and `title`. Each key sorts ascending by default, but may be reversed with the `desc` modifier. Example usage: ?orderBy=folder,modifiedDate desc,title. Please note that there is a current limitation for users with approximately one million files in which the requested sort order is ignored.
+  pageToken: string, Page token for children.
+  q: string, Query string for searching children.
+    { # A list of children of a file.
+  &quot;items&quot;: [ # The list of children. If nextPageToken is populated, then this list may be incomplete and an additional page of results should be fetched.
+  &quot;kind&quot;: &quot;drive#childList&quot;, # This is always `drive#childList`.
+  &quot;nextLink&quot;: &quot;A String&quot;, # A link to the next page of children.
+  &quot;nextPageToken&quot;: &quot;A String&quot;, # The page token for the next page of children. This will be absent if the end of the children list has been reached. If the token is rejected for any reason, it should be discarded, and pagination should be restarted from the first page of results.

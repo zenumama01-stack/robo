@@ -1,0 +1,131 @@
+<h1><a href="backupdr_v1.html">Backup and DR Service API</a> . <a href="backupdr_v1.projects.html">projects</a> . <a href="backupdr_v1.projects.locations.html">locations</a> . <a href="backupdr_v1.projects.locations.backupVaults.html">backupVaults</a> . <a href="backupdr_v1.projects.locations.backupVaults.dataSources.html">dataSources</a></h1>
+  <code><a href="backupdr_v1.projects.locations.backupVaults.dataSources.backups.html">backups()</a></code>
+  <code><a href="#abandonBackup">abandonBackup(dataSource, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Internal only. Abandons a backup.</p>
+  <code><a href="#fetchAccessToken">fetchAccessToken(name, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Internal only. Fetch access token for a given data source.</p>
+  <code><a href="#finalizeBackup">finalizeBackup(dataSource, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Internal only. Finalize a backup that was started by a call to InitiateBackup.</p>
+<p class="firstline">Gets details of a DataSource.</p>
+  <code><a href="#initiateBackup">initiateBackup(dataSource, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Internal only. Initiates a backup.</p>
+<p class="firstline">Lists DataSources in a given project and location.</p>
+  <code><a href="#patch">patch(name, allowMissing=None, body=None, requestId=None, updateMask=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Updates the settings of a DataSource.</p>
+  <code><a href="#remove">remove(name, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Deletes a DataSource. This is a custom method instead of a standard delete method because external clients will not delete DataSources except for BackupDR backup appliances.</p>
+  <code><a href="#setInternalStatus">setInternalStatus(dataSource, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Sets the internal status of a DataSource.</p>
+    <code class="details" id="abandonBackup">abandonBackup(dataSource, body=None, x__xgafv=None)</code>
+  <pre>Internal only. Abandons a backup.
+  dataSource: string, Required. The resource name of the instance, in the format &#x27;projects/*/locations/*/backupVaults/*/dataSources/&#x27;. (required)
+{ # request message for AbandonBackup.
+  &quot;requestId&quot;: &quot;A String&quot;, # Optional. An optional request ID to identify requests. Specify a unique request ID so that if you must retry your request, the server will know to ignore the request if it has already been completed. The server will guarantee that for at least 60 minutes since the first request. For example, consider a situation where you make an initial request and the request times out. If you make the request again with the same request ID, the server can check if original operation with the same request ID was received, and if so, will ignore the second request. This prevents clients from accidentally creating duplicate commitments. The request ID must be a valid UUID with the exception that zero UUID is not supported (00000000-0000-0000-0000-000000000000).
+    <code class="details" id="fetchAccessToken">fetchAccessToken(name, body=None, x__xgafv=None)</code>
+  <pre>Internal only. Fetch access token for a given data source.
+  name: string, Required. The resource name for the location for which static IPs should be returned. Must be in the format &#x27;projects/*/locations/*/backupVaults/*/dataSources&#x27;. (required)
+{ # Request message for FetchAccessToken.
+  &quot;generationId&quot;: 42, # Required. The generation of the backup to update.
+    { # Response message for FetchAccessToken.
+  &quot;expireTime&quot;: &quot;A String&quot;, # The token is valid until this time.
+  &quot;readLocation&quot;: &quot;A String&quot;, # The location in bucket that can be used for reading.
+  &quot;token&quot;: &quot;A String&quot;, # The downscoped token that was created.
+  &quot;writeLocation&quot;: &quot;A String&quot;, # The location in bucket that can be used for writing.
+    <code class="details" id="finalizeBackup">finalizeBackup(dataSource, body=None, x__xgafv=None)</code>
+  <pre>Internal only. Finalize a backup that was started by a call to InitiateBackup.
+{ # Message for finalizing a Backup.
+  &quot;backupId&quot;: &quot;A String&quot;, # Required. Resource ID of the Backup resource to be finalized. This must be the same backup_id that was used in the InitiateBackupRequest.
+  &quot;consistencyTime&quot;: &quot;A String&quot;, # The point in time when this backup was captured from the source. This will be assigned to the consistency_time field of the newly created Backup.
+  &quot;description&quot;: &quot;A String&quot;, # This will be assigned to the description field of the newly created Backup.
+  &quot;recoveryRangeEndTime&quot;: &quot;A String&quot;, # The latest timestamp of data available in this Backup. This will be set on the newly created Backup.
+  &quot;recoveryRangeStartTime&quot;: &quot;A String&quot;, # The earliest timestamp of data available in this Backup. This will set on the newly created Backup.
+  &quot;retentionDuration&quot;: &quot;A String&quot;, # The ExpireTime on the backup will be set to FinalizeTime plus this duration. If the resulting ExpireTime is less than EnforcedRetentionEndTime, then ExpireTime is set to EnforcedRetentionEndTime.
+  <pre>Gets details of a DataSource.
+  name: string, Required. Name of the data source resource name, in the format &#x27;projects/{project_id}/locations/{location}/backupVaults/{resource_name}/dataSource/{resource_name}&#x27; (required)
+    { # Message describing a DataSource object. Datasource object used to represent Datasource details for both admin and basic view.
+  &quot;backupBlockedByVaultAccessRestriction&quot;: True or False, # Output only. This field is set to true if the backup is blocked by vault access restriction.
+  &quot;backupConfigInfo&quot;: { # BackupConfigInfo has information about how the resource is configured for Backup and about the most recent backup to this vault. # Output only. Details of how the resource is configured for backup.
+    &quot;backupApplianceBackupConfig&quot;: { # BackupApplianceBackupConfig captures the backup configuration for applications that are protected by Backup Appliances. # Configuration for an application backed up by a Backup Appliance.
+      &quot;applicationName&quot;: &quot;A String&quot;, # The name of the application.
+      &quot;backupApplianceId&quot;: &quot;A String&quot;, # The ID of the backup appliance.
+      &quot;backupApplianceName&quot;: &quot;A String&quot;, # The name of the backup appliance.
+      &quot;hostName&quot;: &quot;A String&quot;, # The name of the host where the application is running.
+      &quot;slaId&quot;: &quot;A String&quot;, # The ID of the SLA of this application.
+      &quot;slpName&quot;: &quot;A String&quot;, # The name of the SLP associated with the application.
+      &quot;sltName&quot;: &quot;A String&quot;, # The name of the SLT associated with the application.
+    &quot;gcpBackupConfig&quot;: { # GcpBackupConfig captures the Backup configuration details for Google Cloud resources. All Google Cloud resources regardless of type are protected with backup plan associations. # Configuration for a Google Cloud resource.
+      &quot;backupPlan&quot;: &quot;A String&quot;, # The name of the backup plan.
+      &quot;backupPlanAssociation&quot;: &quot;A String&quot;, # The name of the backup plan association.
+      &quot;backupPlanDescription&quot;: &quot;A String&quot;, # The description of the backup plan.
+      &quot;backupPlanRevisionId&quot;: &quot;A String&quot;, # The user friendly id of the backup plan revision. E.g. v0, v1 etc.
+      &quot;backupPlanRevisionName&quot;: &quot;A String&quot;, # The name of the backup plan revision.
+      &quot;backupPlanRules&quot;: [ # The names of the backup plan rules which point to this backupvault
+    &quot;lastBackupError&quot;: { # The `Status` type defines a logical error model that is suitable for different programming environments, including REST APIs and RPC APIs. It is used by [gRPC](https://github.com/grpc). Each `Status` message contains three pieces of data: error code, error message, and error details. You can find out more about this error model and how to work with it in the [API Design Guide](https://cloud.google.com/apis/design/errors). # Output only. If the last backup failed, this field has the error message.
+    &quot;lastBackupState&quot;: &quot;A String&quot;, # Output only. The status of the last backup to this BackupVault
+    &quot;lastSuccessfulBackupConsistencyTime&quot;: &quot;A String&quot;, # Output only. If the last backup were successful, this field has the consistency date.
+  &quot;backupCount&quot;: &quot;A String&quot;, # Number of backups in the data source.
+  &quot;configState&quot;: &quot;A String&quot;, # Output only. The backup configuration state.
+  &quot;dataSourceBackupApplianceApplication&quot;: { # BackupApplianceApplication describes a Source Resource when it is an application backed up by a BackupAppliance. # The backed up resource is a backup appliance application.
+    &quot;applianceId&quot;: &quot;A String&quot;, # Appliance Id of the Backup Appliance.
+    &quot;applicationId&quot;: &quot;A String&quot;, # The appid field of the application within the Backup Appliance.
+    &quot;applicationName&quot;: &quot;A String&quot;, # The name of the Application as known to the Backup Appliance.
+    &quot;backupAppliance&quot;: &quot;A String&quot;, # Appliance name.
+    &quot;hostId&quot;: &quot;A String&quot;, # Hostid of the application host.
+    &quot;hostname&quot;: &quot;A String&quot;, # Hostname of the host where the application is running.
+    &quot;type&quot;: &quot;A String&quot;, # The type of the application. e.g. VMBackup
+  &quot;dataSourceGcpResource&quot;: { # DataSourceGcpResource is used for protected resources that are Google Cloud Resources. This name is easeier to understand than GcpResourceDataSource or GcpDataSourceResource # The backed up resource is a Google Cloud resource. The word &#x27;DataSource&#x27; was included in the names to indicate that this is the representation of the Google Cloud resource used within the DataSource object.
+    &quot;alloyDbClusterDatasourceProperties&quot;: { # AlloyDBClusterDataSourceProperties represents the properties of a AlloyDB cluster resource that are stored in the DataSource. . # Output only. AlloyDBClusterDataSourceProperties has a subset of AlloyDB cluster properties that are useful at the Datasource level. Currently none of its child properties are auditable. If new auditable properties are added, the AUDIT annotation should be added.
+      &quot;clusterUid&quot;: &quot;A String&quot;, # Output only. The cluster UID of the AlloyDB cluster backed up by the datasource.
+      &quot;name&quot;: &quot;A String&quot;, # Output only. Name of the AlloyDB cluster backed up by the datasource.
+      &quot;pitrWindows&quot;: [ # Output only. Point in time recovery windows. The order is guaranteed to be ascending by start time.
+        { # Point in time recovery window for an AlloyDB cluster.
+          &quot;endTime&quot;: &quot;A String&quot;, # Output only. The end time of the PITR window. It is not set if the corresponding Backup Plan Association is active.
+          &quot;logRetentionDays&quot;: &quot;A String&quot;, # Output only. Log retention days for the PITR window.
+          &quot;startTime&quot;: &quot;A String&quot;, # Output only. The start time of the PITR window.
+    &quot;cloudSqlInstanceDatasourceProperties&quot;: { # CloudSqlInstanceDataSourceProperties represents the properties of a Cloud SQL resource that are stored in the DataSource. # Output only. CloudSqlInstanceDataSourceProperties has a subset of Cloud SQL Instance properties that are useful at the Datasource level.
+      &quot;databaseInstalledVersion&quot;: &quot;A String&quot;, # Output only. The installed database version of the Cloud SQL instance.
+      &quot;name&quot;: &quot;A String&quot;, # Output only. Name of the Cloud SQL instance backed up by the datasource. Format: projects/{project}/instances/{instance}
+    &quot;computeInstanceDatasourceProperties&quot;: { # ComputeInstanceDataSourceProperties represents the properties of a ComputeEngine resource that are stored in the DataSource. # ComputeInstanceDataSourceProperties has a subset of Compute Instance properties that are useful at the Datasource level.
+      &quot;description&quot;: &quot;A String&quot;, # The description of the Compute Engine instance.
+      &quot;machineType&quot;: &quot;A String&quot;, # The machine type of the instance.
+      &quot;name&quot;: &quot;A String&quot;, # Name of the compute instance backed up by the datasource.
+      &quot;totalDiskCount&quot;: &quot;A String&quot;, # The total number of disks attached to the Instance.
+      &quot;totalDiskSizeGb&quot;: &quot;A String&quot;, # The sum of all the disk sizes.
+    &quot;diskDatasourceProperties&quot;: { # DiskDataSourceProperties represents the properties of a Disk resource that are stored in the DataSource. . # DiskDataSourceProperties has a subset of Disk properties that are useful at the Datasource level.
+      &quot;description&quot;: &quot;A String&quot;, # The description of the disk.
+      &quot;name&quot;: &quot;A String&quot;, # Name of the disk backed up by the datasource.
+      &quot;sizeGb&quot;: &quot;A String&quot;, # The size of the disk in GB.
+      &quot;type&quot;: &quot;A String&quot;, # The type of the disk.
+    &quot;gcpResourcename&quot;: &quot;A String&quot;, # Output only. Full resource pathname URL of the source Google Cloud resource.
+    &quot;type&quot;: &quot;A String&quot;, # The type of the Google Cloud resource. Use the Unified Resource Type, eg. compute.googleapis.com/Instance.
+  &quot;etag&quot;: &quot;A String&quot;, # Server specified ETag for the ManagementServer resource to prevent simultaneous updates from overwiting each other.
+  &quot;labels&quot;: { # Optional. Resource labels to represent user provided metadata. No labels currently defined:
+  &quot;name&quot;: &quot;A String&quot;, # Output only. Identifier. Name of the datasource to create. It must have the format`&quot;projects/{project}/locations/{location}/backupVaults/{backupvault}/dataSources/{datasource}&quot;`. `{datasource}` cannot be changed after creation. It must be between 3-63 characters long and must be unique within the backup vault.
+  &quot;state&quot;: &quot;A String&quot;, # Output only. The DataSource resource instance state.
+  &quot;totalStoredBytes&quot;: &quot;A String&quot;, # The number of bytes (metadata and data) stored in this datasource.
+    <code class="details" id="initiateBackup">initiateBackup(dataSource, body=None, x__xgafv=None)</code>
+  <pre>Internal only. Initiates a backup.
+{ # request message for InitiateBackup.
+  &quot;backupId&quot;: &quot;A String&quot;, # Required. Resource ID of the Backup resource.
+    { # Response message for InitiateBackup.
+  &quot;backup&quot;: &quot;A String&quot;, # The name of the backup that was created.
+  &quot;baseBackupGenerationId&quot;: 42, # The generation id of the base backup. It is needed for the incremental backups.
+  &quot;newBackupGenerationId&quot;: 42, # The generation id of the new backup.
+  <pre>Lists DataSources in a given project and location.
+  parent: string, Required. The project and location for which to retrieve data sources information, in the format &#x27;projects/{project_id}/locations/{location}&#x27;. In Cloud Backup and DR, locations map to Google Cloud regions, for example **us-central1**. To retrieve data sources for all locations, use &quot;-&quot; for the &#x27;{location}&#x27; value. (required)
+    { # Response message for listing DataSources.
+  &quot;dataSources&quot;: [ # The list of DataSource instances in the project for the specified location. If the &#x27;{location}&#x27; value in the request is &quot;-&quot;, the response contains a list of instances from all locations. In case any location is unreachable, the response will only return data sources in reachable locations and the &#x27;unreachable&#x27; field will be populated with a list of unreachable locations.
+    <code class="details" id="patch">patch(name, allowMissing=None, body=None, requestId=None, updateMask=None, x__xgafv=None)</code>
+  <pre>Updates the settings of a DataSource.
+  name: string, Output only. Identifier. Name of the datasource to create. It must have the format`&quot;projects/{project}/locations/{location}/backupVaults/{backupvault}/dataSources/{datasource}&quot;`. `{datasource}` cannot be changed after creation. It must be between 3-63 characters long and must be unique within the backup vault. (required)
+  allowMissing: boolean, Optional. Enable upsert.
+  updateMask: string, Required. Field mask is used to specify the fields to be overwritten in the DataSource resource by the update. The fields specified in the update_mask are relative to the resource, not the full request. A field will be overwritten if it is in the mask. If the user does not provide a mask then the request will fail.
+    <code class="details" id="remove">remove(name, body=None, x__xgafv=None)</code>
+  <pre>Deletes a DataSource. This is a custom method instead of a standard delete method because external clients will not delete DataSources except for BackupDR backup appliances.
+{ # Message for deleting a DataSource.
+    <code class="details" id="setInternalStatus">setInternalStatus(dataSource, body=None, x__xgafv=None)</code>
+  <pre>Sets the internal status of a DataSource.
+{ # Request message for SetStatusInternal method.
+  &quot;backupConfigState&quot;: &quot;A String&quot;, # Required. Output only. The new BackupConfigState to set for the DataSource.
+  &quot;requestId&quot;: &quot;A String&quot;, # Optional. An optional request ID to identify requests. Specify a unique request ID so that if you must retry your request, the server will know to ignore the request if it has already been completed. The server will guarantee that for at least 60 minutes after the first request. The request ID must be a valid UUID with the exception that zero UUID is not supported (00000000-0000-0000-0000-000000000000).
+  &quot;value&quot;: &quot;A String&quot;, # Required. The value required for this method to work. This field must be the 32-byte SHA256 hash of the DataSourceID. The DataSourceID used here is only the final piece of the fully qualified resource path for this DataSource (i.e. the part after &#x27;.../dataSources/&#x27;). This field exists to make this method difficult to call since it is intended for use only by Backup Appliances.

@@ -1,0 +1,7 @@
+  <kendo-fileselect [disabled]="IsUploading || disabled" [multiple]="false" (select)="SelectEventHandler($event)"> </kendo-fileselect>
+  @if (ConfirmQueue.length > 0) {
+    <kendo-dialog title="Please confirm" (close)="CancelConfirm()" [minWidth]="250" [width]="450">
+      <p style="margin: 30px; text-align: center">
+        This will overwrite an existing file named '{{ConfirmQueue[0][0].name}}'. Are you sure you want to continue?
+        <button kendoButton (click)="CancelConfirm()">Cancel</button>
+        <button kendoButton (click)="Confirm()" themeColor="primary">Overwrite</button>

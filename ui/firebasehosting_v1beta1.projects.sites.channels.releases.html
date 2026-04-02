@@ -1,0 +1,18 @@
+<h1><a href="firebasehosting_v1beta1.html">Firebase Hosting API</a> . <a href="firebasehosting_v1beta1.projects.html">projects</a> . <a href="firebasehosting_v1beta1.projects.sites.html">sites</a> . <a href="firebasehosting_v1beta1.projects.sites.channels.html">channels</a> . <a href="firebasehosting_v1beta1.projects.sites.channels.releases.html">releases</a></h1>
+  <code><a href="#create">create(parent, body=None, versionName=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Creates a new release, which makes the content of the specified version actively display on the appropriate URL(s).</p>
+<p class="firstline">Gets the specified release for a site or channel. When used to get a release for a site, this can get releases for both the default `live` channel and any active preview channels for the specified site.</p>
+<p class="firstline">Lists the releases that have been created for the specified site or channel. When used to list releases for a site, this list includes releases for both the default `live` channel and any active preview channels for the specified site.</p>
+    <code class="details" id="create">create(parent, body=None, versionName=None, x__xgafv=None)</code>
+  <pre>Creates a new release, which makes the content of the specified version actively display on the appropriate URL(s).
+  parent: string, Required. The site or channel to which the release belongs, in either of the following formats: - sites/SITE_ID - sites/SITE_ID/channels/CHANNEL_ID (required)
+{ #  A `Release` is a particular [collection of configurations and files](sites.versions) that is set to be public at a particular time.
+  versionName: string,  The unique identifier for a version, in the format: sites/SITE_ID/versions/ VERSION_ID The SITE_ID in this version identifier must match the SITE_ID in the `parent` parameter. This query parameter must be empty if the `type` field in the request body is `SITE_DISABLE`.
+  <pre>Gets the specified release for a site or channel. When used to get a release for a site, this can get releases for both the default `live` channel and any active preview channels for the specified site.
+  name: string, Required. The fully-qualified resource name for the Hosting release, in either of the following formats: - sites/SITE_ID/channels/CHANNEL_ID/releases/RELEASE_ID - sites/SITE_ID/releases/RELEASE_ID  (required)
+  <pre>Lists the releases that have been created for the specified site or channel. When used to list releases for a site, this list includes releases for both the default `live` channel and any active preview channels for the specified site.
+  parent: string, Required. The site or channel for which to list releases, in either of the following formats: - sites/SITE_ID - sites/SITE_ID/channels/CHANNEL_ID  (required)
+  pageSize: integer, The maximum number of releases to return. The service may return a lower number if fewer releases exist than this maximum number. If unspecified, defaults to 100.
+  pageToken: string, A token from a previous call to `releases.list` or `channels.releases.list` that tells the server where to resume listing.
+  &quot;nextPageToken&quot;: &quot;A String&quot;, # The pagination token, if more results exist beyond the ones in this response. Include this token in your next call to `ListReleases`. Page tokens are short-lived and should not be stored.
+  &quot;releases&quot;: [ # The list of hashes of files that still need to be uploaded, if any exist.

@@ -1,0 +1,10 @@
+  <div class="actionable-commands">
+    <div class="commands-label">Actions:</div>
+    <div class="commands-buttons">
+      @for (command of commands; track trackByCommand($index, command)) {
+          [themeColor]="getButtonTheme(command)"
+          (click)="onCommandClick(command)"
+          class="command-button"
+          @if (command.icon) {
+            <i class="fa {{ command.icon }}" aria-hidden="true"></i>
+          {{ command.label }}

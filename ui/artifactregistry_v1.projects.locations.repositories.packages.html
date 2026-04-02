@@ -1,0 +1,26 @@
+<h1><a href="artifactregistry_v1.html">Artifact Registry API</a> . <a href="artifactregistry_v1.projects.html">projects</a> . <a href="artifactregistry_v1.projects.locations.html">locations</a> . <a href="artifactregistry_v1.projects.locations.repositories.html">repositories</a> . <a href="artifactregistry_v1.projects.locations.repositories.packages.html">packages</a></h1>
+  <code><a href="artifactregistry_v1.projects.locations.repositories.packages.tags.html">tags()</a></code>
+<p class="firstline">Returns the tags Resource.</p>
+  <code><a href="artifactregistry_v1.projects.locations.repositories.packages.versions.html">versions()</a></code>
+<p class="firstline">Deletes a package and all of its versions and tags. The returned operation will complete once the package has been deleted.</p>
+<p class="firstline">Gets a package.</p>
+<p class="firstline">Lists packages.</p>
+<p class="firstline">Updates a package.</p>
+  <pre>Deletes a package and all of its versions and tags. The returned operation will complete once the package has been deleted.
+  name: string, Required. The name of the package to delete. (required)
+  <pre>Gets a package.
+  name: string, Required. The name of the package to retrieve. (required)
+    { # Packages are named collections of versions.
+  &quot;createTime&quot;: &quot;A String&quot;, # The time when the package was created.
+  &quot;displayName&quot;: &quot;A String&quot;, # The display name of the package.
+  &quot;name&quot;: &quot;A String&quot;, # The name of the package, for example: `projects/p1/locations/us-central1/repositories/repo1/packages/pkg1`. If the package ID part contains slashes, the slashes are escaped.
+  &quot;updateTime&quot;: &quot;A String&quot;, # The time when the package was last updated. This includes publishing a new version of the package.
+  <pre>Lists packages.
+  parent: string, Required. The name of the parent resource whose packages will be listed. (required)
+  filter: string, Optional. An expression for filtering the results of the request. Filter rules are case insensitive. The fields eligible for filtering are: * `name` * `annotations` Examples of using a filter: To filter the results of your request to packages with the name `my-package` in project `my-project` in the `us-central` region, in repository `my-repo`, append the following filter expression to your request: * `name=&quot;projects/my-project/locations/us-central1/repositories/my-repo/packages/my-package&quot;` You can also use wildcards to match any number of characters before or after the value: * `name=&quot;projects/my-project/locations/us-central1/repositories/my-repo/packages/my-*&quot;` * `name=&quot;projects/my-project/locations/us-central1/repositories/my-repo/packages/*package&quot;` * `name=&quot;projects/my-project/locations/us-central1/repositories/my-repo/packages/*pack*&quot;` To filter the results of your request to packages with the annotation key-value pair [`external_link`: `external_link_value`], append the following filter expression to your request&quot;: * `&quot;annotations.external_link:external_link_value&quot;` To filter the results just for a specific annotation key `external_link`, append the following filter expression to your request: * `&quot;annotations.external_link&quot;` If the annotation key or value contains special characters, you can escape them by surrounding the value with backticks. For example, to filter the results of your request to packages with the annotation key-value pair [`external.link`:`https://example.com/my-package`], append the following filter expression to your request: * `` &quot;annotations.`external.link`:`https://example.com/my-package`&quot; `` You can also filter with annotations with a wildcard to match any number of characters before or after the value: * `` &quot;annotations.*_link:`*example.com*`&quot; ``
+  pageSize: integer, The maximum number of packages to return. Maximum page size is 1,000.
+    { # The response from listing packages.
+  &quot;nextPageToken&quot;: &quot;A String&quot;, # The token to retrieve the next page of packages, or empty if there are no more packages to return.
+  &quot;packages&quot;: [ # The packages returned.
+  <pre>Updates a package.
+  name: string, The name of the package, for example: `projects/p1/locations/us-central1/repositories/repo1/packages/pkg1`. If the package ID part contains slashes, the slashes are escaped. (required)

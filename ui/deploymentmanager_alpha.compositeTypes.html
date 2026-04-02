@@ -1,0 +1,77 @@
+<h1><a href="deploymentmanager_alpha.html">Cloud Deployment Manager V2 API</a> . <a href="deploymentmanager_alpha.compositeTypes.html">compositeTypes</a></h1>
+  <code><a href="#delete">delete(project, compositeType, header_bypassBillingFilter=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Deletes a composite type.</p>
+  <code><a href="#get">get(project, compositeType, header_bypassBillingFilter=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Gets information about a specific composite type.</p>
+  <code><a href="#insert">insert(project, body=None, header_bypassBillingFilter=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Creates a composite type.</p>
+  <code><a href="#list">list(project, filter=None, maxResults=None, orderBy=None, pageToken=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Lists all composite types for Deployment Manager.</p>
+  <code><a href="#patch">patch(project, compositeType, body=None, header_bypassBillingFilter=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Patches a composite type.</p>
+  <code><a href="#update">update(project, compositeType, body=None, header_bypassBillingFilter=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Updates a composite type.</p>
+    <code class="details" id="delete">delete(project, compositeType, header_bypassBillingFilter=None, x__xgafv=None)</code>
+  <pre>Deletes a composite type.
+  compositeType: string, The name of the type for this request. (required)
+  header_bypassBillingFilter: boolean, A parameter
+    { # Represents an Operation resource. Google Compute Engine has three Operation resources: * [Global](/compute/docs/reference/rest/{$api_version}/globalOperations) * [Regional](/compute/docs/reference/rest/{$api_version}/regionOperations) * [Zonal](/compute/docs/reference/rest/{$api_version}/zoneOperations) You can use an operation resource to manage asynchronous API requests. For more information, read Handling API responses. Operations can be global, regional or zonal. - For global operations, use the `globalOperations` resource. - For regional operations, use the `regionOperations` resource. - For zonal operations, use the `zoneOperations` resource. For more information, read Global, Regional, and Zonal Resources. Note that completed Operation resources have a limited retention period.
+        &quot;arguments&quot;: [ # Output only. [Output Only] Optional error details WARNING: DO NOT MAKE VISIBLE This is for internal use-only (like componentization) (thus the visibility &quot;none&quot;) and in case of public exposure it is strongly recommended to follow pattern of: https://aip.dev/193 and expose as details field.
+        &quot;debugInfo&quot;: { # Describes additional debugging info.
+          &quot;detail&quot;: &quot;A String&quot;, # Additional debugging information provided by the server.
+          &quot;stackEntries&quot;: [ # The stack trace entries indicating where the error occurred.
+              &quot;metadatas&quot;: { # Additional structured details about this error. Keys must match a regular expression of `a-z+` but should ideally be lowerCamelCase. Also, they must be limited to 64 characters in length. When identifying the current value of an exceeded limit, the units should be contained in the key, not the value. For example, rather than `{&quot;instanceLimit&quot;: &quot;100/request&quot;}`, should be returned as, `{&quot;instanceLimitPerRequest&quot;: &quot;100&quot;}`, if the client exceeds the number of instances that can be created in a single (batch) request.
+              &quot;reason&quot;: &quot;A String&quot;, # The reason of the error. This is a constant value that identifies the proximate cause of the error. Error reasons are unique within a particular domain of errors. This should be at most 63 characters and match a regular expression of `A-Z+[A-Z0-9]`, which represents UPPER_SNAKE_CASE.
+              &quot;locale&quot;: &quot;A String&quot;, # The locale used following the specification defined at https://www.rfc-editor.org/rfc/bcp/bcp47.txt. Examples are: &quot;en-US&quot;, &quot;fr-CH&quot;, &quot;es-MX&quot;
+              &quot;futureLimit&quot;: 3.14, # Future quota limit being rolled out. The limit&#x27;s unit depends on the quota type or metric.
+  &quot;firewallPolicyRuleOperationMetadata&quot;: {
+    &quot;allocatedPriority&quot;: 42, # The priority allocated for the firewall policy rule if query parameters specified minPriority/maxPriority.
+      &quot;currentComponentVersions&quot;: { # SBOM versions currently applied to the resource. The key is the component name and the value is the version.
+      &quot;targetComponentVersions&quot;: { # SBOM versions scheduled for the next maintenance. The key is the component name and the value is the version.
+    &quot;machineType&quot;: &quot;A String&quot;, # [Output Only] The machine type of the VMs that were created used internally only by KCP flex bulk insert.
+    &quot;perLocationStatus&quot;: { # Status information per location (location name is key). Example key: zones/us-central1-a
+        &quot;failedToCreateVmCount&quot;: 42, # [Output Only] Count of VMs that started creating but encountered an error.
+        &quot;status&quot;: &quot;A String&quot;, # [Output Only] Creation status of BulkInsert operation - information if the flow is rolling forward or rolling back.
+  &quot;kind&quot;: &quot;compute#operation&quot;, # Output only. [Output Only] Type of the resource. Always `compute#operation` for Operation resources.
+  &quot;operationGroupId&quot;: &quot;A String&quot;, # Output only. [Output Only] An ID that represents a group of operations, such as when a group of operations results from a `bulkInsert` API request.
+  &quot;setAutoscalerLinkOperationMetadata&quot;: { # This field is used internally by the Autoscaler team and should not be promoted to &quot;alpha/beta/v1&quot;.
+    &quot;zonalIgmIds&quot;: [ # List of zonal IGM IDs part of the RMIG.
+    &quot;zoneToIgmIds&quot;: { # Map of zone to an ID of the zonal IGM belonging to the RMIG.
+  &quot;setCommonInstanceMetadataOperationMetadata&quot;: { # Output only. [Output Only] If the operation is for projects.setCommonInstanceMetadata, this field will contain information on all underlying zonal actions and their state.
+    &quot;perLocationOperations&quot;: { # [Output Only] Status information per location (location name is key). Example key: zones/us-central1-a
+        &quot;error&quot;: { # The `Status` type defines a logical error model that is suitable for different programming environments, including REST APIs and RPC APIs. It is used by [gRPC](https://github.com/grpc). Each `Status` message contains three pieces of data: error code, error message, and error details. You can find out more about this error model and how to work with it in the [API Design Guide](https://cloud.google.com/apis/design/errors). # [Output Only] If state is `ABANDONED` or `FAILED`, this field is populated.
+        &quot;state&quot;: &quot;A String&quot;, # [Output Only] Status of the action, which can be one of the following: `PROPAGATING`, `PROPAGATED`, `ABANDONED`, `FAILED`, or `DONE`.
+  &quot;targetLink&quot;: &quot;A String&quot;, # [Output Only] The URL of the resource that the operation modifies. For operations related to creating a snapshot, this points to the disk that the snapshot was created from.
+  &quot;user&quot;: &quot;A String&quot;, # [Output Only] User who requested the operation, for example: `user@example.com` or `alice_smith_identifier (global/workforcePools/example-com-us-employees)`.
+    <code class="details" id="get">get(project, compositeType, header_bypassBillingFilter=None, x__xgafv=None)</code>
+  <pre>Gets information about a specific composite type.
+  compositeType: string, The name of the composite type for this request. (required)
+    { # Holds the composite type.
+  &quot;description&quot;: &quot;A String&quot;, # An optional textual description of the resource; provided by the client when the resource is created.
+  &quot;insertTime&quot;: &quot;A String&quot;, # Output only. Creation timestamp in RFC3339 text format.
+  &quot;labels&quot;: [ # Map of labels; provided by the client when the resource is created or updated. Specifically: Label keys must be between 1 and 63 characters long and must conform to the following regular expression: `[a-z]([-a-z0-9]*[a-z0-9])?` Label values must be between 0 and 63 characters long and must conform to the regular expression `([a-z]([-a-z0-9]*[a-z0-9])?)?`.
+    { # Label object for CompositeTypes
+      &quot;key&quot;: &quot;A String&quot;, # Key of the label
+      &quot;value&quot;: &quot;A String&quot;, # Value of the label
+  &quot;name&quot;: &quot;A String&quot;, # Name of the composite type, must follow the expression: `[a-z]([-a-z0-9_.]{0,61}[a-z0-9])?`.
+  &quot;operation&quot;: { # Represents an Operation resource. Google Compute Engine has three Operation resources: * [Global](/compute/docs/reference/rest/{$api_version}/globalOperations) * [Regional](/compute/docs/reference/rest/{$api_version}/regionOperations) * [Zonal](/compute/docs/reference/rest/{$api_version}/zoneOperations) You can use an operation resource to manage asynchronous API requests. For more information, read Handling API responses. Operations can be global, regional or zonal. - For global operations, use the `globalOperations` resource. - For regional operations, use the `regionOperations` resource. - For zonal operations, use the `zoneOperations` resource. For more information, read Global, Regional, and Zonal Resources. Note that completed Operation resources have a limited retention period. # Output only. The Operation that most recently ran, or is currently running, on this composite type.
+  &quot;selfLink&quot;: &quot;A String&quot;, # Output only. Server defined URL for the resource.
+  &quot;templateContents&quot;: { # Files that make up the template contents of a template type. # Files for the template type.
+    &quot;imports&quot;: [ # Import files referenced by the main template.
+        &quot;content&quot;: &quot;A String&quot;, # The contents of the file.
+        &quot;name&quot;: &quot;A String&quot;, # The name of the file.
+    &quot;interpreter&quot;: &quot;A String&quot;, # Which interpreter (python or jinja) should be used during expansion.
+    &quot;mainTemplate&quot;: &quot;A String&quot;, # The filename of the mainTemplate
+    &quot;schema&quot;: &quot;A String&quot;, # The contents of the template schema.
+    &quot;template&quot;: &quot;A String&quot;, # The contents of the main template file.
+    <code class="details" id="insert">insert(project, body=None, header_bypassBillingFilter=None, x__xgafv=None)</code>
+  <pre>Creates a composite type.
+    <code class="details" id="list">list(project, filter=None, maxResults=None, orderBy=None, pageToken=None, x__xgafv=None)</code>
+  <pre>Lists all composite types for Deployment Manager.
+    { # A response that returns all Composite Types supported by Deployment Manager
+  &quot;compositeTypes&quot;: [ # Output only. A list of resource composite types supported by Deployment Manager.
+  &quot;nextPageToken&quot;: &quot;A String&quot;, # A token used to continue a truncated list request.
+    <code class="details" id="patch">patch(project, compositeType, body=None, header_bypassBillingFilter=None, x__xgafv=None)</code>
+  <pre>Patches a composite type.
+    <code class="details" id="update">update(project, compositeType, body=None, header_bypassBillingFilter=None, x__xgafv=None)</code>
+  <pre>Updates a composite type.

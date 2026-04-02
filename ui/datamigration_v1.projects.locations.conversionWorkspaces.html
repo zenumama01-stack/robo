@@ -1,0 +1,245 @@
+<h1><a href="datamigration_v1.html">Database Migration API</a> . <a href="datamigration_v1.projects.html">projects</a> . <a href="datamigration_v1.projects.locations.html">locations</a> . <a href="datamigration_v1.projects.locations.conversionWorkspaces.html">conversionWorkspaces</a></h1>
+  <code><a href="datamigration_v1.projects.locations.conversionWorkspaces.mappingRules.html">mappingRules()</a></code>
+<p class="firstline">Returns the mappingRules Resource.</p>
+<p class="firstline">Applies draft tree onto a specific destination database.</p>
+<p class="firstline">Marks all the data in the conversion workspace as committed.</p>
+  <code><a href="#convert">convert(name, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Creates a draft tree schema for the destination database.</p>
+  <code><a href="#create">create(parent, body=None, conversionWorkspaceId=None, requestId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Creates a new conversion workspace in a given project and location.</p>
+<p class="firstline">Deletes a single conversion workspace.</p>
+  <code><a href="#describeConversionWorkspaceRevisions">describeConversionWorkspaceRevisions(conversionWorkspace, commitId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Retrieves a list of committed revisions of a specific conversion workspace.</p>
+  <code><a href="#describeDatabaseEntities">describeDatabaseEntities(conversionWorkspace, commitId=None, filter=None, pageSize=None, pageToken=None, tree=None, uncommitted=None, view=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Describes the database entities tree for a specific conversion workspace and a specific tree type. Database entities are not resources like conversion workspaces or mapping rules, and they can't be created, updated or deleted. Instead, they are simple data objects describing the structure of the client database.</p>
+  <code><a href="#describeDatabaseEntities_next">describeDatabaseEntities_next()</a></code></p>
+<p class="firstline">Gets details of a single conversion workspace.</p>
+<p class="firstline">Lists conversion workspaces in a given project and location.</p>
+<p class="firstline">Updates the parameters of a single conversion workspace.</p>
+<p class="firstline">Rolls back a conversion workspace to the last committed snapshot.</p>
+  <code><a href="#searchBackgroundJobs">searchBackgroundJobs(conversionWorkspace, completedUntilTime=None, maxSize=None, returnMostRecentPerJobType=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Searches/lists the background jobs for a specific conversion workspace. The background jobs are not resources like conversion workspaces or mapping rules, and they can't be created, updated or deleted. Instead, they are a way to expose the data plane jobs log.</p>
+  <code><a href="#seed">seed(name, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Imports a snapshot of the source database into the conversion workspace.</p>
+  <pre>Applies draft tree onto a specific destination database.
+  name: string, Required. The name of the conversion workspace resource for which to apply the draft tree. Must be in the form of: projects/{project}/locations/{location}/conversionWorkspaces/{conversion_workspace}. (required)
+{ # Request message for &#x27;ApplyConversionWorkspace&#x27; request.
+  &quot;autoCommit&quot;: True or False, # Optional. Specifies whether the conversion workspace is to be committed automatically after the apply.
+  &quot;connectionProfile&quot;: &quot;A String&quot;, # Optional. Fully qualified (Uri) name of the destination connection profile.
+  &quot;dryRun&quot;: True or False, # Optional. Only validates the apply process, but doesn&#x27;t change the destination database. Only works for PostgreSQL destination connection profile.
+  &quot;filter&quot;: &quot;A String&quot;, # Optional. Filter which entities to apply. Leaving this field empty will apply all of the entities. Supports Google AIP 160 based filtering.
+  <pre>Marks all the data in the conversion workspace as committed.
+  name: string, Required. Name of the conversion workspace resource to commit. (required)
+{ # Request message for &#x27;CommitConversionWorkspace&#x27; request.
+  &quot;commitName&quot;: &quot;A String&quot;, # Optional. Optional name of the commit.
+    <code class="details" id="convert">convert(name, body=None, x__xgafv=None)</code>
+  <pre>Creates a draft tree schema for the destination database.
+  name: string, Name of the conversion workspace resource to convert in the form of: projects/{project}/locations/{location}/conversionWorkspaces/{conversion_workspace}. (required)
+{ # Request message for &#x27;ConvertConversionWorkspace&#x27; request.
+  &quot;autoCommit&quot;: True or False, # Optional. Specifies whether the conversion workspace is to be committed automatically after the conversion.
+  &quot;convertFullPath&quot;: True or False, # Optional. Automatically convert the full entity path for each entity specified by the filter. For example, if the filter specifies a table, that table schema (and database if there is one) will also be converted.
+  &quot;filter&quot;: &quot;A String&quot;, # Optional. Filter the entities to convert. Leaving this field empty will convert all of the entities. Supports Google AIP-160 style filtering.
+    <code class="details" id="create">create(parent, body=None, conversionWorkspaceId=None, requestId=None, x__xgafv=None)</code>
+  <pre>Creates a new conversion workspace in a given project and location.
+  parent: string, Required. The parent which owns this collection of conversion workspaces. (required)
+{ # The main conversion workspace resource entity.
+  &quot;createTime&quot;: &quot;A String&quot;, # Output only. The timestamp when the workspace resource was created.
+  &quot;destination&quot;: { # The type and version of a source or destination database. # Required. The destination engine details.
+    &quot;engine&quot;: &quot;A String&quot;, # Required. Engine type.
+    &quot;version&quot;: &quot;A String&quot;, # Required. Engine version, for example &quot;12.c.1&quot;.
+  &quot;destinationProvider&quot;: &quot;A String&quot;, # Optional. The provider for the destination database.
+  &quot;displayName&quot;: &quot;A String&quot;, # Optional. The display name for the workspace.
+  &quot;globalSettings&quot;: { # Optional. A generic list of settings for the workspace. The settings are database pair dependant and can indicate default behavior for the mapping rules engine or turn on or off specific features. Such examples can be: convert_foreign_key_to_interleave=true, skip_triggers=false, ignore_non_table_synonyms=true
+  &quot;hasUncommittedChanges&quot;: True or False, # Output only. Whether the workspace has uncommitted changes (changes which were made after the workspace was committed).
+  &quot;latestCommitId&quot;: &quot;A String&quot;, # Output only. The latest commit ID.
+  &quot;latestCommitTime&quot;: &quot;A String&quot;, # Output only. The timestamp when the workspace was committed.
+  &quot;name&quot;: &quot;A String&quot;, # Full name of the workspace resource, in the form of: projects/{project}/locations/{location}/conversionWorkspaces/{conversion_workspace}.
+  &quot;source&quot;: { # The type and version of a source or destination database. # Required. The source engine details.
+  &quot;sourceProvider&quot;: &quot;A String&quot;, # Optional. The provider for the source database.
+  &quot;updateTime&quot;: &quot;A String&quot;, # Output only. The timestamp when the workspace resource was last updated.
+  conversionWorkspaceId: string, Required. The ID of the conversion workspace to create.
+  <pre>Deletes a single conversion workspace.
+  name: string, Required. Name of the conversion workspace resource to delete. (required)
+  force: boolean, Optional. Force delete the conversion workspace, even if there&#x27;s a running migration that is using the workspace.
+    <code class="details" id="describeConversionWorkspaceRevisions">describeConversionWorkspaceRevisions(conversionWorkspace, commitId=None, x__xgafv=None)</code>
+  <pre>Retrieves a list of committed revisions of a specific conversion workspace.
+  conversionWorkspace: string, Required. Name of the conversion workspace resource whose revisions are listed. Must be in the form of: projects/{project}/locations/{location}/conversionWorkspaces/{conversion_workspace}. (required)
+  commitId: string, Optional. Optional filter to request a specific commit ID.
+    { # Response message for &#x27;DescribeConversionWorkspaceRevisions&#x27; request.
+  &quot;revisions&quot;: [ # The list of conversion workspace revisions.
+    <code class="details" id="describeDatabaseEntities">describeDatabaseEntities(conversionWorkspace, commitId=None, filter=None, pageSize=None, pageToken=None, tree=None, uncommitted=None, view=None, x__xgafv=None)</code>
+  <pre>Describes the database entities tree for a specific conversion workspace and a specific tree type. Database entities are not resources like conversion workspaces or mapping rules, and they can&#x27;t be created, updated or deleted. Instead, they are simple data objects describing the structure of the client database.
+  conversionWorkspace: string, Required. Name of the conversion workspace resource whose database entities are described. Must be in the form of: projects/{project}/locations/{location}/conversionWorkspaces/{conversion_workspace}. (required)
+  commitId: string, Optional. Request a specific commit ID. If not specified, the entities from the latest commit are returned.
+  filter: string, Optional. Filter the returned entities based on AIP-160 standard.
+  pageSize: integer, Optional. The maximum number of entities to return. The service may return fewer entities than the value specifies.
+  pageToken: string, Optional. The nextPageToken value received in the previous call to conversionWorkspace.describeDatabaseEntities, used in the subsequent request to retrieve the next page of results. On first call this should be left blank. When paginating, all other parameters provided to conversionWorkspace.describeDatabaseEntities must match the call that provided the page token.
+  tree: string, Required. The tree to fetch.
+      DB_TREE_TYPE_UNSPECIFIED - Unspecified tree type.
+      SOURCE_TREE - The source database tree.
+      DRAFT_TREE - The draft database tree.
+      DESTINATION_TREE - The destination database tree.
+  uncommitted: boolean, Optional. Whether to retrieve the latest committed version of the entities or the latest version. This field is ignored if a specific commit_id is specified.
+  view: string, Optional. Results view based on AIP-157
+      DATABASE_ENTITY_VIEW_UNSPECIFIED - Unspecified view. Defaults to basic view.
+      DATABASE_ENTITY_VIEW_BASIC - Default view. Does not return DDLs or Issues.
+      DATABASE_ENTITY_VIEW_FULL - Return full entity details including mappings, ddl and issues.
+      DATABASE_ENTITY_VIEW_ROOT_SUMMARY - Top-most (Database, Schema) nodes which are returned contains summary details for their descendants such as the number of entities per type and issues rollups. When this view is used, only a single page of result is returned and the page_size property of the request is ignored. The returned page will only include the top-most node types.
+      DATABASE_ENTITY_VIEW_FULL_COMPACT - Returns full entity details except for ddls and schema custom features.
+    { # Response message for &#x27;DescribeDatabaseEntities&#x27; request.
+  &quot;databaseEntities&quot;: [ # The list of database entities for the conversion workspace.
+    { # The base entity type for all the database related entities. The message contains the entity name, the name of its parent, the entity type, and the specific details per entity type.
+      &quot;database&quot;: { # DatabaseInstance acts as a parent entity to other database entities. # Database.
+        &quot;customFeatures&quot;: { # Custom engine specific features.
+      &quot;databaseFunction&quot;: { # Function&#x27;s parent is a schema. # Function.
+        &quot;sqlCode&quot;: &quot;A String&quot;, # The SQL code which creates the function.
+      &quot;databasePackage&quot;: { # Package&#x27;s parent is a schema. # Package.
+        &quot;packageBody&quot;: &quot;A String&quot;, # The SQL code which creates the package body. If the package specification has cursors or subprograms, then the package body is mandatory.
+        &quot;packageSqlCode&quot;: &quot;A String&quot;, # The SQL code which creates the package.
+      &quot;entityDdl&quot;: [ # Details about the entity DDL script. Multiple DDL scripts are provided for child entities such as a table entity will have one DDL for the table with additional DDLs for each index, constraint and such.
+        { # A single DDL statement for a specific entity
+          &quot;ddl&quot;: &quot;A String&quot;, # The actual ddl code.
+          &quot;ddlKind&quot;: &quot;A String&quot;, # The DDL Kind selected for apply, or UNSPECIFIED if the entity wasn&#x27;t converted yet.
+          &quot;ddlType&quot;: &quot;A String&quot;, # Type of DDL (Create, Alter).
+          &quot;editedDdlKind&quot;: &quot;A String&quot;, # If ddl_kind is USER_EDIT, this holds the DDL kind of the original content - DETERMINISTIC or AI. Otherwise, this is DDL_KIND_UNSPECIFIED.
+          &quot;entity&quot;: &quot;A String&quot;, # The name of the database entity the ddl refers to.
+          &quot;entityType&quot;: &quot;A String&quot;, # The entity type (if the DDL is for a sub entity).
+          &quot;issueId&quot;: [ # EntityIssues found for this ddl.
+      &quot;entityType&quot;: &quot;A String&quot;, # The type of the database entity (table, view, index, ...).
+      &quot;issues&quot;: [ # Details about the various issues found for the entity.
+        { # Issue related to the entity.
+          &quot;code&quot;: &quot;A String&quot;, # Error/Warning code
+          &quot;ddl&quot;: &quot;A String&quot;, # The ddl which caused the issue, if relevant.
+          &quot;id&quot;: &quot;A String&quot;, # Unique Issue ID.
+          &quot;message&quot;: &quot;A String&quot;, # Issue detailed message
+          &quot;position&quot;: { # Issue position. # The position of the issue found, if relevant.
+            &quot;column&quot;: 42, # Issue column number
+            &quot;length&quot;: 42, # Issue length
+            &quot;line&quot;: 42, # Issue line number
+            &quot;offset&quot;: 42, # Issue offset
+          &quot;severity&quot;: &quot;A String&quot;, # Severity of the issue
+          &quot;type&quot;: &quot;A String&quot;, # The type of the issue.
+      &quot;mappings&quot;: [ # Details about entity mappings. For source tree entities, this holds the draft entities which were generated by the mapping rules. For draft tree entities, this holds the source entities which were converted to form the draft entity. Destination entities will have no mapping details.
+        { # Details of the mappings of a database entity.
+          &quot;draftEntity&quot;: &quot;A String&quot;, # Target entity full name. The draft entity can also include a column, index or constraint using the same naming notation schema.table.column.
+          &quot;draftType&quot;: &quot;A String&quot;, # Type of draft entity.
+          &quot;mappingLog&quot;: [ # Entity mapping log entries. Multiple rules can be effective and contribute changes to a converted entity, such as a rule can handle the entity name, another rule can handle an entity type. In addition, rules which did not change the entity are also logged along with the reason preventing them to do so.
+            { # A single record of a rule which was used for a mapping.
+              &quot;mappingComment&quot;: &quot;A String&quot;, # Comment.
+              &quot;ruleId&quot;: &quot;A String&quot;, # Which rule caused this log entry.
+              &quot;ruleRevisionId&quot;: &quot;A String&quot;, # Rule revision ID.
+          &quot;sourceEntity&quot;: &quot;A String&quot;, # Source entity full name. The source entity can also be a column, index or constraint using the same naming notation schema.table.column.
+          &quot;sourceType&quot;: &quot;A String&quot;, # Type of source entity.
+      &quot;materializedView&quot;: { # MaterializedView&#x27;s parent is a schema. # Materialized view.
+        &quot;indices&quot;: [ # View indices.
+          { # Index is not used as an independent entity, it is retrieved as part of a Table entity.
+            &quot;name&quot;: &quot;A String&quot;, # The name of the index.
+            &quot;tableColumns&quot;: [ # Table columns used as part of the Index, for example B-TREE index should list the columns which constitutes the index.
+            &quot;tableColumnsDescending&quot;: [ # For each table_column, mark whether it&#x27;s sorting order is ascending (false) or descending (true). If no value is defined, assume all columns are sorted in ascending order. Otherwise, the number of items must match that of table_columns with each value specifying the direction of the matched column by its index.
+            &quot;type&quot;: &quot;A String&quot;, # Type of index, for example B-TREE.
+            &quot;unique&quot;: True or False, # Boolean value indicating whether the index is unique.
+        &quot;sqlCode&quot;: &quot;A String&quot;, # The SQL code which creates the view.
+      &quot;parentEntity&quot;: &quot;A String&quot;, # The full name of the parent entity (e.g. schema name).
+      &quot;schema&quot;: { # Schema typically has no parent entity, but can have a parent entity DatabaseInstance (for database engines which support it). For some database engines, the terms schema and user can be used interchangeably when they refer to a namespace or a collection of other database entities. Can store additional information which is schema specific. # Schema.
+      &quot;sequence&quot;: { # Sequence&#x27;s parent is a schema. # Sequence.
+        &quot;cache&quot;: &quot;A String&quot;, # Indicates number of entries to cache / precreate.
+        &quot;cycle&quot;: True or False, # Indicates whether the sequence value should cycle through.
+        &quot;increment&quot;: &quot;A String&quot;, # Increment value for the sequence.
+        &quot;maxValue&quot;: &quot;A String&quot;, # Maximum number for the sequence represented as bytes to accommodate large. numbers
+        &quot;minValue&quot;: &quot;A String&quot;, # Minimum number for the sequence represented as bytes to accommodate large. numbers
+        &quot;startValue&quot;: &quot;A String&quot;, # Start number for the sequence represented as bytes to accommodate large. numbers
+      &quot;shortName&quot;: &quot;A String&quot;, # The short name (e.g. table name) of the entity.
+      &quot;storedProcedure&quot;: { # Stored procedure&#x27;s parent is a schema. # Stored procedure.
+        &quot;sqlCode&quot;: &quot;A String&quot;, # The SQL code which creates the stored procedure.
+      &quot;synonym&quot;: { # Synonym&#x27;s parent is a schema. # Synonym.
+        &quot;sourceEntity&quot;: &quot;A String&quot;, # The name of the entity for which the synonym is being created (the source).
+        &quot;sourceType&quot;: &quot;A String&quot;, # The type of the entity for which the synonym is being created (usually a table or a sequence).
+      &quot;table&quot;: { # Table&#x27;s parent is a schema. # Table.
+        &quot;columns&quot;: [ # Table columns.
+          { # Column is not used as an independent entity, it is retrieved as part of a Table entity.
+            &quot;array&quot;: True or False, # Is the column of array type.
+            &quot;arrayLength&quot;: 42, # If the column is array, of which length.
+            &quot;autoGenerated&quot;: True or False, # Is the column auto-generated/identity.
+            &quot;charset&quot;: &quot;A String&quot;, # Charset override - instead of table level charset.
+            &quot;collation&quot;: &quot;A String&quot;, # Collation override - instead of table level collation.
+            &quot;comment&quot;: &quot;A String&quot;, # Comment associated with the column.
+            &quot;computed&quot;: True or False, # Is the column a computed column.
+            &quot;dataType&quot;: &quot;A String&quot;, # Column data type.
+            &quot;defaultValue&quot;: &quot;A String&quot;, # Default value of the column.
+            &quot;fractionalSecondsPrecision&quot;: 42, # Column fractional second precision - used for timestamp based datatypes.
+            &quot;length&quot;: &quot;A String&quot;, # Column length - e.g. varchar (50).
+            &quot;nullable&quot;: True or False, # Is the column nullable.
+            &quot;ordinalPosition&quot;: 42, # Column order in the table.
+            &quot;precision&quot;: 42, # Column precision - when relevant.
+            &quot;scale&quot;: 42, # Column scale - when relevant.
+            &quot;setValues&quot;: [ # Specifies the list of values allowed in the column. Only used for set data type.
+            &quot;udt&quot;: True or False, # Is the column a UDT.
+        &quot;comment&quot;: &quot;A String&quot;, # Comment associated with the table.
+        &quot;constraints&quot;: [ # Table constraints.
+          { # Constraint is not used as an independent entity, it is retrieved as part of another entity such as Table or View.
+            &quot;name&quot;: &quot;A String&quot;, # The name of the table constraint.
+            &quot;referenceColumns&quot;: [ # Reference columns which may be associated with the constraint. For example, if the constraint is a FOREIGN_KEY, this represents the list of full names of referenced columns by the foreign key.
+            &quot;referenceTable&quot;: &quot;A String&quot;, # Reference table which may be associated with the constraint. For example, if the constraint is a FOREIGN_KEY, this represents the list of full name of the referenced table by the foreign key.
+            &quot;tableColumns&quot;: [ # Table columns used as part of the Constraint, for example primary key constraint should list the columns which constitutes the key.
+            &quot;tableName&quot;: &quot;A String&quot;, # Table which is associated with the constraint. In case the constraint is defined on a table, this field is left empty as this information is stored in parent_name. However, if constraint is defined on a view, this field stores the table name on which the view is defined.
+            &quot;type&quot;: &quot;A String&quot;, # Type of constraint, for example unique, primary key, foreign key (currently only primary key is supported).
+        &quot;indices&quot;: [ # Table indices.
+        &quot;triggers&quot;: [ # Table triggers.
+          { # Trigger is not used as an independent entity, it is retrieved as part of a Table entity.
+            &quot;name&quot;: &quot;A String&quot;, # The name of the trigger.
+            &quot;sqlCode&quot;: &quot;A String&quot;, # The SQL code which creates the trigger.
+            &quot;triggerType&quot;: &quot;A String&quot;, # Indicates when the trigger fires, for example BEFORE STATEMENT, AFTER EACH ROW.
+            &quot;triggeringEvents&quot;: [ # The DML, DDL, or database events that fire the trigger, for example INSERT, UPDATE.
+      &quot;tree&quot;: &quot;A String&quot;, # The type of tree the entity belongs to.
+      &quot;udt&quot;: { # UDT&#x27;s parent is a schema. # UDT.
+        &quot;udtBody&quot;: &quot;A String&quot;, # The SQL code which creates the udt body.
+        &quot;udtSqlCode&quot;: &quot;A String&quot;, # The SQL code which creates the udt.
+      &quot;view&quot;: { # View&#x27;s parent is a schema. # View.
+        &quot;constraints&quot;: [ # View constraints.
+    <code class="details" id="describeDatabaseEntities_next">describeDatabaseEntities_next()</code>
+  <pre>Gets details of a single conversion workspace.
+  name: string, Required. Name of the conversion workspace resource to get. (required)
+  <pre>Lists conversion workspaces in a given project and location.
+  filter: string, Optional. A filter expression that filters conversion workspaces listed in the response. The expression must specify the field name, a comparison operator, and the value that you want to use for filtering. The value must be a string, a number, or a boolean. The comparison operator must be either =, !=, &gt;, or &lt;. For example, list conversion workspaces created this year by specifying **createTime %gt; 2020-01-01T00:00:00.000000000Z.** You can also filter nested fields. For example, you could specify **source.version = &quot;12.c.1&quot;** to select all conversion workspaces with source database version equal to 12.c.1.
+  pageSize: integer, Optional. The maximum number of conversion workspaces to return. The service may return fewer than this value. If unspecified, at most 50 sets are returned.
+  pageToken: string, Optional. The nextPageToken value received in the previous call to conversionWorkspaces.list, used in the subsequent request to retrieve the next page of results. On first call this should be left blank. When paginating, all other parameters provided to conversionWorkspaces.list must match the call that provided the page token.
+    { # Response message for &#x27;ListConversionWorkspaces&#x27; request.
+  &quot;conversionWorkspaces&quot;: [ # The list of conversion workspace objects.
+  <pre>Updates the parameters of a single conversion workspace.
+  name: string, Full name of the workspace resource, in the form of: projects/{project}/locations/{location}/conversionWorkspaces/{conversion_workspace}. (required)
+  <pre>Rolls back a conversion workspace to the last committed snapshot.
+  name: string, Required. Name of the conversion workspace resource to roll back to. (required)
+{ # Request message for &#x27;RollbackConversionWorkspace&#x27; request.
+    <code class="details" id="searchBackgroundJobs">searchBackgroundJobs(conversionWorkspace, completedUntilTime=None, maxSize=None, returnMostRecentPerJobType=None, x__xgafv=None)</code>
+  <pre>Searches/lists the background jobs for a specific conversion workspace. The background jobs are not resources like conversion workspaces or mapping rules, and they can&#x27;t be created, updated or deleted. Instead, they are a way to expose the data plane jobs log.
+  conversionWorkspace: string, Required. Name of the conversion workspace resource whose jobs are listed, in the form of: projects/{project}/locations/{location}/conversionWorkspaces/{conversion_workspace}. (required)
+  completedUntilTime: string, Optional. If provided, only returns jobs that completed until (not including) the given timestamp.
+  maxSize: integer, Optional. The maximum number of jobs to return. The service may return fewer than this value. If unspecified, at most 100 jobs are returned. The maximum value is 100; values above 100 are coerced to 100.
+  returnMostRecentPerJobType: boolean, Optional. Whether or not to return just the most recent job per job type,
+    { # Response message for &#x27;SearchBackgroundJobs&#x27; request.
+  &quot;jobs&quot;: [ # The list of conversion workspace mapping rules.
+    { # Execution log of a background job.
+      &quot;applyJobDetails&quot;: { # Details regarding an Apply background job. # Output only. Apply job details.
+        &quot;connectionProfile&quot;: &quot;A String&quot;, # Output only. The connection profile which was used for the apply job.
+        &quot;filter&quot;: &quot;A String&quot;, # Output only. AIP-160 based filter used to specify the entities to apply
+      &quot;completionComment&quot;: &quot;A String&quot;, # Output only. Job completion comment, such as how many entities were seeded, how many warnings were found during conversion, and similar information.
+      &quot;completionState&quot;: &quot;A String&quot;, # Output only. Job completion state, i.e. the final state after the job completed.
+      &quot;convertJobDetails&quot;: { # Details regarding a Convert background job. # Output only. Convert job details.
+        &quot;filter&quot;: &quot;A String&quot;, # Output only. AIP-160 based filter used to specify the entities to convert
+      &quot;finishTime&quot;: &quot;A String&quot;, # The timestamp when the background job was finished.
+      &quot;id&quot;: &quot;A String&quot;, # The background job log entry ID.
+      &quot;importRulesJobDetails&quot;: { # Details regarding an Import Rules background job. # Output only. Import rules job details.
+        &quot;fileFormat&quot;: &quot;A String&quot;, # Output only. The requested file format.
+        &quot;files&quot;: [ # Output only. File names used for the import rules job.
+      &quot;jobType&quot;: &quot;A String&quot;, # The type of job that was executed.
+      &quot;requestAutocommit&quot;: True or False, # Output only. Whether the client requested the conversion workspace to be committed after a successful completion of the job.
+      &quot;seedJobDetails&quot;: { # Details regarding a Seed background job. # Output only. Seed job details.
+        &quot;connectionProfile&quot;: &quot;A String&quot;, # Output only. The connection profile which was used for the seed job.
+      &quot;startTime&quot;: &quot;A String&quot;, # The timestamp when the background job was started.
+    <code class="details" id="seed">seed(name, body=None, x__xgafv=None)</code>
+  <pre>Imports a snapshot of the source database into the conversion workspace.
+  name: string, Name of the conversion workspace resource to seed with new database structure, in the form of: projects/{project}/locations/{location}/conversionWorkspaces/{conversion_workspace}. (required)
+{ # Request message for &#x27;SeedConversionWorkspace&#x27; request.
+  &quot;autoCommit&quot;: True or False, # Should the conversion workspace be committed automatically after the seed operation.
+  &quot;destinationConnectionProfile&quot;: &quot;A String&quot;, # Optional. Fully qualified (Uri) name of the destination connection profile.
+  &quot;sourceConnectionProfile&quot;: &quot;A String&quot;, # Optional. Fully qualified (Uri) name of the source connection profile.

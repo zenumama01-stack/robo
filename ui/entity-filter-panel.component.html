@@ -1,0 +1,20 @@
+    <h3>Entity Filters</h3>
+      <span class="summary-value">{{ filteredEntities.length }}</span>
+      <span class="summary-label">of {{ entities.length }}</span>
+    <!-- Schema Filter -->
+        [(ngModel)]="filters.schemaName"
+        <option [ngValue]="null">All Schemas</option>
+        @for (schema of distinctSchemas; track schema) {
+          <option [ngValue]="schema.value">
+            {{ schema.text }}
+    <!-- Entity Name Filter -->
+        [(ngModel)]="filters.entityName"
+        placeholder="Search entities...">
+    <!-- Base Table Filter -->
+        <span class="fa-solid fa-table"></span>
+        [(ngModel)]="filters.baseTable"
+        placeholder="Search tables...">
+    <!-- Entity Status Filter -->
+        [(ngModel)]="filters.entityStatus"
+        <option [ngValue]="null">All Statuses</option>
+        <option value="Deprecated">Deprecated</option>

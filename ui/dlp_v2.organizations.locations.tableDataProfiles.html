@@ -1,0 +1,33 @@
+<h1><a href="dlp_v2.html">Sensitive Data Protection (DLP)</a> . <a href="dlp_v2.organizations.html">organizations</a> . <a href="dlp_v2.organizations.locations.html">locations</a> . <a href="dlp_v2.organizations.locations.tableDataProfiles.html">tableDataProfiles</a></h1>
+<p class="firstline">Delete a TableDataProfile. Will not prevent the profile from being regenerated if the table is still included in a discovery configuration.</p>
+<p class="firstline">Gets a table data profile.</p>
+<p class="firstline">Lists table data profiles for an organization.</p>
+  <pre>Delete a TableDataProfile. Will not prevent the profile from being regenerated if the table is still included in a discovery configuration.
+  name: string, Required. Resource name of the table data profile. (required)
+  <pre>Gets a table data profile.
+  name: string, Required. Resource name, for example `organizations/12345/locations/us/tableDataProfiles/53234423`. (required)
+    { # The profile for a scanned table.
+  &quot;createTime&quot;: &quot;A String&quot;, # The time at which the table was created.
+  &quot;dataRiskLevel&quot;: { # Score is a summary of all elements in the data profile. A higher number means more risk. # The data risk level of this table.
+  &quot;datasetId&quot;: &quot;A String&quot;, # If the resource is BigQuery, the dataset ID.
+  &quot;datasetLocation&quot;: &quot;A String&quot;, # If supported, the location where the dataset&#x27;s data is stored. See https://cloud.google.com/bigquery/docs/locations for supported locations.
+  &quot;datasetProjectId&quot;: &quot;A String&quot;, # The Google Cloud project ID that owns the resource.
+  &quot;encryptionStatus&quot;: &quot;A String&quot;, # How the table is encrypted.
+  &quot;expirationTime&quot;: &quot;A String&quot;, # Optional. The time when this table expires.
+  &quot;failedColumnCount&quot;: &quot;A String&quot;, # The number of columns skipped in the table because of an error.
+  &quot;fullResource&quot;: &quot;A String&quot;, # The Cloud Asset Inventory resource that was profiled in order to generate this TableDataProfile. https://cloud.google.com/apis/design/resource_names#full_resource_name
+  &quot;lastModifiedTime&quot;: &quot;A String&quot;, # The time when this table was last modified
+  &quot;otherInfoTypes&quot;: [ # Other infoTypes found in this table&#x27;s data.
+  &quot;predictedInfoTypes&quot;: [ # The infoTypes predicted from this table&#x27;s data.
+    { # The infoType details for this column.
+  &quot;projectDataProfile&quot;: &quot;A String&quot;, # The resource name of the project data profile for this table.
+  &quot;rowCount&quot;: &quot;A String&quot;, # Number of rows in the table when the profile was generated. This will not be populated for BigLake tables.
+  &quot;scannedColumnCount&quot;: &quot;A String&quot;, # The number of columns profiled in the table.
+  &quot;sensitivityScore&quot;: { # Score is calculated from of all elements in the data profile. A higher level means the data is more sensitive. # The sensitivity score of this table.
+  &quot;state&quot;: &quot;A String&quot;, # State of a profile. This will always be set to DONE when the table data profile is written to another service like BigQuery or Pub/Sub.
+  &quot;tableSizeBytes&quot;: &quot;A String&quot;, # The size of the table when the profile was generated.
+  &quot;tags&quot;: [ # The tags attached to the table, including any tags attached during profiling. Because tags are attached to Cloud SQL instances rather than Cloud SQL tables, this field is empty for Cloud SQL table profiles.
+  <pre>Lists table data profiles for an organization.
+  filter: string, Allows filtering. Supported syntax: * Filter expressions are made up of one or more restrictions. * Restrictions can be combined by `AND` or `OR` logical operators. A sequence of restrictions implicitly uses `AND`. * A restriction has the form of `{field} {operator} {value}`. * Supported fields: - `project_id`: The Google Cloud project ID - `dataset_id`: The BigQuery dataset ID - `table_id`: The ID of the BigQuery table - `sensitivity_level`: HIGH|MODERATE|LOW - `data_risk_level`: HIGH|MODERATE|LOW - `resource_visibility`: PUBLIC|RESTRICTED - `status_code`: an RPC status code as defined in https://github.com/googleapis/googleapis/blob/master/google/rpc/code.proto - `profile_last_generated`: Date and time the profile was last generated * The operator must be `=` or `!=`. The `profile_last_generated` filter also supports `&lt;` and `&gt;`. The syntax is based on https://google.aip.dev/160. Examples: * `project_id = 12345 AND status_code = 1` * `project_id = 12345 AND sensitivity_level = HIGH` * `project_id = 12345 AND resource_visibility = PUBLIC` * `profile_last_generated &lt; &quot;2025-01-01T00:00:00.000Z&quot;` The length of this field should be no more than 500 characters.
+  orderBy: string, Comma-separated list of fields to order by, followed by `asc` or `desc` postfix. This list is case insensitive. The default sorting order is ascending. Redundant space characters are insignificant. Only one order field at a time is allowed. Examples: * `project_id asc` * `table_id` * `sensitivity_level desc` Supported fields are: - `project_id`: The Google Cloud project ID. - `dataset_id`: The ID of a BigQuery dataset. - `table_id`: The ID of a BigQuery table. - `sensitivity_level`: How sensitive the data in a table is, at most. - `data_risk_level`: How much risk is associated with this data. - `profile_last_generated`: When the profile was last updated in epoch seconds. - `last_modified`: The last time the resource was modified. - `resource_visibility`: Visibility restriction for this resource. - `row_count`: Number of rows in this resource.
+  &quot;tableDataProfiles&quot;: [ # List of data profiles.

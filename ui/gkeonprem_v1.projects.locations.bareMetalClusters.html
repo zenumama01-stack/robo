@@ -1,0 +1,120 @@
+<h1><a href="gkeonprem_v1.html">GKE On-Prem API</a> . <a href="gkeonprem_v1.projects.html">projects</a> . <a href="gkeonprem_v1.projects.locations.html">locations</a> . <a href="gkeonprem_v1.projects.locations.bareMetalClusters.html">bareMetalClusters</a></h1>
+  <code><a href="gkeonprem_v1.projects.locations.bareMetalClusters.bareMetalNodePools.html">bareMetalNodePools()</a></code>
+<p class="firstline">Returns the bareMetalNodePools Resource.</p>
+  <code><a href="gkeonprem_v1.projects.locations.bareMetalClusters.operations.html">operations()</a></code>
+  <code><a href="#create">create(parent, body, allowPreflightFailure=None, bareMetalClusterId=None, validateOnly=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Creates a new bare metal cluster in a given project and location.</p>
+  <code><a href="#delete">delete(name, allowMissing=None, etag=None, force=None, ignoreErrors=None, validateOnly=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Deletes a single bare metal Cluster.</p>
+<p class="firstline">Enrolls an existing bare metal user cluster and its node pools to the Anthos On-Prem API within a given project and location. Through enrollment, an existing cluster will become Anthos On-Prem API managed. The corresponding GCP resources will be created and all future modifications to the cluster and/or its node pools will be expected to be performed through the API.</p>
+<p class="firstline">Gets details of a single bare metal Cluster.</p>
+  <code><a href="#list">list(parent, allowMissing=None, filter=None, pageSize=None, pageToken=None, view=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Lists bare metal clusters in a given project and location.</p>
+<p class="firstline">Updates the parameters of a single bare metal Cluster.</p>
+  <code><a href="#queryVersionConfig">queryVersionConfig(parent, createConfig_adminClusterMembership=None, createConfig_adminClusterName=None, upgradeConfig_clusterName=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Queries the bare metal user cluster version config.</p>
+  <code><a href="#unenroll">unenroll(name, allowMissing=None, etag=None, force=None, validateOnly=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Unenrolls an existing bare metal user cluster and its node pools from the Anthos On-Prem API within a given project and location. Unenrollment removes the Cloud reference to the cluster without modifying the underlying OnPrem Resources. Clusters and node pools will continue to run; however, they will no longer be accessible through the Anthos On-Prem API or its clients.</p>
+    <code class="details" id="create">create(parent, body, allowPreflightFailure=None, bareMetalClusterId=None, validateOnly=None, x__xgafv=None)</code>
+  <pre>Creates a new bare metal cluster in a given project and location.
+{ # Resource that represents a bare metal user cluster.
+  &quot;adminClusterMembership&quot;: &quot;A String&quot;, # Required. The admin cluster this bare metal user cluster belongs to. This is the full resource name of the admin cluster&#x27;s fleet membership.
+  &quot;adminClusterName&quot;: &quot;A String&quot;, # Output only. The resource name of the bare metal admin cluster managing this user cluster.
+  &quot;annotations&quot;: { # Annotations on the bare metal user cluster. This field has the same restrictions as Kubernetes annotations. The total size of all keys and values combined is limited to 256k. Key can have 2 segments: prefix (optional) and name (required), separated by a slash (/). Prefix must be a DNS subdomain. Name must be 63 characters or less, begin and end with alphanumerics, with dashes (-), underscores (_), dots (.), and alphanumerics between.
+  &quot;bareMetalVersion&quot;: &quot;A String&quot;, # Required. The Anthos clusters on bare metal version for your user cluster.
+  &quot;clusterOperations&quot;: { # Specifies the bare metal user cluster&#x27;s observability infrastructure. # Cluster operations configuration.
+  &quot;controlPlane&quot;: { # Specifies the control plane configuration. # Required. Control plane configuration.
+    &quot;apiServerArgs&quot;: [ # Customizes the default API server args. Only a subset of customized flags are supported. For the exact format, refer to the [API server documentation](https://kubernetes.io/docs/reference/command-line-tools-reference/kube-apiserver/).
+      { # Represents an arg name-&gt;value pair. Only a subset of customized flags are supported. For the exact format, refer to the [API server documentation](https://kubernetes.io/docs/reference/command-line-tools-reference/kube-apiserver/).
+        &quot;argument&quot;: &quot;A String&quot;, # Required. The argument name as it appears on the API Server command line, make sure to remove the leading dashes.
+    &quot;controlPlaneNodePoolConfig&quot;: { # Specifies the control plane node pool configuration. # Required. Configures the node pool running the control plane.
+  &quot;createTime&quot;: &quot;A String&quot;, # Output only. The time when the bare metal user cluster was created.
+  &quot;deleteTime&quot;: &quot;A String&quot;, # Output only. The time when the bare metal user cluster was deleted. If the resource is not deleted, this must be empty
+  &quot;description&quot;: &quot;A String&quot;, # A human readable description of this bare metal user cluster.
+  &quot;endpoint&quot;: &quot;A String&quot;, # Output only. The IP address of the bare metal user cluster&#x27;s API server.
+  &quot;etag&quot;: &quot;A String&quot;, # Output only. This checksum is computed by the server based on the value of other fields, and may be sent on update and delete requests to ensure the client has an up-to-date value before proceeding. Allows clients to perform consistent read-modify-writes through optimistic concurrency control.
+  &quot;loadBalancer&quot;: { # Specifies the load balancer configuration. # Required. Load balancer configuration.
+    &quot;bgpLbConfig&quot;: { # BareMetalBgpLbConfig represents configuration parameters for a Border Gateway Protocol (BGP) load balancer. # Configuration for BGP typed load balancers. When set network_config.advanced_networking is automatically set to true.
+        { # BareMetalBgpPeerConfig represents configuration parameters for a Border Gateway Protocol (BGP) peer.
+    &quot;manualLbConfig&quot;: { # Represents configuration parameters for a manual load balancer. # Manually configured load balancers.
+    &quot;metalLbConfig&quot;: { # Represents configuration parameters for a MetalLB load balancer. # Configuration for MetalLB load balancers.
+      &quot;loadBalancerNodePoolConfig&quot;: { # Specifies the load balancer&#x27;s node pool configuration. # Specifies the node pool running the load balancer. L2 connectivity is required among nodes in this pool. If missing, the control plane node pool is used as the load balancer pool.
+    &quot;portConfig&quot;: { # Specifies load balancer ports for the bare metal user cluster. # Configures the ports that the load balancer will listen on.
+    &quot;vipConfig&quot;: { # Specifies the VIP config for the bare metal load balancer. # The VIPs used by the load balancer.
+      &quot;controlPlaneVip&quot;: &quot;A String&quot;, # The VIP which you previously set aside for the Kubernetes API of this bare metal user cluster.
+      &quot;ingressVip&quot;: &quot;A String&quot;, # The VIP which you previously set aside for ingress traffic into this bare metal user cluster.
+  &quot;localName&quot;: &quot;A String&quot;, # Output only. The object name of the bare metal user cluster custom resource on the associated admin cluster. This field is used to support conflicting names when enrolling existing clusters to the API. When used as a part of cluster enrollment, this field will differ from the name in the resource name. For new clusters, this field will match the user provided cluster name and be visible in the last component of the resource name. It is not modifiable. When the local name and cluster name differ, the local name is used in the admin cluster controller logs. You use the cluster name when accessing the cluster using bmctl and kubectl.
+  &quot;localNamespace&quot;: &quot;A String&quot;, # Output only. The namespace of the cluster.
+  &quot;maintenanceConfig&quot;: { # Specifies configurations to put bare metal nodes in and out of maintenance. # Maintenance configuration.
+  &quot;maintenanceStatus&quot;: { # Represents the maintenance status of the bare metal user cluster. # Output only. Status of on-going maintenance tasks.
+    &quot;machineDrainStatus&quot;: { # Represents the status of node machines that are undergoing drain operations. # The maintenance status of node machines.
+        { # Represents a machine that is currently drained.
+        { # Represents a machine that is currently draining.
+  &quot;name&quot;: &quot;A String&quot;, # Immutable. The bare metal user cluster resource name.
+  &quot;networkConfig&quot;: { # Specifies the cluster network configuration. # Required. Network configuration.
+    &quot;islandModeCidr&quot;: { # Specifies the cluster CIDR configuration while running in island mode. # Configuration for island mode CIDR. In an island-mode network, nodes have unique IP addresses, but pods don&#x27;t have unique addresses across clusters. This doesn&#x27;t cause problems because pods in one cluster never directly communicate with pods in another cluster. Instead, there are gateways that mediate between a pod in one cluster and a pod in another cluster.
+      &quot;serviceAddressCidrBlocks&quot;: [ # Required. All services in the cluster are assigned an RFC1918 IPv4 address from these ranges. This field is mutable after creation starting with version 1.15.
+    &quot;srIovConfig&quot;: { # Specifies the SR-IOV networking operator config. # Configuration for SR-IOV.
+      &quot;enabled&quot;: True or False, # Whether to install the SR-IOV operator.
+  &quot;nodeAccessConfig&quot;: { # Specifies the node access related settings for the bare metal user cluster. # Node access related configurations.
+    &quot;loginUser&quot;: &quot;A String&quot;, # LoginUser is the user name used to access node machines. It defaults to &quot;root&quot; if not set.
+  &quot;nodeConfig&quot;: { # Specifies the workload node configurations. # Workload node configuration.
+    &quot;containerRuntime&quot;: &quot;A String&quot;, # Specifies which container runtime will be used.
+    &quot;maxPodsPerNode&quot;: &quot;A String&quot;, # The maximum number of pods a node can run. The size of the CIDR range assigned to the node will be derived from this parameter.
+  &quot;osEnvironmentConfig&quot;: { # Specifies operating system settings for cluster provisioning. # OS environment related configurations.
+    &quot;packageRepoExcluded&quot;: True or False, # Whether the package repo should not be included when initializing bare metal machines.
+  &quot;proxy&quot;: { # Specifies the cluster proxy configuration. # Proxy configuration.
+    &quot;uri&quot;: &quot;A String&quot;, # Required. Specifies the address of your proxy server. Examples: `http://domain` Do not provide credentials in the format `http://(username:password@)domain` these will be rejected by the server.
+  &quot;reconciling&quot;: True or False, # Output only. If set, there are currently changes in flight to the bare metal user cluster.
+  &quot;securityConfig&quot;: { # Specifies the security related settings for the bare metal user cluster. # Security related setting configuration.
+    &quot;authorization&quot;: { # Authorization defines the On-Prem cluster authorization configuration to bootstrap onto the admin cluster. # Configures user access to the user cluster.
+  &quot;state&quot;: &quot;A String&quot;, # Output only. The current state of the bare metal user cluster.
+  &quot;status&quot;: { # ResourceStatus describes why a cluster or node pool has a certain status. (e.g., ERROR or DEGRADED). # Output only. Detailed cluster status.
+  &quot;storage&quot;: { # BareMetalStorageConfig specifies the cluster storage configuration. # Required. Storage configuration.
+  &quot;uid&quot;: &quot;A String&quot;, # Output only. The unique identifier of the bare metal user cluster.
+  &quot;updateTime&quot;: &quot;A String&quot;, # Output only. The time when the bare metal user cluster was last updated.
+  &quot;upgradePolicy&quot;: { # BareMetalClusterUpgradePolicy defines the cluster upgrade policy. # The cluster upgrade policy.
+    &quot;pause&quot;: True or False, # Output only. Pause is used to show the upgrade pause status. It&#x27;s view only for now.
+    &quot;policy&quot;: &quot;A String&quot;, # Specifies which upgrade policy to use.
+  &quot;validationCheck&quot;: { # ValidationCheck represents the result of preflight check. # Output only. The result of the preflight check.
+  bareMetalClusterId: string, Required. User provided identifier that is used as part of the resource name; must conform to RFC-1034 and additionally restrict to lower-cased letters. This comes out roughly to: /^a-z+[a-z0-9]$/
+    <code class="details" id="delete">delete(name, allowMissing=None, etag=None, force=None, ignoreErrors=None, validateOnly=None, x__xgafv=None)</code>
+  <pre>Deletes a single bare metal Cluster.
+  name: string, Required. Name of the bare metal user cluster to be deleted. Format: &quot;projects/{project}/locations/{location}/bareMetalClusters/{bare_metal_cluster}&quot; (required)
+  allowMissing: boolean, If set to true, and the bare metal cluster is not found, the request will succeed but no action will be taken on the server and return a completed LRO.
+  etag: string, The current etag of the bare metal Cluster. If an etag is provided and does not match the current etag of the cluster, deletion will be blocked and an ABORTED error will be returned.
+  force: boolean, If set to true, any node pools from the cluster will also be deleted.
+  ignoreErrors: boolean, If set to true, the deletion of a bare metal user cluster resource will succeed even if errors occur during deletion. This parameter can be used when you want to delete GCP&#x27;s cluster resource and the on-prem admin cluster that hosts your user cluster is disconnected / unreachable or deleted. WARNING: Using this parameter when your user cluster still exists may result in a deleted GCP user cluster but an existing on-prem user cluster.
+  <pre>Enrolls an existing bare metal user cluster and its node pools to the Anthos On-Prem API within a given project and location. Through enrollment, an existing cluster will become Anthos On-Prem API managed. The corresponding GCP resources will be created and all future modifications to the cluster and/or its node pools will be expected to be performed through the API.
+{ # Message for enrolling an existing bare metal cluster to the Anthos On-Prem API.
+  &quot;adminClusterMembership&quot;: &quot;A String&quot;, # Required. The admin cluster this bare metal user cluster belongs to. This is the full resource name of the admin cluster&#x27;s fleet membership. In the future, references to other resource types might be allowed if admin clusters are modeled as their own resources.
+  &quot;bareMetalClusterId&quot;: &quot;A String&quot;, # User provided OnePlatform identifier that is used as part of the resource name. This must be unique among all bare metal clusters within a project and location and will return a 409 if the cluster already exists. (https://tools.ietf.org/html/rfc1123) format.
+  &quot;localName&quot;: &quot;A String&quot;, # Optional. The object name of the bare metal cluster custom resource on the associated admin cluster. This field is used to support conflicting resource names when enrolling existing clusters to the API. When not provided, this field will resolve to the bare_metal_cluster_id. Otherwise, it must match the object name of the bare metal cluster custom resource. It is not modifiable outside / beyond the enrollment operation.
+  &quot;localNamespace&quot;: &quot;A String&quot;, # Optional. The namespace of the cluster.
+  <pre>Gets details of a single bare metal Cluster.
+  name: string, Required. Name of the bare metal user cluster to get. Format: &quot;projects/{project}/locations/{location}/bareMetalClusters/{bare_metal_cluster}&quot; (required)
+  allowMissing: boolean, Optional. If true, return BareMetal Cluster including the one that only exists in RMS.
+  view: string, View for bare metal user cluster. When `BASIC` is specified, only the cluster resource name and admin cluster membership are returned. The default/unset value `CLUSTER_VIEW_UNSPECIFIED` is the same as `FULL&#x27;, which returns the complete cluster configuration details.
+      BASIC - Includes basic information of a cluster resource including cluster resource name and admin cluster membership.
+      FULL - Includes the complete configuration for bare metal cluster resource. This is the default value for GetBareMetalClusterRequest method.
+    <code class="details" id="list">list(parent, allowMissing=None, filter=None, pageSize=None, pageToken=None, view=None, x__xgafv=None)</code>
+  <pre>Lists bare metal clusters in a given project and location.
+  allowMissing: boolean, Optional. If true, return list of BareMetal Clusters including the ones that only exists in RMS.
+  filter: string, A resource filtering expression following https://google.aip.dev/160. When non-empty, only resource&#x27;s whose attributes field matches the filter are returned.
+  view: string, View for bare metal Clusters. When `BASIC` is specified, only the cluster resource name and admin cluster membership are returned. The default/unset value `CLUSTER_VIEW_UNSPECIFIED` is the same as `FULL&#x27;, which returns the complete cluster configuration details.
+      FULL - Includes the complete configuration for bare metal cluster resource. This is the default value for ListBareMetalClustersRequest method.
+    { # Response message for listing bare metal Clusters.
+  &quot;bareMetalClusters&quot;: [ # The list of bare metal Clusters.
+  <pre>Updates the parameters of a single bare metal Cluster.
+  name: string, Immutable. The bare metal user cluster resource name. (required)
+  allowMissing: boolean, If set to true, and the bare metal cluster is not found, the request will create a new bare metal cluster with the provided configuration. The user must have both create and update permission to call Update with allow_missing set to true.
+  updateMask: string, Required. Field mask is used to specify the fields to be overwritten in the BareMetalCluster resource by the update. The fields specified in the update_mask are relative to the resource, not the full request. A field will be overwritten if it is in the mask. If the user does not provide a mask then all populated fields in the BareMetalCluster message will be updated. Empty fields will be ignored unless a field mask is used.
+    <code class="details" id="queryVersionConfig">queryVersionConfig(parent, createConfig_adminClusterMembership=None, createConfig_adminClusterName=None, upgradeConfig_clusterName=None, x__xgafv=None)</code>
+  <pre>Queries the bare metal user cluster version config.
+  createConfig_adminClusterMembership: string, The admin cluster membership. This is the full resource name of the admin cluster&#x27;s fleet membership. Format: &quot;projects/{project}/locations/{location}/memberships/{membership}&quot;
+  createConfig_adminClusterName: string, The admin cluster resource name. This is the full resource name of the admin cluster resource. Format: &quot;projects/{project}/locations/{location}/bareMetalAdminClusters/{bare_metal_admin_cluster}&quot;
+  upgradeConfig_clusterName: string, The user cluster resource name. This is the full resource name of the user cluster resource. Format: &quot;projects/{project}/locations/{location}/bareMetalClusters/{bare_metal_cluster}&quot;
+    <code class="details" id="unenroll">unenroll(name, allowMissing=None, etag=None, force=None, validateOnly=None, x__xgafv=None)</code>
+  <pre>Unenrolls an existing bare metal user cluster and its node pools from the Anthos On-Prem API within a given project and location. Unenrollment removes the Cloud reference to the cluster without modifying the underlying OnPrem Resources. Clusters and node pools will continue to run; however, they will no longer be accessible through the Anthos On-Prem API or its clients.
+  name: string, Required. Name of the bare metal user cluster to be unenrolled. Format: &quot;projects/{project}/locations/{location}/bareMetalClusters/{cluster}&quot; (required)
+  force: boolean, This is required if the cluster has any associated node pools. When set, any child node pools will also be unenrolled.

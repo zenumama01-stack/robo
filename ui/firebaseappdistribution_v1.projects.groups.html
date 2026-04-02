@@ -1,0 +1,44 @@
+<h1><a href="firebaseappdistribution_v1.html">Firebase App Distribution API</a> . <a href="firebaseappdistribution_v1.projects.html">projects</a> . <a href="firebaseappdistribution_v1.projects.groups.html">groups</a></h1>
+  <code><a href="#batchJoin">batchJoin(group, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Batch adds members to a group. The testers will gain access to all releases that the groups have access to.</p>
+  <code><a href="#batchLeave">batchLeave(group, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Batch removed members from a group. The testers will lose access to all releases that the groups have access to.</p>
+  <code><a href="#create">create(parent, body=None, groupId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Create a group.</p>
+<p class="firstline">Delete a group.</p>
+<p class="firstline">Get a group.</p>
+<p class="firstline">List groups.</p>
+<p class="firstline">Update a group.</p>
+    <code class="details" id="batchJoin">batchJoin(group, body=None, x__xgafv=None)</code>
+  <pre>Batch adds members to a group. The testers will gain access to all releases that the groups have access to.
+  group: string, Required. The name of the group resource to which testers are added. Format: `projects/{project_number}/groups/{group_alias}` (required)
+{ # The request message for `BatchJoinGroup`
+  &quot;createMissingTesters&quot;: True or False, # Indicates whether to create tester resources based on `emails` if they don&#x27;t exist yet.
+  &quot;emails&quot;: [ # Required. The emails of the testers to be added to the group. A maximum of 999 and a minimum of 1 tester can be created in a batch.
+    <code class="details" id="batchLeave">batchLeave(group, body=None, x__xgafv=None)</code>
+  <pre>Batch removed members from a group. The testers will lose access to all releases that the groups have access to.
+  group: string, Required. The name of the group resource from which testers are removed. Format: `projects/{project_number}/groups/{group_alias}` (required)
+{ # Request message for `BatchLeaveGroup`
+  &quot;emails&quot;: [ # Required. The email addresses of the testers to be removed from the group. A maximum of 999 and a minimum of 1 testers can be removed in a batch.
+    <code class="details" id="create">create(parent, body=None, groupId=None, x__xgafv=None)</code>
+  <pre>Create a group.
+  parent: string, Required. The name of the project resource, which is the parent of the group resource. Format: `projects/{project_number}` (required)
+{ # A group which can contain testers. A group can be invited to test apps in a Firebase project.
+  &quot;displayName&quot;: &quot;A String&quot;, # Required. The display name of the group.
+  &quot;inviteLinkCount&quot;: 42, # Output only. The number of invite links for this group.
+  &quot;name&quot;: &quot;A String&quot;, # The name of the group resource. Format: `projects/{project_number}/groups/{group_alias}`
+  &quot;releaseCount&quot;: 42, # Output only. The number of releases this group is permitted to access.
+  &quot;testerCount&quot;: 42, # Output only. The number of testers who are members of this group.
+  groupId: string, Optional. The &quot;alias&quot; to use for the group, which will become the final component of the group&#x27;s resource name. This value must be unique per project. The field is named `groupId` to comply with AIP guidance for user-specified IDs. This value should be 4-63 characters, and valid characters are `/a-z-/`. If not set, it will be generated based on the display name.
+  <pre>Delete a group.
+  name: string, Required. The name of the group resource. Format: `projects/{project_number}/groups/{group_alias}` (required)
+  <pre>Get a group.
+  name: string, Required. The name of the group resource to retrieve. Format: `projects/{project_number}/groups/{group_alias}` (required)
+  <pre>List groups.
+  parent: string, Required. The name of the project resource, which is the parent of the group resources. Format: `projects/{project_number}` (required)
+  pageSize: integer, Optional. The maximum number of groups to return. The service may return fewer than this value. The valid range is [1-1000]; If unspecified (0), at most 25 groups are returned. Values above 1000 are coerced to 1000.
+  pageToken: string, Optional. A page token, received from a previous `ListGroups` call. Provide this to retrieve the subsequent page. When paginating, all other parameters provided to `ListGroups` must match the call that provided the page token.
+    { # The response message for `ListGroups`.
+  &quot;groups&quot;: [ # The groups listed.
+  <pre>Update a group.
+  name: string, The name of the group resource. Format: `projects/{project_number}/groups/{group_alias}` (required)

@@ -1,0 +1,29 @@
+<h1><a href="networksecurity_v1.html">Network Security API</a> . <a href="networksecurity_v1.projects.html">projects</a> . <a href="networksecurity_v1.projects.locations.html">locations</a> . <a href="networksecurity_v1.projects.locations.urlLists.html">urlLists</a></h1>
+  <code><a href="#create">create(parent, body=None, urlListId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Creates a new UrlList in a given project and location.</p>
+<p class="firstline">Deletes a single UrlList.</p>
+<p class="firstline">Gets details of a single UrlList.</p>
+<p class="firstline">Lists UrlLists in a given project and location.</p>
+<p class="firstline">Updates the parameters of a single UrlList.</p>
+    <code class="details" id="create">create(parent, body=None, urlListId=None, x__xgafv=None)</code>
+  <pre>Creates a new UrlList in a given project and location.
+  parent: string, Required. The parent resource of the UrlList. Must be in the format `projects/*/locations/{location}`. (required)
+{ # UrlList proto helps users to set reusable, independently manageable lists of hosts, host patterns, URLs, URL patterns.
+  &quot;createTime&quot;: &quot;A String&quot;, # Output only. Time when the security policy was created.
+  &quot;name&quot;: &quot;A String&quot;, # Required. Name of the resource provided by the user. Name is of the form projects/{project}/locations/{location}/urlLists/{url_list} url_list should match the pattern:(^[a-z]([a-z0-9-]{0,61}[a-z0-9])?$).
+  &quot;updateTime&quot;: &quot;A String&quot;, # Output only. Time when the security policy was updated.
+  &quot;values&quot;: [ # Required. FQDNs and URLs.
+  urlListId: string, Required. Short name of the UrlList resource to be created. This value should be 1-63 characters long, containing only letters, numbers, hyphens, and underscores, and should not start with a number. E.g. &quot;url_list&quot;.
+  <pre>Deletes a single UrlList.
+  name: string, Required. A name of the UrlList to delete. Must be in the format `projects/*/locations/{location}/urlLists/*`. (required)
+  <pre>Gets details of a single UrlList.
+  name: string, Required. A name of the UrlList to get. Must be in the format `projects/*/locations/{location}/urlLists/*`. (required)
+  <pre>Lists UrlLists in a given project and location.
+  parent: string, Required. The project and location from which the UrlLists should be listed, specified in the format `projects/{project}/locations/{location}`. (required)
+  pageSize: integer, Maximum number of UrlLists to return per call.
+  pageToken: string, The value returned by the last `ListUrlListsResponse` Indicates that this is a continuation of a prior `ListUrlLists` call, and that the system should return the next page of data.
+    { # Response returned by the ListUrlLists method.
+  &quot;urlLists&quot;: [ # List of UrlList resources.
+  <pre>Updates the parameters of a single UrlList.
+  name: string, Required. Name of the resource provided by the user. Name is of the form projects/{project}/locations/{location}/urlLists/{url_list} url_list should match the pattern:(^[a-z]([a-z0-9-]{0,61}[a-z0-9])?$). (required)
+  updateMask: string, Optional. Field mask is used to specify the fields to be overwritten in the UrlList resource by the update. The fields specified in the update_mask are relative to the resource, not the full request. A field will be overwritten if it is in the mask. If the user does not provide a mask then all fields will be overwritten.

@@ -1,0 +1,42 @@
+<h1><a href="storagebatchoperations_v1.html">Storage Batch Operations API</a> . <a href="storagebatchoperations_v1.projects.html">projects</a> . <a href="storagebatchoperations_v1.projects.locations.html">locations</a> . <a href="storagebatchoperations_v1.projects.locations.jobs.html">jobs</a></h1>
+  <code><a href="storagebatchoperations_v1.projects.locations.jobs.bucketOperations.html">bucketOperations()</a></code>
+<p class="firstline">Returns the bucketOperations Resource.</p>
+<p class="firstline">Cancels a batch job.</p>
+<p class="firstline">Creates a batch job.</p>
+<p class="firstline">Deletes a batch job.</p>
+<p class="firstline">Gets a batch job.</p>
+<p class="firstline">Lists Jobs in a given project.</p>
+  <pre>Cancels a batch job.
+  name: string, Required. The `name` of the job to cancel. Format: projects/{project_id}/locations/global/jobs/{job_id}. (required)
+{ # Message for Job to Cancel
+  &quot;requestId&quot;: &quot;A String&quot;, # Optional. An optional request ID to identify requests. Specify a unique request ID in case you need to retry your request. Requests with same `request_id` will be ignored for at least 60 minutes since the first request. The request ID must be a valid UUID with the exception that zero UUID is not supported (00000000-0000-0000-0000-000000000000).
+    { # Message for response to cancel Job.
+  <pre>Creates a batch job.
+{ # The Storage Batch Operations Job description.
+  &quot;bucketList&quot;: { # Describes list of buckets and their objects to be transformed. # Specifies a list of buckets and their objects to be transformed.
+    &quot;buckets&quot;: [ # Required. List of buckets and their objects to be transformed. Currently, only one bucket configuration is supported. If multiple buckets are specified, an error will be returned.
+      { # Describes configuration of a single bucket and its objects to be transformed.
+        &quot;bucket&quot;: &quot;A String&quot;, # Required. Bucket name for the objects to be transformed.
+  &quot;completeTime&quot;: &quot;A String&quot;, # Output only. The time that the job was completed.
+  &quot;counters&quot;: { # Describes details about the progress of the job. # Output only. Information about the progress of the job.
+  &quot;createTime&quot;: &quot;A String&quot;, # Output only. The time that the job was created.
+  &quot;description&quot;: &quot;A String&quot;, # Optional. A description provided by the user for the job. Its max length is 1024 bytes when Unicode-encoded.
+  &quot;dryRun&quot;: True or False, # Optional. If true, the job will run in dry run mode, returning the total object count and, if the object configuration is a prefix list, the bytes found from source. No transformations will be performed.
+  &quot;isMultiBucketJob&quot;: True or False, # Output only. If true, this Job operates on multiple buckets. Multibucket jobs are subject to different quota limits than single-bucket jobs.
+  &quot;loggingConfig&quot;: { # Specifies the Cloud Logging behavior. # Optional. Logging configuration.
+    &quot;logActionStates&quot;: [ # Required. States in which Action are logged.If empty, no logs are generated.
+    &quot;logActions&quot;: [ # Required. Specifies the actions to be logged.
+  &quot;name&quot;: &quot;A String&quot;, # Identifier. The resource name of the Job. job_id is unique within the project, that is either set by the customer or defined by the service. Format: projects/{project}/locations/global/jobs/{job_id} . For example: &quot;projects/123456/locations/global/jobs/job01&quot;.
+  &quot;scheduleTime&quot;: &quot;A String&quot;, # Output only. The time that the job was scheduled.
+  jobId: string, Required. The optional `job_id` for this Job . If not specified, an id is generated. `job_id` should be no more than 128 characters and must include only characters available in DNS names, as defined by RFC-1123.
+  requestId: string, Optional. An optional request ID to identify requests. Specify a unique request ID in case you need to retry your request. Requests with same `request_id` will be ignored for at least 60 minutes since the first request. The request ID must be a valid UUID with the exception that zero UUID is not supported (00000000-0000-0000-0000-000000000000).
+  <pre>Deletes a batch job.
+  name: string, Required. The `name` of the job to delete. Format: projects/{project_id}/locations/global/jobs/{job_id} . (required)
+  force: boolean, Optional. If set to true, any child bucket operations of the job will also be deleted. Highly recommended to be set to true by all clients. Users cannot mutate bucket operations directly, so only the jobs.delete permission is required to delete a job (and its child bucket operations).
+  <pre>Gets a batch job.
+  name: string, Required. `name` of the job to retrieve. Format: projects/{project_id}/locations/global/jobs/{job_id} . (required)
+  <pre>Lists Jobs in a given project.
+  parent: string, Required. Format: projects/{project_id}/locations/global. (required)
+  pageSize: integer, Optional. The list page size. default page size is 100.
+    { # Message for response to listing Jobs
+  &quot;jobs&quot;: [ # A list of storage batch jobs.

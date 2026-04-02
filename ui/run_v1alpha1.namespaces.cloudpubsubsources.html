@@ -1,0 +1,35 @@
+<h1><a href="run_v1alpha1.html">Cloud Run Admin API</a> . <a href="run_v1alpha1.namespaces.html">namespaces</a> . <a href="run_v1alpha1.namespaces.cloudpubsubsources.html">cloudpubsubsources</a></h1>
+<p class="firstline">Creates a new cloudpubsubsource.</p>
+<p class="firstline">Rpc to delete a cloudpubsubsource.</p>
+<p class="firstline">Rpc to get information about a cloudpubsubsource.</p>
+<p class="firstline">Rpc to list cloudpubsubsources.</p>
+  <pre>Creates a new cloudpubsubsource.
+  parent: string, The project ID or project number in which this cloudpubsubsource should be created. (required)
+  &quot;kind&quot;: &quot;A String&quot;, # The kind of resource, in this case &quot;CloudPubSubSource&quot;.
+  &quot;metadata&quot;: { # ObjectMeta is metadata that all persisted resources must have, which includes all objects users must create. # Metadata associated with this CloudPubSubSource.
+  &quot;spec&quot;: { # The desired state of the CloudPubSubSource. # Spec defines the desired state of the CloudPubSubSource.
+    &quot;ackDeadline&quot;: &quot;A String&quot;, # AckDeadline is the default maximum time after a subscriber receives a message before the subscriber should acknowledge the message. Defaults to 30 seconds (&#x27;30s&#x27;). +optional
+    &quot;project&quot;: &quot;A String&quot;, # Project is the ID of the Google Cloud Project that the CloudPubSubSource Topic exists in. If omitted, defaults to same as the cluster. +optional
+    &quot;pubsubSecret&quot;: { # Cloud Run fully managed: not supported Cloud Run on GKE: supported SecretKeySelector selects a key of a Secret. # CloudPubSubSourceSecret is the credential to use to create Topic / PullSubscription resources. If omitted, uses Secret.
+      &quot;key&quot;: &quot;A String&quot;, # Cloud Run fully managed: not supported Cloud Run on GKE: supported The key of the secret to select from. Must be a valid secret key.
+      &quot;localObjectReference&quot;: { # LocalObjectReference contains enough information to let you locate the referenced object inside the same namespace. # This field should not be used directly as it is meant to be inlined directly into the message. Use the &quot;name&quot; field instead.
+        &quot;name&quot;: &quot;A String&quot;, # Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names
+      &quot;name&quot;: &quot;A String&quot;, # Cloud Run fully managed: not supported Cloud Run on GKE: supported The name of the secret in the pod&#x27;s namespace to select from.
+      &quot;optional&quot;: True or False, # Cloud Run fully managed: not supported Cloud Run on GKE: supported Specify whether the Secret or its key must be defined +optional
+    &quot;retainAckedMessages&quot;: True or False, # RetainAckedMessages defines whether to retain acknowledged messages. If true, acknowledged messages will not be expunged until they fall out of the RetentionDuration window.
+    &quot;retentionDuration&quot;: &quot;A String&quot;, # RetentionDuration defines how long to retain messages in backlog, from the time of publish. If RetainAckedMessages is true, this duration affects the retention of acknowledged messages, otherwise only unacknowledged messages are retained. Cannot be longer than 7 days or shorter than 10 minutes. Defaults to 7 days (&#x27;7d&#x27;). +optional
+    &quot;secret&quot;: { # Cloud Run fully managed: not supported Cloud Run on GKE: supported SecretKeySelector selects a key of a Secret. # Secret is the credential to use to create the Scheduler Job. If not specified, defaults to: Name: google-cloud-key Key: key.json +optional
+    &quot;topic&quot;: &quot;A String&quot;, # Topic is the ID of the CloudPubSubSource Topic to Subscribe to. It must be in the form of the unique identifier within the project, not the entire name. E.g. it must be &#x27;laconia&#x27;, not &#x27;projects/my-proj/topics/laconia&#x27;.
+  &quot;status&quot;: { # CloudPubSubSourceStatus represents the current state of a CloudPubSubSource. # Status represents the current state of the CloudPubSubSource. This data may be out of date. +optional
+    &quot;conditions&quot;: [ # Array of observed CloudPubSubSourceConditions, indicating the current state of the CloudPubSubSource.
+    &quot;observedGeneration&quot;: 42, # ObservedGeneration is the &#x27;Generation&#x27; of the CloudPubSubSource that was last processed by the controller.
+  <pre>Rpc to delete a cloudpubsubsource.
+  name: string, The name of the cloudpubsubsource being deleted. If needed, replace {namespace_id} with the project ID. (required)
+  <pre>Rpc to get information about a cloudpubsubsource.
+  name: string, The name of the cloudpubsubsource being retrieved. If needed, replace {namespace_id} with the project ID. (required)
+  <pre>Rpc to list cloudpubsubsources.
+  parent: string, The project ID or project number from which the cloudpubsubsources should be listed. (required)
+    { # ListCloudPubSubSourcesResponse is a list of CloudPubSubSource resources.
+  &quot;items&quot;: [ # List of CloudPubSubSources.
+  &quot;kind&quot;: &quot;A String&quot;, # The kind of this resource, in this case &quot;CloudPubSubSourceList&quot;.
+  &quot;metadata&quot;: { # ListMeta describes metadata that synthetic resources must have, including lists and various status objects. A resource may have only one of {ObjectMeta, ListMeta}. # Metadata associated with this CloudPubSubSource list.

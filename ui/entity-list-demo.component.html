@@ -1,0 +1,20 @@
+Entity List Demo Component Template
+1. A table of MemberJunction entities with their properties (when loaded)
+2. A loading message when entities are not yet loaded
+- Rows are clickable and trigger the handleRowClicked() method
+- Selected row is highlighted with a 'row-selected' CSS class
+- Conditional display based on whether entities have been loaded
+<div class="demo-container">
+  <!-- Entity table - only shown when entities have been loaded -->
+  @if (entityList && entityList.length > 0) {
+    <table class="demo-list">
+          <th>Schema</th>
+        <!-- Loop through each entity and create a row -->
+        @for (e of entityList; track e) {
+            (click)="handleRowClicked(e)"
+            [class]=" 'row' + (e === this.selectedRow ? ' row-selected' : '')">
+            <td>{{e.Name}}</td>
+            <td>{{e.Description}}</td>
+            <td>{{e.SchemaName}}</td>
+  <!-- Loading message - shown when entities are not yet loaded -->
+  @if (!entityList || entityList.length === 0) {

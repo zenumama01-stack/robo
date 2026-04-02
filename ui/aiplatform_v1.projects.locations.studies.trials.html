@@ -1,0 +1,61 @@
+<h1><a href="aiplatform_v1.html">Vertex AI API</a> . <a href="aiplatform_v1.projects.html">projects</a> . <a href="aiplatform_v1.projects.locations.html">locations</a> . <a href="aiplatform_v1.projects.locations.studies.html">studies</a> . <a href="aiplatform_v1.projects.locations.studies.trials.html">trials</a></h1>
+  <code><a href="aiplatform_v1.projects.locations.studies.trials.operations.html">operations()</a></code>
+  <code><a href="#addTrialMeasurement">addTrialMeasurement(trialName, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Adds a measurement of the objective metrics to a Trial. This measurement is assumed to have been taken before the Trial is complete.</p>
+  <code><a href="#checkTrialEarlyStoppingState">checkTrialEarlyStoppingState(trialName, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Checks whether a Trial should stop or not. Returns a long-running operation. When the operation is successful, it will contain a CheckTrialEarlyStoppingStateResponse.</p>
+  <code><a href="#complete">complete(name, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Marks a Trial as complete.</p>
+<p class="firstline">Adds a user provided Trial to a Study.</p>
+<p class="firstline">Deletes a Trial.</p>
+<p class="firstline">Gets a Trial.</p>
+<p class="firstline">Lists the Trials associated with a Study.</p>
+  <code><a href="#listOptimalTrials">listOptimalTrials(parent, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Lists the pareto-optimal Trials for multi-objective Study or the optimal Trials for single-objective Study. The definition of pareto-optimal can be checked in wiki page. https://en.wikipedia.org/wiki/Pareto_efficiency</p>
+<p class="firstline">Stops a Trial.</p>
+  <code><a href="#suggest">suggest(parent, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Adds one or more Trials to a Study, with parameter values suggested by Vertex AI Vizier. Returns a long-running operation associated with the generation of Trial suggestions. When this long-running operation succeeds, it will contain a SuggestTrialsResponse.</p>
+    <code class="details" id="addTrialMeasurement">addTrialMeasurement(trialName, body=None, x__xgafv=None)</code>
+  <pre>Adds a measurement of the objective metrics to a Trial. This measurement is assumed to have been taken before the Trial is complete.
+  trialName: string, Required. The name of the trial to add measurement. Format: `projects/{project}/locations/{location}/studies/{study}/trials/{trial}` (required)
+{ # Request message for VizierService.AddTrialMeasurement.
+  &quot;measurement&quot;: { # A message representing a Measurement of a Trial. A Measurement contains the Metrics got by executing a Trial using suggested hyperparameter values. # Required. The measurement to be added to a Trial.
+    <code class="details" id="checkTrialEarlyStoppingState">checkTrialEarlyStoppingState(trialName, body=None, x__xgafv=None)</code>
+  <pre>Checks whether a Trial should stop or not. Returns a long-running operation. When the operation is successful, it will contain a CheckTrialEarlyStoppingStateResponse.
+  trialName: string, Required. The Trial&#x27;s name. Format: `projects/{project}/locations/{location}/studies/{study}/trials/{trial}` (required)
+{ # Request message for VizierService.CheckTrialEarlyStoppingState.
+    <code class="details" id="complete">complete(name, body=None, x__xgafv=None)</code>
+  <pre>Marks a Trial as complete.
+  name: string, Required. The Trial&#x27;s name. Format: `projects/{project}/locations/{location}/studies/{study}/trials/{trial}` (required)
+{ # Request message for VizierService.CompleteTrial.
+  &quot;finalMeasurement&quot;: { # A message representing a Measurement of a Trial. A Measurement contains the Metrics got by executing a Trial using suggested hyperparameter values. # Optional. If provided, it will be used as the completed Trial&#x27;s final_measurement; Otherwise, the service will auto-select a previously reported measurement as the final-measurement
+  &quot;infeasibleReason&quot;: &quot;A String&quot;, # Optional. A human readable reason why the trial was infeasible. This should only be provided if `trial_infeasible` is true.
+  &quot;trialInfeasible&quot;: True or False, # Optional. True if the Trial cannot be run with the given Parameter, and final_measurement will be ignored.
+  <pre>Adds a user provided Trial to a Study.
+  parent: string, Required. The resource name of the Study to create the Trial in. Format: `projects/{project}/locations/{location}/studies/{study}` (required)
+  <pre>Deletes a Trial.
+  <pre>Gets a Trial.
+  name: string, Required. The name of the Trial resource. Format: `projects/{project}/locations/{location}/studies/{study}/trials/{trial}` (required)
+  <pre>Lists the Trials associated with a Study.
+  parent: string, Required. The resource name of the Study to list the Trial from. Format: `projects/{project}/locations/{location}/studies/{study}` (required)
+  pageSize: integer, Optional. The number of Trials to retrieve per &quot;page&quot; of results. If unspecified, the service will pick an appropriate default.
+    { # Response message for VizierService.ListTrials.
+  &quot;nextPageToken&quot;: &quot;A String&quot;, # Pass this token as the `page_token` field of the request for a subsequent call. If this field is omitted, there are no subsequent pages.
+  &quot;trials&quot;: [ # The Trials associated with the Study.
+    <code class="details" id="listOptimalTrials">listOptimalTrials(parent, body=None, x__xgafv=None)</code>
+  <pre>Lists the pareto-optimal Trials for multi-objective Study or the optimal Trials for single-objective Study. The definition of pareto-optimal can be checked in wiki page. https://en.wikipedia.org/wiki/Pareto_efficiency
+  parent: string, Required. The name of the Study that the optimal Trial belongs to. (required)
+{ # Request message for VizierService.ListOptimalTrials.
+    { # Response message for VizierService.ListOptimalTrials.
+  &quot;optimalTrials&quot;: [ # The pareto-optimal Trials for multiple objective Study or the optimal trial for single objective Study. The definition of pareto-optimal can be checked in wiki page. https://en.wikipedia.org/wiki/Pareto_efficiency
+  <pre>Stops a Trial.
+{ # Request message for VizierService.StopTrial.
+    <code class="details" id="suggest">suggest(parent, body=None, x__xgafv=None)</code>
+  <pre>Adds one or more Trials to a Study, with parameter values suggested by Vertex AI Vizier. Returns a long-running operation associated with the generation of Trial suggestions. When this long-running operation succeeds, it will contain a SuggestTrialsResponse.
+  parent: string, Required. The project and location that the Study belongs to. Format: `projects/{project}/locations/{location}/studies/{study}` (required)
+{ # Request message for VizierService.SuggestTrials.
+  &quot;clientId&quot;: &quot;A String&quot;, # Required. The identifier of the client that is requesting the suggestion. If multiple SuggestTrialsRequests have the same `client_id`, the service will return the identical suggested Trial if the Trial is pending, and provide a new Trial if the last suggested Trial was completed.
+  &quot;contexts&quot;: [ # Optional. This allows you to specify the &quot;context&quot; for a Trial; a context is a slice (a subspace) of the search space. Typical uses for contexts: 1) You are using Vizier to tune a server for best performance, but there&#x27;s a strong weekly cycle. The context specifies the day-of-week. This allows Tuesday to generalize from Wednesday without assuming that everything is identical. 2) Imagine you&#x27;re optimizing some medical treatment for people. As they walk in the door, you know certain facts about them (e.g. sex, weight, height, blood-pressure). Put that information in the context, and Vizier will adapt its suggestions to the patient. 3) You want to do a fair A/B test efficiently. Specify the &quot;A&quot; and &quot;B&quot; conditions as contexts, and Vizier will generalize between &quot;A&quot; and &quot;B&quot; conditions. If they are similar, this will allow Vizier to converge to the optimum faster than if &quot;A&quot; and &quot;B&quot; were separate Studies. NOTE: You can also enter contexts as REQUESTED Trials, e.g. via the CreateTrial() RPC; that&#x27;s the asynchronous option where you don&#x27;t need a close association between contexts and suggestions. NOTE: All the Parameters you set in a context MUST be defined in the Study. NOTE: You must supply 0 or $suggestion_count contexts. If you don&#x27;t supply any contexts, Vizier will make suggestions from the full search space specified in the StudySpec; if you supply a full set of context, each suggestion will match the corresponding context. NOTE: A Context with no features set matches anything, and allows suggestions from the full search space. NOTE: Contexts MUST lie within the search space specified in the StudySpec. It&#x27;s an error if they don&#x27;t. NOTE: Contexts preferentially match ACTIVE then REQUESTED trials before new suggestions are generated. NOTE: Generation of suggestions involves a match between a Context and (optionally) a REQUESTED trial; if that match is not fully specified, a suggestion will be geneated in the merged subspace.
+      &quot;description&quot;: &quot;A String&quot;, # A human-readable field which can store a description of this context. This will become part of the resulting Trial&#x27;s description field.
+      &quot;parameters&quot;: [ # If/when a Trial is generated or selected from this Context, its Parameters will match any parameters specified here. (I.e. if this context specifies parameter name:&#x27;a&#x27; int_value:3, then a resulting Trial will have int_value:3 for its parameter named &#x27;a&#x27;.) Note that we first attempt to match existing REQUESTED Trials with contexts, and if there are no matches, we generate suggestions in the subspace defined by the parameters specified here. NOTE: a Context without any Parameters matches the entire feasible search space.
+  &quot;suggestionCount&quot;: 42, # Required. The number of suggestions requested. It must be positive.

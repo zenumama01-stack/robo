@@ -1,0 +1,32 @@
+<h1><a href="translate_v3.html">Cloud Translation API</a> . <a href="translate_v3.projects.html">projects</a> . <a href="translate_v3.projects.locations.html">locations</a> . <a href="translate_v3.projects.locations.glossaries.html">glossaries</a> . <a href="translate_v3.projects.locations.glossaries.glossaryEntries.html">glossaryEntries</a></h1>
+<p class="firstline">Creates a glossary entry.</p>
+<p class="firstline">Deletes a single entry from the glossary</p>
+<p class="firstline">Gets a single glossary entry by the given id.</p>
+<p class="firstline">List the entries for the glossary.</p>
+<p class="firstline">Updates a glossary entry.</p>
+  <pre>Creates a glossary entry.
+  parent: string, Required. The resource name of the glossary to create the entry under. (required)
+{ # Represents a single entry in a glossary.
+  &quot;description&quot;: &quot;A String&quot;, # Describes the glossary entry.
+  &quot;name&quot;: &quot;A String&quot;, # Identifier. The resource name of the entry. Format: `projects/*/locations/*/glossaries/*/glossaryEntries/*`
+  &quot;termsPair&quot;: { # Represents a single entry for an unidirectional glossary. # Used for an unidirectional glossary.
+    &quot;sourceTerm&quot;: { # Represents a single glossary term # The source term is the term that will get match in the text,
+      &quot;languageCode&quot;: &quot;A String&quot;, # The language for this glossary term.
+      &quot;text&quot;: &quot;A String&quot;, # The text for the glossary term.
+    &quot;targetTerm&quot;: { # Represents a single glossary term # The term that will replace the match source term.
+  &quot;termsSet&quot;: { # Represents a single entry for an equivalent term set glossary. This is used for equivalent term sets where each term can be replaced by the other terms in the set. # Used for an equivalent term sets glossary.
+    &quot;terms&quot;: [ # Each term in the set represents a term that can be replaced by the other terms.
+      { # Represents a single glossary term
+  <pre>Deletes a single entry from the glossary
+  name: string, Required. The resource name of the glossary entry to delete (required)
+  <pre>Gets a single glossary entry by the given id.
+  name: string, Required. The resource name of the glossary entry to get (required)
+  <pre>List the entries for the glossary.
+  parent: string, Required. The parent glossary resource name for listing the glossary&#x27;s entries. (required)
+  pageSize: integer, Optional. Requested page size. The server may return fewer glossary entries than requested. If unspecified, the server picks an appropriate default.
+  pageToken: string, Optional. A token identifying a page of results the server should return. Typically, this is the value of [ListGlossaryEntriesResponse.next_page_token] returned from the previous call. The first page is returned if `page_token`is empty or missing.
+    { # Response message for ListGlossaryEntries
+  &quot;glossaryEntries&quot;: [ # Optional. The Glossary Entries
+  &quot;nextPageToken&quot;: &quot;A String&quot;, # Optional. A token to retrieve a page of results. Pass this value in the [ListGLossaryEntriesRequest.page_token] field in the subsequent calls.
+  <pre>Updates a glossary entry.
+  name: string, Identifier. The resource name of the entry. Format: `projects/*/locations/*/glossaries/*/glossaryEntries/*` (required)

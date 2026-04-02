@@ -1,0 +1,66 @@
+<h1><a href="batch_v1.html">Batch API</a> . <a href="batch_v1.projects.html">projects</a> . <a href="batch_v1.projects.locations.html">locations</a> . <a href="batch_v1.projects.locations.state.html">state</a></h1>
+  <code><a href="#report">report(parent, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Report agent's state, e.g. agent status and tasks information</p>
+    <code class="details" id="report">report(parent, body=None, x__xgafv=None)</code>
+  <pre>Report agent&#x27;s state, e.g. agent status and tasks information
+  parent: string, Required. Format: projects/{project}/locations/{location} {project} should be a project number. (required)
+{ # Request to report agent&#x27;s state. The Request itself implies the agent is healthy.
+  &quot;agentInfo&quot;: { # VM Agent Info. # Agent info.
+    &quot;jobId&quot;: &quot;A String&quot;, # Optional. The assigned Job ID
+    &quot;reportTime&quot;: &quot;A String&quot;, # When the AgentInfo is generated.
+    &quot;state&quot;: &quot;A String&quot;, # Agent state.
+    &quot;taskGroupId&quot;: &quot;A String&quot;, # The assigned task group ID.
+    &quot;tasks&quot;: [ # Task Info.
+      { # Task Info
+        &quot;runnable&quot;: &quot;A String&quot;, # The highest index of a runnable started by the agent for this task. The runnables are indexed from 1. Value 0 is undefined.
+        &quot;taskId&quot;: &quot;A String&quot;, # ID of the Task
+        &quot;taskStatus&quot;: { # Status of a task. # The status of the Task. If we need agent specific fields we should fork the public TaskStatus into an agent specific one. Or add them below.
+  &quot;agentTimingInfo&quot;: { # VM timing information # Agent timing info.
+    &quot;agentStartupTime&quot;: &quot;A String&quot;, # Agent startup time
+    &quot;bootTime&quot;: &quot;A String&quot;, # Boot timestamp of the VM OS
+    &quot;scriptStartupTime&quot;: &quot;A String&quot;, # Startup time of the Batch VM script.
+  &quot;metadata&quot;: { # VM Agent Metadata. # Agent metadata.
+    &quot;creationTime&quot;: &quot;A String&quot;, # When the VM agent started. Use agent_startup_time instead.
+    &quot;creator&quot;: &quot;A String&quot;, # Full name of the entity that created this vm. For MIG, this path is: projects/{project}/regions/{region}/InstanceGroupManagers/{igm} The value is retrieved from the vm metadata key of &quot;created-by&quot;.
+    &quot;imageVersion&quot;: &quot;A String&quot;, # image version for the VM that this agent is installed on.
+    &quot;instance&quot;: &quot;A String&quot;, # GCP instance name (go/instance-name).
+    &quot;instanceId&quot;: &quot;A String&quot;, # GCP instance ID (go/instance-id).
+    &quot;instancePreemptionNoticeReceived&quot;: True or False, # If the GCP instance has received preemption notice.
+    &quot;machineType&quot;: &quot;A String&quot;, # Optional. machine type of the VM
+    &quot;osRelease&quot;: { # parsed contents of /etc/os-release
+    &quot;version&quot;: &quot;A String&quot;, # agent binary version running on VM
+    &quot;zone&quot;: &quot;A String&quot;, # Agent zone.
+    { # Response to ReportAgentStateRequest.
+  &quot;defaultReportInterval&quot;: &quot;A String&quot;, # Default report interval override
+  &quot;minReportInterval&quot;: &quot;A String&quot;, # Minimum report interval override
+  &quot;tasks&quot;: [ # Tasks assigned to the agent
+    { # TODO(b/182501497) The message needs to be redefined when the Agent API server updates data in storage per the backend design.
+      &quot;agentTaskSpec&quot;: { # AgentTaskSpec is the user&#x27;s TaskSpec representation between Agent and CLH communication. # AgentTaskSpec is the taskSpec representation between Agent and CLH communication. This field will replace the TaskSpec field above in future to have a better separation between user-facaing API and internal API.
+        &quot;environment&quot;: { # AgentEnvironment is the Environment representation between Agent and CLH communication. The environment is used in both task level and agent level. # Environment variables to set before running the Task.
+          &quot;encryptedVariables&quot;: { # AgentKMSEnvMap contains the encrypted key/value pair to be used in the environment on the Agent side. # An encrypted JSON dictionary where the key/value pairs correspond to environment variable names and their values.
+        &quot;loggingOption&quot;: { # AgentTaskLoggingOption contains the options for the logging of the task. # Logging option for the task.
+          &quot;labels&quot;: { # Labels to be added to the log entry. Now only cloud logging is supported.
+        &quot;runnables&quot;: [ # AgentTaskRunnable is runanbles that will be executed on the agent.
+          { # AgentTaskRunnable is the Runnable representation between Agent and CLH communication.
+            &quot;background&quot;: True or False, # This flag allows a Runnable to continue running in the background while the Task executes subsequent Runnables. This is useful to provide services to other Runnables (or to provide debugging support tools like SSH servers).
+            &quot;container&quot;: { # Container runnable representation on the agent side. # Container runnable.
+              &quot;commands&quot;: [ # Overrides the `CMD` specified in the container. If there is an ENTRYPOINT (either in the container image or with the entrypoint field below) then commands are appended as arguments to the ENTRYPOINT.
+              &quot;entrypoint&quot;: &quot;A String&quot;, # Overrides the `ENTRYPOINT` specified in the container.
+              &quot;imageUri&quot;: &quot;A String&quot;, # The URI to pull the container image from.
+              &quot;options&quot;: &quot;A String&quot;, # Arbitrary additional options to include in the &quot;docker run&quot; command when running this container, e.g. &quot;--network host&quot;.
+              &quot;volumes&quot;: [ # Volumes to mount (bind mount) from the host machine files or directories into the container, formatted to match docker run&#x27;s --volume option, e.g. /foo:/bar, or /foo:/bar:ro
+            &quot;environment&quot;: { # AgentEnvironment is the Environment representation between Agent and CLH communication. The environment is used in both task level and agent level. # Environment variables for this Runnable (overrides variables set for the whole Task or TaskGroup).
+            &quot;ignoreExitStatus&quot;: True or False, # Normally, a non-zero exit status causes the Task to fail. This flag allows execution of other Runnables to continue instead.
+            &quot;script&quot;: { # Script runnable representation on the agent side. # Script runnable.
+              &quot;path&quot;: &quot;A String&quot;, # Script file path on the host VM. To specify an interpreter, please add a `#!`(also known as [shebang line](https://en.wikipedia.org/wiki/Shebang_(Unix))) as the first line of the file.(For example, to execute the script using bash, `#!/bin/bash` should be the first line of the file. To execute the script using`Python3`, `#!/usr/bin/env python3` should be the first line of the file.) Otherwise, the file will by default be executed by `/bin/sh`.
+              &quot;text&quot;: &quot;A String&quot;, # Shell script text. To specify an interpreter, please add a `#!\n` at the beginning of the text.(For example, to execute the script using bash, `#!/bin/bash\n` should be added. To execute the script using`Python3`, `#!/usr/bin/env python3\n` should be added.) Otherwise, the script will by default be executed by `/bin/sh`.
+        &quot;userAccount&quot;: { # AgentTaskUserAccount contains the information of a POSIX account on the guest os which is used to execute the runnables. # User account on the VM to run the runnables in the agentTaskSpec. If not set, the runnable will be run under root user.
+          &quot;gid&quot;: &quot;A String&quot;, # gid id an unique identifier of the POSIX account group corresponding to the user account.
+          &quot;uid&quot;: &quot;A String&quot;, # uid is an unique identifier of the POSIX account corresponding to the user account.
+      &quot;intendedState&quot;: &quot;A String&quot;, # The intended state of the task.
+      &quot;reachedBarrier&quot;: &quot;A String&quot;, # The highest barrier reached by all tasks in the task&#x27;s TaskGroup.
+      &quot;spec&quot;: { # Spec of a task # Task Spec. This field will be replaced by agent_task_spec below in future.
+      &quot;status&quot;: { # Status of a task. # Task status.
+      &quot;task&quot;: &quot;A String&quot;, # Task name.
+      &quot;taskSource&quot;: &quot;A String&quot;, # TaskSource represents the source of the task.
+  &quot;useBatchMonitoredResource&quot;: True or False, # If true, the cloud logging for batch agent will use batch.googleapis.com/Job as monitored resource for Batch job related logging.

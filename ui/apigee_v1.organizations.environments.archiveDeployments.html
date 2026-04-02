@@ -1,0 +1,44 @@
+<h1><a href="apigee_v1.html">Apigee API</a> . <a href="apigee_v1.organizations.html">organizations</a> . <a href="apigee_v1.organizations.environments.html">environments</a> . <a href="apigee_v1.organizations.environments.archiveDeployments.html">archiveDeployments</a></h1>
+<p class="firstline">Creates a new ArchiveDeployment.</p>
+<p class="firstline">Deletes an archive deployment.</p>
+  <code><a href="#generateDownloadUrl">generateDownloadUrl(name, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Generates a signed URL for downloading the original zip file used to create an Archive Deployment. The URL is only valid for a limited period and should be used within minutes after generation. Each call returns a new upload URL.</p>
+  <code><a href="#generateUploadUrl">generateUploadUrl(parent, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Generates a signed URL for uploading an Archive zip file to Google Cloud Storage. Once the upload is complete, the signed URL should be passed to CreateArchiveDeployment. When uploading to the generated signed URL, please follow these restrictions: * Source file type should be a zip file. * Source file size should not exceed 1GB limit. * No credentials should be attached - the signed URLs provide access to the target bucket using internal service identity; if credentials were attached, the identity from the credentials would be used, but that identity does not have permissions to upload files to the URL. When making a HTTP PUT request, these two headers need to be specified: * `content-type: application/zip` * `x-goog-content-length-range: 0,1073741824` And this header SHOULD NOT be specified: * `Authorization: Bearer YOUR_TOKEN`</p>
+<p class="firstline">Gets the specified ArchiveDeployment.</p>
+<p class="firstline">Lists the ArchiveDeployments in the specified Environment.</p>
+<p class="firstline">Updates an existing ArchiveDeployment. Labels can modified but most of the other fields are not modifiable.</p>
+  <pre>Creates a new ArchiveDeployment.
+  parent: string, Required. The Environment this Archive Deployment will be created in. (required)
+{ # Archive Deployment information.
+  &quot;createdAt&quot;: &quot;A String&quot;, # Output only. The time at which the Archive Deployment was created in milliseconds since the epoch.
+  &quot;gcsUri&quot;: &quot;A String&quot;, # Input only. The Google Cloud Storage signed URL returned from GenerateUploadUrl and used to upload the Archive zip file.
+  &quot;labels&quot;: { # User-supplied key-value pairs used to organize ArchiveDeployments. Label keys must be between 1 and 63 characters long, have a UTF-8 encoding of maximum 128 bytes, and must conform to the following PCRE regular expression: \p{Ll}\p{Lo}{0,62} Label values must be between 1 and 63 characters long, have a UTF-8 encoding of maximum 128 bytes, and must conform to the following PCRE regular expression: [\p{Ll}\p{Lo}\p{N}_-]{0,63} No more than 64 labels can be associated with a given store.
+  &quot;name&quot;: &quot;A String&quot;, # Name of the Archive Deployment in the following format: `organizations/{org}/environments/{env}/archiveDeployments/{id}`.
+  &quot;operation&quot;: &quot;A String&quot;, # Output only. A reference to the LRO that created this Archive Deployment in the following format: `organizations/{org}/operations/{id}`
+  &quot;updatedAt&quot;: &quot;A String&quot;, # Output only. The time at which the Archive Deployment was updated in milliseconds since the epoch.
+  <pre>Deletes an archive deployment.
+  name: string, Required. Name of the Archive Deployment in the following format: `organizations/{org}/environments/{env}/archiveDeployments/{id}`. (required)
+    <code class="details" id="generateDownloadUrl">generateDownloadUrl(name, body=None, x__xgafv=None)</code>
+  <pre>Generates a signed URL for downloading the original zip file used to create an Archive Deployment. The URL is only valid for a limited period and should be used within minutes after generation. Each call returns a new upload URL.
+  name: string, Required. The name of the Archive Deployment you want to download. (required)
+{ # Request for GenerateDownloadUrl method.
+    { # Response for GenerateDownloadUrl method.
+  &quot;downloadUri&quot;: &quot;A String&quot;, # The Google Cloud Storage signed URL that can be used to download the Archive zip file.
+    <code class="details" id="generateUploadUrl">generateUploadUrl(parent, body=None, x__xgafv=None)</code>
+  <pre>Generates a signed URL for uploading an Archive zip file to Google Cloud Storage. Once the upload is complete, the signed URL should be passed to CreateArchiveDeployment. When uploading to the generated signed URL, please follow these restrictions: * Source file type should be a zip file. * Source file size should not exceed 1GB limit. * No credentials should be attached - the signed URLs provide access to the target bucket using internal service identity; if credentials were attached, the identity from the credentials would be used, but that identity does not have permissions to upload files to the URL. When making a HTTP PUT request, these two headers need to be specified: * `content-type: application/zip` * `x-goog-content-length-range: 0,1073741824` And this header SHOULD NOT be specified: * `Authorization: Bearer YOUR_TOKEN`
+  parent: string, Required. The organization and environment to upload to. (required)
+{ # Request for GenerateUploadUrl method.
+    { # Response for GenerateUploadUrl method.
+  &quot;uploadUri&quot;: &quot;A String&quot;, # The Google Cloud Storage signed URL that can be used to upload a new Archive zip file.
+  <pre>Gets the specified ArchiveDeployment.
+  <pre>Lists the ArchiveDeployments in the specified Environment.
+  parent: string, Required. Name of the Environment for which to list Archive Deployments in the format: `organizations/{org}/environments/{env}`. (required)
+  filter: string, Optional. An optional query used to return a subset of Archive Deployments using the semantics defined in https://google.aip.dev/160.
+  pageSize: integer, Optional. Maximum number of Archive Deployments to return. If unspecified, at most 25 deployments will be returned.
+  pageToken: string, Optional. Page token, returned from a previous ListArchiveDeployments call, that you can use to retrieve the next page.
+    { # Response for ListArchiveDeployments method.
+  &quot;archiveDeployments&quot;: [ # Archive Deployments in the specified environment.
+  &quot;nextPageToken&quot;: &quot;A String&quot;, # Page token that you can include in a ListArchiveDeployments request to retrieve the next page. If omitted, no subsequent pages exist.
+  <pre>Updates an existing ArchiveDeployment. Labels can modified but most of the other fields are not modifiable.
+  name: string, Name of the Archive Deployment in the following format: `organizations/{org}/environments/{env}/archiveDeployments/{id}`. (required)

@@ -1,0 +1,25 @@
+<h1><a href="realtimebidding_v1alpha.html">Real-time Bidding API</a> . <a href="realtimebidding_v1alpha.bidders.html">bidders</a> . <a href="realtimebidding_v1alpha.bidders.biddingFunctions.html">biddingFunctions</a></h1>
+<p class="firstline">Activates an existing bidding function. An activated function is available for invocation for the server-side TURTLEDOVE simulations.</p>
+<p class="firstline">Archives an existing bidding function. An archived function will not be available for function invocation for the server-side TURTLEDOVE simulations unless it is activated.</p>
+<p class="firstline">Creates a new bidding function.</p>
+<p class="firstline">Lists the bidding functions that a bidder currently has registered.</p>
+  <pre>Activates an existing bidding function. An activated function is available for invocation for the server-side TURTLEDOVE simulations.
+  name: string, Required. The name of the bidding function to activate. Format: `bidders/{bidder_account_id}/biddingFunction/{bidding_function_name}` (required)
+{ # The request to activate a bidding function.
+    { # The bidding function to be executed as part of the TURTLEDOVE simulation experiment bidding flow.
+  &quot;biddingFunction&quot;: &quot;A String&quot;, # The raw Javascript source code of the bidding function.
+  &quot;name&quot;: &quot;A String&quot;, # The name of the bidding function that must follow the pattern: `bidders/{bidder_account_id}/biddingFunctions/{bidding_function_name}`.
+  &quot;state&quot;: &quot;A String&quot;, # Output only. The state of the bidding function.
+  &quot;type&quot;: &quot;A String&quot;, # The type of the bidding function to be created.
+  <pre>Archives an existing bidding function. An archived function will not be available for function invocation for the server-side TURTLEDOVE simulations unless it is activated.
+  name: string, Required. The name of the bidding function to archive. Format: `bidders/{bidder_account_id}/biddingFunction/{bidding_function_name}` (required)
+{ # A request to archive a bidding function.
+  <pre>Creates a new bidding function.
+  parent: string, Required. The name of the bidder for which to create the bidding function. Format: `bidders/{bidderAccountId}` (required)
+  <pre>Lists the bidding functions that a bidder currently has registered.
+  parent: string, Required. Name of the bidder whose bidding functions will be listed. Format: `bidders/{bidder_account_id}` (required)
+  pageSize: integer, The maximum number of bidding functions to return.
+  pageToken: string, A token identifying a page of results the server should return. This value is received from a previous `ListBiddingFunctions` call in ListBiddingFunctionsResponse.nextPageToken.
+    { # A response containing a list of a bidder&#x27;s bidding functions.
+  &quot;biddingFunctions&quot;: [ # A list of a bidder&#x27;s bidding functions.
+  &quot;nextPageToken&quot;: &quot;A String&quot;, # A token which can be passed to a subsequent call to the `ListBiddingFunctions` method to retrieve the next page of results in ListBiddingFunctionsRequest.pageToken.

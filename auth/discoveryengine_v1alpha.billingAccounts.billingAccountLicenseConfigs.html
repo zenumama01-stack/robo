@@ -1,0 +1,57 @@
+<h1><a href="discoveryengine_v1alpha.html">Discovery Engine API</a> . <a href="discoveryengine_v1alpha.billingAccounts.html">billingAccounts</a> . <a href="discoveryengine_v1alpha.billingAccounts.billingAccountLicenseConfigs.html">billingAccountLicenseConfigs</a></h1>
+  <code><a href="#distributeLicenseConfig">distributeLicenseConfig(billingAccountLicenseConfig, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Distributes a LicenseConfig from billing account level to project level.</p>
+<p class="firstline">Gets a BillingAccountLicenseConfig.</p>
+<p class="firstline">Lists all BillingAccountLicenseConfigs for a given billing account.</p>
+  <code><a href="#retractLicenseConfig">retractLicenseConfig(billingAccountLicenseConfig, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">This method is called from the billing account side to retract the LicenseConfig from the given project back to the billing account.</p>
+    <code class="details" id="distributeLicenseConfig">distributeLicenseConfig(billingAccountLicenseConfig, body=None, x__xgafv=None)</code>
+  <pre>Distributes a LicenseConfig from billing account level to project level.
+  billingAccountLicenseConfig: string, Required. Full resource name of BillingAccountLicenseConfig. Format: `billingAccounts/{billing_account}/billingAccountLicenseConfigs/{billing_account_license_config_id}`. (required)
+{ # Request message for LicenseConfigService.DistributeLicenseConfig method.
+  &quot;licenseConfigId&quot;: &quot;A String&quot;, # Optional. Distribute seats to this license config instead of creating a new one. If not specified, a new license config will be created from the billing account license config.
+  &quot;licenseCount&quot;: &quot;A String&quot;, # Required. The number of licenses to distribute.
+  &quot;location&quot;: &quot;A String&quot;, # Required. The target GCP project region to distribute the license config to.
+  &quot;projectNumber&quot;: &quot;A String&quot;, # Required. The target GCP project number to distribute the license config to.
+    { # Response message for LicenseConfigService.DistributeLicenseConfig method.
+  &quot;licenseConfig&quot;: { # Information about users&#x27; licenses. # The updated or created LicenseConfig.
+    &quot;alertPolicyResourceConfig&quot;: { # The resource level alert config. Used in: * UserLicense * EngineUserData The AlertPolicyConfig in data connector is of same usage. No easy way to migrate. # Optional. The alert policy config for this license config.
+      &quot;alertEnrollments&quot;: [ # Optional. The enrollment state of each alert.
+          &quot;notificationParams&quot;: { # Optional. Parameters used to instantiate a notification. Used for notifications that are triggered when registered. Not stored. * Gemini Business welcome emails. * Gemini Business user invitation emails.
+      &quot;alertPolicy&quot;: &quot;A String&quot;, # Immutable. The fully qualified resource name of the AlertPolicy.
+      &quot;contactDetails&quot;: [ # Optional. The contact details for each alert policy.
+        { # The contact info stored in resource level. If both project level and resource level is populated, the resource level contact info will override the project level contact info.
+          &quot;emailAddress&quot;: &quot;A String&quot;, # Optional. The email address of the contact.
+      &quot;languageCode&quot;: &quot;A String&quot;, # Optional. The language code used for notifications
+      &quot;regionCode&quot;: &quot;A String&quot;, # Optional. The region code used of the user that subscribed to the alert policy.
+  <pre>Gets a BillingAccountLicenseConfig.
+  name: string, Required. Full resource name of BillingAccountLicenseConfig. Format: `billingAccounts/{billing_account}/billingAccountLicenseConfigs/{billing_account_license_config_id}`. (required)
+    { # Information about license configs at billing account level.
+  &quot;autoRenew&quot;: True or False, # Whether the BillingAccountLicenseConfig is auto renewed when it reaches the end date.
+  &quot;earlyTerminated&quot;: True or False, # Indication of whether the subscription is terminated earlier than the expiration date. This is usually terminated by pipeline once the subscription gets terminated from subsv3.
+  &quot;earlyTerminationDate&quot;: { # Represents a whole or partial calendar date, such as a birthday. The time of day and time zone are either specified elsewhere or are insignificant. The date is relative to the Gregorian Calendar. This can represent one of the following: * A full date, with non-zero year, month, and day values. * A month and day, with a zero year (for example, an anniversary). * A year on its own, with a zero month and a zero day. * A year and month, with a zero day (for example, a credit card expiration date). Related types: * google.type.TimeOfDay * google.type.DateTime * google.protobuf.Timestamp # The date when the subscription is terminated earlier than the expiration date.
+  &quot;endDate&quot;: { # Represents a whole or partial calendar date, such as a birthday. The time of day and time zone are either specified elsewhere or are insignificant. The date is relative to the Gregorian Calendar. This can represent one of the following: * A full date, with non-zero year, month, and day values. * A month and day, with a zero year (for example, an anniversary). * A year on its own, with a zero month and a zero day. * A year and month, with a zero day (for example, a credit card expiration date). Related types: * google.type.TimeOfDay * google.type.DateTime * google.protobuf.Timestamp # Optional. The planed subscription end date.
+  &quot;geminiBundle&quot;: True or False, # Whether the license config is for Gemini bundle.
+  &quot;licenseConfigDistributions&quot;: { # A map of LicenseConfig names to the number of licenses distributed to each. The key is the full resource name of the LicenseConfig, such as `projects/{project}/locations/{location}/licenseConfigs/{license_config}`. The value is the count of licenses allocated to it.
+  &quot;licenseCount&quot;: &quot;A String&quot;, # Required. The number of licenses purchased under this billing account license config.
+  &quot;name&quot;: &quot;A String&quot;, # Immutable. Identifier. The fully qualified resource name of the billing account license config. Format: `billingAccounts/{billing_account}/billingAccountLicenseConfigs/{billing_account_license_config}`.
+  &quot;procurementEntitlementId&quot;: &quot;A String&quot;, # The procurement entitlement id of the subscription.
+  &quot;startDate&quot;: { # Represents a whole or partial calendar date, such as a birthday. The time of day and time zone are either specified elsewhere or are insignificant. The date is relative to the Gregorian Calendar. This can represent one of the following: * A full date, with non-zero year, month, and day values. * A month and day, with a zero year (for example, an anniversary). * A year on its own, with a zero month and a zero day. * A year and month, with a zero day (for example, a credit card expiration date). Related types: * google.type.TimeOfDay * google.type.DateTime * google.protobuf.Timestamp # Required. The subscription start date.
+  &quot;state&quot;: &quot;A String&quot;, # Output only. The state of the BillingAccountLicenseConfig.
+  &quot;subscriptionDisplayName&quot;: &quot;A String&quot;, # The subscription display name.
+  &quot;subscriptionName&quot;: &quot;A String&quot;, # Output only. The corresponding SubV3 subscription name.
+  &quot;subscriptionTerm&quot;: &quot;A String&quot;, # Required. The subscription term.
+  &quot;subscriptionTier&quot;: &quot;A String&quot;, # Required. The subscription tier.
+  <pre>Lists all BillingAccountLicenseConfigs for a given billing account.
+  parent: string, Required. Format: `billingAccounts/{billing_account}`. (required)
+    { # Response message for LicenseConfigService.ListBillingAccountLicenseConfigs method.
+  &quot;billingAccountLicenseConfigs&quot;: [ # All BillingAccountLicenseConfigs for the given billing account.
+  &quot;nextPageToken&quot;: &quot;A String&quot;, # A token that can be sent as ListBillingAccountLicenseConfigsRequest.page_token to retrieve the next page. If this field is omitted, there are no subsequent pages.
+    <code class="details" id="retractLicenseConfig">retractLicenseConfig(billingAccountLicenseConfig, body=None, x__xgafv=None)</code>
+  <pre>This method is called from the billing account side to retract the LicenseConfig from the given project back to the billing account.
+{ # Request message for LicenseConfigService.RetractLicenseConfig method.
+  &quot;fullRetract&quot;: True or False, # Optional. If set to true, retract the entire license config. Otherwise, retract the specified license count.
+  &quot;licenseConfig&quot;: &quot;A String&quot;, # Required. Full resource name of LicenseConfig. Format: `projects/{project}/locations/{location}/licenseConfigs/{license_config_id}`.
+  &quot;licenseCount&quot;: &quot;A String&quot;, # Optional. The number of licenses to retract. Only used when full_retract is false.
+    { # Response message for LicenseConfigService.RetractLicenseConfig method.
+  &quot;licenseConfig&quot;: { # Information about users&#x27; licenses. # The updated LicenseConfig.

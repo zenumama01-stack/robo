@@ -1,0 +1,33 @@
+<div class="scheduling-dashboard-container">
+      <span>Job Scheduling</span>
+      @if (AlertCount > 0) {
+        <div class="status-badge">
+          <span>{{AlertCount}} Alert{{AlertCount !== 1 ? 's' : ''}}</span>
+      @if (AlertCount === 0) {
+        <div class="status-badge healthy">
+          <span>Healthy</span>
+      <span class="tab-label">{{GetCurrentTabLabel()}}</span>
+        <div class="sidebar-section-title">Overview</div>
+      <div class="nav-item" [class.selected]="ActiveTab === 'dashboard'" (click)="OnTabChange('dashboard')">
+        <span>Dashboard</span>
+      <div class="nav-item" [class.selected]="ActiveTab === 'jobs'" (click)="OnTabChange('jobs')">
+        <span>Jobs</span>
+        @if (ActiveJobCount > 0) {
+          <span class="badge">{{ActiveJobCount}}</span>
+      <div class="nav-item" [class.selected]="ActiveTab === 'activity'" (click)="OnTabChange('activity')">
+        <span>Activity</span>
+          @case ('dashboard') {
+              <app-scheduling-overview
+                [initialState]="DashboardState"
+                (stateChange)="OnDashboardStateChange($event)">
+              </app-scheduling-overview>
+          @case ('jobs') {
+              <app-scheduling-jobs
+                [initialState]="JobsState"
+                (stateChange)="OnJobsStateChange($event)">
+              </app-scheduling-jobs>
+          @case ('activity') {
+              <app-scheduling-activity
+                [initialState]="ActivityState"
+                (stateChange)="OnActivityStateChange($event)">
+              </app-scheduling-activity>

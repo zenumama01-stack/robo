@@ -1,0 +1,24 @@
+<h1><a href="cloudtrace_v1.html">Cloud Trace API</a> . <a href="cloudtrace_v1.projects.html">projects</a> . <a href="cloudtrace_v1.projects.traces.html">traces</a></h1>
+  <code><a href="#get">get(projectId, traceId, x__xgafv=None)</a></code></p>
+<p class="firstline">Gets a single trace by its ID.</p>
+  <code><a href="#list">list(projectId, endTime=None, filter=None, orderBy=None, pageSize=None, pageToken=None, startTime=None, view=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Returns a list of traces that match the specified filter conditions.</p>
+    <code class="details" id="get">get(projectId, traceId, x__xgafv=None)</code>
+  <pre>Gets a single trace by its ID.
+  traceId: string, Required. ID of the trace to return. (required)
+    <code class="details" id="list">list(projectId, endTime=None, filter=None, orderBy=None, pageSize=None, pageToken=None, startTime=None, view=None, x__xgafv=None)</code>
+  <pre>Returns a list of traces that match the specified filter conditions.
+  endTime: string, End of the time interval (inclusive) during which the trace data was collected from the application.
+  filter: string, Optional. A filter against properties of the trace. See [filter syntax documentation](https://cloud.google.com/trace/docs/trace-filters) for details.
+  orderBy: string, Optional. Field used to sort the returned traces. Can be one of the following: * `trace_id` * `name` (`name` field of root span in the trace) * `duration` (difference between `end_time` and `start_time` fields of the root span) * `start` (`start_time` field of the root span) Descending order can be specified by appending `desc` to the sort field (for example, `name desc`). Only one sort field is permitted.
+  pageSize: integer, Optional. Maximum number of traces to return. If not specified or &lt;= 0, the implementation selects a reasonable value. The implementation may return fewer traces than the requested page size.
+  pageToken: string, Token identifying the page of results to return. If provided, use the value of the `next_page_token` field from a previous request.
+  startTime: string, Start of the time interval (inclusive) during which the trace data was collected from the application.
+  view: string, Optional. Type of data returned for traces in the list. Default is `MINIMAL`.
+      VIEW_TYPE_UNSPECIFIED - Default is `MINIMAL` if unspecified.
+      MINIMAL - Minimal view of the trace record that contains only the project and trace IDs.
+      ROOTSPAN - Root span view of the trace record that returns the root spans along with the minimal trace data.
+      COMPLETE - Complete view of the trace record that contains the actual trace data. This is equivalent to calling the REST `get` or RPC `GetTrace` method using the ID of each listed trace.
+    { # The response message for the `ListTraces` method.
+  &quot;nextPageToken&quot;: &quot;A String&quot;, # If defined, indicates that there are more traces that match the request and that this value should be passed to the next request to continue retrieving additional traces.
+  &quot;traces&quot;: [ # List of trace records as specified by the view parameter.

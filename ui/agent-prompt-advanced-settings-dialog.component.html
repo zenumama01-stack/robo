@@ -1,0 +1,56 @@
+<!-- Prompt Advanced Settings Dialog -->
+<div class="prompt-advanced-settings-dialog">
+      <p>Loading prompt settings...</p>
+      <!-- Execution Configuration Section -->
+          <i class="fa-solid fa-list-ol"></i>
+          Execution Configuration
+          <!-- Execution Order -->
+            <label for="executionOrder">Execution Order *</label>
+              formControlName="executionOrder"
+              [min]="0"
+              [class.error-border]="hasExecutionOrderError()"
+            @if (isFieldInvalid('executionOrder')) {
+              <div class="field-error">{{ getFieldError('executionOrder') }}</div>
+            @if (hasExecutionOrderError()) {
+              <div class="field-error">{{ executionOrderError }}</div>
+            <small class="field-hint">Order in which this prompt executes (0 = first). Must be unique among agent prompts.</small>
+          <!-- Purpose -->
+            <label for="purpose">Purpose</label>
+              formControlName="purpose"
+              placeholder="e.g., Initialize, ProcessData, Summarize"
+            <small class="field-hint">Functional purpose of this prompt within the agent workflow</small>
+            <label for="status">Status *</label>
+            @if (isFieldInvalid('status')) {
+              <div class="field-error">{{ getFieldError('status') }}</div>
+            <small class="field-hint">Current status of this prompt mapping</small>
+      <!-- Context Behavior Section -->
+          <i class="fa-solid fa-comments"></i>
+          Context Behavior
+          <!-- Context Behavior -->
+            <label for="contextBehavior">Context Behavior *</label>
+              formControlName="contextBehavior"
+              [data]="contextBehaviorOptions"
+              <ng-template kendoDropDownListItemTemplate let-dataItem>
+                <div class="context-behavior-option">
+                  <div class="option-title">{{ dataItem.text }}</div>
+                  <div class="option-description">{{ dataItem.description }}</div>
+            @if (isFieldInvalid('contextBehavior')) {
+              <div class="field-error">{{ getFieldError('contextBehavior') }}</div>
+            <small class="field-hint">{{ getContextBehaviorDescription(advancedForm.get('contextBehavior')?.value) }}</small>
+          <!-- Context Message Count (conditional) -->
+          @if (requiresMessageCount()) {
+              <label for="contextMessageCount">Message Count *</label>
+                formControlName="contextMessageCount"
+              @if (isFieldInvalid('contextMessageCount')) {
+                <div class="field-error">{{ getFieldError('contextMessageCount') }}</div>
+              <small class="field-hint">Number of messages to include for {{ advancedForm.get('contextBehavior')?.value }}</small>
+      <!-- AI Configuration Section -->
+          <i class="fa-solid fa-cog"></i>
+          AI Configuration Override
+          <!-- Configuration Override -->
+            <label for="configurationID">AI Configuration</label>
+              formControlName="configurationID"
+              [data]="configurations$ | async"
+              [defaultItem]="{ Name: 'Use Agent Default', ID: null }"
+            <small class="field-hint">Override the agent's default AI configuration for this specific prompt</small>
+            [disabled]="((isSaving$ | async) || false) || ((isLoading$ | async) || false) || hasExecutionOrderError()">

@@ -1,0 +1,20 @@
+<h1><a href="adsenseplatform_v1alpha.html">AdSense Platform API</a> . <a href="adsenseplatform_v1alpha.accounts.html">accounts</a> . <a href="adsenseplatform_v1alpha.accounts.platforms.html">platforms</a> . <a href="adsenseplatform_v1alpha.accounts.platforms.childAccounts.html">childAccounts</a> . <a href="adsenseplatform_v1alpha.accounts.platforms.childAccounts.sites.html">sites</a></h1>
+<p class="firstline">Gets a Platform Child Site for a specified Platform Child Account and site.</p>
+<p class="firstline">Lists Platform Child Sites for a specified Platform Child Account.</p>
+<p class="firstline">Update a Platform Child Site.</p>
+  <pre>Gets a Platform Child Site for a specified Platform Child Account and site.
+  name: string, Required. The name of the platform child site to retrieve. Format: accounts/{account}/platforms/{platform}/childAccounts/{child_account}/sites/{platform_child_site} (required)
+    { # Representation of a Transparent Platform Child Site.
+  &quot;domain&quot;: &quot;A String&quot;, # Output only. Domain URL of the Platform Child Site. Part of the PlatformChildSite name.
+  &quot;name&quot;: &quot;A String&quot;, # Identifier. Format: accounts/{account}/platforms/{platform}/childAccounts/{child_account}/sites/{platform_child_site}
+  &quot;platformGroup&quot;: &quot;A String&quot;, # Resource name of the Platform Group of the Platform Child Site.
+  <pre>Lists Platform Child Sites for a specified Platform Child Account.
+  parent: string, Required. The name of the child account under the given platform which owns the platform child sites. Format: accounts/{account}/platforms/{platform}/childAccounts/{child_account} (required)
+  pageSize: integer, Optional. The maximum number of children to include in the response, used for paging. If unspecified, at most 10000 platforms will be returned. The maximum value is 10000; values above 10000 will be coerced to 10000.
+  pageToken: string, Optional. A page token, received from a previous `ListPlatformChildSites` call. Provide this to retrieve the subsequent page. When paginating, all other parameters provided to `ListPlatformChildSites` must match the call that provided the page token.
+    { # Response definition for the list platform child sites rpc.
+  &quot;nextPageToken&quot;: &quot;A String&quot;, # Continuation token used to page through platforms. To retrieve the next page of the results, set the next request&#x27;s &quot;page_token&quot; value to this.
+  &quot;platformChildSites&quot;: [ # The platform child sites returned in this list response.
+  <pre>Update a Platform Child Site.
+  name: string, Identifier. Format: accounts/{account}/platforms/{platform}/childAccounts/{child_account}/sites/{platform_child_site} (required)
+  updateMask: string, Optional. The list of fields to update - currently only supports updating the `platform_group` field.

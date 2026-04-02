@@ -1,0 +1,96 @@
+<div class="deep-diff-container">
+      <h2 class="diff-title">
+        <button class="btn-icon" (click)="expandAllItems()" title="Expand All">
+        <button class="btn-icon" (click)="collapseAllItems()" title="Collapse All">
+        <button class="btn-icon" (click)="exportDiff()" title="Export Diff" [disabled]="!diffResult">
+    <!-- Summary -->
+    @if (showSummary && diffResult) {
+        <div class="summary-item added">
+          <span class="count">{{ diffResult.summary.added }}</span>
+          <span class="label">Added</span>
+        <div class="summary-item removed">
+          <i class="fa-solid fa-minus-circle"></i>
+          <span class="count">{{ diffResult.summary.removed }}</span>
+          <span class="label">Removed</span>
+        <div class="summary-item modified">
+          <span class="count">{{ diffResult.summary.modified }}</span>
+          <span class="label">Modified</span>
+        @if (showUnchanged) {
+          <div class="summary-item unchanged">
+            <span class="count">{{ diffResult.summary.unchanged }}</span>
+            <span class="label">Unchanged</span>
+  <div class="diff-filters">
+    <div class="filter-search">
+        [(ngModel)]="filter" 
+        placeholder="Filter by path or description..."
+    <div class="filter-types">
+        class="filter-btn"
+        [class.active]="filterType === 'all'"
+        (click)="filterType = 'all'">
+        All Changes
+        class="filter-btn added"
+        [class.active]="filterType === 'added'"
+        (click)="filterType = 'added'">
+        class="filter-btn removed"
+        [class.active]="filterType === 'removed'"
+        (click)="filterType = 'removed'">
+        Removed
+        class="filter-btn modified"
+        [class.active]="filterType === 'modified'"
+        (click)="filterType = 'modified'">
+  <!-- Diff Content -->
+    @if (!diffResult) {
+        <i class="fa-solid fa-code-compare fa-3x"></i>
+        <p>No data to compare</p>
+    } @else if (filteredItems.length === 0) {
+        <i class="fa-solid fa-filter fa-3x"></i>
+        <p>No changes match your filter criteria</p>
+      <div class="diff-tree">
+        @for (item of filteredItems; track item.path) {
+          <ng-container *ngTemplateOutlet="diffItem; context: { item: item, level: 0 }"></ng-container>
+<!-- Recursive Template for Diff Items -->
+<ng-template #diffItem let-item="item" let-level="level">
+  <div class="diff-item" [class]="getTypeClass(item.type)" [style.padding-left.px]="level * 24">
+    <div class="item-header" (click)="toggleItem(item)">
+      @if (item.children.length > 0) {
+        <i class="fa-solid fa-chevron-right expand-icon" [class.expanded]="item.isExpanded"></i>
+        <span class="expand-spacer"></span>
+      <i class="fa-solid type-icon" [ngClass]="getIcon(item.type)"></i>
+      <span class="item-path">{{ item.path }}</span>
+      <span class="item-description">{{ item.description }}</span>
+      <button class="btn-copy" (click)="copyToClipboard(item.path); $event.stopPropagation()" title="Copy path">
+    <!-- Value Details -->
+    @if (item.type === 'modified') {
+      <div class="value-details">
+        <div class="value-row old">
+          <span class="value-label">Old:</span>
+          <code class="value-content">{{ formatValue(item.oldValue, item.path + '_old') }}</code>
+          <button class="btn-copy" (click)="copyValueToClipboard(item.oldValue, $event)" title="Copy value">
+          @if (isValueTruncated(item.oldValue, item.path + '_old') || isExpanded(item.path + '_old')) {
+            <button class="btn-expand-value" 
+                    (click)="toggleValueExpansion(item.path + '_old', $event)" 
+                    title="{{ isExpanded(item.path + '_old') ? 'Collapse' : 'Expand' }}">
+                 [ngClass]="isExpanded(item.path + '_old') ? 'fa-compress-alt' : 'fa-expand-alt'"></i>
+        <div class="value-row new">
+          <span class="value-label">New:</span>
+          <code class="value-content">{{ formatValue(item.newValue, item.path + '_new') }}</code>
+          <button class="btn-copy" (click)="copyValueToClipboard(item.newValue, $event)" title="Copy value">
+          @if (isValueTruncated(item.newValue, item.path + '_new') || isExpanded(item.path + '_new')) {
+                    (click)="toggleValueExpansion(item.path + '_new', $event)"
+                    title="{{ isExpanded(item.path + '_new') ? 'Collapse' : 'Expand' }}">
+                 [ngClass]="isExpanded(item.path + '_new') ? 'fa-compress-alt' : 'fa-expand-alt'"></i>
+    } @else if (item.type === 'added') {
+          <span class="value-label">Value:</span>
+          <code class="value-content">{{ formatValue(item.newValue, item.path) }}</code>
+          @if (isValueTruncated(item.newValue, item.path) || isExpanded(item.path)) {
+                    (click)="toggleValueExpansion(item.path, $event)"
+                    title="{{ isExpanded(item.path) ? 'Collapse' : 'Expand' }}">
+                 [ngClass]="isExpanded(item.path) ? 'fa-compress-alt' : 'fa-expand-alt'"></i>
+    } @else if (item.type === 'removed') {
+          <code class="value-content">{{ formatValue(item.oldValue, item.path) }}</code>
+          @if (isValueTruncated(item.oldValue, item.path) || isExpanded(item.path)) {
+    <!-- Children -->
+    @if (item.isExpanded && item.children.length > 0) {
+      <div class="item-children">
+        @for (child of item.children; track child.path) {
+          <ng-container *ngTemplateOutlet="diffItem; context: { item: child, level: level + 1 }"></ng-container>

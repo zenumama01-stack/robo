@@ -1,0 +1,28 @@
+    <h3>MCP Filters</h3>
+      <span class="summary-value">{{ filteredCount }}</span>
+      <span class="summary-label">of {{ totalCount }}</span>
+        [ngModel]="filters.searchTerm"
+        (ngModelChange)="onSearchChange($event)"
+        placeholder="Search {{ getTabLabel().toLowerCase() }}s...">
+    <!-- Status Filter (context-aware based on active tab) -->
+        {{ getTabLabel() }} Status
+        [ngModel]="currentStatusValue"
+        (ngModelChange)="onCurrentStatusChange($event)">
+        @for (option of currentStatusOptions; track option.value) {
+    <!-- Additional filters visible based on context -->
+    @if (activeTab === 'connections' || activeTab === 'tools' || activeTab === 'logs') {
+          <span class="fa-solid fa-server"></span>
+          Server Status
+          [ngModel]="filters.serverStatus"
+          (ngModelChange)="onServerStatusChange($event)">
+          @for (option of serverStatusOptions; track option.value) {
+    @if (activeTab === 'logs') {
+          <span class="fa-solid fa-link"></span>
+          Connection Status
+          [ngModel]="filters.connectionStatus"
+          (ngModelChange)="onConnectionStatusChange($event)">
+          @for (option of connectionStatusOptions; track option.value) {
+        class="reset-btn"
+        (click)="resetAllFilters()"
+        title="Reset all filters"
+        [class.has-filters]="hasActiveFilters">

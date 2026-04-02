@@ -1,0 +1,48 @@
+<h1><a href="dataflow_v1b3.html">Dataflow API</a> . <a href="dataflow_v1b3.projects.html">projects</a> . <a href="dataflow_v1b3.projects.locations.html">locations</a> . <a href="dataflow_v1b3.projects.locations.flexTemplates.html">flexTemplates</a></h1>
+  <code><a href="#launch">launch(projectId, location, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Launch a job with a FlexTemplate.</p>
+    <code class="details" id="launch">launch(projectId, location, body=None, x__xgafv=None)</code>
+  <pre>Launch a job with a FlexTemplate.
+  projectId: string, Required. The ID of the Cloud Platform project that the job belongs to. (required)
+  location: string, Required. The [regional endpoint] (https://cloud.google.com/dataflow/docs/concepts/regional-endpoints) to which to direct the request. E.g., us-central1, us-west1. (required)
+{ # A request to launch a Cloud Dataflow job from a FlexTemplate.
+  &quot;launchParameter&quot;: { # Launch FlexTemplate Parameter. # Required. Parameter to launch a job form Flex Template.
+    &quot;containerSpec&quot;: { # Container Spec. # Spec about the container image to launch.
+        &quot;additionalPipelineOptions&quot;: [ # Optional. Additional pipeline option flags for the job.
+        &quot;autoscalingAlgorithm&quot;: &quot;A String&quot;, # The algorithm to use for autoscaling
+        &quot;diskSizeGb&quot;: 42, # Worker disk size, in gigabytes.
+        &quot;dumpHeapOnOom&quot;: True or False, # If true, when processing time is spent almost entirely on garbage collection (GC), saves a heap dump before ending the thread or process. If false, ends the thread or process without saving a heap dump. Does not save a heap dump when the Java Virtual Machine (JVM) has an out of memory error during processing. The location of the heap file is either echoed back to the user, or the user is given the opportunity to download the heap file.
+        &quot;enableLauncherVmSerialPortLogging&quot;: True or False, # If true serial port logging will be enabled for the launcher VM.
+        &quot;launcherMachineType&quot;: &quot;A String&quot;, # The machine type to use for launching the job. The default is n1-standard-1.
+        &quot;saveHeapDumpsToGcsPath&quot;: &quot;A String&quot;, # Cloud Storage bucket (directory) to upload heap dumps to. Enabling this field implies that `dump_heap_on_oom` is set to true.
+        &quot;sdkContainerImage&quot;: &quot;A String&quot;, # Docker registry location of container image to use for the &#x27;worker harness. Default is the container for the version of the SDK. Note this field is only valid for portable pipelines.
+        &quot;stagingLocation&quot;: &quot;A String&quot;, # The Cloud Storage path for staging local files. Must be a valid Cloud Storage URL, beginning with `gs://`.
+      &quot;imageRepositoryCertPath&quot;: &quot;A String&quot;, # Cloud Storage path to self-signed certificate of private registry.
+      &quot;imageRepositoryPasswordSecretId&quot;: &quot;A String&quot;, # Secret Manager secret id for password to authenticate to private registry.
+      &quot;imageRepositoryUsernameSecretId&quot;: &quot;A String&quot;, # Secret Manager secret id for username to authenticate to private registry.
+        &quot;defaultStreamingMode&quot;: &quot;A String&quot;, # Optional. Indicates the default streaming mode for a streaming template. Only valid if both supports_at_least_once and supports_exactly_once are true. Possible values: UNSPECIFIED, EXACTLY_ONCE and AT_LEAST_ONCE
+            &quot;customMetadata&quot;: { # Optional. Additional metadata for describing this parameter.
+            &quot;defaultValue&quot;: &quot;A String&quot;, # Optional. The default values will pre-populate the parameter with the given value from the proto. If default_value is left empty, the parameter will be populated with a default of the relevant type, e.g. false for a boolean.
+            &quot;enumOptions&quot;: [ # Optional. The options shown when ENUM ParameterType is specified.
+              { # ParameterMetadataEnumOption specifies the option shown in the enum form.
+                &quot;description&quot;: &quot;A String&quot;, # Optional. The description to display for the enum option.
+                &quot;label&quot;: &quot;A String&quot;, # Optional. The label to display for the enum option.
+                &quot;value&quot;: &quot;A String&quot;, # Required. The value of the enum option.
+            &quot;groupName&quot;: &quot;A String&quot;, # Optional. Specifies a group name for this parameter to be rendered under. Group header text will be rendered exactly as specified in this field. Only considered when parent_name is NOT provided.
+            &quot;hiddenUi&quot;: True or False, # Optional. Whether the parameter should be hidden in the UI.
+            &quot;parentName&quot;: &quot;A String&quot;, # Optional. Specifies the name of the parent parameter. Used in conjunction with &#x27;parent_trigger_values&#x27; to make this parameter conditional (will only be rendered conditionally). Should be mappable to a ParameterMetadata.name field.
+            &quot;parentTriggerValues&quot;: [ # Optional. The value(s) of the &#x27;parent_name&#x27; parameter which will trigger this parameter to be shown. If left empty, ANY non-empty value in parent_name will trigger this parameter to be shown. Only considered when this parameter is conditional (when &#x27;parent_name&#x27; has been provided).
+        &quot;streaming&quot;: True or False, # Optional. Indicates if the template is streaming or not.
+        &quot;supportsAtLeastOnce&quot;: True or False, # Optional. Indicates if the streaming template supports at least once mode.
+        &quot;supportsExactlyOnce&quot;: True or False, # Optional. Indicates if the streaming template supports exactly once mode.
+        &quot;yamlDefinition&quot;: &quot;A String&quot;, # Optional. For future use.
+    &quot;containerSpecGcsPath&quot;: &quot;A String&quot;, # Cloud Storage path to a file with json serialized ContainerSpec as content.
+    &quot;environment&quot;: { # The environment values to be set at runtime for flex template. # The runtime environment for the FlexTemplate job
+    &quot;jobName&quot;: &quot;A String&quot;, # Required. The job name to use for the created job. For update job request, job name should be same as the existing running job.
+    &quot;launchOptions&quot;: { # Launch options for this flex template job. This is a common set of options across languages and templates. This should not be used to pass job parameters.
+    &quot;parameters&quot;: { # The parameters for FlexTemplate. Ex. {&quot;num_workers&quot;:&quot;5&quot;}
+    &quot;transformNameMappings&quot;: { # Use this to pass transform_name_mappings for streaming update jobs. Ex:{&quot;oldTransformName&quot;:&quot;newTransformName&quot;,...}&#x27;
+    &quot;update&quot;: True or False, # Set this to true if you are sending a request to update a running streaming job. When set, the job name should be the same as the running job.
+  &quot;validateOnly&quot;: True or False, # If true, the request is validated but not actually executed. Defaults to false.
+    { # Response to the request to launch a job from Flex Template.
+  &quot;job&quot;: { # Defines a job to be run by the Cloud Dataflow service. Do not enter confidential information when you supply string values using the API. # The job that was launched, if the request was not a dry run and the job was successfully launched.

@@ -1,0 +1,18 @@
+<h1><a href="vmwareengine_v1.html">VMware Engine API</a> . <a href="vmwareengine_v1.projects.html">projects</a> . <a href="vmwareengine_v1.projects.locations.html">locations</a> . <a href="vmwareengine_v1.projects.locations.privateClouds.html">privateClouds</a> . <a href="vmwareengine_v1.projects.locations.privateClouds.clusters.html">clusters</a> . <a href="vmwareengine_v1.projects.locations.privateClouds.clusters.nodes.html">nodes</a></h1>
+<p class="firstline">Gets details of a single node.</p>
+<p class="firstline">Lists nodes in a given cluster.</p>
+  <pre>Gets details of a single node.
+  name: string, Required. The resource name of the node to retrieve. For example: `projects/{project}/locations/{location}/privateClouds/{private_cloud}/clusters/{cluster}/nodes/{node}` (required)
+    { # Node in a cluster.
+  &quot;customCoreCount&quot;: &quot;A String&quot;, # Output only. Customized number of cores
+  &quot;fqdn&quot;: &quot;A String&quot;, # Output only. Fully qualified domain name of the node.
+  &quot;internalIp&quot;: &quot;A String&quot;, # Output only. Internal IP address of the node.
+  &quot;name&quot;: &quot;A String&quot;, # Output only. The resource name of this node. Resource names are schemeless URIs that follow the conventions in https://cloud.google.com/apis/design/resource_names. For example: projects/my-project/locations/us-central1-a/privateClouds/my-cloud/clusters/my-cluster/nodes/my-node
+  &quot;state&quot;: &quot;A String&quot;, # Output only. The state of the appliance.
+  &quot;version&quot;: &quot;A String&quot;, # Output only. The version number of the VMware ESXi management component in this cluster.
+  <pre>Lists nodes in a given cluster.
+  parent: string, Required. The resource name of the cluster to be queried for nodes. Resource names are schemeless URIs that follow the conventions in https://cloud.google.com/apis/design/resource_names. For example: `projects/my-project/locations/us-central1-a/privateClouds/my-cloud/clusters/my-cluster` (required)
+  pageSize: integer, The maximum number of nodes to return in one page. The service may return fewer than this value. The maximum value is coerced to 1000. The default value of this field is 500.
+  pageToken: string, A page token, received from a previous `ListNodes` call. Provide this to retrieve the subsequent page. When paginating, all other parameters provided to `ListNodes` must match the call that provided the page token.
+    { # Response message for VmwareEngine.ListNodes
+  &quot;nodes&quot;: [ # The nodes.

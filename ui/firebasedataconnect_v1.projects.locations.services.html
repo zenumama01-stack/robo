@@ -1,0 +1,39 @@
+<h1><a href="firebasedataconnect_v1.html">Firebase Data Connect API</a> . <a href="firebasedataconnect_v1.projects.html">projects</a> . <a href="firebasedataconnect_v1.projects.locations.html">locations</a> . <a href="firebasedataconnect_v1.projects.locations.services.html">services</a></h1>
+  <code><a href="firebasedataconnect_v1.projects.locations.services.connectors.html">connectors()</a></code>
+  <code><a href="firebasedataconnect_v1.projects.locations.services.schemas.html">schemas()</a></code>
+  <code><a href="#create">create(parent, body=None, requestId=None, serviceId=None, validateOnly=None, x__xgafv=None)</a></code></p>
+  <code><a href="#executeGraphql">executeGraphql(name, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Execute any GraphQL query and mutation against the Firebase Data Connect's generated GraphQL schema. Grants full read and write access to the connected data sources. Note: Use introspection query to explore the generated GraphQL schema.</p>
+  <code><a href="#executeGraphqlRead">executeGraphqlRead(name, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Execute any GraphQL query against the Firebase Data Connect's generated GraphQL schema. Grants full read to the connected data sources. `ExecuteGraphqlRead` is identical to `ExecuteGraphql` except it only accepts read-only query.</p>
+  <code><a href="#introspectGraphql">introspectGraphql(name, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Execute introspection query against the Firebase Data Connect's generated GraphQL schema. GraphQL introspection query provides metadata such as what tables the schema have, what queries and mutations can be performed on the schema, and so on. Read more at https://graphql.org/learn/introspection. IntrospectGraphql can read schema metadata but cannot read rows from Cloud SQL instance, which can be done via ExecuteGraphqlRead.</p>
+    <code class="details" id="create">create(parent, body=None, requestId=None, serviceId=None, validateOnly=None, x__xgafv=None)</code>
+{ # A Firebase Data Connect service.
+  &quot;name&quot;: &quot;A String&quot;, # Identifier. The relative resource name of the Firebase Data Connect service, in the format: ``` projects/{project}/locations/{location}/services/{service} ``` Note that the service ID is specific to Firebase Data Connect and does not correspond to any of the instance IDs of the underlying data source connections.
+  &quot;reconciling&quot;: True or False, # Output only. A field that if true, indicates that the system is working update the service.
+  serviceId: string, Required. The ID to use for the service, which will become the final component of the service&#x27;s resource name.
+  validateOnly: boolean, Optional. If set, validate the request and preview the Service, but do not actually create it.
+  name: string, Required. The name of the service to delete, in the format: ``` projects/{project}/locations/{location}/services/{service} ``` (required)
+  allowMissing: boolean, Optional. If true and the Service is not found, the request will succeed but no action will be taken on the server.
+  etag: string, Optional. The etag of the Service. If this is provided, it must match the server&#x27;s etag.
+  force: boolean, Optional. If set to true, any child resources (i.e. Schema, SchemaRevisions, Connectors, and ConnectorRevisions) will also be deleted. Otherwise, the request will only work if the Service has no child resources.
+  validateOnly: boolean, Optional. If set, validate the request and preview the Service, but do not actually delete it.
+    <code class="details" id="executeGraphql">executeGraphql(name, body=None, x__xgafv=None)</code>
+  <pre>Execute any GraphQL query and mutation against the Firebase Data Connect&#x27;s generated GraphQL schema. Grants full read and write access to the connected data sources. Note: Use introspection query to explore the generated GraphQL schema.
+  name: string, Required. The relative resource name of Firebase Data Connect service, in the format: ``` projects/{project}/locations/{location}/services/{service} ``` (required)
+{ # The GraphQL request to Firebase Data Connect. It strives to match the GraphQL over HTTP spec. https://github.com/graphql/graphql-over-http/blob/main/spec/GraphQLOverHTTP.md#post
+  &quot;operationName&quot;: &quot;A String&quot;, # Optional. The name of the GraphQL operation name. Required only if `query` contains multiple operations. See https://graphql.org/learn/queries/#operation-name.
+  &quot;query&quot;: &quot;A String&quot;, # Required. The GraphQL query document source.
+    <code class="details" id="executeGraphqlRead">executeGraphqlRead(name, body=None, x__xgafv=None)</code>
+  <pre>Execute any GraphQL query against the Firebase Data Connect&#x27;s generated GraphQL schema. Grants full read to the connected data sources. `ExecuteGraphqlRead` is identical to `ExecuteGraphql` except it only accepts read-only query.
+  name: string, Required. The name of the service to retrieve, in the format: ``` projects/{project}/locations/{location}/services/{service} ``` (required)
+    <code class="details" id="introspectGraphql">introspectGraphql(name, body=None, x__xgafv=None)</code>
+  <pre>Execute introspection query against the Firebase Data Connect&#x27;s generated GraphQL schema. GraphQL introspection query provides metadata such as what tables the schema have, what queries and mutations can be performed on the schema, and so on. Read more at https://graphql.org/learn/introspection. IntrospectGraphql can read schema metadata but cannot read rows from Cloud SQL instance, which can be done via ExecuteGraphqlRead.
+  pageToken: string, Optional. A page token, received from a previous `ListServices` call. Provide this to retrieve the subsequent page. When paginating, all other parameters provided to `ListServices` must match the call that provided the page token.
+    { # Message for response to listing Services.
+  &quot;services&quot;: [ # The list of Services.
+  name: string, Identifier. The relative resource name of the Firebase Data Connect service, in the format: ``` projects/{project}/locations/{location}/services/{service} ``` Note that the service ID is specific to Firebase Data Connect and does not correspond to any of the instance IDs of the underlying data source connections. (required)
+  allowMissing: boolean, Optional. If true and the Service is not found, a new Service will be created. In this case, `update_mask` is ignored.
+  updateMask: string, Optional. Field mask is used to specify the fields to be overwritten in the Service resource by the update. The fields specified in the update_mask are relative to the resource, not the full request. A field will be overwritten if it is in the mask. If the user does not provide a mask then all fields will be overwritten.
+  validateOnly: boolean, Optional. If set, validate the request and preview the Service, but do not actually update it.

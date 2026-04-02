@@ -1,0 +1,138 @@
+<div class="cap-container">
+        <div class="cap-loading" @fadeIn>
+            <div class="cap-spinner"></div>
+            <div class="cap-error" @slideDown>
+                <button class="cap-error-dismiss" (click)="ErrorMessage = null">
+        <!-- Parent Agent Info -->
+        @if (IsSubAgent && Config.ParentAgentName) {
+            <div class="cap-parent-info" @slideDown>
+                <span>Sub-agent of: <strong>{{ Config.ParentAgentName }}</strong></span>
+        <form [formGroup]="Form" (ngSubmit)="OnSubmit()" class="cap-form">
+            <section class="cap-section">
+                <h3 class="cap-section-title">
+                <div class="cap-field">
+                    <label class="cap-label cap-required">Name</label>
+                        class="cap-input"
+                        [class.cap-input-error]="Form.get('name')?.invalid && Form.get('name')?.touched"
+                    @if (Form.get('name')?.invalid && Form.get('name')?.touched) {
+                        <div class="cap-field-error">
+                    <label class="cap-label">Description</label>
+                        class="cap-textarea"
+                <div class="cap-row">
+                        <label class="cap-label cap-required">Type</label>
+                            formControlName="typeId"
+                            class="cap-select"
+                            [class.cap-input-error]="Form.get('typeId')?.invalid && Form.get('typeId')?.touched"
+                            @for (type of AgentTypes; track type.ID) {
+                        @if (Form.get('typeId')?.invalid && Form.get('typeId')?.touched) {
+                                Agent type is required
+                        <label class="cap-label">Status</label>
+                        <select formControlName="status" class="cap-select">
+                        <label class="cap-label">Execution Mode</label>
+                        <select formControlName="executionMode" class="cap-select">
+                        <label class="cap-label">Model Selection Mode</label>
+                        <select formControlName="modelSelectionMode" class="cap-select">
+                    <label class="cap-label">Purpose</label>
+                        placeholder="Enter the purpose of this agent..."
+                    <label class="cap-label">User Message</label>
+                        formControlName="userMessage"
+                        placeholder="Enter user message template..."
+            <!-- Advanced Configuration Toggle -->
+                class="cap-advanced-toggle"
+                (click)="ToggleAdvancedConfig()"
+                <i class="fa-solid" [class.fa-chevron-down]="!ShowAdvancedConfig" [class.fa-chevron-up]="ShowAdvancedConfig"></i>
+                {{ ShowAdvancedConfig ? 'Hide' : 'Show' }} Advanced Configuration
+            <!-- Advanced Configuration Section -->
+            @if (ShowAdvancedConfig) {
+                <section class="cap-section cap-section-advanced" @slideDown>
+                            <label class="cap-label">Temperature</label>
+                                max="2"
+                                step="0.1"
+                            <div class="cap-field-hint">Controls randomness (0-2)</div>
+                            <label class="cap-label">Top P</label>
+                                formControlName="topP"
+                                max="1"
+                            <div class="cap-field-hint">Nucleus sampling (0-1)</div>
+                            <label class="cap-label">Top K</label>
+                                formControlName="topK"
+                            <div class="cap-field-hint">Token sampling limit</div>
+                            <label class="cap-label">Max Tokens</label>
+                                max="32000"
+                                step="100"
+                            <div class="cap-field-hint">Maximum response length</div>
+                        <div class="cap-field cap-field-checkbox">
+                            <label class="cap-checkbox-label">
+                                <input type="checkbox" formControlName="enableCaching" />
+                                <span>Enable Caching</span>
+                            <label class="cap-label">Cache TTL (seconds)</label>
+                                formControlName="cacheTTL"
+                                min="60"
+                                max="86400"
+                                step="60"
+                <div class="cap-section-header">
+                        <span class="cap-badge">{{ LinkedPromptCount }}</span>
+                        class="cap-btn cap-btn-small"
+                        (click)="OnOpenPromptSelector()"
+                @if (LinkedPrompts.length > 0) {
+                    <div class="cap-linked-items">
+                        @for (prompt of LinkedPrompts; track prompt.ID) {
+                            <div class="cap-linked-item" @slideDown>
+                                <div class="cap-item-icon">
+                                <div class="cap-item-info">
+                                    <span class="cap-item-name">{{ prompt.Name }}</span>
+                                        <span class="cap-item-description">{{ prompt.Description }}</span>
+                                    class="cap-item-remove"
+                                    (click)="RemovePrompt(prompt)"
+                                    title="Remove prompt"
+                    <div class="cap-empty-state">
+                        <p>No prompts added yet</p>
+                <!-- Prompt Selector Dropdown -->
+                @if (ShowPromptSelector) {
+                    <div class="cap-selector" @slideDown>
+                        <div class="cap-selector-header">
+                                class="cap-selector-search"
+                                [(ngModel)]="PromptSearchQuery"
+                                (ngModelChange)="OnPromptSearchChanged()"
+                                class="cap-selector-close"
+                                (click)="OnClosePromptSelector()"
+                        <div class="cap-selector-list">
+                            @if (FilteredPrompts.length > 0) {
+                                @for (prompt of FilteredPrompts; track prompt.ID) {
+                                        class="cap-selector-item"
+                                        (click)="OnSelectPrompt(prompt)"
+                                        <div class="cap-selector-item-info">
+                                            <span class="cap-selector-item-name">{{ prompt.Name }}</span>
+                                                <span class="cap-selector-item-desc">{{ prompt.Description }}</span>
+                                <div class="cap-selector-empty">
+                                    <span>No prompts found</span>
+                        Actions
+                        <span class="cap-badge">{{ LinkedActionCount }}</span>
+                        (click)="OnOpenActionSelector()"
+                @if (LinkedActions.length > 0) {
+                        @for (action of LinkedActions; track action.ID) {
+                                <div class="cap-item-icon cap-icon-action">
+                                    <span class="cap-item-name">{{ action.Name }}</span>
+                                        <span class="cap-item-description">{{ action.Description }}</span>
+                                    (click)="RemoveAction(action)"
+                                    title="Remove action"
+                        <p>No actions added yet</p>
+                <!-- Action Selector Dropdown -->
+                @if (ShowActionSelector) {
+                                [(ngModel)]="ActionSearchQuery"
+                                (ngModelChange)="OnActionSearchChanged()"
+                                (click)="OnCloseActionSelector()"
+                            @if (FilteredActions.length > 0) {
+                                        (click)="OnSelectAction(action)"
+                                            <span class="cap-selector-item-name">{{ action.Name }}</span>
+                                                <span class="cap-selector-item-desc">{{ action.Description }}</span>
+                                    <span>No actions found</span>
+            <!-- Form Actions -->
+            <div class="cap-actions">
+                    class="cap-btn cap-btn-primary"
+                    [disabled]="Form.invalid || IsSubmitting"
+                    @if (IsSubmitting) {
+                        <span class="cap-btn-spinner"></span>
+                        <span>Create {{ IsSubAgent ? 'Sub-Agent' : 'Agent' }}</span>
+                    class="cap-btn cap-btn-secondary"
+                    (click)="OnCancel()"
+                    [disabled]="IsSubmitting"

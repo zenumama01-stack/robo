@@ -1,0 +1,35 @@
+<h1><a href="dataproc_v1.html">Cloud Dataproc API</a> . <a href="dataproc_v1.projects.html">projects</a> . <a href="dataproc_v1.projects.locations.html">locations</a> . <a href="dataproc_v1.projects.locations.sessionTemplates.html">sessionTemplates</a></h1>
+<p class="firstline">Create a session template synchronously.</p>
+<p class="firstline">Deletes a session template.</p>
+<p class="firstline">Gets the resource representation for a session template.</p>
+<p class="firstline">Lists session templates.</p>
+<p class="firstline">Updates the session template synchronously.</p>
+  <pre>Create a session template synchronously.
+  parent: string, Required. The parent resource where this session template will be created. (required)
+{ # A representation of a session template.
+  &quot;createTime&quot;: &quot;A String&quot;, # Output only. The time when the template was created.
+  &quot;creator&quot;: &quot;A String&quot;, # Output only. The email address of the user who created the template.
+  &quot;description&quot;: &quot;A String&quot;, # Optional. Brief description of the template.
+  &quot;environmentConfig&quot;: { # Environment configuration for a workload. # Optional. Environment configuration for session execution.
+  &quot;jupyterSession&quot;: { # Jupyter configuration for an interactive session. # Optional. Jupyter session config.
+    &quot;displayName&quot;: &quot;A String&quot;, # Optional. Display name, shown in the Jupyter kernelspec card.
+    &quot;kernel&quot;: &quot;A String&quot;, # Optional. Kernel
+  &quot;labels&quot;: { # Optional. Labels to associate with sessions created using this template. Label keys must contain 1 to 63 characters, and must conform to RFC 1035 (https://www.ietf.org/rfc/rfc1035.txt). Label values can be empty, but, if present, must contain 1 to 63 characters and conform to RFC 1035 (https://www.ietf.org/rfc/rfc1035.txt). No more than 32 labels can be associated with a session.
+  &quot;name&quot;: &quot;A String&quot;, # Required. Identifier. The resource name of the session template.
+  &quot;runtimeConfig&quot;: { # Runtime configuration for a workload. # Optional. Runtime configuration for session execution.
+  &quot;sparkConnectSession&quot;: { # Spark connect configuration for an interactive session. # Optional. Spark connect session config.
+  &quot;updateTime&quot;: &quot;A String&quot;, # Output only. The time the template was last updated.
+  &quot;uuid&quot;: &quot;A String&quot;, # Output only. A session template UUID (Unique Universal Identifier). The service generates this value when it creates the session template.
+  <pre>Deletes a session template.
+  name: string, Required. The name of the session template resource to delete. (required)
+  <pre>Gets the resource representation for a session template.
+  name: string, Required. The name of the session template to retrieve. (required)
+  <pre>Lists session templates.
+  parent: string, Required. The parent that owns this collection of session templates. (required)
+  filter: string, Optional. A filter for the session templates to return in the response. Filters are case sensitive and have the following syntax:field = value AND field = value ...
+  pageSize: integer, Optional. The maximum number of sessions to return in each response. The service may return fewer than this value.
+  pageToken: string, Optional. A page token received from a previous ListSessions call. Provide this token to retrieve the subsequent page.
+    { # A list of session templates.
+  &quot;sessionTemplates&quot;: [ # Output only. Session template list
+  <pre>Updates the session template synchronously.
+  name: string, Required. Identifier. The resource name of the session template. (required)

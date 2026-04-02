@@ -1,0 +1,43 @@
+<h1><a href="ml_v1.html">AI Platform Training & Prediction API</a> . <a href="ml_v1.projects.html">projects</a> . <a href="ml_v1.projects.locations.html">locations</a> . <a href="ml_v1.projects.locations.studies.html">studies</a></h1>
+  <code><a href="ml_v1.projects.locations.studies.trials.html">trials()</a></code>
+  <code><a href="#create">create(parent, body=None, studyId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Creates a study.</p>
+<p class="firstline">Deletes a study.</p>
+<p class="firstline">Gets a study.</p>
+    <code class="details" id="create">create(parent, body=None, studyId=None, x__xgafv=None)</code>
+  <pre>Creates a study.
+  parent: string, Required. The project and location that the study belongs to. Format: projects/{project}/locations/{location} (required)
+  &quot;name&quot;: &quot;A String&quot;, # Output only. The name of a study.
+  &quot;state&quot;: &quot;A String&quot;, # Output only. The detailed state of a study.
+  &quot;studyConfig&quot;: { # Represents configuration of a study. # Required. Configuration of the study.
+    &quot;algorithm&quot;: &quot;A String&quot;, # The search algorithm specified for the study.
+    &quot;automatedStoppingConfig&quot;: { # Configuration for Automated Early Stopping of Trials. If no implementation_config is set, automated early stopping will not be run. # Configuration for automated stopping of unpromising Trials.
+      &quot;decayCurveStoppingConfig&quot;: {
+        &quot;useElapsedTime&quot;: True or False, # If true, measurement.elapsed_time is used as the x-axis of each Trials Decay Curve. Otherwise, Measurement.steps will be used as the x-axis.
+      &quot;medianAutomatedStoppingConfig&quot;: { # The median automated stopping rule stops a pending trial if the trial&#x27;s best objective_value is strictly below the median &#x27;performance&#x27; of all completed trials reported up to the trial&#x27;s last measurement. Currently, &#x27;performance&#x27; refers to the running average of the objective values reported by the trial in each measurement.
+        &quot;useElapsedTime&quot;: True or False, # If true, the median automated stopping rule applies to measurement.use_elapsed_time, which means the elapsed_time field of the current trial&#x27;s latest measurement is used to compute the median objective value for each completed trial.
+    &quot;metrics&quot;: [ # Metric specs for the study.
+        &quot;categoricalValueSpec&quot;: { # The value spec for a &#x27;CATEGORICAL&#x27; parameter.
+          &quot;values&quot;: [ # Must be specified if type is `CATEGORICAL`. The list of possible categories.
+        &quot;childParameterSpecs&quot;: [ # A child node is active if the parameter&#x27;s value matches the child node&#x27;s matching_parent_values. If two items in child_parameter_specs have the same name, they must have disjoint matching_parent_values.
+          # Object with schema name: GoogleCloudMlV1_StudyConfig_ParameterSpec
+        &quot;discreteValueSpec&quot;: { # The value spec for a &#x27;DISCRETE&#x27; parameter.
+          &quot;values&quot;: [ # Must be specified if type is `DISCRETE`. A list of feasible points. The list should be in strictly increasing order. For instance, this parameter might have possible settings of 1.5, 2.5, and 4.0. This list should not contain more than 1,000 values.
+        &quot;doubleValueSpec&quot;: { # The value spec for a &#x27;DOUBLE&#x27; parameter.
+          &quot;maxValue&quot;: 3.14, # Must be specified if type is `DOUBLE`. Maximum value of the parameter.
+          &quot;minValue&quot;: 3.14, # Must be specified if type is `DOUBLE`. Minimum value of the parameter.
+        &quot;integerValueSpec&quot;: { # The value spec for an &#x27;INTEGER&#x27; parameter.
+          &quot;maxValue&quot;: &quot;A String&quot;, # Must be specified if type is `INTEGER`. Maximum value of the parameter.
+          &quot;minValue&quot;: &quot;A String&quot;, # Must be specified if type is `INTEGER`. Minimum value of the parameter.
+        &quot;parameter&quot;: &quot;A String&quot;, # Required. The parameter name must be unique amongst all ParameterSpecs.
+        &quot;parentCategoricalValues&quot;: { # Represents the spec to match categorical values from parent parameter.
+          &quot;values&quot;: [ # Matches values of the parent parameter with type &#x27;CATEGORICAL&#x27;. All values must exist in `categorical_value_spec` of parent parameter.
+        &quot;parentDiscreteValues&quot;: { # Represents the spec to match discrete values from parent parameter.
+          &quot;values&quot;: [ # Matches values of the parent parameter with type &#x27;DISCRETE&#x27;. All values must exist in `discrete_value_spec` of parent parameter.
+        &quot;parentIntValues&quot;: { # Represents the spec to match integer values from parent parameter.
+          &quot;values&quot;: [ # Matches values of the parent parameter with type &#x27;INTEGER&#x27;. All values must lie in `integer_value_spec` of parent parameter.
+        &quot;scaleType&quot;: &quot;A String&quot;, # How the parameter should be scaled. Leave unset for categorical parameters.
+  studyId: string, Required. The ID to use for the study, which will become the final component of the study&#x27;s resource name.
+  <pre>Deletes a study.
+  name: string, Required. The study name. (required)
+  <pre>Gets a study.

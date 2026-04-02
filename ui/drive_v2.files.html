@@ -1,0 +1,170 @@
+<h1><a href="drive_v2.html">Google Drive API</a> . <a href="drive_v2.files.html">files</a></h1>
+  <code><a href="#copy">copy(fileId, body=None, convert=None, enforceSingleParent=None, includeLabels=None, includePermissionsForView=None, ocr=None, ocrLanguage=None, pinned=None, supportsAllDrives=None, supportsTeamDrives=None, timedTextLanguage=None, timedTextTrackName=None, visibility=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Creates a copy of the specified file.</p>
+  <code><a href="#delete">delete(fileId, enforceSingleParent=None, supportsAllDrives=None, supportsTeamDrives=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Permanently deletes a file owned by the user without moving it to the trash. If the file belongs to a shared drive, the user must be an `organizer` on the parent folder. If the target is a folder, all descendants owned by the user are also deleted.</p>
+  <code><a href="#emptyTrash">emptyTrash(driveId=None, enforceSingleParent=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Permanently deletes all of the user's trashed files.</p>
+  <code><a href="#export">export(fileId, mimeType, x__xgafv=None)</a></code></p>
+<p class="firstline">Exports a Google Workspace document to the requested MIME type and returns exported byte content. Note that the exported content is limited to 10MB.</p>
+  <code><a href="#export_media">export_media(fileId, mimeType, x__xgafv=None)</a></code></p>
+  <code><a href="#generateIds">generateIds(maxResults=None, space=None, type=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Generates a set of file IDs which can be provided in insert or copy requests.</p>
+  <code><a href="#get">get(fileId, acknowledgeAbuse=None, includeLabels=None, includePermissionsForView=None, projection=None, revisionId=None, supportsAllDrives=None, supportsTeamDrives=None, updateViewedDate=None, x__xgafv=None)</a></code></p>
+<p class="firstline"> Gets a file's metadata or content by ID. If you provide the URL parameter `alt=media`, then the response includes the file contents in the response body. Downloading content with `alt=media` only works if the file is stored in Drive. To download Google Docs, Sheets, and Slides use [`files.export`](/workspace/drive/api/reference/rest/v2/files/export) instead. For more information, see [Download & export files](/workspace/drive/api/guides/manage-downloads).</p>
+  <code><a href="#get_media">get_media(fileId, acknowledgeAbuse=None, includeLabels=None, includePermissionsForView=None, projection=None, revisionId=None, supportsAllDrives=None, supportsTeamDrives=None, updateViewedDate=None, x__xgafv=None)</a></code></p>
+  <code><a href="#insert">insert(body=None, convert=None, enforceSingleParent=None, includeLabels=None, includePermissionsForView=None, media_body=None, media_mime_type=None, ocr=None, ocrLanguage=None, pinned=None, supportsAllDrives=None, supportsTeamDrives=None, timedTextLanguage=None, timedTextTrackName=None, useContentAsIndexableText=None, visibility=None, x__xgafv=None)</a></code></p>
+<p class="firstline"> Inserts a new file. This method supports an */upload* URI and accepts uploaded media with the following characteristics: - *Maximum file size:* 5,120 GB - *Accepted Media MIME types:*`*/*` Note: Specify a valid MIME type, rather than the literal `*/*` value. The literal `*/*` is only used to indicate that any valid MIME type can be uploaded. For more information on uploading files, see [Upload file data](/workspace/drive/api/guides/manage-uploads). Apps creating shortcuts with `files.insert` must specify the MIME type `application/vnd.google-apps.shortcut`. Apps should specify a file extension in the `title` property when inserting files with the API. For example, an operation to insert a JPEG file should specify something like `"title": "cat.jpg"` in the metadata. Subsequent `GET` requests include the read-only `fileExtension` property populated with the extension originally specified in the `title` property. When a Google Drive user requests to download a file, or when the file is downloaded through the sync client, Drive builds a full filename (with extension) based on the title. In cases where the extension is missing, Drive attempts to determine the extension based on the file's MIME type.</p>
+  <code><a href="#list">list(corpora=None, corpus=None, driveId=None, includeItemsFromAllDrives=None, includeLabels=None, includePermissionsForView=None, includeTeamDriveItems=None, maxResults=None, orderBy=None, pageToken=None, projection=None, q=None, spaces=None, supportsAllDrives=None, supportsTeamDrives=None, teamDriveId=None, x__xgafv=None)</a></code></p>
+<p class="firstline"> Lists the user's files. For more information, see [Search for files and folders](/workspace/drive/api/guides/search-files). This method accepts the `q` parameter, which is a search query combining one or more search terms. This method returns *all* files by default, including trashed files. If you don't want trashed files to appear in the list, use the `trashed=false` query parameter to remove trashed files from the results.</p>
+  <code><a href="#listLabels">listLabels(fileId, maxResults=None, pageToken=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Lists the labels on a file.</p>
+  <code><a href="#listLabels_next">listLabels_next()</a></code></p>
+  <code><a href="#modifyLabels">modifyLabels(fileId, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Modifies the set of labels applied to a file. Returns a list of the labels that were added or modified.</p>
+  <code><a href="#patch">patch(fileId, addParents=None, body=None, convert=None, enforceSingleParent=None, includeLabels=None, includePermissionsForView=None, modifiedDateBehavior=None, newRevision=None, ocr=None, ocrLanguage=None, pinned=None, removeParents=None, setModifiedDate=None, supportsAllDrives=None, supportsTeamDrives=None, timedTextLanguage=None, timedTextTrackName=None, updateViewedDate=None, useContentAsIndexableText=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Updates a file's metadata and/or content. When calling this method, only populate fields in the request that you want to modify. When updating fields, some fields might change automatically, such as modifiedDate. This method supports patch semantics.</p>
+  <code><a href="#touch">touch(fileId, includeLabels=None, includePermissionsForView=None, supportsAllDrives=None, supportsTeamDrives=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Set the file's updated time to the current server time.</p>
+  <code><a href="#trash">trash(fileId, includeLabels=None, includePermissionsForView=None, supportsAllDrives=None, supportsTeamDrives=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Moves a file to the trash. The currently authenticated user must own the file or be at least a `fileOrganizer` on the parent for shared drive files.</p>
+  <code><a href="#untrash">untrash(fileId, includeLabels=None, includePermissionsForView=None, supportsAllDrives=None, supportsTeamDrives=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Restores a file from the trash. The currently authenticated user must own the file or be at least a `fileOrganizer` on the parent for shared drive files.</p>
+  <code><a href="#update">update(fileId, addParents=None, body=None, convert=None, enforceSingleParent=None, includeLabels=None, includePermissionsForView=None, media_body=None, media_mime_type=None, modifiedDateBehavior=None, newRevision=None, ocr=None, ocrLanguage=None, pinned=None, removeParents=None, setModifiedDate=None, supportsAllDrives=None, supportsTeamDrives=None, timedTextLanguage=None, timedTextTrackName=None, updateViewedDate=None, useContentAsIndexableText=None, x__xgafv=None)</a></code></p>
+<p class="firstline"> Updates a file's metadata, content, or both. When calling this method, only populate fields in the request that you want to modify. When updating fields, some fields might be changed automatically, such as `modifiedDate`. This method supports patch semantics. This method supports an */upload* URI and accepts uploaded media with the following characteristics: - *Maximum file size:* 5,120 GB - *Accepted Media MIME types:* `*/*` (Specify a valid MIME type, rather than the literal `*/*` value. The literal `*/*` is only used to indicate that any valid MIME type can be uploaded. For more information, see [Google Workspace and Google Drive supported MIME types](/workspace/drive/api/guides/mime-types).) For more information on uploading files, see [Upload file data](/workspace/drive/api/guides/manage-uploads).</p>
+  <code><a href="#watch">watch(fileId, acknowledgeAbuse=None, body=None, includeLabels=None, includePermissionsForView=None, projection=None, revisionId=None, supportsAllDrives=None, supportsTeamDrives=None, updateViewedDate=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Subscribes to changes to a file.</p>
+    <code class="details" id="copy">copy(fileId, body=None, convert=None, enforceSingleParent=None, includeLabels=None, includePermissionsForView=None, ocr=None, ocrLanguage=None, pinned=None, supportsAllDrives=None, supportsTeamDrives=None, timedTextLanguage=None, timedTextTrackName=None, visibility=None, x__xgafv=None)</code>
+  <pre>Creates a copy of the specified file.
+  fileId: string, The ID of the file to copy. (required)
+{ # The metadata for a file. Some resource methods (such as `files.update`) require a `fileId`. Use the `files.list` method to retrieve the ID for a file.
+  convert: boolean, Whether to convert this file to the corresponding Docs Editors format.
+  enforceSingleParent: boolean, Deprecated: Copying files into multiple folders is no longer supported. Use shortcuts instead.
+  ocr: boolean, Whether to attempt OCR on .jpg, .png, .gif, or .pdf uploads.
+  ocrLanguage: string, If `ocr` is true, hints at the language to use. Valid values are BCP 47 codes.
+  pinned: boolean, Whether to pin the head revision of the new copy. A file can have a maximum of 200 pinned revisions.
+  timedTextLanguage: string, The language of the timed text.
+  timedTextTrackName: string, The timed text track name.
+  visibility: string, The visibility of the new file. Permissions are still inherited from parent folders. This parameter is only relevant when the source is not a Google Doc file and when `convert=false`.
+      DEFAULT - The visibility of the new file is determined by the user&#x27;s default visibility or sharing policies.
+      PRIVATE - The user&#x27;s default visibility or sharing policies are ignored, and the new file is only visible to the owner and any users with permissions inherited from the parent folder.
+    <code class="details" id="delete">delete(fileId, enforceSingleParent=None, supportsAllDrives=None, supportsTeamDrives=None, x__xgafv=None)</code>
+  <pre>Permanently deletes a file owned by the user without moving it to the trash. If the file belongs to a shared drive, the user must be an `organizer` on the parent folder. If the target is a folder, all descendants owned by the user are also deleted.
+  fileId: string, The ID of the file to delete. (required)
+  enforceSingleParent: boolean, Deprecated: If an item is not in a shared drive and its last parent is deleted but the item itself is not, the item is placed under its owner&#x27;s root.
+    <code class="details" id="emptyTrash">emptyTrash(driveId=None, enforceSingleParent=None, x__xgafv=None)</code>
+  <pre>Permanently deletes all of the user&#x27;s trashed files.
+  driveId: string, If set, empties the trash of the provided shared drive.
+    <code class="details" id="export">export(fileId, mimeType, x__xgafv=None)</code>
+  <pre>Exports a Google Workspace document to the requested MIME type and returns exported byte content. Note that the exported content is limited to 10MB.
+  mimeType: string, Required. The MIME type of the format requested for this export. (required)
+    <code class="details" id="export_media">export_media(fileId, mimeType, x__xgafv=None)</code>
+    <code class="details" id="generateIds">generateIds(maxResults=None, space=None, type=None, x__xgafv=None)</code>
+  <pre>Generates a set of file IDs which can be provided in insert or copy requests.
+  maxResults: integer, Maximum number of IDs to return.
+  space: string, The space in which the IDs can be used to create new files. Supported values are `drive` and `appDataFolder`. (Default: `drive`)
+  type: string, The type of items which the IDs can be used for. Supported values are `files` and `shortcuts`. Note that `shortcuts` are only supported in the `drive` `space`. (Default: `files`)
+    { # A list of generated IDs which can be provided in insert requests
+  &quot;ids&quot;: [ # The IDs generated for the requesting user in the specified space.
+  &quot;kind&quot;: &quot;drive#generatedIds&quot;, # This is always `drive#generatedIds`
+  &quot;space&quot;: &quot;A String&quot;, # The type of file that can be created with these IDs.
+    <code class="details" id="get">get(fileId, acknowledgeAbuse=None, includeLabels=None, includePermissionsForView=None, projection=None, revisionId=None, supportsAllDrives=None, supportsTeamDrives=None, updateViewedDate=None, x__xgafv=None)</code>
+  <pre> Gets a file&#x27;s metadata or content by ID. If you provide the URL parameter `alt=media`, then the response includes the file contents in the response body. Downloading content with `alt=media` only works if the file is stored in Drive. To download Google Docs, Sheets, and Slides use [`files.export`](/workspace/drive/api/reference/rest/v2/files/export) instead. For more information, see [Download &amp; export files](/workspace/drive/api/guides/manage-downloads).
+  fileId: string, The ID for the file in question. (required)
+  acknowledgeAbuse: boolean, Whether the user is acknowledging the risk of downloading known malware or other abusive files. This is only applicable when the `alt` parameter is set to `media` and the user is the owner of the file or an organizer of the shared drive in which the file resides.
+  projection: string, Deprecated: This parameter has no function.
+      BASIC - Deprecated.
+      FULL - Deprecated.
+  revisionId: string, Specifies the Revision ID that should be downloaded. Ignored unless alt=media is specified.
+  updateViewedDate: boolean, Deprecated: Use `files.update` with `modifiedDateBehavior=noChange, updateViewedDate=true` and an empty request body.
+    <code class="details" id="get_media">get_media(fileId, acknowledgeAbuse=None, includeLabels=None, includePermissionsForView=None, projection=None, revisionId=None, supportsAllDrives=None, supportsTeamDrives=None, updateViewedDate=None, x__xgafv=None)</code>
+    <code class="details" id="insert">insert(body=None, convert=None, enforceSingleParent=None, includeLabels=None, includePermissionsForView=None, media_body=None, media_mime_type=None, ocr=None, ocrLanguage=None, pinned=None, supportsAllDrives=None, supportsTeamDrives=None, timedTextLanguage=None, timedTextTrackName=None, useContentAsIndexableText=None, visibility=None, x__xgafv=None)</code>
+  <pre> Inserts a new file. This method supports an */upload* URI and accepts uploaded media with the following characteristics: - *Maximum file size:* 5,120 GB - *Accepted Media MIME types:*`*/*` Note: Specify a valid MIME type, rather than the literal `*/*` value. The literal `*/*` is only used to indicate that any valid MIME type can be uploaded. For more information on uploading files, see [Upload file data](/workspace/drive/api/guides/manage-uploads). Apps creating shortcuts with `files.insert` must specify the MIME type `application/vnd.google-apps.shortcut`. Apps should specify a file extension in the `title` property when inserting files with the API. For example, an operation to insert a JPEG file should specify something like `&quot;title&quot;: &quot;cat.jpg&quot;` in the metadata. Subsequent `GET` requests include the read-only `fileExtension` property populated with the extension originally specified in the `title` property. When a Google Drive user requests to download a file, or when the file is downloaded through the sync client, Drive builds a full filename (with extension) based on the title. In cases where the extension is missing, Drive attempts to determine the extension based on the file&#x27;s MIME type.
+  enforceSingleParent: boolean, Deprecated: Creating files in multiple folders is no longer supported.
+  ocrLanguage: string, If ocr is true, hints at the language to use. Valid values are BCP 47 codes.
+  pinned: boolean, Whether to pin the head revision of the uploaded file. A file can have a maximum of 200 pinned revisions.
+  useContentAsIndexableText: boolean, Whether to use the content as indexable text.
+  visibility: string, The visibility of the new file. Permissions are still inherited from parent folders. This parameter is only relevant when `convert=false`.
+    <code class="details" id="list">list(corpora=None, corpus=None, driveId=None, includeItemsFromAllDrives=None, includeLabels=None, includePermissionsForView=None, includeTeamDriveItems=None, maxResults=None, orderBy=None, pageToken=None, projection=None, q=None, spaces=None, supportsAllDrives=None, supportsTeamDrives=None, teamDriveId=None, x__xgafv=None)</code>
+  <pre> Lists the user&#x27;s files. For more information, see [Search for files and folders](/workspace/drive/api/guides/search-files). This method accepts the `q` parameter, which is a search query combining one or more search terms. This method returns *all* files by default, including trashed files. If you don&#x27;t want trashed files to appear in the list, use the `trashed=false` query parameter to remove trashed files from the results.
+  corpora: string, Bodies of items (files/documents) to which the query applies. Supported bodies are `default`, `domain`, `drive` and `allDrives`. Prefer `default` or `drive` to `allDrives` for efficiency.
+  corpus: string, Deprecated: The body of items (files/documents) to which the query applies. Use `corpora` instead.
+      DEFAULT - The items that the user has accessed.
+      DOMAIN - Items shared to the user&#x27;s domain.
+  driveId: string, ID of the shared drive to search.
+  maxResults: integer, The maximum number of files to return per page. Partial or empty result pages are possible even before the end of the files list has been reached.
+  orderBy: string, A comma-separated list of sort keys. Valid keys are: * `createdDate`: When the file was created. * `folder`: The folder ID. This field is sorted using alphabetical ordering. * `lastViewedByMeDate`: The last time the file was viewed by the user. * `modifiedByMeDate`: The last time the file was modified by the user. * `modifiedDate`: The last time the file was modified by anyone. * `quotaBytesUsed`: The number of storage quota bytes used by the file. * `recency`: The most recent timestamp from the file&#x27;s date-time fields. * `sharedWithMeDate`: When the file was shared with the user, if applicable. * `starred`: Whether the user has starred the file. * `title`: The title of the file. This field is sorted using alphabetical ordering, so 1, 12, 2, 22. * `title_natural`: The title of the file. This field is sorted using natural sort ordering, so 1, 2, 12, 22. Each key sorts ascending by default, but can be reversed with the &#x27;desc&#x27; modifier. Example usage: `?orderBy=folder,modifiedDate desc,title`. Note that there&#x27;s a current limitation for users with approximately one million files in which the requested sort order is ignored.
+  pageToken: string, Page token for files.
+  q: string, Query string for searching files.
+  spaces: string, A comma-separated list of spaces to query. Supported values are `drive`, and `appDataFolder`.
+    { # A list of files.
+  &quot;incompleteSearch&quot;: True or False, # Whether the search process was incomplete. If true, then some search results may be missing, since all documents were not searched. This may occur when searching multiple drives with the &quot;allDrives&quot; corpora, but all corpora could not be searched. When this happens, it is suggested that clients narrow their query by choosing a different corpus such as &quot;default&quot; or &quot;drive&quot;.
+  &quot;items&quot;: [ # The list of files. If nextPageToken is populated, then this list may be incomplete and an additional page of results should be fetched.
+  &quot;kind&quot;: &quot;drive#fileList&quot;, # This is always `drive#fileList`.
+  &quot;nextLink&quot;: &quot;A String&quot;, # A link to the next page of files.
+  &quot;nextPageToken&quot;: &quot;A String&quot;, # The page token for the next page of files. This will be absent if the end of the files list has been reached. If the token is rejected for any reason, it should be discarded, and pagination should be restarted from the first page of results.
+    <code class="details" id="listLabels">listLabels(fileId, maxResults=None, pageToken=None, x__xgafv=None)</code>
+  <pre>Lists the labels on a file.
+  fileId: string, The ID for the file. (required)
+  maxResults: integer, The maximum number of labels to return per page. When not set, defaults to 100.
+  pageToken: string, The token for continuing a previous list request on the next page. This should be set to the value of `nextPageToken` from the previous response.
+    { # A list of labels applied to a file.
+  &quot;items&quot;: [ # The list of labels.
+  &quot;kind&quot;: &quot;drive#labelList&quot;, # This is always `drive#labelList`
+  &quot;nextPageToken&quot;: &quot;A String&quot;, # The page token for the next page of labels. This field will be absent if the end of the list has been reached. If the token is rejected for any reason, it should be discarded, and pagination should be restarted from the first page of results.
+    <code class="details" id="listLabels_next">listLabels_next()</code>
+    <code class="details" id="modifyLabels">modifyLabels(fileId, body=None, x__xgafv=None)</code>
+  <pre>Modifies the set of labels applied to a file. Returns a list of the labels that were added or modified.
+  fileId: string, The ID of the file to which the labels belong. (required)
+{ # A request to modify the set of labels on a file. This request may contain many modifications that will either all succeed or all fail atomically.
+  &quot;kind&quot;: &quot;drive#modifyLabelsRequest&quot;, # This is always `drive#modifyLabelsRequest`.
+  &quot;labelModifications&quot;: [ # The list of modifications to apply to the labels on the file.
+    { # A modification to a label on a file. A LabelModification can be used to apply a label to a file, update an existing label on a file, or remove a label from a file.
+      &quot;fieldModifications&quot;: [ # The list of modifications to this label&#x27;s fields.
+        { # A modification to a label&#x27;s field.
+          &quot;fieldId&quot;: &quot;A String&quot;, # The ID of the field to be modified.
+          &quot;kind&quot;: &quot;drive#labelFieldModification&quot;, # This is always `drive#labelFieldModification`.
+          &quot;setDateValues&quot;: [ # Replaces the value of a dateString Field with these new values. The string must be in the RFC 3339 full-date format: YYYY-MM-DD.
+          &quot;setIntegerValues&quot;: [ # Replaces the value of an `integer` field with these new values.
+          &quot;setSelectionValues&quot;: [ # Replaces a `selection` field with these new values.
+          &quot;setTextValues&quot;: [ # Sets the value of a `text` field.
+          &quot;setUserValues&quot;: [ # Replaces a `user` field with these new values. The values must be valid email addresses.
+          &quot;unsetValues&quot;: True or False, # Unsets the values for this field.
+      &quot;kind&quot;: &quot;drive#labelModification&quot;, # This is always `drive#labelModification`.
+      &quot;labelId&quot;: &quot;A String&quot;, # The ID of the label to modify.
+      &quot;removeLabel&quot;: True or False, # If true, the label will be removed from the file.
+    { # Response to a ModifyLabels request. This contains only those labels which were added or updated by the request.
+  &quot;kind&quot;: &quot;drive#modifyLabelsResponse&quot;, # This is always `drive#modifyLabelsResponse`
+  &quot;modifiedLabels&quot;: [ # The list of labels which were added or updated by the request.
+    <code class="details" id="patch">patch(fileId, addParents=None, body=None, convert=None, enforceSingleParent=None, includeLabels=None, includePermissionsForView=None, modifiedDateBehavior=None, newRevision=None, ocr=None, ocrLanguage=None, pinned=None, removeParents=None, setModifiedDate=None, supportsAllDrives=None, supportsTeamDrives=None, timedTextLanguage=None, timedTextTrackName=None, updateViewedDate=None, useContentAsIndexableText=None, x__xgafv=None)</code>
+  <pre>Updates a file&#x27;s metadata and/or content. When calling this method, only populate fields in the request that you want to modify. When updating fields, some fields might change automatically, such as modifiedDate. This method supports patch semantics.
+  fileId: string, The ID of the file to update. (required)
+  addParents: string, Comma-separated list of parent IDs to add.
+  convert: boolean, Deprecated: This parameter has no function.
+  modifiedDateBehavior: string, Determines the behavior in which `modifiedDate` is updated. This overrides `setModifiedDate`.
+      fromBody - Set `modifiedDate` to the value provided in the body of the request. No change if no value was provided.
+      fromBodyIfNeeded - Set `modifiedDate` to the value provided in the body of the request depending on other contents of the update.
+      fromBodyOrNow - Set modifiedDate to the value provided in the body of the request, or to the current time if no value was provided.
+      noChange - Maintain the previous value of `modifiedDate`.
+      now - Set `modifiedDate` to the current time.
+      nowIfNeeded - Set `modifiedDate` to the current time depending on contents of the update.
+  newRevision: boolean, Whether a blob upload should create a new revision. If false, the blob data in the current head revision is replaced. If true or not set, a new blob is created as head revision, and previous unpinned revisions are preserved for a short period of time. Pinned revisions are stored indefinitely, using additional storage quota, up to a maximum of 200 revisions. For details on how revisions are retained, see the [Drive Help Center](https://support.google.com/drive/answer/2409045). Note that this field is ignored if there is no payload in the request.
+  pinned: boolean, Whether to pin the new revision. A file can have a maximum of 200 pinned revisions. Note that this field is ignored if there is no payload in the request.
+  removeParents: string, Comma-separated list of parent IDs to remove.
+  setModifiedDate: boolean, Whether to set the modified date using the value supplied in the request body. Setting this field to `true` is equivalent to `modifiedDateBehavior=fromBodyOrNow`, and `false` is equivalent to `modifiedDateBehavior=now`. To prevent any changes to the modified date set `modifiedDateBehavior=noChange`.
+  updateViewedDate: boolean, Whether to update the view date after successfully updating the file.
+    <code class="details" id="touch">touch(fileId, includeLabels=None, includePermissionsForView=None, supportsAllDrives=None, supportsTeamDrives=None, x__xgafv=None)</code>
+  <pre>Set the file&#x27;s updated time to the current server time.
+    <code class="details" id="trash">trash(fileId, includeLabels=None, includePermissionsForView=None, supportsAllDrives=None, supportsTeamDrives=None, x__xgafv=None)</code>
+  <pre>Moves a file to the trash. The currently authenticated user must own the file or be at least a `fileOrganizer` on the parent for shared drive files.
+  fileId: string, The ID of the file to trash. (required)
+    <code class="details" id="untrash">untrash(fileId, includeLabels=None, includePermissionsForView=None, supportsAllDrives=None, supportsTeamDrives=None, x__xgafv=None)</code>
+  <pre>Restores a file from the trash. The currently authenticated user must own the file or be at least a `fileOrganizer` on the parent for shared drive files.
+  fileId: string, The ID of the file to untrash. (required)
+    <code class="details" id="update">update(fileId, addParents=None, body=None, convert=None, enforceSingleParent=None, includeLabels=None, includePermissionsForView=None, media_body=None, media_mime_type=None, modifiedDateBehavior=None, newRevision=None, ocr=None, ocrLanguage=None, pinned=None, removeParents=None, setModifiedDate=None, supportsAllDrives=None, supportsTeamDrives=None, timedTextLanguage=None, timedTextTrackName=None, updateViewedDate=None, useContentAsIndexableText=None, x__xgafv=None)</code>
+  <pre> Updates a file&#x27;s metadata, content, or both. When calling this method, only populate fields in the request that you want to modify. When updating fields, some fields might be changed automatically, such as `modifiedDate`. This method supports patch semantics. This method supports an */upload* URI and accepts uploaded media with the following characteristics: - *Maximum file size:* 5,120 GB - *Accepted Media MIME types:* `*/*` (Specify a valid MIME type, rather than the literal `*/*` value. The literal `*/*` is only used to indicate that any valid MIME type can be uploaded. For more information, see [Google Workspace and Google Drive supported MIME types](/workspace/drive/api/guides/mime-types).) For more information on uploading files, see [Upload file data](/workspace/drive/api/guides/manage-uploads).
+  newRevision: boolean, Whether a blob upload should create a new revision. If false, the blob data in the current head revision is replaced. If true or not set, a new blob is created as head revision, and previous unpinned revisions are preserved for a short period of time. Pinned revisions are stored indefinitely, using additional storage quota, up to a maximum of 200 revisions. For details on how revisions are retained, see the [Drive Help Center](https://support.google.com/drive/answer/2409045).
+  pinned: boolean, Whether to pin the new revision. A file can have a maximum of 200 pinned revisions.
+    <code class="details" id="watch">watch(fileId, acknowledgeAbuse=None, body=None, includeLabels=None, includePermissionsForView=None, projection=None, revisionId=None, supportsAllDrives=None, supportsTeamDrives=None, updateViewedDate=None, x__xgafv=None)</code>
+  <pre>Subscribes to changes to a file.
+  updateViewedDate: boolean, Deprecated: Use files.update with modifiedDateBehavior=noChange, updateViewedDate=true and an empty request body.

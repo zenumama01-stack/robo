@@ -1,0 +1,26 @@
+<h1><a href="contentwarehouse_v1.html">Document AI Warehouse API</a> . <a href="contentwarehouse_v1.projects.html">projects</a> . <a href="contentwarehouse_v1.projects.locations.html">locations</a> . <a href="contentwarehouse_v1.projects.locations.ruleSets.html">ruleSets</a></h1>
+<p class="firstline">Creates a ruleset.</p>
+<p class="firstline">Deletes a ruleset. Returns NOT_FOUND if the document does not exist.</p>
+<p class="firstline">Gets a ruleset. Returns NOT_FOUND if the ruleset does not exist.</p>
+<p class="firstline">Lists rulesets.</p>
+<p class="firstline">Updates a ruleset. Returns INVALID_ARGUMENT if the name of the ruleset is non-empty and does not equal the existing name.</p>
+  <pre>Creates a ruleset.
+{ # Represents a set of rules from a single customer.
+  &quot;description&quot;: &quot;A String&quot;, # Short description of the rule-set.
+  &quot;name&quot;: &quot;A String&quot;, # The resource name of the rule set. Managed internally. Format: projects/{project_number}/locations/{location}/ruleSet/{rule_set_id}. The name is ignored when creating a rule set.
+  &quot;rules&quot;: [ # List of rules given by the customer.
+  &quot;source&quot;: &quot;A String&quot;, # Source of the rules i.e., customer name.
+  <pre>Deletes a ruleset. Returns NOT_FOUND if the document does not exist.
+  name: string, Required. The name of the rule set to delete. Format: projects/{project_number}/locations/{location}/ruleSets/{rule_set_id}. (required)
+  <pre>Gets a ruleset. Returns NOT_FOUND if the ruleset does not exist.
+  name: string, Required. The name of the rule set to retrieve. Format: projects/{project_number}/locations/{location}/ruleSets/{rule_set_id}. (required)
+  <pre>Lists rulesets.
+  parent: string, Required. The parent, which owns this collection of document. Format: projects/{project_number}/locations/{location}. (required)
+  pageSize: integer, The maximum number of rule sets to return. The service may return fewer than this value. If unspecified, at most 50 rule sets will be returned. The maximum value is 1000; values above 1000 will be coerced to 1000.
+  pageToken: string, A page token, received from a previous `ListRuleSets` call. Provide this to retrieve the subsequent page. When paginating, all other parameters provided to `ListRuleSets` must match the call that provided the page token.
+    { # Response message for RuleSetService.ListRuleSets.
+  &quot;ruleSets&quot;: [ # The rule sets from the specified parent.
+  <pre>Updates a ruleset. Returns INVALID_ARGUMENT if the name of the ruleset is non-empty and does not equal the existing name.
+  name: string, Required. The name of the rule set to update. Format: projects/{project_number}/locations/{location}/ruleSets/{rule_set_id}. (required)
+{ # Request message for RuleSetService.UpdateRuleSet.
+  &quot;ruleSet&quot;: { # Represents a set of rules from a single customer. # Required. The rule set to update.

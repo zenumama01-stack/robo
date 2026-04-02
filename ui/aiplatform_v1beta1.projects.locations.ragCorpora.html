@@ -1,0 +1,28 @@
+<h1><a href="aiplatform_v1beta1.html">Vertex AI API</a> . <a href="aiplatform_v1beta1.projects.html">projects</a> . <a href="aiplatform_v1beta1.projects.locations.html">locations</a> . <a href="aiplatform_v1beta1.projects.locations.ragCorpora.html">ragCorpora</a></h1>
+  <code><a href="aiplatform_v1beta1.projects.locations.ragCorpora.operations.html">operations()</a></code>
+  <code><a href="aiplatform_v1beta1.projects.locations.ragCorpora.ragDataSchemas.html">ragDataSchemas()</a></code>
+<p class="firstline">Returns the ragDataSchemas Resource.</p>
+  <code><a href="aiplatform_v1beta1.projects.locations.ragCorpora.ragFiles.html">ragFiles()</a></code>
+  <code><a href="#delete">delete(name, force=None, forceDelete=None, x__xgafv=None)</a></code></p>
+  &quot;corpusTypeConfig&quot;: { # The config for the corpus type of the RagCorpus. # Optional. The corpus type config of the RagCorpus.
+    &quot;documentCorpus&quot;: { # Config for the document corpus. # Optional. Config for the document corpus.
+    &quot;memoryCorpus&quot;: { # Config for the memory corpus. # Optional. Config for the memory corpus.
+      &quot;llmParser&quot;: { # Specifies the LLM parsing for RagFiles. # The LLM parser to use for the memory corpus.
+  &quot;ragEmbeddingModelConfig&quot;: { # Config for the embedding model to use for RAG. # Optional. Immutable. The embedding model config of the RagCorpus.
+    &quot;hybridSearchConfig&quot;: { # Config for hybrid search. # Configuration for hybrid search.
+      &quot;denseEmbeddingModelPredictionEndpoint&quot;: { # Config representing a model hosted on Vertex Prediction Endpoint. # Required. The Vertex AI Prediction Endpoint that hosts the embedding model for dense embedding generations.
+      &quot;sparseEmbeddingConfig&quot;: { # Configuration for sparse emebdding generation. # Optional. The configuration for sparse embedding generation. This field is optional the default behavior depends on the vector database choice on the RagCorpus.
+        &quot;bm25&quot;: { # Message for BM25 parameters. # Use BM25 scoring algorithm.
+          &quot;b&quot;: 3.14, # Optional. The parameter to control document length normalization. It determines how much the document length affects the final score. b is in the range of [0, 1]. The default value is 0.75.
+          &quot;k1&quot;: 3.14, # Optional. The parameter to control term frequency saturation. It determines the scaling between the matching term frequency and final score. k1 is in the range of [1.2, 3]. The default value is 1.2.
+          &quot;multilingual&quot;: True or False, # Optional. Use multilingual tokenizer if set to true.
+  &quot;ragFilesCount&quot;: 42, # Output only. Number of RagFiles in the RagCorpus. NOTE: This field is not populated in the response of VertexRagDataService.ListRagCorpora.
+  &quot;ragVectorDbConfig&quot;: { # Config for the Vector DB to use for RAG. # Optional. Immutable. The Vector DB config of the RagCorpus.
+    &quot;ragManagedVertexVectorSearch&quot;: { # The config for the RAG-managed Vertex Vector Search 2.0. # The config for the RAG-managed Vertex Vector Search 2.0.
+      &quot;collectionName&quot;: &quot;A String&quot;, # Output only. The resource name of the Vector Search 2.0 Collection that RAG Created for the corpus. Only populated after the corpus is successfully created. Format: `projects/{project}/locations/{location}/collections/{collection_id}`
+    &quot;vertexFeatureStore&quot;: { # The config for the Vertex Feature Store. # The config for the Vertex Feature Store.
+      &quot;featureViewResourceName&quot;: &quot;A String&quot;, # The resource name of the FeatureView. Format: `projects/{project}/locations/{location}/featureOnlineStores/{feature_online_store}/featureViews/{feature_view}`
+    &quot;weaviate&quot;: { # The config for the Weaviate. # The config for the Weaviate.
+      &quot;collectionName&quot;: &quot;A String&quot;, # The corresponding collection this corpus maps to. This value cannot be changed after it&#x27;s set.
+      &quot;httpEndpoint&quot;: &quot;A String&quot;, # Weaviate DB instance HTTP endpoint. e.g. 34.56.78.90:8080 Vertex RAG only supports HTTP connection to Weaviate. This value cannot be changed after it&#x27;s set.
+    <code class="details" id="delete">delete(name, force=None, forceDelete=None, x__xgafv=None)</code>

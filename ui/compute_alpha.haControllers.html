@@ -1,0 +1,133 @@
+<h1><a href="compute_alpha.html">Compute Engine API</a> . <a href="compute_alpha.haControllers.html">haControllers</a></h1>
+<p class="firstline">Retrieves an aggregated list of all of the HaControllers in the specified</p>
+  <code><a href="#delete">delete(project, region, haController, requestId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Deletes an HaController in the specified project.</p>
+  <code><a href="#failover">failover(project, region, haController, body=None, requestId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Fails over a VM targeted by the specified HaController to the selected</p>
+  <code><a href="#get">get(project, region, haController, x__xgafv=None)</a></code></p>
+<p class="firstline">Returns all the details of a specific HaController.</p>
+<p class="firstline">Creates HaController in the specified project.</p>
+<p class="firstline">Lists all HaControllers in the specified project in the specified region.</p>
+  <code><a href="#patch">patch(project, region, haController, body=None, requestId=None, updateMask=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Updates HaController in the specified project.</p>
+  <pre>Retrieves an aggregated list of all of the HaControllers in the specified
+project across all regions.
+  &quot;items&quot;: { # A list of HaControllersScopedList resources.
+    &quot;a_key&quot;: { # Name of the scope containing this set of ha controllers.
+      &quot;haControllers&quot;: [ # List of HaControllers contained in this scope.
+        { # HaController handles failover for a VM Instance.
+          &quot;backendServices&quot;: [ # Advanced configuration option. If specified, these Backend Services need to
+              # be pre-created.
+              # Currently, only one backend service can be specified, and it must be L4
+              # Internal Load Balancer (ILB).
+          &quot;creationTimestamp&quot;: &quot;A String&quot;, # Output only. [Output Only] Creation timestamp in RFC3339
+          &quot;failoverCapacity&quot;: &quot;A String&quot;, # Capacity guarantee settings for the event of a failover.
+              # This determines whether capacity is guaranteed to be available
+              # in the zones used by the HaController.
+          &quot;failoverInitiation&quot;: &quot;A String&quot;, # Indicates how failover should be initiated.
+          &quot;instanceName&quot;: &quot;A String&quot;, # Name of the instance that HaController is in charge of.
+              # If not specified the HaController&#x27;s resource name will be used instead.
+              # expression `[a-z]([-a-z0-9]*[a-z0-9])?` which means the first character
+              # must be a lowercase letter, and all following characters must be a dash,
+              # lowercase letter, or digit, except the last character, which cannot be a
+              # dash.
+          &quot;kind&quot;: &quot;compute#HaController&quot;, # Output only. [Output Only] Type of the resource. Alwayscompute#haController for HaControllers.
+          &quot;name&quot;: &quot;A String&quot;, # Name of the resource.
+              # Provided by the client when the resource is created.
+          &quot;networkingAutoConfiguration&quot;: { # Basic networking configuration. Required backend services and forwarding # Basic networking configuration. Required backend services and forwarding
+              # rules will be automatically created with default parameters.
+            &quot;internal&quot;: { # Internal networking configuration # Internal networking configuration
+              &quot;ipAddress&quot;: &quot;A String&quot;, # Optional. IP addresses will be automatically allocated according to
+                  # StackType if not provided.
+              &quot;stackType&quot;: &quot;A String&quot;, # Determine which IP addresses to automatically create. Field and option
+                  # naming consistent with NetworkInterface configuration on Instances.
+          &quot;region&quot;: &quot;A String&quot;, # Output only. [Output Only] URL of the region where the resource resides.
+              # You must specify this field as part of the HTTP request URL.
+              # It is not settable as a field in the request body.
+          &quot;secondaryZoneCapacity&quot;: &quot;A String&quot;, # Indicates the capacity guarantees in the secondary zone.
+          &quot;selfLink&quot;: &quot;A String&quot;, # Output only. [Output only] Server-defined URL for the resource.
+          &quot;status&quot;: { # Contains information about current status of the HaController. # Output only. [Output Only] Status information for the HaController resource.
+            &quot;failoverProgress&quot;: { # Contains information about the current failover operation. # Output only. [Output Only] Contains the details of the ongoing failover. This message
+                # is not displayed if failover is NOT in progress.
+              &quot;failoverCompleteTimestamp&quot;: &quot;A String&quot;, # Output only. [Output Only] Timestamp of the failover completion.
+                  # Filled only if the failover is completed, in lastFailoverInfo.
+              &quot;failoverTrigger&quot;: &quot;A String&quot;, # Output only. [Output Only] Indicates if failover has been triggered automatically or
+                  # manually.
+              &quot;failoverTriggerTimestamp&quot;: &quot;A String&quot;, # Output only. [Output Only] Timestamp of the last failover trigger.
+              &quot;lastFailoverAttempt&quot;: { # Output only. [Output Only] Contains details of the last failed failover. This field
+                  # is filled only if the current failover is failing
+                &quot;errors&quot;: { # Output only. [Output Only] Encountered errors during the last attempt to process
+                    # failover.
+                &quot;timestamp&quot;: &quot;A String&quot;, # Output only. [Output Only] Show timestamp only if there is an error.RFC3339
+            &quot;lastFailoverInfo&quot;: { # Contains information about the current failover operation. # Output only. [Output Only] Contains the details of the last successful failover.
+            &quot;ongoingFailover&quot;: True or False, # Output only. [Output Only]  Indicates if the failover is currently in-progress.
+            &quot;primaryInstance&quot;: &quot;A String&quot;, # Output only. [Output Only] The URL to the instance that is intended to be primary at
+                # this moment. Primary instance will be changed at the very beginning of a
+                # failover operation.
+            &quot;primaryZone&quot;: &quot;A String&quot;, # Output only. [Output Only] The name of the zone that is intended to be primary at this
+                # moment. Primary zone will be changed at the very beginning of a failover
+                # operation. The zone may not be operational in the middle of a failover
+            &quot;readyForFailover&quot;: True or False, # Output only. [Output Only] Indicates if the resource is ready for initiating a
+                # failover to the secondary zone.
+            &quot;zoneStatus&quot;: { # Output only. [Output Only] Map of zone statuses.
+                # Key: name of the zone
+                # Value: ZoneStatus
+              &quot;a_key&quot;: { # Contains the status of a specific zone.
+                &quot;isPrimary&quot;: True or False, # Output only. [Output Only] Indicates if the zone is primary at this moment.
+                &quot;isZoneReady&quot;: True or False, # Output only. [Output Only] Indicates if the zone is ready for initiating a failover.
+                &quot;lastError&quot;: { # Contains details of the last failed operation. # Output only. [Output Only] This field is filled only if the current operation is
+                    # failing.
+                  &quot;errors&quot;: { # Output only. [Output Only] Encountered errors.
+          &quot;zoneConfigurations&quot;: { # Map of zone configurations
+              # Value: ZoneConfiguration
+            &quot;a_key&quot;: { # Config for a zone that the HaController may use for running the VM
+              &quot;nodeAffinities&quot;: [ # A set of node affinity configurations. Refer toConfiguring node
+                  # affinity for more information.
+                  # Overrides reservationAffinity.
+                { # Node Affinity: the configuration of desired nodes onto which the
+                    #  Instance could be scheduled.
+                    #  This message should be an exact copy of the Instances representation
+                    #  of NodeAffinity.
+                    # LINT.IfChange(HaControllerNodeAffinityMixer)
+                  &quot;key&quot;: &quot;A String&quot;, # Corresponds to the label key of Node resource.
+                  &quot;operator&quot;: &quot;A String&quot;, # Defines the operation of node selection. Valid operators areIN for affinity and NOT_IN for anti-affinity.
+                  &quot;values&quot;: [ # Corresponds to the label values of Node resource.
+              &quot;reservationAffinity&quot;: { # Specifies the reservations that this instance can consume from. # Specifies the reservations that the instance can consume from.
+                  # This message should be an exact copy of the Instances representation
+                  # of AllocationAffinity.
+                  # LINT.IfChange(HaControllerAllocationAffinityMixer)
+                &quot;consumeReservationType&quot;: &quot;A String&quot;, # Specifies the type of reservation from which this instance can consume
+                    # resources: ANY_RESERVATION (default),SPECIFIC_RESERVATION, or NO_RESERVATION. See
+                    # Consuming reserved instances for examples.
+                &quot;key&quot;: &quot;A String&quot;, # Corresponds to the label key of a reservation resource. To target aSPECIFIC_RESERVATION by name, specifygoogleapis.com/reservation-name as the key and specify
+                    # the name of your reservation as its value.
+                &quot;values&quot;: [ # Corresponds to the label values of a reservation resource. This can be
+                    # either a name to a reservation in the same project or
+                    # &quot;projects/different-project/reservations/some-reservation-name&quot; to
+                    # target a shared reservation in the same zone but in a different
+                    # project.
+  &quot;kind&quot;: &quot;compute#haControllersAggregatedList&quot;, # Output only. [Output Only] Type of resource. Alwayscompute#haControllersAggregatedList for lists of
+      # HaControllers.
+    <code class="details" id="delete">delete(project, region, haController, requestId=None, x__xgafv=None)</code>
+  <pre>Deletes an HaController in the specified project.
+  haController: string, Name of the HaController resource to delete. (required)
+    <code class="details" id="failover">failover(project, region, haController, body=None, requestId=None, x__xgafv=None)</code>
+  <pre>Fails over a VM targeted by the specified HaController to the selected
+zone.
+  haController: string, ID of the HaController resource to update. (required)
+  &quot;failoverToZone&quot;: &quot;A String&quot;, # Name of the destination zone for the failover.
+  &quot;primaryZone&quot;: &quot;A String&quot;, # Name of the destination zone for the failover.
+      # Deprecated: use failover_to_zone instead.
+    <code class="details" id="get">get(project, region, haController, x__xgafv=None)</code>
+  <pre>Returns all the details of a specific HaController.
+  haController: string, Name of the HaController resource to return. (required)
+  <pre>Creates HaController in the specified project.
+  <pre>Lists all HaControllers in the specified project in the specified region.
+  &quot;id&quot;: &quot;A String&quot;, # Unique identifier for the resource; defined by the server.
+  &quot;items&quot;: [ # A list of HaControllers in the specified project and region.
+  &quot;nextPageToken&quot;: &quot;A String&quot;, # This token allows you to get the next page of results formaxResults, use the nextPageToken as a value for
+  &quot;selfLink&quot;: &quot;A String&quot;, # Output only. [Output only] Server-defined URL for this resource.
+  &quot;unreachables&quot;: [ # Output only. [Output only] Unreachable resources.
+  &quot;warning&quot;: { # Informational warning message.
+    <code class="details" id="patch">patch(project, region, haController, body=None, requestId=None, updateMask=None, x__xgafv=None)</code>
+  <pre>Updates HaController in the specified project.

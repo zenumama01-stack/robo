@@ -1,0 +1,65 @@
+<h1><a href="apigeeregistry_v1.html">Apigee Registry API</a> . <a href="apigeeregistry_v1.projects.html">projects</a> . <a href="apigeeregistry_v1.projects.locations.html">locations</a> . <a href="apigeeregistry_v1.projects.locations.apis.html">apis</a> . <a href="apigeeregistry_v1.projects.locations.apis.deployments.html">deployments</a></h1>
+  <code><a href="apigeeregistry_v1.projects.locations.apis.deployments.artifacts.html">artifacts()</a></code>
+  <code><a href="#create">create(parent, apiDeploymentId=None, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Creates a specified deployment.</p>
+<p class="firstline">Removes a specified deployment, all revisions, and all child resources (e.g., artifacts).</p>
+  <code><a href="#deleteRevision">deleteRevision(name, x__xgafv=None)</a></code></p>
+<p class="firstline">Deletes a revision of a deployment.</p>
+<p class="firstline">Returns a specified deployment.</p>
+<p class="firstline">Returns matching deployments.</p>
+  <code><a href="#listRevisions">listRevisions(name, filter=None, pageSize=None, pageToken=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Lists all revisions of a deployment. Revisions are returned in descending order of revision creation time.</p>
+<p class="firstline">Used to modify a specified deployment.</p>
+<p class="firstline">Sets the current revision to a specified prior revision. Note that this creates a new revision with a new revision ID.</p>
+  <code><a href="#tagRevision">tagRevision(name, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Adds a tag to a specified revision of a deployment.</p>
+    <code class="details" id="create">create(parent, apiDeploymentId=None, body=None, x__xgafv=None)</code>
+  <pre>Creates a specified deployment.
+  parent: string, Required. The parent, which owns this collection of deployments. Format: `projects/*/locations/*/apis/*` (required)
+{ # Describes a service running at particular address that provides a particular version of an API. ApiDeployments have revisions which correspond to different configurations of a single deployment in time. Revision identifiers should be updated whenever the served API spec or endpoint address changes.
+  &quot;accessGuidance&quot;: &quot;A String&quot;, # Text briefly describing how to access the endpoint. Changes to this value will not affect the revision.
+  &quot;apiSpecRevision&quot;: &quot;A String&quot;, # The full resource name (including revision ID) of the spec of the API being served by the deployment. Changes to this value will update the revision. Format: `projects/{project}/locations/{location}/apis/{api}/versions/{version}/specs/{spec@revision}`
+  &quot;createTime&quot;: &quot;A String&quot;, # Output only. Creation timestamp; when the deployment resource was created.
+  &quot;description&quot;: &quot;A String&quot;, # A detailed description.
+  &quot;displayName&quot;: &quot;A String&quot;, # Human-meaningful name.
+  &quot;endpointUri&quot;: &quot;A String&quot;, # The address where the deployment is serving. Changes to this value will update the revision.
+  &quot;externalChannelUri&quot;: &quot;A String&quot;, # The address of the external channel of the API (e.g., the Developer Portal). Changes to this value will not affect the revision.
+  &quot;intendedAudience&quot;: &quot;A String&quot;, # Text briefly identifying the intended audience of the API. Changes to this value will not affect the revision.
+  &quot;labels&quot;: { # Labels attach identifying metadata to resources. Identifying metadata can be used to filter list operations. Label keys and values can be no longer than 64 characters (Unicode codepoints), can only contain lowercase letters, numeric characters, underscores and dashes. International characters are allowed. No more than 64 user labels can be associated with one resource (System labels are excluded). See https://goo.gl/xmQnxf for more information and examples of labels. System reserved label keys are prefixed with `apigeeregistry.googleapis.com/` and cannot be changed.
+  &quot;revisionCreateTime&quot;: &quot;A String&quot;, # Output only. Revision creation timestamp; when the represented revision was created.
+  &quot;revisionId&quot;: &quot;A String&quot;, # Output only. Immutable. The revision ID of the deployment. A new revision is committed whenever the deployment contents are changed. The format is an 8-character hexadecimal string.
+  &quot;revisionUpdateTime&quot;: &quot;A String&quot;, # Output only. Last update timestamp: when the represented revision was last modified.
+  apiDeploymentId: string, Required. The ID to use for the deployment, which will become the final component of the deployment&#x27;s resource name. This value should be 4-63 characters, and valid characters are /a-z-/. Following AIP-162, IDs must not have the form of a UUID.
+  <pre>Removes a specified deployment, all revisions, and all child resources (e.g., artifacts).
+  name: string, Required. The name of the deployment to delete. Format: `projects/*/locations/*/apis/*/deployments/*` (required)
+  force: boolean, If set to true, any child resources will also be deleted. (Otherwise, the request will only work if there are no child resources.)
+    <code class="details" id="deleteRevision">deleteRevision(name, x__xgafv=None)</code>
+  <pre>Deletes a revision of a deployment.
+  name: string, Required. The name of the deployment revision to be deleted, with a revision ID explicitly included. Example: `projects/sample/locations/global/apis/petstore/deployments/prod@c7cfa2a8` (required)
+  <pre>Returns a specified deployment.
+  name: string, Required. The name of the deployment to retrieve. Format: `projects/*/locations/*/apis/*/deployments/*` (required)
+  <pre>Returns matching deployments.
+  filter: string, An expression that can be used to filter the list. Filters use the Common Expression Language and can refer to all message fields.
+  pageSize: integer, The maximum number of deployments to return. The service may return fewer than this value. If unspecified, at most 50 values will be returned. The maximum is 1000; values above 1000 will be coerced to 1000.
+  pageToken: string, A page token, received from a previous `ListApiDeployments` call. Provide this to retrieve the subsequent page. When paginating, all other parameters provided to `ListApiDeployments` must match the call that provided the page token.
+    { # Response message for ListApiDeployments.
+  &quot;apiDeployments&quot;: [ # The deployments from the specified publisher.
+    <code class="details" id="listRevisions">listRevisions(name, filter=None, pageSize=None, pageToken=None, x__xgafv=None)</code>
+  <pre>Lists all revisions of a deployment. Revisions are returned in descending order of revision creation time.
+  name: string, Required. The name of the deployment to list revisions for. (required)
+  pageSize: integer, The maximum number of revisions to return per page.
+  pageToken: string, The page token, received from a previous ListApiDeploymentRevisions call. Provide this to retrieve the subsequent page.
+    { # Response message for ListApiDeploymentRevisionsResponse.
+  &quot;apiDeployments&quot;: [ # The revisions of the deployment.
+  <pre>Used to modify a specified deployment.
+  allowMissing: boolean, If set to true, and the deployment is not found, a new deployment will be created. In this situation, `update_mask` is ignored.
+  updateMask: string, The list of fields to be updated. If omitted, all fields are updated that are set in the request message (fields set to default values are ignored). If an asterisk &quot;*&quot; is specified, all fields are updated, including fields that are unspecified/default in the request.
+  <pre>Sets the current revision to a specified prior revision. Note that this creates a new revision with a new revision ID.
+  name: string, Required. The deployment being rolled back. (required)
+{ # Request message for RollbackApiDeployment.
+  &quot;revisionId&quot;: &quot;A String&quot;, # Required. The revision ID to roll back to. It must be a revision of the same deployment. Example: `c7cfa2a8`
+    <code class="details" id="tagRevision">tagRevision(name, body=None, x__xgafv=None)</code>
+  <pre>Adds a tag to a specified revision of a deployment.
+  name: string, Required. The name of the deployment to be tagged, including the revision ID is optional. If a revision is not specified, it will tag the latest revision. (required)
+{ # Request message for TagApiDeploymentRevision.
+  &quot;tag&quot;: &quot;A String&quot;, # Required. The tag to apply. The tag should be at most 40 characters, and match `a-z{3,39}`.

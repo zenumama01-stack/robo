@@ -1,0 +1,18 @@
+<h1><a href="cloudkms_v1.html">Cloud Key Management Service (KMS) API</a> . <a href="cloudkms_v1.projects.html">projects</a> . <a href="cloudkms_v1.projects.locations.html">locations</a> . <a href="cloudkms_v1.projects.locations.retiredResources.html">retiredResources</a></h1>
+<p class="firstline">Retrieves a specific RetiredResource resource, which represents the record of a deleted CryptoKey.</p>
+<p class="firstline">Lists the RetiredResources which are the records of deleted CryptoKeys. RetiredResources prevent the reuse of these resource names after deletion.</p>
+  <pre>Retrieves a specific RetiredResource resource, which represents the record of a deleted CryptoKey.
+  name: string, Required. The name of the RetiredResource to get. (required)
+    { # A RetiredResource resource represents the record of a deleted CryptoKey. Its purpose is to provide visibility into retained user data and to prevent reuse of these names for new CryptoKeys.
+  &quot;deleteTime&quot;: &quot;A String&quot;, # Output only. The time at which the original resource was deleted and this RetiredResource record was created.
+  &quot;name&quot;: &quot;A String&quot;, # Output only. Identifier. The resource name for this RetiredResource in the format `projects/*/locations/*/retiredResources/*`.
+  &quot;originalResource&quot;: &quot;A String&quot;, # Output only. The full resource name of the original CryptoKey that was deleted in the format `projects/*/locations/*/keyRings/*/cryptoKeys/*`.
+  &quot;resourceType&quot;: &quot;A String&quot;, # Output only. The resource type of the original deleted resource.
+  <pre>Lists the RetiredResources which are the records of deleted CryptoKeys. RetiredResources prevent the reuse of these resource names after deletion.
+  parent: string, Required. The project-specific location holding the RetiredResources, in the format `projects/*/locations/*`. (required)
+  pageSize: integer, Optional. Optional limit on the number of RetiredResources to be included in the response. Further RetiredResources can subsequently be obtained by including the ListRetiredResourcesResponse.next_page_token in a subsequent request. If unspecified, the server will pick an appropriate default.
+  pageToken: string, Optional. Optional pagination token, returned earlier via ListRetiredResourcesResponse.next_page_token.
+    { # Response message for KeyManagementService.ListRetiredResources.
+  &quot;nextPageToken&quot;: &quot;A String&quot;, # A token to retrieve the next page of results. Pass this value in ListRetiredResourcesRequest.page_token to retrieve the next page of results.
+  &quot;retiredResources&quot;: [ # The list of RetiredResources.
+  &quot;totalSize&quot;: &quot;A String&quot;, # The total number of RetiredResources that matched the query.

@@ -1,0 +1,25 @@
+<h1><a href="serviceusage_v1beta1.html">Service Usage API</a> . <a href="serviceusage_v1beta1.services.html">services</a> . <a href="serviceusage_v1beta1.services.consumerQuotaMetrics.html">consumerQuotaMetrics</a> . <a href="serviceusage_v1beta1.services.consumerQuotaMetrics.limits.html">limits</a> . <a href="serviceusage_v1beta1.services.consumerQuotaMetrics.limits.adminOverrides.html">adminOverrides</a></h1>
+  <code><a href="#create">create(parent, body=None, force=None, forceOnly=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Creates an admin override. An admin override is applied by an administrator of a parent folder or parent organization of the consumer receiving the override. An admin override is intended to limit the amount of quota the consumer can use out of the total quota pool allocated to all children of the folder or organization.</p>
+  <code><a href="#delete">delete(name, force=None, forceOnly=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Deletes an admin override.</p>
+<p class="firstline">Lists all admin overrides on this limit.</p>
+  <code><a href="#patch">patch(name, body=None, force=None, forceOnly=None, updateMask=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Updates an admin override.</p>
+    <code class="details" id="create">create(parent, body=None, force=None, forceOnly=None, x__xgafv=None)</code>
+  <pre>Creates an admin override. An admin override is applied by an administrator of a parent folder or parent organization of the consumer receiving the override. An admin override is intended to limit the amount of quota the consumer can use out of the total quota pool allocated to all children of the folder or organization.
+  parent: string, The resource name of the parent quota limit, returned by a ListConsumerQuotaMetrics or GetConsumerQuotaMetric call. An example name would be: `projects/123/services/compute.googleapis.com/consumerQuotaMetrics/compute.googleapis.com%2Fcpus/limits/%2Fproject%2Fregion` (required)
+  force: boolean, Whether to force the creation of the quota override. Setting the force parameter to &#x27;true&#x27; ignores all quota safety checks that would fail the request. QuotaSafetyCheck lists all such validations. If force is set to true, it is recommended to include a case id in &quot;X-Goog-Request-Reason&quot; header when sending the request.
+  forceOnly: string, The list of quota safety checks to ignore before the override mutation. Unlike &#x27;force&#x27; field that ignores all the quota safety checks, the &#x27;force_only&#x27; field ignores only the specified checks; other checks are still enforced. The &#x27;force&#x27; and &#x27;force_only&#x27; fields cannot both be set. If force_only is specified, it is recommended to include a case id in &quot;X-Goog-Request-Reason&quot; header when sending the request. (repeated)
+    <code class="details" id="delete">delete(name, force=None, forceOnly=None, x__xgafv=None)</code>
+  <pre>Deletes an admin override.
+  name: string, The resource name of the override to delete. An example name would be: `projects/123/services/compute.googleapis.com/consumerQuotaMetrics/compute.googleapis.com%2Fcpus/limits/%2Fproject%2Fregion/adminOverrides/4a3f2c1d` (required)
+  force: boolean, Whether to force the deletion of the quota override. Setting the force parameter to &#x27;true&#x27; ignores all quota safety checks that would fail the request. QuotaSafetyCheck lists all such validations. If force is set to true, it is recommended to include a case id in &quot;X-Goog-Request-Reason&quot; header when sending the request.
+  <pre>Lists all admin overrides on this limit.
+    { # Response message for ListAdminOverrides.
+  &quot;overrides&quot;: [ # Admin overrides on this limit.
+    <code class="details" id="patch">patch(name, body=None, force=None, forceOnly=None, updateMask=None, x__xgafv=None)</code>
+  <pre>Updates an admin override.
+  name: string, The resource name of the override to update. An example name would be: `projects/123/services/compute.googleapis.com/consumerQuotaMetrics/compute.googleapis.com%2Fcpus/limits/%2Fproject%2Fregion/adminOverrides/4a3f2c1d` (required)
+  force: boolean, Whether to force the update of the quota override. Setting the force parameter to &#x27;true&#x27; ignores all quota safety checks that would fail the request. QuotaSafetyCheck lists all such validations. If force is set to true, it is recommended to include a case id in &quot;X-Goog-Request-Reason&quot; header when sending the request.
+  updateMask: string, Update only the specified fields of the override. If unset, all fields will be updated.

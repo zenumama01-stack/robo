@@ -1,0 +1,16 @@
+<h1><a href="libraryagent_v1.html">Library Agent API</a> . <a href="libraryagent_v1.shelves.html">shelves</a></h1>
+  <code><a href="libraryagent_v1.shelves.books.html">books()</a></code>
+<p class="firstline">Returns the books Resource.</p>
+<p class="firstline">Gets a shelf. Returns NOT_FOUND if the shelf does not exist.</p>
+<p class="firstline">Lists shelves. The order is unspecified but deterministic. Newly created shelves will not necessarily be added to the end of this list.</p>
+  <pre>Gets a shelf. Returns NOT_FOUND if the shelf does not exist.
+  name: string, Required. The name of the shelf to retrieve. (required)
+    { # A Shelf contains a collection of books with a theme.
+  &quot;name&quot;: &quot;A String&quot;, # Output only. The resource name of the shelf. Shelf names have the form `shelves/{shelf_id}`. The name is ignored when creating a shelf.
+  &quot;theme&quot;: &quot;A String&quot;, # The theme of the shelf
+  <pre>Lists shelves. The order is unspecified but deterministic. Newly created shelves will not necessarily be added to the end of this list.
+  pageSize: integer, Requested page size. Server may return fewer shelves than requested. If unspecified, server will pick an appropriate default.
+  pageToken: string, A token identifying a page of results the server should return. Typically, this is the value of ListShelvesResponse.next_page_token returned from the previous call to `ListShelves` method.
+    { # Response message for LibraryAgent.ListShelves.
+  &quot;nextPageToken&quot;: &quot;A String&quot;, # A token to retrieve next page of results. Pass this value in the ListShelvesRequest.page_token field in the subsequent call to `ListShelves` method to retrieve the next page of results.
+  &quot;shelves&quot;: [ # The list of shelves.

@@ -1,0 +1,118 @@
+<h1><a href="compute_alpha.html">Compute Engine API</a> . <a href="compute_alpha.instanceGroups.html">instanceGroups</a></h1>
+  <code><a href="#addInstances">addInstances(project, zone, instanceGroup, body=None, requestId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Adds a list of instances to the specified instance group.  All of the</p>
+<p class="firstline">Retrieves the list of instance groups and sorts them by zone.</p>
+  <code><a href="#delete">delete(project, zone, instanceGroup, requestId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Deletes the specified instance group. The instances in the group are not</p>
+  <code><a href="#get">get(project, zone, instanceGroup, x__xgafv=None)</a></code></p>
+<p class="firstline">Returns the specified zonal instance group. Get a list of available zonal</p>
+<p class="firstline">Creates an instance group in the specified project using the</p>
+<p class="firstline">Retrieves the list of zonal instance group resources contained within the</p>
+  <code><a href="#listInstances">listInstances(project, zone, instanceGroup, body=None, filter=None, maxResults=None, orderBy=None, pageToken=None, returnPartialSuccess=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Lists the instances in the specified instance group.</p>
+  <code><a href="#listInstances_next">listInstances_next()</a></code></p>
+  <code><a href="#removeInstances">removeInstances(project, zone, instanceGroup, body=None, requestId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Removes one or more instances from the specified instance group, but does</p>
+  <code><a href="#setNamedPorts">setNamedPorts(project, zone, instanceGroup, body=None, requestId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Sets the named ports for the specified instance group.</p>
+    <code class="details" id="addInstances">addInstances(project, zone, instanceGroup, body=None, requestId=None, x__xgafv=None)</code>
+  <pre>Adds a list of instances to the specified instance group.  All of the
+instances in the instance group must be in the same network/subnetwork.
+Adding instances for more information.
+where the instance group is located. (required)
+  instanceGroup: string, The name of the instance group where you are adding instances. (required)
+  &quot;instances&quot;: [ # The list of instances to add to the instance group.
+      &quot;instance&quot;: &quot;A String&quot;, # The URL for a specific instance.
+          # @required compute.instancegroups.addInstances/removeInstances
+  <pre>Retrieves the list of instance groups and sorts them by zone.
+  &quot;items&quot;: { # A list of InstanceGroupsScopedList resources.
+    &quot;a_key&quot;: { # The name of the scope that contains this set of instance groups.
+      &quot;instanceGroups&quot;: [ # Output only. [Output Only] The list ofinstance
+          # groups that are contained in this scope.
+        { # Represents an Instance Group resource.
+            # Instance Groups can be used to configure a target forload
+            # Instance groups can either be managed or unmanaged.
+            # To create
+            # managed instance groups, use the instanceGroupManager orregionInstanceGroupManager resource instead.
+            # Use zonal unmanaged instance groups if you need to applyload
+            # balancing to groups of heterogeneous instances or if you need to manage
+            # the instances yourself. You cannot create regional unmanaged instance groups.
+            # For more information, readInstance
+            # groups.
+          &quot;creationTimestamp&quot;: &quot;A String&quot;, # Output only. [Output Only] The creation timestamp for this instance group inRFC3339
+          &quot;fingerprint&quot;: &quot;A String&quot;, # Output only. [Output Only] The fingerprint of the named ports. The system
+              # uses this fingerprint to detect conflicts when multiple users change the
+              # named ports concurrently.
+          &quot;id&quot;: &quot;A String&quot;, # Output only. [Output Only] A unique identifier for this instance group, generated
+              # by the server.
+          &quot;kind&quot;: &quot;compute#instanceGroup&quot;, # Output only. [Output Only] The resource type, which is alwayscompute#instanceGroup for instance groups.
+          &quot;name&quot;: &quot;A String&quot;, # The name of the instance group. The name must be 1-63 characters
+          &quot;namedPorts&quot;: [ # Optional. Assigns a name to a port number. For example:{name: &quot;http&quot;, port: 80}
+              # This
+              # allows the system to reference ports by the assigned name instead of a
+              # port number. Named ports can also contain multiple ports. For example:[{name: &quot;app1&quot;, port: 8080}, {name:
+              # &quot;app1&quot;, port: 8081}, {name: &quot;app2&quot;, port:
+              # 8082}]
+              # Named ports apply to all instances in this instance group.
+          &quot;network&quot;: &quot;A String&quot;, # [Output Only] The URL of the network to which all instances in the
+              # instance group belong. If your instance has multiple network interfaces,
+              # then the network and subnetwork fields only refer to the
+              # network and subnet used by your primary interface (nic0).
+              # where the instance group is located (for regional resources).
+          &quot;selfLink&quot;: &quot;A String&quot;, # Output only. [Output Only] The URL for this instance group. The server generates
+          &quot;size&quot;: 42, # Output only. [Output Only] The total number of instances in the instance group.
+          &quot;subnetwork&quot;: &quot;A String&quot;, # Output only. [Output Only] The URL of the subnetwork to which all instances in the
+              # where the instance group is located (for zonal resources).
+      &quot;warning&quot;: { # Output only. [Output Only] An informational warning that replaces the list of
+          # instance groups when the list is empty.
+  &quot;kind&quot;: &quot;compute#instanceGroupAggregatedList&quot;, # Output only. [Output Only] The resource type, which is alwayscompute#instanceGroupAggregatedList for aggregated lists of
+    <code class="details" id="delete">delete(project, zone, instanceGroup, requestId=None, x__xgafv=None)</code>
+  <pre>Deletes the specified instance group. The instances in the group are not
+deleted. Note that instance group must not belong to a backend service.
+  instanceGroup: string, The name of the instance group to delete. (required)
+    <code class="details" id="get">get(project, zone, instanceGroup, x__xgafv=None)</code>
+  <pre>Returns the specified zonal instance group. Get a list of available zonal
+instance groups by making a list() request.
+For managed instance groups, use theinstanceGroupManagers
+or regionInstanceGroupManagers
+methods instead.
+  instanceGroup: string, The name of the instance group. (required)
+  <pre>Creates an instance group in the specified project using the
+where you want to create the instance group. (required)
+  <pre>Retrieves the list of zonal instance group resources contained within the
+specified zone.
+    { # A list of InstanceGroup resources.
+  &quot;items&quot;: [ # A list of InstanceGroup resources.
+  &quot;kind&quot;: &quot;compute#instanceGroupList&quot;, # Output only. [Output Only] The resource type, which is alwayscompute#instanceGroupList for instance group lists.
+    <code class="details" id="listInstances">listInstances(project, zone, instanceGroup, body=None, filter=None, maxResults=None, orderBy=None, pageToken=None, returnPartialSuccess=None, x__xgafv=None)</code>
+  <pre>Lists the instances in the specified instance group.
+The orderBy query parameter is not supported.
+The filter query parameter is supported, but only for
+expressions that use `eq` (equal) or `ne` (not equal) operators.
+  instanceGroup: string, The name of the instance group from which you want to generate a list
+of included instances. (required)
+  &quot;instanceState&quot;: &quot;A String&quot;, # A filter for the state of the instances in the instance group. Valid
+      # options are ALL or RUNNING. If you do not specify
+      # this parameter the list includes all instances regardless of their state.
+  &quot;items&quot;: [ # A list of InstanceWithNamedPorts resources.
+      &quot;namedPorts&quot;: [ # Output only. [Output Only] The named ports that belong to this instance group.
+      &quot;status&quot;: &quot;A String&quot;, # Output only. [Output Only] The status of the instance.
+  &quot;kind&quot;: &quot;compute#instanceGroupsListInstances&quot;, # Output only. [Output Only] The resource type, which is alwayscompute#instanceGroupsListInstances for the list of instances
+      # in the specified instance group.
+    <code class="details" id="listInstances_next">listInstances_next()</code>
+    <code class="details" id="removeInstances">removeInstances(project, zone, instanceGroup, body=None, requestId=None, x__xgafv=None)</code>
+  <pre>Removes one or more instances from the specified instance group, but does
+not delete those instances.
+draining duration before the VM instance is removed or deleted.
+  instanceGroup: string, The name of the instance group where the specified instances will be
+removed. (required)
+  &quot;instances&quot;: [ # The list of instances to remove from the instance group.
+    <code class="details" id="setNamedPorts">setNamedPorts(project, zone, instanceGroup, body=None, requestId=None, x__xgafv=None)</code>
+  <pre>Sets the named ports for the specified instance group.
+  instanceGroup: string, The name of the instance group where the named ports are updated. (required)
+  &quot;fingerprint&quot;: &quot;A String&quot;, # The fingerprint of the named ports information for this instance group.
+      # Use this optional property to prevent conflicts when multiple users change
+      # the named ports settings concurrently. Obtain the fingerprint with theinstanceGroups.get
+      # do not overwrite changes that were applied from another concurrent request.
+      # A request with an incorrect fingerprint will fail with error412 conditionNotMet.
+  &quot;namedPorts&quot;: [ # The list of named ports to set for this instance group.

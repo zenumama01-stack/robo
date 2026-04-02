@@ -1,0 +1,164 @@
+          <h3>{{ eventName }}</h3>
+          <p class="header-subtitle">{{ record.SubmissionTitle || 'New Submission' }}</p>
+            <span class="submission-date">{{ record.SubmittedAt | date:'MMM d, y' }}</span>
+            <label for="event" class="form-label required">
+              Event
+              <a *ngIf="record.EventID"
+                 (click)="openEventRecord()"
+                 title="Open event record">
+            </label>
+              id="event"
+              name="event"
+              [(ngModel)]="record.EventID"
+              <option [value]="null" disabled>Select an event...</option>
+              <option *ngFor="let event of events" [value]="event.ID">
+                {{ event.Name }} ({{ event.StartDate | date:'MMM d, y' }})
+            <label for="title" class="form-label required">Submission Title</label>
+              [(ngModel)]="record.SubmissionTitle"
+              placeholder="Enter the title of your session or talk"
+              maxlength="500"
+              <label for="sessionFormat" class="form-label">Session Format</label>
+                id="sessionFormat"
+                name="sessionFormat"
+                [(ngModel)]="record.SessionFormat"
+                <option [value]="null">Select format...</option>
+                <option *ngFor="let format of sessionFormatOptions" [value]="format">
+                  {{ format }}
+              <label for="duration" class="form-label">Duration (minutes)</label>
+                type="number"
+                id="duration"
+                name="duration"
+                [(ngModel)]="record.Duration"
+                placeholder="e.g., 45"
+                min="0">
+              <label for="audienceLevel" class="form-label">Audience Level</label>
+                id="audienceLevel"
+                name="audienceLevel"
+                [(ngModel)]="record.TargetAudienceLevel"
+                <option [value]="null">Select level...</option>
+                <option *ngFor="let level of audienceLevelOptions" [value]="level">
+                  {{ level }}
+    <!-- AI Evaluation Section - Collapsible with special styling -->
+    <div class="form-card collapsible-card ai-evaluation-card">
+      <div class="collapsible-header ai-card-header" (click)="toggleSection('aiEvaluation')" role="button" tabindex="0">
+          <h3>AI Evaluation</h3>
+          <p>Automated analysis and scoring</p>
+        <div class="ai-status-indicator" [class.processed]="showAIEvaluation" [class.pending]="!showAIEvaluation">
+          <i [class]="showAIEvaluation ? 'fa fa-check-circle' : 'fa fa-clock'"></i>
+          <span>{{ showAIEvaluation ? 'Processed' : 'Not Yet Processed' }}</span>
+          <i [class]="sectionsExpanded.aiEvaluation ? 'fa fa-chevron-up' : 'fa fa-chevron-down'"></i>
+      <div class="collapsible-body ai-card-body" [class.collapsed]="!sectionsExpanded.aiEvaluation">
+        <!-- Not Processed State -->
+        <div *ngIf="!showAIEvaluation" class="ai-empty-state">
+            <i class="fa fa-brain"></i>
+          <h4>Awaiting AI Analysis</h4>
+          <p>This submission has not been evaluated by the AI system yet. Evaluation includes scoring, topic extraction, and quality assessment.</p>
+        <!-- Processed State -->
+        <div *ngIf="showAIEvaluation" class="ai-content-grid">
+          <!-- Score Card -->
+          <div class="ai-metric-card" *ngIf="record.AIEvaluationScore != null">
+              <span>Overall Score</span>
+            <div class="score-display-large" [ngClass]="aiScoreClass">
+              <div class="score-number">{{ record.AIEvaluationScore }}</div>
+            <div class="screening-result">
+              <span class="result-badge" [ngClass]="record.PassedInitialScreening ? 'passed' : 'failed'">
+                <i [class]="record.PassedInitialScreening ? 'fa fa-check-circle' : 'fa fa-times-circle'"></i>
+                {{ record.PassedInitialScreening ? 'Passed Screening' : 'Failed Screening' }}
+              <span *ngIf="!record.PassedInitialScreening && record.IsFixable" class="fixable-tag">
+                <i class="fa fa-wrench"></i> Fixable
+          <!-- Summary Card -->
+          <div class="ai-content-card" *ngIf="record.SubmissionSummary">
+              <span>AI Summary</span>
+            <div class="content-card-body">{{ record.SubmissionSummary }}</div>
+          <!-- Key Topics Card -->
+          <div class="ai-content-card" *ngIf="record.KeyTopics">
+              <i class="fa fa-tags"></i>
+              <span>Key Topics</span>
+                <span *ngFor="let topic of parseJsonArray(record.KeyTopics)" class="topic-badge">
+          <!-- Reasoning Card -->
+          <div class="ai-content-card" *ngIf="record.AIEvaluationReasoning">
+              <span>Evaluation Reasoning</span>
+            <div class="content-card-body">{{ record.AIEvaluationReasoning }}</div>
+          <!-- Failure Reasons Card -->
+          <div class="ai-content-card failure-card" *ngIf="record.FailureReasons">
+              <span>Issues Identified</span>
+              <div class="failure-list">
+                <div *ngFor="let reason of parseJsonArray(record.FailureReasons)" class="failure-item">
+                  <i class="fa fa-times-circle"></i>
+                  <span>{{ reason }}</span>
+    <!-- Submission Content Section - Collapsible -->
+      <div class="collapsible-header" (click)="toggleSection('content')" role="button" tabindex="0">
+          <i class="fa fa-file-text"></i>
+          <h3>Submission Content</h3>
+          <i [class]="sectionsExpanded.content ? 'fa fa-chevron-up' : 'fa fa-chevron-down'"></i>
+      <div class="collapsible-body" [class.collapsed]="!sectionsExpanded.content">
+            <label for="abstract" class="form-label required">Abstract</label>
+              id="abstract"
+              name="abstract"
+              [(ngModel)]="record.SubmissionAbstract"
+              placeholder="Enter the full abstract or proposal text"
+              rows="10"
+              required></textarea>
+    <!-- Supporting Materials Section - Collapsible -->
+      <div class="collapsible-header" (click)="toggleSection('materials')" role="button" tabindex="0">
+          <i class="fa fa-paperclip"></i>
+          <h3>Supporting Materials</h3>
+          <i [class]="sectionsExpanded.materials ? 'fa fa-chevron-up' : 'fa fa-chevron-down'"></i>
+      <div class="collapsible-body" [class.collapsed]="!sectionsExpanded.materials">
+            <label for="presentationUrl" class="form-label">Presentation File URL</label>
+                id="presentationUrl"
+                name="presentationUrl"
+                [(ngModel)]="record.PresentationFileURL"
+                placeholder="https://box.com/...">
+              <a *ngIf="record.PresentationFileURL && !EditMode"
+                 [href]="record.PresentationFileURL"
+          <div class="form-group" *ngIf="record.PresentationFileSummary">
+            <label class="form-label">Presentation Summary</label>
+            <div class="summary-box">{{ record.PresentationFileSummary }}</div>
+            <label for="specialReqs" class="form-label">Special Requirements</label>
+              id="specialReqs"
+              name="specialReqs"
+              [(ngModel)]="record.SpecialRequirements"
+              placeholder="Any AV equipment, accessibility needs, etc."
+              rows="3"></textarea>
+    <!-- Review and Decision Section - Collapsible -->
+    <div class="form-card collapsible-card" *ngIf="EditMode || record.ReviewNotes || showFinalDecision">
+      <div class="collapsible-header" (click)="toggleSection('reviewDecision')" role="button" tabindex="0">
+          <i class="fa fa-gavel"></i>
+          <h3>Review & Decision</h3>
+          <i [class]="sectionsExpanded.reviewDecision ? 'fa fa-chevron-up' : 'fa fa-chevron-down'"></i>
+      <div class="collapsible-body" [class.collapsed]="!sectionsExpanded.reviewDecision">
+          <!-- Human Review Section -->
+          <div class="form-section" *ngIf="EditMode || record.ReviewNotes">
+            <div class="form-section-title">Human Review Notes</div>
+              <label for="reviewNotes" class="form-label">Review Notes</label>
+                id="reviewNotes"
+                name="reviewNotes"
+                [(ngModel)]="record.ReviewNotes"
+                placeholder="Notes added by human reviewers during evaluation"
+          <!-- Final Decision Section -->
+          <div class="form-section" *ngIf="EditMode || showFinalDecision">
+            <div class="form-section-title">Final Decision</div>
+                <label for="finalDecision" class="form-label">Decision</label>
+                  id="finalDecision"
+                  name="finalDecision"
+                  [(ngModel)]="record.FinalDecision"
+                  <option [value]="null">No decision yet...</option>
+                  <option *ngFor="let decision of finalDecisionOptions" [value]="decision">
+                    {{ decision }}
+                <label for="decisionDate" class="form-label">Decision Date</label>
+                  id="decisionDate"
+                  name="decisionDate"
+                  [ngModel]="record.FinalDecisionDate | date:'yyyy-MM-ddTHH:mm'"
+                  (ngModelChange)="onDecisionDateChange($event)"
+              <label for="decisionReasoning" class="form-label">Decision Reasoning</label>
+                id="decisionReasoning"
+                name="decisionReasoning"
+                [(ngModel)]="record.FinalDecisionReasoning"
+                placeholder="Explanation for the final decision"
+            <span class="metadata-label">Submitted:</span>
+            <span class="metadata-value">{{ record.SubmittedAt | date:'medium' }}</span>
+          <div class="metadata-item" *ngIf="record.TypeformResponseID">
+            <span class="metadata-label">Typeform ID:</span>
+            <span class="metadata-value">{{ record.TypeformResponseID }}</span>
+    <p>Loading submission data...</p>

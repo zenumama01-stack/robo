@@ -1,0 +1,88 @@
+  <title>googleapiclient.model.BaseModel</title>
+        <a href="googleapiclient.model-module.html">Module&nbsp;model</a> ::
+        Class&nbsp;BaseModel
+            >]&nbsp;|&nbsp;<a href="googleapiclient.model.BaseModel-class.html"
+<h1 class="epydoc">Class BaseModel</h1><p class="nomargin-top"><span class="codelink"><a href="googleapiclient.model-pysrc.html#BaseModel">source&nbsp;code</a></span></p>
+     <a href="googleapiclient.model.Model-class.html">Model</a> --+
+            <strong class="uidshort">BaseModel</strong>
+<li><a href="googleapiclient.model.JsonModel-class.html">JsonModel</a></li><li>, <a href="googleapiclient.model.ProtocolBufferModel-class.html">ProtocolBufferModel</a></li>  </ul>
+Subclasses should provide implementations for the &quot;serialize&quot; and
+&quot;deserialize&quot; methods, as well as values for the following class attributes.
+  accept: The value to use for the HTTP Accept header.
+  content_type: The value to use for the HTTP Content-type header.
+  no_content_response: The value to return when deserializing a 204 &quot;No
+      Content&quot; response.
+  alt_param: The value to supply as the &quot;alt&quot; query parameter for requests.
+          <td><span class="summary-sig"><a name="_log_request"></a><span class="summary-sig-name">_log_request</span>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">headers</span>,
+        <span class="summary-sig-arg">path_params</span>,
+        <span class="summary-sig-arg">query</span>,
+        <span class="summary-sig-arg">body</span>)</span><br />
+      Logs debugging information about the request if requested.</td>
+            <span class="codelink"><a href="googleapiclient.model-pysrc.html#BaseModel._log_request">source&nbsp;code</a></span>
+          <td><span class="summary-sig"><a href="googleapiclient.model.BaseModel-class.html#request" class="summary-sig-name">request</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">query_params</span>,
+        <span class="summary-sig-arg">body_value</span>)</span><br />
+      Updates outgoing requests with a serialized body.</td>
+            <span class="codelink"><a href="googleapiclient.model-pysrc.html#BaseModel.request">source&nbsp;code</a></span>
+          <td><span class="summary-sig"><a href="googleapiclient.model.BaseModel-class.html#_build_query" class="summary-sig-name" onclick="show_private();">_build_query</a>(<span class="summary-sig-arg">self</span>,
+      Builds a query string.</td>
+            <span class="codelink"><a href="googleapiclient.model-pysrc.html#BaseModel._build_query">source&nbsp;code</a></span>
+          <td><span class="summary-sig"><a name="_log_response"></a><span class="summary-sig-name">_log_response</span>(<span class="summary-sig-arg">self</span>,
+      Logs debugging information about the response if requested.</td>
+            <span class="codelink"><a href="googleapiclient.model-pysrc.html#BaseModel._log_response">source&nbsp;code</a></span>
+          <td><span class="summary-sig"><a href="googleapiclient.model.BaseModel-class.html#response" class="summary-sig-name">response</a>(<span class="summary-sig-arg">self</span>,
+      Convert the response wire format into a Python object.</td>
+            <span class="codelink"><a href="googleapiclient.model-pysrc.html#BaseModel.response">source&nbsp;code</a></span>
+          <td><span class="summary-sig"><a href="googleapiclient.model.BaseModel-class.html#serialize" class="summary-sig-name">serialize</a>(<span class="summary-sig-arg">self</span>,
+      Perform the actual Python object serialization.</td>
+            <span class="codelink"><a href="googleapiclient.model-pysrc.html#BaseModel.serialize">source&nbsp;code</a></span>
+          <td><span class="summary-sig"><a href="googleapiclient.model.BaseModel-class.html#deserialize" class="summary-sig-name">deserialize</a>(<span class="summary-sig-arg">self</span>,
+      Perform the actual deserialization from response string to Python
+object.</td>
+            <span class="codelink"><a href="googleapiclient.model-pysrc.html#BaseModel.deserialize">source&nbsp;code</a></span>
+        <a name="accept"></a><span class="summary-name">accept</span> = <code title="None">None</code>
+        <a name="content_type"></a><span class="summary-name">content_type</span> = <code title="None">None</code>
+        <a name="no_content_response"></a><span class="summary-name">no_content_response</span> = <code title="None">None</code>
+        <a name="alt_param"></a><span class="summary-name">alt_param</span> = <code title="None">None</code>
+<a name="request"></a>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">request</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">headers</span>,
+        <span class="sig-arg">path_params</span>,
+        <span class="sig-arg">query_params</span>,
+        <span class="sig-arg">body_value</span>)</span>
+    ><span class="codelink"><a href="googleapiclient.model-pysrc.html#BaseModel.request">source&nbsp;code</a></span>&nbsp;
+Updates outgoing requests with a serialized body.
+  headers: dict, request headers
+  path_params: dict, parameters that appear in the request path
+  query_params: dict, parameters that appear in the query
+  body_value: object, the request body as a Python object, which must be
+              serializable by json.
+  A tuple of (headers, path_params, query, body)
+  query: string, query part of the request URI
+  body: string, the body serialized as JSON
+        <a href="googleapiclient.model.Model-class.html#request">Model.request</a>
+<a name="_build_query"></a>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">_build_query</span>(<span class="sig-arg">self</span>,
+    ><span class="codelink"><a href="googleapiclient.model-pysrc.html#BaseModel._build_query">source&nbsp;code</a></span>&nbsp;
+Builds a query string.
+  params: dict, the query parameters
+  The query parameters properly encoded into an HTTP URI query string.
+<a name="response"></a>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">response</span>(<span class="sig-arg">self</span>,
+    ><span class="codelink"><a href="googleapiclient.model-pysrc.html#BaseModel.response">source&nbsp;code</a></span>&nbsp;
+Convert the response wire format into a Python object.
+  resp: httplib2.Response, the HTTP response headers and status
+  content: string, the body of the HTTP response
+  The body de-serialized as a Python object.
+  googleapiclient.errors.HttpError if a non 2xx response is received.
+        <a href="googleapiclient.model.Model-class.html#response">Model.response</a>
+<a name="serialize"></a>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">serialize</span>(<span class="sig-arg">self</span>,
+    ><span class="codelink"><a href="googleapiclient.model-pysrc.html#BaseModel.serialize">source&nbsp;code</a></span>&nbsp;
+Perform the actual Python object serialization.
+  body_value: object, the request body as a Python object.
+  string, the body in serialized form.
+<a name="deserialize"></a>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">deserialize</span>(<span class="sig-arg">self</span>,
+    ><span class="codelink"><a href="googleapiclient.model-pysrc.html#BaseModel.deserialize">source&nbsp;code</a></span>&nbsp;

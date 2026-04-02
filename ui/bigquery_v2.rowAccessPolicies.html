@@ -1,0 +1,50 @@
+<h1><a href="bigquery_v2.html">BigQuery API</a> . <a href="bigquery_v2.rowAccessPolicies.html">rowAccessPolicies</a></h1>
+  <code><a href="#batchDelete">batchDelete(projectId, datasetId, tableId, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Deletes provided row access policies.</p>
+  <code><a href="#delete">delete(projectId, datasetId, tableId, policyId, force=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Deletes a row access policy.</p>
+  <code><a href="#get">get(projectId, datasetId, tableId, policyId, x__xgafv=None)</a></code></p>
+<p class="firstline">Gets the specified row access policy by policy ID.</p>
+  <code><a href="#insert">insert(projectId, datasetId, tableId, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Creates a row access policy.</p>
+  <code><a href="#list">list(projectId, datasetId, tableId, pageSize=None, pageToken=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Lists all row access policies on the specified table.</p>
+  <code><a href="#update">update(projectId, datasetId, tableId, policyId, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Updates a row access policy.</p>
+    <code class="details" id="batchDelete">batchDelete(projectId, datasetId, tableId, body=None, x__xgafv=None)</code>
+  <pre>Deletes provided row access policies.
+  projectId: string, Required. Project ID of the table to delete the row access policies. (required)
+  datasetId: string, Required. Dataset ID of the table to delete the row access policies. (required)
+  tableId: string, Required. Table ID of the table to delete the row access policies. (required)
+{ # Request message for the BatchDeleteRowAccessPoliciesRequest method.
+  &quot;force&quot;: True or False, # If set to true, it deletes the row access policy even if it&#x27;s the last row access policy on the table and the deletion will widen the access rather narrowing it.
+  &quot;policyIds&quot;: [ # Required. Policy IDs of the row access policies.
+    <code class="details" id="delete">delete(projectId, datasetId, tableId, policyId, force=None, x__xgafv=None)</code>
+  <pre>Deletes a row access policy.
+  projectId: string, Required. Project ID of the table to delete the row access policy. (required)
+  datasetId: string, Required. Dataset ID of the table to delete the row access policy. (required)
+  tableId: string, Required. Table ID of the table to delete the row access policy. (required)
+  policyId: string, Required. Policy ID of the row access policy. (required)
+  force: boolean, If set to true, it deletes the row access policy even if it&#x27;s the last row access policy on the table and the deletion will widen the access rather narrowing it.
+    <code class="details" id="get">get(projectId, datasetId, tableId, policyId, x__xgafv=None)</code>
+  <pre>Gets the specified row access policy by policy ID.
+  projectId: string, Required. Project ID of the table to get the row access policy. (required)
+  datasetId: string, Required. Dataset ID of the table to get the row access policy. (required)
+  tableId: string, Required. Table ID of the table to get the row access policy. (required)
+    { # Represents access on a subset of rows on the specified table, defined by its filter predicate. Access to the subset of rows is controlled by its IAM policy.
+  &quot;creationTime&quot;: &quot;A String&quot;, # Output only. The time when this row access policy was created, in milliseconds since the epoch.
+  &quot;filterPredicate&quot;: &quot;A String&quot;, # Required. A SQL boolean expression that represents the rows defined by this row access policy, similar to the boolean expression in a WHERE clause of a SELECT query on a table. References to other tables, routines, and temporary functions are not supported. Examples: region=&quot;EU&quot; date_field = CAST(&#x27;2019-9-27&#x27; as DATE) nullable_field is not NULL numeric_field BETWEEN 1.0 AND 5.0
+  &quot;grantees&quot;: [ # Optional. Input only. The optional list of iam_member users or groups that specifies the initial members that the row-level access policy should be created with. grantees types: - &quot;user:alice@example.com&quot;: An email address that represents a specific Google account. - &quot;serviceAccount:my-other-app@appspot.gserviceaccount.com&quot;: An email address that represents a service account. - &quot;group:admins@example.com&quot;: An email address that represents a Google group. - &quot;domain:example.com&quot;:The Google Workspace domain (primary) that represents all the users of that domain. - &quot;allAuthenticatedUsers&quot;: A special identifier that represents all service accounts and all users on the internet who have authenticated with a Google Account. This identifier includes accounts that aren&#x27;t connected to a Google Workspace or Cloud Identity domain, such as personal Gmail accounts. Users who aren&#x27;t authenticated, such as anonymous visitors, aren&#x27;t included. - &quot;allUsers&quot;:A special identifier that represents anyone who is on the internet, including authenticated and unauthenticated users. Because BigQuery requires authentication before a user can access the service, allUsers includes only authenticated users.
+  &quot;lastModifiedTime&quot;: &quot;A String&quot;, # Output only. The time when this row access policy was last modified, in milliseconds since the epoch.
+  &quot;rowAccessPolicyReference&quot;: { # Id path of a row access policy. # Required. Reference describing the ID of this row access policy.
+    <code class="details" id="insert">insert(projectId, datasetId, tableId, body=None, x__xgafv=None)</code>
+  <pre>Creates a row access policy.
+    <code class="details" id="list">list(projectId, datasetId, tableId, pageSize=None, pageToken=None, x__xgafv=None)</code>
+  <pre>Lists all row access policies on the specified table.
+  projectId: string, Required. Project ID of the row access policies to list. (required)
+  datasetId: string, Required. Dataset ID of row access policies to list. (required)
+  tableId: string, Required. Table ID of the table to list row access policies. (required)
+    { # Response message for the ListRowAccessPolicies method.
+  &quot;rowAccessPolicies&quot;: [ # Row access policies on the requested table.
+    <code class="details" id="update">update(projectId, datasetId, tableId, policyId, body=None, x__xgafv=None)</code>
+  <pre>Updates a row access policy.

@@ -1,0 +1,31 @@
+<h1><a href="discoveryengine_v1alpha.html">Discovery Engine API</a> . <a href="discoveryengine_v1alpha.projects.html">projects</a> . <a href="discoveryengine_v1alpha.projects.locations.html">locations</a> . <a href="discoveryengine_v1alpha.projects.locations.sampleQuerySets.html">sampleQuerySets</a> . <a href="discoveryengine_v1alpha.projects.locations.sampleQuerySets.sampleQueries.html">sampleQueries</a></h1>
+  <code><a href="#create">create(parent, body=None, sampleQueryId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Creates a SampleQuery</p>
+<p class="firstline">Deletes a SampleQuery.</p>
+<p class="firstline">Gets a SampleQuery.</p>
+<p class="firstline">Bulk import of multiple SampleQuerys. Sample queries that already exist may be deleted. Note: It is possible for a subset of the SampleQuerys to be successfully imported.</p>
+<p class="firstline">Gets a list of SampleQuerys.</p>
+<p class="firstline">Updates a SampleQuery.</p>
+    <code class="details" id="create">create(parent, body=None, sampleQueryId=None, x__xgafv=None)</code>
+  <pre>Creates a SampleQuery
+  parent: string, Required. The parent resource name, such as `projects/{project}/locations/{location}/sampleQuerySets/{sampleQuerySet}`. (required)
+{ # Sample Query captures metadata to be used for evaluation.
+  sampleQueryId: string, Required. The ID to use for the SampleQuery, which will become the final component of the SampleQuery.name. If the caller does not have permission to create the SampleQuery, regardless of whether or not it exists, a `PERMISSION_DENIED` error is returned. This field must be unique among all SampleQuerys with the same parent. Otherwise, an `ALREADY_EXISTS` error is returned. This field must conform to [RFC-1034](https://tools.ietf.org/html/rfc1034) standard with a length limit of 63 characters. Otherwise, an `INVALID_ARGUMENT` error is returned.
+  <pre>Deletes a SampleQuery.
+  name: string, Required. Full resource name of SampleQuery, such as `projects/{project}/locations/{location}/sampleQuerySets/{sample_query_set}/sampleQueries/{sample_query}`. If the caller does not have permission to delete the SampleQuery, regardless of whether or not it exists, a `PERMISSION_DENIED` error is returned. If the SampleQuery to delete does not exist, a `NOT_FOUND` error is returned. (required)
+  <pre>Gets a SampleQuery.
+  name: string, Required. Full resource name of SampleQuery, such as `projects/{project}/locations/{location}/sampleQuerySets/{sample_query_set}/sampleQueries/{sample_query}`. If the caller does not have permission to access the SampleQuery, regardless of whether or not it exists, a PERMISSION_DENIED error is returned. If the requested SampleQuery does not exist, a NOT_FOUND error is returned. (required)
+  <pre>Bulk import of multiple SampleQuerys. Sample queries that already exist may be deleted. Note: It is possible for a subset of the SampleQuerys to be successfully imported.
+  parent: string, Required. The parent sample query set resource name, such as `projects/{project}/locations/{location}/sampleQuerySets/{sampleQuerySet}`. If the caller does not have permission to list SampleQuerys under this sample query set, regardless of whether or not this sample query set exists, a `PERMISSION_DENIED` error is returned. (required)
+{ # Request message for SampleQueryService.ImportSampleQueries method.
+  &quot;inlineSource&quot;: { # The inline source for SampleQuerys. # The Inline source for sample query entries.
+    &quot;sampleQueries&quot;: [ # Required. A list of SampleQuerys to import. Max of 1000 items.
+  <pre>Gets a list of SampleQuerys.
+  pageSize: integer, Maximum number of SampleQuerys to return. If unspecified, defaults to 100. The maximum allowed value is 1000. Values above 1000 will be coerced to 1000. If this field is negative, an `INVALID_ARGUMENT` error is returned.
+  pageToken: string, A page token ListSampleQueriesResponse.next_page_token, received from a previous SampleQueryService.ListSampleQueries call. Provide this to retrieve the subsequent page. When paginating, all other parameters provided to SampleQueryService.ListSampleQueries must match the call that provided the page token. Otherwise, an `INVALID_ARGUMENT` error is returned.
+    { # Response message for SampleQueryService.ListSampleQueries method.
+  &quot;nextPageToken&quot;: &quot;A String&quot;, # A token that can be sent as ListSampleQueriesRequest.page_token to retrieve the next page. If this field is omitted, there are no subsequent pages.
+  &quot;sampleQueries&quot;: [ # The SampleQuerys.
+  <pre>Updates a SampleQuery.
+  name: string, Identifier. The full resource name of the sample query, in the format of `projects/{project}/locations/{location}/sampleQuerySets/{sample_query_set}/sampleQueries/{sample_query}`. This field must be a UTF-8 encoded string with a length limit of 1024 characters. (required)
+  updateMask: string, Indicates which fields in the provided imported &#x27;simple query&#x27; to update. If not set, will by default update all fields.

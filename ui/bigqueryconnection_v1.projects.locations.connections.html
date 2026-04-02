@@ -1,0 +1,86 @@
+<h1><a href="bigqueryconnection_v1.html">BigQuery Connection API</a> . <a href="bigqueryconnection_v1.projects.html">projects</a> . <a href="bigqueryconnection_v1.projects.locations.html">locations</a> . <a href="bigqueryconnection_v1.projects.locations.connections.html">connections</a></h1>
+  <code><a href="#create">create(parent, body=None, connectionId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Creates a new connection.</p>
+<p class="firstline">Deletes connection and associated credential.</p>
+<p class="firstline">Returns specified connection.</p>
+<p class="firstline">Returns a list of connections in the given project.</p>
+<p class="firstline">Updates the specified connection. For security reasons, also resets credential if connection properties are in the update field mask.</p>
+    <code class="details" id="create">create(parent, body=None, connectionId=None, x__xgafv=None)</code>
+  <pre>Creates a new connection.
+  parent: string, Required. Parent resource name. Must be in the format `projects/{project_id}/locations/{location_id}` (required)
+{ # Configuration parameters to establish connection with an external data source, except the credential attributes.
+  &quot;aws&quot;: { # Connection properties specific to Amazon Web Services (AWS). # Amazon Web Services (AWS) properties.
+    &quot;accessRole&quot;: { # Authentication method for Amazon Web Services (AWS) that uses Google owned Google service account to assume into customer&#x27;s AWS IAM Role. # Authentication using Google owned service account to assume into customer&#x27;s AWS IAM Role.
+      &quot;iamRoleId&quot;: &quot;A String&quot;, # The user’s AWS IAM Role that trusts the Google-owned AWS IAM user Connection.
+      &quot;identity&quot;: &quot;A String&quot;, # A unique Google-owned and Google-generated identity for the Connection. This identity will be used to access the user&#x27;s AWS IAM Role.
+  &quot;azure&quot;: { # Container for connection properties specific to Azure. # Azure properties.
+    &quot;application&quot;: &quot;A String&quot;, # Output only. The name of the Azure Active Directory Application.
+    &quot;clientId&quot;: &quot;A String&quot;, # Output only. The client id of the Azure Active Directory Application.
+    &quot;customerTenantId&quot;: &quot;A String&quot;, # The id of customer&#x27;s directory that host the data.
+    &quot;federatedApplicationClientId&quot;: &quot;A String&quot;, # The client ID of the user&#x27;s Azure Active Directory Application used for a federated connection.
+    &quot;identity&quot;: &quot;A String&quot;, # Output only. A unique Google-owned and Google-generated identity for the Connection. This identity will be used to access the user&#x27;s Azure Active Directory Application.
+    &quot;objectId&quot;: &quot;A String&quot;, # Output only. The object id of the Azure Active Directory Application.
+    &quot;redirectUri&quot;: &quot;A String&quot;, # The URL user will be redirected to after granting consent during connection setup.
+  &quot;cloudResource&quot;: { # Container for connection properties for delegation of access to GCP resources. # Cloud Resource properties.
+    &quot;serviceAccountId&quot;: &quot;A String&quot;, # Output only. The account ID of the service created for the purpose of this connection. The service account does not have any permissions associated with it when it is created. After creation, customers delegate permissions to the service account. When the connection is used in the context of an operation in BigQuery, the service account will be used to connect to the desired resources in GCP. The account ID is in the form of: @gcp-sa-bigquery-cloudresource.iam.gserviceaccount.com
+  &quot;cloudSpanner&quot;: { # Connection properties specific to Cloud Spanner. # Cloud Spanner properties.
+    &quot;database&quot;: &quot;A String&quot;, # Cloud Spanner database in the form `project/instance/database&#x27;
+    &quot;databaseRole&quot;: &quot;A String&quot;, # Optional. Cloud Spanner database role for fine-grained access control. The Cloud Spanner admin should have provisioned the database role with appropriate permissions, such as `SELECT` and `INSERT`. Other users should only use roles provided by their Cloud Spanner admins. For more details, see [About fine-grained access control] (https://cloud.google.com/spanner/docs/fgac-about). REQUIRES: The database role name must start with a letter, and can only contain letters, numbers, and underscores.
+    &quot;maxParallelism&quot;: 42, # Allows setting max parallelism per query when executing on Spanner independent compute resources. If unspecified, default values of parallelism are chosen that are dependent on the Cloud Spanner instance configuration. REQUIRES: `use_parallelism` must be set. REQUIRES: `use_data_boost` must be set.
+    &quot;useDataBoost&quot;: True or False, # If set, the request will be executed via Spanner independent compute resources. REQUIRES: `use_parallelism` must be set.
+    &quot;useParallelism&quot;: True or False, # If parallelism should be used when reading from Cloud Spanner
+    &quot;useServerlessAnalytics&quot;: True or False, # Deprecated: prefer use_data_boost instead. If the serverless analytics service should be used to read data from Cloud Spanner. Note: `use_parallelism` must be set when using serverless analytics.
+  &quot;cloudSql&quot;: { # Connection properties specific to the Cloud SQL. # Cloud SQL properties.
+    &quot;credential&quot;: { # Credential info for the Cloud SQL. # Input only. Cloud SQL credential.
+      &quot;password&quot;: &quot;A String&quot;, # The password for the credential.
+      &quot;username&quot;: &quot;A String&quot;, # The username for the credential.
+    &quot;database&quot;: &quot;A String&quot;, # Database name.
+    &quot;instanceId&quot;: &quot;A String&quot;, # Cloud SQL instance ID in the form `project:location:instance`.
+    &quot;serviceAccountId&quot;: &quot;A String&quot;, # Output only. The account ID of the service used for the purpose of this connection. When the connection is used in the context of an operation in BigQuery, this service account will serve as the identity being used for connecting to the CloudSQL instance specified in this connection.
+    &quot;type&quot;: &quot;A String&quot;, # Type of the Cloud SQL database.
+  &quot;configuration&quot;: { # Represents concrete parameter values for Connector Configuration. # Optional. Connector configuration.
+    &quot;asset&quot;: { # Data Asset - a resource within instance of the system, reachable under specified endpoint. For example a database name in a SQL DB. # Data asset.
+      &quot;database&quot;: &quot;A String&quot;, # Name of the database.
+      &quot;googleCloudResource&quot;: &quot;A String&quot;, # Full Google Cloud resource name - https://cloud.google.com/apis/design/resource_names#full_resource_name. Example: `//library.googleapis.com/shelves/shelf1/books/book2`
+    &quot;authentication&quot;: { # Client authentication. # Client authentication.
+      &quot;serviceAccount&quot;: &quot;A String&quot;, # Output only. Google-managed service account associated with this connection, e.g., `service-{project_number}@gcp-sa-bigqueryconnection.iam.gserviceaccount.com`. BigQuery jobs using this connection will act as `service_account` identity while connecting to the datasource.
+      &quot;usernamePassword&quot;: { # Username and Password authentication. # Username/password authentication.
+        &quot;password&quot;: { # Secret value parameter. # Required. Password.
+          &quot;plaintext&quot;: &quot;A String&quot;, # Input only. Secret as plaintext.
+          &quot;secretType&quot;: &quot;A String&quot;, # Output only. Indicates type of secret. Can be used to check type of stored secret value even if it&#x27;s `INPUT_ONLY`.
+    &quot;connectorId&quot;: &quot;A String&quot;, # Required. Immutable. The ID of the Connector these parameters are configured for.
+    &quot;endpoint&quot;: { # Remote endpoint specification. # Specifies how to reach the remote system this connection is pointing to.
+      &quot;hostPort&quot;: &quot;A String&quot;, # Host and port in a format of `hostname:port` as defined in https://www.ietf.org/rfc/rfc3986.html#section-3.2.2 and https://www.ietf.org/rfc/rfc3986.html#section-3.2.3.
+    &quot;network&quot;: { # Network related configuration. # Networking configuration.
+      &quot;privateServiceConnect&quot;: { # Private Service Connect configuration. # Private Service Connect networking configuration.
+        &quot;networkAttachment&quot;: &quot;A String&quot;, # Required. Network Attachment name in the format of `projects/{project}/regions/{region}/networkAttachments/{networkattachment}`.
+  &quot;creationTime&quot;: &quot;A String&quot;, # Output only. The creation timestamp of the connection.
+  &quot;description&quot;: &quot;A String&quot;, # User provided description.
+  &quot;friendlyName&quot;: &quot;A String&quot;, # User provided display name for the connection.
+  &quot;hasCredential&quot;: True or False, # Output only. True, if credential is configured for this connection.
+  &quot;kmsKeyName&quot;: &quot;A String&quot;, # Optional. The Cloud KMS key that is used for credentials encryption. If omitted, internal Google owned encryption keys are used. Example: `projects/[kms_project_id]/locations/[region]/keyRings/[key_region]/cryptoKeys/[key]`
+  &quot;lastModifiedTime&quot;: &quot;A String&quot;, # Output only. The last update timestamp of the connection.
+  &quot;name&quot;: &quot;A String&quot;, # Output only. The resource name of the connection in the form of: `projects/{project_id}/locations/{location_id}/connections/{connection_id}`
+  &quot;salesforceDataCloud&quot;: { # Connection properties specific to Salesforce DataCloud. This is intended for use only by Salesforce partner projects. # Optional. Salesforce DataCloud properties. This field is intended for use only by Salesforce partner projects. This field contains properties for your Salesforce DataCloud connection.
+    &quot;identity&quot;: &quot;A String&quot;, # Output only. A unique Google-owned and Google-generated service account identity for the connection.
+    &quot;instanceUri&quot;: &quot;A String&quot;, # The URL to the user&#x27;s Salesforce DataCloud instance.
+    &quot;tenantId&quot;: &quot;A String&quot;, # The ID of the user&#x27;s Salesforce tenant.
+  &quot;spark&quot;: { # Container for connection properties to execute stored procedures for Apache Spark. # Spark properties.
+    &quot;metastoreServiceConfig&quot;: { # Configuration of the Dataproc Metastore Service. # Optional. Dataproc Metastore Service configuration for the connection.
+      &quot;metastoreService&quot;: &quot;A String&quot;, # Optional. Resource name of an existing Dataproc Metastore service. Example: * `projects/[project_id]/locations/[region]/services/[service_id]`
+    &quot;serviceAccountId&quot;: &quot;A String&quot;, # Output only. The account ID of the service created for the purpose of this connection. The service account does not have any permissions associated with it when it is created. After creation, customers delegate permissions to the service account. When the connection is used in the context of a stored procedure for Apache Spark in BigQuery, the service account is used to connect to the desired resources in Google Cloud. The account ID is in the form of: bqcx--@gcp-sa-bigquery-consp.iam.gserviceaccount.com
+    &quot;sparkHistoryServerConfig&quot;: { # Configuration of the Spark History Server. # Optional. Spark History Server configuration for the connection.
+      &quot;dataprocCluster&quot;: &quot;A String&quot;, # Optional. Resource name of an existing Dataproc Cluster to act as a Spark History Server for the connection. Example: * `projects/[project_id]/regions/[region]/clusters/[cluster_name]`
+  connectionId: string, Optional. Connection id that should be assigned to the created connection.
+  <pre>Deletes connection and associated credential.
+  name: string, Required. Name of the deleted connection, for example: `projects/{project_id}/locations/{location_id}/connections/{connection_id}` (required)
+  <pre>Returns specified connection.
+  name: string, Required. Name of the requested connection, for example: `projects/{project_id}/locations/{location_id}/connections/{connection_id}` (required)
+  <pre>Returns a list of connections in the given project.
+  parent: string, Required. Parent resource name. Must be in the form: `projects/{project_id}/locations/{location_id}` (required)
+  pageSize: integer, Required. Page size.
+    { # The response for ConnectionService.ListConnections.
+  &quot;connections&quot;: [ # List of connections.
+  <pre>Updates the specified connection. For security reasons, also resets credential if connection properties are in the update field mask.
+  name: string, Required. Name of the connection to update, for example: `projects/{project_id}/locations/{location_id}/connections/{connection_id}` (required)
+  updateMask: string, Required. Update mask for the connection fields to be updated.

@@ -1,0 +1,46 @@
+<h1><a href="discoveryengine_v1alpha.html">Discovery Engine API</a> . <a href="discoveryengine_v1alpha.projects.html">projects</a></h1>
+  <code><a href="discoveryengine_v1alpha.projects.locations.html">locations()</a></code>
+  <code><a href="discoveryengine_v1alpha.projects.operations.html">operations()</a></code>
+<p class="firstline">Gets a Project. Returns NOT_FOUND when the project is not yet created.</p>
+<p class="firstline">Updates the editable settings of a Discovery Engine Project.</p>
+  <code><a href="#reportConsentChange">reportConsentChange(project, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Updates service terms for this project. This method can be used to retroactively accept the latest terms. Terms available for update: * [Terms for data use](https://cloud.google.com/retail/data-use-terms)</p>
+  <pre>Gets a Project. Returns NOT_FOUND when the project is not yet created.
+    { # Metadata and configurations for a Google Cloud project in the service.
+  &quot;configurableBillingStatus&quot;: { # Represents the currently effective configurable billing parameters. These values are derived from the customer&#x27;s subscription history stored internally and reflect the thresholds actively being used for billing purposes at the time of the GetProject call. This includes the start_time of the subscription and may differ from the values in `customer_provided_config` due to billing rules (e.g., scale-downs taking effect only at the start of a new month). # Output only. The current status of the project&#x27;s configurable billing.
+    &quot;effectiveIndexingCoreThreshold&quot;: &quot;A String&quot;, # Optional. The currently effective Indexing Core threshold. This is the threshold against which Indexing Core usage is compared for overage calculations.
+    &quot;effectiveSearchQpmThreshold&quot;: &quot;A String&quot;, # Optional. The currently effective Search QPM threshold in queries per minute. This is the threshold against which QPM usage is compared for overage calculations.
+    &quot;indexingCoreThresholdNextUpdateTime&quot;: &quot;A String&quot;, # Output only. The earliest next update time for the indexing core subscription threshold. This is based on the next_update_time returned by the underlying Cloud Billing Subscription V3 API. This field is populated only if an update indexing core subscription threshold request is succeeded.
+    &quot;searchQpmThresholdNextUpdateTime&quot;: &quot;A String&quot;, # Output only. The earliest next update time for the search QPM subscription threshold. This is based on the next_update_time returned by the underlying Cloud Billing Subscription V3 API. This field is populated only if an update QPM subscription threshold request is succeeded.
+    &quot;startTime&quot;: &quot;A String&quot;, # Optional. The start time of the currently active billing subscription.
+    &quot;terminateTime&quot;: &quot;A String&quot;, # Output only. The latest terminate effective time of search qpm and indexing core subscriptions.
+  &quot;createTime&quot;: &quot;A String&quot;, # Output only. The timestamp when this project is created.
+  &quot;customerProvidedConfig&quot;: { # Customer provided configurations. # Optional. Customer provided configurations.
+    &quot;notebooklmConfig&quot;: { # Configuration for NotebookLM. # Optional. Configuration for NotebookLM settings.
+      &quot;dataProtectionPolicy&quot;: { # Data protection policy config for NotebookLM. # Optional. Specifies the data protection policy for NotebookLM.
+        &quot;sensitiveDataProtectionPolicy&quot;: { # Specifies a Sensitive Data Protection (https://cloud.google.com/sensitive-data-protection/docs/sensitive-data-protection-overview) policy. # Optional. The sensitive data protection policy.
+          &quot;policy&quot;: &quot;A String&quot;, # Optional. The Sensitive Data Protection policy resource name.
+      &quot;modelArmorConfig&quot;: { # Configuration for customer defined Model Armor templates to be used for sanitizing user prompts and LLM responses. # Model Armor configuration to be used for sanitizing user prompts and LLM responses.
+        &quot;responseTemplate&quot;: &quot;A String&quot;, # Optional. The resource name of the Model Armor Template for sanitizing LLM responses. Format: projects/{project}/locations/{location}/templates/{template_id} If not specified, no sanitization will be applied to the LLM response.
+        &quot;userPromptTemplate&quot;: &quot;A String&quot;, # Optional. The resource name of the Model Armor Template for sanitizing user prompts. Format: projects/{project}/locations/{location}/templates/{template_id} If not specified, no sanitization will be applied to the user prompt.
+      &quot;observabilityConfig&quot;: { # Observability config for a resource. # Optional. Observability config for NotebookLM.
+      &quot;optOutNotebookSharing&quot;: True or False, # Optional. Whether to disable the notebook sharing feature for the project. Default to false if not specified.
+  &quot;name&quot;: &quot;A String&quot;, # Output only. Full resource name of the project, for example `projects/{project}`. Note that when making requests, project number and project id are both acceptable, but the server will always respond in project number.
+  &quot;provisionCompletionTime&quot;: &quot;A String&quot;, # Output only. The timestamp when this project is successfully provisioned. Empty value means this project is still provisioning and is not ready for use.
+  &quot;serviceTermsMap&quot;: { # Output only. A map of terms of services. The key is the `id` of ServiceTerms.
+    &quot;a_key&quot;: { # Metadata about the terms of service.
+      &quot;acceptTime&quot;: &quot;A String&quot;, # The last time when the project agreed to the terms of service.
+      &quot;declineTime&quot;: &quot;A String&quot;, # The last time when the project declined or revoked the agreement to terms of service.
+      &quot;id&quot;: &quot;A String&quot;, # The unique identifier of this terms of service. Available terms: * `GA_DATA_USE_TERMS`: [Terms for data use](https://cloud.google.com/retail/data-use-terms). When using this as `id`, the acceptable version to provide is `2022-11-23`.
+      &quot;state&quot;: &quot;A String&quot;, # Whether the project has accepted/rejected the service terms or it is still pending.
+      &quot;version&quot;: &quot;A String&quot;, # The version string of the terms of service. For acceptable values, see the comments for id above.
+  <pre>Updates the editable settings of a Discovery Engine Project.
+  name: string, Output only. Full resource name of the project, for example `projects/{project}`. Note that when making requests, project number and project id are both acceptable, but the server will always respond in project number. (required)
+  updateMask: string, Optional. The list of fields to update. Supported fields: * `customer_provided_config` * `customer_provided_config.notebooklm_config.observability_config`
+    <code class="details" id="reportConsentChange">reportConsentChange(project, body=None, x__xgafv=None)</code>
+  <pre>Updates service terms for this project. This method can be used to retroactively accept the latest terms. Terms available for update: * [Terms for data use](https://cloud.google.com/retail/data-use-terms)
+  project: string, Required. Full resource name of a Project, such as `projects/{project_id_or_number}`. (required)
+{ # Request for ReportConsentChange method.
+  &quot;consentChangeAction&quot;: &quot;A String&quot;, # Required. Whether customer decides to accept or decline service term. At this moment, only accept action is supported.
+  &quot;serviceTermId&quot;: &quot;A String&quot;, # Required. The unique identifier of the terms of service to update. Available term ids: * `GA_DATA_USE_TERMS`: [Terms for data use](https://cloud.google.com/retail/data-use-terms). When using this service term id, the acceptable service_term_version to provide is `2022-11-23`.
+  &quot;serviceTermVersion&quot;: &quot;A String&quot;, # Required. The version string of the terms of service to update.

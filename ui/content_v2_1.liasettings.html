@@ -1,0 +1,40 @@
+<h1><a href="content_v2_1.html">Content API for Shopping</a> . <a href="content_v2_1.liasettings.html">liasettings</a></h1>
+<p class="firstline">Retrieves the list of accessible Business Profiles.</p>
+<p class="firstline">Requests access to a specified Business Profile.</p>
+<p class="firstline">Sets the inventory verification contact for the specified country.</p>
+  <code><a href="#setomnichannelexperience">setomnichannelexperience(merchantId, accountId, country=None, lsfType=None, pickupTypes=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Sets the omnichannel experience for the specified country. Only supported for merchants whose POS data provider is trusted to enable the corresponding experience. For more context, see these help articles [about LFP](https://support.google.com/merchants/answer/7676652) and [how to get started](https://support.google.com/merchants/answer/7676578) with it.</p>
+      &quot;gmbEmail&quot;: &quot;A String&quot;, # The Business Profile. Required only for RequestGmbAccess.
+              &quot;status&quot;: &quot;A String&quot;, # The status of the verification process for the About page. Supported values are: - &quot;`active`&quot; - &quot;`inactive`&quot; - &quot;`pending`&quot;
+            &quot;country&quot;: &quot;A String&quot;, # Required. CLDR country code (for example, &quot;US&quot;).
+            &quot;omnichannelExperience&quot;: { # Omnichannel experience details. # The omnichannel experience configured for this country.
+              &quot;country&quot;: &quot;A String&quot;, # The CLDR country code (for example, &quot;US&quot;).
+              &quot;lsfType&quot;: &quot;A String&quot;, # The Local Store Front (LSF) type for this country. Acceptable values are: - &quot;`ghlsf`&quot; (Google-Hosted Local Store Front) - &quot;`mhlsfBasic`&quot; (Merchant-Hosted Local Store Front Basic) - &quot;`mhlsfFull`&quot; (Merchant-Hosted Local Store Front Full) More details about these types can be found here.
+              &quot;pickupTypes&quot;: [ # The Pickup types for this country. Acceptable values are: - &quot;`pickupToday`&quot; - &quot;`pickupLater`&quot;
+      &quot;omnichannelExperience&quot;: { # Omnichannel experience details. # The omnichannel experience for a country. Required only for SetOmnichannelExperience.
+      &quot;gmbAccounts&quot;: { # The list of accessible Business Profiles.
+        &quot;gmbAccounts&quot;: [ # A list of Business Profiles which are available to the merchant.
+            &quot;email&quot;: &quot;A String&quot;, # The email which identifies the Business Profile.
+            &quot;name&quot;: &quot;A String&quot;, # The name of the Business Profile.
+            &quot;type&quot;: &quot;A String&quot;, # The type of the Business Profile (User or Business).
+      &quot;omnichannelExperience&quot;: { # Omnichannel experience details. # The updated omnichannel experience for a country.
+  &quot;kind&quot;: &quot;A String&quot;, # Identifies what kind of resource this is. Value: the fixed string &quot;`content#liasettingsCustomBatchResponse`&quot;.
+  <pre>Retrieves the list of accessible Business Profiles.
+  accountId: string, The ID of the account for which to retrieve accessible Business Profiles. (required)
+  &quot;kind&quot;: &quot;A String&quot;, # Identifies what kind of resource this is. Value: the fixed string &quot;`content#liasettingsGetAccessibleGmbAccountsResponse`&quot;.
+  &quot;kind&quot;: &quot;A String&quot;, # Identifies what kind of resource this is. Value: the fixed string &quot;`content#liasettingsListResponse`&quot;.
+  &quot;kind&quot;: &quot;A String&quot;, # Identifies what kind of resource this is. Value: the fixed string &quot;`content#liasettingsListPosDataProvidersResponse`&quot;.
+  <pre>Requests access to a specified Business Profile.
+  accountId: string, The ID of the account for which Business Profile access is requested. (required)
+  gmbEmail: string, The email of the Business Profile. (required)
+  &quot;kind&quot;: &quot;A String&quot;, # Identifies what kind of resource this is. Value: the fixed string &quot;`content#liasettingsRequestGmbAccessResponse`&quot;.
+  &quot;kind&quot;: &quot;A String&quot;, # Identifies what kind of resource this is. Value: the fixed string &quot;`content#liasettingsRequestInventoryVerificationResponse`&quot;.
+  <pre>Sets the inventory verification contact for the specified country.
+  &quot;kind&quot;: &quot;A String&quot;, # Identifies what kind of resource this is. Value: the fixed string &quot;`content#liasettingsSetInventoryVerificationContactResponse`&quot;.
+    <code class="details" id="setomnichannelexperience">setomnichannelexperience(merchantId, accountId, country=None, lsfType=None, pickupTypes=None, x__xgafv=None)</code>
+  <pre>Sets the omnichannel experience for the specified country. Only supported for merchants whose POS data provider is trusted to enable the corresponding experience. For more context, see these help articles [about LFP](https://support.google.com/merchants/answer/7676652) and [how to get started](https://support.google.com/merchants/answer/7676578) with it.
+  country: string, The CLDR country code (for example, &quot;US&quot;) for which the omnichannel experience is selected.
+  lsfType: string, The Local Store Front (LSF) type for this country. Acceptable values are: - &quot;`ghlsf`&quot; (Google-Hosted Local Store Front) - &quot;`mhlsfBasic`&quot; (Merchant-Hosted Local Store Front Basic) - &quot;`mhlsfFull`&quot; (Merchant-Hosted Local Store Front Full) More details about these types can be found here.
+  pickupTypes: string, The Pickup types for this country. Acceptable values are: - &quot;`pickupToday`&quot; - &quot;`pickupLater`&quot;  (repeated)
+    { # Omnichannel experience details.
+  &quot;kind&quot;: &quot;A String&quot;, # Identifies what kind of resource this is. Value: the fixed string &quot;`content#liasettingsSetPosDataProviderResponse`&quot;.

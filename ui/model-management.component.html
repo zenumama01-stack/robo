@@ -1,0 +1,182 @@
+<div class="model-management-v2">
+      <mj-loading [text]="currentLoadingMessage" size="large"></mj-loading>
+          AI Models
+          (click)="toggleFilters()"
+          @if (showFilters) {
+        <span class="item-count">{{ filteredModels.length }} models</span>
+          (click)="createNewModel()"
+          title="Create New Model">
+          New Model
+    <kendo-splitter orientation="horizontal">
+        <kendo-splitter-pane size="320" min="250" max="400">
+              <h3>Model Filters</h3>
+                <span class="summary-value">{{ filteredModels.length }}</span>
+                <span class="summary-label">of {{ models.length }}</span>
+                  [value]="searchTerm"
+                  (input)="onSearchChange($any($event.target).value)"
+              <!-- Sort By Filter -->
+                  <span class="fa-solid fa-sort"></span>
+                  Sort By
+                <select class="filter-select" [value]="sortBy" (change)="onSortChange($any($event.target).value)">
+                  @for (option of sortOptions; track option.value) {
+                    <option [value]="option.value">{{ option.label }}</option>
+              <!-- Vendor Filter -->
+                  <span class="fa-solid fa-building"></span>
+                  Vendor
+                <select class="filter-select" [value]="selectedVendor" (change)="onVendorChange($any($event.target).value)">
+                  <option value="all">All Vendors</option>
+                  @for (vendor of vendors; track vendor.ID) {
+                    <option [value]="vendor.ID">{{ vendor.Name }}</option>
+              <!-- Type Filter -->
+                  <span class="fa-solid fa-microchip"></span>
+                <select class="filter-select" [value]="selectedType" (change)="onTypeChange($any($event.target).value)">
+                  <option value="all">All Types</option>
+                  @for (type of modelTypes; track type.ID) {
+                <select class="filter-select" [value]="selectedStatus" (change)="onStatusChange($any($event.target).value)">
+                  <option value="all">All Statuses</option>
+                  <option value="active">Active</option>
+                  <option value="inactive">Inactive</option>
+              <!-- Power Rank Filter -->
+                  <span class="fa-solid fa-bolt"></span>
+                  Power Rank
+                <div class="rank-filter-inputs">
+                    [max]="maxPowerRank" 
+                    [(ngModel)]="powerRankRange.min"
+                    (change)="validateAndApplyRankFilters('power')"
+                    class="rank-input"
+                    placeholder="Min"
+                  <span class="rank-separator">-</span>
+                    [(ngModel)]="powerRankRange.max"
+                    placeholder="Max"
+                <button class="reset-btn" (click)="clearFilters()" title="Reset all filters">
+      <kendo-splitter-pane>
+          @if (filteredModels.length === 0) {
+              <i class="fa-solid fa-microchip fa-4x"></i>
+              <h3>No models found</h3>
+              <p>{{ hasActiveFilters ? 'Try adjusting your filters' : 'Create your first AI model to get started' }}</p>
+              @if (!hasActiveFilters) {
+                <button class="primary-action" (click)="createNewModel()">
+                  Create First Model
+            @switch (viewMode) {
+              @case ('grid') {
+                <div class="model-grid">
+                  @for (model of filteredModels; track model.ID) {
+                    <div class="model-card" [class.expanded]="expandedModelId === model.ID">
+                      <div class="card-header" (click)="toggleModelExpansion(model.ID)">
+                        <div class="model-info">
+                            <i [class]="getModelIcon(model)"></i>
+                            <h4 class="model-name" [innerHTML]="(model.Name || 'Unnamed Model') | highlightSearch:searchTerm"></h4>
+                            <div class="model-meta">
+                              @if (model.Vendor) {
+                                  {{ model.Vendor }}
+                              @if (model.AIModelType) {
+                                  {{ model.AIModelType }}
+                              @if (model.IsActive) {
+                                <span class="meta-item status-active">
+                                <span class="meta-item status-inactive">
+                                  Inactive
+                           [class.rotated]="expandedModelId === model.ID"></i>
+                        @if (model.Description) {
+                          <p class="model-description" [innerHTML]="model.Description | highlightSearch:searchTerm"></p>
+                          <p class="model-description text-muted">No description provided</p>
+                        @if (expandedModelId === model.ID) {
+                            <div class="model-stats">
+                                <span class="stat-label">Power Rank</span>
+                                <span class="stat-value">{{ formatRank(model.PowerRank, 'power') }}</span>
+                                <span class="stat-label">Speed Rank</span>
+                                <span class="stat-value">{{ formatRank(model.SpeedRank, 'speed') }}</span>
+                                <span class="stat-label">Cost Rank</span>
+                                <span class="stat-value">{{ formatRank(model.CostRank, 'cost') }}</span>
+                              @if (model.InputTokenLimit) {
+                                  <span class="stat-label">Token Limit</span>
+                                  <span class="stat-value">{{ formatTokenLimit(model.InputTokenLimit) }}</span>
+                              @if (model.APIName) {
+                                  <span class="stat-label">API Name</span>
+                                  <span class="stat-value">{{ model.APIName }}</span>
+                              @if (model.DriverClass) {
+                                  <span class="stat-label">Driver</span>
+                                  <span class="stat-value">{{ model.DriverClass }}</span>
+                          (click)="showModelDetails(model, $event)"
+              @case ('list') {
+                <div class="model-list">
+                  <table class="data-table">
+                        <th (click)="onSortChange('name')"
+                            [class.sorted]="sortBy === 'name'"
+                            [class.desc]="sortBy === 'name' && sortDirection === 'desc'">
+                        <th (click)="onSortChange('vendor')"
+                            [class.sorted]="sortBy === 'vendor'"
+                            [class.desc]="sortBy === 'vendor' && sortDirection === 'desc'">
+                        <th (click)="onSortChange('type')"
+                            [class.sorted]="sortBy === 'type'"
+                            [class.desc]="sortBy === 'type' && sortDirection === 'desc'">
+                        <th (click)="onSortChange('powerRank')"
+                            [class.sorted]="sortBy === 'powerRank'"
+                            [class.desc]="sortBy === 'powerRank' && sortDirection === 'desc'">
+                            Power
+                        <th (click)="onSortChange('speedRank')"
+                            [class.sorted]="sortBy === 'speedRank'"
+                            [class.desc]="sortBy === 'speedRank' && sortDirection === 'desc'">
+                            Speed
+                        <th (click)="onSortChange('costRank')"
+                            [class.sorted]="sortBy === 'costRank'"
+                            [class.desc]="sortBy === 'costRank' && sortDirection === 'desc'">
+                            <div class="name-cell">
+                              <span [innerHTML]="(model.Name || 'Unnamed Model') | highlightSearch:searchTerm"></span>
+                          <td>{{ model.Vendor || '-' }}</td>
+                          <td>{{ model.AIModelType }}</td>
+                            <span class="rank-badge" [class]="getRankClass(model.PowerRank, 'power')">
+                              {{ formatRank(model.PowerRank, 'power') }}
+                            <span class="rank-badge" [class]="getRankClass(model.SpeedRank, 'speed')">
+                              {{ formatRank(model.SpeedRank, 'speed') }}
+                            <span class="rank-badge" [class]="getRankClass(model.CostRank, 'cost')">
+                              {{ formatRank(model.CostRank, 'cost') }}
+                            <span class="status-badge" [class.active]="model.IsActive" [class.inactive]="!model.IsActive">
+                              {{ model.IsActive ? 'Active' : 'Inactive' }}
+                            <button class="action-button small" (click)="showModelDetails(model)" title="View Details">
+      @if (selectedModel) {
+            <div class="detail-icon">
+              <i [class]="getModelIcon(selectedModel)"></i>
+              <h3>{{ selectedModel.Name }}</h3>
+              <span class="detail-subtitle">{{ selectedModel.Vendor || 'AI Model' }}</span>
+          <!-- Status Section -->
+              @if (selectedModel.IsActive) {
+                <span class="status-badge status-active">
+                <span class="status-badge status-inactive">
+              @if (selectedModel.AIModelType) {
+                  {{ selectedModel.AIModelType }}
+          @if (selectedModel.Description) {
+              <p class="detail-description">{{ selectedModel.Description }}</p>
+          <!-- Ranking Details -->
+              <i class="fa-solid fa-chart-bar"></i>
+              Rankings
+                <span class="detail-label">Power Rank</span>
+                <span class="detail-value rank-badge" [class]="getRankClass(selectedModel.PowerRank, 'power')">
+                  {{ formatRank(selectedModel.PowerRank, 'power') }}
+                <span class="detail-label">Speed Rank</span>
+                <span class="detail-value rank-badge" [class]="getRankClass(selectedModel.SpeedRank, 'speed')">
+                  {{ formatRank(selectedModel.SpeedRank, 'speed') }}
+                <span class="detail-label">Cost Rank</span>
+                <span class="detail-value rank-badge" [class]="getRankClass(selectedModel.CostRank, 'cost')">
+                  {{ formatRank(selectedModel.CostRank, 'cost') }}
+                <span class="detail-label">Vendor</span>
+                <span class="detail-value">{{ selectedModel.Vendor || 'Unknown' }}</span>
+                <span class="detail-label">Model Type</span>
+                <span class="detail-value">{{ selectedModel.AIModelType || 'Unknown' }}</span>
+              @if (selectedModel.APIName) {
+                  <span class="detail-label">API Name</span>
+                  <span class="detail-value">{{ selectedModel.APIName }}</span>
+              @if (selectedModel.InputTokenLimit) {
+                  <span class="detail-label">Input Token Limit</span>
+                  <span class="detail-value">{{ formatTokenLimit(selectedModel.InputTokenLimit) }}</span>
+              @if (selectedModel.SupportedResponseFormats) {
+                  <span class="detail-label">Response Formats</span>
+                  <span class="detail-value">{{ selectedModel.SupportedResponseFormats }}</span>
+              @if (selectedModel.SupportsEffortLevel) {
+                  <span class="detail-label">Supports Effort Level</span>
+                  <span class="detail-value">Yes</span>
+              @if (selectedModel.DriverClass) {
+                  <span class="detail-label">Driver Class</span>
+                  <span class="detail-value">{{ selectedModel.DriverClass }}</span>
+                <span class="detail-value">{{ selectedModel.__mj_CreatedAt | date:'medium' }}</span>
+                <span class="detail-value">{{ selectedModel.__mj_UpdatedAt | date:'medium' }}</span>
+            (click)="openModelFromPanel()">

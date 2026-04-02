@@ -1,0 +1,93 @@
+  <title>googleapiclient.http.HttpRequest</title>
+        Class&nbsp;HttpRequest
+            >]&nbsp;|&nbsp;<a href="googleapiclient.http.HttpRequest-class.html"
+<h1 class="epydoc">Class HttpRequest</h1><p class="nomargin-top"><span class="codelink"><a href="googleapiclient.http-pysrc.html#HttpRequest">source&nbsp;code</a></span></p>
+        <strong class="uidshort">HttpRequest</strong>
+<p>Encapsulates a single HTTP request.</p>
+          <td><span class="summary-sig"><a href="googleapiclient.http.HttpRequest-class.html#__init__" class="summary-sig-name">__init__</a>(<span class="summary-sig-arg">*args</span>,
+      Constructor for an HttpRequest.</td>
+            <span class="codelink"><a href="googleapiclient.http-pysrc.html#HttpRequest.__init__">source&nbsp;code</a></span>
+          <td><span class="summary-sig"><a href="googleapiclient.http.HttpRequest-class.html#execute" class="summary-sig-name">execute</a>(<span class="summary-sig-arg">*args</span>,
+      Execute the request.</td>
+            <span class="codelink"><a href="googleapiclient.http-pysrc.html#HttpRequest.execute">source&nbsp;code</a></span>
+          <td><span class="summary-sig"><a href="googleapiclient.http.HttpRequest-class.html#add_response_callback" class="summary-sig-name">add_response_callback</a>(<span class="summary-sig-arg">*args</span>,
+      add_response_headers_callback</td>
+            <span class="codelink"><a href="googleapiclient.http-pysrc.html#HttpRequest.add_response_callback">source&nbsp;code</a></span>
+          <td><span class="summary-sig"><a href="googleapiclient.http.HttpRequest-class.html#next_chunk" class="summary-sig-name">next_chunk</a>(<span class="summary-sig-arg">*args</span>,
+      Execute the next step of a resumable upload.</td>
+            <span class="codelink"><a href="googleapiclient.http-pysrc.html#HttpRequest.next_chunk">source&nbsp;code</a></span>
+          <td><span class="summary-sig"><a href="googleapiclient.http.HttpRequest-class.html#_process_response" class="summary-sig-name" onclick="show_private();">_process_response</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">resp</span>,
+      Process the response from a single chunk upload.</td>
+            <span class="codelink"><a href="googleapiclient.http-pysrc.html#HttpRequest._process_response">source&nbsp;code</a></span>
+          <td><span class="summary-sig"><a name="to_json"></a><span class="summary-sig-name">to_json</span>(<span class="summary-sig-arg">self</span>)</span><br />
+      Returns a JSON representation of the HttpRequest.</td>
+            <span class="codelink"><a href="googleapiclient.http-pysrc.html#HttpRequest.to_json">source&nbsp;code</a></span>
+<!-- ==================== STATIC METHODS ==================== -->
+<a name="section-StaticMethods"></a>
+        <td align="left"><span class="table-header">Static Methods</span></td>
+         ><span class="options">[<a href="#section-StaticMethods"
+          <td><span class="summary-sig"><a name="from_json"></a><span class="summary-sig-name">from_json</span>(<span class="summary-sig-arg">s</span>,
+        <span class="summary-sig-arg">postproc</span>)</span><br />
+      Returns an HttpRequest populated with info from a JSON object.</td>
+            <span class="codelink"><a href="googleapiclient.http-pysrc.html#HttpRequest.from_json">source&nbsp;code</a></span>
+          <td><span class="summary-sig"><a name="null_postproc"></a><span class="summary-sig-name">null_postproc</span>(<span class="summary-sig-arg">resp</span>,
+        <span class="summary-sig-arg">contents</span>)</span></td>
+            <span class="codelink"><a href="googleapiclient.http-pysrc.html#HttpRequest.null_postproc">source&nbsp;code</a></span>
+    ><span class="codelink"><a href="googleapiclient.http-pysrc.html#HttpRequest.__init__">source&nbsp;code</a></span>&nbsp;
+Constructor for an HttpRequest.
+  http: httplib2.Http, the transport object to use to make a request
+  postproc: callable, called on the HTTP response and content to transform
+            it into a data object before returning, or raising an exception
+            on an error.
+  uri: string, the absolute URI to send the request to
+  method: string, the HTTP method to use
+  body: string, the request body of the HTTP request,
+  headers: dict, the HTTP request headers
+  methodId: string, a unique identifier for the API method being called.
+  resumable: MediaUpload, None if this is not a resumbale request.
+        <li><code>@util.positional(4)</code></li>
+    ><span class="codelink"><a href="googleapiclient.http-pysrc.html#HttpRequest.execute">source&nbsp;code</a></span>&nbsp;
+Execute the request.
+  http: httplib2.Http, an http object to be used in place of the
+        one the HttpRequest request object was constructed with.
+  num_retries: Integer, number of times to retry with randomized
+        exponential backoff. If all retries fail, the raised HttpError
+        represents the last request. If zero (default), we attempt the
+        request only once.
+  A deserialized object model of the response body as determined
+  by the postproc.
+  googleapiclient.errors.HttpError if the response was not a 2xx.
+<a name="add_response_callback"></a>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">add_response_callback</span>(<span class="sig-arg">*args</span>,
+    ><span class="codelink"><a href="googleapiclient.http-pysrc.html#HttpRequest.add_response_callback">source&nbsp;code</a></span>&nbsp;
+add_response_headers_callback
+  cb: Callback to be called on receiving the response headers, of signature:
+  def cb(resp):
+    # Where resp is an instance of httplib2.Response
+<a name="next_chunk"></a>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">next_chunk</span>(<span class="sig-arg">*args</span>,
+    ><span class="codelink"><a href="googleapiclient.http-pysrc.html#HttpRequest.next_chunk">source&nbsp;code</a></span>&nbsp;
+Execute the next step of a resumable upload.
+Can only be used if the method being executed supports media uploads and
+the MediaUpload object passed in was flagged as using resumable upload.
+  media = MediaFileUpload('cow.png', mimetype='image/png',
+                          chunksize=1000, resumable=True)
+  request = farm.animals().insert(
+      id='cow',
+      name='cow.png',
+      media_body=media)
+  while response is None:
+    status, response = request.next_chunk()
+    if status:
+      print &quot;Upload %d%% complete.&quot; % int(status.progress() * 100)
+  (status, body): (ResumableMediaStatus, object)
+     The body will be None until the resumable media is fully uploaded.
+<a name="_process_response"></a>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">_process_response</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">resp</span>,
+    ><span class="codelink"><a href="googleapiclient.http-pysrc.html#HttpRequest._process_response">source&nbsp;code</a></span>&nbsp;
+Process the response from a single chunk upload.
+  resp: httplib2.Response, the response object.
+  content: string, the content of the response.
+  googleapiclient.errors.HttpError if the response was not a 2xx or a 308.

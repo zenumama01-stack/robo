@@ -1,0 +1,424 @@
+<h1><a href="compute_alpha.html">Compute Engine API</a> . <a href="compute_alpha.instanceTemplates.html">instanceTemplates</a></h1>
+<p class="firstline">Retrieves the list of all InstanceTemplates resources, regional and global,</p>
+  <code><a href="#delete">delete(project, instanceTemplate, requestId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Deletes the specified instance template. Deleting an instance template is</p>
+  <code><a href="#get">get(project, instanceTemplate, view=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Returns the specified instance template.</p>
+<p class="firstline">Creates an instance template in the specified project using the</p>
+  <code><a href="#list">list(project, filter=None, maxResults=None, orderBy=None, pageToken=None, returnPartialSuccess=None, view=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Retrieves a list of instance templates that are contained within</p>
+  <pre>Retrieves the list of all InstanceTemplates resources, regional and global,
+    { # Contains a list of InstanceTemplatesScopedList.
+  &quot;items&quot;: { # A list of InstanceTemplatesScopedList resources.
+    &quot;a_key&quot;: { # The name of the scope that contains this set of instance templates.
+      &quot;instanceTemplates&quot;: [ # [Output Only] A list of instance templates that are contained within
+        { # Represents an Instance Template resource.
+            # Google Compute Engine has two Instance Template resources:
+            # * [Global](/compute/docs/reference/rest/alpha/instanceTemplates)
+            # * [Regional](/compute/docs/reference/rest/alpha/regionInstanceTemplates)
+            # You can reuse a global instance template in
+            # different regions whereas you can use a regional instance template in a
+            # specified region only. If you want to reduce cross-region dependency or
+            # achieve data residency, use a regional instance template.
+            # To create VMs, managed instance groups, and reservations, you can use either
+            # global or regional instance templates.
+            # For more information, readInstance Templates.
+          &quot;creationTimestamp&quot;: &quot;A String&quot;, # Output only. [Output Only] The creation timestamp for this instance template inRFC3339
+          &quot;id&quot;: &quot;A String&quot;, # Output only. [Output Only] A unique identifier for this instance template. The server
+          &quot;kind&quot;: &quot;compute#instanceTemplate&quot;, # Output only. [Output Only] The resource type, which is alwayscompute#instanceTemplate for instance templates.
+          &quot;properties&quot;: { # The instance properties for this instance template.
+            &quot;advancedMachineFeatures&quot;: { # Specifies options for controlling advanced machine features. # Controls for advanced machine-related behavior features.
+                # Note that for MachineImage, this is not supported yet.
+                # Options that would traditionally be configured in a BIOS belong
+                # here. Features that require operating system support may have
+                # corresponding entries in the GuestOsFeatures of anImage (e.g., whether or not the OS in theImage supports nested virtualization being enabled or
+                # disabled).
+              &quot;enableNestedVirtualization&quot;: True or False, # Whether to enable nested virtualization or not (default is false).
+              &quot;enableUefiNetworking&quot;: True or False, # Whether to enable UEFI networking for instance creation.
+              &quot;enableWatchdogTimer&quot;: True or False, # Whether to enable the watchdog timer.
+              &quot;numaNodeCount&quot;: 42, # The number of vNUMA nodes.
+              &quot;performanceMonitoringUnit&quot;: &quot;A String&quot;, # Type of Performance Monitoring Unit requested on instance.
+              &quot;threadsPerCore&quot;: 42, # The number of threads per physical core. To disable simultaneous
+                  # multithreading (SMT) set this to 1. If unset, the maximum number
+                  # of threads supported per core by the underlying processor is
+                  # assumed.
+              &quot;turboMode&quot;: &quot;A String&quot;, # Turbo frequency mode to use for the instance.
+                  # Supported modes include:
+                  # * ALL_CORE_MAX
+                  # Using empty string or not setting this field will use the platform-specific
+                  # default turbo mode.
+              &quot;visibleCoreCount&quot;: 42, # The number of physical cores to expose to an instance. Multiply by
+                  # the number of threads per core to compute the total number of virtual
+                  # CPUs to expose to the instance. If unset, the number of cores is
+                  # inferred from the instance&#x27;s nominal CPU count and the underlying
+                  # platform&#x27;s SMT width.
+            &quot;canIpForward&quot;: True or False, # Enables instances created based on these properties to send packets with
+                # source IP addresses other than their own and receive packets with
+                # destination IP addresses other than their own. If these instances will be
+                # used as an IP gateway or it will be set as the next-hop in a Route
+                # resource, specify true. If unsure, leave this set tofalse. See theEnable IP forwarding
+                # documentation for more information.
+            &quot;confidentialInstanceConfig&quot;: { # A set of Confidential Instance options. # Specifies the Confidential Instance options.
+              &quot;confidentialInstanceType&quot;: &quot;A String&quot;, # Defines the type of technology used by the confidential instance.
+              &quot;confidentialParavisorConfig&quot;: { # A set of Confidential Paravisor (SVSM) options. # Defines a set of Confidential Paravisor (SVSM) options.
+                &quot;confidentialTpmType&quot;: &quot;A String&quot;,
+                &quot;sevSnpIrqMode&quot;: &quot;A String&quot;,
+              &quot;enableConfidentialCompute&quot;: True or False, # Defines whether the instance should have confidential compute enabled.
+            &quot;description&quot;: &quot;A String&quot;, # An optional text description for the instances that are created from these
+            &quot;disks&quot;: [ # An array of disks that are associated with the instances that are created
+                # from these properties.
+            &quot;displayDevice&quot;: { # A set of Display Device options # Display Device properties to enable support
+                # for remote display products like: Teradici,
+                # VNC and TeamViewer
+              &quot;enableDisplay&quot;: True or False, # Defines whether the instance has Display enabled.
+            &quot;guestAccelerators&quot;: [ # A list of guest accelerator cards&#x27; type and count to use for instances
+                # created from these properties.
+            &quot;identity&quot;: &quot;A String&quot;,
+            &quot;identityCertificate&quot;: True or False,
+            &quot;keyRevocationActionType&quot;: &quot;A String&quot;, # KeyRevocationActionType of the instance. Supported options are &quot;STOP&quot; and
+                # &quot;NONE&quot;. The default value is &quot;NONE&quot; if it is not specified.
+            &quot;machineType&quot;: &quot;A String&quot;, # The machine type to use for instances that are created from these
+                # This field only accepts a machine type name, for example `n2-standard-4`.
+                # If you use the machine type full or partial URL, for example
+                # `projects/my-l7ilb-project/zones/us-central1-a/machineTypes/n2-standard-4`,
+                # the request will result in an `INTERNAL_ERROR`.
+            &quot;metadata&quot;: { # A metadata key/value entry. # The metadata key/value pairs to assign to instances that are created from
+                # these properties. These pairs can consist of custom metadata or predefined
+                # keys. SeeProject and
+                # instance metadata for more information.
+              &quot;fingerprint&quot;: &quot;A String&quot;, # Specifies a fingerprint for this request, which is essentially a hash of
+              &quot;items&quot;: [ # Array of key/value pairs. The total size of all keys and values must be
+                  # less than 512 KB.
+                { # Metadata
+                  &quot;key&quot;: &quot;A String&quot;, # Key for the metadata entry. Keys must conform to the following
+                      # regexp: [a-zA-Z0-9-_]+, and be less than 128 bytes in length.
+                      # This is reflected as part of a URL in the metadata server. Additionally, to
+                      # avoid ambiguity, keys must not conflict with any other metadata keys
+                      # for the project.
+                  &quot;value&quot;: &quot;A String&quot;, # Value for the metadata entry. These are free-form strings, and only
+                      # have meaning as interpreted by the image running in the instance. The
+                      # only restriction placed on values is that their size must be less than
+                      # or equal to 262144 bytes (256 KiB).
+            &quot;minCpuPlatform&quot;: &quot;A String&quot;, # Minimum cpu/platform to be used by instances. The instance may be
+                # scheduled on the specified or newer cpu/platform. Applicable values are the
+                # friendly names of CPU platforms, such asminCpuPlatform: &quot;Intel Haswell&quot; orminCpuPlatform: &quot;Intel Sandy Bridge&quot;. For more
+                # information, read Specifying a
+                # Minimum CPU Platform.
+            &quot;networkInterfaces&quot;: [ # An array of network access configurations for this interface.
+              { # A network interface resource attached to an instance.
+                &quot;accessConfigs&quot;: [ # An array of configurations for this interface. Currently, only one access
+                    # config, ONE_TO_ONE_NAT, is supported. If there are noaccessConfigs specified, then this instance will have
+                    # no external internet access.
+                  { # An access configuration attached to an instance&#x27;s network interface.
+                      # Only one access config per instance is supported.
+                    &quot;externalIpv6&quot;: &quot;A String&quot;, # Applies to ipv6AccessConfigs only.
+                        # The first IPv6 address of the external IPv6 range associated
+                        # with this instance, prefix length is stored inexternalIpv6PrefixLength in ipv6AccessConfig. To
+                        # use a static external IP address, it must be unused and in the same region
+                        # as the instance&#x27;s zone. If not specified, Google Cloud will automatically
+                        # assign an external IPv6 address from the instance&#x27;s subnetwork.
+                    &quot;externalIpv6PrefixLength&quot;: 42, # Applies to ipv6AccessConfigs only. The prefix length of the
+                        # external IPv6 range.
+                    &quot;kind&quot;: &quot;compute#accessConfig&quot;, # Output only. [Output Only] Type of the resource. Alwayscompute#accessConfig for access configs.
+                    &quot;name&quot;: &quot;A String&quot;, # The name of this access configuration. In accessConfigs
+                        # (IPv4), the default and recommended name is External NAT, but
+                        # you can use any arbitrary string, such as My external IP orNetwork Access. In ipv6AccessConfigs, the
+                        # recommend name is External IPv6.
+                    &quot;natIP&quot;: &quot;A String&quot;, # Applies to accessConfigs (IPv4) only. Anexternal IP
+                        # address associated with this instance. Specify an unused static
+                        # external IP address available to the project or leave this field undefined
+                        # to use an IP from a shared ephemeral IP address pool. If you specify a
+                        # static external IP address, it must live in the same region as the zone of
+                    &quot;networkTier&quot;: &quot;A String&quot;, # This signifies the networking tier used for configuring this access
+                        # configuration and can only take the following values: PREMIUM,STANDARD.
+                        # If an AccessConfig is specified without a valid external IP address, an
+                        # ephemeral IP will be created with this networkTier.
+                        # If an AccessConfig with a valid external IP address is specified, it must
+                        # match that of the networkTier associated with the Address resource owning
+                        # that IP.
+                    &quot;publicDnsName&quot;: &quot;A String&quot;, # Output only. [Output Only] The public DNS domain name for the instance.
+                    &quot;publicPtrDomainName&quot;: &quot;A String&quot;, # The DNS domain name for the public PTR record.
+                        # You can set this field only if the `setPublicPtr` field is enabled inaccessConfig. If this field is unspecified inipv6AccessConfig, a default PTR record will be created for
+                        # first IP in associated external IPv6 range.
+                    &quot;securityPolicy&quot;: &quot;A String&quot;, # The resource URL for the security policy associated with this access
+                    &quot;setPublicDns&quot;: True or False, # Specifies whether a public DNS &#x27;A&#x27; record should be created for the
+                        # external IP address of this access configuration.
+                    &quot;setPublicPtr&quot;: True or False, # Specifies whether a public DNS &#x27;PTR&#x27; record should be created to map the
+                        # external IP address of the instance to a DNS domain name.
+                        # This field is not used in ipv6AccessConfig. A default PTR
+                        # record will be created if the VM has external IPv6 range associated.
+                    &quot;type&quot;: &quot;A String&quot;, # The type of configuration. In accessConfigs (IPv4), the
+                        # default and only option is ONE_TO_ONE_NAT. Inipv6AccessConfigs, the default and only option isDIRECT_IPV6.
+                &quot;aliasIpRanges&quot;: [ # An array of alias IP ranges for this network interface.
+                    # You can only specify this field for network interfaces in VPC networks.
+                    &quot;ipCidrRange&quot;: &quot;A String&quot;, # The IP alias ranges to allocate for this interface. This IP CIDR range
+                        # must belong to the specified subnetwork and cannot contain IP addresses
+                        # reserved by system or used by other network interfaces. This range may be
+                        # a single IP address (such as 10.2.3.4), a netmask (such as/24) or a CIDR-formatted string (such as10.1.2.0/24).
+                    &quot;subnetworkRangeName&quot;: &quot;A String&quot;, # The name of a subnetwork secondary IP range from which to allocate an IP
+                        # alias range. If not specified, the primary range of the subnetwork is used.
+                &quot;aliasIpv6Ranges&quot;: [ # An array of alias IPv6 ranges for this network interface.
+                &quot;enableVpcScopedDns&quot;: True or False, # Optional. If true, DNS resolution will be enabled over this interface. Only valid
+                    # with network_attachment.
+                &quot;fingerprint&quot;: &quot;A String&quot;, # Fingerprint hash of contents stored in this network interface.
+                    # This field will be ignored when inserting an Instance or
+                    # adding a NetworkInterface. An up-to-date
+                    # fingerprint must be provided in order to update theNetworkInterface. The request will fail with error400 Bad Request if the fingerprint is not provided, or412 Precondition Failed if the fingerprint is out of date.
+                &quot;igmpQuery&quot;: &quot;A String&quot;, # Indicate whether igmp query is enabled on the network interface
+                    # or not. If enabled, also indicates the version of IGMP supported.
+                &quot;internalIpv6PrefixLength&quot;: 42, # The prefix length of the primary internal IPv6 range.
+                &quot;ipv6AccessConfigs&quot;: [ # An array of IPv6 access configurations for this interface. Currently, only
+                    # one IPv6 access config, DIRECT_IPV6, is supported. If there
+                    # is no ipv6AccessConfig specified, then this instance will
+                    # have no external IPv6 Internet access.
+                &quot;ipv6AccessType&quot;: &quot;A String&quot;, # Output only. [Output Only] One of EXTERNAL, INTERNAL to indicate whether the IP can be
+                    # accessed from the Internet. This field is always inherited from its
+                    # subnetwork.
+                    # Valid only if stackType is IPV4_IPV6.
+                &quot;ipv6Address&quot;: &quot;A String&quot;, # An IPv6 internal network address for this network interface. To
+                    # use a static internal IP address, it must be unused and in the same region
+                    # assign an internal IPv6 address from the instance&#x27;s subnetwork.
+                &quot;kind&quot;: &quot;compute#networkInterface&quot;, # Output only. [Output Only] Type of the resource. Alwayscompute#networkInterface for network interfaces.
+                &quot;macAddress&quot;: &quot;A String&quot;, # Output only. [Output Only] MAC address assigned to this network interface.
+                &quot;name&quot;: &quot;A String&quot;, # [Output Only] The name of the network interface, which is generated by the
+                    # server. For a VM, the network interface uses the nicN naming
+                    # format. Where N is a value between 0 and7. The default interface value is nic0.
+                &quot;network&quot;: &quot;A String&quot;, # URL of the VPC network resource for this instance. When creating an
+                    # instance, if neither the network nor the subnetwork is specified, the
+                    # default network global/networks/default is used. If the
+                    # selected project doesn&#x27;t have the default network, you must specify a
+                    # network or subnet. If the network is not specified but the subnetwork is
+                    # specified, the network is inferred.
+                    # If you specify this property, you can specify the network as
+                    # a full or partial URL. For example, the following are all valid URLs:
+                    #       - https://www.googleapis.com/compute/v1/projects/project/global/networks/network
+                    #       - projects/project/global/networks/network
+                    #       - global/networks/default
+                &quot;networkAttachment&quot;: &quot;A String&quot;, # The URL of the network attachment that this interface should connect
+                    # to in the following format:
+                    # projects/{project_number}/regions/{region_name}/networkAttachments/{network_attachment_name}.
+                &quot;networkIP&quot;: &quot;A String&quot;, # An IPv4 internal IP address to assign to the instance for this network
+                    # interface. If not specified by the user, an unused internal IP is
+                    # assigned by the system.
+                &quot;nicType&quot;: &quot;A String&quot;, # The type of vNIC to be used on this interface. This may be gVNIC or
+                    # VirtioNet.
+                &quot;parentNicName&quot;: &quot;A String&quot;, # Name of the parent network interface of a dynamic network interface.
+                &quot;queueCount&quot;: 42, # The networking queue count that&#x27;s specified by users for the network
+                    # interface. Both Rx and Tx queues will be set to this number. It&#x27;ll be empty
+                    # if not specified by the users.
+                &quot;serviceClassId&quot;: &quot;A String&quot;, # Optional. Producer Service&#x27;s Service class Id for the region of this network
+                    # interface. Can only be used with network_attachment. It is not possible to
+                    # use on its own however, network_attachment can be used without
+                    # service_class_id.
+                &quot;stackType&quot;: &quot;A String&quot;, # The stack type for this network interface. To assign only IPv4 addresses,
+                    # use IPV4_ONLY. To assign both IPv4 and IPv6 addresses, useIPV4_IPV6. If not specified, IPV4_ONLY is used.
+                    # This field can be both set at instance creation and update network
+                    # interface operations.
+                &quot;subinterfaces&quot;: [ # SubInterfaces help enable L2 communication for the instance over
+                    # subnetworks that support L2. Every network interface will get a default
+                    # untagged (vlan not specified) subinterface. Users can specify additional
+                    # tagged subinterfaces which are sub-fields to the Network Interface.
+                    &quot;ipAddress&quot;: &quot;A String&quot;, # An IPv4 internal IP address to assign to the instance for this
+                        # subinterface. If specified, ip_allocation_mode should be set to
+                        # ALLOCATE_IP.
+                    &quot;ipAllocationMode&quot;: &quot;A String&quot;,
+                    &quot;subnetwork&quot;: &quot;A String&quot;, # If specified, this subnetwork must belong to the same network
+                        # as that of the network interface.
+                        # If not specified the subnet of network interface will be used.
+                        # If you specify this property, you can specify the subnetwork as a full
+                        #       - https://www.googleapis.com/compute/v1/projects/project/regions/region/subnetworks/subnetwork
+                        #    - regions/region/subnetworks/subnetwork
+                    &quot;vlan&quot;: 42, # VLAN tag. Should match the VLAN(s) supported by the subnetwork to which
+                        # this subinterface is connecting.
+                &quot;subnetwork&quot;: &quot;A String&quot;, # The URL of the Subnetwork resource for this instance. If the network
+                    # resource is inlegacy
+                    # mode, do not specify this field. If the network is in auto subnet
+                    # mode, specifying the subnetwork is optional. If the network is in custom
+                    # subnet mode, specifying the subnetwork is required. If you specify this
+                    # field, you can specify the subnetwork as a full or partial URL. For
+                    # example, the following are all valid URLs:
+                &quot;vlan&quot;: 42, # VLAN tag of a dynamic network interface, must be  an integer in the range
+                    # from 2 to 255 inclusively.
+            &quot;networkPerformanceConfig&quot;: { # Note that for MachineImage, this is not supported yet.
+              &quot;externalIpEgressBandwidthTier&quot;: &quot;A String&quot;,
+              &quot;totalEgressBandwidthTier&quot;: &quot;A String&quot;,
+            &quot;partnerMetadata&quot;: { # Partner Metadata assigned to the instance properties. A map from a
+                # subdomain (namespace) to entries map.
+                &quot;entries&quot;: { # Map of a partner metadata that belong to the same subdomain.
+                    # It accepts any value including google.protobuf.Struct.
+            &quot;postKeyRevocationActionType&quot;: &quot;A String&quot;, # PostKeyRevocationActionType of the instance.
+            &quot;privateIpv6GoogleAccess&quot;: &quot;A String&quot;, # The private IPv6 google access type for VMs.
+                # If not specified, use  INHERIT_FROM_SUBNETWORK as default.
+            &quot;reservationAffinity&quot;: { # Specifies the reservations that this instance can consume from. # Specifies the reservations that instances can consume from.
+                  # &quot;projects/different-project/reservations/some-reservation-name&quot; to target a
+                  # shared reservation in the same zone but in a different project.
+            &quot;resourceManagerTags&quot;: { # Input only. Resource manager tags to be bound to the instance. Tag keys and values
+                # manager tags. Keys must be in the format `tagKeys/{tag_key_id}`, and
+                # values are in the format `tagValues/456`. The field is ignored (both PUT &amp;
+            &quot;resourcePolicies&quot;: [ # Resource policies (names, not URLs) applied to instances created from
+                # these properties.
+            &quot;scheduling&quot;: { # Sets the scheduling options for an Instance. # Specifies the scheduling options for the instances that are created from
+              &quot;automaticRestart&quot;: True or False, # Specifies whether the instance should be automatically restarted if it is
+                  # terminated by Compute Engine (not terminated by a user). You can only set
+                  # the automatic restart option for standard instances.Preemptible instances
+                  # cannot be automatically restarted.
+                  # By default, this is set to true so an instance is
+                  # automatically restarted if it is terminated by Compute Engine.
+              &quot;availabilityDomain&quot;: 42, # Specifies the availability domain to place the instance in. The value
+                  # must be a number between 1 and the number of availability domains
+                  # specified in the spread placement policy attached to the instance.
+              &quot;currentCpus&quot;: 42, # Current number of vCPUs available for VM.
+                  # 0 or unset means default vCPUs of the current machine type.
+              &quot;currentMemoryMb&quot;: &quot;A String&quot;, # Current amount of memory (in MB) available for VM.
+                  # 0 or unset means default amount of memory of the current machine type.
+              &quot;gracefulShutdown&quot;: { # The configuration for gracefully shutting down the instance.
+                &quot;enabled&quot;: True or False, # Opts-in for graceful shutdown.
+                &quot;maxDuration&quot;: { # A Duration represents a fixed-length span of time represented # The time allotted for the instance to gracefully shut down. If the
+                    # graceful shutdown isn&#x27;t complete after this time, then the instance
+                    # transitions to the STOPPING state.
+              &quot;hostErrorTimeoutSeconds&quot;: 42, # Specify the time in seconds for host error detection, the value must be
+                  # within the range of [90, 330] with the increment of 30, if unset, the
+                  # default behavior of host error recovery will be used.
+              &quot;instanceTerminationAction&quot;: &quot;A String&quot;, # Specifies the termination action for the instance.
+              &quot;latencyTolerant&quot;: True or False, # Defines whether the instance is tolerant of higher cpu latency.  This can
+                  # only be set during instance creation, or when the instance is not currently
+                  # running.  It must not be set if thepreemptible option is
+                  # also set.
+              &quot;localSsdRecoveryTimeout&quot;: { # A Duration represents a fixed-length span of time represented # Specifies the maximum amount of time a Local Ssd Vm should wait while
+                  # recovery of the Local Ssd state is attempted. Its value should be in
+                  # between 0 and 168 hours with hour granularity and the default value being 1
+                  # hour.
+              &quot;locationHint&quot;: &quot;A String&quot;, # An opaque location hint used to place the instance close to other
+              &quot;maintenanceFreezeDurationHours&quot;: 42, # Specifies the number of hours after VM instance creation where the VM won&#x27;t
+                  # be scheduled for maintenance.
+              &quot;maintenanceInterval&quot;: &quot;A String&quot;, # Specifies the frequency of planned maintenance events. The accepted values
+                  # are: `PERIODIC`.
+              &quot;maxRunDuration&quot;: { # A Duration represents a fixed-length span of time represented # Specifies the max run duration for the given instance. If specified,
+                  # the instance termination action will be performed at the end of the run
+                  # duration.
+              &quot;minNodeCpus&quot;: 42, # The minimum number of virtual CPUs this instance will consume when running
+                  # on a sole-tenant node.
+              &quot;nodeAffinities&quot;: [ # A set of node affinity and anti-affinity configurations. Refer toConfiguring node
+                { # Node Affinity: the configuration of desired nodes onto which this Instance
+                    #  could be scheduled.
+              &quot;onHostMaintenance&quot;: &quot;A String&quot;, # Defines the maintenance behavior for this instance. For standard instances,
+                  # the default behavior is MIGRATE. Forpreemptible instances,
+                  # the default and only possible behavior is TERMINATE. For more
+                  # information, see
+                  #  Set
+                  #  VM host maintenance policy.
+              &quot;onInstanceStopAction&quot;: { # Defines the behaviour for instances with the instance_termination_actionSTOP.
+                &quot;discardLocalSsd&quot;: True or False, # If true, the contents of any attached Local SSD disks will be discarded
+                    # else, the Local SSD data will be preserved when the instance is stopped
+                    # at the end of the run duration/termination time.
+              &quot;preemptible&quot;: True or False, # Defines whether the instance is preemptible. This can only be set during
+                  # instance creation or while the instance isstopped and
+                  # therefore, in a `TERMINATED` state. SeeInstance Life
+                  # Cycle for more information on the possible instance states.
+              &quot;preemptionNoticeDuration&quot;: { # A Duration represents a fixed-length span of time represented # Specifies the Metadata Service preemption notice duration before the  GCE ACPI G2 Soft
+                  #  Off signal is triggered for Spot
+                  #  VMs only. If not specified, there will be no wait before the G2 Soft
+                  #  Off signal is triggered.
+              &quot;shutdownTimeout&quot;: { # A Duration represents a fixed-length span of time represented # DEPRECATED: please use skipGuestOsShutdown.
+                  # Timeout between GCE ACPI G2 Soft
+                  # Off and ACPI G3 Mechanical
+                  # Off during shutdown operation of VM.
+                  # For Standard VMs values between 0s and 120s are allowed. For Spot and
+                  # Preemptible VMs supported values are between 0s and 30s.
+                  # If no value is specified for shutdownDuration, default values are 90s for
+                  # Standard VMs and 30s for Spot/Preemptible VMs.
+              &quot;skipGuestOsShutdown&quot;: True or False, # Default is false and there will be 120 seconds between GCE ACPI G2 Soft
+                  # Off for Standard VMs and 30 seconds for Spot VMs.
+              &quot;terminationTime&quot;: &quot;A String&quot;, # Specifies the timestamp, when the instance will be terminated, inRFC3339 text format. If specified, the instance
+                  # termination action will be performed at the termination time.
+              &quot;windowsLicenseOptimizationMode&quot;: &quot;A String&quot;, # Represents the Windows Server License Optimization Mode of the VM. If
+                  # unspecified, the default mode is `OFF`.
+            &quot;secureTags&quot;: [ # [Input Only] Secure tags to apply to this instance.
+                # Maximum number of secure tags allowed is 50.
+            &quot;serviceAccounts&quot;: [ # A list of service accounts with specified scopes. Access tokens for these
+                # service accounts are available to the instances that are created from
+                # these properties. Use metadata queries to obtain the access tokens for
+                # these instances.
+                &quot;scopes&quot;: [ # The list of scopes to be made available for this service account.
+            &quot;serviceIntegrationSpecs&quot;: { # Mapping of user defined keys to ServiceIntegrationSpec.
+              &quot;a_key&quot;: { # Specifies the parameters to configure an integration with instances.
+                &quot;backupDr&quot;: { # Specifies parameters to Backup and DR to attach a BackupPlan to a compute
+                    # instance for managed VM backup.
+                  &quot;plan&quot;: &quot;A String&quot;, # The BackupPlan resource to attach to the instance. Specified as a
+                      # resource reference in instances, and regional instance templates, and as
+                      # just the plan name in global instance templates
+            &quot;shieldedInstanceConfig&quot;: { # A set of Shielded Instance options. # Note that for MachineImage, this is not supported yet.
+              &quot;enableIntegrityMonitoring&quot;: True or False, # Defines whether the instance has integrity monitoring enabled.Enabled by
+              &quot;enableSecureBoot&quot;: True or False, # Defines whether the instance has Secure Boot enabled.Disabled by
+              &quot;enableVtpm&quot;: True or False, # Defines whether the instance has the vTPM enabled.Enabled by
+            &quot;shieldedVmConfig&quot;: { # A set of Shielded VM options. # Specifies the Shielded VM options for the instances that are created from
+              &quot;enableIntegrityMonitoring&quot;: True or False, # Defines whether the instance has integrity monitoring enabled.
+              &quot;enableSecureBoot&quot;: True or False, # Defines whether the instance has Secure Boot enabled.
+              &quot;enableVtpm&quot;: True or False, # Defines whether the instance has the vTPM enabled.
+            &quot;tags&quot;: { # A set of instance tags. # A list of tags to apply to the instances that are created from these
+                # properties. The tags identify valid sources or targets for network
+                # firewalls. The setTags method can modify this list of tags. Each tag within
+                # the list must comply with RFC1035.
+                  # the tags&#x27; contents and used for optimistic locking. The
+                  # every request to modify or update tags. You must always provide an
+                  # up-to-date fingerprint hash in order to update or change tags.
+              &quot;items&quot;: [ # An array of tags. Each tag must be 1-63 characters long, and comply
+                  # with RFC1035.
+            &quot;workloadIdentityConfig&quot;: {
+              &quot;identityCertificateEnabled&quot;: True or False,
+          &quot;region&quot;: &quot;A String&quot;, # Output only. [Output Only] URL of the region where the instance template resides. Only
+          &quot;selfLink&quot;: &quot;A String&quot;, # Output only. [Output Only] The URL for this instance template. The server defines this
+              # URL.
+          &quot;sourceInstance&quot;: &quot;A String&quot;, # The source instance used to create the template. You can provide this as a
+              #      - https://www.googleapis.com/compute/v1/projects/project/zones/zone/instances/instance
+              #    - projects/project/zones/zone/instances/instance
+          &quot;sourceInstanceParams&quot;: { # A specification of the parameters to use when creating the instance template # The source instance params to use to create this instance template.
+              # from a source instance.
+            &quot;diskConfigs&quot;: [ # Attached disks configuration. If not provided, defaults are applied:
+                # For boot disk and any other R/W disks, the source images for each disk
+                # will be used. For read-only disks, they will be attached in read-only
+                # mode. Local SSD disks will be created as blank volumes.
+              { # A specification of the desired way to instantiate a disk in the instance
+                  # template when its created from a source instance.
+                &quot;customImage&quot;: &quot;A String&quot;, # The custom source image to be used to restore this disk when instantiating
+                    # this instance template.
+                &quot;deviceName&quot;: &quot;A String&quot;, # Specifies the device name of the disk to which the configurations apply to.
+                &quot;instantiateFrom&quot;: &quot;A String&quot;, # Specifies whether to include the disk and what image to use. Possible
+                    #      - source-image: to use the same image that was used to
+                    #      create the source instance&#x27;s corresponding disk. Applicable to the boot
+                    #      disk and additional read-write disks.
+                    #      - source-image-family: to use the same image family that
+                    #      was used to create the source instance&#x27;s corresponding disk. Applicable
+                    #      to the boot disk and additional read-write disks.
+                    #      - custom-image: to use a user-provided image url for disk
+                    #      creation. Applicable to the boot disk and additional read-write
+                    #      disks.
+                    #    - attach-read-only: to attach a read-only
+                    #      disk. Applicable to read-only disks.
+                    #      - do-not-include: to exclude a disk from the template.
+                    #      Applicable to additional read-write disks, local SSDs, and read-only
+      &quot;warning&quot;: { # [Output Only] An informational warning that replaces the list of instance
+          # templates when the list is empty.
+  &quot;kind&quot;: &quot;compute#instanceTemplateAggregatedList&quot;, # Output only. Type of resource.
+    <code class="details" id="delete">delete(project, instanceTemplate, requestId=None, x__xgafv=None)</code>
+  <pre>Deletes the specified instance template. Deleting an instance template is
+permanent and cannot be undone. It is not possible to delete templates
+that are already in use by a managed instance group.
+  instanceTemplate: string, The name of the instance template to delete. (required)
+    <code class="details" id="get">get(project, instanceTemplate, view=None, x__xgafv=None)</code>
+  <pre>Returns the specified instance template.
+  instanceTemplate: string, The name of the instance template. (required)
+  view: string, View of the instance template.
+      BASIC - Include everything except Partner Metadata.
+      INSTANCE_VIEW_UNSPECIFIED - The default / unset value. The API will default to the BASIC view.
+  <pre>Creates an instance template in the specified project using the
+data that is included in the request. If you are creating a new template to
+update an existing instance group, your new instance template must use the
+same network or, if applicable, the same subnetwork as the original
+template.
+    <code class="details" id="list">list(project, filter=None, maxResults=None, orderBy=None, pageToken=None, returnPartialSuccess=None, view=None, x__xgafv=None)</code>
+  <pre>Retrieves a list of instance templates that are contained within
+the specified project.
+    { # A list of instance templates.
+  &quot;items&quot;: [ # A list of InstanceTemplate resources.
+  &quot;kind&quot;: &quot;compute#instanceTemplateList&quot;, # Output only. [Output Only] The resource type, which is alwayscompute#instanceTemplatesListResponse for instance template

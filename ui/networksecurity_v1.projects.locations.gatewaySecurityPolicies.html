@@ -1,0 +1,29 @@
+<h1><a href="networksecurity_v1.html">Network Security API</a> . <a href="networksecurity_v1.projects.html">projects</a> . <a href="networksecurity_v1.projects.locations.html">locations</a> . <a href="networksecurity_v1.projects.locations.gatewaySecurityPolicies.html">gatewaySecurityPolicies</a></h1>
+  <code><a href="networksecurity_v1.projects.locations.gatewaySecurityPolicies.rules.html">rules()</a></code>
+  <code><a href="#create">create(parent, body=None, gatewaySecurityPolicyId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Creates a new GatewaySecurityPolicy in a given project and location.</p>
+<p class="firstline">Deletes a single GatewaySecurityPolicy.</p>
+<p class="firstline">Gets details of a single GatewaySecurityPolicy.</p>
+<p class="firstline">Lists GatewaySecurityPolicies in a given project and location.</p>
+<p class="firstline">Updates the parameters of a single GatewaySecurityPolicy.</p>
+    <code class="details" id="create">create(parent, body=None, gatewaySecurityPolicyId=None, x__xgafv=None)</code>
+  <pre>Creates a new GatewaySecurityPolicy in a given project and location.
+  parent: string, Required. The parent resource of the GatewaySecurityPolicy. Must be in the format `projects/{project}/locations/{location}`. (required)
+{ # The GatewaySecurityPolicy resource contains a collection of GatewaySecurityPolicyRules and associated metadata.
+  &quot;name&quot;: &quot;A String&quot;, # Required. Name of the resource. Name is of the form projects/{project}/locations/{location}/gatewaySecurityPolicies/{gateway_security_policy} gateway_security_policy should match the pattern:(^[a-z]([a-z0-9-]{0,61}[a-z0-9])?$).
+  &quot;tlsInspectionPolicy&quot;: &quot;A String&quot;, # Optional. Name of a TLS Inspection Policy resource that defines how TLS inspection will be performed for any rule(s) which enables it.
+  gatewaySecurityPolicyId: string, Required. Short name of the GatewaySecurityPolicy resource to be created. This value should be 1-63 characters long, containing only letters, numbers, hyphens, and underscores, and should not start with a number. E.g. &quot;gateway_security_policy1&quot;.
+  <pre>Deletes a single GatewaySecurityPolicy.
+  name: string, Required. A name of the GatewaySecurityPolicy to delete. Must be in the format `projects/{project}/locations/{location}/gatewaySecurityPolicies/*`. (required)
+  <pre>Gets details of a single GatewaySecurityPolicy.
+  name: string, Required. A name of the GatewaySecurityPolicy to get. Must be in the format `projects/{project}/locations/{location}/gatewaySecurityPolicies/*`. (required)
+  <pre>Lists GatewaySecurityPolicies in a given project and location.
+  parent: string, Required. The project and location from which the GatewaySecurityPolicies should be listed, specified in the format `projects/{project}/locations/{location}`. (required)
+  pageSize: integer, Maximum number of GatewaySecurityPolicies to return per call.
+  pageToken: string, The value returned by the last &#x27;ListGatewaySecurityPoliciesResponse&#x27; Indicates that this is a continuation of a prior &#x27;ListGatewaySecurityPolicies&#x27; call, and that the system should return the next page of data.
+    { # Response returned by the ListGatewaySecurityPolicies method.
+  &quot;gatewaySecurityPolicies&quot;: [ # List of GatewaySecurityPolicies resources.
+  &quot;nextPageToken&quot;: &quot;A String&quot;, # If there might be more results than those appearing in this response, then &#x27;next_page_token&#x27; is included. To get the next set of results, call this method again using the value of &#x27;next_page_token&#x27; as &#x27;page_token&#x27;.
+  <pre>Updates the parameters of a single GatewaySecurityPolicy.
+  name: string, Required. Name of the resource. Name is of the form projects/{project}/locations/{location}/gatewaySecurityPolicies/{gateway_security_policy} gateway_security_policy should match the pattern:(^[a-z]([a-z0-9-]{0,61}[a-z0-9])?$). (required)
+  updateMask: string, Optional. Field mask is used to specify the fields to be overwritten in the GatewaySecurityPolicy resource by the update. The fields specified in the update_mask are relative to the resource, not the full request. A field will be overwritten if it is in the mask. If the user does not provide a mask then all fields will be overwritten.

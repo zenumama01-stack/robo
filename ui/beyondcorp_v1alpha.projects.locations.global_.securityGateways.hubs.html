@@ -1,0 +1,15 @@
+<h1><a href="beyondcorp_v1alpha.html">BeyondCorp API</a> . <a href="beyondcorp_v1alpha.projects.html">projects</a> . <a href="beyondcorp_v1alpha.projects.locations.html">locations</a> . <a href="beyondcorp_v1alpha.projects.locations.global_.html">global_</a> . <a href="beyondcorp_v1alpha.projects.locations.global_.securityGateways.html">securityGateways</a> . <a href="beyondcorp_v1alpha.projects.locations.global_.securityGateways.hubs.html">hubs</a></h1>
+  <code><a href="#create">create(parent, body=None, hubId=None, requestId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Creates a new Hub in a given project and location.</p>
+<p class="firstline">Updates the parameters of a single Hub.</p>
+    <code class="details" id="create">create(parent, body=None, hubId=None, requestId=None, x__xgafv=None)</code>
+  <pre>Creates a new Hub in a given project and location.
+{ # A Beyondcorp Hub resource information.
+  &quot;displayName&quot;: &quot;A String&quot;, # Optional. An arbitrary user-provided name for the Hub. Cannot exceed 64 characters.
+  &quot;natGatewayConfig&quot;: { # Represents the NAT Gateway configuration. # Required. NAT gateway setup to ensure enough NAT IP addresses are available to handle the traffic needed to access the applications. Allows to explicitly enable or disable the NAT in the Hub along with the total IPs allocated to handle the capacity limits.
+    &quot;enableNatGateway&quot;: True or False, # Optional. Explicitly enable or disable the NAT Gateway. This is defaulted to false until NAT Gateway configuration is fully supported and any request with a disable option will be rejected.
+    &quot;natIps&quot;: [ # Output only. List of NAT IPs that will be used for establishing connection to the endpoints.
+  &quot;state&quot;: &quot;A String&quot;, # Output only. The operational state of the Hub.
+  hubId: string, Optional. User-settable Hub resource ID. * Must start with a letter. * Must contain between 4-63 characters from `/a-z-/`. * Must end with a number or letter.
+  <pre>Updates the parameters of a single Hub.
+  updateMask: string, Required. Mutable fields include: display_name.

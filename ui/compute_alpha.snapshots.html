@@ -1,0 +1,33 @@
+<h1><a href="compute_alpha.html">Compute Engine API</a> . <a href="compute_alpha.snapshots.html">snapshots</a></h1>
+<p class="firstline">Retrieves an aggregated list of all of the snapshots in your project</p>
+  <code><a href="#delete">delete(project, snapshot, requestId=None, x__xgafv=None)</a></code></p>
+  <code><a href="#get">get(project, snapshot, x__xgafv=None)</a></code></p>
+  <code><a href="#getEffectiveRecycleBinRule">getEffectiveRecycleBinRule(project, snapshot, x__xgafv=None)</a></code></p>
+<p class="firstline">Returns the effective recycle bin rule for a snapshot by merging org and</p>
+<p class="firstline">Creates a snapshot in the specified project using the data included</p>
+<p class="firstline">Sets the labels on a snapshot. To learn more about labels, read theLabeling</p>
+  <code><a href="#updateKmsKey">updateKmsKey(project, snapshot, body=None, requestId=None, x__xgafv=None)</a></code></p>
+  <pre>Retrieves an aggregated list of all of the snapshots in your project
+across all regions and global scope.
+  &quot;items&quot;: { # A list of SnapshotsScopedList resources.
+    &quot;a_key&quot;: { # [Output Only] Name of the scope containing this set of snapshots.
+      &quot;snapshots&quot;: [ # [Output Only] A list of snapshots contained in this scope.
+      &quot;warning&quot;: { # [Output Only] Informational warning which replaces the list of snapshots
+  &quot;kind&quot;: &quot;compute#snapshotAggregatedList&quot;, # Output only. [Output Only] Type of resource. Alwayscompute#snapshotAggregatedList for aggregated lists of
+    <code class="details" id="delete">delete(project, snapshot, requestId=None, x__xgafv=None)</code>
+  snapshot: string, Name of the Snapshot resource to delete. (required)
+    <code class="details" id="get">get(project, snapshot, x__xgafv=None)</code>
+    <code class="details" id="getEffectiveRecycleBinRule">getEffectiveRecycleBinRule(project, snapshot, x__xgafv=None)</code>
+  <pre>Returns the effective recycle bin rule for a snapshot by merging org and
+project level rules. If no rules are defined at org and project level, the
+standard default rule is returned.
+  snapshot: string, Name of the Snapshot resource to get the effective recycle bin rule for. (required)
+  &quot;retentionDurationDays&quot;: &quot;A String&quot;, # The retention duration of the snapshot in recycle bin.
+  <pre>Creates a snapshot in the specified project using the data included
+in the request. For regular snapshot creation, consider using this method
+instead of disks.createSnapshot,
+as this method supports more features, such as creating snapshots in a
+project different from the source disk project.
+  <pre>Sets the labels on a snapshot. To learn more about labels, read theLabeling
+    <code class="details" id="updateKmsKey">updateKmsKey(project, snapshot, body=None, requestId=None, x__xgafv=None)</code>
+      #      - projects/project_id/locations/region/keyRings/key_ring/cryptoKeys/key

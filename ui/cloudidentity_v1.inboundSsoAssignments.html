@@ -1,0 +1,31 @@
+<h1><a href="cloudidentity_v1.html">Cloud Identity API</a> . <a href="cloudidentity_v1.inboundSsoAssignments.html">inboundSsoAssignments</a></h1>
+<p class="firstline">Creates an InboundSsoAssignment for users and devices in a `Customer` under a given `Group` or `OrgUnit`.</p>
+<p class="firstline">Deletes an InboundSsoAssignment. To disable SSO, Create (or Update) an assignment that has `sso_mode` == `SSO_OFF`.</p>
+<p class="firstline">Gets an InboundSsoAssignment.</p>
+<p class="firstline">Lists the InboundSsoAssignments for a `Customer`.</p>
+<p class="firstline">Updates an InboundSsoAssignment. The body of this request is the `inbound_sso_assignment` field and the `update_mask` is relative to that. For example: a PATCH to `/v1/inboundSsoAssignments/0abcdefg1234567&update_mask=rank` with a body of `{ "rank": 1 }` moves that (presumably group-targeted) SSO assignment to the highest priority and shifts any other group-targeted assignments down in priority.</p>
+  <pre>Creates an InboundSsoAssignment for users and devices in a `Customer` under a given `Group` or `OrgUnit`.
+{ # Targets with &quot;set&quot; SSO assignments and their respective assignments.
+  &quot;name&quot;: &quot;A String&quot;, # Output only. [Resource name](https://cloud.google.com/apis/design/resource_names) of the Inbound SSO Assignment.
+  &quot;oidcSsoInfo&quot;: { # Details that are applicable when `sso_mode` is set to `OIDC_SSO`. # OpenID Connect SSO details. Must be set if and only if `sso_mode` is set to `OIDC_SSO`.
+    &quot;inboundOidcSsoProfile&quot;: &quot;A String&quot;, # Required. Name of the `InboundOidcSsoProfile` to use. Must be of the form `inboundOidcSsoProfiles/{inbound_oidc_sso_profile}`.
+  &quot;rank&quot;: 42, # Must be zero (which is the default value so it can be omitted) for assignments with `target_org_unit` set and must be greater-than-or-equal-to one for assignments with `target_group` set.
+  &quot;samlSsoInfo&quot;: { # Details that are applicable when `sso_mode` == `SAML_SSO`. # SAML SSO details. Must be set if and only if `sso_mode` is set to `SAML_SSO`.
+    &quot;inboundSamlSsoProfile&quot;: &quot;A String&quot;, # Required. Name of the `InboundSamlSsoProfile` to use. Must be of the form `inboundSamlSsoProfiles/{inbound_saml_sso_profile}`.
+  &quot;signInBehavior&quot;: { # Controls sign-in behavior. # Assertions about users assigned to an IdP will always be accepted from that IdP. This controls whether/when Google should redirect a user to the IdP. Unset (defaults) is the recommended configuration.
+    &quot;redirectCondition&quot;: &quot;A String&quot;, # When to redirect sign-ins to the IdP.
+  &quot;ssoMode&quot;: &quot;A String&quot;, # Inbound SSO behavior.
+  &quot;targetGroup&quot;: &quot;A String&quot;, # Immutable. Must be of the form `groups/{group}`.
+  &quot;targetOrgUnit&quot;: &quot;A String&quot;, # Immutable. Must be of the form `orgUnits/{org_unit}`.
+  <pre>Deletes an InboundSsoAssignment. To disable SSO, Create (or Update) an assignment that has `sso_mode` == `SSO_OFF`.
+  name: string, Required. The [resource name](https://cloud.google.com/apis/design/resource_names) of the InboundSsoAssignment to delete. Format: `inboundSsoAssignments/{assignment}` (required)
+  <pre>Gets an InboundSsoAssignment.
+  name: string, Required. The [resource name](https://cloud.google.com/apis/design/resource_names) of the InboundSsoAssignment to fetch. Format: `inboundSsoAssignments/{assignment}` (required)
+  <pre>Lists the InboundSsoAssignments for a `Customer`.
+  filter: string, A CEL expression to filter the results. The only supported filter is filtering by customer. For example: `customer==customers/C0123abc`. Omitting the filter or specifying a filter of `customer==customers/my_customer` will return the assignments for the customer that the caller (authenticated user) belongs to.
+  pageSize: integer, The maximum number of assignments to return. The service may return fewer than this value. If omitted (or defaulted to zero) the server will use a sensible default. This default may change over time. The maximum allowed value is 100, though requests with page_size greater than that will be silently interpreted as having this maximum value. This may increase in the futue.
+  pageToken: string, A page token, received from a previous `ListInboundSsoAssignments` call. Provide this to retrieve the subsequent page. When paginating, all other parameters provided to `ListInboundSsoAssignments` must match the call that provided the page token.
+    { # Response of the InboundSsoAssignmentsService.ListInboundSsoAssignments method.
+  &quot;inboundSsoAssignments&quot;: [ # The assignments.
+  <pre>Updates an InboundSsoAssignment. The body of this request is the `inbound_sso_assignment` field and the `update_mask` is relative to that. For example: a PATCH to `/v1/inboundSsoAssignments/0abcdefg1234567&amp;update_mask=rank` with a body of `{ &quot;rank&quot;: 1 }` moves that (presumably group-targeted) SSO assignment to the highest priority and shifts any other group-targeted assignments down in priority.
+  name: string, Output only. [Resource name](https://cloud.google.com/apis/design/resource_names) of the Inbound SSO Assignment. (required)

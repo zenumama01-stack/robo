@@ -1,0 +1,29 @@
+<h1><a href="runtimeconfig_v1beta1.html">Cloud Runtime Configuration API</a> . <a href="runtimeconfig_v1beta1.projects.html">projects</a> . <a href="runtimeconfig_v1beta1.projects.configs.html">configs</a></h1>
+  <code><a href="runtimeconfig_v1beta1.projects.configs.operations.html">operations()</a></code>
+  <code><a href="runtimeconfig_v1beta1.projects.configs.variables.html">variables()</a></code>
+<p class="firstline">Returns the variables Resource.</p>
+  <code><a href="runtimeconfig_v1beta1.projects.configs.waiters.html">waiters()</a></code>
+<p class="firstline">Returns the waiters Resource.</p>
+<p class="firstline">Creates a new RuntimeConfig resource. The configuration name must be unique within project.</p>
+<p class="firstline">Deletes a RuntimeConfig resource.</p>
+<p class="firstline">Gets information about a RuntimeConfig resource.</p>
+<p class="firstline">Lists all the RuntimeConfig resources within project.</p>
+<p class="firstline">Updates a RuntimeConfig resource. The configuration must exist beforehand.</p>
+  <pre>Creates a new RuntimeConfig resource. The configuration name must be unique within project.
+  parent: string, The [project ID](https://support.google.com/cloud/answer/6158840?hl=en&amp;ref_topic=6158848) for this request, in the format `projects/[PROJECT_ID]`. (required)
+{ # A RuntimeConfig resource is the primary resource in the Cloud RuntimeConfig service. A RuntimeConfig resource consists of metadata and a hierarchy of variables.
+  &quot;description&quot;: &quot;A String&quot;, # An optional description of the RuntimeConfig object.
+  &quot;name&quot;: &quot;A String&quot;, # The resource name of a runtime config. The name must have the format: projects/[PROJECT_ID]/configs/[CONFIG_NAME] The `[PROJECT_ID]` must be a valid project ID, and `[CONFIG_NAME]` is an arbitrary name that matches the `[0-9A-Za-z](?:[_.A-Za-z0-9-]{0,62}[_.A-Za-z0-9])?` regular expression. The length of `[CONFIG_NAME]` must be less than 64 characters. You pick the RuntimeConfig resource name, but the server will validate that the name adheres to this format. After you create the resource, you cannot change the resource&#x27;s name.
+  requestId: string, An optional but recommended unique `request_id`. If the server receives two `create()` requests with the same `request_id`, then the second request will be ignored and the first resource created and stored in the backend is returned. Empty `request_id` fields are ignored. It is responsibility of the client to ensure uniqueness of the `request_id` strings. `request_id` strings are limited to 64 characters.
+  <pre>Deletes a RuntimeConfig resource.
+  name: string, The RuntimeConfig resource to delete, in the format: `projects/[PROJECT_ID]/configs/[CONFIG_NAME]` (required)
+  <pre>Gets information about a RuntimeConfig resource.
+  name: string, The name of the RuntimeConfig resource to retrieve, in the format: `projects/[PROJECT_ID]/configs/[CONFIG_NAME]` (required)
+  <pre>Lists all the RuntimeConfig resources within project.
+  pageSize: integer, Specifies the number of results to return per page. If there are fewer elements than the specified number, returns all elements.
+  pageToken: string, Specifies a page token to use. Set `pageToken` to a `nextPageToken` returned by a previous list request to get the next page of results.
+    { # `ListConfigs()` returns the following response. The order of returned objects is arbitrary; that is, it is not ordered in any particular way.
+  &quot;configs&quot;: [ # A list of the configurations in the project. The order of returned objects is arbitrary; that is, it is not ordered in any particular way.
+  &quot;nextPageToken&quot;: &quot;A String&quot;, # This token allows you to get the next page of results for list requests. If the number of results is larger than `pageSize`, use the `nextPageToken` as a value for the query parameter `pageToken` in the next list request. Subsequent list requests will have their own `nextPageToken` to continue paging through the results
+  <pre>Updates a RuntimeConfig resource. The configuration must exist beforehand.
+  name: string, The name of the RuntimeConfig resource to update, in the format: `projects/[PROJECT_ID]/configs/[CONFIG_NAME]` (required)

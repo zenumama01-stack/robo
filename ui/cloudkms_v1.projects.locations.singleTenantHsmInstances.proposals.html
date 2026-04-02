@@ -1,0 +1,71 @@
+<h1><a href="cloudkms_v1.html">Cloud Key Management Service (KMS) API</a> . <a href="cloudkms_v1.projects.html">projects</a> . <a href="cloudkms_v1.projects.locations.html">locations</a> . <a href="cloudkms_v1.projects.locations.singleTenantHsmInstances.html">singleTenantHsmInstances</a> . <a href="cloudkms_v1.projects.locations.singleTenantHsmInstances.proposals.html">proposals</a></h1>
+<p class="firstline">Approves a SingleTenantHsmInstanceProposal for a given SingleTenantHsmInstance. The proposal must be in the PENDING state.</p>
+  <code><a href="#create">create(parent, body=None, singleTenantHsmInstanceProposalId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Creates a new SingleTenantHsmInstanceProposal for a given SingleTenantHsmInstance.</p>
+<p class="firstline">Deletes a SingleTenantHsmInstanceProposal.</p>
+<p class="firstline">Executes a SingleTenantHsmInstanceProposal for a given SingleTenantHsmInstance. The proposal must be in the APPROVED state.</p>
+<p class="firstline">Returns metadata for a given SingleTenantHsmInstanceProposal.</p>
+<p class="firstline">Lists SingleTenantHsmInstanceProposals.</p>
+  <pre>Approves a SingleTenantHsmInstanceProposal for a given SingleTenantHsmInstance. The proposal must be in the PENDING state.
+  name: string, Required. The name of the SingleTenantHsmInstanceProposal to approve. (required)
+{ # Request message for HsmManagement.ApproveSingleTenantHsmInstanceProposal.
+  &quot;quorumReply&quot;: { # The reply to QuorumParameters for approving the proposal. # Required. The reply to QuorumParameters for approving the proposal.
+    &quot;challengeReplies&quot;: [ # Required. The challenge replies to approve the proposal. Challenge replies can be sent across multiple requests. The proposal will be approved when required_approver_count challenge replies are provided.
+      { # A reply to a challenge signed by a 2FA key.
+        &quot;publicKeyPem&quot;: &quot;A String&quot;, # Required. The public key associated with the 2FA key.
+        &quot;signedChallenge&quot;: &quot;A String&quot;, # Required. The signed challenge associated with the 2FA key. The signature must be RSASSA-PKCS1 v1.5 with a SHA256 digest.
+  &quot;requiredActionQuorumReply&quot;: { # The reply to RequiredActionQuorumParameters for approving the proposal. # Required. The reply to RequiredActionQuorumParameters for approving the proposal.
+    &quot;quorumChallengeReplies&quot;: [ # Required. Quorum members&#x27; signed challenge replies. These can be provided across multiple requests. The proposal will be approved when required_approver_count quorum_challenge_replies are provided and when all required_challenge_replies are provided.
+    &quot;requiredChallengeReplies&quot;: [ # Required. All required challenges must be signed for the proposal to be approved. These can be sent across multiple requests.
+    { # Response message for HsmManagement.ApproveSingleTenantHsmInstanceProposal.
+    <code class="details" id="create">create(parent, body=None, singleTenantHsmInstanceProposalId=None, x__xgafv=None)</code>
+  <pre>Creates a new SingleTenantHsmInstanceProposal for a given SingleTenantHsmInstance.
+  parent: string, Required. The name of the SingleTenantHsmInstance associated with the SingleTenantHsmInstanceProposals. (required)
+{ # A SingleTenantHsmInstanceProposal represents a proposal to perform an operation on a SingleTenantHsmInstance.
+  &quot;addQuorumMember&quot;: { # Add a quorum member to the SingleTenantHsmInstance. This will increase the total_approver_count by 1. The SingleTenantHsmInstance must be in the ACTIVE state to perform this operation. # Add a quorum member to the SingleTenantHsmInstance. This will increase the total_approver_count by 1. The SingleTenantHsmInstance must be in the ACTIVE state to perform this operation.
+    &quot;twoFactorPublicKeyPem&quot;: &quot;A String&quot;, # Required. The public key associated with the 2FA key for the new quorum member to add. Public keys must be associated with RSA 2048 keys.
+  &quot;createTime&quot;: &quot;A String&quot;, # Output only. The time at which the SingleTenantHsmInstanceProposal was created.
+  &quot;deleteSingleTenantHsmInstance&quot;: { # Delete the SingleTenantHsmInstance. Deleting a SingleTenantHsmInstance will make all CryptoKeys attached to the SingleTenantHsmInstance unusable. The SingleTenantHsmInstance must not be in the DELETING or DELETED state to perform this operation. # Delete the SingleTenantHsmInstance. Deleting a SingleTenantHsmInstance will make all CryptoKeys attached to the SingleTenantHsmInstance unusable. The SingleTenantHsmInstance must be in the DISABLED or PENDING_TWO_FACTOR_AUTH_REGISTRATION state to perform this operation.
+  &quot;deleteTime&quot;: &quot;A String&quot;, # Output only. The time at which the SingleTenantHsmInstanceProposal was deleted.
+  &quot;disableSingleTenantHsmInstance&quot;: { # Disable the SingleTenantHsmInstance. The SingleTenantHsmInstance must be in the ACTIVE state to perform this operation. # Disable the SingleTenantHsmInstance. The SingleTenantHsmInstance must be in the ACTIVE state to perform this operation.
+  &quot;enableSingleTenantHsmInstance&quot;: { # Enable the SingleTenantHsmInstance. The SingleTenantHsmInstance must be in the DISABLED state to perform this operation. # Enable the SingleTenantHsmInstance. The SingleTenantHsmInstance must be in the DISABLED state to perform this operation.
+  &quot;expireTime&quot;: &quot;A String&quot;, # The time at which the SingleTenantHsmInstanceProposal will expire if not approved and executed.
+  &quot;failureReason&quot;: &quot;A String&quot;, # Output only. The root cause of the most recent failure. Only present if state is FAILED.
+  &quot;name&quot;: &quot;A String&quot;, # Identifier. The resource name for this SingleTenantHsmInstance in the format `projects/*/locations/*/singleTenantHsmInstances/*/proposals/*`.
+  &quot;purgeTime&quot;: &quot;A String&quot;, # Output only. The time at which the soft-deleted SingleTenantHsmInstanceProposal will be permanently purged. This field is only populated when the state is DELETED and will be set a time after expiration of the proposal, i.e. &gt;= expire_time or (create_time + ttl).
+  &quot;quorumParameters&quot;: { # Parameters of quorum approval for the SingleTenantHsmInstanceProposal. # Output only. The quorum approval parameters for the SingleTenantHsmInstanceProposal.
+    &quot;approvedTwoFactorPublicKeyPems&quot;: [ # Output only. The public keys associated with the 2FA keys that have already approved the SingleTenantHsmInstanceProposal by signing the challenge.
+    &quot;challenges&quot;: [ # Output only. The challenges to be signed by 2FA keys for quorum auth. M of N of these challenges are required to be signed to approve the operation.
+      { # A challenge to be signed by a 2FA key.
+        &quot;challenge&quot;: &quot;A String&quot;, # Output only. The challenge to be signed by the 2FA key indicated by the public key.
+        &quot;publicKeyPem&quot;: &quot;A String&quot;, # Output only. The public key associated with the 2FA key that should sign the challenge.
+    &quot;requiredApproverCount&quot;: 42, # Output only. The required numbers of approvers. This is the M value used for M of N quorum auth. It is less than the number of public keys.
+  &quot;refreshSingleTenantHsmInstance&quot;: { # Refreshes the SingleTenantHsmInstance. This operation must be performed periodically to keep the SingleTenantHsmInstance active. This operation must be performed before unrefreshed_duration_until_disable has passed. The SingleTenantHsmInstance must be in the ACTIVE state to perform this operation. # Refreshes the SingleTenantHsmInstance. This operation must be performed periodically to keep the SingleTenantHsmInstance active. This operation must be performed before unrefreshed_duration_until_disable has passed. The SingleTenantHsmInstance must be in the ACTIVE state to perform this operation.
+  &quot;registerTwoFactorAuthKeys&quot;: { # Register 2FA keys for the SingleTenantHsmInstance. This operation requires all Challenges to be signed by 2FA keys. The SingleTenantHsmInstance must be in the PENDING_TWO_FACTOR_AUTH_REGISTRATION state to perform this operation. # Register 2FA keys for the SingleTenantHsmInstance. This operation requires all N Challenges to be signed by 2FA keys. The SingleTenantHsmInstance must be in the PENDING_TWO_FACTOR_AUTH_REGISTRATION state to perform this operation.
+    &quot;requiredApproverCount&quot;: 42, # Required. The required numbers of approvers to set for the SingleTenantHsmInstance. This is the M value used for M of N quorum auth. Must be greater than or equal to 2 and less than or equal to total_approver_count - 1.
+    &quot;twoFactorPublicKeyPems&quot;: [ # Required. The public keys associated with the 2FA keys for M of N quorum auth. Public keys must be associated with RSA 2048 keys.
+  &quot;removeQuorumMember&quot;: { # Remove a quorum member from the SingleTenantHsmInstance. This will reduce total_approver_count by 1. The SingleTenantHsmInstance must be in the ACTIVE state to perform this operation. # Remove a quorum member from the SingleTenantHsmInstance. This will reduce total_approver_count by 1. The SingleTenantHsmInstance must be in the ACTIVE state to perform this operation.
+    &quot;twoFactorPublicKeyPem&quot;: &quot;A String&quot;, # Required. The public key associated with the 2FA key for the quorum member to remove. Public keys must be associated with RSA 2048 keys.
+  &quot;requiredActionQuorumParameters&quot;: { # Parameters for an approval that has both required challenges and a quorum. # Output only. Parameters for an approval of a SingleTenantHsmInstanceProposal that has both required challenges and a quorum.
+    &quot;quorumChallenges&quot;: [ # Output only. The challenges to be signed by 2FA keys for quorum auth. M of N of these challenges are required to be signed to approve the operation.
+    &quot;requiredApproverCount&quot;: 42, # Output only. The required number of quorum approvers. This is the M value used for M of N quorum auth. It is less than the number of public keys.
+    &quot;requiredChallenges&quot;: [ # Output only. A list of specific challenges that must be signed. For some operations, this will contain a single challenge.
+  &quot;state&quot;: &quot;A String&quot;, # Output only. The state of the SingleTenantHsmInstanceProposal.
+  &quot;ttl&quot;: &quot;A String&quot;, # Input only. The TTL for the SingleTenantHsmInstanceProposal. Proposals will expire after this duration.
+  singleTenantHsmInstanceProposalId: string, Optional. It must be unique within a location and match the regular expression `[a-zA-Z0-9_-]{1,63}`.
+  <pre>Deletes a SingleTenantHsmInstanceProposal.
+  name: string, Required. The name of the SingleTenantHsmInstanceProposal to delete. (required)
+  <pre>Executes a SingleTenantHsmInstanceProposal for a given SingleTenantHsmInstance. The proposal must be in the APPROVED state.
+  name: string, Required. The name of the SingleTenantHsmInstanceProposal to execute. (required)
+{ # Request message for HsmManagement.ExecuteSingleTenantHsmInstanceProposal.
+  <pre>Returns metadata for a given SingleTenantHsmInstanceProposal.
+  name: string, Required. The name of the SingleTenantHsmInstanceProposal to get. (required)
+  <pre>Lists SingleTenantHsmInstanceProposals.
+  parent: string, Required. The resource name of the single tenant HSM instance associated with the SingleTenantHsmInstanceProposals to list, in the format `projects/*/locations/*/singleTenantHsmInstances/*`. (required)
+  pageSize: integer, Optional. Optional limit on the number of SingleTenantHsmInstanceProposals to include in the response. Further SingleTenantHsmInstanceProposals can subsequently be obtained by including the ListSingleTenantHsmInstanceProposalsResponse.next_page_token in a subsequent request. If unspecified, the server will pick an appropriate default.
+  pageToken: string, Optional. Optional pagination token, returned earlier via ListSingleTenantHsmInstanceProposalsResponse.next_page_token.
+  showDeleted: boolean, Optional. If set to true, HsmManagement.ListSingleTenantHsmInstanceProposals will also return SingleTenantHsmInstanceProposals in DELETED state.
+    { # Response message for HsmManagement.ListSingleTenantHsmInstanceProposals.
+  &quot;nextPageToken&quot;: &quot;A String&quot;, # A token to retrieve next page of results. Pass this value in ListSingleTenantHsmInstanceProposalsRequest.page_token to retrieve the next page of results.
+  &quot;singleTenantHsmInstanceProposals&quot;: [ # The list of SingleTenantHsmInstanceProposals.
+  &quot;totalSize&quot;: 42, # The total number of SingleTenantHsmInstanceProposals that matched the query. This field is not populated if ListSingleTenantHsmInstanceProposalsRequest.filter is applied.

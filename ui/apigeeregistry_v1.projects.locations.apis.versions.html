@@ -1,0 +1,28 @@
+<h1><a href="apigeeregistry_v1.html">Apigee Registry API</a> . <a href="apigeeregistry_v1.projects.html">projects</a> . <a href="apigeeregistry_v1.projects.locations.html">locations</a> . <a href="apigeeregistry_v1.projects.locations.apis.html">apis</a> . <a href="apigeeregistry_v1.projects.locations.apis.versions.html">versions</a></h1>
+  <code><a href="apigeeregistry_v1.projects.locations.apis.versions.artifacts.html">artifacts()</a></code>
+  <code><a href="apigeeregistry_v1.projects.locations.apis.versions.specs.html">specs()</a></code>
+<p class="firstline">Returns the specs Resource.</p>
+  <code><a href="#create">create(parent, apiVersionId=None, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Creates a specified version.</p>
+<p class="firstline">Removes a specified version and all of the resources that it owns.</p>
+<p class="firstline">Returns a specified version.</p>
+<p class="firstline">Returns matching versions.</p>
+<p class="firstline">Used to modify a specified version.</p>
+    <code class="details" id="create">create(parent, apiVersionId=None, body=None, x__xgafv=None)</code>
+  <pre>Creates a specified version.
+  parent: string, Required. The parent, which owns this collection of versions. Format: `projects/*/locations/*/apis/*` (required)
+{ # Describes a particular version of an API. ApiVersions are what consumers actually use.
+  &quot;primarySpec&quot;: &quot;A String&quot;, # The primary spec for this version. Format: projects/{project}/locations/{location}/apis/{api}/versions/{version}/specs/{spec}
+  &quot;state&quot;: &quot;A String&quot;, # A user-definable description of the lifecycle phase of this API version. Format: free-form, but we expect single words that describe API maturity, e.g., &quot;CONCEPT&quot;, &quot;DESIGN&quot;, &quot;DEVELOPMENT&quot;, &quot;STAGING&quot;, &quot;PRODUCTION&quot;, &quot;DEPRECATED&quot;, &quot;RETIRED&quot;.
+  apiVersionId: string, Required. The ID to use for the version, which will become the final component of the version&#x27;s resource name. This value should be 1-63 characters, and valid characters are /a-z-/. Following AIP-162, IDs must not have the form of a UUID.
+  <pre>Removes a specified version and all of the resources that it owns.
+  name: string, Required. The name of the version to delete. Format: `projects/*/locations/*/apis/*/versions/*` (required)
+  <pre>Returns a specified version.
+  name: string, Required. The name of the version to retrieve. Format: `projects/*/locations/*/apis/*/versions/*` (required)
+  <pre>Returns matching versions.
+  pageSize: integer, The maximum number of versions to return. The service may return fewer than this value. If unspecified, at most 50 values will be returned. The maximum is 1000; values above 1000 will be coerced to 1000.
+  pageToken: string, A page token, received from a previous `ListApiVersions` call. Provide this to retrieve the subsequent page. When paginating, all other parameters provided to `ListApiVersions` must match the call that provided the page token.
+    { # Response message for ListApiVersions.
+  &quot;apiVersions&quot;: [ # The versions from the specified publisher.
+  <pre>Used to modify a specified version.
+  allowMissing: boolean, If set to true, and the version is not found, a new version will be created. In this situation, `update_mask` is ignored.

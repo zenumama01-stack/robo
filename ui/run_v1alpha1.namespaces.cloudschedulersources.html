@@ -1,0 +1,35 @@
+<h1><a href="run_v1alpha1.html">Cloud Run Admin API</a> . <a href="run_v1alpha1.namespaces.html">namespaces</a> . <a href="run_v1alpha1.namespaces.cloudschedulersources.html">cloudschedulersources</a></h1>
+<p class="firstline">Creates a new cloudschedulersource.</p>
+<p class="firstline">Rpc to delete a cloudschedulersource.</p>
+<p class="firstline">Rpc to get information about a cloudschedulersource.</p>
+<p class="firstline">Rpc to list cloudschedulersources.</p>
+  <code><a href="#replaceCloudSchedulerSource">replaceCloudSchedulerSource(name, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Rpc to replace a cloudschedulersource. Only the spec and metadata labels and annotations are modifiable. After the Update request, Cloud Run will work to make the 'status' match the requested 'spec'. May provide metadata.resourceVersion to enforce update from last read for optimistic concurrency control.</p>
+  <pre>Creates a new cloudschedulersource.
+  parent: string, Required. The project ID or project number in which this cloudschedulersource should be created. (required)
+{ # The CloudSchedulerSource resource.
+  &quot;kind&quot;: &quot;A String&quot;, # The kind of resource, in this case &quot;CloudSchedulerSource&quot;.
+  &quot;metadata&quot;: { # ObjectMeta is metadata that all persisted resources must have, which includes all objects users must create. # Metadata associated with this CloudSchedulerSource.
+  &quot;spec&quot;: { # The desired state of the CloudSchedulerSource. # Spec defines the desired state of the CloudSchedulerSource.
+    &quot;ceOverrides&quot;: { # CloudEventOverrides defines arguments for a Source that control the output format of the CloudEvents produced by the Source. # CloudEventOverrides defines overrides to control the output format and modifications of the event sent to the sink.
+    &quot;data&quot;: &quot;A String&quot;, # Data to send in the payload of the Event.
+    &quot;location&quot;: &quot;A String&quot;, # Location to create the Scheduler job in.
+    &quot;project&quot;: &quot;A String&quot;, # Project is the ID of the Google Cloud Project that the CloudPubSubSource Topic exists in. If omitted, defaults to same as the cluster.
+    &quot;schedule&quot;: &quot;A String&quot;, # Schedule in cron format, for example: &quot;* * * * *&quot; would be run every minute.
+    &quot;secret&quot;: { # Cloud Run fully managed: not supported Cloud Run on GKE: supported SecretKeySelector selects a key of a Secret. # Secret is the credential to use to create the Scheduler Job. If not specified, defaults to: Name: google-cloud-key Key: key.json
+  &quot;status&quot;: { # CloudSchedulerSourceStatus represents the current state of a CloudSchedulerSource. # Status represents the current state of the CloudSchedulerSource. This data may be out of date.
+    &quot;conditions&quot;: [ # Array of observed CloudSchedulerSourceConditions, indicating the current state of the CloudSchedulerSource.
+    &quot;observedGeneration&quot;: 42, # ObservedGeneration is the &#x27;Generation&#x27; of the CloudSchedulerSource that was last processed by the controller.
+    &quot;sinkUri&quot;: &quot;A String&quot;, # SinkURI is the current active sink URI that has been configured for the Source.
+  <pre>Rpc to delete a cloudschedulersource.
+  name: string, Required. The name of the cloudschedulersource being deleted. If needed, replace {namespace_id} with the project ID. (required)
+  <pre>Rpc to get information about a cloudschedulersource.
+  name: string, Required. The name of the cloudschedulersource being retrieved. If needed, replace {namespace_id} with the project ID. (required)
+  <pre>Rpc to list cloudschedulersources.
+  parent: string, Required. The project ID or project number from which the cloudschedulersources should be listed. (required)
+    { # ListCloudSchedulerSourcesResponse is a list of CloudSchedulerSource resources.
+  &quot;items&quot;: [ # List of CloudSchedulerSources.
+  &quot;kind&quot;: &quot;A String&quot;, # The kind of this resource, in this case &quot;CloudSchedulerSourceList&quot;.
+  &quot;metadata&quot;: { # ListMeta describes metadata that synthetic resources must have, including lists and various status objects. A resource may have only one of {ObjectMeta, ListMeta}. # Metadata associated with this CloudSchedulerSource list.
+    <code class="details" id="replaceCloudSchedulerSource">replaceCloudSchedulerSource(name, body=None, x__xgafv=None)</code>
+  <pre>Rpc to replace a cloudschedulersource. Only the spec and metadata labels and annotations are modifiable. After the Update request, Cloud Run will work to make the &#x27;status&#x27; match the requested &#x27;spec&#x27;. May provide metadata.resourceVersion to enforce update from last read for optimistic concurrency control.

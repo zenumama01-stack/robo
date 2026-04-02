@@ -1,0 +1,84 @@
+<div class="mj-page-container">
+      <mj-loading text="Loading settings..."></mj-loading>
+        <button class="retry-button" (click)="loadInitialData()">
+    <div class="settings-content">
+      <!-- Desktop Layout -->
+      @if (!isMobile) {
+        <div class="desktop-layout" style="display: flex;">
+          <!-- Side Navigation -->
+          <nav class="side-navigation" role="navigation" aria-label="Settings navigation">
+            <div class="nav-search">
+              <i class="fa-solid fa-search nav-search-icon" aria-hidden="true"></i>
+                class="nav-search-input"
+                placeholder="Search settings..."
+                aria-label="Search settings"
+              @if (searchTerm$.value) {
+                  class="nav-search-clear"
+                  <i class="fa-solid fa-xmark" aria-hidden="true"></i>
+            <ul class="nav-list" role="tablist" aria-orientation="vertical">
+              @for (tab of filteredTabs; track tab.id) {
+                <li
+                  [class.active]="activeTab === tab.id"
+                  [class.disabled]="tab.disabled"
+                  (click)="onTabChange(tab.id)"
+                  (keydown.enter)="onTabChange(tab.id)"
+                  [attr.aria-selected]="activeTab === tab.id"
+                  [attr.aria-controls]="'panel-' + tab.id"
+                  [attr.aria-disabled]="tab.disabled"
+                  <i [class]="tab.icon" aria-hidden="true"></i>
+                  <span class="nav-label">{{ tab.label }}</span>
+                  @if (tab.disabled) {
+                    <span class="coming-soon-badge">Soon</span>
+                  @if (tab.badgeCount && tab.badgeCount > 0) {
+                    <span class="nav-badge" [class]="'badge-' + (tab.badgeColor || 'primary')">
+                      {{ tab.badgeCount }}
+          <div class="content-area" role="tabpanel" [attr.id]="'panel-' + activeTab">
+                @case ('general') {
+                  <mj-general-settings></mj-general-settings>
+                @case ('notifications') {
+                  <div class="notifications-settings">
+                    <h2 class="section-title">Notifications</h2>
+                    <p class="section-description">Configure how and when you receive notifications</p>
+                    <mj-notification-preferences></mj-notification-preferences>
+                @case ('applications') {
+                  <mj-application-settings></mj-application-settings>
+                @case ('appearance') {
+                  <mj-appearance-settings></mj-appearance-settings>
+      <!-- Mobile Layout -->
+      @if (isMobile) {
+        <div class="mobile-layout">
+          <!-- Mobile Header -->
+          @if (!isMobileNavOpen) {
+            <header class="mobile-header">
+                class="mobile-header-icon"
+                (click)="toggleMobileNav()"
+                aria-label="Toggle navigation menu"
+                [attr.aria-expanded]="isMobileNavOpen"
+                <i class="fa-solid fa-bars" aria-hidden="true"></i>
+              <h1 class="mobile-header-title">Settings</h1>
+              <div class="mobile-header-spacer"></div>
+          <!-- Backdrop Overlay -->
+          @if (isMobileNavOpen) {
+              class="mobile-nav-backdrop"
+              (click)="closeMobileNav()"
+          <!-- Mobile Navigation Rail -->
+          <nav
+            class="mobile-nav-rail"
+            [class.open]="isMobileNavOpen"
+            role="navigation"
+            aria-label="Settings navigation"
+            <div class="nav-rail-header">
+              <span class="nav-rail-title">Settings</span>
+            <div class="nav-rail-items" role="tablist">
+                  class="nav-rail-item"
+                  [disabled]="tab.disabled"
+                  (click)="onMobileTabChange(tab.id)"
+                  [attr.aria-label]="tab.label"
+                  <span class="nav-rail-label">{{ tab.label }}</span>
+                    <span class="rail-badge" [class]="'badge-' + (tab.badgeColor || 'primary')">
+                class="nav-rail-item nav-rail-close-item"
+                (click)="closeSettings()"
+                aria-label="Close settings"
+                <span class="nav-rail-label">Close</span>
+          <!-- Mobile Content Area -->
+          <div class="mobile-content">

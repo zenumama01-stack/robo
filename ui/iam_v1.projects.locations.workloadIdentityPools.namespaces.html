@@ -1,0 +1,39 @@
+<h1><a href="iam_v1.html">Identity and Access Management (IAM) API</a> . <a href="iam_v1.projects.html">projects</a> . <a href="iam_v1.projects.locations.html">locations</a> . <a href="iam_v1.projects.locations.workloadIdentityPools.html">workloadIdentityPools</a> . <a href="iam_v1.projects.locations.workloadIdentityPools.namespaces.html">namespaces</a></h1>
+  <code><a href="iam_v1.projects.locations.workloadIdentityPools.namespaces.managedIdentities.html">managedIdentities()</a></code>
+<p class="firstline">Returns the managedIdentities Resource.</p>
+  <code><a href="iam_v1.projects.locations.workloadIdentityPools.namespaces.operations.html">operations()</a></code>
+  <code><a href="#create">create(parent, body=None, workloadIdentityPoolNamespaceId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Creates a new WorkloadIdentityPoolNamespace in a WorkloadIdentityPool.</p>
+<p class="firstline">Deletes a WorkloadIdentityPoolNamespace. You can undelete a namespace for 30 days. After 30 days, deletion is permanent.</p>
+<p class="firstline">Gets an individual WorkloadIdentityPoolNamespace.</p>
+<p class="firstline">Lists all non-deleted WorkloadIdentityPoolNamespaces in a workload identity pool. If `show_deleted` is set to `true`, then deleted namespaces are also listed.</p>
+<p class="firstline">Updates an existing WorkloadIdentityPoolNamespace in a WorkloadIdentityPool.</p>
+<p class="firstline">Undeletes a WorkloadIdentityPoolNamespace, as long as it was deleted fewer than 30 days ago.</p>
+    <code class="details" id="create">create(parent, body=None, workloadIdentityPoolNamespaceId=None, x__xgafv=None)</code>
+  <pre>Creates a new WorkloadIdentityPoolNamespace in a WorkloadIdentityPool.
+  parent: string, Required. The parent resource to create the namespace in. The only supported location is `global`. (required)
+{ # Represents a namespace for a workload identity pool. Namespaces are used to segment identities within the pool.
+  &quot;description&quot;: &quot;A String&quot;, # Optional. A description of the namespace. Cannot exceed 256 characters.
+  &quot;disabled&quot;: True or False, # Optional. Whether the namespace is disabled. If disabled, credentials may no longer be issued for identities within this namespace, however existing credentials will still be accepted until they expire.
+  &quot;expireTime&quot;: &quot;A String&quot;, # Output only. Time after which the namespace will be permanently purged and cannot be recovered.
+  &quot;name&quot;: &quot;A String&quot;, # Identifier. The resource name of the namespace.
+  &quot;ownerService&quot;: { # The Google Cloud service that owns this namespace. # Output only. The Google Cloud service that owns this namespace.
+    &quot;principalSubject&quot;: &quot;A String&quot;, # Required. The service agent principal subject, e.g. &quot;serviceAccount:service-1234@gcp-sa-gkehub.iam.gserviceaccount.com&quot;.
+  &quot;state&quot;: &quot;A String&quot;, # Output only. The state of the namespace.
+  workloadIdentityPoolNamespaceId: string, Required. The ID to use for the namespace. This value must: * contain at most 63 characters * contain only lowercase alphanumeric characters or `-` * start with an alphanumeric character * end with an alphanumeric character The prefix &quot;gcp-&quot; will be reserved for future uses.
+  <pre>Deletes a WorkloadIdentityPoolNamespace. You can undelete a namespace for 30 days. After 30 days, deletion is permanent.
+  name: string, Required. The name of the namespace to delete. (required)
+  <pre>Gets an individual WorkloadIdentityPoolNamespace.
+  name: string, Required. The name of the namespace to retrieve. (required)
+  <pre>Lists all non-deleted WorkloadIdentityPoolNamespaces in a workload identity pool. If `show_deleted` is set to `true`, then deleted namespaces are also listed.
+  parent: string, Required. The parent resource to list namespaces for. (required)
+  pageSize: integer, The maximum number of namespaces to return. If unspecified, at most 50 namespaces are returned. The maximum value is 1000; values above are 1000 truncated to 1000.
+  pageToken: string, A page token, received from a previous `ListWorkloadIdentityPoolNamespaces` call. Provide this to retrieve the subsequent page.
+  showDeleted: boolean, Whether to return soft-deleted namespaces.
+    { # Response message for ListWorkloadIdentityPoolNamespaces.
+  &quot;workloadIdentityPoolNamespaces&quot;: [ # A list of namespaces.
+  <pre>Updates an existing WorkloadIdentityPoolNamespace in a WorkloadIdentityPool.
+  name: string, Identifier. The resource name of the namespace. (required)
+  <pre>Undeletes a WorkloadIdentityPoolNamespace, as long as it was deleted fewer than 30 days ago.
+  name: string, Required. The name of the namespace to undelete. (required)
+{ # Request message for UndeleteWorkloadIdentityPoolNamespace.

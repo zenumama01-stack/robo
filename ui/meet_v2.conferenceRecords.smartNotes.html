@@ -1,0 +1,17 @@
+<h1><a href="meet_v2.html">Google Meet API</a> . <a href="meet_v2.conferenceRecords.html">conferenceRecords</a> . <a href="meet_v2.conferenceRecords.smartNotes.html">smartNotes</a></h1>
+<p class="firstline">Gets smart notes by smart note ID.</p>
+<p class="firstline">Lists the set of smart notes from the conference record. By default, ordered by start time and in ascending order.</p>
+  <pre>Gets smart notes by smart note ID.
+  name: string, Required. Resource name of the smart note. Format: conferenceRecords/{conference_record}/smartNotes/{smart_note} (required)
+    { # Metadata for a smart note generated from a conference. It refers to the notes generated from Take Notes with Gemini during the conference.
+  &quot;docsDestination&quot;: { # Google Docs location where the transcript file is saved. # Output only. The Google Doc destination where the smart notes are saved.
+    &quot;document&quot;: &quot;A String&quot;, # Output only. The document ID for the underlying Google Docs transcript file. For example, &quot;1kuceFZohVoCh6FulBHxwy6I15Ogpc4hP&quot;. Use the `documents.get` method of the Google Docs API (https://developers.google.com/docs/api/reference/rest/v1/documents/get) to fetch the content.
+    &quot;exportUri&quot;: &quot;A String&quot;, # Output only. URI for the Google Docs transcript file. Use `https://docs.google.com/document/d/{$DocumentId}/view` to browse the transcript in the browser.
+  &quot;endTime&quot;: &quot;A String&quot;, # Output only. Timestamp when the smart notes stopped.
+  &quot;name&quot;: &quot;A String&quot;, # Output only. Identifier. Resource name of the smart notes. Format: `conferenceRecords/{conference_record}/smartNotes/{smart_note}`, where `{smart_note}` is a 1:1 mapping to each unique smart notes session of the conference.
+  &quot;startTime&quot;: &quot;A String&quot;, # Output only. Timestamp when the smart notes started.
+  <pre>Lists the set of smart notes from the conference record. By default, ordered by start time and in ascending order.
+  pageSize: integer, Optional. Maximum number of smart notes to return. The service might return fewer than this value. If unspecified, at most 10 smart notes are returned. The maximum value is 100; values above 100 are coerced to 100. Maximum might change in the future.
+    { # Response for ListSmartNotes method.
+  &quot;nextPageToken&quot;: &quot;A String&quot;, # Token to be circulated back for further List call if current List doesn&#x27;t include all the smart notes. Unset if all smart notes are returned.
+  &quot;smartNotes&quot;: [ # List of smart notes in one page.

@@ -1,0 +1,31 @@
+<h1><a href="prod_tt_sasportal_v1alpha1.html">SAS Portal API (Testing)</a> . <a href="prod_tt_sasportal_v1alpha1.customers.html">customers</a> . <a href="prod_tt_sasportal_v1alpha1.customers.nodes.html">nodes</a></h1>
+  <code><a href="prod_tt_sasportal_v1alpha1.customers.nodes.deployments.html">deployments()</a></code>
+  <code><a href="prod_tt_sasportal_v1alpha1.customers.nodes.devices.html">devices()</a></code>
+  <code><a href="prod_tt_sasportal_v1alpha1.customers.nodes.nodes.html">nodes()</a></code>
+<p class="firstline">Creates a new node.</p>
+<p class="firstline">Deletes a node.</p>
+<p class="firstline">Returns a requested node.</p>
+<p class="firstline">Lists nodes.</p>
+<p class="firstline">Moves a node under another node or customer.</p>
+<p class="firstline">Updates an existing node.</p>
+  <pre>Creates a new node.
+  parent: string, Required. The parent resource name where the node is to be created. (required)
+{ # The Node.
+  &quot;displayName&quot;: &quot;A String&quot;, # The node&#x27;s display name.
+  &quot;sasUserIds&quot;: [ # User ids used by the devices belonging to this node.
+  <pre>Deletes a node.
+  name: string, Required. The name of the node. (required)
+  <pre>Returns a requested node.
+  <pre>Lists nodes.
+  parent: string, Required. The parent resource name, for example, &quot;nodes/1&quot;. (required)
+  filter: string, The filter expression. The filter should have the following format: &quot;DIRECT_CHILDREN&quot; or format: &quot;direct_children&quot;. The filter is case insensitive. If empty, then no nodes are filtered.
+  pageSize: integer, The maximum number of nodes to return in the response.
+  pageToken: string, A pagination token returned from a previous call to ListNodes that indicates where this listing should continue from.
+    { # Response for ListNodes.
+  &quot;nextPageToken&quot;: &quot;A String&quot;, # A pagination token returned from a previous call to ListNodes that indicates from where listing should continue. If the field is missing or empty, it means there is no more nodes.
+  &quot;nodes&quot;: [ # The nodes that match the request.
+  <pre>Moves a node under another node or customer.
+  name: string, Required. The name of the node to move. (required)
+{ # Request for MoveNode.
+  &quot;destination&quot;: &quot;A String&quot;, # Required. The name of the new parent resource node or customer to reparent the node under.
+  <pre>Updates an existing node.

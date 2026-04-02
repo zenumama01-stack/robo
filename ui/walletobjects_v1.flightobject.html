@@ -1,0 +1,37 @@
+<h1><a href="walletobjects_v1.html">Google Wallet API</a> . <a href="walletobjects_v1.flightobject.html">flightobject</a></h1>
+<p class="firstline">Adds a message to the flight object referenced by the given object ID.</p>
+<p class="firstline">Returns the flight object with the given object ID.</p>
+<p class="firstline">Inserts an flight object with the given ID and properties.</p>
+<p class="firstline">Returns a list of all flight objects for a given issuer ID.</p>
+<p class="firstline">Updates the flight object referenced by the given object ID. This method supports patch semantics.</p>
+<p class="firstline">Updates the flight object referenced by the given object ID.</p>
+  <pre>Adds a message to the flight object referenced by the given object ID.
+  &quot;resource&quot;: { # The updated FlightObject resource.
+    &quot;boardingAndSeatingInfo&quot;: { # Passenger specific information about boarding and seating.
+      &quot;boardingDoor&quot;: &quot;A String&quot;, # Set this field only if this flight boards through more than one door or bridge and you want to explicitly print the door location on the boarding pass. Most airlines route their passengers to the right door or bridge by refering to doors/bridges by the `seatClass`. In those cases `boardingDoor` should not be set.
+      &quot;boardingGroup&quot;: &quot;A String&quot;, # The value of boarding group (or zone) this passenger shall board with. eg: &quot;B&quot; The label for this value will be determined by the `boardingPolicy` field in the `flightClass` referenced by this object.
+      &quot;boardingPosition&quot;: &quot;A String&quot;, # The value of boarding position. eg: &quot;76&quot;
+      &quot;boardingPrivilegeImage&quot;: { # Wrapping type for Google hosted images. # A small image shown above the boarding barcode. Airlines can use it to communicate any special boarding privileges. In the event the security program logo is also set, this image might be rendered alongside the logo for that security program.
+      &quot;kind&quot;: &quot;A String&quot;, # Identifies what kind of resource this is. Value: the fixed string `&quot;walletobjects#boardingAndSeatingInfo&quot;`.
+      &quot;seatAssignment&quot;: { # The passenger&#x27;s seat assignment. To be used when there is no specific identifier to use in `seatNumber`. eg: &quot;assigned at gate&quot;
+      &quot;seatClass&quot;: &quot;A String&quot;, # The value of the seat class. eg: &quot;Economy&quot; or &quot;Economy Plus&quot;
+      &quot;seatNumber&quot;: &quot;A String&quot;, # The value of passenger seat. If there is no specific identifier, use `seatAssignment` instead. eg: &quot;25A&quot;
+      &quot;sequenceNumber&quot;: &quot;A String&quot;, # The sequence number on the boarding pass. This usually matches the sequence in which the passengers checked in. Airline might use the number for manual boarding and bag tags. eg: &quot;49&quot;
+    &quot;disableExpirationNotification&quot;: True or False, # Indicates if notifications should explicitly be suppressed. If this field is set to true, regardless of the `messages` field, expiration notifications to the user will be suppressed. By default, this field is set to false. Currently, this can only be set for Flights.
+    &quot;kind&quot;: &quot;A String&quot;, # Identifies what kind of resource this is. Value: the fixed string `&quot;walletobjects#flightObject&quot;`.
+    &quot;linkedObjectIds&quot;: [ # linked_object_ids are a list of other objects such as event ticket, loyalty, offer, generic, giftcard, transit and boarding pass that should be automatically attached to this flight object. If a user had saved this boarding pass, then these linked_object_ids would be automatically pushed to the user&#x27;s wallet (unless they turned off the setting to receive such linked passes). Make sure that objects present in linked_object_ids are already inserted - if not, calls would fail. Once linked, the linked objects cannot be unlinked. You cannot link objects belonging to another issuer. There is a limit to the number of objects that can be linked to a single object. After the limit is reached, new linked objects in the call will be ignored silently. Object IDs should follow the format issuer ID. identifier where the former is issued by Google and the latter is chosen by you.
+    &quot;passengerName&quot;: &quot;A String&quot;, # Required. Passenger name as it would appear on the boarding pass. eg: &quot;Dave M Gahan&quot; or &quot;Gahan/Dave&quot; or &quot;GAHAN/DAVEM&quot;
+    &quot;reservationInfo&quot;: { # Required. Information about flight reservation.
+      &quot;confirmationCode&quot;: &quot;A String&quot;, # Confirmation code needed to check into this flight. This is the number that the passenger would enter into a kiosk at the airport to look up the flight and print a boarding pass.
+      &quot;eticketNumber&quot;: &quot;A String&quot;, # E-ticket number.
+      &quot;frequentFlyerInfo&quot;: { # Frequent flyer membership information.
+        &quot;frequentFlyerNumber&quot;: &quot;A String&quot;, # Frequent flyer number. Required for each nested object of kind `walletobjects#frequentFlyerInfo`.
+        &quot;frequentFlyerProgramName&quot;: { # Frequent flyer program name. eg: &quot;Lufthansa Miles &amp; More&quot;
+        &quot;kind&quot;: &quot;A String&quot;, # Identifies what kind of resource this is. Value: the fixed string `&quot;walletobjects#frequentFlyerInfo&quot;`.
+      &quot;kind&quot;: &quot;A String&quot;, # Identifies what kind of resource this is. Value: the fixed string `&quot;walletobjects#reservationInfo&quot;`.
+    &quot;securityProgramLogo&quot;: { # Wrapping type for Google hosted images. # An image for the security program that applies to the passenger.
+  <pre>Returns the flight object with the given object ID.
+  <pre>Inserts an flight object with the given ID and properties.
+  <pre>Returns a list of all flight objects for a given issuer ID.
+  <pre>Updates the flight object referenced by the given object ID. This method supports patch semantics.
+  <pre>Updates the flight object referenced by the given object ID.

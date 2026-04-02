@@ -1,0 +1,28 @@
+<h1><a href="genomics_v2alpha1.html">Genomics API</a> . <a href="genomics_v2alpha1.projects.html">projects</a> . <a href="genomics_v2alpha1.projects.workers.html">workers</a></h1>
+  <code><a href="#checkIn">checkIn(id, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">The worker uses this method to retrieve the assigned operation and provide periodic status updates.</p>
+    <code class="details" id="checkIn">checkIn(id, body=None, x__xgafv=None)</code>
+  <pre>The worker uses this method to retrieve the assigned operation and provide periodic status updates.
+  id: string, The VM identity token for authenticating the VM instance. https://cloud.google.com/compute/docs/instances/verifying-instance-identity (required)
+{ # The parameters to the CheckIn method.
+  &quot;deadlineExpired&quot;: { # A generic empty message that you can re-use to avoid defining duplicated empty messages in your APIs. A typical example is to use it as the request or the response type of an API method. For instance: service Foo { rpc Bar(google.protobuf.Empty) returns (google.protobuf.Empty); } # The deadline has expired and the worker needs more time.
+  &quot;event&quot;: { # A workflow specific event occurred.
+  &quot;events&quot;: [ # A list of timestamped events.
+    { # An event that occured in the operation assigned to the worker and the time of occurance.
+      &quot;data&quot;: { # The event data.
+      &quot;timestamp&quot;: &quot;A String&quot;, # The time when the event happened.
+  &quot;result&quot;: { # The `Status` type defines a logical error model that is suitable for different programming environments, including REST APIs and RPC APIs. It is used by [gRPC](https://github.com/grpc). Each `Status` message contains three pieces of data: error code, error message, and error details. You can find out more about this error model and how to work with it in the [API Design Guide](https://cloud.google.com/apis/design/errors). # The operation has finished with the given result.
+  &quot;sosReport&quot;: &quot;A String&quot;, # An SOS report for an unexpected VM failure.
+  &quot;workerStatus&quot;: { # The status of the worker VM. # Data about the status of the worker VM.
+    &quot;attachedDisks&quot;: { # Status of attached disks.
+      &quot;a_key&quot;: { # The status of a disk on a VM.
+        &quot;freeSpaceBytes&quot;: &quot;A String&quot;, # Free disk space.
+        &quot;totalSpaceBytes&quot;: &quot;A String&quot;, # Total disk space.
+    &quot;bootDisk&quot;: { # The status of a disk on a VM. # Status of the boot disk.
+    &quot;freeRamBytes&quot;: &quot;A String&quot;, # Free RAM.
+    &quot;totalRamBytes&quot;: &quot;A String&quot;, # Total RAM.
+    &quot;uptimeSeconds&quot;: &quot;A String&quot;, # System uptime.
+    { # The response to the CheckIn method.
+  &quot;deadline&quot;: &quot;A String&quot;, # The deadline by which the worker must request an extension. The backend will allow for network transmission time and other delays, but the worker must attempt to transmit the extension request no later than the deadline.
+  &quot;features&quot;: { # Feature configuration for the operation.
+  &quot;metadata&quot;: { # The metadata that describes the operation assigned to the worker.

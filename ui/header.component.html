@@ -1,0 +1,34 @@
+<header class="header">
+  <!-- App Switcher (shows current app) -->
+  <div class="app-switcher-container" [style.--app-color]="activeApp?.Color || '#1976d2'">
+    <div class="app-switcher-button" (click)="ToggleAppSwitcher()" title="Switch Apps">
+      <i [class]="activeApp?.Icon || 'fa-solid fa-grid-2'" class="app-icon"></i>
+      <span class="app-name">{{ activeApp?.Name || 'Apps' }}</span>
+    <!-- App Switcher Dropdown -->
+    <div class="app-switcher-dropdown" *ngIf="showAppSwitcher">
+      <div *ngFor="let app of GetAllApps()"
+           [class.active]="activeApp?.Id === app.Id"
+           [style.--item-color]="app.Color"
+           (click)="SwitchToApp(app)">
+  <!-- Navigation Items (List style) -->
+  <nav class="nav-list" [style.--app-color]="activeApp?.Color || '#1976d2'" *ngIf="navigationType === 'list' && navItems.length > 0">
+      *ngFor="let item of navItems"
+      (click)="OnNavigate(item.Route)"
+      [class.active]="isNavItemActive(item.Route)"
+      <i [class]="item.Icon" *ngIf="item.Icon"></i>
+      <span class="badge" *ngIf="item.Badge">{{ item.Badge }}</span>
+  <!-- Breadcrumb (Alternative style) -->
+  <nav class="breadcrumb" *ngIf="navigationType === 'breadcrumb' && breadcrumbs.length > 0">
+    <ng-container *ngFor="let crumb of breadcrumbs; let last = last">
+      <span class="separator" *ngIf="!last">›</span>
+        *ngIf="crumb.Route"
+        [routerLink]="crumb.Route"
+        <i [class]="crumb.Icon" *ngIf="crumb.Icon"></i>
+        {{ crumb.Label }}
+      <span *ngIf="!crumb.Route" class="breadcrumb-item current">
+  <div class="actions">
+    <button class="icon-btn" (click)="OnSearch()" title="Search">
+    <button class="icon-btn" title="Notifications">
+      <button class="avatar-btn" (click)="ToggleUserMenu()">
+      <div class="dropdown" *ngIf="showUserMenu">
+        <div class="dropdown-item" (click)="OnNavigate('/settings'); ToggleUserMenu()">

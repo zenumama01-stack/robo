@@ -1,0 +1,40 @@
+<h1><a href="beyondcorp_v1.html">BeyondCorp API</a> . <a href="beyondcorp_v1.projects.html">projects</a> . <a href="beyondcorp_v1.projects.locations.html">locations</a> . <a href="beyondcorp_v1.projects.locations.securityGateways.html">securityGateways</a></h1>
+  <code><a href="beyondcorp_v1.projects.locations.securityGateways.applications.html">applications()</a></code>
+  <code><a href="#create">create(parent, body=None, requestId=None, securityGatewayId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Creates a new Security Gateway in a given project and location.</p>
+<p class="firstline">Deletes a single SecurityGateway.</p>
+<p class="firstline">Gets details of a single SecurityGateway.</p>
+<p class="firstline">Lists SecurityGateways in a given project and location.</p>
+<p class="firstline">Updates the parameters of a single SecurityGateway.</p>
+    <code class="details" id="create">create(parent, body=None, requestId=None, securityGatewayId=None, x__xgafv=None)</code>
+  <pre>Creates a new Security Gateway in a given project and location.
+  parent: string, Required. The resource project name of the SecurityGateway location using the form: `projects/{project_id}/locations/{location_id}` (required)
+{ # The information about a security gateway resource.
+  &quot;delegatingServiceAccount&quot;: &quot;A String&quot;, # Output only. Service account used for operations that involve resources in consumer projects.
+  &quot;displayName&quot;: &quot;A String&quot;, # Optional. An arbitrary user-provided name for the SecurityGateway. Cannot exceed 64 characters.
+  &quot;externalIps&quot;: [ # Output only. IP addresses that will be used for establishing connection to the endpoints.
+  &quot;hubs&quot;: { # Optional. Map of Hubs that represents regional data path deployment with GCP region as a key.
+    &quot;a_key&quot;: { # The Hub message contains information pertaining to the regional data path deployments.
+      &quot;internetGateway&quot;: { # Represents the Internet Gateway configuration. # Optional. Internet Gateway configuration.
+        &quot;assignedIps&quot;: [ # Output only. List of IP addresses assigned to the Cloud NAT.
+  &quot;logging&quot;: { # Configuration for Cloud Logging. # Optional. Configuration for Cloud Logging. If this field is present, the logging will be enabled.
+  &quot;proxyProtocolConfig&quot;: { # The configuration for the proxy. # Optional. Shared proxy configuration for all apps.
+  &quot;serviceDiscovery&quot;: { # Settings related to the Service Discovery. # Optional. Settings related to the Service Discovery.
+    &quot;apiGateway&quot;: { # If Service Discovery is done through API, defines its settings. # Required. External API configuration.
+      &quot;resourceOverride&quot;: { # API operation descriptor. # Required. Enables fetching resource model updates to alter service behavior per Chrome profile.
+        &quot;path&quot;: &quot;A String&quot;, # Required. Contains the URI path fragment where HTTP request is sent.
+  &quot;state&quot;: &quot;A String&quot;, # Output only. The operational state of the SecurityGateway.
+  requestId: string, Optional. An optional request ID to identify requests. Specify a unique request ID so that if you must retry your request, the server will know to ignore the request if it has already been completed. The server will guarantee that for at least 60 minutes since the first request.
+  securityGatewayId: string, Optional. User-settable SecurityGateway resource ID. * Must start with a letter. * Must contain between 4-63 characters from `/a-z-/`. * Must end with a number or letter.
+  <pre>Deletes a single SecurityGateway.
+  name: string, Required. BeyondCorp SecurityGateway name using the form: `projects/{project_id}/locations/{location_id}/securityGateways/{security_gateway_id}` (required)
+  <pre>Gets details of a single SecurityGateway.
+  name: string, Required. The resource name of the PartnerTenant using the form: `projects/{project_id}/locations/{location_id}/securityGateway/{security_gateway_id}` (required)
+  <pre>Lists SecurityGateways in a given project and location.
+  parent: string, Required. The parent location to which the resources belong. `projects/{project_id}/locations/{location_id}/` (required)
+  filter: string, Optional. A filter specifying constraints of a list operation. All fields in the SecurityGateway message are supported. For example, the following query will return the SecurityGateway with displayName &quot;test-security-gateway&quot; For more information, please refer to https://google.aip.dev/160.
+  pageToken: string, Optional. The next_page_token value returned from a previous ListSecurityGatewayRequest, if any.
+    { # Message for response to listing SecurityGateways.
+  &quot;securityGateways&quot;: [ # A list of BeyondCorp SecurityGateway in the project.
+  <pre>Updates the parameters of a single SecurityGateway.
+  updateMask: string, Optional. Mutable fields include: display_name, hubs.

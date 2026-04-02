@@ -1,0 +1,2 @@
+from ..responses.response_input_file_param import ResponseInputFileParam
+InputFileContentParam = ResponseInputFileParam

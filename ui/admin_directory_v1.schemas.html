@@ -1,0 +1,49 @@
+<h1><a href="admin_directory_v1.html">Admin SDK API</a> . <a href="admin_directory_v1.schemas.html">schemas</a></h1>
+  <code><a href="#delete">delete(customerId, schemaKey, x__xgafv=None)</a></code></p>
+<p class="firstline">Deletes a schema.</p>
+  <code><a href="#get">get(customerId, schemaKey, x__xgafv=None)</a></code></p>
+<p class="firstline">Retrieves a schema.</p>
+<p class="firstline">Creates a schema.</p>
+  <code><a href="#list">list(customerId, x__xgafv=None)</a></code></p>
+<p class="firstline">Retrieves all schemas for a customer.</p>
+  <code><a href="#patch">patch(customerId, schemaKey, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Patches a schema.</p>
+  <code><a href="#update">update(customerId, schemaKey, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Updates a schema.</p>
+    <code class="details" id="delete">delete(customerId, schemaKey, x__xgafv=None)</code>
+  <pre>Deletes a schema.
+  customerId: string, Immutable ID of the Google Workspace account. (required)
+  schemaKey: string, Name or immutable ID of the schema. (required)
+    <code class="details" id="get">get(customerId, schemaKey, x__xgafv=None)</code>
+  <pre>Retrieves a schema.
+  customerId: string, The unique ID for the customer&#x27;s Google Workspace account. In case of a multi-domain account, to fetch all groups for a customer, use this field instead of `domain`. You can also use the `my_customer` alias to represent your account&#x27;s `customerId`. The `customerId` is also returned as part of the [Users](https://developers.google.com/workspace/admin/directory/v1/reference/users) resource. You must provide either the `customer` or the `domain` parameter. (required)
+    { # The type of API resource. For Schema resources, this is always `admin#directory#schema`.
+  &quot;displayName&quot;: &quot;A String&quot;, # Display name for the schema.
+  &quot;etag&quot;: &quot;A String&quot;, # The ETag of the resource.
+  &quot;fields&quot;: [ # A list of fields in the schema.
+    { # You can use schemas to add custom fields to user profiles. You can use these fields to store information such as the projects your users work on, their physical locations, their hire dates, or whatever else fits your business needs. For more information, see [Custom User Fields](https://developers.google.com/workspace/admin/directory/v1/guides/manage-schemas).
+      &quot;displayName&quot;: &quot;A String&quot;, # Display Name of the field.
+      &quot;etag&quot;: &quot;A String&quot;, # The ETag of the field.
+      &quot;fieldId&quot;: &quot;A String&quot;, # The unique identifier of the field (Read-only)
+      &quot;fieldName&quot;: &quot;A String&quot;, # The name of the field.
+      &quot;fieldType&quot;: &quot;A String&quot;, # The type of the field.
+      &quot;indexed&quot;: true, # Boolean specifying whether the field is indexed or not. Default: `true`.
+      &quot;kind&quot;: &quot;admin#directory#schema#fieldspec&quot;, # The kind of resource this is. For schema fields this is always `admin#directory#schema#fieldspec`.
+      &quot;multiValued&quot;: True or False, # A boolean specifying whether this is a multi-valued field or not. Default: `false`.
+      &quot;numericIndexingSpec&quot;: { # Indexing spec for a numeric field. By default, only exact match queries will be supported for numeric fields. Setting the `numericIndexingSpec` allows range queries to be supported.
+        &quot;maxValue&quot;: 3.14, # Maximum value of this field. This is meant to be indicative rather than enforced. Values outside this range will still be indexed, but search may not be as performant.
+        &quot;minValue&quot;: 3.14, # Minimum value of this field. This is meant to be indicative rather than enforced. Values outside this range will still be indexed, but search may not be as performant.
+      &quot;readAccessType&quot;: &quot;ALL_DOMAIN_USERS&quot;, # Specifies who can view values of this field. See [Retrieve users as a non-administrator](https://developers.google.com/workspace/admin/directory/v1/guides/manage-users#retrieve_users_non_admin) for more information. Note: It may take up to 24 hours for changes to this field to be reflected.
+  &quot;kind&quot;: &quot;admin#directory#schema&quot;, # Kind of resource this is.
+  &quot;schemaId&quot;: &quot;A String&quot;, # The unique identifier of the schema (Read-only)
+  &quot;schemaName&quot;: &quot;A String&quot;, # The schema&#x27;s name. Each `schema_name` must be unique within a customer. Reusing a name results in a `409: Entity already exists` error.
+  <pre>Creates a schema.
+    <code class="details" id="list">list(customerId, x__xgafv=None)</code>
+  <pre>Retrieves all schemas for a customer.
+    { # JSON response template for List Schema operation in Directory API.
+  &quot;kind&quot;: &quot;admin#directory#schemas&quot;, # Kind of resource this is.
+  &quot;schemas&quot;: [ # A list of UserSchema objects.
+    <code class="details" id="patch">patch(customerId, schemaKey, body=None, x__xgafv=None)</code>
+  <pre>Patches a schema.
+    <code class="details" id="update">update(customerId, schemaKey, body=None, x__xgafv=None)</code>
+  <pre>Updates a schema.

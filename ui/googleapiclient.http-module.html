@@ -1,0 +1,121 @@
+  <title>googleapiclient.http</title>
+        Module&nbsp;http
+            >]&nbsp;|&nbsp;<a href="googleapiclient.http-module.html"
+<h1 class="epydoc">Module http</h1><p class="nomargin-top"><span class="codelink"><a href="googleapiclient.http-pysrc.html">source&nbsp;code</a></span></p>
+<p>Classes to encapsulate a single HTTP request.</p>
+  <p>The classes implement a command pattern, with every object supporting 
+  an execute() method that does the actual HTTP request.</p>
+        <a href="googleapiclient.http.MediaUploadProgress-class.html" class="summary-name">MediaUploadProgress</a><br />
+      Status of a resumable upload.
+        <a href="googleapiclient.http.MediaDownloadProgress-class.html" class="summary-name">MediaDownloadProgress</a><br />
+      Status of a resumable download.
+        <a href="googleapiclient.http.MediaUpload-class.html" class="summary-name">MediaUpload</a><br />
+      Describes a media object to upload.
+        <a href="googleapiclient.http.MediaIoBaseUpload-class.html" class="summary-name">MediaIoBaseUpload</a><br />
+      A MediaUpload for a io.Base objects.
+        <a href="googleapiclient.http.MediaFileUpload-class.html" class="summary-name">MediaFileUpload</a><br />
+      A MediaUpload for a file.
+        <a href="googleapiclient.http.MediaInMemoryUpload-class.html" class="summary-name">MediaInMemoryUpload</a><br />
+      MediaUpload for a chunk of bytes.
+        <a href="googleapiclient.http.MediaIoBaseDownload-class.html" class="summary-name">MediaIoBaseDownload</a><br />
+      &quot;Download media resources.
+        <a href="googleapiclient.http._StreamSlice-class.html" class="summary-name" onclick="show_private();">_StreamSlice</a><br />
+      Truncated stream.
+        <a href="googleapiclient.http.HttpRequest-class.html" class="summary-name">HttpRequest</a><br />
+      Encapsulates a single HTTP request.
+        <a href="googleapiclient.http.BatchHttpRequest-class.html" class="summary-name">BatchHttpRequest</a><br />
+      Batches multiple HttpRequest objects into a single HTTP request.
+        <a href="googleapiclient.http.HttpRequestMock-class.html" class="summary-name">HttpRequestMock</a><br />
+      Mock of HttpRequest.
+        <a href="googleapiclient.http.RequestMockBuilder-class.html" class="summary-name">RequestMockBuilder</a><br />
+      A simple mock of HttpRequest
+        <a href="googleapiclient.http.HttpMock-class.html" class="summary-name">HttpMock</a><br />
+      Mock of httplib2.Http
+        <a href="googleapiclient.http.HttpMockSequence-class.html" class="summary-name">HttpMockSequence</a><br />
+          <td><span class="summary-sig"><a href="googleapiclient.http-module.html#_should_retry_response" class="summary-sig-name" onclick="show_private();">_should_retry_response</a>(<span class="summary-sig-arg">resp_status</span>,
+      Determines whether a response should be retried.</td>
+            <span class="codelink"><a href="googleapiclient.http-pysrc.html#_should_retry_response">source&nbsp;code</a></span>
+          <td><span class="summary-sig"><a href="googleapiclient.http-module.html#_retry_request" class="summary-sig-name" onclick="show_private();">_retry_request</a>(<span class="summary-sig-arg">http</span>,
+        <span class="summary-sig-arg">num_retries</span>,
+        <span class="summary-sig-arg">req_type</span>,
+        <span class="summary-sig-arg">sleep</span>,
+        <span class="summary-sig-arg">rand</span>,
+        <span class="summary-sig-arg">uri</span>,
+        <span class="summary-sig-arg">method</span>,
+        <span class="summary-sig-arg">*args</span>,
+      Retries an HTTP request multiple times while handling errors.</td>
+            <span class="codelink"><a href="googleapiclient.http-pysrc.html#_retry_request">source&nbsp;code</a></span>
+          <td><span class="summary-sig"><a href="googleapiclient.http-module.html#set_user_agent" class="summary-sig-name">set_user_agent</a>(<span class="summary-sig-arg">http</span>,
+        <span class="summary-sig-arg">user_agent</span>)</span><br />
+      Set the user-agent on every request.</td>
+            <span class="codelink"><a href="googleapiclient.http-pysrc.html#set_user_agent">source&nbsp;code</a></span>
+          <td><span class="summary-sig"><a href="googleapiclient.http-module.html#tunnel_patch" class="summary-sig-name">tunnel_patch</a>(<span class="summary-sig-arg">http</span>)</span><br />
+      Tunnel PATCH requests over POST.</td>
+            <span class="codelink"><a href="googleapiclient.http-pysrc.html#tunnel_patch">source&nbsp;code</a></span>
+          <td><span class="summary-sig"><a href="googleapiclient.http-module.html#build_http" class="summary-sig-name">build_http</a>()</span><br />
+      Builds httplib2.Http object</td>
+            <span class="codelink"><a href="googleapiclient.http-pysrc.html#build_http">source&nbsp;code</a></span>
+        <a name="DEFAULT_CHUNK_SIZE"></a><span class="summary-name">DEFAULT_CHUNK_SIZE</span> = <code title="104857600">104857600</code>
+        <a name="MAX_URI_LENGTH"></a><span class="summary-name">MAX_URI_LENGTH</span> = <code title="2048">2048</code>
+        <a name="MAX_BATCH_LIMIT"></a><span class="summary-name">MAX_BATCH_LIMIT</span> = <code title="1000">1000</code>
+        <a name="_TOO_MANY_REQUESTS"></a><span class="summary-name">_TOO_MANY_REQUESTS</span> = <code title="429">429</code>
+        <a name="DEFAULT_HTTP_TIMEOUT_SEC"></a><span class="summary-name">DEFAULT_HTTP_TIMEOUT_SEC</span> = <code title="60">60</code>
+        <a name="_LEGACY_BATCH_URI"></a><span class="summary-name">_LEGACY_BATCH_URI</span> = <code title="'https://www.googleapis.com/batch'"><code class="variable-quote">'</code><code class="variable-string">https://www.googleapis.com/batch</code><code class="variable-quote">'</code></code>
+        <a name="ConnectionError"></a><span class="summary-name">ConnectionError</span> = <code title="None">None</code>
+<a name="_should_retry_response"></a>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">_should_retry_response</span>(<span class="sig-arg">resp_status</span>,
+    ><span class="codelink"><a href="googleapiclient.http-pysrc.html#_should_retry_response">source&nbsp;code</a></span>&nbsp;
+Determines whether a response should be retried.
+  resp_status: The response status received.
+  content: The response content body.
+  True if the response should be retried, otherwise False.
+<a name="_retry_request"></a>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">_retry_request</span>(<span class="sig-arg">http</span>,
+        <span class="sig-arg">num_retries</span>,
+        <span class="sig-arg">req_type</span>,
+        <span class="sig-arg">sleep</span>,
+        <span class="sig-arg">rand</span>,
+        <span class="sig-arg">uri</span>,
+        <span class="sig-arg">method</span>,
+        <span class="sig-arg">*args</span>,
+    ><span class="codelink"><a href="googleapiclient.http-pysrc.html#_retry_request">source&nbsp;code</a></span>&nbsp;
+Retries an HTTP request multiple times while handling errors.
+If after all retries the request still fails, last error is either returned as
+return value (for HTTP 5xx errors) or thrown (for ssl.SSLError).
+  http: Http object to be used to execute request.
+  num_retries: Maximum number of retries.
+  req_type: Type of the request (used for logging retries).
+  sleep, rand: Functions to sleep for random time between retries.
+  uri: URI to be requested.
+  method: HTTP method to be used.
+  args, kwargs: Additional arguments passed to http.request.
+  resp, content - Response from the http request (may be HTTP 5xx).
+<a name="set_user_agent"></a>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">set_user_agent</span>(<span class="sig-arg">http</span>,
+        <span class="sig-arg">user_agent</span>)</span>
+    ><span class="codelink"><a href="googleapiclient.http-pysrc.html#set_user_agent">source&nbsp;code</a></span>&nbsp;
+Set the user-agent on every request.
+   http - An instance of httplib2.Http
+       or something that acts like it.
+   user_agent: string, the value for the user-agent header.
+   A modified instance of http that was passed in.
+  h = httplib2.Http()
+  h = set_user_agent(h, &quot;my-app-name/6.0&quot;)
+Most of the time the user-agent will be set doing auth, this is for the rare
+cases where you are accessing an unauthenticated endpoint.
+<a name="tunnel_patch"></a>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">tunnel_patch</span>(<span class="sig-arg">http</span>)</span>
+    ><span class="codelink"><a href="googleapiclient.http-pysrc.html#tunnel_patch">source&nbsp;code</a></span>&nbsp;
+Tunnel PATCH requests over POST.
+  h = tunnel_patch(h, &quot;my-app-name/6.0&quot;)
+Useful if you are running on a platform that doesn't support PATCH.
+Apply this last if you are using OAuth 1.0, as changing the method
+will result in a different signature.
+<a name="build_http"></a>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">build_http</span>()</span>
+    ><span class="codelink"><a href="googleapiclient.http-pysrc.html#build_http">source&nbsp;code</a></span>&nbsp;
+Builds httplib2.Http object
+A httplib2.Http object, which is used to make http requests, and which has timeout set by default.
+To override default timeout call
+  socket.setdefaulttimeout(timeout_in_sec)
+before interacting with this method.

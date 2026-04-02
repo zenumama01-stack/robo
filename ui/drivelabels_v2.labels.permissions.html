@@ -1,0 +1,31 @@
+<h1><a href="drivelabels_v2.html">Drive Labels API</a> . <a href="drivelabels_v2.labels.html">labels</a> . <a href="drivelabels_v2.labels.permissions.html">permissions</a></h1>
+<p class="firstline">Deletes label permissions. Permissions affect the label resource as a whole, aren't revisioned, and don't require publishing.</p>
+<p class="firstline">Updates label permissions. If a permission for the indicated principal doesn't exist, a label permission is created, otherwise the existing permission is updated. Permissions affect the label resource as a whole, aren't revisioned, and don't require publishing.</p>
+<p class="firstline">Deletes a label's permission. Permissions affect the label resource as a whole, aren't revisioned, and don't require publishing.</p>
+  <code><a href="#list">list(parent, pageSize=None, pageToken=None, useAdminAccess=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Lists a label's permissions.</p>
+  <pre>Deletes label permissions. Permissions affect the label resource as a whole, aren&#x27;t revisioned, and don&#x27;t require publishing.
+  parent: string, Required. The parent label resource name shared by all permissions being deleted. Format: `labels/{label}`. If this is set, the parent field in the `UpdateLabelPermissionRequest` messages must either be empty or match this field. (required)
+{ # Deletes one or more label permissions.
+  &quot;requests&quot;: [ # Required. The request message specifying the resources to update.
+    { # Deletes a label permission. Permissions affect the label resource as a whole, aren&#x27;t revisioned, and don&#x27;t require publishing.
+      &quot;name&quot;: &quot;A String&quot;, # Required. Label permission resource name.
+  &quot;useAdminAccess&quot;: True or False, # Set to `true` in order to use the user&#x27;s admin credentials. The server will verify the user is an admin for the label before allowing access. If this is set, the `use_admin_access` field in the `DeleteLabelPermissionRequest` messages must either be empty or match this field.
+  <pre>Updates label permissions. If a permission for the indicated principal doesn&#x27;t exist, a label permission is created, otherwise the existing permission is updated. Permissions affect the label resource as a whole, aren&#x27;t revisioned, and don&#x27;t require publishing.
+  parent: string, Required. The parent label resource name shared by all permissions being updated. Format: `labels/{label}`. If this is set, the parent field in the `UpdateLabelPermissionRequest` messages must either be empty or match this field. (required)
+{ # Updates one or more label permissions.
+    { # Updates a label permission. Permissions affect the label resource as a whole, aren&#x27;t revisioned, and don&#x27;t require publishing.
+      &quot;labelPermission&quot;: { # The permission that applies to a principal (user, group, audience) on a label. # Required. The permission to create or update on the label.
+      &quot;parent&quot;: &quot;A String&quot;, # Required. The parent label resource name.
+  &quot;useAdminAccess&quot;: True or False, # Set to `true` in order to use the user&#x27;s admin credentials. The server will verify the user is an admin for the label before allowing access. If this is set, the `use_admin_access` field in the `UpdateLabelPermissionRequest` messages must either be empty or match this field.
+    { # Response for updating one or more label permissions.
+  &quot;permissions&quot;: [ # Required. Permissions updated.
+  parent: string, Required. The parent label resource name on the label permission is created. Format: `labels/{label}`. (required)
+  <pre>Deletes a label&#x27;s permission. Permissions affect the label resource as a whole, aren&#x27;t revisioned, and don&#x27;t require publishing.
+  name: string, Required. Label permission resource name. (required)
+    <code class="details" id="list">list(parent, pageSize=None, pageToken=None, useAdminAccess=None, x__xgafv=None)</code>
+  <pre>Lists a label&#x27;s permissions.
+  parent: string, Required. The parent label resource name on which label permissions are listed. Format: `labels/{label}`. (required)
+  pageSize: integer, Maximum number of permissions to return per page. Default: 50. Max: 200.
+    { # Response for listing the permissions on a label.
+  &quot;labelPermissions&quot;: [ # Label permissions.

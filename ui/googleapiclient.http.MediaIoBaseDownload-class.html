@@ -1,0 +1,31 @@
+  <title>googleapiclient.http.MediaIoBaseDownload</title>
+        Class&nbsp;MediaIoBaseDownload
+            >]&nbsp;|&nbsp;<a href="googleapiclient.http.MediaIoBaseDownload-class.html"
+<h1 class="epydoc">Class MediaIoBaseDownload</h1><p class="nomargin-top"><span class="codelink"><a href="googleapiclient.http-pysrc.html#MediaIoBaseDownload">source&nbsp;code</a></span></p>
+        <strong class="uidshort">MediaIoBaseDownload</strong>
+Note that the Python file object is compatible with io.Base and can be used
+with this class also.
+  request = farms.animals().get_media(id='cow')
+  fh = io.FileIO('cow.png', mode='wb')
+  downloader = MediaIoBaseDownload(fh, request, chunksize=1024*1024)
+  done = False
+  while done is False:
+    status, done = downloader.next_chunk()
+      print &quot;Download %d%%.&quot; % int(status.progress() * 100)
+  print &quot;Download Complete!&quot;
+          <td><span class="summary-sig"><a href="googleapiclient.http.MediaIoBaseDownload-class.html#__init__" class="summary-sig-name">__init__</a>(<span class="summary-sig-arg">*args</span>,
+            <span class="codelink"><a href="googleapiclient.http-pysrc.html#MediaIoBaseDownload.__init__">source&nbsp;code</a></span>
+          <td><span class="summary-sig"><a href="googleapiclient.http.MediaIoBaseDownload-class.html#next_chunk" class="summary-sig-name">next_chunk</a>(<span class="summary-sig-arg">*args</span>,
+      Get the next chunk of the download.</td>
+            <span class="codelink"><a href="googleapiclient.http-pysrc.html#MediaIoBaseDownload.next_chunk">source&nbsp;code</a></span>
+    ><span class="codelink"><a href="googleapiclient.http-pysrc.html#MediaIoBaseDownload.__init__">source&nbsp;code</a></span>&nbsp;
+  fd: io.Base or file object, The stream in which to write the downloaded
+    bytes.
+  request: googleapiclient.http.HttpRequest, the media request to perform in
+    chunks.
+  chunksize: int, File will be downloaded in chunks of this many bytes.
+    ><span class="codelink"><a href="googleapiclient.http-pysrc.html#MediaIoBaseDownload.next_chunk">source&nbsp;code</a></span>&nbsp;
+Get the next chunk of the download.
+  (status, done): (MediaDownloadProgress, boolean)
+     The value of 'done' will be True when the media has been fully
+     downloaded or the total size of the media is unknown.

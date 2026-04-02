@@ -1,0 +1,87 @@
+<h1><a href="ces_v1beta.html">Gemini Enterprise for Customer Experience API</a> . <a href="ces_v1beta.projects.html">projects</a> . <a href="ces_v1beta.projects.locations.html">locations</a> . <a href="ces_v1beta.projects.locations.apps.html">apps</a> . <a href="ces_v1beta.projects.locations.apps.evaluationRuns.html">evaluationRuns</a></h1>
+<p class="firstline">Deletes an evaluation run.</p>
+<p class="firstline">Gets details of the specified evaluation run.</p>
+<p class="firstline">Lists all evaluation runs in the given app.</p>
+  <pre>Deletes an evaluation run.
+  name: string, Required. The resource name of the evaluation run to delete. (required)
+  <pre>Gets details of the specified evaluation run.
+  name: string, Required. The resource name of the evaluation run to retrieve. (required)
+    { # An evaluation run represents an all the evaluation results from an evaluation execution.
+  &quot;appVersion&quot;: &quot;A String&quot;, # Output only. The app version to evaluate. Format: `projects/{project}/locations/{location}/apps/{app}/versions/{version}`
+  &quot;appVersionDisplayName&quot;: &quot;A String&quot;, # Output only. The display name of the `app_version` that the evaluation ran against.
+  &quot;changelog&quot;: &quot;A String&quot;, # Output only. The changelog of the app version that the evaluation ran against. This is populated if user runs evaluation on latest/draft.
+  &quot;changelogCreateTime&quot;: &quot;A String&quot;, # Output only. The create time of the changelog of the app version that the evaluation ran against. This is populated if user runs evaluation on latest/draft.
+  &quot;config&quot;: { # EvaluationConfig configures settings for running the evaluation. # Output only. The configuration used in the run.
+    &quot;evaluationChannel&quot;: &quot;A String&quot;, # Optional. The channel to evaluate.
+    &quot;toolCallBehaviour&quot;: &quot;A String&quot;, # Optional. Specifies whether the evaluation should use real tool calls or fake tools.
+  &quot;createTime&quot;: &quot;A String&quot;, # Output only. Timestamp when the evaluation run was created.
+  &quot;displayName&quot;: &quot;A String&quot;, # Optional. User-defined display name of the evaluation run. default: &quot; run - &quot;.
+  &quot;error&quot;: { # The `Status` type defines a logical error model that is suitable for different programming environments, including REST APIs and RPC APIs. It is used by [gRPC](https://github.com/grpc). Each `Status` message contains three pieces of data: error code, error message, and error details. You can find out more about this error model and how to work with it in the [API Design Guide](https://cloud.google.com/apis/design/errors). # Output only. Deprecated: Use error_info instead. Errors encountered during execution.
+  &quot;errorInfo&quot;: { # Information about an error encountered during an evaluation execution. # Output only. Error information for the evaluation run.
+    &quot;errorMessage&quot;: &quot;A String&quot;, # Output only. The error message.
+    &quot;errorType&quot;: &quot;A String&quot;, # Output only. The type of error.
+    &quot;sessionId&quot;: &quot;A String&quot;, # Output only. The session ID for the conversation that caused the error.
+  &quot;evaluationDataset&quot;: &quot;A String&quot;, # Output only. The evaluation dataset that this run is associated with. This field is mutually exclusive with `evaluations`. Format: `projects/{project}/locations/{location}/apps/{app}/evaluationDatasets/{evaluationDataset}`
+  &quot;evaluationResults&quot;: [ # Output only. The evaluation results that are part of this run. Format: `projects/{project}/locations/{location}/apps/{app}/evaluations/{evaluation}/results/{result}`
+  &quot;evaluationRunSummaries&quot;: { # Output only. Map of evaluation name to EvaluationRunSummary.
+    &quot;a_key&quot;: { # Contains the summary of passed and failed result counts for a specific evaluation in an evaluation run.
+      &quot;errorCount&quot;: 42, # Output only. Number of error results for the associated Evaluation in this run.
+      &quot;failedCount&quot;: 42, # Output only. Number of failed results for the associated Evaluation in this run.
+      &quot;passedCount&quot;: 42, # Output only. Number of passed results for the associated Evaluation in this run.
+  &quot;evaluationType&quot;: &quot;A String&quot;, # Output only. The type of the evaluations in this run.
+  &quot;evaluations&quot;: [ # Output only. The evaluations that are part of this run. The list may contain evaluations of either type. This field is mutually exclusive with `evaluation_dataset`. Format: `projects/{project}/locations/{location}/apps/{app}/evaluations/{evaluation}`
+  &quot;goldenRunMethod&quot;: &quot;A String&quot;, # Output only. The method used to run the evaluation.
+  &quot;initiatedBy&quot;: &quot;A String&quot;, # Output only. The user who initiated the evaluation run.
+  &quot;latencyReport&quot;: { # Latency report for the evaluation run. # Output only. Latency report for the evaluation run.
+    &quot;callbackLatencies&quot;: [ # Output only. Unordered list. Latency metrics for each callback.
+      { # Latency metrics for a single callback.
+        &quot;latencyMetrics&quot;: { # Latency metrics for a component. # Output only. The latency metrics for the callback.
+          &quot;callCount&quot;: 42, # Output only. The number of times the resource was called.
+          &quot;p50Latency&quot;: &quot;A String&quot;, # Output only. The 50th percentile latency.
+          &quot;p90Latency&quot;: &quot;A String&quot;, # Output only. The 90th percentile latency.
+          &quot;p99Latency&quot;: &quot;A String&quot;, # Output only. The 99th percentile latency.
+        &quot;stage&quot;: &quot;A String&quot;, # Output only. The stage of the callback.
+    &quot;guardrailLatencies&quot;: [ # Output only. Unordered list. Latency metrics for each guardrail.
+      { # Latency metrics for a single guardrail.
+        &quot;guardrail&quot;: &quot;A String&quot;, # Output only. The name of the guardrail. Format: `projects/{project}/locations/{location}/apps/{app}/guardrails/{guardrail}`.
+        &quot;guardrailDisplayName&quot;: &quot;A String&quot;, # Output only. The display name of the guardrail.
+        &quot;latencyMetrics&quot;: { # Latency metrics for a component. # Output only. The latency metrics for the guardrail.
+    &quot;llmCallLatencies&quot;: [ # Output only. Unordered list. Latency metrics for each LLM call.
+      { # Latency metrics for a single LLM call.
+        &quot;latencyMetrics&quot;: { # Latency metrics for a component. # Output only. The latency metrics for the LLM call.
+        &quot;model&quot;: &quot;A String&quot;, # Output only. The name of the model.
+    &quot;sessionCount&quot;: 42, # Output only. The total number of sessions considered in the latency report.
+    &quot;toolLatencies&quot;: [ # Output only. Unordered list. Latency metrics for each tool.
+      { # Latency metrics for a single tool.
+        &quot;latencyMetrics&quot;: { # Latency metrics for a component. # Output only. The latency metrics for the tool.
+        &quot;tool&quot;: &quot;A String&quot;, # Output only. Format: `projects/{project}/locations/{location}/apps/{app}/tools/{tool}`.
+        &quot;toolDisplayName&quot;: &quot;A String&quot;, # Output only. The display name of the tool.
+        &quot;toolsetTool&quot;: { # A tool that is created from a toolset. # Output only. The toolset tool identifier.
+  &quot;name&quot;: &quot;A String&quot;, # Identifier. The unique identifier of the evaluation run. Format: `projects/{project}/locations/{location}/apps/{app}/evaluationRuns/{evaluationRun}`
+  &quot;optimizationConfig&quot;: { # Configuration for running the optimization step after the evaluation run. # Optional. Configuration for running the optimization step after the evaluation run. If not set, the optimization step will not be run.
+    &quot;assistantSession&quot;: &quot;A String&quot;, # Output only. The assistant session to use for the optimization based on this evaluation run. Format: `projects/{project}/locations/{location}/apps/{app}/assistantSessions/{assistantSession}`
+    &quot;errorMessage&quot;: &quot;A String&quot;, # Output only. The error message if the optimization run failed.
+    &quot;generateLossReport&quot;: True or False, # Optional. Whether to generate a loss report.
+    &quot;lossReport&quot;: { # Output only. The generated loss report.
+    &quot;reportSummary&quot;: &quot;A String&quot;, # Output only. The summary of the loss report.
+    &quot;shouldSuggestFix&quot;: True or False, # Output only. Whether to suggest a fix for the losses.
+    &quot;status&quot;: &quot;A String&quot;, # Output only. The status of the optimization run.
+  &quot;personaRunConfigs&quot;: [ # Output only. The configuration to use for the run per persona.
+    { # Configuration for running an evaluation for a specific persona.
+      &quot;persona&quot;: &quot;A String&quot;, # Optional. The persona to use for the evaluation. Format: `projects/{project}/locations/{location}/apps/{app}/evaluationPersonas/{evaluationPersona}`
+      &quot;taskCount&quot;: 42, # Optional. The number of tasks to run for the persona.
+  &quot;progress&quot;: { # The progress of the evaluation run. # Output only. The progress of the evaluation run.
+    &quot;completedCount&quot;: 42, # Output only. Number of evaluation results that finished successfully. (EvaluationResult.execution_state is COMPLETED).
+    &quot;errorCount&quot;: 42, # Output only. Number of evaluation results that failed to execute. (EvaluationResult.execution_state is ERROR).
+    &quot;failedCount&quot;: 42, # Output only. Number of completed evaluation results with an outcome of FAIL. (EvaluationResult.execution_state is COMPLETED and EvaluationResult.evaluation_status is FAIL).
+    &quot;passedCount&quot;: 42, # Output only. Number of completed evaluation results with an outcome of PASS. (EvaluationResult.execution_state is COMPLETED and EvaluationResult.evaluation_status is PASS).
+    &quot;totalCount&quot;: 42, # Output only. Total number of evaluation results in this run.
+  &quot;runCount&quot;: 42, # Output only. The number of times the evaluations inside the run were run.
+  &quot;scheduledEvaluationRun&quot;: &quot;A String&quot;, # Output only. The scheduled evaluation run resource name that created this evaluation run. This field is only set if the evaluation run was created by a scheduled evaluation run. Format: `projects/{project}/locations/{location}/apps/{app}/scheduledEvaluationRuns/{scheduled_evaluation_run}`
+  <pre>Lists all evaluation runs in the given app.
+  parent: string, Required. The resource name of the app to list evaluation runs from. (required)
+  filter: string, Optional. Filter to be applied when listing the evaluation runs. See https://google.aip.dev/160 for more details.
+  pageToken: string, Optional. The next_page_token value returned from a previous list EvaluationService.ListEvaluationRuns call.
+    { # Response message for EvaluationService.ListEvaluationRuns.
+  &quot;evaluationRuns&quot;: [ # The list of evaluation runs.
+  &quot;nextPageToken&quot;: &quot;A String&quot;, # A token that can be sent as ListEvaluationRunsRequest.page_token to retrieve the next page. Absence of this field indicates there are no subsequent pages.

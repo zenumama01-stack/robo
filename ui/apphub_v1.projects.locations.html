@@ -1,0 +1,44 @@
+<h1><a href="apphub_v1.html">App Hub API</a> . <a href="apphub_v1.projects.html">projects</a> . <a href="apphub_v1.projects.locations.html">locations</a></h1>
+  <code><a href="apphub_v1.projects.locations.applications.html">applications()</a></code>
+  <code><a href="apphub_v1.projects.locations.discoveredServices.html">discoveredServices()</a></code>
+<p class="firstline">Returns the discoveredServices Resource.</p>
+  <code><a href="apphub_v1.projects.locations.discoveredWorkloads.html">discoveredWorkloads()</a></code>
+<p class="firstline">Returns the discoveredWorkloads Resource.</p>
+  <code><a href="apphub_v1.projects.locations.extendedMetadataSchemas.html">extendedMetadataSchemas()</a></code>
+<p class="firstline">Returns the extendedMetadataSchemas Resource.</p>
+  <code><a href="apphub_v1.projects.locations.operations.html">operations()</a></code>
+  <code><a href="apphub_v1.projects.locations.serviceProjectAttachments.html">serviceProjectAttachments()</a></code>
+<p class="firstline">Returns the serviceProjectAttachments Resource.</p>
+  <code><a href="#detachServiceProjectAttachment">detachServiceProjectAttachment(name, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Detaches a service project from a host project. You can call this API from any service project without needing access to the host project that it is attached to.</p>
+  <code><a href="#getBoundary">getBoundary(name, x__xgafv=None)</a></code></p>
+<p class="firstline">Gets a Boundary.</p>
+  <code><a href="#lookupServiceProjectAttachment">lookupServiceProjectAttachment(name, x__xgafv=None)</a></code></p>
+<p class="firstline">Lists a service project attachment for a given service project. You can call this API from any project to find if it is attached to a host project.</p>
+  <code><a href="#updateBoundary">updateBoundary(name, body=None, requestId=None, updateMask=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Updates a Boundary.</p>
+    <code class="details" id="detachServiceProjectAttachment">detachServiceProjectAttachment(name, body=None, x__xgafv=None)</code>
+  <pre>Detaches a service project from a host project. You can call this API from any service project without needing access to the host project that it is attached to.
+  name: string, Required. Service project id and location to detach from a host project. Only global location is supported. Expected format: `projects/{project}/locations/{location}`. (required)
+{ # Request for DetachServiceProjectAttachment.
+    { # Response for DetachServiceProjectAttachment.
+    <code class="details" id="getBoundary">getBoundary(name, x__xgafv=None)</code>
+  <pre>Gets a Boundary.
+  name: string, Required. The name of the boundary to retrieve. Format: `projects/{project}/locations/{location}/boundary`. (required)
+    { # Application management boundary.
+  &quot;crmNode&quot;: &quot;A String&quot;, # Optional. The resource name of the CRM node being attached to the boundary. Format: `projects/{project-number}` or `projects/{project-id}`
+  &quot;name&quot;: &quot;A String&quot;, # Identifier. The resource name of the boundary. Format: &quot;projects/{project}/locations/{location}/boundary&quot;
+  &quot;type&quot;: &quot;A String&quot;, # Output only. Boundary type.
+    <code class="details" id="lookupServiceProjectAttachment">lookupServiceProjectAttachment(name, x__xgafv=None)</code>
+  <pre>Lists a service project attachment for a given service project. You can call this API from any project to find if it is attached to a host project.
+  name: string, Required. Service project ID and location to lookup service project attachment for. Only global location is supported. Expected format: `projects/{project}/locations/{location}`. (required)
+    { # Response for LookupServiceProjectAttachment.
+  &quot;serviceProjectAttachment&quot;: { # ServiceProjectAttachment represents an attachment from a service project to a host project. Service projects contain the underlying cloud infrastructure resources, and expose these resources to the host project through a ServiceProjectAttachment. With the attachments, the host project can provide an aggregated view of resources across all service projects. # Service project attachment for a project if exists, empty otherwise.
+    &quot;name&quot;: &quot;A String&quot;, # Identifier. The resource name of a ServiceProjectAttachment. Format: `&quot;projects/{host-project-id}/locations/global/serviceProjectAttachments/{service-project-id}.&quot;`
+    &quot;serviceProject&quot;: &quot;A String&quot;, # Required. Immutable. Service project name in the format: `&quot;projects/abc&quot;` or `&quot;projects/123&quot;`. As input, project name with either project id or number are accepted. As output, this field will contain project number.
+    &quot;state&quot;: &quot;A String&quot;, # Output only. ServiceProjectAttachment state.
+    &quot;uid&quot;: &quot;A String&quot;, # Output only. A globally unique identifier (in UUID4 format) for the `ServiceProjectAttachment`.
+    <code class="details" id="updateBoundary">updateBoundary(name, body=None, requestId=None, updateMask=None, x__xgafv=None)</code>
+  <pre>Updates a Boundary.
+  name: string, Identifier. The resource name of the boundary. Format: &quot;projects/{project}/locations/{location}/boundary&quot; (required)
+  updateMask: string, Required. Field mask is used to specify the fields to be overwritten in the Boundary resource by the update. The fields specified in the update_mask are relative to the resource, not the full request. A field will be overwritten if it is in the mask. If the user does not provide a mask then all fields will be overwritten.

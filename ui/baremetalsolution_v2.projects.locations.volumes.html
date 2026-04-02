@@ -1,0 +1,32 @@
+<h1><a href="baremetalsolution_v2.html">Bare Metal Solution API</a> . <a href="baremetalsolution_v2.projects.html">projects</a> . <a href="baremetalsolution_v2.projects.locations.html">locations</a> . <a href="baremetalsolution_v2.projects.locations.volumes.html">volumes</a></h1>
+  <code><a href="baremetalsolution_v2.projects.locations.volumes.luns.html">luns()</a></code>
+<p class="firstline">Returns the luns Resource.</p>
+  <code><a href="baremetalsolution_v2.projects.locations.volumes.snapshots.html">snapshots()</a></code>
+  <code><a href="#evict">evict(name, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Skips volume's cooloff and deletes it now. Volume must be in cooloff state.</p>
+<p class="firstline">Get details of a single storage volume.</p>
+<p class="firstline">List storage volumes in a given project and location.</p>
+<p class="firstline">Update details of a single storage volume.</p>
+<p class="firstline">RenameVolume sets a new name for a volume. Use with caution, previous names become immediately invalidated.</p>
+  <code><a href="#resize">resize(volume, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Emergency Volume resize.</p>
+    <code class="details" id="evict">evict(name, body=None, x__xgafv=None)</code>
+  <pre>Skips volume&#x27;s cooloff and deletes it now. Volume must be in cooloff state.
+  name: string, Required. The name of the Volume. (required)
+{ # Request for skip volume cooloff and delete it.
+  <pre>Get details of a single storage volume.
+  <pre>List storage volumes in a given project and location.
+  parent: string, Required. Parent value for ListVolumesRequest. (required)
+    { # Response message containing the list of storage volumes.
+  &quot;volumes&quot;: [ # The list of storage volumes.
+  <pre>Update details of a single storage volume.
+  name: string, Output only. The resource name of this `Volume`. Resource names are schemeless URIs that follow the conventions in https://cloud.google.com/apis/design/resource_names. Format: `projects/{project}/locations/{location}/volumes/{volume}` (required)
+  updateMask: string, The list of fields to update. The only currently supported fields are: &#x27;labels&#x27;
+  <pre>RenameVolume sets a new name for a volume. Use with caution, previous names become immediately invalidated.
+  name: string, Required. The `name` field is used to identify the volume. Format: projects/{project}/locations/{location}/volumes/{volume} (required)
+  &quot;newVolumeId&quot;: &quot;A String&quot;, # Required. The new `id` of the volume.
+    <code class="details" id="resize">resize(volume, body=None, x__xgafv=None)</code>
+  <pre>Emergency Volume resize.
+  volume: string, Required. Volume to resize. (required)
+{ # Request for emergency resize Volume.
+  &quot;sizeGib&quot;: &quot;A String&quot;, # New Volume size, in GiB.

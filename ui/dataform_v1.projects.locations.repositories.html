@@ -1,0 +1,119 @@
+<h1><a href="dataform_v1.html">Dataform API</a> . <a href="dataform_v1.projects.html">projects</a> . <a href="dataform_v1.projects.locations.html">locations</a> . <a href="dataform_v1.projects.locations.repositories.html">repositories</a></h1>
+  <code><a href="dataform_v1.projects.locations.repositories.compilationResults.html">compilationResults()</a></code>
+<p class="firstline">Returns the compilationResults Resource.</p>
+  <code><a href="dataform_v1.projects.locations.repositories.releaseConfigs.html">releaseConfigs()</a></code>
+<p class="firstline">Returns the releaseConfigs Resource.</p>
+  <code><a href="dataform_v1.projects.locations.repositories.workflowConfigs.html">workflowConfigs()</a></code>
+<p class="firstline">Returns the workflowConfigs Resource.</p>
+  <code><a href="dataform_v1.projects.locations.repositories.workflowInvocations.html">workflowInvocations()</a></code>
+<p class="firstline">Returns the workflowInvocations Resource.</p>
+  <code><a href="dataform_v1.projects.locations.repositories.workspaces.html">workspaces()</a></code>
+<p class="firstline">Applies a Git commit to a Repository. The Repository must not have a value for `git_remote_settings.url`.</p>
+  <code><a href="#computeAccessTokenStatus">computeAccessTokenStatus(name, x__xgafv=None)</a></code></p>
+<p class="firstline">Computes a Repository's Git access token status.</p>
+<p class="firstline">Creates a new Repository in a given project and location.</p>
+<p class="firstline">Deletes a single Repository.</p>
+  <code><a href="#fetchHistory">fetchHistory(name, pageSize=None, pageToken=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Fetches a Repository's history of commits. The Repository must not have a value for `git_remote_settings.url`.</p>
+  <code><a href="#fetchHistory_next">fetchHistory_next()</a></code></p>
+  <code><a href="#fetchRemoteBranches">fetchRemoteBranches(name, x__xgafv=None)</a></code></p>
+<p class="firstline">Fetches a Repository's remote branches.</p>
+<p class="firstline">Fetches a single Repository.</p>
+<p class="firstline">Lists Repositories in a given project and location. **Note:** *This method can return repositories not shown in the [Dataform UI](https://console.cloud.google.com/bigquery/dataform)*.</p>
+<p class="firstline">Updates a single Repository. **Note:** *This method does not fully implement [AIP/134](https://google.aip.dev/134). The wildcard entry (\*) is treated as a bad request, and when the `field_mask` is omitted, the request is treated as a full update on all modifiable fields.*</p>
+  <code><a href="#queryDirectoryContents">queryDirectoryContents(name, commitSha=None, pageSize=None, pageToken=None, path=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Returns the contents of a given Repository directory. The Repository must not have a value for `git_remote_settings.url`.</p>
+  <code><a href="#queryDirectoryContents_next">queryDirectoryContents_next()</a></code></p>
+  <code><a href="#readFile">readFile(name, commitSha=None, path=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Returns the contents of a file (inside a Repository). The Repository must not have a value for `git_remote_settings.url`.</p>
+  <pre>Applies a Git commit to a Repository. The Repository must not have a value for `git_remote_settings.url`.
+  name: string, Required. The repository&#x27;s name. (required)
+{ # `CommitRepositoryChanges` request message.
+  &quot;commitMetadata&quot;: { # Represents a Dataform Git commit. # Required. The changes to commit to the repository.
+    &quot;author&quot;: { # Represents the author of a Git commit. # Required. The commit&#x27;s author.
+      &quot;emailAddress&quot;: &quot;A String&quot;, # Required. The commit author&#x27;s email address.
+      &quot;name&quot;: &quot;A String&quot;, # Required. The commit author&#x27;s name.
+    &quot;commitMessage&quot;: &quot;A String&quot;, # Optional. The commit&#x27;s message.
+  &quot;fileOperations&quot;: { # Optional. A map to the path of the file to the operation. The path is the full file path including filename, from repository root.
+    &quot;a_key&quot;: { # Represents a single file operation to the repository.
+      &quot;deleteFile&quot;: { # Represents the delete file operation. # Represents the delete operation.
+      &quot;writeFile&quot;: { # Represents the write file operation (for files added or modified). # Represents the write operation.
+        &quot;contents&quot;: &quot;A String&quot;, # The file&#x27;s contents.
+  &quot;requiredHeadCommitSha&quot;: &quot;A String&quot;, # Optional. The commit SHA which must be the repository&#x27;s current HEAD before applying this commit; otherwise this request will fail. If unset, no validation on the current HEAD commit SHA is performed.
+    { # `CommitRepositoryChanges` response message.
+  &quot;commitSha&quot;: &quot;A String&quot;, # The commit SHA of the current commit.
+    <code class="details" id="computeAccessTokenStatus">computeAccessTokenStatus(name, x__xgafv=None)</code>
+  <pre>Computes a Repository&#x27;s Git access token status.
+    { # `ComputeRepositoryAccessTokenStatus` response message.
+  &quot;tokenStatus&quot;: &quot;A String&quot;, # Indicates the status of the Git access token.
+  <pre>Creates a new Repository in a given project and location.
+  parent: string, Required. The location in which to create the repository. Must be in the format `projects/*/locations/*`. (required)
+{ # Represents a Dataform Git repository.
+  &quot;createTime&quot;: &quot;A String&quot;, # Output only. The timestamp of when the repository was created.
+  &quot;dataEncryptionState&quot;: { # Describes encryption state of a resource. # Output only. A data encryption state of a Git repository if this Repository is protected by a KMS key.
+  &quot;displayName&quot;: &quot;A String&quot;, # Optional. The repository&#x27;s user-friendly name.
+  &quot;gitRemoteSettings&quot;: { # Controls Git remote configuration for a repository. # Optional. If set, configures this repository to be linked to a Git remote.
+    &quot;authenticationTokenSecretVersion&quot;: &quot;A String&quot;, # Optional. The name of the Secret Manager secret version to use as an authentication token for Git operations. Must be in the format `projects/*/secrets/*/versions/*`.
+    &quot;defaultBranch&quot;: &quot;A String&quot;, # Required. The Git remote&#x27;s default branch name.
+    &quot;sshAuthenticationConfig&quot;: { # Configures fields for performing SSH authentication. # Optional. Authentication fields for remote uris using SSH protocol.
+      &quot;hostPublicKey&quot;: &quot;A String&quot;, # Required. Content of a public SSH key to verify an identity of a remote Git host.
+      &quot;userPrivateKeySecretVersion&quot;: &quot;A String&quot;, # Required. The name of the Secret Manager secret version to use as a ssh private key for Git operations. Must be in the format `projects/*/secrets/*/versions/*`.
+    &quot;tokenStatus&quot;: &quot;A String&quot;, # Output only. Deprecated: The field does not contain any token status information.
+    &quot;url&quot;: &quot;A String&quot;, # Required. The Git remote&#x27;s URL.
+  &quot;kmsKeyName&quot;: &quot;A String&quot;, # Optional. The reference to a KMS encryption key. If provided, it will be used to encrypt user data in the repository and all child resources. It is not possible to add or update the encryption key after the repository is created. Example: `projects/{kms_project}/locations/{location}/keyRings/{key_location}/cryptoKeys/{key}`
+  &quot;labels&quot;: { # Optional. Repository user labels.
+  &quot;name&quot;: &quot;A String&quot;, # Identifier. The repository&#x27;s name.
+  &quot;npmrcEnvironmentVariablesSecretVersion&quot;: &quot;A String&quot;, # Optional. The name of the Secret Manager secret version to be used to interpolate variables into the .npmrc file for package installation operations. Must be in the format `projects/*/secrets/*/versions/*`. The file itself must be in a JSON format.
+  &quot;serviceAccount&quot;: &quot;A String&quot;, # Optional. The service account to run workflow invocations under.
+  &quot;setAuthenticatedUserAdmin&quot;: True or False, # Optional. Input only. If set to true, the authenticated user will be granted the roles/dataform.admin role on the created repository.
+  &quot;workspaceCompilationOverrides&quot;: { # Configures workspace compilation overrides for a repository. # Optional. If set, fields of `workspace_compilation_overrides` override the default compilation settings that are specified in dataform.json when creating workspace-scoped compilation results. See documentation for `WorkspaceCompilationOverrides` for more information.
+  repositoryId: string, Required. The ID to use for the repository, which will become the final component of the repository&#x27;s resource name.
+  <pre>Deletes a single Repository.
+  force: boolean, Optional. If set to true, child resources of this repository (compilation results and workflow invocations) will also be deleted. Otherwise, the request will only succeed if the repository has no child resources. **Note:** *This flag doesn&#x27;t support deletion of workspaces, release configs or workflow configs. If any of such resources exists in the repository, the request will fail.*.
+    <code class="details" id="fetchHistory">fetchHistory(name, pageSize=None, pageToken=None, x__xgafv=None)</code>
+  <pre>Fetches a Repository&#x27;s history of commits. The Repository must not have a value for `git_remote_settings.url`.
+  pageSize: integer, Optional. Maximum number of commits to return. The server may return fewer items than requested. If unspecified, the server will pick an appropriate default.
+  pageToken: string, Optional. Page token received from a previous `FetchRepositoryHistory` call. Provide this to retrieve the subsequent page. When paginating, all other parameters provided to `FetchRepositoryHistory`, with the exception of `page_size`, must match the call that provided the page token.
+    { # `FetchRepositoryHistory` response message.
+  &quot;commits&quot;: [ # A list of commit logs, ordered by &#x27;git log&#x27; default order.
+    { # Represents a single commit log.
+      &quot;author&quot;: { # Represents the author of a Git commit. # The commit author for this commit log entry.
+      &quot;commitMessage&quot;: &quot;A String&quot;, # The commit message for this commit log entry.
+      &quot;commitSha&quot;: &quot;A String&quot;, # The commit SHA for this commit log entry.
+      &quot;commitTime&quot;: &quot;A String&quot;, # Commit timestamp.
+    <code class="details" id="fetchHistory_next">fetchHistory_next()</code>
+    <code class="details" id="fetchRemoteBranches">fetchRemoteBranches(name, x__xgafv=None)</code>
+  <pre>Fetches a Repository&#x27;s remote branches.
+    { # `FetchRemoteBranches` response message.
+  &quot;branches&quot;: [ # The remote repository&#x27;s branch names.
+  <pre>Fetches a single Repository.
+  <pre>Lists Repositories in a given project and location. **Note:** *This method can return repositories not shown in the [Dataform UI](https://console.cloud.google.com/bigquery/dataform)*.
+  parent: string, Required. The location in which to list repositories. Must be in the format `projects/*/locations/*`. (required)
+  orderBy: string, Optional. This field only supports ordering by `name`. If unspecified, the server will choose the ordering. If specified, the default order is ascending for the `name` field.
+  pageSize: integer, Optional. Maximum number of repositories to return. The server may return fewer items than requested. If unspecified, the server will pick an appropriate default.
+  pageToken: string, Optional. Page token received from a previous `ListRepositories` call. Provide this to retrieve the subsequent page. When paginating, all other parameters provided to `ListRepositories`, with the exception of `page_size`, must match the call that provided the page token.
+    { # `ListRepositories` response message.
+  &quot;repositories&quot;: [ # List of repositories.
+  <pre>Updates a single Repository. **Note:** *This method does not fully implement [AIP/134](https://google.aip.dev/134). The wildcard entry (\*) is treated as a bad request, and when the `field_mask` is omitted, the request is treated as a full update on all modifiable fields.*
+  name: string, Identifier. The repository&#x27;s name. (required)
+  updateMask: string, Optional. Specifies the fields to be updated in the repository. If left unset, all fields will be updated.
+    <code class="details" id="queryDirectoryContents">queryDirectoryContents(name, commitSha=None, pageSize=None, pageToken=None, path=None, x__xgafv=None)</code>
+  <pre>Returns the contents of a given Repository directory. The Repository must not have a value for `git_remote_settings.url`.
+  commitSha: string, Optional. The Commit SHA for the commit to query from. If unset, the directory will be queried from HEAD.
+  pageSize: integer, Optional. Maximum number of paths to return. The server may return fewer items than requested. If unspecified, the server will pick an appropriate default.
+  pageToken: string, Optional. Page token received from a previous `QueryRepositoryDirectoryContents` call. Provide this to retrieve the subsequent page. When paginating, all other parameters provided to `QueryRepositoryDirectoryContents`, with the exception of `page_size`, must match the call that provided the page token.
+  path: string, Optional. The directory&#x27;s full path including directory name, relative to root. If left unset, the root is used.
+    { # `QueryRepositoryDirectoryContents` response message.
+  &quot;directoryEntries&quot;: [ # List of entries in the directory.
+    { # Represents a single entry in a directory.
+      &quot;directory&quot;: &quot;A String&quot;, # A child directory in the directory.
+      &quot;file&quot;: &quot;A String&quot;, # A file in the directory.
+      &quot;metadata&quot;: { # Represents metadata for a single entry in a filesystem. # Entry with metadata.
+        &quot;sizeBytes&quot;: &quot;A String&quot;, # Output only. Provides the size of the entry in bytes. For directories, this will be 0.
+        &quot;updateTime&quot;: &quot;A String&quot;, # Output only. Represents the time of the last modification of the entry.
+    <code class="details" id="queryDirectoryContents_next">queryDirectoryContents_next()</code>
+    <code class="details" id="readFile">readFile(name, commitSha=None, path=None, x__xgafv=None)</code>
+  <pre>Returns the contents of a file (inside a Repository). The Repository must not have a value for `git_remote_settings.url`.
+  commitSha: string, Optional. The commit SHA for the commit to read from. If unset, the file will be read from HEAD.
+  path: string, Required. Full file path to read including filename, from repository root.
+    { # `ReadRepositoryFile` response message.

@@ -1,0 +1,46 @@
+        <i class="fa-solid fa-save"></i> Save Component to Artifact
+    <div class="artifact-selection-content">
+                    ({{ totalArtifacts }} total items)
+            <!-- Existing Artifacts -->
+            <!-- Create New Artifact Section (at bottom) -->
+            <div class="create-section">
+                <div class="divider">OR CREATE NEW ARTIFACT</div>
+                (click)="selectCreateNew()"
+                class="create-btn">
+                <i class="fa-solid fa-plus"></i> Create New Artifact
+                @if (showNewArtifactForm) {
+                    <div class="new-artifact-form">
+                        [(value)]="newArtifactName"
+                        placeholder="Artifact name...">
+                        [(value)]="newArtifactDescription"
+                        placeholder="Description (optional)...">
+        <!-- Right Version Panel (only show when artifact selected) -->
+                    <h4><i class="fa-solid fa-code-branch"></i> Version</h4>
+                @if (artifactVersions.length > 0) {
+                            <label>Action</label>
+                            <label class="radio-label">
+                                    name="versionAction" 
+                                    [(ngModel)]="versionAction"
+                                    (change)="selectedVersion = null">
+                                <span>Create New Version (v{{ getNextVersionNumber() }})</span>
+                                    value="update"
+                                    [(ngModel)]="versionAction">
+                                <span>Update Existing Version</span>
+                        @if (versionAction === 'update') {
+                            <div class="version-selection">
+                                <label>Select Version</label>
+                                    <label class="version-item" 
+                                           [class.selected]="selectedVersion?.ID === version.ID">
+                                            name="selectedVersion"
+                                            [value]="version"
+                                            [(ngModel)]="selectedVersion">
+                                            <div class="version-number">Version {{ version.VersionNumber }}</div>
+                                            <div class="version-date">{{ version.__mj_UpdatedAt | date:'short' }}</div>
+                                <div class="warning">
+                                    <span>Warning: This will overwrite version {{ selectedVersion.VersionNumber }}</span>
+                    <div class="info-state">
+                        <p>No versions available for this artifact.</p>
+                        <p>A new version will be created.</p>
+            [themeColor]="versionAction === 'update' && selectedVersion ? 'warning' : 'primary'" 
+            [disabled]="!canSave()">
+            {{ getSaveButtonText() }}

@@ -1,0 +1,55 @@
+<div class="communication-dashboard-container">
+  <!-- TOOLBAR -->
+  <div class="studio-toolbar">
+    <div class="toolbar-brand">
+      <div class="brand-icon"><i class="fa-solid fa-satellite-dish"></i></div>
+      <span class="brand-label">Communications</span>
+    <div class="toolbar-divider"></div>
+    <div class="toolbar-spacer"></div>
+    <button class="tb-btn" (click)="onRefresh()">
+      <i class="fa-solid fa-rotate" [class.spinning]="isRefreshing"></i> Refresh
+  <!-- BODY -->
+  <div class="dashboard-body">
+    <!-- SIDEBAR -->
+    <div class="sidebar">
+      <div class="sidebar-section-label">Dashboard</div>
+      <div class="nav-item" [class.selected]="activeTab === 'monitor'"
+        (click)="onTabChange('monitor')">
+        <span>Monitor</span>
+      <div class="nav-item" [class.selected]="activeTab === 'logs'"
+        (click)="onTabChange('logs')">
+        <i class="fa-solid fa-list-ul"></i>
+        <span>Message Logs</span>
+      <div class="sidebar-section-label">Configuration</div>
+      <div class="nav-item" [class.selected]="activeTab === 'providers'"
+        (click)="onTabChange('providers')">
+        <span>Providers</span>
+      <div class="nav-item" [class.selected]="activeTab === 'templates'"
+        (click)="onTabChange('templates')">
+        <span>Templates</span>
+      <div class="sidebar-section-label">Operations</div>
+      <div class="nav-item" [class.selected]="activeTab === 'runs'"
+        (click)="onTabChange('runs')">
+        <span>Bulk Runs</span>
+      <div class="sidebar-footer">
+        <div class="nav-item" [class.selected]="activeTab === 'settings'"
+          (click)="onTabChange('settings')">
+          <span>Settings</span>
+    <!-- MAIN CONTENT -->
+      <div class="tab-container">
+        @switch (activeTab) {
+          @case ('monitor') {
+              @if (hasVisited('monitor')) {
+                <mj-communication-monitor-resource></mj-communication-monitor-resource>
+          @case ('logs') {
+              @if (hasVisited('logs')) {
+                <mj-communication-logs-resource></mj-communication-logs-resource>
+          @case ('providers') {
+              @if (hasVisited('providers')) {
+                <mj-communication-providers-resource></mj-communication-providers-resource>
+          @case ('templates') {
+              @if (hasVisited('templates')) {
+                <mj-communication-templates-resource></mj-communication-templates-resource>
+          @case ('runs') {
+              @if (hasVisited('runs')) {
+                <mj-communication-runs-resource></mj-communication-runs-resource>

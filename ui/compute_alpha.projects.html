@@ -1,0 +1,189 @@
+<h1><a href="compute_alpha.html">Compute Engine API</a> . <a href="compute_alpha.projects.html">projects</a></h1>
+  <code><a href="#disableXpnHost">disableXpnHost(project, requestId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Disable this project as a shared VPC host project.</p>
+  <code><a href="#disableXpnResource">disableXpnResource(project, body=None, requestId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Disable a service resource (also known as service project) associated with</p>
+  <code><a href="#enableXpnHost">enableXpnHost(project, requestId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Enable this project as a shared VPC host project.</p>
+  <code><a href="#enableXpnResource">enableXpnResource(project, body=None, requestId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Enable service resource (a.k.a service project) for a host project, so that</p>
+  <code><a href="#get">get(project, x__xgafv=None)</a></code></p>
+<p class="firstline">Returns the specified Project resource.</p>
+  <code><a href="#getXpnHost">getXpnHost(project, x__xgafv=None)</a></code></p>
+<p class="firstline">Gets the shared VPC host project that this project links to. May be empty</p>
+  <code><a href="#getXpnResources">getXpnResources(project, filter=None, maxResults=None, orderBy=None, pageToken=None, returnPartialSuccess=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Gets service resources (a.k.a service project) associated with this host</p>
+  <code><a href="#getXpnResources_next">getXpnResources_next()</a></code></p>
+  <code><a href="#listXpnHosts">listXpnHosts(project, body=None, filter=None, maxResults=None, orderBy=None, pageToken=None, returnPartialSuccess=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Lists all shared VPC host projects visible to the user in an organization.</p>
+  <code><a href="#listXpnHosts_next">listXpnHosts_next()</a></code></p>
+  <code><a href="#moveDisk">moveDisk(project, body=None, requestId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Moves a persistent disk from one zone to another.</p>
+  <code><a href="#moveInstance">moveInstance(project, body=None, requestId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Moves an instance and its attached persistent disks from one zone to</p>
+  <code><a href="#setCloudArmorTier">setCloudArmorTier(project, body=None, requestId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Sets the Cloud Armor tier of the project. To set ENTERPRISE or above the</p>
+  <code><a href="#setCommonInstanceMetadata">setCommonInstanceMetadata(project, body=None, requestId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Sets metadata common to all instances within the specified project using</p>
+  <code><a href="#setDefaultNetworkTier">setDefaultNetworkTier(project, body=None, requestId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Sets the default network tier of the project. The default network tier is</p>
+  <code><a href="#setDefaultServiceAccount">setDefaultServiceAccount(project, body=None, requestId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Sets the default service account of the project. The default service</p>
+  <code><a href="#setManagedProtectionTier">setManagedProtectionTier(project, body=None, requestId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Sets the Cloud Armor Managed Protection (CAMP) tier of the project. To set</p>
+  <code><a href="#setUsageExportBucket">setUsageExportBucket(project, body=None, requestId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Enables the usage export feature and sets theusage export bucket</p>
+    <code class="details" id="disableXpnHost">disableXpnHost(project, requestId=None, x__xgafv=None)</code>
+  <pre>Disable this project as a shared VPC host project.
+    <code class="details" id="disableXpnResource">disableXpnResource(project, body=None, requestId=None, x__xgafv=None)</code>
+  <pre>Disable a service resource (also known as service project) associated with
+this host project.
+  &quot;xpnResource&quot;: { # Service resource (a.k.a service project) ID. # Service resource (a.k.a service project) ID.
+    &quot;id&quot;: &quot;A String&quot;, # The ID of the service resource. In the case of projects, this field
+        # supports project id (e.g., my-project-123) and project number
+        # (e.g. 12345678).
+    &quot;type&quot;: &quot;A String&quot;, # The type of the service resource.
+    <code class="details" id="enableXpnHost">enableXpnHost(project, requestId=None, x__xgafv=None)</code>
+  <pre>Enable this project as a shared VPC host project.
+    <code class="details" id="enableXpnResource">enableXpnResource(project, body=None, requestId=None, x__xgafv=None)</code>
+  <pre>Enable service resource (a.k.a service project) for a host project, so that
+subnets in the host project can be used by instances in the service
+    <code class="details" id="get">get(project, x__xgafv=None)</code>
+  <pre>Returns the specified Project resource.
+To decrease latency for this method, you can optionally omit any unneeded
+information from the response by using a field mask. This practice is
+especially recommended for unused quota information (the `quotas` field).
+To exclude one or more fields, set your request&#x27;s `fields` query parameter
+to only include the fields you need. For example, to only include the `id`
+and `selfLink` fields, add the query parameter `?fields=id,selfLink` to
+your request.
+    { # Represents a Project resource.
+    # A project is used to organize resources in a Google Cloud Platform
+    # environment. For more information, read about the
+    # Resource Hierarchy.
+  &quot;cloudArmorTier&quot;: &quot;A String&quot;, # Output only. [Output Only] The Cloud Armor tier for this project. It can be one of the
+      # following values: CA_STANDARD,CA_ENTERPRISE_PAYGO.
+      # If this field is not specified, it is assumed to beCA_STANDARD.
+  &quot;commonInstanceMetadata&quot;: { # A metadata key/value entry. # Metadata key/value pairs available to all instances contained in this
+      # project. See Custom
+      # metadata for more information.
+  &quot;defaultNetworkTier&quot;: &quot;A String&quot;, # This signifies the default network tier used for configuring resources of
+      # the project and can only take the following values:PREMIUM, STANDARD. Initially the default network
+      # tier is PREMIUM.
+  &quot;defaultServiceAccount&quot;: &quot;A String&quot;, # [Output Only] Default service account used by VMs running in this project.
+  &quot;description&quot;: &quot;A String&quot;, # An optional textual description of the resource.
+  &quot;enabledFeatures&quot;: [ # An optional list of restricted features enabled for use on this project.
+      # defined by the server. This is *not* the project ID, and is
+      # just a unique ID used by Compute Engine to identify resources.
+  &quot;kind&quot;: &quot;compute#project&quot;, # Output only. [Output Only] Type of the resource. Always compute#project for
+      # projects.
+  &quot;managedProtectionTier&quot;: &quot;A String&quot;, # Output only. [Output Only] The Cloud Armor Managed Protection (CAMP) tier for
+      # this project. It can be one of the following values:CA_STANDARD, CAMP_PLUS_PAYGO.
+  &quot;name&quot;: &quot;A String&quot;, # The project ID. For example: my-example-project. Use the
+      # project ID to make requests to Compute Engine.
+  &quot;quotas&quot;: [ # [Output Only] Quotas assigned to this project.
+    { # A quotas entry.
+      &quot;limit&quot;: 3.14, # [Output Only] Quota limit for this metric.
+      &quot;metric&quot;: &quot;A String&quot;, # [Output Only] Name of the quota metric.
+      &quot;owner&quot;: &quot;A String&quot;, # [Output Only] Owning resource. This is the resource on which this quota
+          # is applied.
+      &quot;usage&quot;: 3.14, # [Output Only] Current usage of this metric.
+  &quot;usageExportLocation&quot;: { # The location in Cloud Storage and naming method of the daily usage # An optional naming prefix for daily usage reports and the Google Cloud
+      # Storage bucket where they are stored.
+      # report. Contains bucket_name and report_name prefix.
+    &quot;bucketName&quot;: &quot;A String&quot;, # The name of an existing bucket in Cloud Storage where the usage report
+        # object is stored. The Google Service Account is granted write access to
+        # this bucket. This can either be the bucket name by itself, such asexample-bucket, or the bucket name with gs://
+        # or https://storage.googleapis.com/ in front of it, such
+        # as gs://example-bucket.
+    &quot;reportNamePrefix&quot;: &quot;A String&quot;, # An optional prefix for the name of the usage report object stored inbucketName. If not supplied, defaults tousage_gce. The report is stored as a CSV file namedreport_name_prefix_gce_YYYYMMDD.csv whereYYYYMMDD is the day of the usage according to Pacific Time.
+        # If you supply a prefix, it should conform to Cloud Storageobject naming
+        # conventions.
+  &quot;vmDnsSetting&quot;: &quot;A String&quot;, # Output only. [Output Only] Default internal DNS setting used by VMs running in
+      # this project.
+  &quot;xpnProjectStatus&quot;: &quot;A String&quot;, # [Output Only] The role this project has in a shared VPC configuration.
+      # Currently, only projects with the host role, which is specified by the
+      # value HOST, are differentiated.
+    <code class="details" id="getXpnHost">getXpnHost(project, x__xgafv=None)</code>
+  <pre>Gets the shared VPC host project that this project links to. May be empty
+if no link exists.
+    <code class="details" id="getXpnResources">getXpnResources(project, filter=None, maxResults=None, orderBy=None, pageToken=None, returnPartialSuccess=None, x__xgafv=None)</code>
+  <pre>Gets service resources (a.k.a service project) associated with this host
+  &quot;kind&quot;: &quot;compute#projectsGetXpnResources&quot;, # Output only. [Output Only] Type of resource. Alwayscompute#projectsGetXpnResources for lists of service resources
+      # (a.k.a service projects)
+  &quot;resources&quot;: [ # Service resources (a.k.a service projects) attached to this project as
+      # their shared VPC host.
+    { # Service resource (a.k.a service project) ID.
+    <code class="details" id="getXpnResources_next">getXpnResources_next()</code>
+    <code class="details" id="listXpnHosts">listXpnHosts(project, body=None, filter=None, maxResults=None, orderBy=None, pageToken=None, returnPartialSuccess=None, x__xgafv=None)</code>
+  <pre>Lists all shared VPC host projects visible to the user in an organization.
+  &quot;organization&quot;: &quot;A String&quot;, # Optional organization ID managed by Cloud Resource Manager, for which to
+      # list shared VPC host projects. If not specified, the organization will be
+      # inferred from the project.
+  &quot;returnPartialPage&quot;: True or False, # Opt-in for partial page behavior which provides a partial filled page
+      # (number of items on which may be smaller than maxResults) within the API
+      # deadline. If opt-in, then the user should rely on if nextPageToken is empty
+      # in the response to determine if there is a next page. Empty page is also
+      # valid and possible. The default value is false.
+  &quot;items&quot;: [ # [Output Only] A list of shared VPC host project URLs.
+  &quot;kind&quot;: &quot;compute#xpnHostList&quot;, # Output only. [Output Only] Type of resource. Always compute#xpnHostList for
+      # lists of shared VPC hosts.
+    <code class="details" id="listXpnHosts_next">listXpnHosts_next()</code>
+    <code class="details" id="moveDisk">moveDisk(project, body=None, requestId=None, x__xgafv=None)</code>
+  <pre>Moves a persistent disk from one zone to another.
+*Note*: The moveDisk API will be deprecated on September 29, 2026.
+Starting September 29, 2025, you can&#x27;t use the moveDisk API on new
+projects. To move a disk to a different region or zone, follow the steps in
+[Change the location of a
+disk](https://cloud.google.com/compute/docs/disks/migrate-to-hyperdisk#migrate-to-hd).
+Projects that already use the moveDisk API can continue usage until
+September 29, 2026.
+Starting November 1, 2025, API responses will include a warning message in
+the response body about the upcoming deprecation. You can skip the message
+to continue using the service without interruption.
+  &quot;destinationZone&quot;: &quot;A String&quot;, # The URL of the destination zone to move the disk. This can be a full or
+      # partial URL. For example, the following are all valid URLs to a zone:
+      #    - https://www.googleapis.com/compute/v1/projects/project/zones/zone
+  &quot;targetDisk&quot;: &quot;A String&quot;, # The URL of the target disk to move. This can be a full or partial URL.
+      # For example, the following are all valid URLs to a disk:
+    <code class="details" id="moveInstance">moveInstance(project, body=None, requestId=None, x__xgafv=None)</code>
+  <pre>Moves an instance and its attached persistent disks from one zone to
+another.
+*Note*: Moving VMs or disks by using this method might
+ cause unexpected behavior. For more information, see the [known
+ issue](/compute/docs/troubleshooting/known-issues#moving_vms_or_disks_using_the_moveinstance_api_or_the_causes_unexpected_behavior).
+[Deprecated] This method is deprecated. See [moving instance across
+zones](/compute/docs/instances/moving-instance-across-zones) instead.
+  &quot;destinationZone&quot;: &quot;A String&quot;, # The URL of the destination zone to move the instance. This can be a full or
+  &quot;targetInstance&quot;: &quot;A String&quot;, # The URL of the target instance to move. This can be a full or partial URL.
+      # For example, the following are all valid URLs to an instance:
+      #    - https://www.googleapis.com/compute/v1/projects/project/zones/zone/instances/instance
+      #    - zones/zone/instances/instance
+    <code class="details" id="setCloudArmorTier">setCloudArmorTier(project, body=None, requestId=None, x__xgafv=None)</code>
+  <pre>Sets the Cloud Armor tier of the project. To set ENTERPRISE or above the
+billing account of the project must be subscribed to Cloud Armor
+Enterprise. See Subscribing
+to Cloud Armor Enterprise for more information.
+  &quot;cloudArmorTier&quot;: &quot;A String&quot;, # Managed protection tier to be set.
+    <code class="details" id="setCommonInstanceMetadata">setCommonInstanceMetadata(project, body=None, requestId=None, x__xgafv=None)</code>
+  <pre>Sets metadata common to all instances within the specified project using
+    <code class="details" id="setDefaultNetworkTier">setDefaultNetworkTier(project, body=None, requestId=None, x__xgafv=None)</code>
+  <pre>Sets the default network tier of the project. The default network tier is
+used when an address/forwardingRule/instance is created without specifying
+the network tier field.
+  &quot;networkTier&quot;: &quot;A String&quot;, # Default network tier to be set.
+    <code class="details" id="setDefaultServiceAccount">setDefaultServiceAccount(project, body=None, requestId=None, x__xgafv=None)</code>
+  <pre>Sets the default service account of the project. The default service
+account is used when a VM instance is created with the service account
+email address set to &quot;default&quot;.
+    <code class="details" id="setManagedProtectionTier">setManagedProtectionTier(project, body=None, requestId=None, x__xgafv=None)</code>
+  <pre>Sets the Cloud Armor Managed Protection (CAMP) tier of the project. To set
+PLUS or above the billing account of the project must be subscribed to
+Managed Protection Plus. See Subscribing
+to Managed Protection Plus for more information.
+  &quot;managedProtectionTier&quot;: &quot;A String&quot;, # Managed protection tier to be set.
+    <code class="details" id="setUsageExportBucket">setUsageExportBucket(project, body=None, requestId=None, x__xgafv=None)</code>
+  <pre>Enables the usage export feature and sets theusage export bucket
+where reports are stored. If you provide an empty request body using this
+method, the usage export feature will be disabled.
+{ # The location in Cloud Storage and naming method of the daily usage

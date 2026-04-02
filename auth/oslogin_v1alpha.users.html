@@ -1,0 +1,26 @@
+<h1><a href="oslogin_v1alpha.html">Cloud OS Login API</a> . <a href="oslogin_v1alpha.users.html">users</a></h1>
+  <code><a href="oslogin_v1alpha.users.projects.html">projects()</a></code>
+  <code><a href="oslogin_v1alpha.users.sshPublicKeys.html">sshPublicKeys()</a></code>
+  <code><a href="#getLoginProfile">getLoginProfile(name, operatingSystemType=None, projectId=None, systemId=None, view=None, x__xgafv=None)</a></code></p>
+  <code><a href="#importSshPublicKey">importSshPublicKey(parent, body=None, projectId=None, regions=None, view=None, x__xgafv=None)</a></code></p>
+    <code class="details" id="getLoginProfile">getLoginProfile(name, operatingSystemType=None, projectId=None, systemId=None, view=None, x__xgafv=None)</code>
+  operatingSystemType: string, Optional. The type of operating system associated with the account.
+      OPERATING_SYSTEM_TYPE_UNSPECIFIED - The operating system type associated with the user account information is unspecified.
+      LINUX - Linux user account information.
+      WINDOWS - Windows user account information.
+  view: string, The view configures whether to retrieve security keys information.
+      LOGIN_PROFILE_VIEW_UNSPECIFIED - The default login profile view. The API defaults to the BASIC view.
+      BASIC - Includes POSIX and SSH key information.
+      SECURITY_KEY - Include security key information for the user.
+  &quot;securityKeys&quot;: [ # The registered security key credentials for a user.
+    { # The credential information for a Google registered security key.
+      &quot;deviceNickname&quot;: &quot;A String&quot;, # The security key nickname explicitly set by the user.
+      &quot;privateKey&quot;: &quot;A String&quot;, # Hardware-backed private key text in SSH format.
+      &quot;publicKey&quot;: &quot;A String&quot;, # Public key text in SSH format, defined by [RFC4253](&quot;https://www.ietf.org/rfc/rfc4253.txt&quot;) section 6.6.
+      &quot;universalTwoFactor&quot;: { # Security key information specific to the U2F protocol. # The U2F protocol type.
+        &quot;appId&quot;: &quot;A String&quot;, # Application ID for the U2F protocol.
+      &quot;webAuthn&quot;: { # Security key information specific to the Web Authentication protocol. # The Web Authentication protocol type.
+        &quot;rpId&quot;: &quot;A String&quot;, # Relying party ID for Web Authentication.
+    <code class="details" id="importSshPublicKey">importSshPublicKey(parent, body=None, projectId=None, regions=None, view=None, x__xgafv=None)</code>
+  parent: string, The unique ID for the user in format `users/{user}`. (required)
+  regions: string, Optional. The regions to wait for a POSIX account to be written to before returning a response. If unspecified, defaults to all regions. Regions are listed at https://cloud.google.com/about/locations#region. (repeated)

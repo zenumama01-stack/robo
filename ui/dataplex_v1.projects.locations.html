@@ -1,0 +1,84 @@
+<h1><a href="dataplex_v1.html">Cloud Dataplex API</a> . <a href="dataplex_v1.projects.html">projects</a> . <a href="dataplex_v1.projects.locations.html">locations</a></h1>
+  <code><a href="dataplex_v1.projects.locations.aspectTypes.html">aspectTypes()</a></code>
+<p class="firstline">Returns the aspectTypes Resource.</p>
+  <code><a href="dataplex_v1.projects.locations.changeRequests.html">changeRequests()</a></code>
+<p class="firstline">Returns the changeRequests Resource.</p>
+  <code><a href="dataplex_v1.projects.locations.dataAttributeBindings.html">dataAttributeBindings()</a></code>
+<p class="firstline">Returns the dataAttributeBindings Resource.</p>
+  <code><a href="dataplex_v1.projects.locations.dataProducts.html">dataProducts()</a></code>
+<p class="firstline">Returns the dataProducts Resource.</p>
+  <code><a href="dataplex_v1.projects.locations.dataScans.html">dataScans()</a></code>
+<p class="firstline">Returns the dataScans Resource.</p>
+  <code><a href="dataplex_v1.projects.locations.dataTaxonomies.html">dataTaxonomies()</a></code>
+<p class="firstline">Returns the dataTaxonomies Resource.</p>
+  <code><a href="dataplex_v1.projects.locations.entryGroups.html">entryGroups()</a></code>
+  <code><a href="dataplex_v1.projects.locations.entryLinkTypes.html">entryLinkTypes()</a></code>
+<p class="firstline">Returns the entryLinkTypes Resource.</p>
+  <code><a href="dataplex_v1.projects.locations.entryTypes.html">entryTypes()</a></code>
+<p class="firstline">Returns the entryTypes Resource.</p>
+  <code><a href="dataplex_v1.projects.locations.glossaries.html">glossaries()</a></code>
+<p class="firstline">Returns the glossaries Resource.</p>
+  <code><a href="dataplex_v1.projects.locations.governanceRules.html">governanceRules()</a></code>
+<p class="firstline">Returns the governanceRules Resource.</p>
+  <code><a href="dataplex_v1.projects.locations.lakes.html">lakes()</a></code>
+<p class="firstline">Returns the lakes Resource.</p>
+  <code><a href="dataplex_v1.projects.locations.metadataFeeds.html">metadataFeeds()</a></code>
+<p class="firstline">Returns the metadataFeeds Resource.</p>
+  <code><a href="dataplex_v1.projects.locations.metadataJobs.html">metadataJobs()</a></code>
+<p class="firstline">Returns the metadataJobs Resource.</p>
+  <code><a href="dataplex_v1.projects.locations.operations.html">operations()</a></code>
+  <code><a href="dataplex_v1.projects.locations.policyIntents.html">policyIntents()</a></code>
+<p class="firstline">Returns the policyIntents Resource.</p>
+  <code><a href="#lookupContext">lookupContext(name, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Looks up LLM Context for the specified resources.</p>
+  <code><a href="#lookupEntry">lookupEntry(name, aspectTypes=None, entry=None, paths=None, view=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Looks up an entry by name using the permission on the source system.</p>
+  <code><a href="#lookupEntryLinks">lookupEntryLinks(name, entry=None, entryLinkTypes=None, entryMode=None, pageSize=None, pageToken=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Looks up Entry Links referencing the specified Entry.</p>
+  <code><a href="#lookupEntryLinks_next">lookupEntryLinks_next()</a></code></p>
+  <code><a href="#searchEntries">searchEntries(name, orderBy=None, pageSize=None, pageToken=None, query=None, scope=None, semanticSearch=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Searches for Entries matching the given query and scope.</p>
+  <code><a href="#searchEntries_next">searchEntries_next()</a></code></p>
+    <code class="details" id="lookupContext">lookupContext(name, body=None, x__xgafv=None)</code>
+  <pre>Looks up LLM Context for the specified resources.
+  name: string, Required. The project to which the request should be attributed in the following form: projects/{project}/locations/{location}. (required)
+{ # Lookup Context using permissions in the source system.
+  &quot;options&quot;: { # Optional. Allows to configure the context.
+  &quot;resources&quot;: [ # Required. The entry names to lookup context for. The request should have max 10 of those.Examples:projects/{project}/locations/{location}/entryGroups/{entry_group}/entries/{entry}
+    { # Lookup Context response.
+  &quot;context&quot;: &quot;A String&quot;, # LLM generated context for the resources.
+    <code class="details" id="lookupEntry">lookupEntry(name, aspectTypes=None, entry=None, paths=None, view=None, x__xgafv=None)</code>
+  <pre>Looks up an entry by name using the permission on the source system.
+  entry: string, Required. The resource name of the Entry: projects/{project}/locations/{location}/entryGroups/{entry_group}/entries/{entry}.
+    <code class="details" id="lookupEntryLinks">lookupEntryLinks(name, entry=None, entryLinkTypes=None, entryMode=None, pageSize=None, pageToken=None, x__xgafv=None)</code>
+  <pre>Looks up Entry Links referencing the specified Entry.
+  name: string, Required. The project to which the request should be attributed to Format: projects/{project_id_or_number}/locations/{location_id}. (required)
+  entry: string, Required. The resource name of the referred Entry. Format: projects/{project_id_or_number}/locations/{location_id}/entryGroups/{entry_group_id}/entries/{entry_id}. Entry Links which references this entry will be returned in the response.
+  entryLinkTypes: string, Entry link types to filter the response by. If empty, all entry link types will be returned. At most 10 entry link types can be specified. (repeated)
+  entryMode: string, Mode of entry reference.
+      ENTRY_MODE_UNSPECIFIED - Unspecified entry mode. Returns both directional and non-directional entry links which references the entry.
+      SOURCE - Returns all directed entry links which references the entry as source.
+      TARGET - Return all directed entry links which references the entry as target.
+  pageSize: integer, Maximum number of EntryLinks to return. The service may return fewer than this value. If unspecified, at most 10 EntryLinks will be returned. The maximum value is 10; values above 10 will be coerced to 10.
+  pageToken: string, Page token received from a previous LookupEntryLinks call. Provide this to retrieve the subsequent page. When paginating, all other parameters that are provided to the LookupEntryLinks request must match the call that provided the page token.
+    { # Response message for LookupEntryLinks.
+  &quot;entryLinks&quot;: [ # List of entry links that reference the specified entry.
+    <code class="details" id="lookupEntryLinks_next">lookupEntryLinks_next()</code>
+    <code class="details" id="searchEntries">searchEntries(name, orderBy=None, pageSize=None, pageToken=None, query=None, scope=None, semanticSearch=None, x__xgafv=None)</code>
+  <pre>Searches for Entries matching the given query and scope.
+  name: string, Required. The project to which the request should be attributed in the following form: projects/{project}/locations/global. (required)
+  orderBy: string, Optional. Specifies the ordering of results. Supported values are: relevance last_modified_timestamp last_modified_timestamp asc
+  pageSize: integer, Optional. Number of results in the search page. If &lt;=0, then defaults to 10. Max limit for page_size is 1000. Throws an invalid argument for page_size &gt; 1000.
+  pageToken: string, Optional. Page token received from a previous SearchEntries call. Provide this to retrieve the subsequent page.
+  query: string, Required. The query against which entries in scope should be matched. The query syntax is defined in Search syntax for Dataplex Universal Catalog (https://cloud.google.com/dataplex/docs/search-syntax).
+  scope: string, Optional. The scope under which the search should be operating. It must either be organizations/ or projects/. If it is unspecified, it defaults to the organization where the project provided in name is located.
+  semanticSearch: boolean, Optional. Specifies whether the search should understand the meaning and intent behind the query, rather than just matching keywords.
+  &quot;results&quot;: [ # The results matching the search query.
+    { # A single result of a SearchEntries request.
+      &quot;dataplexEntry&quot;: { # An entry is a representation of a data resource that can be described by various metadata.
+      &quot;linkedResource&quot;: &quot;A String&quot;, # Linked resource name.
+      &quot;snippets&quot;: { # Snippets for the entry, contains HTML-style highlighting for matched tokens, will be used in UI. # Snippets.
+        &quot;dataplexEntry&quot;: { # An entry is a representation of a data resource that can be described by various metadata. # Entry
+  &quot;totalSize&quot;: 42, # The estimated total number of matching entries. This number isn&#x27;t guaranteed to be accurate.
+  &quot;unreachable&quot;: [ # Locations that the service couldn&#x27;t reach. Search results don&#x27;t include data from these locations.
+    <code class="details" id="searchEntries_next">searchEntries_next()</code>

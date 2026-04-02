@@ -1,0 +1,56 @@
+<h1><a href="oracledatabase_v1.html">Oracle Database@Google Cloud API</a> . <a href="oracledatabase_v1.projects.html">projects</a> . <a href="oracledatabase_v1.projects.locations.html">locations</a> . <a href="oracledatabase_v1.projects.locations.dbSystems.html">dbSystems</a></h1>
+  <code><a href="#create">create(parent, body=None, dbSystemId=None, requestId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Creates a new DbSystem in a given project and location.</p>
+<p class="firstline">Deletes a single DbSystem.</p>
+<p class="firstline">Gets details of a single DbSystem.</p>
+<p class="firstline">Lists all the DbSystems for the given project and location.</p>
+    <code class="details" id="create">create(parent, body=None, dbSystemId=None, requestId=None, x__xgafv=None)</code>
+  <pre>Creates a new DbSystem in a given project and location.
+  parent: string, Required. The value for parent of the DbSystem in the following format: projects/{project}/locations/{location}. (required)
+{ # Details of the DbSystem (BaseDB) resource. https://docs.oracle.com/en-us/iaas/api/#/en/database/20160918/DbSystem/
+  &quot;createTime&quot;: &quot;A String&quot;, # Output only. The date and time that the DbSystem was created.
+  &quot;displayName&quot;: &quot;A String&quot;, # Required. The display name for the System db. The name does not have to be unique within your project.
+  &quot;entitlementId&quot;: &quot;A String&quot;, # Output only. The ID of the subscription entitlement associated with the DbSystem
+  &quot;gcpOracleZone&quot;: &quot;A String&quot;, # Optional. The GCP Oracle zone where Oracle DbSystem is hosted. Example: us-east4-b-r2. If not specified, the system will pick a zone based on availability.
+  &quot;labels&quot;: { # Optional. The labels or tags associated with the DbSystem.
+  &quot;name&quot;: &quot;A String&quot;, # Identifier. The name of the DbSystem resource in the following format: projects/{project}/locations/{region}/dbSystems/{db_system}
+  &quot;odbNetwork&quot;: &quot;A String&quot;, # Optional. The name of the OdbNetwork associated with the DbSystem. Format: projects/{project}/locations/{location}/odbNetworks/{odb_network} It is optional but if specified, this should match the parent ODBNetwork of the OdbSubnet.
+  &quot;odbSubnet&quot;: &quot;A String&quot;, # Required. The name of the OdbSubnet associated with the DbSystem for IP allocation. Format: projects/{project}/locations/{location}/odbNetworks/{odb_network}/odbSubnets/{odb_subnet}
+  &quot;properties&quot;: { # The properties of a DbSystem. # Optional. The properties of the DbSystem.
+    &quot;computeCount&quot;: 42, # Required. The number of CPU cores to enable for the DbSystem.
+    &quot;computeModel&quot;: &quot;A String&quot;, # Optional. The compute model of the DbSystem.
+    &quot;dataCollectionOptions&quot;: { # Data collection options for DbSystem. # Optional. Data collection options for diagnostics.
+      &quot;isDiagnosticsEventsEnabled&quot;: True or False, # Optional. Indicates whether to enable data collection for diagnostics.
+      &quot;isIncidentLogsEnabled&quot;: True or False, # Optional. Indicates whether to enable incident logs and trace collection.
+    &quot;dataStorageSizeGb&quot;: 42, # Optional. The data storage size in GB that is currently available to DbSystems.
+    &quot;databaseEdition&quot;: &quot;A String&quot;, # Required. The database edition of the DbSystem.
+    &quot;dbHome&quot;: { # Details of the Database Home resource. # Optional. Details for creating a Database Home.
+      &quot;database&quot;: { # Details of the Database resource. https://docs.oracle.com/en-us/iaas/api/#/en/database/20160918/Database/ # Required. The Database resource.
+      &quot;dbVersion&quot;: &quot;A String&quot;, # Required. A valid Oracle Database version. For a list of supported versions, use the ListDbVersions operation.
+      &quot;displayName&quot;: &quot;A String&quot;, # Optional. The display name for the Database Home. The name does not have to be unique within your project.
+      &quot;isUnifiedAuditingEnabled&quot;: True or False, # Optional. Whether unified auditing is enabled for the Database Home.
+    &quot;dbSystemOptions&quot;: { # Details of the DbSystem Options. # Optional. The options for the DbSystem.
+      &quot;storageManagement&quot;: &quot;A String&quot;, # Optional. The storage option used in DB system.
+    &quot;domain&quot;: &quot;A String&quot;, # Optional. The host domain name of the DbSystem.
+    &quot;hostname&quot;: &quot;A String&quot;, # Output only. The hostname of the DbSystem.
+    &quot;hostnamePrefix&quot;: &quot;A String&quot;, # Optional. Prefix for DB System host names.
+    &quot;initialDataStorageSizeGb&quot;: 42, # Required. The initial data storage size in GB.
+    &quot;licenseModel&quot;: &quot;A String&quot;, # Required. The license model of the DbSystem.
+    &quot;lifecycleState&quot;: &quot;A String&quot;, # Output only. State of the DbSystem.
+    &quot;memorySizeGb&quot;: 42, # Optional. The memory size in GB.
+    &quot;nodeCount&quot;: 42, # Optional. The number of nodes in the DbSystem.
+    &quot;ocid&quot;: &quot;A String&quot;, # Output only. OCID of the DbSystem.
+    &quot;privateIp&quot;: &quot;A String&quot;, # Optional. The private IP address of the DbSystem.
+    &quot;recoStorageSizeGb&quot;: 42, # Optional. The reco/redo storage size in GB.
+    &quot;shape&quot;: &quot;A String&quot;, # Required. Shape of DB System.
+    &quot;sshPublicKeys&quot;: [ # Required. SSH public keys to be stored with the DbSystem.
+    &quot;timeZone&quot;: { # Represents a time zone from the [IANA Time Zone Database](https://www.iana.org/time-zones). # Optional. Time zone of the DbSystem.
+  dbSystemId: string, Required. The ID of the DbSystem to create. This value is restricted to (^[a-z]([a-z0-9-]{0,61}[a-z0-9])?$) and must be a maximum of 63 characters in length. The value must start with a letter and end with a letter or a number.
+  <pre>Deletes a single DbSystem.
+  name: string, Required. The name of the DbSystem in the following format: projects/{project}/locations/{location}/dbSystems/{db_system}. (required)
+  <pre>Gets details of a single DbSystem.
+  <pre>Lists all the DbSystems for the given project and location.
+  parent: string, Required. The parent value for DbSystems in the following format: projects/{project}/locations/{location}. (required)
+  pageSize: integer, Optional. The maximum number of items to return. If unspecified, at most 50 DbSystems will be returned. The maximum value is 1000; values above 1000 will be coerced to 1000.
+    { # The response for `DbSystem.List`.
+  &quot;dbSystems&quot;: [ # The list of DbSystems.

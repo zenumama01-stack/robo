@@ -1,0 +1,80 @@
+<h1><a href="healthcare_v1.html">Cloud Healthcare API</a> . <a href="healthcare_v1.projects.html">projects</a> . <a href="healthcare_v1.projects.locations.html">locations</a> . <a href="healthcare_v1.projects.locations.datasets.html">datasets</a> . <a href="healthcare_v1.projects.locations.datasets.consentStores.html">consentStores</a></h1>
+  <code><a href="healthcare_v1.projects.locations.datasets.consentStores.attributeDefinitions.html">attributeDefinitions()</a></code>
+<p class="firstline">Returns the attributeDefinitions Resource.</p>
+  <code><a href="healthcare_v1.projects.locations.datasets.consentStores.consentArtifacts.html">consentArtifacts()</a></code>
+<p class="firstline">Returns the consentArtifacts Resource.</p>
+  <code><a href="healthcare_v1.projects.locations.datasets.consentStores.consents.html">consents()</a></code>
+<p class="firstline">Returns the consents Resource.</p>
+  <code><a href="healthcare_v1.projects.locations.datasets.consentStores.userDataMappings.html">userDataMappings()</a></code>
+<p class="firstline">Returns the userDataMappings Resource.</p>
+  <code><a href="#checkDataAccess">checkDataAccess(consentStore, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Checks if a particular data_id of a User data mapping in the specified consent store is consented for the specified use.</p>
+  <code><a href="#create">create(parent, body=None, consentStoreId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Creates a new consent store in the parent dataset. Attempting to create a consent store with the same ID as an existing store fails with an ALREADY_EXISTS error.</p>
+<p class="firstline">Deletes the specified consent store and removes all the consent store's data.</p>
+  <code><a href="#evaluateUserConsents">evaluateUserConsents(consentStore, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Evaluates the user's Consents for all matching User data mappings. Note: User data mappings are indexed asynchronously, which can cause a slight delay between the time mappings are created or updated and when they are included in EvaluateUserConsents results.</p>
+  <code><a href="#evaluateUserConsents_next">evaluateUserConsents_next()</a></code></p>
+<p class="firstline">Gets the specified consent store.</p>
+<p class="firstline">Lists the consent stores in the specified dataset.</p>
+<p class="firstline">Updates the specified consent store.</p>
+  <code><a href="#queryAccessibleData">queryAccessibleData(consentStore, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Queries all data_ids that are consented for a specified use in the given consent store and writes them to a specified destination. The returned Operation includes a progress counter for the number of User data mappings processed. If the request is successful, a detailed response is returned of type QueryAccessibleDataResponse, contained in the response field when the operation finishes. The metadata field type is OperationMetadata. Errors are logged to Cloud Logging (see [Viewing error logs in Cloud Logging](https://cloud.google.com/healthcare/docs/how-tos/logging)). For example, the following sample log entry shows a `failed to evaluate consent policy` error that occurred during a QueryAccessibleData call to consent store `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/consentStores/{consent_store_id}`. ```json jsonPayload: { @type: "type.googleapis.com/google.cloud.healthcare.logging.QueryAccessibleDataLogEntry" error: { code: 9 message: "failed to evaluate consent policy" } resourceName: "projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/consentStores/{consent_store_id}/consents/{consent_id}" } logName: "projects/{project_id}/logs/healthcare.googleapis.com%2Fquery_accessible_data" operation: { id: "projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/operations/{operation_id}" producer: "healthcare.googleapis.com/QueryAccessibleData" } receiveTimestamp: "TIMESTAMP" resource: { labels: { consent_store_id: "{consent_store_id}" dataset_id: "{dataset_id}" location: "{location_id}" project_id: "{project_id}" } type: "healthcare_consent_store" } severity: "ERROR" timestamp: "TIMESTAMP" ```</p>
+    <code class="details" id="checkDataAccess">checkDataAccess(consentStore, body=None, x__xgafv=None)</code>
+  <pre>Checks if a particular data_id of a User data mapping in the specified consent store is consented for the specified use.
+  consentStore: string, Required. Name of the consent store where the requested data_id is stored, of the form `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/consentStores/{consent_store_id}`. (required)
+{ # Checks if a particular data_id of a User data mapping in the given consent store is consented for a given use.
+  &quot;consentList&quot;: { # List of resource names of Consent resources. # Optional. Specific Consents to evaluate the access request against. These Consents must have the same `user_id` as the evaluated User data mapping, must exist in the current `consent_store`, and have a `state` of either `ACTIVE` or `DRAFT`. A maximum of 100 Consents can be provided here. If no selection is specified, the access request is evaluated against all `ACTIVE` unexpired Consents with the same `user_id` as the evaluated User data mapping.
+    &quot;consents&quot;: [ # The resource names of the Consents to evaluate against, of the form `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/consentStores/{consent_store_id}/consents/{consent_id}`.
+  &quot;dataId&quot;: &quot;A String&quot;, # Required. The unique identifier of the resource to check access for. This identifier must correspond to a User data mapping in the given consent store.
+  &quot;requestAttributes&quot;: { # The values of request attributes associated with this access request.
+  &quot;responseView&quot;: &quot;A String&quot;, # Optional. The view for CheckDataAccessResponse. If unspecified, defaults to `BASIC` and returns `consented` as `TRUE` or `FALSE`.
+  &quot;consentDetails&quot;: { # The resource names of all evaluated Consents mapped to their evaluation.
+    &quot;a_key&quot;: { # The detailed evaluation of a particular Consent.
+      &quot;evaluationResult&quot;: &quot;A String&quot;, # The evaluation result.
+  &quot;consented&quot;: True or False, # Whether the requested resource is consented for the given use.
+    <code class="details" id="create">create(parent, body=None, consentStoreId=None, x__xgafv=None)</code>
+  <pre>Creates a new consent store in the parent dataset. Attempting to create a consent store with the same ID as an existing store fails with an ALREADY_EXISTS error.
+  parent: string, Required. The name of the dataset this consent store belongs to. (required)
+{ # Represents a consent store.
+  &quot;defaultConsentTtl&quot;: &quot;A String&quot;, # Optional. Default time to live for Consents created in this store. Must be at least 24 hours. Updating this field will not affect the expiration time of existing consents.
+  &quot;enableConsentCreateOnUpdate&quot;: True or False, # Optional. If `true`, UpdateConsent creates the Consent if it does not already exist. If unspecified, defaults to `false`.
+  &quot;labels&quot;: { # Optional. User-supplied key-value pairs used to organize consent stores. Label keys must be between 1 and 63 characters long, have a UTF-8 encoding of maximum 128 bytes, and must conform to the following PCRE regular expression: \p{Ll}\p{Lo}{0,62}. Label values must be between 1 and 63 characters long, have a UTF-8 encoding of maximum 128 bytes, and must conform to the following PCRE regular expression: [\p{Ll}\p{Lo}\p{N}_-]{0,63}. No more than 64 labels can be associated with a given store. For more information: https://cloud.google.com/healthcare/docs/how-tos/labeling-resources
+  &quot;name&quot;: &quot;A String&quot;, # Identifier. Resource name of the consent store, of the form `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/consentStores/{consent_store_id}`. Cannot be changed after creation.
+  consentStoreId: string, Required. The ID of the consent store to create. The string must match the following regex: `[\p{L}\p{N}_\-\.]{1,256}`. Cannot be changed after creation.
+  <pre>Deletes the specified consent store and removes all the consent store&#x27;s data.
+  name: string, Required. The resource name of the consent store to delete. (required)
+    <code class="details" id="evaluateUserConsents">evaluateUserConsents(consentStore, body=None, x__xgafv=None)</code>
+  <pre>Evaluates the user&#x27;s Consents for all matching User data mappings. Note: User data mappings are indexed asynchronously, which can cause a slight delay between the time mappings are created or updated and when they are included in EvaluateUserConsents results.
+  consentStore: string, Required. Name of the consent store to retrieve User data mappings from. (required)
+{ # Evaluate a user&#x27;s Consents for all matching User data mappings. Note: User data mappings are indexed asynchronously, causing slight delays between the time mappings are created or updated and when they are included in EvaluateUserConsents results.
+  &quot;consentList&quot;: { # List of resource names of Consent resources. # Optional. Specific Consents to evaluate the access request against. These Consents must have the same `user_id` as the User data mappings being evalauted, must exist in the current `consent_store`, and must have a `state` of either `ACTIVE` or `DRAFT`. A maximum of 100 Consents can be provided here. If unspecified, all `ACTIVE` unexpired Consents in the current `consent_store` will be evaluated.
+  &quot;pageSize&quot;: 42, # Optional. Limit on the number of User data mappings to return in a single response. If not specified, 100 is used. May not be larger than 1000.
+  &quot;pageToken&quot;: &quot;A String&quot;, # Optional. Token to retrieve the next page of results, or empty to get the first page.
+  &quot;requestAttributes&quot;: { # Required. The values of request attributes associated with this access request.
+  &quot;resourceAttributes&quot;: { # Optional. The values of resource attributes associated with the resources being requested. If no values are specified, then all resources are queried.
+  &quot;responseView&quot;: &quot;A String&quot;, # Optional. The view for EvaluateUserConsentsResponse. If unspecified, defaults to `BASIC` and returns `consented` as `TRUE` or `FALSE`.
+  &quot;userId&quot;: &quot;A String&quot;, # Required. User ID to evaluate consents for.
+  &quot;nextPageToken&quot;: &quot;A String&quot;, # Token to retrieve the next page of results, or empty if there are no more results in the list. This token is valid for 72 hours after it is created.
+  &quot;results&quot;: [ # The consent evaluation result for each `data_id`.
+    { # The consent evaluation result for a single `data_id`.
+      &quot;consented&quot;: True or False, # Whether the resource is consented for the given use.
+      &quot;dataId&quot;: &quot;A String&quot;, # The unique identifier of the evaluated resource.
+    <code class="details" id="evaluateUserConsents_next">evaluateUserConsents_next()</code>
+  <pre>Gets the specified consent store.
+  name: string, Required. The resource name of the consent store to get. (required)
+  <pre>Lists the consent stores in the specified dataset.
+  parent: string, Required. Name of the dataset. (required)
+  filter: string, Optional. Restricts the stores returned to those matching a filter. Only filtering on labels is supported. For example, `filter=labels.key=value`.
+  pageSize: integer, Optional. Limit on the number of consent stores to return in a single response. If not specified, 100 is used. May not be larger than 1000.
+  pageToken: string, Optional. Token to retrieve the next page of results, or empty to get the first page.
+  &quot;consentStores&quot;: [ # The returned consent stores. The maximum number of stores returned is determined by the value of page_size in the ListConsentStoresRequest.
+  <pre>Updates the specified consent store.
+  name: string, Identifier. Resource name of the consent store, of the form `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/consentStores/{consent_store_id}`. Cannot be changed after creation. (required)
+  updateMask: string, Required. The update mask that applies to the resource. For the `FieldMask` definition, see https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#fieldmask. Only the `labels`, `default_consent_ttl`, and `enable_consent_create_on_update` fields are allowed to be updated.
+    <code class="details" id="queryAccessibleData">queryAccessibleData(consentStore, body=None, x__xgafv=None)</code>
+  <pre>Queries all data_ids that are consented for a specified use in the given consent store and writes them to a specified destination. The returned Operation includes a progress counter for the number of User data mappings processed. If the request is successful, a detailed response is returned of type QueryAccessibleDataResponse, contained in the response field when the operation finishes. The metadata field type is OperationMetadata. Errors are logged to Cloud Logging (see [Viewing error logs in Cloud Logging](https://cloud.google.com/healthcare/docs/how-tos/logging)). For example, the following sample log entry shows a `failed to evaluate consent policy` error that occurred during a QueryAccessibleData call to consent store `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/consentStores/{consent_store_id}`. ```json jsonPayload: { @type: &quot;type.googleapis.com/google.cloud.healthcare.logging.QueryAccessibleDataLogEntry&quot; error: { code: 9 message: &quot;failed to evaluate consent policy&quot; } resourceName: &quot;projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/consentStores/{consent_store_id}/consents/{consent_id}&quot; } logName: &quot;projects/{project_id}/logs/healthcare.googleapis.com%2Fquery_accessible_data&quot; operation: { id: &quot;projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/operations/{operation_id}&quot; producer: &quot;healthcare.googleapis.com/QueryAccessibleData&quot; } receiveTimestamp: &quot;TIMESTAMP&quot; resource: { labels: { consent_store_id: &quot;{consent_store_id}&quot; dataset_id: &quot;{dataset_id}&quot; location: &quot;{location_id}&quot; project_id: &quot;{project_id}&quot; } type: &quot;healthcare_consent_store&quot; } severity: &quot;ERROR&quot; timestamp: &quot;TIMESTAMP&quot; ```
+{ # Queries all data_ids that are consented for a given use in the given consent store and writes them to a specified destination. The returned Operation includes a progress counter for the number of User data mappings processed. Errors are logged to Cloud Logging (see [Viewing error logs in Cloud Logging] (https://cloud.google.com/healthcare/docs/how-tos/logging) and [QueryAccessibleData] for a sample log entry).
+  &quot;gcsDestination&quot;: { # The Cloud Storage location for export. # The Cloud Storage destination. The Cloud Healthcare API service account must have the `roles/storage.objectAdmin` Cloud IAM role for this Cloud Storage location.
+    &quot;uriPrefix&quot;: &quot;A String&quot;, # URI for a Cloud Storage directory where the server writes result files, in the format `gs://{bucket-id}/{path/to/destination/dir}`. If there is no trailing slash, the service appends one when composing the object path. The user is responsible for creating the Cloud Storage bucket and directory referenced in `uri_prefix`.
+  &quot;resourceAttributes&quot;: { # Optional. The values of resource attributes associated with the type of resources being requested. If no values are specified, then all resource types are included in the output.

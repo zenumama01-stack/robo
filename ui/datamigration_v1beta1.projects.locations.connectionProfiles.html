@@ -1,0 +1,18 @@
+<h1><a href="datamigration_v1beta1.html">Database Migration API</a> . <a href="datamigration_v1beta1.projects.html">projects</a> . <a href="datamigration_v1beta1.projects.locations.html">locations</a> . <a href="datamigration_v1beta1.projects.locations.connectionProfiles.html">connectionProfiles</a></h1>
+  <code><a href="#create">create(parent, body=None, connectionProfileId=None, requestId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Retrieve a list of all connection profiles in a given project and location.</p>
+    <code class="details" id="create">create(parent, body=None, connectionProfileId=None, requestId=None, x__xgafv=None)</code>
+  parent: string, Required. The parent, which owns this collection of connection profiles. (required)
+      &quot;dataDiskType&quot;: &quot;A String&quot;, # The type of storage: `PD_SSD` (default) or `PD_HDD`.
+      &quot;databaseVersion&quot;: &quot;A String&quot;, # The database engine type and version.
+        &quot;enableIpv4&quot;: True or False, # Whether the instance is assigned a public IP address or not.
+        &quot;privateNetwork&quot;: &quot;A String&quot;, # The resource link for the VPC network from which the Cloud SQL instance is accessible for private IP. For example, `/projects/myProject/global/networks/default`. This setting can be updated, but it cannot be removed after it is set.
+      &quot;tier&quot;: &quot;A String&quot;, # The tier (or machine type) for this instance, for example: `db-n1-standard-1` (MySQL instances). For more information, see [Cloud SQL Instance Settings](https://cloud.google.com/sql/docs/mysql/instance-settings).
+      &quot;type&quot;: &quot;A String&quot;, # Output only. The ssl config type according to &#x27;client_key&#x27;, &#x27;client_certificate&#x27; and &#x27;ca_certificate&#x27;.
+  requestId: string, A unique id used to identify the request. If the server receives two requests with the same id, then the second request will be ignored. It is recommended to always set this value to a UUID. The id must contain only letters (a-z, A-Z), numbers (0-9), underscores (_), and hyphens (-). The maximum length is 40 characters.
+  <pre>Retrieve a list of all connection profiles in a given project and location.
+  filter: string, A filter expression that filters connection profiles listed in the response. The expression must specify the field name, a comparison operator, and the value that you want to use for filtering. The value must be a string, a number, or a boolean. The comparison operator must be either =, !=, &gt;, or &lt;. For example, list connection profiles created this year by specifying **createTime %gt; 2020-01-01T00:00:00.000000000Z**. You can also filter nested fields. For example, you could specify **mySql.username = %lt;my_username%gt;** to list all connection profiles configured to connect with a specific username.
+  orderBy: string, the order by fields for the result.
+  pageSize: integer, The maximum number of connection profiles to return. The service may return fewer than this value. If unspecified, at most 50 connection profiles will be returned. The maximum value is 1000; values above 1000 will be coerced to 1000.
+  pageToken: string, A page token, received from a previous `ListConnectionProfiles` call. Provide this to retrieve the subsequent page. When paginating, all other parameters provided to `ListConnectionProfiles` must match the call that provided the page token.
+  updateMask: string, Required. Field mask is used to specify the fields to be overwritten in the connection profile resource by the update.

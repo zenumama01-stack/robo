@@ -1,0 +1,70 @@
+<h1><a href="documentai_v1.html">Cloud Document AI API</a> . <a href="documentai_v1.projects.html">projects</a> . <a href="documentai_v1.projects.locations.html">locations</a> . <a href="documentai_v1.projects.locations.processors.html">processors</a> . <a href="documentai_v1.projects.locations.processors.processorVersions.html">processorVersions</a></h1>
+  <code><a href="documentai_v1.projects.locations.processors.processorVersions.evaluations.html">evaluations()</a></code>
+<p class="firstline">Deletes the processor version, all artifacts under the processor version will be deleted.</p>
+<p class="firstline">Deploys the processor version.</p>
+  <code><a href="#evaluateProcessorVersion">evaluateProcessorVersion(processorVersion, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Evaluates a ProcessorVersion against annotated documents, producing an Evaluation.</p>
+<p class="firstline">Gets a processor version detail.</p>
+<p class="firstline">Lists all versions of a processor.</p>
+<p class="firstline">Trains a new processor version. Operation metadata is returned as TrainProcessorVersionMetadata.</p>
+<p class="firstline">Undeploys the processor version.</p>
+  <pre>Deletes the processor version, all artifacts under the processor version will be deleted.
+  name: string, Required. The processor version resource name to be deleted. (required)
+  <pre>Deploys the processor version.
+  name: string, Required. The processor version resource name to be deployed. (required)
+{ # Request message for the DeployProcessorVersion method.
+    <code class="details" id="evaluateProcessorVersion">evaluateProcessorVersion(processorVersion, body=None, x__xgafv=None)</code>
+  <pre>Evaluates a ProcessorVersion against annotated documents, producing an Evaluation.
+  processorVersion: string, Required. The resource name of the ProcessorVersion to evaluate. `projects/{project}/locations/{location}/processors/{processor}/processorVersions/{processorVersion}` (required)
+{ # Evaluates the given ProcessorVersion against the supplied documents.
+  &quot;evaluationDocuments&quot;: { # The common config to specify a set of documents used as input. # Optional. The documents used in the evaluation. If unspecified, use the processor&#x27;s dataset as evaluation input.
+  <pre>Gets a processor version detail.
+    { # A processor version is an implementation of a processor. Each processor can have multiple versions, pretrained by Google internally or uptrained by the customer. A processor can only have one default version at a time. Its document-processing behavior is defined by that version.
+  &quot;createTime&quot;: &quot;A String&quot;, # Output only. The time the processor version was created.
+  &quot;deprecationInfo&quot;: { # Information about the upcoming deprecation of this processor version. # Output only. If set, information about the eventual deprecation of this version.
+    &quot;deprecationTime&quot;: &quot;A String&quot;, # The time at which this processor version will be deprecated.
+    &quot;replacementProcessorVersion&quot;: &quot;A String&quot;, # If set, the processor version that will be used as a replacement.
+  &quot;displayName&quot;: &quot;A String&quot;, # The display name of the processor version.
+  &quot;documentSchema&quot;: { # The schema defines the output of the processed document by a processor. # Output only. The schema of the processor version. Describes the output.
+  &quot;genAiModelInfo&quot;: { # Information about Generative AI model-based processor versions. # Output only. Information about Generative AI model-based processor versions.
+    &quot;customGenAiModelInfo&quot;: { # Information for a custom Generative AI model created by the user. These are created with `Create New Version` in either the `Call foundation model` or `Fine tuning` tabs. # Information for a custom Generative AI model created by the user.
+      &quot;baseProcessorVersionId&quot;: &quot;A String&quot;, # The base processor version ID for the custom model.
+      &quot;customModelType&quot;: &quot;A String&quot;, # The type of custom model created by the user.
+    &quot;foundationGenAiModelInfo&quot;: { # Information for a pretrained Google-managed foundation model. # Information for a pretrained Google-managed foundation model.
+      &quot;finetuningAllowed&quot;: True or False, # Whether fine tuning is allowed for this base processor version.
+      &quot;minTrainLabeledDocuments&quot;: 42, # The minimum number of labeled documents in the training dataset required for fine tuning.
+  &quot;googleManaged&quot;: True or False, # Output only. Denotes that this `ProcessorVersion` is managed by Google.
+  &quot;kmsKeyName&quot;: &quot;A String&quot;, # Output only. The KMS key name used for encryption.
+  &quot;kmsKeyVersionName&quot;: &quot;A String&quot;, # Output only. The KMS key version with which data is encrypted.
+  &quot;latestEvaluation&quot;: { # Gives a short summary of an evaluation, and links to the evaluation itself. # Output only. The most recently invoked evaluation for the processor version.
+    &quot;aggregateMetrics&quot;: { # Evaluation metrics, either in aggregate or about a specific entity. # An aggregate of the statistics for the evaluation with fuzzy matching on.
+    &quot;aggregateMetricsExact&quot;: { # Evaluation metrics, either in aggregate or about a specific entity. # An aggregate of the statistics for the evaluation with fuzzy matching off.
+    &quot;evaluation&quot;: &quot;A String&quot;, # The resource name of the evaluation.
+    &quot;operation&quot;: &quot;A String&quot;, # The resource name of the Long Running Operation for the evaluation.
+  &quot;modelType&quot;: &quot;A String&quot;, # Output only. The model type of this processor version.
+  &quot;name&quot;: &quot;A String&quot;, # Identifier. The resource name of the processor version. Format: `projects/{project}/locations/{location}/processors/{processor}/processorVersions/{processor_version}`
+  &quot;state&quot;: &quot;A String&quot;, # Output only. The state of the processor version.
+  <pre>Lists all versions of a processor.
+  parent: string, Required. The parent (project, location and processor) to list all versions. Format: `projects/{project}/locations/{location}/processors/{processor}` (required)
+  pageSize: integer, The maximum number of processor versions to return. If unspecified, at most `10` processor versions will be returned. The maximum value is `20`. Values above `20` will be coerced to `20`.
+  pageToken: string, We will return the processor versions sorted by creation time. The page token will point to the next processor version.
+    { # Response message for the ListProcessorVersions method.
+  &quot;processorVersions&quot;: [ # The list of processors.
+  <pre>Trains a new processor version. Operation metadata is returned as TrainProcessorVersionMetadata.
+  parent: string, Required. The parent (project, location and processor) to create the new version for. Format: `projects/{project}/locations/{location}/processors/{processor}`. (required)
+{ # Request message for the TrainProcessorVersion method.
+  &quot;baseProcessorVersion&quot;: &quot;A String&quot;, # Optional. The processor version to use as a base for training. This processor version must be a child of `parent`. Format: `projects/{project}/locations/{location}/processors/{processor}/processorVersions/{processorVersion}`.
+  &quot;customDocumentExtractionOptions&quot;: { # Options to control the training of the Custom Document Extraction (CDE) Processor. # Options to control Custom Document Extraction (CDE) Processor.
+    &quot;trainingMethod&quot;: &quot;A String&quot;, # Optional. Training method to use for CDE training.
+  &quot;documentSchema&quot;: { # The schema defines the output of the processed document by a processor. # Optional. The schema the processor version will be trained with.
+  &quot;foundationModelTuningOptions&quot;: { # Options to control foundation model tuning of the processor. # Options to control foundation model tuning of a processor.
+    &quot;learningRateMultiplier&quot;: 3.14, # Optional. The multiplier to apply to the recommended learning rate. Valid values are between 0.1 and 10. If not provided, recommended learning rate will be used.
+    &quot;previousFineTunedProcessorVersionName&quot;: &quot;A String&quot;, # Optional. Resource name of a previously fine tuned version id to copy the overwritten configs from. The base_processor_version should be newer than the base processor version used to fine tune this provided processor version. Format: `projects/{project}/locations/{location}/processors/{processor}/processorVersions/{processorVersion}`.
+    &quot;trainSteps&quot;: 42, # Optional. The number of steps to run for model tuning. Valid values are between 1 and 400. If not provided, recommended steps will be used.
+  &quot;inputData&quot;: { # The input data used to train a new ProcessorVersion. # Optional. The input data used to train the ProcessorVersion.
+    &quot;testDocuments&quot;: { # The common config to specify a set of documents used as input. # The documents used for testing the trained version.
+    &quot;trainingDocuments&quot;: { # The common config to specify a set of documents used as input. # The documents used for training the new version.
+  &quot;processorVersion&quot;: { # A processor version is an implementation of a processor. Each processor can have multiple versions, pretrained by Google internally or uptrained by the customer. A processor can only have one default version at a time. Its document-processing behavior is defined by that version. # Required. The processor version to be created.
+  <pre>Undeploys the processor version.
+  name: string, Required. The processor version resource name to be undeployed. (required)
+{ # Request message for the UndeployProcessorVersion method.

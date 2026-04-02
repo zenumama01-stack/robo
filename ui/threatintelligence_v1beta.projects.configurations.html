@@ -1,0 +1,92 @@
+<h1><a href="threatintelligence_v1beta.html">Threat Intelligence API</a> . <a href="threatintelligence_v1beta.projects.html">projects</a> . <a href="threatintelligence_v1beta.projects.configurations.html">configurations</a></h1>
+  <code><a href="threatintelligence_v1beta.projects.configurations.revisions.html">revisions()</a></code>
+<p class="firstline">Get a configuration by name.</p>
+<p class="firstline">Get a list of configurations that meet the filter criteria.</p>
+  <code><a href="#upsert">upsert(parent, body=None, publishTime=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Creates or updates a configuration.</p>
+  <pre>Get a configuration by name.
+  name: string, Required. Name of the configuration to get. Format: vaults/{vault}/configurations/{configuration} (required)
+    { # A configuration represents a behavior an engine should follow when producing new findings.
+  &quot;audit&quot;: { # Tracks basic CRUD facts. # Output only. Audit information for the configuration.
+  &quot;description&quot;: &quot;A String&quot;, # Optional. A description of the configuration.
+  &quot;detail&quot;: { # Wrapper class that contains the union struct for all the various configuration detail specific classes. # Required. Domain specific details for the configuration.
+    &quot;customerProfile&quot;: { # CustomerProfileConfig is the configuration for the customer profile. # Customer Profile detail config.
+      &quot;citations&quot;: [ # Optional. Citations for the organization profile.
+        { # Citation information for the customer profile.
+          &quot;citationId&quot;: &quot;A String&quot;, # Required. The citation id for the citation. Should be unique within the profile.
+          &quot;document&quot;: &quot;A String&quot;, # Required. The name of the document the citation is from.
+          &quot;retrievalTime&quot;: &quot;A String&quot;, # The time the citation was retrieved.
+          &quot;source&quot;: &quot;A String&quot;, # Required. The source of the citation.
+          &quot;uri&quot;: &quot;A String&quot;, # Optional. The url of the citation.
+      &quot;contactInfo&quot;: [ # Optional. Contact information for the organization.
+        { # Contact information for the customer profile.
+          &quot;address&quot;: &quot;A String&quot;, # The address of the contact.
+          &quot;citationIds&quot;: [ # Optional. The citation ids for the contact information.
+          &quot;email&quot;: &quot;A String&quot;, # The email address of the contact.
+          &quot;label&quot;: &quot;A String&quot;, # Optional. The name of the contact.
+          &quot;other&quot;: &quot;A String&quot;, # The other contact information.
+          &quot;phone&quot;: &quot;A String&quot;, # The phone number of the contact.
+      &quot;executives&quot;: [ # Optional. Executives of the organization.
+        { # Person information for the customer profile.
+          &quot;citationIds&quot;: [ # Optional. The citation ids for the person.
+          &quot;name&quot;: &quot;A String&quot;, # Required. The name of the person.
+          &quot;title&quot;: &quot;A String&quot;, # Optional. The title of the person.
+      &quot;industries&quot;: [ # Optional. The industries the organization is involved in.
+        { # Industry information for the customer profile.
+          &quot;citationIds&quot;: [ # Optional. The citation ids for the industry.
+          &quot;industry&quot;: &quot;A String&quot;, # Required. The name of the industry.
+      &quot;locations&quot;: [ # Optional. Locations the organization is present or conducts business in.
+        { # Location information for the customer profile.
+          &quot;address&quot;: &quot;A String&quot;, # Required. The address of the location.
+          &quot;brand&quot;: &quot;A String&quot;, # Required. The brand of the location.
+          &quot;citationIds&quot;: [ # Optional. The citation ids for the location.
+          &quot;facilityType&quot;: &quot;A String&quot;, # Optional. The type of location.
+      &quot;org&quot;: &quot;A String&quot;, # Required. The name of the organization.
+      &quot;orgSummary&quot;: &quot;A String&quot;, # Optional. A summary of the organization.
+      &quot;parentCompanies&quot;: [ # Optional. The parent companies of the organization.
+        { # Company information for the customer profile.
+          &quot;citationIds&quot;: [ # Optional. The citation ids for the company.
+          &quot;company&quot;: &quot;A String&quot;, # Required. The name of the company.
+      &quot;products&quot;: [ # Optional. Product information for the organization.
+        { # Product information for the customer profile.
+          &quot;brand&quot;: &quot;A String&quot;, # Required. The brand of the product.
+          &quot;citationIds&quot;: [ # Optional. The citation ids for the product.
+          &quot;product&quot;: &quot;A String&quot;, # Required. The name of the product.
+      &quot;securityConsiderations&quot;: { # Security considerations for the customer profile. # Optional. Security considerations for the organization.
+        &quot;considerations&quot;: [ # Optional. A series of considerations for the security of the organization, such as &quot;high risk of compromise&quot; or &quot;vulnerable to cyberbullying&quot;.
+        &quot;note&quot;: &quot;A String&quot;, # Optional. A note about the security considerations.
+      &quot;summary&quot;: { # A summarized version of the customer profile. Generated by the backend. # Optional. A summarized version of the customer profile.
+        &quot;areaServed&quot;: { # A string with citation ids. # Optional. The area the customer serves.
+          &quot;citationIds&quot;: [ # Optional. The citation ids for the string.
+          &quot;value&quot;: &quot;A String&quot;, # Required. The value of the string.
+        &quot;brands&quot;: { # A string with citation ids. # Optional. A narrative summary of brands.
+        &quot;entityType&quot;: { # A string with citation ids. # Optional. The entity type of the customer.
+        &quot;founded&quot;: { # A string with citation ids. # Optional. The date the customer was founded.
+        &quot;headquarters&quot;: { # A string with citation ids. # Optional. The headquarters of the customer.
+        &quot;industry&quot;: { # A string with citation ids. # Optional. The industry the customer is in.
+        &quot;keyPeopleSummary&quot;: { # A string with citation ids. # Optional. A narrative summary of key people.
+        &quot;parentCompany&quot;: { # A string with citation ids. # Optional. The parent company of the customer.
+        &quot;primaryWebsite&quot;: { # A string with citation ids. # Optional. The primary website of the customer.
+        &quot;productsSummary&quot;: { # A string with citation ids. # Optional. A narrative summary of products.
+        &quot;servicesSummary&quot;: { # A string with citation ids. # Optional. A narrative summary of services.
+        &quot;title&quot;: { # A string with citation ids. # Optional. The official name of the customer.
+      &quot;technologyPresence&quot;: &quot;A String&quot;, # Optional. Technology presence of the organization.
+      &quot;webPresences&quot;: [ # Optional. Web presence of the organization.
+        { # Web presence information for the customer profile.
+          &quot;citationIds&quot;: [ # Optional. The citation ids for the web presence.
+          &quot;domain&quot;: &quot;A String&quot;, # Required. The domain name of the web presence.
+  &quot;displayName&quot;: &quot;A String&quot;, # Output only. Human readable name for the configuration.
+  &quot;name&quot;: &quot;A String&quot;, # Identifier. Server generated name for the configuration. format is projects/{project}/configurations/{configuration}
+  &quot;provider&quot;: &quot;A String&quot;, # Required. Name of the service that provides the configuration.
+  &quot;state&quot;: &quot;A String&quot;, # Optional. State of the configuration.
+  &quot;version&quot;: &quot;A String&quot;, # Optional. A user-manipulatable version. Does not adhere to a specific format
+  <pre>Get a list of configurations that meet the filter criteria.
+  parent: string, Required. Parent of the configuration. Format: vaults/{vault} (required)
+    { # Response message for ListConfigurations.
+  &quot;configurations&quot;: [ # List of configurations.
+    <code class="details" id="upsert">upsert(parent, body=None, publishTime=None, x__xgafv=None)</code>
+  <pre>Creates or updates a configuration.
+  parent: string, Required. Parent of the configuration. (required)
+  publishTime: string, Optional. Time that the configuration should be considered to have been published. This is an advanced feature used when onboarding and bulk loading data from other systems. Do not set this field without consulting with the API team.
+    { # Response message for UpsertConfiguration.
+  &quot;configuration&quot;: &quot;A String&quot;, # Output only. Created configuration ID with server assigned id.

@@ -1,0 +1,53 @@
+<h1><a href="aiplatform_v1.html">Vertex AI API</a> . <a href="aiplatform_v1.projects.html">projects</a> . <a href="aiplatform_v1.projects.locations.html">locations</a> . <a href="aiplatform_v1.projects.locations.tensorboards.html">tensorboards</a> . <a href="aiplatform_v1.projects.locations.tensorboards.experiments.html">experiments</a> . <a href="aiplatform_v1.projects.locations.tensorboards.experiments.runs.html">runs</a></h1>
+  <code><a href="aiplatform_v1.projects.locations.tensorboards.experiments.runs.operations.html">operations()</a></code>
+  <code><a href="aiplatform_v1.projects.locations.tensorboards.experiments.runs.timeSeries.html">timeSeries()</a></code>
+<p class="firstline">Returns the timeSeries Resource.</p>
+<p class="firstline">Batch create TensorboardRuns.</p>
+  <code><a href="#create">create(parent, body=None, tensorboardRunId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Creates a TensorboardRun.</p>
+<p class="firstline">Deletes a TensorboardRun.</p>
+<p class="firstline">Gets a TensorboardRun.</p>
+<p class="firstline">Lists TensorboardRuns in a Location.</p>
+<p class="firstline">Updates a TensorboardRun.</p>
+  <code><a href="#write">write(tensorboardRun, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Write time series data points into multiple TensorboardTimeSeries under a TensorboardRun. If any data fail to be ingested, an error is returned.</p>
+  <pre>Batch create TensorboardRuns.
+  parent: string, Required. The resource name of the TensorboardExperiment to create the TensorboardRuns in. Format: `projects/{project}/locations/{location}/tensorboards/{tensorboard}/experiments/{experiment}` The parent field in the CreateTensorboardRunRequest messages must match this field. (required)
+{ # Request message for TensorboardService.BatchCreateTensorboardRuns.
+  &quot;requests&quot;: [ # Required. The request message specifying the TensorboardRuns to create. A maximum of 1000 TensorboardRuns can be created in a batch.
+    { # Request message for TensorboardService.CreateTensorboardRun.
+      &quot;parent&quot;: &quot;A String&quot;, # Required. The resource name of the TensorboardExperiment to create the TensorboardRun in. Format: `projects/{project}/locations/{location}/tensorboards/{tensorboard}/experiments/{experiment}`
+      &quot;tensorboardRun&quot;: { # TensorboardRun maps to a specific execution of a training job with a given set of hyperparameter values, model definition, dataset, etc # Required. The TensorboardRun to create.
+        &quot;createTime&quot;: &quot;A String&quot;, # Output only. Timestamp when this TensorboardRun was created.
+        &quot;description&quot;: &quot;A String&quot;, # Description of this TensorboardRun.
+        &quot;displayName&quot;: &quot;A String&quot;, # Required. User provided name of this TensorboardRun. This value must be unique among all TensorboardRuns belonging to the same parent TensorboardExperiment.
+        &quot;labels&quot;: { # The labels with user-defined metadata to organize your TensorboardRuns. This field will be used to filter and visualize Runs in the Tensorboard UI. For example, a Vertex AI training job can set a label aiplatform.googleapis.com/training_job_id=xxxxx to all the runs created within that job. An end user can set a label experiment_id=xxxxx for all the runs produced in a Jupyter notebook. These runs can be grouped by a label value and visualized together in the Tensorboard UI. Label keys and values can be no longer than 64 characters (Unicode codepoints), can only contain lowercase letters, numeric characters, underscores and dashes. International characters are allowed. No more than 64 user labels can be associated with one TensorboardRun (System labels are excluded). See https://goo.gl/xmQnxf for more information and examples of labels. System reserved label keys are prefixed with &quot;aiplatform.googleapis.com/&quot; and are immutable.
+        &quot;name&quot;: &quot;A String&quot;, # Output only. Name of the TensorboardRun. Format: `projects/{project}/locations/{location}/tensorboards/{tensorboard}/experiments/{experiment}/runs/{run}`
+        &quot;updateTime&quot;: &quot;A String&quot;, # Output only. Timestamp when this TensorboardRun was last updated.
+      &quot;tensorboardRunId&quot;: &quot;A String&quot;, # Required. The ID to use for the Tensorboard run, which becomes the final component of the Tensorboard run&#x27;s resource name. This value should be 1-128 characters, and valid characters are `/a-z-/`.
+    { # Response message for TensorboardService.BatchCreateTensorboardRuns.
+  &quot;tensorboardRuns&quot;: [ # The created TensorboardRuns.
+    { # TensorboardRun maps to a specific execution of a training job with a given set of hyperparameter values, model definition, dataset, etc
+    <code class="details" id="create">create(parent, body=None, tensorboardRunId=None, x__xgafv=None)</code>
+  <pre>Creates a TensorboardRun.
+  parent: string, Required. The resource name of the TensorboardExperiment to create the TensorboardRun in. Format: `projects/{project}/locations/{location}/tensorboards/{tensorboard}/experiments/{experiment}` (required)
+  tensorboardRunId: string, Required. The ID to use for the Tensorboard run, which becomes the final component of the Tensorboard run&#x27;s resource name. This value should be 1-128 characters, and valid characters are `/a-z-/`.
+  <pre>Deletes a TensorboardRun.
+  name: string, Required. The name of the TensorboardRun to be deleted. Format: `projects/{project}/locations/{location}/tensorboards/{tensorboard}/experiments/{experiment}/runs/{run}` (required)
+  <pre>Gets a TensorboardRun.
+  name: string, Required. The name of the TensorboardRun resource. Format: `projects/{project}/locations/{location}/tensorboards/{tensorboard}/experiments/{experiment}/runs/{run}` (required)
+  <pre>Lists TensorboardRuns in a Location.
+  parent: string, Required. The resource name of the TensorboardExperiment to list TensorboardRuns. Format: `projects/{project}/locations/{location}/tensorboards/{tensorboard}/experiments/{experiment}` (required)
+  filter: string, Lists the TensorboardRuns that match the filter expression.
+  pageSize: integer, The maximum number of TensorboardRuns to return. The service may return fewer than this value. If unspecified, at most 50 TensorboardRuns are returned. The maximum value is 1000; values above 1000 are coerced to 1000.
+  pageToken: string, A page token, received from a previous TensorboardService.ListTensorboardRuns call. Provide this to retrieve the subsequent page. When paginating, all other parameters provided to TensorboardService.ListTensorboardRuns must match the call that provided the page token.
+    { # Response message for TensorboardService.ListTensorboardRuns.
+  &quot;nextPageToken&quot;: &quot;A String&quot;, # A token, which can be sent as ListTensorboardRunsRequest.page_token to retrieve the next page. If this field is omitted, there are no subsequent pages.
+  &quot;tensorboardRuns&quot;: [ # The TensorboardRuns mathching the request.
+  <pre>Updates a TensorboardRun.
+  name: string, Output only. Name of the TensorboardRun. Format: `projects/{project}/locations/{location}/tensorboards/{tensorboard}/experiments/{experiment}/runs/{run}` (required)
+  updateMask: string, Required. Field mask is used to specify the fields to be overwritten in the TensorboardRun resource by the update. The fields specified in the update_mask are relative to the resource, not the full request. A field is overwritten if it&#x27;s in the mask. If the user does not provide a mask then all fields are overwritten if new values are specified.
+    <code class="details" id="write">write(tensorboardRun, body=None, x__xgafv=None)</code>
+  <pre>Write time series data points into multiple TensorboardTimeSeries under a TensorboardRun. If any data fail to be ingested, an error is returned.
+  tensorboardRun: string, Required. The resource name of the TensorboardRun to write data to. Format: `projects/{project}/locations/{location}/tensorboards/{tensorboard}/experiments/{experiment}/runs/{run}` (required)
+    { # Response message for TensorboardService.WriteTensorboardRunData.

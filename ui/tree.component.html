@@ -1,0 +1,70 @@
+<!-- Tree Component Template -->
+<div [ngClass]="getContainerClasses()" tabindex="0">
+  @if (IsLoading && ShowLoading) {
+    <div class="tree-loading">
+      <div class="tree-loading__spinner">
+      <span class="tree-loading__text">Loading...</span>
+      <i class="fa-solid fa-exclamation-triangle tree-error__icon"></i>
+      <span class="tree-error__message">{{ ErrorMessage }}</span>
+      <button class="tree-error__retry" (click)="Refresh()">
+  @if (ShowExpandCollapseAll && Nodes.length > 0 && !IsLoading) {
+    <div class="tree-toolbar">
+        class="tree-toolbar__btn"
+        (click)="ExpandAll()"
+        title="Expand All">
+        (click)="CollapseAll()"
+        title="Collapse All">
+  @if (IsLoaded && Nodes.length === 0 && !ErrorMessage && !IsLoading) {
+    <div class="tree-empty">
+      <i [class]="EmptyIcon + ' tree-empty__icon'"></i>
+      <span class="tree-empty__message">{{ EmptyMessage }}</span>
+  @if (Nodes.length > 0 && !IsLoading) {
+      @for (node of Nodes; track trackNode($index, node)) {
+        @if (node.Visible) {
+          <ng-container *ngTemplateOutlet="nodeTemplate; context: { node: node }"></ng-container>
+<ng-template #nodeTemplate let-node="node">
+    [ngClass]="getNodeClasses(node)"
+    [style.padding-left]="getNodePadding(node)"
+    [attr.data-node-id]="node.ID"
+    [attr.data-node-type]="node.Type"
+    [attr.aria-expanded]="node.Type === 'branch' ? node.Expanded : null"
+    [attr.aria-selected]="node.Selected"
+    (click)="onNodeClick(node, $event)"
+    (dblclick)="onNodeDoubleClick(node, $event)">
+    <!-- Toggle Button (for branches with children) -->
+    @if (node.Type === 'branch') {
+        class="tree-node-toggle"
+        (click)="onToggleClick(node, $event)">
+            class="fa-solid tree-node-toggle__icon"
+                    'fa-chevron-right': !node.Expanded,
+                    'fa-chevron-down': node.Expanded
+                }">
+        @if (node.Children.length === 0) {
+            class="tree-node-toggle__spacer">
+    <!-- Leaf Spacer (to align with branches, only when not at root level) -->
+    @if (node.Type === 'leaf' && node.Level > 0) {
+        class="tree-node-leaf-spacer"
+    @if (ShowIcons) {
+        class="tree-node-icon"
+        [style.color]="node.Color || null">
+        <i [class]="node.Icon"></i>
+    <span class="tree-node-content">
+      <!-- Label with search highlight -->
+      <span class="tree-node-label" [innerHTML]="getHighlightedLabel(node)"></span>
+      @if (ShowDescriptions && node.Description) {
+          class="tree-node-description"
+          {{ node.Description }}
+    <!-- Badge -->
+    @if (ShowBadges && node.Badge) {
+        class="tree-node-badge"
+        {{ node.Badge }}
+    @if (node.Selected) {
+      <span class="tree-node-selected-indicator">
+  <!-- Children (if expanded) -->
+  @if (node.Type === 'branch' && node.Expanded && node.Children.length > 0) {
+      class="tree-node-children"
+      [class.tree-node-children--animated]="AnimateExpandCollapse"
+      role="group">
+      @for (child of node.Children; track trackNode($index, child)) {
+        @if (child.Visible) {
+          <ng-container *ngTemplateOutlet="nodeTemplate; context: { node: child }"></ng-container>

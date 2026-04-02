@@ -1,0 +1,28 @@
+<h1><a href="connectors_v2.html">Connectors API</a> . <a href="connectors_v2.projects.html">projects</a> . <a href="connectors_v2.projects.locations.html">locations</a> . <a href="connectors_v2.projects.locations.connections.html">connections</a> . <a href="connectors_v2.projects.locations.connections.tools.html">tools</a></h1>
+<p class="firstline">Executes a specific tool.</p>
+<p class="firstline">Lists all available tools.</p>
+  <pre>Executes a specific tool.
+  name: string, Required. Resource name of the Tool. Format: projects/{project}/locations/{location}/connections/{connection}/tools/{tool} (required)
+{ # Request message for ConnectorAgentService.ExecuteTool
+  &quot;parameters&quot;: { # Input parameters for the tool.
+  &quot;toolDefinition&quot;: { # Tool definition for the tool to be executed.
+    { # Response message for ConnectorAgentService.ExecuteTool
+  &quot;_meta&quot;: { # Metadata for the tool execution result.
+  &quot;result&quot;: { # Output from the tool execution.
+  <pre>Lists all available tools.
+  parent: string, Required. Resource name of the Connection. Format: projects/{project}/locations/{location}/connections/{connection} (required)
+    { # Response message for ConnectorAgentService.ListTools
+  &quot;tools&quot;: [ # List of available tools.
+    { # Message representing a single tool.
+      &quot;_meta&quot;: { # Metadata for the tool.
+      &quot;annotations&quot;: { # ToolAnnotations holds annotations for a tool. # Annotations for the tool.
+        &quot;destructiveHint&quot;: True or False, # If true, the tool may perform destructive updates to its environment. If false, the tool performs only additive updates. (This property is meaningful only when `read_only_hint == false`)
+        &quot;idempotentHint&quot;: True or False, # If true, calling the tool repeatedly with the same arguments will have no additional effect on the environment. (This property is meaningful only when `read_only_hint == false`)
+        &quot;openWorldHint&quot;: True or False, # If true, this tool may interact with an &quot;open world&quot; of external entities. If false, the tool&#x27;s domain of interaction is closed. For example, the world of a web search tool is open, whereas that of a memory tool is not.
+        &quot;readOnlyHint&quot;: True or False, # If true, the tool does not modify its environment.
+        &quot;title&quot;: &quot;A String&quot;, # A human-readable title for the tool.
+      &quot;dependsOn&quot;: [ # List of tool names that this tool depends on.
+      &quot;description&quot;: &quot;A String&quot;, # Description of the tool.
+      &quot;inputSchema&quot;: { # JsonSchema representation of schema metadata # JSON schema for the input parameters of the tool.
+      &quot;name&quot;: &quot;A String&quot;, # Name of the tool.
+      &quot;outputSchema&quot;: { # JsonSchema representation of schema metadata # JSON schema for the output of the tool.

@@ -1,0 +1,29 @@
+<h1><a href="bigtableadmin_v2.html">Cloud Bigtable Admin API</a> . <a href="bigtableadmin_v2.projects.html">projects</a> . <a href="bigtableadmin_v2.projects.instances.html">instances</a> . <a href="bigtableadmin_v2.projects.instances.logicalViews.html">logicalViews</a></h1>
+  <code><a href="#create">create(parent, body=None, logicalViewId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Creates a logical view within an instance.</p>
+<p class="firstline">Deletes a logical view from an instance.</p>
+<p class="firstline">Gets information about a logical view.</p>
+<p class="firstline">Lists information about logical views in an instance.</p>
+<p class="firstline">Updates a logical view within an instance.</p>
+    <code class="details" id="create">create(parent, body=None, logicalViewId=None, x__xgafv=None)</code>
+  <pre>Creates a logical view within an instance.
+  parent: string, Required. The parent instance where this logical view will be created. Format: `projects/{project}/instances/{instance}`. (required)
+{ # A SQL logical view object that can be referenced in SQL queries.
+  &quot;deletionProtection&quot;: True or False, # Optional. Set to true to make the LogicalView protected against deletion.
+  &quot;etag&quot;: &quot;A String&quot;, # Optional. The etag for this logical view. This may be sent on update requests to ensure that the client has an up-to-date value before proceeding. The server returns an ABORTED error on a mismatched etag.
+  &quot;name&quot;: &quot;A String&quot;, # Identifier. The unique name of the logical view. Format: `projects/{project}/instances/{instance}/logicalViews/{logical_view}`
+  &quot;query&quot;: &quot;A String&quot;, # Required. The logical view&#x27;s select query.
+  logicalViewId: string, Required. The ID to use for the logical view, which will become the final component of the logical view&#x27;s resource name.
+  <pre>Deletes a logical view from an instance.
+  name: string, Required. The unique name of the logical view to be deleted. Format: `projects/{project}/instances/{instance}/logicalViews/{logical_view}`. (required)
+  etag: string, Optional. The current etag of the logical view. If an etag is provided and does not match the current etag of the logical view, deletion will be blocked and an ABORTED error will be returned.
+  <pre>Gets information about a logical view.
+  name: string, Required. The unique name of the requested logical view. Values are of the form `projects/{project}/instances/{instance}/logicalViews/{logical_view}`. (required)
+  <pre>Lists information about logical views in an instance.
+  parent: string, Required. The unique name of the instance for which the list of logical views is requested. Values are of the form `projects/{project}/instances/{instance}`. (required)
+  pageSize: integer, Optional. The maximum number of logical views to return. The service may return fewer than this value
+  pageToken: string, Optional. A page token, received from a previous `ListLogicalViews` call. Provide this to retrieve the subsequent page. When paginating, all other parameters provided to `ListLogicalViews` must match the call that provided the page token.
+    { # Response message for BigtableInstanceAdmin.ListLogicalViews.
+  &quot;logicalViews&quot;: [ # The list of requested logical views.
+  <pre>Updates a logical view within an instance.
+  name: string, Identifier. The unique name of the logical view. Format: `projects/{project}/instances/{instance}/logicalViews/{logical_view}` (required)

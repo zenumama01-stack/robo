@@ -1,0 +1,190 @@
+<!-- Grid Container -->
+  #gridContainer
+  [class]="gridContainerClasses.join(' ')"
+  [style.height]="gridHeightStyle">
+  @if (ShowToolbar) {
+    <div class="mj-grid-toolbar">
+        @if (ShowSearch) {
+          <div class="toolbar-search">
+              [placeholder]="ToolbarConfig.searchPlaceholder || 'Search...'"
+              [value]="FilterText"
+              (input)="FilterText = $any($event.target).value" />
+            @if (FilterText) {
+                class="search-clear"
+                (click)="FilterText = ''">
+        <!-- Custom Left Buttons -->
+        @for (button of ToolbarConfig.customButtons; track button) {
+          @if (button.position !== 'right' && isButtonVisible(button)) {
+              [class]="button.cssClass"
+              [disabled]="isButtonDisabled(button)"
+              (click)="onToolbarButtonClick(button)">
+              @if (button.icon) {
+              @if (button.text) {
+                <span>{{ button.text }}</span>
+        <!-- Row Count -->
+        @if (ToolbarConfig.showRowCount !== false) {
+          <span class="row-count">
+            {{ totalRowCount }} {{ totalRowCount === 1 ? 'row' : 'rows' }}
+        <!-- Selection Count -->
+        @if (ToolbarConfig.showSelectionCount && SelectedKeys.length > 0) {
+          <span class="selection-count">
+            ({{ SelectedKeys.length }} selected)
+        <!-- New/Add Button (predefined) -->
+        @if (ShowNewButton) {
+            title="Create new record"
+            (click)="onAddClick()">
+            <span class="button-text">New</span>
+        <!-- Refresh Button (predefined) -->
+        @if (ShowRefreshButton) {
+            title="Refresh data"
+            (click)="onRefreshClick()">
+            <i class="fa-solid fa-arrows-rotate" [class.fa-spin]="loading"></i>
+            <span class="button-text">Refresh</span>
+        <!-- Export Button (predefined) -->
+        @if (ShowExportButton) {
+            title="Export to Excel"
+            (click)="onExportClick()">
+            <span class="button-text">Export</span>
+        <!-- Delete Button (predefined) -->
+        @if (ShowDeleteButton && HasSelection) {
+            class="toolbar-button toolbar-button-danger"
+            title="Delete selected records"
+            (click)="onDeleteClick()">
+            <span class="button-text">Delete</span>
+        <!-- Compare Button (predefined) -->
+        @if (ShowCompareButton) {
+            title="Compare selected records"
+            [disabled]="!HasMultipleSelection"
+            (click)="onCompareClick()">
+            <span class="button-text">Compare</span>
+        <!-- Merge Button (predefined) -->
+        @if (ShowMergeButton) {
+            title="Merge selected records"
+            (click)="onMergeClick()">
+            <i class="fa-solid fa-code-merge"></i>
+            <span class="button-text">Merge</span>
+        <!-- Add to List Button (predefined) -->
+        @if (ShowAddToListButton) {
+            title="Add selected records to a list"
+            [disabled]="!HasSelection"
+            (click)="onAddToListClick()">
+            <span class="button-text">Add to List</span>
+        <!-- Search for Duplicates Button (predefined) -->
+        @if (ShowDuplicateSearchButton) {
+            title="Search for duplicate records"
+            (click)="onDuplicateSearchClick()">
+            <i class="fa-solid fa-magnifying-glass-plus"></i>
+            <span class="button-text">Find Duplicates</span>
+        <!-- Communication Button (predefined) -->
+        @if (ShowCommunicationButton) {
+            title="Send message to selected records"
+            (click)="onCommunicationClick()">
+            <span class="button-text">Send Message</span>
+        <!-- Legacy ToolbarConfig buttons -->
+        <!-- Add Button (legacy) -->
+        @if (ToolbarConfig.showAdd && AllowAdd && !ShowNewButton) {
+            title="Add New"
+        <!-- Refresh Button (legacy) -->
+        @if (ToolbarConfig.showRefresh !== false && !ShowRefreshButton) {
+            <i class="fa-solid fa-refresh" [class.fa-spin]="loading"></i>
+        <!-- Delete Button (legacy) -->
+        @if (ToolbarConfig.showDelete && AllowDelete && HasSelection && !ShowDeleteButton) {
+            title="Delete Selected"
+        <!-- Export Button (legacy) -->
+        @if (ToolbarConfig.showExport && !ShowExportButton) {
+            title="Export"
+        <!-- Column Chooser Button -->
+        @if (ToolbarConfig.showColumnChooser && AllowColumnToggle) {
+            title="Column Chooser"
+            (click)="onColumnChooserClick()">
+        <!-- Custom Right Buttons -->
+          @if (button.position === 'right' && isButtonVisible(button)) {
+        <!-- Overflow Menu -->
+        @if (hasOverflowMenuItems) {
+          <div class="toolbar-overflow" (click)="$event.stopPropagation()">
+              class="toolbar-button overflow-trigger"
+              title="More actions"
+              (click)="toggleOverflowMenu()">
+            @if (showOverflowMenu) {
+              <div class="overflow-menu" [@fadeIn]>
+                <!-- Export (if in overflow) -->
+                @if (showExportInOverflow) {
+                  <button class="overflow-item" (click)="onExportClick(); closeOverflowMenu()">
+                    <span>Export to Excel</span>
+                <!-- Entity Actions -->
+                @if (ShowEntityActionButtons && EntityActions.length > 0) {
+                  <div class="overflow-divider"></div>
+                  <div class="overflow-section-label">Actions</div>
+                  @for (action of EntityActions; track action) {
+                      class="overflow-item"
+                      [disabled]="!isEntityActionEnabled(action)"
+                      (click)="onEntityActionClick(action); closeOverflowMenu()">
+                      <i [class]="action.icon || 'fa-solid fa-bolt'"></i>
+                      <span>{{ action.name }}</span>
+                <!-- Column Chooser (if in overflow) -->
+                @if (showColumnChooserInOverflow) {
+                  <button class="overflow-item" (click)="onColumnChooserClick(); closeOverflowMenu()">
+                    <span>Manage Columns</span>
+                <!-- Selection-dependent actions in overflow -->
+                @if (HasSelection && hasSelectionDependentOverflowActions) {
+                  @if (showCommunicationInOverflow) {
+                    <button class="overflow-item" (click)="onCommunicationClick(); closeOverflowMenu()">
+                      <span>Send Message</span>
+  <!-- Aggregate Cards (displayed as summary cards above the grid) -->
+  @if (ShowAggregatePanel) {
+    <div class="mj-aggregate-cards">
+        <div class="aggregate-card">
+            <div class="aggregate-card-icon">
+          <div class="aggregate-card-content">
+            <span class="aggregate-card-label">{{ agg.label }}</span>
+            <span class="aggregate-card-value">{{ getAggregateValue(agg) }}</span>
+      @if (AggregatesLoading) {
+        <div class="aggregate-card-loading">
+  <!-- Grid Content -->
+  <div class="mj-grid-content">
+    @if (loading && rowData.length === 0) {
+      <div class="mj-grid-loading-overlay">
+    @if (errorMessage && !loading) {
+      <div class="mj-grid-error">
+        <button class="error-retry" (click)="Refresh()">Retry</button>
+    @if (!loading && !errorMessage && rowData.length === 0) {
+      <div class="mj-grid-empty">
+        <span>No data to display</span>
+    <!-- AG Grid (Client-side mode) -->
+    @if (!errorMessage && PaginationMode === 'client' && (rowData.length > 0 || loading)) {
+      <ag-grid-angular
+        class="mj-ag-grid ag-theme-alpine"
+        [theme]="agGridTheme"
+        [columnDefs]="agColumnDefs"
+        [rowData]="rowData"
+        [defaultColDef]="defaultColDef"
+        [rowSelection]="agRowSelection"
+        [getRowId]="getRowId"
+        [suppressCellFocus]="true"
+        [rowHeight]="RowHeight"
+        [headerHeight]="ShowHeader ? undefined : 0"
+        (gridReady)="onGridReady($event)"
+        (cellClicked)="onAgCellClicked($event)"
+        (rowClicked)="onAgRowClicked($event)"
+        (rowDoubleClicked)="onAgRowDoubleClicked($event)"
+        (sortChanged)="onAgSortChanged($event)"
+        (selectionChanged)="onAgSelectionChanged($event)"
+        (columnResized)="onAgColumnResized($event)"
+        (columnMoved)="onAgColumnMoved($event)">
+      </ag-grid-angular>
+    <!-- AG Grid (Infinite Scroll mode) -->
+    @if (!errorMessage && PaginationMode === 'infinite') {
+        [rowModelType]="'infinite'"
+        [cacheBlockSize]="CacheBlockSize"
+        [maxBlocksInCache]="MaxBlocksInCache"
+        [infiniteInitialRowCount]="1"
+        [cacheOverflowSize]="2"
+  <!-- Aggregate Summary Row (outside mj-grid-content so it's always visible) -->
+  @if (ShowAggregateSummary) {
+    <div class="mj-aggregate-summary">
+      <div class="aggregate-summary-content">
+        @for (agg of ColumnAggregates; track agg) {
+          <div class="aggregate-summary-item">
+            <span class="agg-summary-label">{{ agg.label }}:</span>
+            <span class="agg-summary-value">{{ getAggregateValue(agg) }}</span>
+        <div class="aggregate-loading">

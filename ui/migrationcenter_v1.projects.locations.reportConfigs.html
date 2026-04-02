@@ -1,0 +1,26 @@
+<h1><a href="migrationcenter_v1.html">Migration Center API</a> . <a href="migrationcenter_v1.projects.html">projects</a> . <a href="migrationcenter_v1.projects.locations.html">locations</a> . <a href="migrationcenter_v1.projects.locations.reportConfigs.html">reportConfigs</a></h1>
+  <code><a href="migrationcenter_v1.projects.locations.reportConfigs.reports.html">reports()</a></code>
+  <code><a href="#create">create(parent, body=None, reportConfigId=None, requestId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Creates a report configuration.</p>
+<p class="firstline">Deletes a ReportConfig.</p>
+<p class="firstline">Gets details of a single ReportConfig.</p>
+<p class="firstline">Lists ReportConfigs in a given project and location.</p>
+    <code class="details" id="create">create(parent, body=None, reportConfigId=None, requestId=None, x__xgafv=None)</code>
+  <pre>Creates a report configuration.
+{ # The groups and associated preference sets on which we can generate reports.
+  &quot;createTime&quot;: &quot;A String&quot;, # Output only. The timestamp when the resource was created.
+  &quot;description&quot;: &quot;A String&quot;, # Free-text description.
+  &quot;groupPreferencesetAssignments&quot;: [ # Required. Collection of combinations of groups and preference sets.
+    { # Represents a combination of a group with a preference set.
+      &quot;group&quot;: &quot;A String&quot;, # Required. Name of the group.
+      &quot;preferenceSet&quot;: &quot;A String&quot;, # Required. Name of the Preference Set.
+  &quot;name&quot;: &quot;A String&quot;, # Output only. Name of resource.
+  &quot;updateTime&quot;: &quot;A String&quot;, # Output only. The timestamp when the resource was last updated.
+  reportConfigId: string, Required. User specified ID for the report config. It will become the last component of the report config name. The ID must be unique within the project, must conform with RFC-1034, is restricted to lower-cased letters, and has a maximum length of 63 characters. The ID must match the regular expression: [a-z]([a-z0-9-]{0,61}[a-z0-9])?.
+  <pre>Deletes a ReportConfig.
+  force: boolean, Optional. If set to `true`, any child `Reports` of this entity will also be deleted. If set to `false`, the request only works if the resource has no children.
+  <pre>Gets details of a single ReportConfig.
+  <pre>Lists ReportConfigs in a given project and location.
+  parent: string, Required. Parent value for `ListReportConfigsRequest`. (required)
+    { # Response message for listing report configs.
+  &quot;reportConfigs&quot;: [ # A list of report configs.

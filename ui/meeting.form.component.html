@@ -1,0 +1,23 @@
+    <!-- Meeting Schedule & Logistics Section -->
+        sectionKey="meetingScheduleLogistics"
+        sectionName="Meeting Schedule & Logistics"
+        icon="fa fa-calendar-alt"
+            FieldName="Location"
+            FieldName="MaxAttendees"
+            FieldName="MeetingPlatform"
+            FieldName="OrganizerName"
+    <!-- Product Details Section -->
+        sectionKey="productDetails"
+        sectionName="Product Details"
+        icon="fa fa-box"
+            FieldName="Price"
+            FieldName="SKU"
+    <!-- Webinars Section -->
+        sectionKey="webinars"
+        sectionName="Webinars"
+        icon="fa fa-video"
+        [badgeCount]="GetSectionRowCount('webinars')"
+                [Params]="BuildRelationshipViewParamsByEntityName('Webinars','ID')"
+                [NewRecordValues]="NewRecordValues('Webinars')"
+                [AllowLoad]="IsSectionExpanded('webinars')"
+                (AfterDataLoad)="SetSectionRowCount('webinars', $event.totalRowCount)"

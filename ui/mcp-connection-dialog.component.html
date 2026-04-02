@@ -1,0 +1,94 @@
+@if (visible) {
+    [title]="DialogTitle"
+    (close)="cancel()"
+    [minWidth]="400">
+    <form [formGroup]="connectionForm" class="connection-form">
+      <!-- Basic Info Section -->
+        <h3><i class="fa-solid fa-info-circle"></i> Basic Information</h3>
+          <label for="server">MCP Server <span class="required">*</span></label>
+            id="server"
+            formControlName="MCPServerID"
+            [data]="ActiveServers"
+            [defaultItem]="{ Name: 'Select a server...', ID: '' }"
+            (valueChange)="onServerChange()">
+              <div class="server-option">
+                <span class="server-name">{{ dataItem.Name }}</span>
+                @if (dataItem.TransportType) {
+                  <span class="server-transport">{{ dataItem.TransportType }}</span>
+          @if (hasError('MCPServerID', 'required')) {
+            <span class="error-text">Server selection is required</span>
+          <label for="name">Connection Name <span class="required">*</span></label>
+          <input kendoTextBox
+            formControlName="Name"
+            placeholder="e.g., Production GitHub Connection" />
+          @if (hasError('Name', 'required')) {
+            <span class="error-text">Name is required</span>
+          <textarea kendoTextArea
+            formControlName="Description"
+            placeholder="Optional description of this connection"
+          [rows]="3"></textarea>
+            formControlName="Status"
+            [data]="['Active', 'Inactive']"
+          <label for="company">Company</label>
+            id="company"
+            formControlName="CompanyID"
+            [data]="companies"
+            [defaultItem]="{ Name: 'Global (all companies)', ID: '' }">
+          <span class="hint">Leave as Global to make this connection available to all companies</span>
+      <!-- Authentication Section -->
+        <h3><i class="fa-solid fa-key"></i> Authentication</h3>
+          <label for="credential">Credential</label>
+          @if (IsLoadingDropdowns) {
+            <div class="loading-credentials">
+              Loading credentials...
+            <div class="credential-row">
+                id="credential"
+                formControlName="CredentialID"
+                [data]="credentials"
+                [defaultItem]="{ Name: 'No credential (anonymous)', ID: '' }">
+                (click)="openCredentialDialog()"
+                title="Create New Credential">
+            <span class="hint">Select an existing credential or create a new one</span>
+          <label for="customHeader">Custom Header Name</label>
+            id="customHeader"
+            formControlName="CustomHeaderName"
+            placeholder="e.g., X-Custom-API-Key" />
+          <span class="hint">Override the default header name for API key authentication</span>
+      <!-- Behavior Section -->
+        <h3><i class="fa-solid fa-sliders"></i> Behavior</h3>
+        <div class="checkbox-group">
+            <input type="checkbox" kendoCheckBox formControlName="AutoSyncTools" />
+            <span>Auto-sync tools on connect</span>
+          <span class="hint">Automatically discover and sync available tools when connecting</span>
+      <!-- Logging Section -->
+        <h3><i class="fa-solid fa-file-lines"></i> Logging</h3>
+            <input type="checkbox" kendoCheckBox formControlName="LogToolCalls" />
+            <span>Enable tool call logging</span>
+          <span class="hint">Log all tool executions to the database</span>
+        <div class="logging-options" [class.disabled]="!connectionForm.get('LogToolCalls')?.value">
+              <input type="checkbox" kendoCheckBox formControlName="LogInputParameters" />
+              <span>Log input parameters</span>
+              <input type="checkbox" kendoCheckBox formControlName="LogOutputContent" />
+              <span>Log output content</span>
+            <label for="maxOutputSize">Max Output Log Size (bytes)</label>
+              id="maxOutputSize"
+              formControlName="MaxOutputLogSize"
+              [max]="10485760"
+              [step]="10240"
+            <span class="hint">Maximum size of output content to log (0 = unlimited, max 10MB)</span>
+      <!-- Advanced Section -->
+        <h3><i class="fa-solid fa-gear"></i> Advanced</h3>
+          <label for="envVars">Environment Variables (JSON)</label>
+            id="envVars"
+            formControlName="EnvironmentVars"
+            placeholder='{"VAR_NAME": "value"}'
+          <span class="hint">Additional environment variables for Stdio transport (JSON object)</span>
+      <button kendoButton (click)="save()" themeColor="primary" [disabled]="IsSaving">
+        {{ IsEditMode ? 'Update' : 'Create' }}
+<!-- Credential Creation Dialog -->
+@if (ShowCredentialDialog) {
+  <mj-credential-dialog
+    #credentialDialog
+    [Visible]="ShowCredentialDialog"
+    (close)="onCredentialDialogClose($event)">
+  </mj-credential-dialog>

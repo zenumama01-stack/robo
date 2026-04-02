@@ -1,0 +1,109 @@
+import { BehaviorSubject, Observable, interval, Subscription } from 'rxjs';
+import { map, shareReplay, switchMap } from 'rxjs/operators';
+import { LogStatusEx, RunView, UserInfo } from '@memberjunction/core';
+export type AgentStatus = 'acknowledging' | 'working' | 'completing' | 'completed' | 'error';
+export interface AgentWithStatus {
+  run: MJAIAgentRunEntity;
+  status: AgentStatus;
+  confidence: number | null;
+ * Manages agent state and provides real-time updates for active agents
+ * Polls for agent status changes and provides reactive streams
+export class AgentStateService implements OnDestroy {
+  private _activeAgents$ = new BehaviorSubject<AgentWithStatus[]>([]);
+  private pollSubscription?: Subscription;
+  private currentUser?: UserInfo;
+  private pollInterval: number = 30000; // Poll every 30 seconds (reduced from 3s to minimize DB load)
+  // Public observable streams
+  public readonly activeAgents$ = this._activeAgents$.asObservable();
+    this.stopPolling();
+   * Starts polling for active agents
+   * @param currentUser The current user context
+   * @param conversationId Optional conversation ID to filter by
+  startPolling(currentUser: UserInfo, conversationId?: string): void {
+    this.currentUser = currentUser;
+    // Initial load
+    this.loadActiveAgents(conversationId);
+    // Start polling
+    this.pollSubscription = interval(this.pollInterval)
+      .pipe(switchMap(() => this.loadActiveAgents(conversationId)))
+      .subscribe();
+   * Stops polling for active agents
+  stopPolling(): void {
+    if (this.pollSubscription) {
+      this.pollSubscription.unsubscribe();
+      this.pollSubscription = undefined;
+   * Gets active agents as an observable
+  getActiveAgents(conversationId?: string): Observable<AgentWithStatus[]> {
+      return this.activeAgents$.pipe(
+        map(agents => agents.filter(a => a.run.ConversationID === conversationId)),
+    return this.activeAgents$;
+   * Gets a specific agent by ID
+   * @param agentRunId The agent run ID
+  getAgent(agentRunId: string): AgentWithStatus | undefined {
+    return this._activeAgents$.value.find(a => a.run.ID === agentRunId);
+   * Manually refreshes active agents
+  async refresh(conversationId?: string): Promise<void> {
+    await this.loadActiveAgents(conversationId);
+   * Loads active agents from the database
+  private async loadActiveAgents(conversationId?: string): Promise<void> {
+    if (!this.currentUser) {
+    LogStatusEx({message: `[${timestamp}] 🤖 AgentStateService.loadActiveAgents - Polling for active agents (conversation: ${conversationId || 'ALL'})`, verboseOnly: true});
+      // Valid statuses: Running, Completed, Paused, Failed, Cancelled
+      let filter = `Status IN ('Running', 'Paused')`;
+        filter += ` AND ConversationID='${conversationId}'`;
+      LogStatusEx({message: `[${timestamp}] 🤖 AgentStateService - Executing RunView for AI Agent Runs`, verboseOnly: true});
+      const result = await rv.RunView<MJAIAgentRunEntity>(
+        const runs = result.Results || [];
+        LogStatusEx({message: `[${timestamp}] 🤖 AgentStateService - Found ${runs.length} active agent(s)`, verboseOnly: true});
+        const agentsWithStatus = runs.map(run => this.mapRunToAgentWithStatus(run));
+        this._activeAgents$.next(agentsWithStatus);
+        // Stop polling if no active agents (optimization to reduce DB load)
+        if (runs.length === 0 && this.pollSubscription) {
+          LogStatusEx({message: `[${timestamp}] 🤖 AgentStateService - No active agents, stopping polling`, verboseOnly: true});
+      console.error('Failed to load active agents:', error);
+   * Maps an agent run to include status and confidence information
+  private mapRunToAgentWithStatus(run: MJAIAgentRunEntity): AgentWithStatus {
+    const status = this.determineAgentStatus(run);
+    const confidence = this.extractConfidence(run);
+      confidence
+   * Determines the agent status based on the run entity
+  private determineAgentStatus(run: MJAIAgentRunEntity): AgentStatus {
+    const status = run.Status?.toLowerCase() || 'running';
+    if (status === 'error' || status === 'failed') {
+    // Check for completion
+    if (status === 'completed' || status === 'complete' || status === 'success') {
+    // Determine stage based on progress or elapsed time
+      const elapsed = Date.now() - new Date(run.StartedAt).getTime();
+      const seconds = elapsed / 1000;
+      // First 5 seconds: acknowledging
+      if (seconds < 5) {
+        return 'acknowledging';
+      // Check if nearing completion (has results or output)
+      if (run.Result || run.Status === 'Completed') {
+        // If there's output, likely completing
+        return 'completing';
+      // Otherwise, working
+      return 'working';
+    // Default to acknowledging if just started
+   * Extracts confidence score from agent run if available
+  private extractConfidence(run: MJAIAgentRunEntity): number | null {
+    // Try to parse confidence from Result or other fields
+    // This is a placeholder - adjust based on actual data structure
+      if (run.Result) {
+        const result = typeof run.Result === 'string' ? JSON.parse(run.Result) : run.Result;
+        if (result.confidence != null) {
+          return parseFloat(result.confidence);
+   * @param agentRunId The agent run ID to cancel
+  async cancelAgent(agentRunId: string): Promise<boolean> {
+      const agent = this.getAgent(agentRunId);
+      agent.run.Status = 'Cancelled';
+      const saved = await agent.run.Save();
+        // Refresh the active agents list
+      console.error('Failed to cancel agent:', error);
+   * Updates the poll interval
+   * @param milliseconds The new poll interval in milliseconds
+  setPollInterval(milliseconds: number): void {
+    this.pollInterval = milliseconds;
+    // Restart polling if currently active
+    if (this.pollSubscription && this.currentUser) {
+      this.startPolling(this.currentUser);

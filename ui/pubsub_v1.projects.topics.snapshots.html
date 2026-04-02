@@ -1,0 +1,11 @@
+<h1><a href="pubsub_v1.html">Cloud Pub/Sub API</a> . <a href="pubsub_v1.projects.html">projects</a> . <a href="pubsub_v1.projects.topics.html">topics</a> . <a href="pubsub_v1.projects.topics.snapshots.html">snapshots</a></h1>
+  <code><a href="#list">list(topic, pageSize=None, pageToken=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Lists the names of the snapshots on this topic. Snapshots are used in [Seek](https://cloud.google.com/pubsub/docs/replay-overview) operations, which allow you to manage message acknowledgments in bulk. That is, you can set the acknowledgment state of messages in an existing subscription to the state captured by a snapshot.</p>
+    <code class="details" id="list">list(topic, pageSize=None, pageToken=None, x__xgafv=None)</code>
+  <pre>Lists the names of the snapshots on this topic. Snapshots are used in [Seek](https://cloud.google.com/pubsub/docs/replay-overview) operations, which allow you to manage message acknowledgments in bulk. That is, you can set the acknowledgment state of messages in an existing subscription to the state captured by a snapshot.
+  topic: string, Required. The name of the topic that snapshots are attached to. Format is `projects/{project}/topics/{topic}`. (required)
+  pageSize: integer, Optional. Maximum number of snapshot names to return.
+  pageToken: string, Optional. The value returned by the last `ListTopicSnapshotsResponse`; indicates that this is a continuation of a prior `ListTopicSnapshots` call, and that the system should return the next page of data.
+    { # Response for the `ListTopicSnapshots` method.
+  &quot;nextPageToken&quot;: &quot;A String&quot;, # Optional. If not empty, indicates that there may be more snapshots that match the request; this value should be passed in a new `ListTopicSnapshotsRequest` to get more snapshots.
+  &quot;snapshots&quot;: [ # Optional. The names of the snapshots that match the request.

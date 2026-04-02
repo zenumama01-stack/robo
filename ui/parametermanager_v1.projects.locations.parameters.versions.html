@@ -1,0 +1,40 @@
+<h1><a href="parametermanager_v1.html">Parameter Manager API</a> . <a href="parametermanager_v1.projects.html">projects</a> . <a href="parametermanager_v1.projects.locations.html">locations</a> . <a href="parametermanager_v1.projects.locations.parameters.html">parameters</a> . <a href="parametermanager_v1.projects.locations.parameters.versions.html">versions</a></h1>
+  <code><a href="#create">create(parent, body=None, parameterVersionId=None, requestId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Creates a new ParameterVersion in a given project, location, and parameter.</p>
+<p class="firstline">Deletes a single ParameterVersion.</p>
+<p class="firstline">Gets details of a single ParameterVersion.</p>
+<p class="firstline">Lists ParameterVersions in a given project, location, and parameter.</p>
+<p class="firstline">Updates a single ParameterVersion.</p>
+  <code><a href="#render">render(name, x__xgafv=None)</a></code></p>
+<p class="firstline">Gets rendered version of a ParameterVersion.</p>
+    <code class="details" id="create">create(parent, body=None, parameterVersionId=None, requestId=None, x__xgafv=None)</code>
+  <pre>Creates a new ParameterVersion in a given project, location, and parameter.
+  parent: string, Required. Value for parent in the format `projects/*/locations/*/parameters/*`. (required)
+{ # Message describing ParameterVersion resource
+  &quot;disabled&quot;: True or False, # Optional. Disabled boolean to determine if a ParameterVersion acts as a metadata only resource (payload is never returned if disabled is true). If true any calls will always default to BASIC view even if the user explicitly passes FULL view as part of the request. A render call on a disabled resource fails with an error. Default value is False.
+  &quot;kmsKeyVersion&quot;: &quot;A String&quot;, # Optional. Output only. [Output only] The resource name of the KMS key version used to encrypt the ParameterVersion payload. This field is populated only if the Parameter resource has customer managed encryption key (CMEK) configured.
+  &quot;name&quot;: &quot;A String&quot;, # Identifier. [Output only] The resource name of the ParameterVersion in the format `projects/*/locations/*/parameters/*/versions/*`.
+  &quot;payload&quot;: { # Message for storing a ParameterVersion resource&#x27;s payload data # Required. Immutable. Payload content of a ParameterVersion resource. This is only returned when the request provides the View value of FULL (default for GET request).
+    &quot;data&quot;: &quot;A String&quot;, # Required. bytes data for storing payload.
+  parameterVersionId: string, Required. Id of the ParameterVersion resource
+  <pre>Deletes a single ParameterVersion.
+  name: string, Required. Name of the resource in the format `projects/*/locations/*/parameters/*/versions/*`. (required)
+  <pre>Gets details of a single ParameterVersion.
+  view: string, Optional. View of the ParameterVersion. In the default FULL view, all metadata &amp; payload associated with the ParameterVersion will be returned.
+      VIEW_UNSPECIFIED - The default / unset value. The API will default to the FULL view.
+      BASIC - Include only the metadata for the resource.
+      FULL - Include metadata &amp; other relevant payload data as well. This is the default view.
+  <pre>Lists ParameterVersions in a given project, location, and parameter.
+  parent: string, Required. Parent value for ListParameterVersionsRequest in the format `projects/*/locations/*/parameters/*`. (required)
+  pageToken: string, Optional. A page token, received from a previous `ListParameterVersions` call. Provide this to retrieve the subsequent page. When paginating, all other parameters provided to `ListParameterVersions` must match the call that provided the page token.
+    { # Message for response to listing ParameterVersions
+  &quot;parameterVersions&quot;: [ # The list of ParameterVersions
+  <pre>Updates a single ParameterVersion.
+  name: string, Identifier. [Output only] The resource name of the ParameterVersion in the format `projects/*/locations/*/parameters/*/versions/*`. (required)
+  updateMask: string, Optional. Field mask is used to specify the fields to be overwritten in the ParameterVersion resource by the update. The fields specified in the update_mask are relative to the resource, not the full request. A mutable field will be overwritten if it is in the mask. If the user does not provide a mask then all mutable fields present in the request will be overwritten.
+    <code class="details" id="render">render(name, x__xgafv=None)</code>
+  <pre>Gets rendered version of a ParameterVersion.
+    { # Message describing RenderParameterVersionResponse resource
+  &quot;parameterVersion&quot;: &quot;A String&quot;, # Output only. Resource identifier of a ParameterVersion in the format `projects/*/locations/*/parameters/*/versions/*`.
+  &quot;payload&quot;: { # Message for storing a ParameterVersion resource&#x27;s payload data # Payload content of a ParameterVersion resource.
+  &quot;renderedPayload&quot;: &quot;A String&quot;, # Output only. Server generated rendered version of the user provided payload data (ParameterVersionPayload) which has substitutions of all (if any) references to a SecretManager SecretVersion resources. This substitution only works for a Parameter which is in JSON or YAML format.

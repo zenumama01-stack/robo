@@ -1,0 +1,75 @@
+<div class="slideout-container">
+      <i [class]="Mode === 'create' ? 'fa-solid fa-plus-circle' : 'fa-solid fa-pen-to-square'"></i>
+      <span>{{Title}}</span>
+    <button class="close-btn" (click)="OnClose()">
+  <!-- Body -->
+  <div class="slideout-body">
+    <!-- Error -->
+        <span>{{ErrorMessage}}</span>
+    <!-- Form -->
+      <div class="section-title">General</div>
+        <label class="form-label">Name <span class="required">*</span></label>
+        <input class="form-input" type="text" [(ngModel)]="Name" placeholder="e.g., Daily Data Sync" />
+        <textarea class="form-textarea" [(ngModel)]="Description" rows="3"
+        placeholder="What does this job do?"></textarea>
+          <label class="form-label">Job Type <span class="required">*</span></label>
+          <select class="form-input" [(ngModel)]="JobTypeID">
+            @for (t of JobTypes; track t) {
+              <option [value]="t.id">{{t.name}}</option>
+          <label class="form-label">Status</label>
+          <select class="form-input" [(ngModel)]="Status">
+            @for (s of StatusOptions; track s) {
+              <option [value]="s">{{s}}</option>
+      <div class="section-title">Schedule</div>
+        <label class="form-label">Cron Expression <span class="required">*</span></label>
+        <input class="form-input mono" type="text" [(ngModel)]="CronExpression"
+          placeholder="0 */15 * * * *" />
+        <div class="form-hint">e.g., 0 */15 * * * * (every 15 minutes)</div>
+          <label class="form-label">Timezone</label>
+          <select class="form-input" [(ngModel)]="Timezone">
+            @for (tz of TimezoneOptions; track tz) {
+              <option [value]="tz">{{tz}}</option>
+          <label class="form-label">Concurrency</label>
+          <select class="form-input" [(ngModel)]="ConcurrencyMode">
+            @for (c of ConcurrencyOptions; track c) {
+              <option [value]="c">{{c}}</option>
+      <div class="section-title">Configuration</div>
+        <label class="form-label">Configuration JSON</label>
+        <div class="code-editor-wrapper">
+            [value]="Configuration"
+            [placeholder]="'{ }'"
+            (change)="OnConfigurationChange($event)">
+        <div class="form-hint">Optional JSON configuration for the job type plugin</div>
+      <div class="section-title">Notifications</div>
+      <div class="form-row checkboxes">
+          <input type="checkbox" [(ngModel)]="NotifyOnSuccess" />
+          <span>Notify on success</span>
+          <input type="checkbox" [(ngModel)]="NotifyOnFailure" />
+          <span>Notify on failure</span>
+    <!-- Job Stats (Edit Mode) -->
+    @if (Mode === 'edit' && Job) {
+        <div class="section-title">Statistics</div>
+            <span class="stat-label">Total Runs</span>
+            <span class="stat-value">{{Job.totalRuns}}</span>
+            <span class="stat-label">Success</span>
+            <span class="stat-value success">{{Job.successCount}}</span>
+            <span class="stat-label">Failures</span>
+            <span class="stat-value failure">{{Job.failureCount}}</span>
+            <span class="stat-value">{{Job.createdAt | date:'short'}}</span>
+      @if (Mode === 'edit') {
+        <button class="delete-btn" (click)="ShowDeleteConfirm = true"
+          [disabled]="IsDeleting">
+          <i class="fa-solid fa-trash-can"></i> Delete
+      <button class="cancel-btn" (click)="OnClose()">Cancel</button>
+      <button class="save-btn" (click)="Save()" [disabled]="!IsValid || IsSaving">
+        {{Mode === 'create' ? 'Create Job' : 'Save Changes'}}
+  <!-- Delete Confirmation -->
+  @if (ShowDeleteConfirm) {
+    <div class="confirm-overlay">
+      <div class="confirm-dialog">
+        <div class="confirm-icon">
+        <h3>Delete Job</h3>
+        <p>Are you sure you want to delete "{{Name}}"? This action cannot be undone.</p>
+          <button class="delete-confirm-btn" (click)="Delete()" [disabled]="IsDeleting">
+            @if (IsDeleting) {
+          <button class="cancel-btn" (click)="ShowDeleteConfirm = false">Cancel</button>

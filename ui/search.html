@@ -1,0 +1,19 @@
+{% extends "!search.html" %}
+  <div id="fallback" class="admonition warning">
+    <script type="text/javascript">$('#fallback').hide();</script>
+      {% trans %}Please activate JavaScript to enable the search
+        functionality.{% endtrans %}
+  {% if search_performed %}
+    <h1>{{ _('Search Results') }}</h1>
+    {% if not search_results %}
+      <p>{{ _('Your search did not match any documents. Please make sure that all words are spelled correctly and that you\'ve selected enough categories.') }}</p>
+  <div id="search-results">
+    {% if search_results %}
+        {% for href, caption, context in search_results %}
+          <li><a href="{{ pathto(item.href) }}">{{ caption }}</a>
+            <div class="context">{{ context|e }}</div>
+        {% endfor %}
+{% include "django/forms/widgets/input.html" %}
+{% extends "basic/search.html" %}
+{% block bodyclass %}{% endblock %}
+{% block sidebarwrapper %}{% endblock %}

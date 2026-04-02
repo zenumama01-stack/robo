@@ -1,0 +1,44 @@
+<h1><a href="vmmigration_v1.html">VM Migration API</a> . <a href="vmmigration_v1.projects.html">projects</a> . <a href="vmmigration_v1.projects.locations.html">locations</a> . <a href="vmmigration_v1.projects.locations.groups.html">groups</a></h1>
+  <code><a href="#addGroupMigration">addGroupMigration(group, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Adds a MigratingVm to a Group.</p>
+<p class="firstline">Creates a new Group in a given project and location.</p>
+<p class="firstline">Deletes a single Group.</p>
+<p class="firstline">Gets details of a single Group.</p>
+<p class="firstline">Lists Groups in a given project and location.</p>
+<p class="firstline">Updates the parameters of a single Group.</p>
+  <code><a href="#removeGroupMigration">removeGroupMigration(group, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Removes a MigratingVm from a Group.</p>
+    <code class="details" id="addGroupMigration">addGroupMigration(group, body=None, x__xgafv=None)</code>
+  <pre>Adds a MigratingVm to a Group.
+  group: string, Required. The full path name of the Group to add to. (required)
+{ # Request message for &#x27;AddGroupMigration&#x27; request.
+  &quot;migratingVm&quot;: &quot;A String&quot;, # The full path name of the MigratingVm to add.
+  <pre>Creates a new Group in a given project and location.
+  parent: string, Required. The Group&#x27;s parent. (required)
+{ # Describes message for &#x27;Group&#x27; resource. The Group is a collections of several MigratingVms.
+  &quot;description&quot;: &quot;A String&quot;, # User-provided description of the group.
+  &quot;displayName&quot;: &quot;A String&quot;, # Display name is a user defined name for this group which can be updated.
+  &quot;migrationTargetType&quot;: &quot;A String&quot;, # Immutable. The target type of this group.
+  &quot;name&quot;: &quot;A String&quot;, # Output only. The Group name.
+  groupId: string, Required. The group identifier.
+  requestId: string, A request ID to identify requests. Specify a unique request ID so that if you must retry your request, the server will know to ignore the request if it has already been completed. The server will guarantee that for at least 60 minutes since the first request. For example, consider a situation where you make an initial request and the request times out. If you make the request again with the same request ID, the server can check if original operation with the same request ID was received, and if so, will ignore the second request. This prevents clients from accidentally creating duplicate commitments. The request ID must be a valid UUID with the exception that zero UUID is not supported (00000000-0000-0000-0000-000000000000).
+  <pre>Deletes a single Group.
+  name: string, Required. The Group name. (required)
+  <pre>Gets details of a single Group.
+  name: string, Required. The group name. (required)
+  <pre>Lists Groups in a given project and location.
+  parent: string, Required. The parent, which owns this collection of groups. (required)
+  filter: string, Optional. The filter request.
+  orderBy: string, Optional. the order by fields for the result.
+  pageSize: integer, Optional. The maximum number of groups to return. The service may return fewer than this value. If unspecified, at most 500 groups will be returned. The maximum value is 1000; values above 1000 will be coerced to 1000.
+  pageToken: string, Required. A page token, received from a previous `ListGroups` call. Provide this to retrieve the subsequent page. When paginating, all other parameters provided to `ListGroups` must match the call that provided the page token.
+    { # Response message for &#x27;ListGroups&#x27; request.
+  &quot;groups&quot;: [ # Output only. The list of groups response.
+  <pre>Updates the parameters of a single Group.
+  name: string, Output only. The Group name. (required)
+  updateMask: string, Field mask is used to specify the fields to be overwritten in the Group resource by the update. The fields specified in the update_mask are relative to the resource, not the full request. A field will be overwritten if it is in the mask. If the user does not provide a mask then all fields will be overwritten.
+    <code class="details" id="removeGroupMigration">removeGroupMigration(group, body=None, x__xgafv=None)</code>
+  <pre>Removes a MigratingVm from a Group.
+  group: string, Required. The name of the Group. (required)
+{ # Request message for &#x27;RemoveMigration&#x27; request.
+  &quot;migratingVm&quot;: &quot;A String&quot;, # The MigratingVm to remove.

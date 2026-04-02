@@ -1,0 +1,48 @@
+<h1><a href="managedkafka_v1.html">Managed Service for Apache Kafka API</a> . <a href="managedkafka_v1.projects.html">projects</a> . <a href="managedkafka_v1.projects.locations.html">locations</a> . <a href="managedkafka_v1.projects.locations.connectClusters.html">connectClusters</a> . <a href="managedkafka_v1.projects.locations.connectClusters.connectors.html">connectors</a></h1>
+  <code><a href="#create">create(parent, body=None, connectorId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Creates a new connector in a given Connect cluster.</p>
+<p class="firstline">Deletes a connector.</p>
+<p class="firstline">Returns the properties of a single connector.</p>
+<p class="firstline">Lists the connectors in a given Connect cluster.</p>
+<p class="firstline">Updates the properties of a connector.</p>
+<p class="firstline">Pauses the connector and its tasks.</p>
+<p class="firstline">Restarts the connector.</p>
+<p class="firstline">Resumes the connector and its tasks.</p>
+<p class="firstline">Stops the connector.</p>
+    <code class="details" id="create">create(parent, body=None, connectorId=None, x__xgafv=None)</code>
+  <pre>Creates a new connector in a given Connect cluster.
+  parent: string, Required. The parent Connect cluster in which to create the connector. Structured like `projects/{project}/locations/{location}/connectClusters/{connect_cluster_id}`. (required)
+{ # A Kafka Connect connector in a given ConnectCluster.
+  &quot;configs&quot;: { # Optional. Connector config as keys/values. The keys of the map are connector property names, for example: `connector.class`, `tasks.max`, `key.converter`.
+  &quot;name&quot;: &quot;A String&quot;, # Identifier. The name of the connector. Structured like: projects/{project}/locations/{location}/connectClusters/{connect_cluster}/connectors/{connector}
+  &quot;taskRestartPolicy&quot;: { # Task Retry Policy is implemented on a best-effort basis. The default policy retries tasks with a minimum_backoff of 60 seconds, and a maximum_backoff of 12 hours. You can disable the policy by setting the task_retry_disabled field to true. Retry delay will be exponential based on provided minimum and maximum backoffs. https://en.wikipedia.org/wiki/Exponential_backoff. Note that the delay between consecutive task restarts may not always precisely match the configured settings. This can happen when the ConnectCluster is in rebalancing state or if the ConnectCluster is unresponsive etc. The default values for minimum and maximum backoffs are 60 seconds and 12 hours respectively. # Optional. Restarts the individual tasks of a Connector.
+    &quot;maximumBackoff&quot;: &quot;A String&quot;, # Optional. The maximum amount of time to wait before retrying a failed task. This sets an upper bound for the backoff delay.
+    &quot;minimumBackoff&quot;: &quot;A String&quot;, # Optional. The minimum amount of time to wait before retrying a failed task. This sets a lower bound for the backoff delay.
+    &quot;taskRetryDisabled&quot;: True or False, # Optional. If true, task retry is disabled.
+  connectorId: string, Required. The ID to use for the connector, which will become the final component of the connector&#x27;s name. The ID must be 1-63 characters long, and match the regular expression `[a-z]([-a-z0-9]*[a-z0-9])?` to comply with RFC 1035. This value is structured like: `my-connector-id`.
+  <pre>Deletes a connector.
+  name: string, Required. The name of the connector to delete. Structured like: projects/{project}/locations/{location}/connectClusters/{connectCluster}/connectors/{connector} (required)
+  <pre>Returns the properties of a single connector.
+  name: string, Required. The name of the connector whose configuration to return. Structured like: projects/{project}/locations/{location}/connectClusters/{connectCluster}/connectors/{connector} (required)
+  <pre>Lists the connectors in a given Connect cluster.
+  parent: string, Required. The parent Connect cluster whose connectors are to be listed. Structured like `projects/{project}/locations/{location}/connectClusters/{connect_cluster_id}`. (required)
+  pageSize: integer, Optional. The maximum number of connectors to return. The service may return fewer than this value. If unspecified, server will pick an appropriate default.
+    { # Response for ListConnectors.
+  &quot;connectors&quot;: [ # The list of connectors in the requested parent.
+  <pre>Updates the properties of a connector.
+  name: string, Identifier. The name of the connector. Structured like: projects/{project}/locations/{location}/connectClusters/{connect_cluster}/connectors/{connector} (required)
+  <pre>Pauses the connector and its tasks.
+  name: string, Required. The name of the connector to pause. Structured like: projects/{project}/locations/{location}/connectClusters/{connectCluster}/connectors/{connector} (required)
+{ # Request for PauseConnector.
+    { # Response for PauseConnector.
+  <pre>Restarts the connector.
+  name: string, Required. The name of the connector to restart. Structured like: projects/{project}/locations/{location}/connectClusters/{connectCluster}/connectors/{connector} (required)
+{ # Request for RestartConnector.
+    { # Response for RestartConnector.
+  <pre>Resumes the connector and its tasks.
+{ # Request for ResumeConnector.
+    { # Response for ResumeConnector.
+  <pre>Stops the connector.
+  name: string, Required. The name of the connector to stop. Structured like: projects/{project}/locations/{location}/connectClusters/{connectCluster}/connectors/{connector} (required)
+{ # Request for StopConnector.
+    { # Response for StopConnector.

@@ -1,0 +1,73 @@
+<div class="jobs-container">
+  <div class="jobs-toolbar">
+          placeholder="Search jobs..."
+      <select class="filter-select" [value]="TypeFilter" (change)="OnTypeFilterChange($any($event.target).value)">
+        @for (t of TypeOptions.slice(1); track t) {
+          <option [value]="t">{{t}}</option>
+      <span class="result-count">{{FilteredJobs.length}} of {{Jobs.length}} jobs</span>
+      <button class="primary-btn" (click)="OpenCreateSlideout()">
+        <i class="fa-solid fa-plus"></i> New Job
+      <mj-loading text="Loading jobs..." size="medium"></mj-loading>
+  @if (!IsLoading && FilteredJobs.length === 0) {
+        <i class="fa-solid fa-calendar-xmark"></i>
+      <h3>No jobs found</h3>
+      @if (SearchTerm || StatusFilter || TypeFilter) {
+        <p>Try adjusting your filters</p>
+      @if (!SearchTerm && !StatusFilter && !TypeFilter) {
+        <p>Create your first scheduled job to get started</p>
+          <i class="fa-solid fa-plus"></i> Create Job
+  <!-- Job Cards Grid -->
+  @if (!IsLoading && FilteredJobs.length > 0) {
+    <div class="jobs-grid">
+      @for (job of FilteredJobs; track job) {
+          class="job-card"
+          (click)="OpenEditSlideout(job)">
+          <div class="job-card-header">
+            <div class="job-card-title">
+              <i [class]="GetTypeIcon(job.jobType)" class="type-icon"></i>
+              <span class="job-name">{{job.jobName}}</span>
+            <span class="status-chip" [ngClass]="GetStatusClass(job.status)">{{job.status}}</span>
+          <div class="job-card-body">
+            @if (job.description) {
+              <div class="job-description">{{job.description}}</div>
+            <div class="job-meta-grid">
+                <span class="meta-label">Type</span>
+                <span class="meta-value">{{job.jobType}}</span>
+                <span class="meta-label">Schedule</span>
+                <span class="meta-value mono">{{job.cronExpression}}</span>
+                <span class="meta-label">Last Run</span>
+                <span class="meta-value">{{FormatDate(job.lastRunAt)}}</span>
+                <span class="meta-label">Next Run</span>
+                <span class="meta-value">{{FormatDate(job.nextRunAt)}}</span>
+            <!-- Success Rate Bar -->
+            <div class="success-section">
+              <div class="success-header">
+                <span class="success-label">Success Rate</span>
+                <span class="success-value" [style.color]="GetSuccessRateColor(job.successRate)">
+                  {{FormatPercentage(job.successRate)}}
+              <div class="success-bar-track">
+                <div class="success-bar-fill"
+                  [style.width]="(job.successRate * 100) + '%'"
+                  [style.background]="GetSuccessRateColor(job.successRate)">
+              <div class="run-stats">
+                <span class="stat-success"><i class="fa-solid fa-check"></i> {{job.successCount}}</span>
+                <span class="stat-failure"><i class="fa-solid fa-xmark"></i> {{job.failureCount}}</span>
+                <span class="stat-total">{{job.totalRuns}} total</span>
+          <!-- Card Footer -->
+          <div class="job-card-footer">
+            <button class="action-btn" (click)="ToggleJobStatus(job, $event)">
+              <i [class]="job.status === 'Active' ? 'fa-solid fa-pause' : 'fa-solid fa-play'"></i>
+              {{job.status === 'Active' ? 'Pause' : 'Resume'}}
+            <button class="action-btn" (click)="OpenEntityRecord(job); $event.stopPropagation()">
+              Full Details
+  <!-- Slideout Panel -->
+  @if (SlideoutOpen) {
+    <div class="slideout-backdrop" (click)="CloseSlideout()"></div>
+  <div class="slideout-panel" [class.open]="SlideoutOpen" [style.width.px]="SlideoutWidth">
+    <div class="slideout-resize-handle" (mousedown)="OnResizeStart($event)"></div>
+      <app-job-slideout
+        [Mode]="SlideoutMode"
+        [Job]="SelectedJob"
+        (Close)="CloseSlideout()"
+        (Saved)="OnSlideoutSaved()">
+      </app-job-slideout>

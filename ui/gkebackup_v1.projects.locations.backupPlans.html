@@ -1,0 +1,79 @@
+<h1><a href="gkebackup_v1.html">Backup for GKE API</a> . <a href="gkebackup_v1.projects.html">projects</a> . <a href="gkebackup_v1.projects.locations.html">locations</a> . <a href="gkebackup_v1.projects.locations.backupPlans.html">backupPlans</a></h1>
+  <code><a href="gkebackup_v1.projects.locations.backupPlans.backups.html">backups()</a></code>
+  <code><a href="#create">create(parent, backupPlanId=None, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Creates a new BackupPlan in a given location.</p>
+<p class="firstline">Deletes an existing BackupPlan.</p>
+<p class="firstline">Retrieve the details of a single BackupPlan.</p>
+  <code><a href="#getTags">getTags(name, x__xgafv=None)</a></code></p>
+<p class="firstline">Returns tags directly bound to a GCP resource.</p>
+<p class="firstline">Lists BackupPlans in a given location.</p>
+  <code><a href="#setTags">setTags(name, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Updates tags directly bound to a GCP resource.</p>
+    <code class="details" id="create">create(parent, backupPlanId=None, body=None, x__xgafv=None)</code>
+  <pre>Creates a new BackupPlan in a given location.
+  parent: string, Required. The location within which to create the BackupPlan. Format: `projects/*/locations/*` (required)
+{ # Defines the configuration and scheduling for a &quot;line&quot; of Backups.
+  &quot;backupChannel&quot;: &quot;A String&quot;, # Output only. The fully qualified name of the BackupChannel to be used to create a backup. This field is set only if the cluster being backed up is in a different project. `projects/*/locations/*/backupChannels/*`
+  &quot;backupConfig&quot;: { # BackupConfig defines the configuration of Backups created via this BackupPlan. # Optional. Defines the configuration of Backups created via this BackupPlan.
+    &quot;allNamespaces&quot;: True or False, # If True, include all namespaced resources
+    &quot;encryptionKey&quot;: { # Defined a customer managed encryption key that will be used to encrypt Backup artifacts. # Optional. This defines a customer managed encryption key that will be used to encrypt the &quot;config&quot; portion (the Kubernetes resources) of Backups created via this plan. Default (empty): Config backup artifacts will not be encrypted.
+    &quot;includeSecrets&quot;: True or False, # Optional. This flag specifies whether Kubernetes Secret resources should be included when they fall into the scope of Backups. Default: False
+    &quot;includeVolumeData&quot;: True or False, # Optional. This flag specifies whether volume data should be backed up when PVCs are included in the scope of a Backup. Default: False
+    &quot;permissiveMode&quot;: True or False, # Optional. If false, Backups will fail when Backup for GKE detects Kubernetes configuration that is non-standard or requires additional setup to restore. Default: False
+    &quot;selectedApplications&quot;: { # A list of namespaced Kubernetes resources. # If set, include just the resources referenced by the listed ProtectedApplications.
+    &quot;selectedNamespaceLabels&quot;: { # A list of Kubernetes labels. # If set, the list of labels whose constituent namespaces were included in the Backup.
+    &quot;selectedNamespaces&quot;: { # A list of Kubernetes Namespaces. # If set, include just the resources in the listed namespaces.
+  &quot;backupSchedule&quot;: { # Defines scheduling parameters for automatically creating Backups via this BackupPlan. # Optional. Defines a schedule for automatic Backup creation via this BackupPlan.
+    &quot;cronSchedule&quot;: &quot;A String&quot;, # Optional. A standard [cron](https://wikipedia.com/wiki/cron) string that defines a repeating schedule for creating Backups via this BackupPlan. This is mutually exclusive with the rpo_config field since at most one schedule can be defined for a BackupPlan. If this is defined, then backup_retain_days must also be defined. Default (empty): no automatic backup creation will occur.
+    &quot;nextScheduledBackupTime&quot;: &quot;A String&quot;, # Output only. Start time of next scheduled backup under this BackupPlan by either cron_schedule or rpo config.
+    &quot;paused&quot;: True or False, # Optional. This flag denotes whether automatic Backup creation is paused for this BackupPlan. Default: False
+    &quot;rpoConfig&quot;: { # Defines RPO scheduling configuration for automatically creating Backups via this BackupPlan. # Optional. Defines the RPO schedule configuration for this BackupPlan. This is mutually exclusive with the cron_schedule field since at most one schedule can be defined for a BackupPLan. If this is defined, then backup_retain_days must also be defined. Default (empty): no automatic backup creation will occur.
+      &quot;exclusionWindows&quot;: [ # Optional. User specified time windows during which backup can NOT happen for this BackupPlan - backups should start and finish outside of any given exclusion window. Note: backup jobs will be scheduled to start and finish outside the duration of the window as much as possible, but running jobs will not get canceled when it runs into the window. All the time and date values in exclusion_windows entry in the API are in UTC. We only allow &lt;=1 recurrence (daily or weekly) exclusion window for a BackupPlan while no restriction on number of single occurrence windows.
+        { # Defines a time window during which no backup should happen. All time and date are in UTC.
+          &quot;daily&quot;: True or False, # The exclusion window occurs every day if set to &quot;True&quot;. Specifying this field to &quot;False&quot; is an error.
+          &quot;daysOfWeek&quot;: { # Holds repeated DaysOfWeek values as a container. # The exclusion window occurs on these days of each week in UTC.
+            &quot;daysOfWeek&quot;: [ # Optional. A list of days of week.
+          &quot;duration&quot;: &quot;A String&quot;, # Required. Specifies duration of the window. Duration must be &gt;= 5 minutes and &lt; (target RPO - 20 minutes). Additional restrictions based on the recurrence type to allow some time for backup to happen: - single_occurrence_date: no restriction, but UI may warn about this when duration &gt;= target RPO - daily window: duration &lt; 24 hours - weekly window: - days of week includes all seven days of a week: duration &lt; 24 hours - all other weekly window: duration &lt; 168 hours (i.e., 24 * 7 hours)
+          &quot;singleOccurrenceDate&quot;: { # Represents a whole or partial calendar date, such as a birthday. The time of day and time zone are either specified elsewhere or are insignificant. The date is relative to the Gregorian Calendar. This can represent one of the following: * A full date, with non-zero year, month, and day values. * A month and day, with a zero year (for example, an anniversary). * A year on its own, with a zero month and a zero day. * A year and month, with a zero day (for example, a credit card expiration date). Related types: * google.type.TimeOfDay * google.type.DateTime * google.protobuf.Timestamp # No recurrence. The exclusion window occurs only once and on this date in UTC.
+          &quot;startTime&quot;: { # Represents a time of day. The date and time zone are either not significant or are specified elsewhere. An API may choose to allow leap seconds. Related types are google.type.Date and `google.protobuf.Timestamp`. # Optional. Specifies the start time of the window using time of the day in UTC.
+      &quot;targetRpoMinutes&quot;: 42, # Required. Defines the target RPO for the BackupPlan in minutes, which means the target maximum data loss in time that is acceptable for this BackupPlan. This must be at least 60, i.e., 1 hour, and at most 86400, i.e., 60 days.
+  &quot;cluster&quot;: &quot;A String&quot;, # Required. Immutable. The source cluster from which Backups will be created via this BackupPlan. Valid formats: - `projects/*/locations/*/clusters/*` - `projects/*/zones/*/clusters/*`
+  &quot;createTime&quot;: &quot;A String&quot;, # Output only. The timestamp when this BackupPlan resource was created.
+  &quot;deactivated&quot;: True or False, # Optional. This flag indicates whether this BackupPlan has been deactivated. Setting this field to True locks the BackupPlan such that no further updates will be allowed (except deletes), including the deactivated field itself. It also prevents any new Backups from being created via this BackupPlan (including scheduled Backups). Default: False
+  &quot;description&quot;: &quot;A String&quot;, # Optional. User specified descriptive string for this BackupPlan.
+  &quot;etag&quot;: &quot;A String&quot;, # Output only. `etag` is used for optimistic concurrency control as a way to help prevent simultaneous updates of a backup plan from overwriting each other. It is strongly suggested that systems make use of the &#x27;etag&#x27; in the read-modify-write cycle to perform BackupPlan updates in order to avoid race conditions: An `etag` is returned in the response to `GetBackupPlan`, and systems are expected to put that etag in the request to `UpdateBackupPlan` or `DeleteBackupPlan` to ensure that their change will be applied to the same version of the resource.
+  &quot;lastSuccessfulBackupTime&quot;: &quot;A String&quot;, # Output only. Completion time of the last successful Backup. This is sourced from a successful Backup&#x27;s complete_time field. This field is added to maintain consistency with BackupPlanBinding to display last successful backup time.
+  &quot;name&quot;: &quot;A String&quot;, # Output only. Identifier. The full name of the BackupPlan resource. Format: `projects/*/locations/*/backupPlans/*`
+  &quot;protectedNamespaceCount&quot;: 42, # Output only. The number of user managed namespaces backed up in the last successful Backup created via this BackupPlan.
+  &quot;retentionPolicy&quot;: { # RetentionPolicy defines a Backup retention policy for a BackupPlan. # Optional. RetentionPolicy governs lifecycle of Backups created under this plan.
+    &quot;backupRetainDays&quot;: 42, # Optional. The default maximum age of a Backup created via this BackupPlan. This field MUST be an integer value &gt;= 0 and &lt;= 365. If specified, a Backup created under this BackupPlan will be automatically deleted after its age reaches (create_time + backup_retain_days). If not specified, Backups created under this BackupPlan will NOT be subject to automatic deletion. Updating this field does NOT affect existing Backups under it. Backups created AFTER a successful update will automatically pick up the new value. NOTE: backup_retain_days must be &gt;= backup_delete_lock_days. If cron_schedule is defined, then this must be &lt;= 360 * the creation interval. If rpo_config is defined, then this must be &lt;= 360 * target_rpo_minutes / (1440minutes/day). Default: 0 (no automatic deletion)
+    &quot;locked&quot;: True or False, # Optional. This flag denotes whether the retention policy of this BackupPlan is locked. If set to True, no further update is allowed on this policy, including the `locked` field itself. Default: False
+  &quot;rpoRiskReason&quot;: &quot;A String&quot;, # Output only. Human-readable description of why the BackupPlan is in the current rpo_risk_level and action items if any.
+  &quot;state&quot;: &quot;A String&quot;, # Output only. State of the BackupPlan. This State field reflects the various stages a BackupPlan can be in during the Create operation. It will be set to &quot;DEACTIVATED&quot; if the BackupPlan is deactivated on an Update
+  &quot;stateReason&quot;: &quot;A String&quot;, # Output only. Human-readable description of why BackupPlan is in the current `state`. This field is only meant for human readability and should not be used programmatically as this field is not guaranteed to be consistent.
+  &quot;updateTime&quot;: &quot;A String&quot;, # Output only. The timestamp when this BackupPlan resource was last updated.
+  backupPlanId: string, Required. The client-provided short name for the BackupPlan resource. This name must: - be between 1 and 63 characters long (inclusive) - consist of only lower-case ASCII letters, numbers, and dashes - start with a lower-case letter - end with a lower-case letter or number - be unique within the set of BackupPlans in this location
+  <pre>Deletes an existing BackupPlan.
+  name: string, Required. Fully qualified BackupPlan name. Format: `projects/*/locations/*/backupPlans/*` (required)
+  etag: string, Optional. If provided, this value must match the current value of the target BackupPlan&#x27;s etag field or the request is rejected.
+  <pre>Retrieve the details of a single BackupPlan.
+    <code class="details" id="getTags">getTags(name, x__xgafv=None)</code>
+  <pre>Returns tags directly bound to a GCP resource.
+  name: string, Required. The full resource name of the service resource. (required)
+    { # Response message for GetTags.
+  &quot;etag&quot;: &quot;A String&quot;, # A checksum based on the current bindings. This field is always set in server responses.
+  &quot;name&quot;: &quot;A String&quot;, # Required. The full resource name of the service resource.
+  &quot;tags&quot;: { # Required. Tag keys/values directly bound to this resource. Each item in the map must be expressed as &quot; : &quot;. For example: &quot;123/environment&quot; : &quot;production&quot;, &quot;123/costCenter&quot; : &quot;marketing&quot;
+  <pre>Lists BackupPlans in a given location.
+  parent: string, Required. The location that contains the BackupPlans to list. Format: `projects/*/locations/*` (required)
+    { # Response message for ListBackupPlans.
+  &quot;backupPlans&quot;: [ # The list of BackupPlans matching the given criteria.
+  name: string, Output only. Identifier. The full name of the BackupPlan resource. Format: `projects/*/locations/*/backupPlans/*` (required)
+  updateMask: string, Optional. This is used to specify the fields to be overwritten in the BackupPlan targeted for update. The values for each of these updated fields will be taken from the `backup_plan` provided with this request. Field names are relative to the root of the resource (e.g., `description`, `backup_config.include_volume_data`, etc.) If no `update_mask` is provided, all fields in `backup_plan` will be written to the target BackupPlan resource. Note that OUTPUT_ONLY and IMMUTABLE fields in `backup_plan` are ignored and are not used to update the target BackupPlan.
+    <code class="details" id="setTags">setTags(name, body=None, x__xgafv=None)</code>
+  <pre>Updates tags directly bound to a GCP resource.
+{ # Request message for SetTags.
+  &quot;etag&quot;: &quot;A String&quot;, # Optional. A checksum based on the current bindings which can be passed to prevent race conditions. If not passed, etag check would be skipped.
+  &quot;requestId&quot;: &quot;A String&quot;, # Optional. A unique identifier for this request. Must be a valid UUID. This request is only idempotent if a `request_id` is provided.
+  &quot;tags&quot;: { # Required. These bindings will override any bindings previously set and will be effective immediately. Each item in the map must be expressed as &quot; : &quot;. For example: &quot;123/environment&quot; : &quot;production&quot;, &quot;123/costCenter&quot; : &quot;marketing&quot;
+    { # Response message for SetTags.

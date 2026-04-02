@@ -1,0 +1,116 @@
+<div class="data-requirements-viewer">
+  @if (!hasData) {
+      <i class="fas fa-database"></i>
+      <h3>No Data Requirements</h3>
+      <p>This component doesn't have any data requirements defined.</p>
+    <!-- Header Summary -->
+      <div class="mode-badge">
+        <i class="fas" [ngClass]="modeIcon"></i>
+        <span>{{ modeLabel }}</span>
+        @if (entities.length > 0) {
+            <span class="stat-value">{{ entities.length }}</span>
+            <span class="stat-label">{{ entities.length === 1 ? 'Entity' : 'Entities' }}</span>
+        @if (queries.length > 0) {
+            <span class="stat-value">{{ queries.length }}</span>
+            <span class="stat-label">{{ queries.length === 1 ? 'Query' : 'Queries' }}</span>
+          <span class="stat-value">{{ totalFieldCount }}</span>
+          <span class="stat-label">{{ totalFieldCount === 1 ? 'Field' : 'Fields' }}</span>
+    <!-- Description / Overview (supports markdown including mermaid diagrams) -->
+    @if (description) {
+        <h4 class="description-title">
+        <div class="description-content">
+          <mj-markdown [data]="description"
+            [enableCollapsibleHeadings]="false"
+            [enableLineNumbers]="false"
+          <i class="fas fa-table"></i>
+          Entities
+        <div class="cards-container">
+          @for (entity of entities; track entity.name) {
+            <div class="data-card entity-card" [class.expanded]="isEntityExpanded(entity.name)">
+              <div class="card-header" (click)="toggleEntity(entity.name)">
+                  <div class="card-title-info">
+                    <h4 class="card-title">{{ entity.name }}</h4>
+                    @if (entity.description) {
+                      <p class="card-description">{{ entity.description }}</p>
+                  <div class="expand-icon">
+                    <i class="fas" [ngClass]="isEntityExpanded(entity.name) ? 'fa-chevron-up' : 'fa-chevron-down'"></i>
+                  <div class="permissions-row">
+                    @for (perm of entity.permissionLevelNeeded; track perm) {
+                      <span class="permission-badge" [style.background-color]="getPermissionColor(perm)">
+                        <i class="fas" [ngClass]="getPermissionIcon(perm)"></i>
+                        {{ perm }}
+                  <span class="field-count">{{ entity.fieldMetadata.length || 0 }} fields</span>
+              @if (isEntityExpanded(entity.name)) {
+                  @if (entity.usageContext) {
+                    <div class="usage-context">
+                      <span>{{ entity.usageContext }}</span>
+                  <!-- Fields Table -->
+                  @if (entity.fieldMetadata && entity.fieldMetadata.length > 0) {
+                    <div class="fields-section">
+                      <h5 class="fields-title">Fields</h5>
+                      <div class="fields-table">
+                        <div class="fields-header">
+                          <span class="field-col name-col">Name</span>
+                          <span class="field-col type-col">Type</span>
+                          <span class="field-col tags-col">Usage</span>
+                          <span class="field-col desc-col">Description</span>
+                        @for (field of entity.fieldMetadata; track field.name) {
+                          <div class="field-row">
+                            <span class="field-col name-col">
+                              <i class="fas" [ngClass]="getFieldTypeIcon(field.type)" [style.color]="getFieldTypeColor(field.type)"></i>
+                              <span class="field-name">{{ field.name }}</span>
+                              @if (!field.allowsNull) {
+                                <span class="required-indicator" title="Required">*</span>
+                            <span class="field-col type-col">
+                              <code class="field-type">{{ formatFieldType(field.type) }}</code>
+                            <span class="field-col tags-col">
+                              @for (tag of getFieldUsageTags(field, entity); track tag) {
+                                <span class="usage-tag" [style.background-color]="getTagColor(tag)">{{ tag }}</span>
+                            <span class="field-col desc-col">
+                              {{ field.description || '—' }}
+      <div class="section queries-section">
+          Queries
+          @for (query of queries; track getQueryKey(query)) {
+            <div class="data-card query-card" [class.expanded]="isQueryExpanded(getQueryKey(query))">
+              <div class="card-header" (click)="toggleQuery(getQueryKey(query))">
+                  <div class="card-icon query-icon">
+                    <i class="fas fa-code"></i>
+                    <div class="title-with-badge">
+                      <h4 class="card-title">{{ query.name }}</h4>
+                      @if (query.isNew) {
+                        <span class="new-query-badge" title="This query was newly created for this component">
+                          <i class="fas fa-sparkles"></i>
+                          NEW
+                    <p class="card-path">{{ query.categoryPath }}</p>
+                    @if (query.description) {
+                      <p class="card-description">{{ query.description }}</p>
+                    <i class="fas" [ngClass]="isQueryExpanded(getQueryKey(query)) ? 'fa-chevron-up' : 'fa-chevron-down'"></i>
+                  @if (query.entityNames && query.entityNames.length > 0) {
+                    <div class="entity-badges">
+                      @for (entityName of query.entityNames; track entityName) {
+                        <span class="entity-badge">
+                          {{ entityName }}
+                  <span class="field-count">{{ query.fields.length || 0 }} fields</span>
+              @if (isQueryExpanded(getQueryKey(query))) {
+                  @if (query.parameters && query.parameters.length > 0) {
+                    <div class="parameters-section">
+                      <h5 class="parameters-title">
+                        @for (param of query.parameters; track param.name) {
+                              <span class="param-name">{{ param.name }}</span>
+                                <span class="optional-badge">Optional</span>
+                              @if (param.type) {
+                                <code class="param-type">{{ param.type }}</code>
+                              <p class="param-description">{{ param.description }}</p>
+                            @if (param.sampleValue || param.testValue) {
+                              <div class="param-sample">
+                                <span class="sample-label">Sample:</span>
+                                <code>{{ param.sampleValue || param.testValue }}</code>
+                  @if (query.fields && query.fields.length > 0) {
+                      <h5 class="fields-title">Output Fields</h5>
+                        @for (field of query.fields; track field.name) {
+                  <!-- New Query SQL -->
+                  @if (query.newQuerySQL) {
+                    <div class="sql-section">
+                      <h5 class="sql-title">
+                        Query SQL
+                      <pre class="sql-code">{{ query.newQuerySQL }}</pre>

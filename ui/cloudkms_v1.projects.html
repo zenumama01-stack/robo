@@ -1,0 +1,27 @@
+<h1><a href="cloudkms_v1.html">Cloud Key Management Service (KMS) API</a> . <a href="cloudkms_v1.projects.html">projects</a></h1>
+  <code><a href="cloudkms_v1.projects.locations.html">locations()</a></code>
+  <code><a href="#showEffectiveAutokeyConfig">showEffectiveAutokeyConfig(parent, x__xgafv=None)</a></code></p>
+<p class="firstline">Returns the effective Cloud KMS Autokey configuration for a given project.</p>
+  <code><a href="#showEffectiveKeyAccessJustificationsEnrollmentConfig">showEffectiveKeyAccessJustificationsEnrollmentConfig(project, x__xgafv=None)</a></code></p>
+<p class="firstline">Returns the KeyAccessJustificationsEnrollmentConfig of the resource closest to the given project in hierarchy.</p>
+  <code><a href="#showEffectiveKeyAccessJustificationsPolicyConfig">showEffectiveKeyAccessJustificationsPolicyConfig(project, x__xgafv=None)</a></code></p>
+<p class="firstline">Returns the KeyAccessJustificationsPolicyConfig of the resource closest to the given project in hierarchy.</p>
+    <code class="details" id="showEffectiveAutokeyConfig">showEffectiveAutokeyConfig(parent, x__xgafv=None)</code>
+  <pre>Returns the effective Cloud KMS Autokey configuration for a given project.
+  parent: string, Required. Name of the resource project to the show effective Cloud KMS Autokey configuration for. This may be helpful for interrogating the effect of nested folder configurations on a given resource project. (required)
+    { # Response message for ShowEffectiveAutokeyConfig.
+  &quot;keyProject&quot;: &quot;A String&quot;, # Name of the key project configured in the resource project&#x27;s folder ancestry.
+    <code class="details" id="showEffectiveKeyAccessJustificationsEnrollmentConfig">showEffectiveKeyAccessJustificationsEnrollmentConfig(project, x__xgafv=None)</code>
+  <pre>Returns the KeyAccessJustificationsEnrollmentConfig of the resource closest to the given project in hierarchy.
+  project: string, Required. Specifies the number or id of the project to get the effective KeyAccessJustificationsEnrollmentConfig for. (required)
+    { # Represents a response message for KeyAccessJustificationsConfig.ShowEffectiveKeyAccessJustificationsEnrollmentConfig
+  &quot;externalConfig&quot;: { # Represents the configuration of a protection level for a project&#x27;s Key Access Justifications enrollment. # Contains the effective KeyAccessJustificationsEnrollmentConfig for external keys.
+    &quot;auditLogging&quot;: True or False, # Indicates whether the project has KAJ logging enabled.
+    &quot;policyEnforcement&quot;: True or False, # Indicates whether the project is enrolled in KAJ policy enforcement.
+  &quot;hardwareConfig&quot;: { # Represents the configuration of a protection level for a project&#x27;s Key Access Justifications enrollment. # Contains the effective KeyAccessJustificationsEnrollmentConfig for hardware keys.
+  &quot;softwareConfig&quot;: { # Represents the configuration of a protection level for a project&#x27;s Key Access Justifications enrollment. # Contains the effective KeyAccessJustificationsEnrollmentConfig for software keys.
+    <code class="details" id="showEffectiveKeyAccessJustificationsPolicyConfig">showEffectiveKeyAccessJustificationsPolicyConfig(project, x__xgafv=None)</code>
+  <pre>Returns the KeyAccessJustificationsPolicyConfig of the resource closest to the given project in hierarchy.
+  project: string, Required. Specifies the number or id of the project to get the effective KeyAccessJustificationsPolicyConfig. In the format of &quot;projects/{|}&quot; (required)
+    { # Represents a response message for KeyAccessJustificationsConfig.ShowEffectiveKeyAccessJustificationsPolicyConfig.
+  &quot;effectiveKajPolicy&quot;: { # Represents a singleton configuration for Key Access Justifications policies. # Contains the effective KeyAccessJustificationsPolicyConfig.

@@ -1,0 +1,47 @@
+<h1><a href="aiplatform_v1.html">Vertex AI API</a> . <a href="aiplatform_v1.projects.html">projects</a> . <a href="aiplatform_v1.projects.locations.html">locations</a> . <a href="aiplatform_v1.projects.locations.featureGroups.html">featureGroups</a></h1>
+  <code><a href="aiplatform_v1.projects.locations.featureGroups.features.html">features()</a></code>
+  <code><a href="aiplatform_v1.projects.locations.featureGroups.operations.html">operations()</a></code>
+  <code><a href="#create">create(parent, body=None, featureGroupId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Creates a new FeatureGroup in a given project and location.</p>
+  <code><a href="#delete">delete(name, force=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Deletes a single FeatureGroup.</p>
+<p class="firstline">Gets details of a single FeatureGroup.</p>
+<p class="firstline">Lists FeatureGroups in a given project and location.</p>
+<p class="firstline">Updates the parameters of a single FeatureGroup.</p>
+    <code class="details" id="create">create(parent, body=None, featureGroupId=None, x__xgafv=None)</code>
+  <pre>Creates a new FeatureGroup in a given project and location.
+  parent: string, Required. The resource name of the Location to create FeatureGroups. Format: `projects/{project}/locations/{location}` (required)
+{ # Vertex AI Feature Group.
+  &quot;bigQuery&quot;: { # Input source type for BigQuery Tables and Views. # Indicates that features for this group come from BigQuery Table/View. By default treats the source as a sparse time series source. The BigQuery source table or view must have at least one entity ID column and a column named `feature_timestamp`.
+    &quot;bigQuerySource&quot;: { # The BigQuery location for the input content. # Required. Immutable. The BigQuery source URI that points to either a BigQuery Table or View.
+    &quot;dense&quot;: True or False, # Optional. If set, all feature values will be fetched from a single row per unique entityId including nulls. If not set, will collapse all rows for each unique entityId into a singe row with any non-null values if present, if no non-null values are present will sync null. ex: If source has schema `(entity_id, feature_timestamp, f0, f1)` and the following rows: `(e1, 2020-01-01T10:00:00.123Z, 10, 15)` `(e1, 2020-02-01T10:00:00.123Z, 20, null)` If dense is set, `(e1, 20, null)` is synced to online stores. If dense is not set, `(e1, 20, 15)` is synced to online stores.
+    &quot;entityIdColumns&quot;: [ # Optional. Columns to construct entity_id / row keys. If not provided defaults to `entity_id`.
+    &quot;staticDataSource&quot;: True or False, # Optional. Set if the data source is not a time-series.
+    &quot;timeSeries&quot;: { # Optional. If the source is a time-series source, this can be set to control how downstream sources (ex: FeatureView ) will treat time-series sources. If not set, will treat the source as a time-series source with `feature_timestamp` as timestamp column and no scan boundary.
+      &quot;timestampColumn&quot;: &quot;A String&quot;, # Optional. Column hosting timestamp values for a time-series source. Will be used to determine the latest `feature_values` for each entity. Optional. If not provided, column named `feature_timestamp` of type `TIMESTAMP` will be used.
+  &quot;createTime&quot;: &quot;A String&quot;, # Output only. Timestamp when this FeatureGroup was created.
+  &quot;description&quot;: &quot;A String&quot;, # Optional. Description of the FeatureGroup.
+  &quot;labels&quot;: { # Optional. The labels with user-defined metadata to organize your FeatureGroup. Label keys and values can be no longer than 64 characters (Unicode codepoints), can only contain lowercase letters, numeric characters, underscores and dashes. International characters are allowed. See https://goo.gl/xmQnxf for more information on and examples of labels. No more than 64 user labels can be associated with one FeatureGroup(System labels are excluded).&quot; System reserved label keys are prefixed with &quot;aiplatform.googleapis.com/&quot; and are immutable.
+  &quot;name&quot;: &quot;A String&quot;, # Identifier. Name of the FeatureGroup. Format: `projects/{project}/locations/{location}/featureGroups/{featureGroup}`
+  &quot;serviceAccountEmail&quot;: &quot;A String&quot;, # Output only. A Service Account unique to this FeatureGroup. The role bigquery.dataViewer should be granted to this service account to allow Vertex AI Feature Store to access source data while running jobs under this FeatureGroup.
+  &quot;serviceAgentType&quot;: &quot;A String&quot;, # Optional. Service agent type used during jobs under a FeatureGroup. By default, the Vertex AI Service Agent is used. When using an IAM Policy to isolate this FeatureGroup within a project, a separate service account should be provisioned by setting this field to `SERVICE_AGENT_TYPE_FEATURE_GROUP`. This will generate a separate service account to access the BigQuery source table.
+  &quot;updateTime&quot;: &quot;A String&quot;, # Output only. Timestamp when this FeatureGroup was last updated.
+  featureGroupId: string, Required. The ID to use for this FeatureGroup, which will become the final component of the FeatureGroup&#x27;s resource name. This value may be up to 128 characters, and valid characters are `[a-z0-9_]`. The first character cannot be a number. The value must be unique within the project and location.
+    <code class="details" id="delete">delete(name, force=None, x__xgafv=None)</code>
+  <pre>Deletes a single FeatureGroup.
+  name: string, Required. The name of the FeatureGroup to be deleted. Format: `projects/{project}/locations/{location}/featureGroups/{feature_group}` (required)
+  force: boolean, If set to true, any Features under this FeatureGroup will also be deleted. (Otherwise, the request will only work if the FeatureGroup has no Features.)
+  <pre>Gets details of a single FeatureGroup.
+  name: string, Required. The name of the FeatureGroup resource. (required)
+  <pre>Lists FeatureGroups in a given project and location.
+  parent: string, Required. The resource name of the Location to list FeatureGroups. Format: `projects/{project}/locations/{location}` (required)
+  filter: string, Lists the FeatureGroups that match the filter expression. The following fields are supported: * `create_time`: Supports `=`, `!=`, `&lt;`, `&gt;`, `&lt;=`, and `&gt;=` comparisons. Values must be in RFC 3339 format. * `update_time`: Supports `=`, `!=`, `&lt;`, `&gt;`, `&lt;=`, and `&gt;=` comparisons. Values must be in RFC 3339 format. * `labels`: Supports key-value equality and key presence. Examples: * `create_time &gt; &quot;2020-01-01&quot; OR update_time &gt; &quot;2020-01-01&quot;` FeatureGroups created or updated after 2020-01-01. * `labels.env = &quot;prod&quot;` FeatureGroups with label &quot;env&quot; set to &quot;prod&quot;.
+  orderBy: string, A comma-separated list of fields to order by, sorted in ascending order. Use &quot;desc&quot; after a field name for descending. Supported Fields: * `create_time` * `update_time`
+  pageSize: integer, The maximum number of FeatureGroups to return. The service may return fewer than this value. If unspecified, at most 100 FeatureGroups will be returned. The maximum value is 100; any value greater than 100 will be coerced to 100.
+  pageToken: string, A page token, received from a previous FeatureRegistryService.ListFeatureGroups call. Provide this to retrieve the subsequent page. When paginating, all other parameters provided to FeatureRegistryService.ListFeatureGroups must match the call that provided the page token.
+    { # Response message for FeatureRegistryService.ListFeatureGroups.
+  &quot;featureGroups&quot;: [ # The FeatureGroups matching the request.
+  &quot;nextPageToken&quot;: &quot;A String&quot;, # A token, which can be sent as ListFeatureGroupsRequest.page_token to retrieve the next page. If this field is omitted, there are no subsequent pages.
+  <pre>Updates the parameters of a single FeatureGroup.
+  name: string, Identifier. Name of the FeatureGroup. Format: `projects/{project}/locations/{location}/featureGroups/{featureGroup}` (required)
+  updateMask: string, Field mask is used to specify the fields to be overwritten in the FeatureGroup resource by the update. The fields specified in the update_mask are relative to the resource, not the full request. A field will be overwritten if it is in the mask. If the user does not provide a mask then only the non-empty fields present in the request will be overwritten. Set the update_mask to `*` to override all fields. Updatable fields: * `labels` * `description` * `big_query` * `big_query.entity_id_columns` * `service_agent_type`

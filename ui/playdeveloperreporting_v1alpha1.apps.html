@@ -1,0 +1,27 @@
+<h1><a href="playdeveloperreporting_v1alpha1.html">Google Play Developer Reporting API</a> . <a href="playdeveloperreporting_v1alpha1.apps.html">apps</a></h1>
+  <code><a href="#fetchReleaseFilterOptions">fetchReleaseFilterOptions(name, x__xgafv=None)</a></code></p>
+<p class="firstline">Describes filtering options for releases.</p>
+  <code><a href="#search">search(pageSize=None, pageToken=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Searches for Apps accessible by the user.</p>
+    <code class="details" id="fetchReleaseFilterOptions">fetchReleaseFilterOptions(name, x__xgafv=None)</code>
+  <pre>Describes filtering options for releases.
+  name: string, Required. Name of the resource, i.e. app the filtering options are for. Format: apps/{app} (required)
+    { # A set of filtering options for releases and version codes specific to an app.
+  &quot;tracks&quot;: [ # List of tracks to filter releases over. Provides the grouping of version codes under releases and tracks.
+    { # A representation of a Play release track.
+      &quot;displayName&quot;: &quot;A String&quot;, # Readable identifier of the track.
+      &quot;servingReleases&quot;: [ # Represents all active releases in the track.
+        { # A representation of an app release.
+          &quot;displayName&quot;: &quot;A String&quot;, # Readable identifier of the release.
+          &quot;versionCodes&quot;: [ # The version codes contained in this release.
+      &quot;type&quot;: &quot;A String&quot;, # The type of the track.
+    <code class="details" id="search">search(pageSize=None, pageToken=None, x__xgafv=None)</code>
+  <pre>Searches for Apps accessible by the user.
+  pageSize: integer, Optional. The maximum number of apps to return. The service may return fewer than this value. If unspecified, at most 50 apps will be returned. The maximum value is 1000; values above 1000 will be coerced to 1000.
+  pageToken: string, Optional. A page token, received from a previous `SearchAccessibleApps` call. Provide this to retrieve the subsequent page. When paginating, all other parameters provided to `SearchAccessibleApps` must match the call that provided the page token.
+    { # Response message for SearchAccessibleApps.
+  &quot;apps&quot;: [ # The apps accessible to the user calling the endpoint.
+    { # A representation of an app in the Play Store.
+      &quot;displayName&quot;: &quot;A String&quot;, # Title of the app. This is the latest title as set in the Play Console and may not yet have been reviewed, so might not match the Play Store. Example: `Google Maps`.
+      &quot;name&quot;: &quot;A String&quot;, # Identifier. The resource name. Format: apps/{app}
+      &quot;packageName&quot;: &quot;A String&quot;, # Package name of the app. Example: `com.example.app123`.

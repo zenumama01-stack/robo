@@ -1,0 +1,28 @@
+<h1><a href="apihub_v1.html">API hub API</a> . <a href="apihub_v1.projects.html">projects</a> . <a href="apihub_v1.projects.locations.html">locations</a> . <a href="apihub_v1.projects.locations.discoveredApiObservations.html">discoveredApiObservations</a></h1>
+  <code><a href="apihub_v1.projects.locations.discoveredApiObservations.discoveredApiOperations.html">discoveredApiOperations()</a></code>
+<p class="firstline">Returns the discoveredApiOperations Resource.</p>
+<p class="firstline">Gets a DiscoveredAPIObservation in a given project, location and ApiObservation.</p>
+<p class="firstline">Lists all the DiscoveredAPIObservations in a given project and location.</p>
+  <pre>Gets a DiscoveredAPIObservation in a given project, location and ApiObservation.
+  name: string, Required. The name of the DiscoveredApiObservation to retrieve. Format: projects/{project}/locations/{location}/discoveredApiObservations/{discovered_api_observation} (required)
+    { # Respresents an API Observation observed in one of the sources.
+  &quot;apiOperationCount&quot;: &quot;A String&quot;, # Optional. The number of observed API Operations.
+  &quot;createTime&quot;: &quot;A String&quot;, # Output only. Create time stamp of the observation in API Hub.
+  &quot;hostname&quot;: &quot;A String&quot;, # Optional. The hostname of requests processed for this Observation.
+  &quot;knownOperationsCount&quot;: &quot;A String&quot;, # Output only. The number of known API Operations.
+  &quot;lastEventDetectedTime&quot;: &quot;A String&quot;, # Optional. Last event detected time stamp
+  &quot;name&quot;: &quot;A String&quot;, # Identifier. The name of the discovered API Observation. Format: `projects/{project}/locations/{location}/discoveredApiObservations/{discovered_api_observation}`
+  &quot;origin&quot;: &quot;A String&quot;, # Optional. For an observation pushed from a Google Cloud resource, this would be the Google Cloud project id.
+  &quot;serverIps&quot;: [ # Optional. The IP address (IPv4 or IPv6) of the origin server that the request was sent to. This field can include port information. Examples: `&quot;192.168.1.1&quot;`, `&quot;10.0.0.1:80&quot;`, `&quot;FE80::0202:B3FF:FE1E:8329&quot;`.
+  &quot;sourceLocations&quot;: [ # Optional. The location of the observation source.
+  &quot;sourceMetadata&quot;: { # SourceMetadata represents the metadata for a resource at the source. # Output only. The metadata of the source from which the observation was collected.
+  &quot;sourceTypes&quot;: [ # Optional. The type of the source from which the observation was collected.
+  &quot;style&quot;: &quot;A String&quot;, # Optional. Style of ApiObservation
+  &quot;unknownOperationsCount&quot;: &quot;A String&quot;, # Output only. The number of unknown API Operations.
+  &quot;updateTime&quot;: &quot;A String&quot;, # Output only. Update time stamp of the observation in API Hub.
+  <pre>Lists all the DiscoveredAPIObservations in a given project and location.
+  parent: string, Required. The parent, which owns this collection of ApiObservations. Format: projects/{project}/locations/{location} (required)
+  pageSize: integer, Optional. The maximum number of ApiObservations to return. The service may return fewer than this value. If unspecified, at most 10 ApiObservations will be returned. The maximum value is 1000; values above 1000 will be coerced to 1000.
+  pageToken: string, Optional. A page token, received from a previous `ListApiObservations` call. Provide this to retrieve the subsequent page. When paginating, all other parameters provided to `ListApiObservations` must match the call that provided the page token.
+    { # Message for response to listing DiscoveredApiObservations
+  &quot;discoveredApiObservations&quot;: [ # The DiscoveredApiObservation from the specified project and location.

@@ -1,0 +1,14 @@
+<h1><a href="observability_v1.html">Observability API</a> . <a href="observability_v1.folders.html">folders</a> . <a href="observability_v1.folders.locations.html">locations</a></h1>
+  <code><a href="observability_v1.folders.locations.operations.html">operations()</a></code>
+<p class="firstline">Get Settings</p>
+<p class="firstline">Update Settings</p>
+  <pre>Get Settings
+  name: string, Required. Name of the settings to retrieve. Name format: &quot;projects/[PROJECT_ID]/locations/[LOCATION]/settings&quot; &quot;folders/[FOLDER_ID]/locations/[LOCATION]/settings&quot; &quot;organizations/[ORGANIZATION_ID]/locations/[LOCATION]/settings&quot; (required)
+    { # Describes the settings associated with a project, organization, or folder.
+  &quot;defaultStorageLocation&quot;: &quot;A String&quot;, # Optional. The location which should be used when any regional resources are provisioned by Google Cloud.
+  &quot;kmsKeyName&quot;: &quot;A String&quot;, # Optional. The resource name for the configured Cloud KMS key. KMS key name format: &quot;projects/[PROJECT_ID]/locations/[LOCATION]/keyRings/[KEYRING]/cryptoKeys/[KEY]&quot; For example: `&quot;projects/my-project/locations/us-central1/keyRings/my-ring/cryptoKeys/my-key&quot;`
+  &quot;name&quot;: &quot;A String&quot;, # Identifier. The resource name of the settings.
+  &quot;serviceAccountId&quot;: &quot;A String&quot;, # Output only. The service account for the given resource container, such as project or folder. This will be used by Cloud Observability to perform actions in the container&#x27;s project like access KMS keys or create Links. Always the same service account per resource container regardless of region.
+  <pre>Update Settings
+  name: string, Identifier. The resource name of the settings. (required)
+  updateMask: string, Optional. The field mask specifying which fields of the settings are to be updated.

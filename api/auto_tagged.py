@@ -1,0 +1,1 @@
+class AutoTagged(OneDriveObjectBase):

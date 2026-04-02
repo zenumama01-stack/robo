@@ -1,0 +1,42 @@
+<h1><a href="clouddebugger_v2.html">Cloud Debugger API (Deprecated)</a> . <a href="clouddebugger_v2.debugger.html">debugger</a> . <a href="clouddebugger_v2.debugger.debuggees.html">debuggees</a> . <a href="clouddebugger_v2.debugger.debuggees.breakpoints.html">breakpoints</a></h1>
+  <code><a href="#delete">delete(debuggeeId, breakpointId, clientVersion=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Deletes the breakpoint from the debuggee.</p>
+  <code><a href="#get">get(debuggeeId, breakpointId, clientVersion=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Gets breakpoint information.</p>
+  <code><a href="#list">list(debuggeeId, action_value=None, clientVersion=None, includeAllUsers=None, includeInactive=None, stripResults=None, waitToken=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Lists all breakpoints for the debuggee.</p>
+  <code><a href="#set">set(debuggeeId, body=None, canaryOption=None, clientVersion=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Sets the breakpoint to the debuggee.</p>
+    <code class="details" id="delete">delete(debuggeeId, breakpointId, clientVersion=None, x__xgafv=None)</code>
+  <pre>Deletes the breakpoint from the debuggee.
+  debuggeeId: string, Required. ID of the debuggee whose breakpoint to delete. (required)
+  breakpointId: string, Required. ID of the breakpoint to delete. (required)
+  clientVersion: string, Required. The client version making the call. Schema: `domain/type/version` (e.g., `google.com/intellij/v1`).
+    <code class="details" id="get">get(debuggeeId, breakpointId, clientVersion=None, x__xgafv=None)</code>
+  <pre>Gets breakpoint information.
+  debuggeeId: string, Required. ID of the debuggee whose breakpoint to get. (required)
+  breakpointId: string, Required. ID of the breakpoint to get. (required)
+    { # Response for getting breakpoint information.
+  &quot;breakpoint&quot;: { # ------------------------------------------------------------------------------ ## Breakpoint (the resource) Represents the breakpoint specification, status and results. # Complete breakpoint state. The fields `id` and `location` are guaranteed to be set.
+    <code class="details" id="list">list(debuggeeId, action_value=None, clientVersion=None, includeAllUsers=None, includeInactive=None, stripResults=None, waitToken=None, x__xgafv=None)</code>
+  <pre>Lists all breakpoints for the debuggee.
+  debuggeeId: string, Required. ID of the debuggee whose breakpoints to list. (required)
+  action_value: string, Only breakpoints with the specified action will pass the filter.
+      CAPTURE - Capture stack frame and variables and update the breakpoint. The data is only captured once. After that the breakpoint is set in a final state.
+      LOG - Log each breakpoint hit. The breakpoint remains active until deleted or expired.
+  includeAllUsers: boolean, When set to `true`, the response includes the list of breakpoints set by any user. Otherwise, it includes only breakpoints set by the caller.
+  includeInactive: boolean, When set to `true`, the response includes active and inactive breakpoints. Otherwise, it includes only active breakpoints.
+  stripResults: boolean, This field is deprecated. The following fields are always stripped out of the result: `stack_frames`, `evaluated_expressions` and `variable_table`.
+  waitToken: string, A wait token that, if specified, blocks the call until the breakpoints list has changed, or a server selected timeout has expired. The value should be set from the last response. The error code `google.rpc.Code.ABORTED` (RPC) is returned on wait timeout, which should be called again with the same `wait_token`.
+    { # Response for listing breakpoints.
+  &quot;breakpoints&quot;: [ # List of breakpoints matching the request. The fields `id` and `location` are guaranteed to be set on each breakpoint. The fields: `stack_frames`, `evaluated_expressions` and `variable_table` are cleared on each breakpoint regardless of its status.
+  &quot;nextWaitToken&quot;: &quot;A String&quot;, # A wait token that can be used in the next call to `list` (REST) or `ListBreakpoints` (RPC) to block until the list of breakpoints has changes.
+    <code class="details" id="set">set(debuggeeId, body=None, canaryOption=None, clientVersion=None, x__xgafv=None)</code>
+  <pre>Sets the breakpoint to the debuggee.
+  debuggeeId: string, Required. ID of the debuggee where the breakpoint is to be set. (required)
+  canaryOption: string, The canary option set by the user upon setting breakpoint.
+      CANARY_OPTION_UNSPECIFIED - Depends on the canary_mode of the debuggee.
+      CANARY_OPTION_TRY_ENABLE - Enable the canary for this breakpoint if the canary_mode of the debuggee is not CANARY_MODE_ALWAYS_ENABLED or CANARY_MODE_ALWAYS_DISABLED.
+      CANARY_OPTION_TRY_DISABLE - Disable the canary for this breakpoint if the canary_mode of the debuggee is not CANARY_MODE_ALWAYS_ENABLED or CANARY_MODE_ALWAYS_DISABLED.
+    { # Response for setting a breakpoint.
+  &quot;breakpoint&quot;: { # ------------------------------------------------------------------------------ ## Breakpoint (the resource) Represents the breakpoint specification, status and results. # Breakpoint resource. The field `id` is guaranteed to be set (in addition to the echoed fields).

@@ -1,0 +1,30 @@
+<h1><a href="dataplex_v1.html">Cloud Dataplex API</a> . <a href="dataplex_v1.projects.html">projects</a> . <a href="dataplex_v1.projects.locations.html">locations</a> . <a href="dataplex_v1.projects.locations.entryGroups.html">entryGroups</a> . <a href="dataplex_v1.projects.locations.entryGroups.entryLinks.html">entryLinks</a></h1>
+  <code><a href="#create">create(parent, body=None, entryLinkId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Creates an Entry Link.</p>
+<p class="firstline">Deletes an Entry Link.</p>
+<p class="firstline">Gets an Entry Link.</p>
+  <code><a href="#patch">patch(name, allowMissing=None, aspectKeys=None, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Updates an Entry Link.</p>
+    <code class="details" id="create">create(parent, body=None, entryLinkId=None, x__xgafv=None)</code>
+  <pre>Creates an Entry Link.
+  parent: string, Required. The resource name of the parent Entry Group: projects/{project_id_or_number}/locations/{location_id}/entryGroups/{entry_group_id}. (required)
+{ # EntryLink represents a link between two Entries.
+  &quot;aspects&quot;: { # Optional. The aspects that are attached to the entry link. The format of the aspect key has to be the following: {project_id_or_number}.{location_id}.{aspect_type_id} Currently, only a single aspect of a Dataplex-owned Aspect Type is allowed.
+  &quot;createTime&quot;: &quot;A String&quot;, # Output only. The time when the Entry Link was created.
+  &quot;entryLinkType&quot;: &quot;A String&quot;, # Required. Immutable. Relative resource name of the Entry Link Type used to create this Entry Link. For example: Entry link between synonym terms in a glossary: projects/dataplex-types/locations/global/entryLinkTypes/synonym Entry link between related terms in a glossary: projects/dataplex-types/locations/global/entryLinkTypes/related Entry link between glossary terms and data assets: projects/dataplex-types/locations/global/entryLinkTypes/definition
+  &quot;entryReferences&quot;: [ # Required. Immutable. Specifies the Entries referenced in the Entry Link. There should be exactly two entry references.
+    { # Reference to the Entry that is linked through the Entry Link.
+      &quot;name&quot;: &quot;A String&quot;, # Required. Immutable. The relative resource name of the referenced Entry, of the form: projects/{project_id_or_number}/locations/{location_id}/entryGroups/{entry_group_id}/entries/{entry_id}
+      &quot;path&quot;: &quot;A String&quot;, # Immutable. The path in the Entry that is referenced in the Entry Link. Empty path denotes that the Entry itself is referenced in the Entry Link.
+      &quot;type&quot;: &quot;A String&quot;, # Required. Immutable. The reference type of the Entry.
+  &quot;name&quot;: &quot;A String&quot;, # Output only. Immutable. Identifier. The relative resource name of the Entry Link, of the form: projects/{project_id_or_number}/locations/{location_id}/entryGroups/{entry_group_id}/entryLinks/{entry_link_id}
+  &quot;updateTime&quot;: &quot;A String&quot;, # Output only. The time when the Entry Link was last updated.
+  entryLinkId: string, Required. Entry Link identifier * Must contain only lowercase letters, numbers and hyphens. * Must start with a letter. * Must be between 1-63 characters. * Must end with a number or a letter. * Must be unique within the EntryGroup.
+  <pre>Deletes an Entry Link.
+  name: string, Required. The resource name of the Entry Link: projects/{project_id_or_number}/locations/{location_id}/entryGroups/{entry_group_id}/entryLinks/{entry_link_id}. (required)
+  <pre>Gets an Entry Link.
+    <code class="details" id="patch">patch(name, allowMissing=None, aspectKeys=None, body=None, x__xgafv=None)</code>
+  <pre>Updates an Entry Link.
+  name: string, Output only. Immutable. Identifier. The relative resource name of the Entry Link, of the form: projects/{project_id_or_number}/locations/{location_id}/entryGroups/{entry_group_id}/entryLinks/{entry_link_id} (required)
+  allowMissing: boolean, Optional. If set to true and the entry link doesn&#x27;t exist, the service will create it.
+  aspectKeys: string, Optional. The map keys of the Aspects which the service should modify. It should be the aspect type reference in the format {project_id_or_number}.{location_id}.{aspect_type_id}.If this field is left empty, the service treats it as specifying exactly those Aspects present in the request. (repeated)

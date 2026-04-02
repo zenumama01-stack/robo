@@ -1,0 +1,20 @@
+    <!-- Test Type Definition Section -->
+        SectionKey="testTypeDefinition"
+        SectionName="Test Type Definition"
+            FieldName="VariablesSchema"
+    <!-- MJ: Test Rubrics Section -->
+        SectionKey="mJTestRubrics"
+        SectionName="MJ: Test Rubrics"
+        [BadgeCount]="GetSectionRowCount('mJTestRubrics')"
+                [Params]="BuildRelationshipViewParamsByEntityName('MJ: Test Rubrics','TypeID')"
+                [NewRecordValues]="NewRecordValues('MJ: Test Rubrics')"
+                [AllowLoad]="IsSectionExpanded('mJTestRubrics')"
+                (AfterDataLoad)="SetSectionRowCount('mJTestRubrics', $event.totalRowCount)"
+    <!-- MJ: Tests Section -->
+        SectionKey="mJTests"
+        SectionName="MJ: Tests"
+        [BadgeCount]="GetSectionRowCount('mJTests')"
+                [Params]="BuildRelationshipViewParamsByEntityName('MJ: Tests','TypeID')"
+                [NewRecordValues]="NewRecordValues('MJ: Tests')"
+                [AllowLoad]="IsSectionExpanded('mJTests')"
+                (AfterDataLoad)="SetSectionRowCount('mJTests', $event.totalRowCount)"

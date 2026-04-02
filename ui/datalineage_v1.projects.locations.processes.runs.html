@@ -1,0 +1,31 @@
+<h1><a href="datalineage_v1.html">Data Lineage API</a> . <a href="datalineage_v1.projects.html">projects</a> . <a href="datalineage_v1.projects.locations.html">locations</a> . <a href="datalineage_v1.projects.locations.processes.html">processes</a> . <a href="datalineage_v1.projects.locations.processes.runs.html">runs</a></h1>
+  <code><a href="datalineage_v1.projects.locations.processes.runs.lineageEvents.html">lineageEvents()</a></code>
+<p class="firstline">Returns the lineageEvents Resource.</p>
+<p class="firstline">Creates a new run.</p>
+<p class="firstline">Deletes the run with the specified name.</p>
+<p class="firstline">Gets the details of the specified run.</p>
+<p class="firstline">Lists runs in the given project and location. List order is descending by `start_time`.</p>
+<p class="firstline">Updates a run.</p>
+  <pre>Creates a new run.
+  parent: string, Required. The name of the process that should own the run. (required)
+{ # A lineage run represents an execution of a process that creates lineage events.
+  &quot;attributes&quot;: { # Optional. The attributes of the run. Should only be used for the purpose of non-semantic management (classifying, describing or labeling the run). Up to 100 attributes are allowed.
+  &quot;displayName&quot;: &quot;A String&quot;, # Optional. A human-readable name you can set to display in a user interface. Must be not longer than 1024 characters and only contain UTF-8 letters or numbers, spaces or characters like `_-:&amp;.`
+  &quot;endTime&quot;: &quot;A String&quot;, # Optional. The timestamp of the end of the run.
+  &quot;name&quot;: &quot;A String&quot;, # Immutable. The resource name of the run. Format: `projects/{project}/locations/{location}/processes/{process}/runs/{run}`. Can be specified or auto-assigned. {run} must be not longer than 200 characters and only contain characters in a set: `a-zA-Z0-9_-:.`
+  &quot;startTime&quot;: &quot;A String&quot;, # Required. The timestamp of the start of the run.
+  &quot;state&quot;: &quot;A String&quot;, # Required. The state of the run.
+  <pre>Deletes the run with the specified name.
+  name: string, Required. The name of the run to delete. (required)
+  allowMissing: boolean, If set to true and the run is not found, the request succeeds but the server doesn&#x27;t perform any actions.
+  <pre>Gets the details of the specified run.
+  name: string, Required. The name of the run to get. (required)
+  <pre>Lists runs in the given project and location. List order is descending by `start_time`.
+  parent: string, Required. The name of process that owns this collection of runs. (required)
+  pageSize: integer, The maximum number of runs to return. The service may return fewer than this value. If unspecified, at most 50 runs are returned. The maximum value is 100; values greater than 100 are cut to 100.
+  pageToken: string, The page token received from a previous `ListRuns` call. Specify it to get the next page. When paginating, all other parameters specified in this call must match the parameters of the call that provided the page token.
+    { # Response message for ListRuns.
+  &quot;runs&quot;: [ # The runs from the specified project and location.
+  <pre>Updates a run.
+  name: string, Immutable. The resource name of the run. Format: `projects/{project}/locations/{location}/processes/{process}/runs/{run}`. Can be specified or auto-assigned. {run} must be not longer than 200 characters and only contain characters in a set: `a-zA-Z0-9_-:.` (required)
+  allowMissing: boolean, If set to true and the run is not found, the request creates it.

@@ -1,0 +1,41 @@
+<h1><a href="workloadmanager_v1.html">Workload Manager API</a> . <a href="workloadmanager_v1.projects.html">projects</a> . <a href="workloadmanager_v1.projects.locations.html">locations</a> . <a href="workloadmanager_v1.projects.locations.evaluations.html">evaluations</a></h1>
+  <code><a href="workloadmanager_v1.projects.locations.evaluations.executions.html">executions()</a></code>
+  <code><a href="#create">create(parent, body=None, evaluationId=None, requestId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Creates a new Evaluation in a given project and location.</p>
+<p class="firstline">Deletes a single Evaluation.</p>
+<p class="firstline">Gets details of a single Evaluation.</p>
+<p class="firstline">Lists Evaluations in a given project and location.</p>
+<p class="firstline">Updates the parameters of a single Evaluation.</p>
+    <code class="details" id="create">create(parent, body=None, evaluationId=None, requestId=None, x__xgafv=None)</code>
+  <pre>Creates a new Evaluation in a given project and location.
+  parent: string, Required. The resource prefix of the evaluation location using the form: `projects/{project_id}/locations/{location_id}`. (required)
+{ # Represents a Workload Manager Evaluation configuration. An Evaluation defines a set of rules to be validated against a scope of Cloud resources.
+  &quot;bigQueryDestination&quot;: { # BigQuery destination for evaluation results. # Optional. The BigQuery destination for detailed evaluation results. If this field is specified, the results of each evaluation execution are exported to BigQuery.
+    &quot;createNewResultsTable&quot;: True or False, # Optional. Determines if a new results table will be created when an Execution is created.
+    &quot;destinationDataset&quot;: &quot;A String&quot;, # Optional. Destination dataset to save evaluation results.
+  &quot;customRulesBucket&quot;: &quot;A String&quot;, # The Cloud Storage bucket name for custom rules.
+  &quot;description&quot;: &quot;A String&quot;, # Description of the Evaluation.
+  &quot;evaluationType&quot;: &quot;A String&quot;, # Evaluation type.
+  &quot;kmsKey&quot;: &quot;A String&quot;, # Optional. Immutable. Customer-managed encryption key name, in the format projects/*/locations/*/keyRings/*/cryptoKeys/*. The key will be used for CMEK encryption of the evaluation resource.
+  &quot;name&quot;: &quot;A String&quot;, # Name of resource that has the form `projects/{project_id}/locations/{location_id}/evaluations/{evaluation_id}`.
+  &quot;resourceFilter&quot;: { # Resource filter for an evaluation defining the scope of resources to be evaluated. # Resource filter for an evaluation defining the scope of resources to be evaluated.
+    &quot;gceInstanceFilter&quot;: { # A filter for matching Compute Engine instances. # Filter compute engine resources.
+      &quot;serviceAccounts&quot;: [ # If non-empty, only Compute Engine instances associated with at least one of the provided service accounts will be included in the evaluation.
+    &quot;inclusionLabels&quot;: { # Labels to filter resources by. Each key-value pair in the map must exist on the resource for it to be included (e.g. VM instance labels). For example, specifying `{ &quot;env&quot;: &quot;prod&quot;, &quot;database&quot;: &quot;nosql&quot; }` will only include resources that have labels `env=prod` and `database=nosql`.
+    &quot;resourceIdPatterns&quot;: [ # The pattern to filter resources by their id For example, a pattern of &quot;.*prod-cluster.*&quot; will match all resources that contain &quot;prod-cluster&quot; in their ID.
+    &quot;scopes&quot;: [ # The scopes of evaluation resource. Format: * `projects/{project_id}` * `folders/{folder_id}` * `organizations/{organization_id}`
+  &quot;resourceStatus&quot;: { # The lifecycle status of an Evaluation resource. # Output only. [Output only] The current lifecycle state of the evaluation resource.
+    &quot;state&quot;: &quot;A String&quot;, # State of the Evaluation resource.
+  &quot;ruleNames&quot;: [ # The names of the rules used for this evaluation.
+  &quot;schedule&quot;: &quot;A String&quot;, # Crontab format schedule for scheduled evaluation, currently only supports the following fixed schedules: * `0 */1 * * *` # Hourly * `0 */6 * * *` # Every 6 hours * `0 */12 * * *` # Every 12 hours * `0 0 */1 * *` # Daily * `0 0 */7 * *` # Weekly * `0 0 */14 * *` # Every 14 days * `0 0 1 */1 *` # Monthly
+  evaluationId: string, Required. Id of the requesting object.
+  <pre>Deletes a single Evaluation.
+  force: boolean, Optional. Followed the best practice from https://aip.dev/135#cascading-delete.
+  <pre>Gets details of a single Evaluation.
+  <pre>Lists Evaluations in a given project and location.
+  parent: string, Required. Parent value for ListEvaluationsRequest. (required)
+  filter: string, Filter to be applied when listing the evaluation results.
+    { # Response message for the ListEvaluations RPC.
+  <pre>Updates the parameters of a single Evaluation.
+  name: string, Name of resource that has the form `projects/{project_id}/locations/{location_id}/evaluations/{evaluation_id}`. (required)
+  updateMask: string, Required. Field mask is used to specify the fields to be overwritten in the Evaluation resource by the update. The fields specified in the update_mask are relative to the resource, not the full request. A field will be overwritten if it is in the mask.

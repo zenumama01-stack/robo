@@ -1,0 +1,21 @@
+<h1><a href="beyondcorp_v1alpha.html">BeyondCorp API</a> . <a href="beyondcorp_v1alpha.organizations.html">organizations</a> . <a href="beyondcorp_v1alpha.organizations.locations.html">locations</a> . <a href="beyondcorp_v1alpha.organizations.locations.global_.html">global_</a> . <a href="beyondcorp_v1alpha.organizations.locations.global_.tenants.html">tenants</a> . <a href="beyondcorp_v1alpha.organizations.locations.global_.tenants.proxyConfigs.html">proxyConfigs</a></h1>
+<p class="firstline">Creates a new BeyondCorp Enterprise ProxyConfig in a given organization and Tenant. Can only be called by on onboarded Beyondcorp Enterprise partner.</p>
+<p class="firstline">Deletes a single ProxyConfig.</p>
+<p class="firstline">Gets details of a single ProxyConfig.</p>
+  <pre>Creates a new BeyondCorp Enterprise ProxyConfig in a given organization and Tenant. Can only be called by on onboarded Beyondcorp Enterprise partner.
+  parent: string, Required. The resource name of the Tenant using the form: `organizations/{organization_id}/locations/global/tenants/{tenant_id}` (required)
+{ # Proxy Configuration of a Tenant.
+  &quot;displayName&quot;: &quot;A String&quot;, # Optional. An arbitrary caller-provided name for the ProxyConfig. Cannot exceed 64 characters.
+  &quot;encryptionInfo&quot;: { # Message contains the JWT encryption information for the proxy server. # Optional. Information to encrypt JWT for the proxy server.
+    &quot;encryptionSaEmail&quot;: &quot;A String&quot;, # Optional. Service Account for encryption key.
+    &quot;jwk&quot;: &quot;A String&quot;, # Optional. JWK in string.
+  &quot;name&quot;: &quot;A String&quot;, # Output only. ProxyConfig resource name.
+  &quot;proxyUri&quot;: &quot;A String&quot;, # Required. The URI of the proxy server.
+  &quot;routingInfo&quot;: { # Message contains the routing information to direct traffic to the proxy server. # Required. Routing info to direct traffic to the proxy server.
+    &quot;pacUri&quot;: &quot;A String&quot;, # Required. Proxy Auto-Configuration (PAC) URI.
+  &quot;transportInfo&quot;: { # Message contains the transport layer information to verify the proxy server. # Required. Transport layer information to verify for the proxy server.
+    &quot;serverCaCertPem&quot;: &quot;A String&quot;, # Required. PEM encoded CA certificate associated with the proxy server certificate.
+    &quot;sslDecryptCaCertPem&quot;: &quot;A String&quot;, # Optional. PEM encoded CA certificate associated with the certificate used by proxy server for SSL decryption.
+  <pre>Deletes a single ProxyConfig.
+  <pre>Gets details of a single ProxyConfig.
+  name: string, Required. The resource name of the ProxyConfig using the form: `organizations/{organization_id}/locations/global/tenants/{tenant_id}/proxyConfigs/{proxy_config_id}` (required)

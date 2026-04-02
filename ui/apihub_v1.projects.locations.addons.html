@@ -1,0 +1,41 @@
+<h1><a href="apihub_v1.html">API hub API</a> . <a href="apihub_v1.projects.html">projects</a> . <a href="apihub_v1.projects.locations.html">locations</a> . <a href="apihub_v1.projects.locations.addons.html">addons</a></h1>
+<p class="firstline">Get an addon.</p>
+<p class="firstline">List addons.</p>
+  <code><a href="#manageConfig">manageConfig(name, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Manage addon config. This RPC is used for managing the config of the addon. Calling this RPC moves the addon into an updating state until the long-running operation succeeds.</p>
+  <pre>Get an addon.
+  name: string, Required. The name of the addon to get. Format: `projects/{project}/locations/{location}/addons/{addon}`. (required)
+    { # Addon resource.
+  &quot;config&quot;: { # Configuration for the addon. # Required. The configuration of the addon.
+    &quot;allDataAddonConfig&quot;: { # Configuration for addons which act on all data in the API hub. This is used to specify if the addon is enabled for all data in the API hub. # Configuration for addons which act on all data in the API hub.
+      &quot;enabled&quot;: True or False, # Required. If true, the addon is enabled for all data in the API hub.
+    &quot;gatewayPluginAddonConfig&quot;: { # Configuration for gateway plugin addons. This is used to specify the list of gateway plugin configs for which the addon is enabled. # Configuration for gateway plugin addons.
+      &quot;gatewayPluginConfigs&quot;: [ # Required. The list of gateway plugin configs for which the addon is enabled. Each gateway plugin config should have a unique plugin instance.
+        { # Configuration for a gateway plugin. This is used to specify configs for different gateways.
+          &quot;apigeeEdgeConfig&quot;: { # Configuration for Apigee Edge gateways. Applicability of a filter is determined by the filter being provided. If none of the filters are provided the addon will be enabled for all data brought in by the gateway plugin instance. # Configuration for Apigee Edge gateways.
+            &quot;environmentFilter&quot;: { # Filter for environments. # Optional. The filter to apply on the resources managed by the gateway plugin instance. If provided this filter applies environment specific filtering.
+              &quot;allEnvironments&quot;: True or False, # Optional. Indicates if this filter should match all environments or only a subset of environments. If set to true, all environments are matched.
+              &quot;environments&quot;: [ # Optional. If provided, only environments in this list are matched. This field is ignored if `all_environments` is true.
+          &quot;apigeeOpdkConfig&quot;: { # Configuration for Apigee OPDK gateways. Applicability of a filter is determined by the filter being provided. If none of the filters are provided the addon will be enabled for all data brought in by the gateway plugin instance. # Configuration for Apigee OPDK gateways.
+          &quot;apigeeXHybridConfig&quot;: { # Configuration for Apigee X and Apigee Hybrid gateways. Applicability of a filter is determined by the filter being provided. If none of the filters are provided the addon will be enabled for all data brought in by the gateway plugin instance. # Configuration for Apigee X and Apigee Hybrid gateways.
+          &quot;pluginInstance&quot;: &quot;A String&quot;, # Required. The name of the gateway plugin instance for which the config is to be specified. Format: projects/{project}/locations/{location}/plugins/{plugin}/pluginInstances/{plugin_instance}
+  &quot;createTime&quot;: &quot;A String&quot;, # Output only. The time at which the addon was created.
+  &quot;dataSource&quot;: &quot;A String&quot;, # Required. The data source on which the addon operates. This determines which field in the `config` oneof is used.
+  &quot;description&quot;: &quot;A String&quot;, # Optional. The description of the addon.
+  &quot;displayName&quot;: &quot;A String&quot;, # Required. The display name of the addon.
+  &quot;name&quot;: &quot;A String&quot;, # Identifier. The name of the addon to enable. Format: `projects/{project}/locations/{location}/addons/{addon}`.
+  &quot;state&quot;: &quot;A String&quot;, # Output only. The state of the addon.
+  &quot;updateTime&quot;: &quot;A String&quot;, # Output only. The time at which the addon was last updated.
+  <pre>List addons.
+  parent: string, Required. The parent resource where this addon will be created. Format: `projects/{project}/locations/{location}`. (required)
+  filter: string, Optional. An expression that filters the list of addons. The only supported filter is `plugin_instance_name`. It can be used to filter addons that are enabled for a given plugin instance. The format of the filter is `plugin_instance_name = &quot;projects/{project}/locations/{location}/plugins/{plugin}/instances/{instance}&quot;`.
+  pageSize: integer, Optional. The maximum number of hub addons to return. The service may return fewer than this value. If unspecified, at most 50 hub addons will be returned. The maximum value is 1000; values above 1000 will be coerced to 1000.
+  pageToken: string, Optional. A page token, received from a previous `ListAddons` call. Provide this to retrieve the subsequent page. When paginating, all other parameters (except page_size) provided to `ListAddons` must match the call that provided the page token.
+    { # The ListAddons method&#x27;s response.
+  &quot;addons&quot;: [ # The list of addons.
+  &quot;nextPageToken&quot;: &quot;A String&quot;, # A token to retrieve the next page of results, or empty if there are no more results in the list.
+    <code class="details" id="manageConfig">manageConfig(name, body=None, x__xgafv=None)</code>
+  <pre>Manage addon config. This RPC is used for managing the config of the addon. Calling this RPC moves the addon into an updating state until the long-running operation succeeds.
+  name: string, Required. The name of the addon for which the config is to be managed. Format: `projects/{project}/locations/{location}/addons/{addon}`. (required)
+{ # The ManageAddonConfig method&#x27;s request.
+  &quot;config&quot;: { # Configuration for the addon. # Required. The config of the addon to be managed. This config will replace the config present in the addon. The type of the config should match the config type already present in the addon.

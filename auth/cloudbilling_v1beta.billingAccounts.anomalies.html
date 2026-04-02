@@ -1,0 +1,33 @@
+<h1><a href="cloudbilling_v1beta.html">Cloud Billing API</a> . <a href="cloudbilling_v1beta.billingAccounts.html">billingAccounts</a> . <a href="cloudbilling_v1beta.billingAccounts.anomalies.html">anomalies</a></h1>
+<p class="firstline">Gets an anomaly for a billing account or a project.</p>
+<p class="firstline">Lists anomalies for a billing account or a project.</p>
+  <pre>Gets an anomaly for a billing account or a project.
+  name: string, Required. Format for project: projects/{project}/anomalies/{anomalies}. Format for billing account: billingAccounts/{billing_account}/anomalies/{anomalies}. (required)
+    { # Encapsulates an anomaly.
+  &quot;detectionTime&quot;: &quot;A String&quot;, # Time that the anomaly was detected. Will be set to 00:00 google time of the detected date.
+  &quot;deviation&quot;: { # Encapsulates the deviation information. # Deviation information of the anomaly.
+    &quot;actualSpend&quot;: { # Represents an amount of money with its currency type. # The actual spend for the anomaly.
+    &quot;deviationAmount&quot;: { # Represents an amount of money with its currency type. # The difference between the actual spend and expected spend&#x27;s upper bound. Calculation formula: deviation_amount = actual_spend - expected_spend.
+    &quot;deviationPercentage&quot;: 3.14, # The percentage of devition amount from expected spend&#x27;s upper bound. Calculation formula: deviation_percentage = divation_amount / expected_spend * 100.
+    &quot;expectedSpend&quot;: { # Represents an amount of money with its currency type. # The expected spend for the anomaly.
+  &quot;name&quot;: &quot;A String&quot;, # Identifier. Resource name for the anomaly.
+  &quot;resourceDisplayName&quot;: &quot;A String&quot;, # The display name of the resource that the anomaly occurred in/belongs to.
+  &quot;rootCauses&quot;: [ # A list of causes which contribute to the anomaly.
+    { # Encapsulates the information of the reason which caused the anomaly.
+      &quot;causeType&quot;: &quot;A String&quot;, # The cause type.
+      &quot;deviation&quot;: { # Encapsulates the deviation information. # The deviation information for the cause.
+      &quot;displayName&quot;: &quot;A String&quot;, # The display name of the cause.
+      &quot;resource&quot;: &quot;A String&quot;, # The resource name of the cause. project: projects/{project}. service: services/{service}. sku: services/{service}/skus/{sku}.
+      &quot;subCauses&quot;: [ # The sub causes.
+        # Object with schema name: GoogleCloudBillingAnomaliesV1betaCause
+  &quot;scope&quot;: &quot;A String&quot;, # Indicate the scope of the anomaly.
+  &quot;severity&quot;: &quot;A String&quot;, # Severity of the anomaly. Unspecified if severity is not met/assigned.
+  &quot;updateTime&quot;: &quot;A String&quot;, # Output only. The most recent anomaly&#x27;s last updated time.
+  <pre>Lists anomalies for a billing account or a project.
+  parent: string, Required. The project to list Anomaly for the project. Format for project: projects/{project}. Format for billing account: billingAccounts/{billing_account}. (required)
+  filter: string, Optional. Options for how to filter the anomalies. Currently, only filter on `start_time` and `end_time` is supported. Only =, AND operators are supported. If start_time and/or end_time empty, we only retrieve the most recent 30 days&#x27; anomalies. Examples: - start_time = &quot;20231201&quot; AND end_time = &quot;20240120&quot; .
+  pageSize: integer, Optional. Maximum number of anomalies to return. Results may return fewer than this value. Default value is 50 and maximum value is 1000.
+  pageToken: string, Optional. Page token received from a previous ListAnomalies call to retrieve the next page of results. If this field is empty, the first page is returned.
+    { # Response message for ListAnomalies.
+  &quot;anomalies&quot;: [ # The returned anomalies.
+  &quot;nextPageToken&quot;: &quot;A String&quot;, # Token that can be sent as `page_token` in the subsequent request to retrieve the next page. If this field is empty, there are no subsequent pages.

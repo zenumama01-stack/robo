@@ -1,0 +1,41 @@
+<h1><a href="securitycenter_v1.html">Security Command Center API</a> . <a href="securitycenter_v1.organizations.html">organizations</a> . <a href="securitycenter_v1.organizations.resourceValueConfigs.html">resourceValueConfigs</a></h1>
+<p class="firstline">Creates a ResourceValueConfig for an organization. Maps user's tags to difference resource values for use by the attack path simulation.</p>
+<p class="firstline">Deletes a ResourceValueConfig.</p>
+<p class="firstline">Gets a ResourceValueConfig.</p>
+<p class="firstline">Lists all ResourceValueConfigs.</p>
+<p class="firstline">Updates an existing ResourceValueConfigs with new rules.</p>
+  <pre>Creates a ResourceValueConfig for an organization. Maps user&#x27;s tags to difference resource values for use by the attack path simulation.
+  parent: string, Required. Resource name of the new ResourceValueConfig&#x27;s parent. The parent field in the CreateResourceValueConfigRequest messages must either be empty or match this field. (required)
+{ # Request message to create multiple resource value configs
+  &quot;requests&quot;: [ # Required. The resource value configs to be created.
+    { # Request message to create single resource value config
+      &quot;parent&quot;: &quot;A String&quot;, # Required. Resource name of the new ResourceValueConfig&#x27;s parent.
+      &quot;resourceValueConfig&quot;: { # A resource value configuration (RVC) is a mapping configuration of user&#x27;s resources to resource values. Used in Attack path simulations. # Required. The resource value config being created.
+        &quot;cloudProvider&quot;: &quot;A String&quot;, # Cloud provider this configuration applies to
+        &quot;createTime&quot;: &quot;A String&quot;, # Output only. Timestamp this resource value configuration was created.
+        &quot;description&quot;: &quot;A String&quot;, # Description of the resource value configuration.
+        &quot;name&quot;: &quot;A String&quot;, # Name for the resource value configuration
+        &quot;resourceLabelsSelector&quot;: { # List of resource labels to search for, evaluated with `AND`. For example, `&quot;resource_labels_selector&quot;: {&quot;key&quot;: &quot;value&quot;, &quot;env&quot;: &quot;prod&quot;}` will match resources with labels &quot;key&quot;: &quot;value&quot; `AND` &quot;env&quot;: &quot;prod&quot; https://cloud.google.com/resource-manager/docs/creating-managing-labels
+        &quot;resourceType&quot;: &quot;A String&quot;, # Apply resource_value only to resources that match resource_type. resource_type will be checked with `AND` of other resources. For example, &quot;storage.googleapis.com/Bucket&quot; with resource_value &quot;HIGH&quot; will apply &quot;HIGH&quot; value only to &quot;storage.googleapis.com/Bucket&quot; resources.
+        &quot;resourceValue&quot;: &quot;A String&quot;, # Required. Resource value level this expression represents
+        &quot;scope&quot;: &quot;A String&quot;, # Project or folder to scope this configuration to. For example, &quot;project/456&quot; would apply this configuration only to resources in &quot;project/456&quot; scope will be checked with `AND` of other resources.
+        &quot;sensitiveDataProtectionMapping&quot;: { # Resource value mapping for Sensitive Data Protection findings. If any of these mappings have a resource value that is not unspecified, the resource_value field will be ignored when reading this configuration. # A mapping of the sensitivity on Sensitive Data Protection finding to resource values. This mapping can only be used in combination with a resource_type that is related to BigQuery, e.g. &quot;bigquery.googleapis.com/Dataset&quot;.
+          &quot;highSensitivityMapping&quot;: &quot;A String&quot;, # Resource value mapping for high-sensitivity Sensitive Data Protection findings
+          &quot;mediumSensitivityMapping&quot;: &quot;A String&quot;, # Resource value mapping for medium-sensitivity Sensitive Data Protection findings
+        &quot;tagValues&quot;: [ # Required. Tag values combined with `AND` to check against. For Google Cloud resources, they are tag value IDs in the form of &quot;tagValues/123&quot;. Example: `[ &quot;tagValues/123&quot;, &quot;tagValues/456&quot;, &quot;tagValues/789&quot; ]` https://cloud.google.com/resource-manager/docs/tags/tags-creating-and-managing
+        &quot;updateTime&quot;: &quot;A String&quot;, # Output only. Timestamp this resource value configuration was last updated.
+    { # Response message for BatchCreateResourceValueConfigs
+  &quot;resourceValueConfigs&quot;: [ # The resource value configs created
+    { # A resource value configuration (RVC) is a mapping configuration of user&#x27;s resources to resource values. Used in Attack path simulations.
+  <pre>Deletes a ResourceValueConfig.
+  name: string, Required. Name of the ResourceValueConfig to delete (required)
+  <pre>Gets a ResourceValueConfig.
+  name: string, Required. Name of the resource value config to retrieve. Its format is `organizations/{organization}/resourceValueConfigs/{config_id}`. (required)
+  <pre>Lists all ResourceValueConfigs.
+  parent: string, Required. The parent, which owns the collection of resource value configs. Its format is `organizations/[organization_id]` (required)
+  pageSize: integer, The number of results to return. The service may return fewer than this value. If unspecified, at most 10 configs will be returned. The maximum value is 1000; values above 1000 will be coerced to 1000.
+  pageToken: string, A page token, received from a previous `ListResourceValueConfigs` call. Provide this to retrieve the subsequent page. When paginating, all other parameters provided to `ListResourceValueConfigs` must match the call that provided the page token. page_size can be specified, and the new page_size will be used.
+    { # Response message to list resource value configs
+  &quot;resourceValueConfigs&quot;: [ # The resource value configs from the specified parent.
+  <pre>Updates an existing ResourceValueConfigs with new rules.
+  name: string, Name for the resource value configuration (required)

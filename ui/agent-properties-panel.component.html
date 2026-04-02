@@ -1,0 +1,204 @@
+<div class="mj-agent-props">
+  @if (!isStepSelected && !isConnectionSelected) {
+    <div class="mj-agent-props-empty">
+      <i class="fa-solid fa-mouse-pointer"></i>
+      <p>Select a step or connection to view its properties</p>
+  <!-- ============================================ -->
+  <!-- STEP PROPERTIES                              -->
+  @if (isStepSelected) {
+    <!-- Step Header -->
+    <div class="mj-agent-props-header mj-agent-props-header--step"
+      [style.border-left-color]="stepTypeColor">
+      <div class="mj-agent-props-header-top">
+        <span class="mj-agent-props-header-label">STEP</span>
+        <button class="mj-agent-props-close" (click)="CloseRequested.emit()" title="Close">
+      <!-- Identity card -->
+      <div class="mj-agent-props-identity">
+        <div class="mj-agent-props-identity-icon" [style.background]="stepTypeColor">
+          <i class="fa-solid" [ngClass]="stepTypeIcon"></i>
+        <div class="mj-agent-props-identity-info">
+          <span class="mj-agent-props-identity-name">{{ Step!.Name }}</span>
+          <span class="mj-agent-props-identity-meta">
+            <span class="mj-agent-props-type-pill" [style.color]="stepTypeColor"
+            [style.background]="stepTypeColor + '18'">{{ stepTypeLabel }}</span>
+            <span class="mj-agent-props-status-dot" [style.background]="statusColor"></span>
+            <span class="mj-agent-props-status-label">{{ Step!.Status }}</span>
+            @if (Step!.StartingStep) {
+              <span class="mj-agent-props-start-badge">Start</span>
+    <div class="mj-agent-props-content">
+      <!-- ── General Section ─────────────────── -->
+      <div class="mj-agent-props-section">
+        <button class="mj-agent-props-section-header" (click)="ToggleSection('general')">
+          <span class="mj-agent-props-section-title">General</span>
+          <i class="fa-solid" [ngClass]="IsSectionCollapsed('general') ? 'fa-chevron-right' : 'fa-chevron-down'"></i>
+        @if (!IsSectionCollapsed('general')) {
+          <div class="mj-agent-props-section-body">
+            <div class="mj-agent-props-field">
+              @if (!ReadOnly) {
+                <input type="text" [value]="Step!.Name"
+                  (input)="OnNameChange(InputValue($event))"
+                  placeholder="Step name..." class="mj-agent-props-input">
+              @if (ReadOnly) {
+                <div class="mj-agent-props-readonly-value">{{ Step!.Name }}</div>
+                <textarea [value]="Step!.Description || ''"
+                  (input)="OnDescriptionChange(InputValue($event))"
+                  placeholder="Optional description..." rows="2"
+                class="mj-agent-props-input mj-agent-props-textarea"></textarea>
+                <div class="mj-agent-props-readonly-value">
+                  {{ Step!.Description || '—' }}
+                <select [value]="Step!.Status"
+                  (change)="OnStatusChange(InputValue($event))"
+                  class="mj-agent-props-input">
+                  {{ Step!.Status }}
+              <div class="mj-agent-props-field mj-agent-props-field--row">
+                <label class="mj-agent-props-checkbox-label">
+                  <input type="checkbox" [checked]="Step!.StartingStep"
+                    (change)="OnStartingStepChange(CheckedValue($event))">
+                  Starting Step
+            @if (ReadOnly && Step!.StartingStep) {
+                <label>Starting Step</label>
+                  <span class="mj-agent-props-start-badge">Yes — this is the entry point</span>
+      <!-- ── Configuration Section ───────────── -->
+        <button class="mj-agent-props-section-header" (click)="ToggleSection('config')">
+          <span class="mj-agent-props-section-title">Configuration</span>
+          <i class="fa-solid" [ngClass]="IsSectionCollapsed('config') ? 'fa-chevron-right' : 'fa-chevron-down'"></i>
+        @if (!IsSectionCollapsed('config')) {
+            <!-- Loop Body Type (ForEach / While) -->
+            @if (showLoopConfig) {
+                <label>Loop Body Type</label>
+                  <select [value]="Step!.LoopBodyType || 'Action'"
+                    (change)="OnLoopBodyTypeChange(InputValue($event))"
+                    <option value="Action">Action</option>
+                    <option value="Prompt">Prompt</option>
+                    <option value="Sub-Agent">Sub-Agent</option>
+                    {{ Step!.LoopBodyType || 'Action' }}
+            <!-- Action Picker -->
+            @if (showActionPicker) {
+                  <select [value]="Step!.ActionID || ''"
+                    (change)="OnActionChange(InputValue($event))"
+                    <option value="">-- Select Action --</option>
+                    @for (action of Actions; track action) {
+                      <option [value]="action.ID">{{ action.Name }}</option>
+                  <div class="mj-agent-props-readonly-value">{{ selectedActionName }}</div>
+            <!-- Prompt Picker -->
+            @if (showPromptPicker) {
+                <label>Prompt</label>
+                  <select [value]="Step!.PromptID || ''"
+                    (change)="OnPromptChange(InputValue($event))"
+                    <option value="">-- Select Prompt --</option>
+                    @for (prompt of Prompts; track prompt) {
+                      <option [value]="prompt.ID">{{ prompt.Name }}</option>
+                  <div class="mj-agent-props-readonly-value">{{ selectedPromptName }}</div>
+            <!-- Sub-Agent Picker -->
+            @if (showAgentPicker) {
+                <label>Sub-Agent</label>
+                  <select [value]="Step!.SubAgentID || ''"
+                    (change)="OnSubAgentChange(InputValue($event))"
+                    <option value="">-- Select Agent --</option>
+                    @for (agent of Agents; track agent) {
+                      <option [value]="agent.ID">{{ agent.Name }}</option>
+                  <div class="mj-agent-props-readonly-value">{{ selectedAgentName }}</div>
+            <!-- Loop Configuration (JSON) -->
+                <label>Loop Configuration</label>
+                  [value]="FormatJsonDisplay(Step!.Configuration)"
+                  [readonly]="ReadOnly"
+                  setup="minimal"
+                  (change)="OnConfigurationChange($any($event))">
+      <!-- ── Data Mapping Section (Action steps) ─── -->
+      @if (Step!.StepType === 'Action' || showActionPicker) {
+          <button class="mj-agent-props-section-header" (click)="ToggleSection('mapping')">
+            <span class="mj-agent-props-section-title">Data Mapping</span>
+            <i class="fa-solid" [ngClass]="IsSectionCollapsed('mapping') ? 'fa-chevron-right' : 'fa-chevron-down'"></i>
+          @if (!IsSectionCollapsed('mapping')) {
+                <label>Input Mapping</label>
+                  [value]="FormatJsonDisplay(Step!.ActionInputMapping)"
+                  placeholder="Enter JSON input mapping..."
+                  (change)="OnInputMappingChange($any($event))">
+                <label>Output Mapping</label>
+                  [value]="FormatJsonDisplay(Step!.ActionOutputMapping)"
+                  placeholder="Enter JSON output mapping..."
+                  (change)="OnOutputMappingChange($any($event))">
+      <!-- ── Error Handling Section ──────────── -->
+        <button class="mj-agent-props-section-header" (click)="ToggleSection('errors')">
+          <span class="mj-agent-props-section-title">Error Handling</span>
+          <i class="fa-solid" [ngClass]="IsSectionCollapsed('errors') ? 'fa-chevron-right' : 'fa-chevron-down'"></i>
+        @if (!IsSectionCollapsed('errors')) {
+              <label>On Error</label>
+                <select [value]="Step!.OnErrorBehavior"
+                  (change)="OnErrorBehaviorChange(InputValue($event))"
+                  <option value="fail">Fail (stop flow)</option>
+                  <option value="continue">Continue (ignore error)</option>
+                  <option value="retry">Retry</option>
+                  {{ Step!.OnErrorBehavior === 'fail' ? 'Fail (stop flow)' :
+                  Step!.OnErrorBehavior === 'continue' ? 'Continue (ignore error)' : 'Retry' }}
+            @if (Step!.OnErrorBehavior === 'retry') {
+                <label>Retry Count</label>
+                  <input type="number" [value]="Step!.RetryCount" min="0" max="10"
+                    (input)="OnRetryCountChange(NumericValue($event))"
+                  <div class="mj-agent-props-readonly-value">{{ Step!.RetryCount }}</div>
+              <label>Timeout (seconds)</label>
+                <input type="number" [value]="Step!.TimeoutSeconds" min="1"
+                  (input)="OnTimeoutChange(NumericValue($event))"
+                <div class="mj-agent-props-readonly-value">{{ Step!.TimeoutSeconds }}s</div>
+      <!-- ── Danger Zone ─────────────────────── -->
+        <div class="mj-agent-props-section mj-agent-props-danger">
+          <button class="mj-agent-props-delete-btn" (click)="OnDeleteStep()">
+            <i class="fa-solid fa-trash-can"></i> Delete Step
+  <!-- PATH PROPERTIES                              -->
+  @if (isConnectionSelected) {
+    <!-- Path Header -->
+    <div class="mj-agent-props-header mj-agent-props-header--path"
+      [style.border-left-color]="pathAccentColor">
+        <span class="mj-agent-props-header-label">PATH</span>
+      <!-- Path identity card -->
+        <div class="mj-agent-props-identity-icon mj-agent-props-identity-icon--path"
+          [style.background]="pathAccentColor">
+          <span class="mj-agent-props-path-route">
+            <span class="mj-agent-props-path-step-name">{{ originStepName }}</span>
+            <i class="fa-solid fa-arrow-right mj-agent-props-path-arrow"></i>
+            <span class="mj-agent-props-path-step-name">{{ destinationStepName }}</span>
+            <span class="mj-agent-props-type-pill"
+              [style.color]="pathAccentColor"
+              [style.background]="pathAccentColor + '18'">
+              {{ isConditionalPath ? 'Conditional' : 'Always' }}
+            @if (PathEntity!.Priority !== 0) {
+              <span class="mj-agent-props-priority-badge">
+                Priority: {{ PathEntity!.Priority }}
+      <!-- ── Overview Section ────────────────── -->
+        <button class="mj-agent-props-section-header" (click)="ToggleSection('path-overview')">
+          <span class="mj-agent-props-section-title">Route</span>
+          <i class="fa-solid" [ngClass]="IsSectionCollapsed('path-overview') ? 'fa-chevron-right' : 'fa-chevron-down'"></i>
+        @if (!IsSectionCollapsed('path-overview')) {
+              <label>From</label>
+              <div class="mj-agent-props-readonly-value mj-agent-props-readonly-value--muted">
+                {{ originStepName }}
+              <label>To</label>
+                {{ destinationStepName }}
+            <span class="mj-agent-props-hint">To change the route, rewire the connection on the canvas.</span>
+      <!-- ── Path Settings Section ───────────── -->
+        <button class="mj-agent-props-section-header" (click)="ToggleSection('path-settings')">
+          <span class="mj-agent-props-section-title">Settings</span>
+          <i class="fa-solid" [ngClass]="IsSectionCollapsed('path-settings') ? 'fa-chevron-right' : 'fa-chevron-down'"></i>
+        @if (!IsSectionCollapsed('path-settings')) {
+                <input type="text" [value]="PathEntity!.Description || ''"
+                  (input)="OnPathDescriptionChange(InputValue($event))"
+                  placeholder="Path label..." class="mj-agent-props-input">
+                  {{ PathEntity!.Description || '—' }}
+                <span class="mj-agent-props-hint">Displayed as a label on the connection line</span>
+              <label>Condition</label>
+                  [value]="PathEntity!.Condition || ''"
+                  language="javascript"
+                  placeholder="e.g. payload.status === 'active'"
+                  (change)="OnPathConditionChange($any($event))">
+              @if (ReadOnly && PathEntity!.Condition) {
+                  [value]="PathEntity!.Condition"
+              @if (ReadOnly && !PathEntity!.Condition) {
+                  No condition (always taken)
+                <span class="mj-agent-props-hint">
+                  JavaScript expression evaluated at runtime. Leave empty for unconditional.
+                <input type="number" [value]="PathEntity!.Priority" min="-100" max="100"
+                  (input)="OnPathPriorityChange(NumericValue($event))"
+                <div class="mj-agent-props-readonly-value">{{ PathEntity!.Priority }}</div>
+              <span class="mj-agent-props-hint">Higher priority paths are evaluated first when multiple paths leave a step.</span>
+          <button class="mj-agent-props-delete-btn" (click)="OnDeletePath()">
+            <i class="fa-solid fa-trash-can"></i> Delete Path

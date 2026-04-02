@@ -1,0 +1,35 @@
+<h1><a href="privateca_v1.html">Certificate Authority API</a> . <a href="privateca_v1.projects.html">projects</a> . <a href="privateca_v1.projects.locations.html">locations</a> . <a href="privateca_v1.projects.locations.caPools.html">caPools</a> . <a href="privateca_v1.projects.locations.caPools.certificateAuthorities.html">certificateAuthorities</a> . <a href="privateca_v1.projects.locations.caPools.certificateAuthorities.certificateRevocationLists.html">certificateRevocationLists</a></h1>
+<p class="firstline">Returns a CertificateRevocationList.</p>
+<p class="firstline">Lists CertificateRevocationLists.</p>
+<p class="firstline">Update a CertificateRevocationList.</p>
+  <pre>Returns a CertificateRevocationList.
+  name: string, Required. The name of the CertificateRevocationList to get. (required)
+    { # A CertificateRevocationList corresponds to a signed X.509 certificate Revocation List (CRL). A CRL contains the serial numbers of certificates that should no longer be trusted.
+  &quot;accessUrl&quot;: &quot;A String&quot;, # Output only. The location where &#x27;pem_crl&#x27; can be accessed.
+  &quot;createTime&quot;: &quot;A String&quot;, # Output only. The time at which this CertificateRevocationList was created.
+  &quot;labels&quot;: { # Optional. Labels with user-defined metadata.
+  &quot;name&quot;: &quot;A String&quot;, # Identifier. The resource name for this CertificateRevocationList in the format `projects/*/locations/*/caPools/*certificateAuthorities/*/ certificateRevocationLists/*`.
+  &quot;pemCrl&quot;: &quot;A String&quot;, # Output only. The PEM-encoded X.509 CRL.
+  &quot;revisionId&quot;: &quot;A String&quot;, # Output only. The revision ID of this CertificateRevocationList. A new revision is committed whenever a new CRL is published. The format is an 8-character hexadecimal string.
+  &quot;revokedCertificates&quot;: [ # Output only. The revoked serial numbers that appear in pem_crl.
+    { # Describes a revoked Certificate.
+      &quot;certificate&quot;: &quot;A String&quot;, # The resource name for the Certificate in the format `projects/*/locations/*/caPools/*/certificates/*`.
+      &quot;hexSerialNumber&quot;: &quot;A String&quot;, # The serial number of the Certificate.
+      &quot;revocationReason&quot;: &quot;A String&quot;, # The reason the Certificate was revoked.
+  &quot;sequenceNumber&quot;: &quot;A String&quot;, # Output only. The CRL sequence number that appears in pem_crl.
+  &quot;state&quot;: &quot;A String&quot;, # Output only. The State for this CertificateRevocationList.
+  &quot;updateTime&quot;: &quot;A String&quot;, # Output only. The time at which this CertificateRevocationList was updated.
+  <pre>Lists CertificateRevocationLists.
+  parent: string, Required. The resource name of the location associated with the CertificateRevocationLists, in the format `projects/*/locations/*/caPools/*/certificateAuthorities/*`. (required)
+  filter: string, Optional. Only include resources that match the filter in the response.
+  orderBy: string, Optional. Specify how the results should be sorted.
+  pageSize: integer, Optional. Limit on the number of CertificateRevocationLists to include in the response. Further CertificateRevocationLists can subsequently be obtained by including the ListCertificateRevocationListsResponse.next_page_token in a subsequent request. If unspecified, the server will pick an appropriate default.
+  pageToken: string, Optional. Pagination token, returned earlier via ListCertificateRevocationListsResponse.next_page_token.
+    { # Response message for CertificateAuthorityService.ListCertificateRevocationLists.
+  &quot;certificateRevocationLists&quot;: [ # The list of CertificateRevocationLists.
+  &quot;nextPageToken&quot;: &quot;A String&quot;, # A token to retrieve next page of results. Pass this value in ListCertificateRevocationListsRequest.page_token to retrieve the next page of results.
+  &quot;unreachable&quot;: [ # A list of locations (e.g. &quot;us-west1&quot;) that could not be reached.
+  <pre>Update a CertificateRevocationList.
+  name: string, Identifier. The resource name for this CertificateRevocationList in the format `projects/*/locations/*/caPools/*certificateAuthorities/*/ certificateRevocationLists/*`. (required)
+  requestId: string, Optional. An ID to identify requests. Specify a unique request ID so that if you must retry your request, the server will know to ignore the request if it has already been completed. The server will guarantee that for at least 60 minutes since the first request. For example, consider a situation where you make an initial request and the request times out. If you make the request again with the same request ID, the server can check if original operation with the same request ID was received, and if so, will ignore the second request. This prevents clients from accidentally creating duplicate commitments. The request ID must be a valid UUID with the exception that zero UUID is not supported (00000000-0000-0000-0000-000000000000).
+  updateMask: string, Required. A list of fields to be updated in this request.

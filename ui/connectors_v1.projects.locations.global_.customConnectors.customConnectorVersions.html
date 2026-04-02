@@ -1,0 +1,84 @@
+<h1><a href="connectors_v1.html">Connectors API</a> . <a href="connectors_v1.projects.html">projects</a> . <a href="connectors_v1.projects.locations.html">locations</a> . <a href="connectors_v1.projects.locations.global_.html">global_</a> . <a href="connectors_v1.projects.locations.global_.customConnectors.html">customConnectors</a> . <a href="connectors_v1.projects.locations.global_.customConnectors.customConnectorVersions.html">customConnectorVersions</a></h1>
+  <code><a href="#create">create(parent, body=None, customConnectorVersionId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Creates a new CustomConnectorVersion in a given project and location.</p>
+<p class="firstline">Gets details of a single CustomConnectorVersion.</p>
+<p class="firstline">List CustomConnectorVersions in a given project</p>
+    <code class="details" id="create">create(parent, body=None, customConnectorVersionId=None, x__xgafv=None)</code>
+  <pre>Creates a new CustomConnectorVersion in a given project and location.
+  parent: string, Required. Parent resource of the CreateCustomConnector, of the form: `projects/{project}/locations/{location}/customConnectors/{custom_connector}` (required)
+{ # CustomConnectorVersion indicates a specific version of a connector.
+  &quot;asyncOperationsSupport&quot;: True or False, # Optional. Indicates if Async Operations/Connector Job is supported. This is only available for SDK based custom connectors.
+  &quot;authConfig&quot;: { # AuthConfig defines details of a authentication type. # Optional. Authentication config for accessing connector service (facade). This is used only when enable_backend_destination_config is true.
+  &quot;authConfigTemplates&quot;: [ # Optional. Auth Config Templates is only used when connector backend is enabled. This is used to specify the auth configs supported by the connector backend service to talk to the actual application backend.
+    { # AuthConfigTemplate defines required field over an authentication type.
+      &quot;configVariableTemplates&quot;: [ # Config variables to describe an `AuthConfig` for a `Connection`.
+        { # ConfigVariableTemplate provides metadata about a `ConfigVariable` that is used in a Connection.
+          &quot;authorizationCodeLink&quot;: { # This configuration captures the details required to render an authorization link for the OAuth Authorization Code Flow. # Optional. Authorization code link options. To be populated if `ValueType` is `AUTHORIZATION_CODE`
+            &quot;clientId&quot;: &quot;A String&quot;, # Optional. The client ID assigned to the Google Cloud Connectors OAuth app for the connector data source.
+            &quot;clientSecret&quot;: { # Secret provides a reference to entries in Secret Manager. # Optional. The client secret assigned to the Google Cloud Connectors OAuth app for the connector data source.
+            &quot;enablePkce&quot;: True or False, # Optional. Whether to enable PKCE for the auth code flow.
+            &quot;omitQueryParams&quot;: True or False, # Optional. Omit query params from the redirect URI.
+            &quot;scopes&quot;: [ # Optional. The scopes for which the user will authorize Google Cloud Connectors on the connector data source.
+            &quot;uri&quot;: &quot;A String&quot;, # Optional. The base URI the user must click to trigger the authorization code login flow.
+          &quot;displayName&quot;: &quot;A String&quot;, # Optional. Display name of the parameter.
+          &quot;enumOptions&quot;: [ # Optional. Enum options. To be populated if `ValueType` is `ENUM`
+            { # EnumOption definition
+              &quot;displayName&quot;: &quot;A String&quot;, # Optional. Display name of the option.
+              &quot;id&quot;: &quot;A String&quot;, # Optional. Id of the option.
+          &quot;enumSource&quot;: &quot;A String&quot;, # Optional. enum source denotes the source of api to fill the enum options
+          &quot;isAdvanced&quot;: True or False, # Optional. Indicates if current template is part of advanced settings
+          &quot;locationType&quot;: &quot;A String&quot;, # Optional. Location Type denotes where this value should be sent in BYOC connections.
+          &quot;multipleSelectConfig&quot;: { # MultipleSelectConfig represents the multiple options for a config variable. # Optional. MultipleSelectConfig represents the multiple options for a config variable.
+            &quot;allowCustomValues&quot;: True or False, # Optional. Allow custom values.
+            &quot;multipleSelectOptions&quot;: [ # Required. Multiple select options.
+              { # MultiplSelecteOption represents the single option for a config variable.
+                &quot;description&quot;: &quot;A String&quot;, # Optional. Value of the option.
+                &quot;key&quot;: &quot;A String&quot;, # Required. Key of the option.
+                &quot;preselected&quot;: True or False, # Optional. Indicates if the option is preselected.
+            &quot;valueSeparator&quot;: &quot;A String&quot;, # Required. Value separator. Only &quot;,&quot; can be used for OAuth auth code flow scope field.
+          &quot;required&quot;: True or False, # Optional. Flag represents that this `ConfigVariable` must be provided for a connection.
+          &quot;requiredCondition&quot;: { # Struct for representing boolean expressions. # Optional. Condition under which a field would be required. The condition can be represented in the form of a logical expression.
+            &quot;fieldComparisons&quot;: [ # Optional. A list of fields to be compared.
+              { # Field that needs to be compared.
+                &quot;boolValue&quot;: True or False, # Boolean value
+                &quot;comparator&quot;: &quot;A String&quot;, # Optional. Comparator to use for comparing the field value.
+                &quot;intValue&quot;: &quot;A String&quot;, # Integer value
+                &quot;key&quot;: &quot;A String&quot;, # Optional. Key of the field.
+                &quot;stringValue&quot;: &quot;A String&quot;, # String value
+            &quot;logicalExpressions&quot;: [ # Optional. A list of nested conditions to be compared.
+              # Object with schema name: LogicalExpression
+            &quot;logicalOperator&quot;: &quot;A String&quot;, # Optional. The logical operator to use between the fields and conditions.
+          &quot;roleGrant&quot;: { # This configuration defines all the Cloud IAM roles that needs to be granted to a particular Google Cloud resource for the selected principal like service account. These configurations will let UI display to customers what IAM roles need to be granted by them. Or these configurations can be used by the UI to render a &#x27;grant&#x27; button to do the same on behalf of the user. # Optional. Role grant configuration for the config variable.
+            &quot;helperTextTemplate&quot;: &quot;A String&quot;, # Optional. Template that UI can use to provide helper text to customers.
+            &quot;principal&quot;: &quot;A String&quot;, # Optional. Principal/Identity for whom the role need to assigned.
+            &quot;resource&quot;: { # Resource definition # Optional. Resource on which the roles needs to be granted for the principal.
+              &quot;pathTemplate&quot;: &quot;A String&quot;, # Optional. Template to uniquely represent a Google Cloud resource in a format IAM expects This is a template that can have references to other values provided in the config variable template.
+              &quot;type&quot;: &quot;A String&quot;, # Optional. Different types of resource supported.
+            &quot;roles&quot;: [ # Optional. List of roles that need to be granted.
+          &quot;state&quot;: &quot;A String&quot;, # Output only. State of the config variable.
+          &quot;valueType&quot;: &quot;A String&quot;, # Optional. Type of the parameter: string, int, bool etc. consider custom type for the benefit for the validation.
+      &quot;description&quot;: &quot;A String&quot;, # Connector specific description for an authentication template.
+      &quot;displayName&quot;: &quot;A String&quot;, # Display name for authentication template.
+      &quot;isDefault&quot;: True or False, # Whether the auth config is the default one.
+  &quot;authOverrideSupport&quot;: True or False, # Optional. Auth override support.
+  &quot;backendVariableTemplates&quot;: [ # Optional. Backend variable templates is only used when connector backend is enabled. This is used to specify the variables required by the connector backend service to talk to the actual application backend. This translates to additional variable templates in the connection config.
+  &quot;destinationConfigs&quot;: [ # Optional. Destination config(s) for accessing connector service (facade). This is used only when enable_backend_destination_config is true.
+  &quot;enableBackendDestinationConfig&quot;: True or False, # Optional. Indicates if an intermediatory connectorservice is used as backend. When this is enabled, the connector destination and connector auth config are required. For SDK based connectors, this is always enabled.
+  &quot;name&quot;: &quot;A String&quot;, # Output only. Identifier. Resource name of the Version. Format: projects/{project}/locations/{location}/customConnectors/{custom_connector}/customConnectorVersions/{custom_connector_version}
+  &quot;partnerMetadata&quot;: { # Partner metadata details. This will be populated when publishing the custom connector as a partner connector version. On publishing, parntner connector version will be created using the fields in PartnerMetadata. # Optional. Partner metadata details. This should be populated only when publishing the custom connector to partner connector.
+  &quot;publishStatus&quot;: { # Publish status of a custom connector. # Output only. Publish status of a custom connector.
+    &quot;publishState&quot;: &quot;A String&quot;, # Output only. Publish state of the custom connector.
+    &quot;publishTime&quot;: &quot;A String&quot;, # Output only. Publish time.
+    &quot;publishedAs&quot;: &quot;A String&quot;, # Output only. Partner connector name. Will be set on the custom connector. Format: providers/partner/connectors//versions/
+    &quot;publishedSource&quot;: &quot;A String&quot;, # Output only. Custom connector name. Will be set on the partner connector. Format: providers/customconnectors/connectors//versions/
+  &quot;serviceAccount&quot;: &quot;A String&quot;, # Optional. Service account used by runtime plane to access auth config secrets.
+  &quot;specLocation&quot;: &quot;A String&quot;, # Optional. Location of the custom connector spec. This is only used for Open API based custom connectors. The location can be either a public url like `https://public-url.com/spec` Or a Google Cloud Storage location like `gs:///`.
+  &quot;specServerUrls&quot;: [ # Output only. Server URLs parsed from the Open API spec. This is only used for Open API based custom connectors.
+  &quot;state&quot;: &quot;A String&quot;, # Output only. State of the custom connector version.
+  customConnectorVersionId: string, Required. Identifier to assign to the CreateCustomConnectorVersion. Must be unique within scope of the parent resource.
+  <pre>Gets details of a single CustomConnectorVersion.
+  name: string, Required. Resource name of the form: `projects/*/locations/{location}/customConnectors/*/customConnectorVersions/*` (required)
+  <pre>List CustomConnectorVersions in a given project
+  parent: string, Required. Parent resource of the connectors, of the form: `projects/*/locations/{location}/customConnectors/*/customConnectorVersions/*` (required)
+    { # Response message for Connectors.ListCustomConnectorVersions.
+  &quot;customConnectorVersions&quot;: [ # A list of connector versions.

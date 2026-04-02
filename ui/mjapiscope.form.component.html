@@ -1,0 +1,19 @@
+    <!-- Scope Definition Section -->
+        SectionKey="scopeDefinition"
+        SectionName="Scope Definition"
+            FieldName="UIConfig"
+    <!-- Scope Hierarchy Section -->
+        SectionKey="scopeHierarchy"
+        SectionName="Scope Hierarchy"
+            FieldName="FullPath"
+            FieldName="ResourceType"
+                [Params]="BuildRelationshipViewParamsByEntityName('MJ: API Application Scopes','ScopeID')"
+                [Params]="BuildRelationshipViewParamsByEntityName('MJ: API Key Scopes','ScopeID')"
+    <!-- MJ: API Scopes Section -->
+        SectionKey="mJAPIScopes"
+        SectionName="MJ: API Scopes"
+        [BadgeCount]="GetSectionRowCount('mJAPIScopes')"
+                [Params]="BuildRelationshipViewParamsByEntityName('MJ: API Scopes','ParentID')"
+                [NewRecordValues]="NewRecordValues('MJ: API Scopes')"
+                [AllowLoad]="IsSectionExpanded('mJAPIScopes')"
+                (AfterDataLoad)="SetSectionRowCount('mJAPIScopes', $event.totalRowCount)"

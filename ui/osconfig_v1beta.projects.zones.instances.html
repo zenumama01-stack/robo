@@ -1,0 +1,21 @@
+<h1><a href="osconfig_v1beta.html">OS Config API</a> . <a href="osconfig_v1beta.projects.html">projects</a> . <a href="osconfig_v1beta.projects.zones.html">zones</a> . <a href="osconfig_v1beta.projects.zones.instances.html">instances</a></h1>
+  <code><a href="#lookupEffectiveGuestPolicy">lookupEffectiveGuestPolicy(instance, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Lookup the effective guest policy that applies to a VM instance. This lookup merges all policies that are assigned to the instance ancestry.</p>
+    <code class="details" id="lookupEffectiveGuestPolicy">lookupEffectiveGuestPolicy(instance, body=None, x__xgafv=None)</code>
+  <pre>Lookup the effective guest policy that applies to a VM instance. This lookup merges all policies that are assigned to the instance ancestry.
+  instance: string, Required. The VM instance whose policies are being looked up. (required)
+{ # A request message for getting the effective guest policy assigned to the instance.
+  &quot;osArchitecture&quot;: &quot;A String&quot;, # Architecture of OS running on the instance. The OS Config agent only provides this field for targeting if OS Inventory is enabled for that instance.
+  &quot;osShortName&quot;: &quot;A String&quot;, # Short name of the OS running on the instance. The OS Config agent only provides this field for targeting if OS Inventory is enabled for that instance.
+  &quot;osVersion&quot;: &quot;A String&quot;, # Version of the OS running on the instance. The OS Config agent only provides this field for targeting if OS Inventory is enabled for that VM instance.
+    { # The effective guest policy that applies to a VM instance.
+  &quot;packageRepositories&quot;: [ # List of package repository configurations assigned to the VM instance.
+    { # A guest policy package repository including its source.
+      &quot;packageRepository&quot;: { # A package repository. # A software package repository to configure on the VM instance.
+      &quot;source&quot;: &quot;A String&quot;, # Name of the guest policy providing this config.
+  &quot;packages&quot;: [ # List of package configurations assigned to the VM instance.
+    { # A guest policy package including its source.
+      &quot;package&quot;: { # Package is a reference to the software package to be installed or removed. The agent on the VM instance uses the system package manager to apply the config. These are the commands that the agent uses to install or remove packages. Apt install: `apt-get update &amp;&amp; apt-get -y install package1 package2 package3` remove: `apt-get -y remove package1 package2 package3` Yum install: `yum -y install package1 package2 package3` remove: `yum -y remove package1 package2 package3` Zypper install: `zypper install package1 package2 package3` remove: `zypper rm package1 package2` Googet install: `googet -noconfirm install package1 package2 package3` remove: `googet -noconfirm remove package1 package2 package3` # A software package to configure on the VM instance.
+  &quot;softwareRecipes&quot;: [ # List of recipes assigned to the VM instance.
+    { # A guest policy recipe including its source.
+      &quot;softwareRecipe&quot;: { # A software recipe is a set of instructions for installing and configuring a piece of software. It consists of a set of artifacts that are downloaded, and a set of steps that install, configure, and/or update the software. Recipes support installing and updating software from artifacts in the following formats: Zip archive, Tar archive, Windows MSI, Debian package, and RPM package. Additionally, recipes support executing a script (either defined in a file or directly in this api) in bash, sh, cmd, and powershell. Updating a software recipe If a recipe is assigned to an instance and there is a recipe with the same name but a lower version already installed and the assigned state of the recipe is `UPDATED`, then the recipe is updated to the new version. Script Working Directories Each script or execution step is run in its own temporary directory which is deleted after completing the step. # A software recipe to configure on the VM instance.

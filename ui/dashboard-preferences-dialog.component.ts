@@ -1,0 +1,204 @@
+import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
+import { LogError, Metadata, RunView } from '@memberjunction/core';
+import { DashboardEntityExtended, MJDashboardUserPreferenceEntity, MJApplicationEntity } from '@memberjunction/core-entities';
+export interface DashboardPreferencesResult {
+  preferences?: MJDashboardUserPreferenceEntity[];
+  selector: 'mj-dashboard-preferences-dialog',
+  templateUrl: './dashboard-preferences-dialog.component.html',
+  styleUrls: ['./dashboard-preferences-dialog.component.css']
+export class DashboardPreferencesDialogComponent implements OnInit {
+  @Input() public applicationId: string | null = null;
+  @Input() public scope: 'Global' | 'App' = 'Global';
+  @Output() public result = new EventEmitter<DashboardPreferencesResult>();
+  public availableDashboards: DashboardEntityExtended[] = [];
+  public configuredDashboards: DashboardEntityExtended[] = [];
+  public applicationName: string = '';
+  public loading: boolean = true;
+  public saving: boolean = false;
+  public hasChanges: boolean = false;
+  public isSysAdmin: boolean = false;
+  public preferenceMode: 'personal' | 'system' = 'personal';
+  private originalConfiguredIds: string[] = [];
+  private currentUserPreferences: MJDashboardUserPreferenceEntity[] = [];
+  private allAvailableDashboards: DashboardEntityExtended[] = [];
+      LogError('Error initializing dashboard preferences dialog', null, error);
+      this.error = 'Failed to load dashboard preferences';
+    // Check if current user is sysadmin
+    this.isSysAdmin = md.CurrentUser.Type.trim().toLowerCase() === 'owner';
+    console.log('User is sysadmin:', this.isSysAdmin);
+    // Default to personal preferences for all users (including sysadmin)
+    this.preferenceMode = 'personal';
+    // Load application name if we're in app scope
+    if (this.scope === 'App' && this.applicationId) {
+      await this.loadApplicationName();
+    // Get cached dashboards from MJ_Metadata dataset
+    const ds = await md.GetAndCacheDatasetByName("MJ_Metadata");
+    if (!ds || !ds.Success) {
+      throw new Error(ds?.Status || 'Failed to load metadata dataset');
+    const dashList = ds.Results.find(r => r.Code === 'Dashboards');
+    if (!dashList) {
+      throw new Error('Dashboards dataset not found');
+    // Filter dashboards by scope
+    const appFilter = this.applicationId ? ` AND ApplicationID='${this.applicationId}'` : ' AND ApplicationID IS NULL';
+    this.allAvailableDashboards = dashList.Results.filter((d: DashboardEntityExtended) => {
+      if (this.scope === 'Global') {
+        return d.Scope === 'Global' && !d.ApplicationID;
+        return d.ApplicationID === this.applicationId; // ignore scope for dashboards that match app id, sometimes they have a global scope as they can be shown globally as well as app specific
+    // Load current user preferences
+    await this.loadCurrentPreferences();
+    // Split dashboards into available and configured
+    this.splitDashboards();
+    // Store original state to detect changes
+    this.originalConfiguredIds = this.configuredDashboards.map(d => d.ID);
+  private async loadApplicationName(): Promise<void> {
+    if (!this.applicationId) return;
+      const appList = ds.Results.find(r => r.Code === 'Applications');
+      if (appList) {
+        const app = appList.Results.find((a: MJApplicationEntity) => a.ID === this.applicationId);
+        this.applicationName = app?.Name || 'Unknown Application';
+      LogError('Error loading application name', null, error);
+      this.applicationName = 'Unknown Application';
+  private async loadCurrentPreferences(): Promise<void> {
+    const appFilter = this.applicationId ? ` AND ApplicationID='${this.applicationId}'` : '';
+    const baseCondition = `Scope='${this.scope}'${appFilter}`;
+    let filter: string;
+    if (this.isSysAdmin && this.scope === 'Global' && this.preferenceMode === 'system') {
+      // Load system defaults only (UserID IS NULL)
+      filter = `UserID IS NULL AND ${baseCondition}`;
+      // Load personal user preferences (including for sysadmin when in personal mode)
+      // For personal mode, we ONLY load the user's specific preferences, no fallback to system defaults
+      // This allows sysadmin to see their actual personal preferences vs system defaults
+      filter = `UserID='${md.CurrentUser.ID}' AND ${baseCondition}`;
+    console.log('Loading preferences with filter:', filter);
+    const prefsResult = await rv.RunView<MJDashboardUserPreferenceEntity>({
+      EntityName: 'MJ: Dashboard User Preferences',
+      OrderBy: 'DisplayOrder',
+    this.currentUserPreferences = prefsResult?.Results || [];
+    console.log('Loaded preferences:', this.currentUserPreferences.length);
+  private splitDashboards(): void {
+    const configuredIds = new Set(this.currentUserPreferences.map(p => p.DashboardID));
+    // Get configured dashboards in the right order
+    this.configuredDashboards = this.currentUserPreferences
+      .map(pref => this.allAvailableDashboards.find(d => d.ID === pref.DashboardID))
+      .filter((d): d is DashboardEntityExtended => d !== undefined);
+    // Get available dashboards (not configured)
+    this.availableDashboards = this.allAvailableDashboards
+      .filter(d => !configuredIds.has(d.ID))
+  public onDrop(event: CdkDragDrop<DashboardEntityExtended[]>): void {
+      if (event.previousContainer === event.container) {
+        // Reordering within the same list
+        moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
+        // Moving between lists
+        transferArrayItem(
+          event.previousContainer.data,
+          event.container.data,
+          event.previousIndex,
+          event.currentIndex
+        // If moving to configured dashboards, sort the available list
+        if (event.container.data === this.configuredDashboards) {
+          this.availableDashboards.sort((a, b) => a.Name.localeCompare(b.Name));
+      this.checkForChanges();
+      LogError('Error in drag drop operation', null, error);
+      this.error = 'Error reordering dashboards. Please try again.';
+      // Clear error after 3 seconds
+      }, 3000);
+  public addDashboard(dashboard: DashboardEntityExtended): void {
+      const index = this.availableDashboards.findIndex(d => d.ID === dashboard.ID);
+      if (index !== -1) {
+        this.availableDashboards.splice(index, 1);
+        this.configuredDashboards.push(dashboard);
+      LogError('Error adding dashboard', null, error);
+      this.error = 'Error adding dashboard. Please try again.';
+  public removeDashboard(dashboard: DashboardEntityExtended): void {
+      const index = this.configuredDashboards.findIndex(d => d.ID === dashboard.ID);
+        this.configuredDashboards.splice(index, 1);
+        this.availableDashboards.push(dashboard);
+      LogError('Error removing dashboard', null, error);
+      this.error = 'Error removing dashboard. Please try again.';
+  public async onPreferenceModeChange(): Promise<void> {
+      // Reload preferences with new mode
+      this.hasChanges = false;
+      LogError('Error changing preference mode', null, error);
+      this.error = 'Error loading preferences. Please try again.';
+  private checkForChanges(): void {
+      const currentConfiguredIds = this.configuredDashboards.map(d => d.ID);
+      // Check if the order or selection has changed
+      this.hasChanges = currentConfiguredIds.length !== this.originalConfiguredIds.length ||
+                       currentConfiguredIds.some((id, index) => id !== this.originalConfiguredIds[index]);
+      console.log('Dashboard preferences change check:', {
+        original: this.originalConfiguredIds,
+        current: currentConfiguredIds,
+        hasChanges: this.hasChanges
+      LogError('Error checking for changes', null, error);
+    if (this.saving || !this.hasChanges) {
+      console.log('Save cancelled:', { saving: this.saving, hasChanges: this.hasChanges });
+      this.saving = true;
+      console.log('Starting save process with configured dashboards:', this.configuredDashboards.map(d => ({ id: d.ID, name: d.Name })));
+      // Get existing preferences for this scope
+      const baseCondition = this.scope === 'Global' 
+        ? `Scope='Global' AND ApplicationID IS NULL`
+        : `Scope='App' AND ApplicationID='${this.applicationId}'`;
+      let userFilter: string;
+        // Managing system defaults
+        userFilter = `UserID IS NULL AND ${baseCondition}`;
+        // Managing personal preferences
+        userFilter = `UserID='${md.CurrentUser.ID}' AND ${baseCondition}`;
+      console.log('Loading existing preferences with filter:', userFilter);
+      const existingPrefs = await rv.RunView<MJDashboardUserPreferenceEntity>({
+        ExtraFilter: userFilter,
+      const existingPreferences = existingPrefs?.Results || [];
+      console.log('Found existing preferences:', existingPreferences.length);
+      // Create maps for efficient lookups
+      const existingByDashboardId = new Map<string, MJDashboardUserPreferenceEntity>();
+      existingPreferences.forEach(pref => {
+        existingByDashboardId.set(pref.DashboardID, pref);
+      const configuredDashboardIds = new Set(this.configuredDashboards.map(d => d.ID));
+      // Step 1: Delete preferences that are no longer configured
+      const prefsToDelete = existingPreferences.filter(pref => !configuredDashboardIds.has(pref.DashboardID));
+      console.log('Preferences to delete:', prefsToDelete.length);
+      for (const pref of prefsToDelete) {
+        console.log('Deleting preference for dashboard:', pref.DashboardID);
+        if (!await pref.Delete()) {
+          const errorMsg = pref.LatestResult?.Error || pref.LatestResult?.Message || 'Unknown error';
+          throw new Error(`Failed to delete preference: ${errorMsg}`);
+      // Step 2: Update existing preferences or create new ones
+      const newPreferences: MJDashboardUserPreferenceEntity[] = [];
+      for (let i = 0; i < this.configuredDashboards.length; i++) {
+        const dashboard = this.configuredDashboards[i];
+        const newDisplayOrder = i + 1;
+        let prefEntity = existingByDashboardId.get(dashboard.ID);
+        if (prefEntity) {
+          // Update existing preference
+          console.log(`Updating existing preference for dashboard ${dashboard.Name}, new order: ${newDisplayOrder}`);
+          prefEntity.DisplayOrder = newDisplayOrder;
+          if (!await prefEntity.Save()) {
+            const errorMsg = prefEntity.LatestResult?.Error || prefEntity.LatestResult?.Message || 'Unknown error';
+            throw new Error(`Failed to update preference for dashboard ${dashboard.Name}: ${errorMsg}`);
+          // Create new preference
+          console.log(`Creating new preference for dashboard ${dashboard.Name}, order: ${newDisplayOrder}`);
+          prefEntity = await md.GetEntityObject<MJDashboardUserPreferenceEntity>('MJ: Dashboard User Preferences');
+          // Set UserID based on preference mode
+            prefEntity.UserID = null; // System default
+            prefEntity.UserID = md.CurrentUser.ID; // Personal preference
+          prefEntity.DashboardID = dashboard.ID;
+          prefEntity.Scope = this.scope;
+          prefEntity.ApplicationID = this.applicationId;
+          console.log('Creating preference entity:', {
+            UserID: prefEntity.UserID,
+            DashboardID: prefEntity.DashboardID,
+            DisplayOrder: prefEntity.DisplayOrder,
+            Scope: prefEntity.Scope,
+            ApplicationID: prefEntity.ApplicationID
+            throw new Error(`Failed to create preference for dashboard ${dashboard.Name}: ${errorMsg}`);
+        newPreferences.push(prefEntity);
+      console.log('Successfully processed', newPreferences.length, 'preferences');
+      // Emit success result
+      this.result.emit({
+        saved: true,
+        preferences: newPreferences
+      console.error('Save error:', error);
+      LogError('Error saving dashboard preferences', null, error);
+      this.error = `Failed to save preferences: ${error instanceof Error ? error.message : 'Unknown error'}`;
+      // Clear error after 5 seconds
+      this.saving = false;
+    this.result.emit({ saved: false });

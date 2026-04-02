@@ -1,0 +1,47 @@
+<h1><a href="gkehub_v1alpha.html">GKE Hub API</a> . <a href="gkehub_v1alpha.projects.html">projects</a> . <a href="gkehub_v1alpha.projects.locations.html">locations</a> . <a href="gkehub_v1alpha.projects.locations.features.html">features</a></h1>
+      &quot;binauthz&quot;: { # Configuration for Binauthz # Optional. Deprecated: Binauthz configuration will be ignored and should not be set.
+        &quot;enabled&quot;: True or False, # Whether binauthz is enabled in this cluster.
+      &quot;defaultChannel&quot;: &quot;A String&quot;, # Determines which release channel to use for default injection and service mesh APIs.
+      &quot;cloudbuild&quot;: { # **Cloud Build**: Configurations for each Cloud Build enabled cluster. # Cloud Build-specific spec
+        &quot;securityPolicy&quot;: &quot;A String&quot;, # Whether it is allowed to run the privileged builds on the cluster or not.
+        &quot;version&quot;: &quot;A String&quot;, # Version of the cloud build software on the cluster.
+      &quot;namespaceactuation&quot;: { # **Namespace Actuation**: The membership-specific input for NamespaceActuation feature. # FNS Actuation membership spec
+      &quot;workloadcertificate&quot;: { # **Workload Certificate**: The membership-specific input for WorkloadCertificate feature. # Workload Certificate spec.
+        &quot;certificateManagement&quot;: &quot;A String&quot;, # Specifies workload certificate management.
+        &quot;scopes&quot;: [ # Fully qualified scope names that this clusters is bound to which also have rollout sequencing enabled.
+        &quot;binauthzState&quot;: { # State for Binauthz # Output only. Binauthz status
+          &quot;version&quot;: { # The version of binauthz. # The version of binauthz that is installed.
+            &quot;webhookVersion&quot;: &quot;A String&quot;, # The version of the binauthz webhook.
+          &quot;webhook&quot;: &quot;A String&quot;, # The state of the binauthz webhook.
+      &quot;metering&quot;: { # **Metering**: Per-Membership Feature State. # Metering-specific state.
+        &quot;lastMeasurementTime&quot;: &quot;A String&quot;, # The time stamp of the most recent measurement of the number of vCPUs in the cluster.
+        &quot;preciseLastMeasuredClusterVcpuCapacity&quot;: 3.14, # The vCPUs capacity in the cluster according to the most recent measurement (1/1000 precision).
+      &quot;namespaceactuation&quot;: { # **Namespace Actuation**: An empty state left as an example membership-specific Feature state. # FNS Actuation membership state
+        &quot;analysisMessages&quot;: [ # Output only. Results of running Service Mesh analyzers.
+          { # AnalysisMessage is a single message produced by an analyzer, and it used to communicate to the end user about the state of their Service Mesh configuration.
+            &quot;args&quot;: { # A UI can combine these args with a template (based on message_base.type) to produce an internationalized message.
+            &quot;description&quot;: &quot;A String&quot;, # A human readable description of what the error means. It is suitable for non-internationalize display purposes.
+            &quot;messageBase&quot;: { # AnalysisMessageBase describes some common information that is needed for all messages. # Details common to all types of Istio and ServiceMesh analysis messages.
+              &quot;documentationUrl&quot;: &quot;A String&quot;, # A url pointing to the Service Mesh or Istio documentation for this specific error type.
+              &quot;level&quot;: &quot;A String&quot;, # Represents how severe a message is.
+              &quot;type&quot;: { # A unique identifier for the type of message. Display_name is intended to be human-readable, code is intended to be machine readable. There should be a one-to-one mapping between display_name and code. (i.e. do not re-use display_names or codes between message types.) See istio.analysis.v1alpha1.AnalysisMessageBase.Type # Represents the specific type of a message.
+                &quot;code&quot;: &quot;A String&quot;, # A 7 character code matching `^IST[0-9]{4}$` or `^ASM[0-9]{4}$`, intended to uniquely identify the message type. (e.g. &quot;IST0001&quot; is mapped to the &quot;InternalError&quot; message type.)
+                &quot;displayName&quot;: &quot;A String&quot;, # A human-readable name for the message type. e.g. &quot;InternalError&quot;, &quot;PodMissingProxy&quot;. This should be the same for all messages of the same type. (This corresponds to the `name` field in open-source Istio.)
+            &quot;resourcePaths&quot;: [ # A list of strings specifying the resource identifiers that were the cause of message generation. A &quot;path&quot; here may be: * MEMBERSHIP_ID if the cause is a specific member cluster * MEMBERSHIP_ID/(NAMESPACE\/)?RESOURCETYPE/NAME if the cause is a resource in a cluster
+        &quot;configApiVersion&quot;: &quot;A String&quot;, # The API version (i.e. Istio CRD version) for configuring service mesh in this cluster. This version is influenced by the `default_channel` field.
+      &quot;clusterupgrade&quot;: { # **ClusterUpgrade**: The configuration for the scope-level ClusterUpgrade feature. # Spec for the ClusterUpgrade feature at the scope level
+        &quot;upstreamScopes&quot;: [ # This scope consumes upgrades that have COMPLETE status code in the upstream scopes. See UpgradeStatus.Code for code definitions. The scope name should be in the form: `projects/{p}/locations/global/scopes/{s}` Where {p} is the project, {s} is a valid Scope in this project. {p} WILL match the Feature&#x27;s project. This is defined as repeated for future proof reasons. Initial implementation will enforce at most one upstream scope.
+      &quot;clusterupgrade&quot;: { # **ClusterUpgrade**: The state for the scope-level ClusterUpgrade feature. # State for the ClusterUpgrade feature at the scope level
+        &quot;downstreamScopes&quot;: [ # This scopes whose upstream_scopes contain the current scope. The scope name should be in the form: `projects/{p}/locations/gloobal/scopes/{s}` Where {p} is the project, {s} is a valid Scope in this project. {p} WILL match the Feature&#x27;s project.
+    &quot;cloudauditlogging&quot;: { # **Cloud Audit Logging**: Spec for Audit Logging Allowlisting. # Cloud Audit Logging-specific spec.
+      &quot;allowlistedServiceAccounts&quot;: [ # Service account that should be allowlisted to send the audit logs; eg cloudauditlogging@gcp-project.iam.gserviceaccount.com. These accounts must already exist, but do not need to have any permissions granted to them. The customer&#x27;s entitlements will be checked prior to allowlisting (i.e. the customer must be an Anthos customer.)
+      &quot;upgradeEngine&quot;: &quot;A String&quot;, # Output only. The effective upgrade engine for the fleet.
+      &quot;billing&quot;: &quot;A String&quot;, # Deprecated: This field will be ignored and should not be set. Customer&#x27;s billing structure.
+    &quot;namespaceactuation&quot;: { # An empty spec for actuation feature. This is required since Feature proto requires a spec. # Namespace Actuation feature spec
+      &quot;actuationMode&quot;: &quot;A String&quot;, # actuation_mode controls the behavior of the controller
+    &quot;workloadcertificate&quot;: { # **Workload Certificate**: The Hub-wide input for the WorkloadCertificate feature. # Workload Certificate spec.
+      &quot;defaultConfig&quot;: { # **Workload Certificate**: The membership-specific input for WorkloadCertificate feature. # Specifies default membership spec. Users can override the default in the member_configs for each member.
+      &quot;provisionGoogleCa&quot;: &quot;A String&quot;, # Immutable. Specifies CA configuration.
+    &quot;namespaceactuation&quot;: { # NamespaceActuation Feature State. # Namespace Actuation feature state.
+    &quot;servicemesh&quot;: { # **Service Mesh**: State for the whole Hub, as analyzed by the Service Mesh Hub Controller. # Service Mesh-specific state.
+      &quot;conditions&quot;: [ # Output only. List of conditions reported for this feature.

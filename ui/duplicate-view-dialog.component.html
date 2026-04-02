@@ -1,0 +1,25 @@
+    <div class="icon-circle">
+    <span class="header-title">Duplicate View</span>
+    <p class="intro-text">
+      Creating a copy of <strong>"{{ SourceViewName }}"</strong> with all its columns, filters, and sorting.
+    <!-- New Name Input -->
+      <label for="duplicateName">New View Name</label>
+        id="duplicateName"
+        [class.invalid]="NameTouched && !NewName.trim()"
+        [(ngModel)]="NewName"
+        (blur)="NameTouched = true"
+        (keydown.enter)="OnDuplicate()"
+      @if (NameTouched && !NewName.trim()) {
+        <span class="validation-error">Name is required</span>
+    <!-- Metadata Summary -->
+    @if (Summary) {
+      <div class="meta-summary">
+        @if (Summary.FilterCount > 0) {
+            {{ Summary.FilterCount }} filter{{ Summary.FilterCount !== 1 ? 's' : '' }}
+          {{ Summary.ColumnCount }} column{{ Summary.ColumnCount !== 1 ? 's' : '' }}
+        @if (Summary.SortCount > 0) {
+            {{ Summary.SortCount }} sort{{ Summary.SortCount !== 1 ? 's' : '' }}
+        @if (Summary.AggregateCount > 0) {
+            {{ Summary.AggregateCount }} aggregate{{ Summary.AggregateCount !== 1 ? 's' : '' }}
+      (click)="OnDuplicate()"
+      [disabled]="!NewName.trim()">

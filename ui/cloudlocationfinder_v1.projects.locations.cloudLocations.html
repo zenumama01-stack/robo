@@ -1,0 +1,29 @@
+<h1><a href="cloudlocationfinder_v1.html">Cloud Location Finder API</a> . <a href="cloudlocationfinder_v1.projects.html">projects</a> . <a href="cloudlocationfinder_v1.projects.locations.html">locations</a> . <a href="cloudlocationfinder_v1.projects.locations.cloudLocations.html">cloudLocations</a></h1>
+<p class="firstline">Retrieves a resource containing information about a cloud location.</p>
+<p class="firstline">Lists cloud locations under a given project and location.</p>
+  <code><a href="#search">search(parent, pageSize=None, pageToken=None, query=None, sourceCloudLocation=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Searches for cloud locations from a given source location.</p>
+  <pre>Retrieves a resource containing information about a cloud location.
+    { # Represents resource cloud locations.
+  &quot;carbonFreeEnergyPercentage&quot;: 3.14, # Optional. The carbon free energy percentage of the cloud location. This represents the average percentage of time customers&#x27; application will be running on carbon-free energy. See https://cloud.google.com/sustainability/region-carbon for more details. There is a difference between default value 0 and unset value. 0 means the carbon free energy percentage is 0%, while unset value means the carbon footprint data is not available.
+  &quot;cloudLocationType&quot;: &quot;A String&quot;, # Optional. The type of the cloud location.
+  &quot;cloudProvider&quot;: &quot;A String&quot;, # Optional. The provider of the cloud location. Values can be Google Cloud or third-party providers, including AWS, Azure, or Oracle Cloud Infrastructure.
+  &quot;containingCloudLocation&quot;: &quot;A String&quot;, # Output only. The containing cloud location in the strict nesting hierarchy. For example, the containing cloud location of a zone is a region.
+  &quot;displayName&quot;: &quot;A String&quot;, # Optional. The human-readable name of the cloud location. Example: us-east-2, us-east1.
+  &quot;name&quot;: &quot;A String&quot;, # Identifier. Name of the cloud location. Unique name of the cloud location including project and location using the form: `projects/{project_id}/locations/{location}/cloudLocations/{cloud_location}`
+  &quot;territoryCode&quot;: &quot;A String&quot;, # Optional. The two-letter ISO 3166-1 alpha-2 code of the cloud location. Examples: US, JP, KR.
+  <pre>Lists cloud locations under a given project and location.
+  parent: string, Required. The parent, which owns this collection of cloud locations. Format: projects/{project}/locations/{location} (required)
+  filter: string, Optional. A filter expression that filters resources listed in the response. The expression is in the form of field=value. For example, &#x27;cloud_location_type=CLOUD_LOCATION_TYPE_REGION&#x27;. Multiple filter queries are space-separated. For example, &#x27;cloud_location_type=CLOUD_LOCATION_TYPE_REGION territory_code=&quot;US&quot;&#x27; By default, each expression is an AND expression. However, you can include AND and OR expressions explicitly.
+  pageSize: integer, Optional. The maximum number of cloud locations to return per page. The service might return fewer cloud locations than this value. If unspecified, server will pick an appropriate default.
+  pageToken: string, Optional. A token identifying a page of results the server should return. Provide page token returned by a previous &#x27;ListCloudLocations&#x27; call to retrieve the next page of results. When paginating, all other parameters provided to &#x27;ListCloudLocations&#x27; must match the call that provided the page token.
+    { # Message for response to listing cloud locations.
+  &quot;cloudLocations&quot;: [ # Output only. List of cloud locations.
+  &quot;nextPageToken&quot;: &quot;A String&quot;, # Output only. The continuation token, used to page through large result sets. Provide this value in a subsequent request as page_token in subsequent requests to retrieve the next page. If this field is not present, there are no subsequent results.
+    <code class="details" id="search">search(parent, pageSize=None, pageToken=None, query=None, sourceCloudLocation=None, x__xgafv=None)</code>
+  <pre>Searches for cloud locations from a given source location.
+  pageSize: integer, Optional. The maximum number of cloud locations to return. The service might return fewer cloud locations than this value. If unspecified, server will pick an appropriate default.
+  pageToken: string, Optional. A token identifying a page of results the server should return. Provide Page token returned by a previous &#x27;ListCloudLocations&#x27; call to retrieve the next page of results. When paginating, all other parameters provided to &#x27;ListCloudLocations&#x27; must match the call that provided the page token.
+  query: string, Optional. The query string in search query syntax. While filter is used to filter the search results by attributes, query is used to specify the search requirements.
+  sourceCloudLocation: string, Required. The source cloud location to search from. Example search can be searching nearby cloud locations from the source cloud location by latency.
+    { # Message for response to searching cloud locations.

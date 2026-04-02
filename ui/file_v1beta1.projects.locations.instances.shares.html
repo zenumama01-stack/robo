@@ -1,0 +1,30 @@
+<h1><a href="file_v1beta1.html">Cloud Filestore API</a> . <a href="file_v1beta1.projects.html">projects</a> . <a href="file_v1beta1.projects.locations.html">locations</a> . <a href="file_v1beta1.projects.locations.instances.html">instances</a> . <a href="file_v1beta1.projects.locations.instances.shares.html">shares</a></h1>
+  <code><a href="#create">create(parent, body=None, shareId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Creates a share.</p>
+<p class="firstline">Deletes a share.</p>
+<p class="firstline">Gets the details of a specific share.</p>
+<p class="firstline">Lists all shares for a specified instance.</p>
+<p class="firstline">Updates the settings of a specific share.</p>
+    <code class="details" id="create">create(parent, body=None, shareId=None, x__xgafv=None)</code>
+  <pre>Creates a share.
+  parent: string, Required. The Filestore Instance to create the share for, in the format `projects/{project_id}/locations/{location}/instances/{instance_id}` (required)
+{ # A Filestore share.
+  &quot;backup&quot;: &quot;A String&quot;, # Immutable. Full name of the Cloud Filestore Backup resource that this Share is restored from, in the format of projects/{project_id}/locations/{location_id}/backups/{backup_id}. Empty, if the Share is created from scratch and not restored from a backup.
+  &quot;capacityGb&quot;: &quot;A String&quot;, # File share capacity in gigabytes (GB). Filestore defines 1 GB as 1024^3 bytes. Must be greater than 0.
+  &quot;createTime&quot;: &quot;A String&quot;, # Output only. The time when the share was created.
+  &quot;description&quot;: &quot;A String&quot;, # A description of the share with 2048 characters or less. Requests with longer descriptions will be rejected.
+  &quot;mountName&quot;: &quot;A String&quot;, # The mount name of the share. Must be 63 characters or less and consist of uppercase or lowercase letters, numbers, and underscores.
+  &quot;name&quot;: &quot;A String&quot;, # Output only. The resource name of the share, in the format `projects/{project_id}/locations/{location_id}/instances/{instance_id}/shares/{share_id}`.
+  &quot;state&quot;: &quot;A String&quot;, # Output only. The share state.
+  shareId: string, Required. The ID to use for the share. The ID must be unique within the specified instance. This value must start with a lowercase letter followed by up to 62 lowercase letters, numbers, or hyphens, and cannot end with a hyphen.
+  <pre>Deletes a share.
+  name: string, Required. The share resource name, in the format `projects/{project_id}/locations/{location}/instances/{instance_id}/share/{share_id}` (required)
+  <pre>Gets the details of a specific share.
+  name: string, Required. The share resource name, in the format `projects/{project_id}/locations/{location}/instances/{instance_id}/shares/{share_id}` (required)
+  <pre>Lists all shares for a specified instance.
+  parent: string, Required. The instance for which to retrieve share information, in the format `projects/{project_id}/locations/{location}/instances/{instance_id}`. (required)
+    { # ListSharesResponse is the result of ListSharesRequest.
+  &quot;shares&quot;: [ # A list of shares in the project for the specified instance.
+  <pre>Updates the settings of a specific share.
+  name: string, Output only. The resource name of the share, in the format `projects/{project_id}/locations/{location_id}/instances/{instance_id}/shares/{share_id}`. (required)
+  updateMask: string, Required. Mask of fields to update. At least one path must be supplied in this field. The elements of the repeated paths field may only include these fields: * &quot;description&quot; * &quot;capacity_gb&quot; * &quot;labels&quot; * &quot;nfs_export_options&quot;

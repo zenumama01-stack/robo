@@ -1,0 +1,23 @@
+<h1><a href="serviceconsumermanagement_v1.html">Service Consumer Management API</a> . <a href="serviceconsumermanagement_v1.services.html">services</a></h1>
+  <code><a href="serviceconsumermanagement_v1.services.tenancyUnits.html">tenancyUnits()</a></code>
+<p class="firstline">Returns the tenancyUnits Resource.</p>
+<p class="firstline">Search tenancy units for a managed service.</p>
+  <pre>Search tenancy units for a managed service.
+  parent: string, Required. Service for which search is performed. services/{service} {service} the name of a service, for example &#x27;service.googleapis.com&#x27;. (required)
+  pageSize: integer, Optional. The maximum number of results returned by this request. Currently, the default maximum is set to 256. If `page_size` &lt;= 256, the request proceeds. Else, the request fails with an `TU_INVALID_PAGE_SIZE` error.
+  pageToken: string, Optional. The continuation token, which is used to page through large result sets. To get the next page of results, set this parameter to the value of `nextPageToken` from the previous response.
+  query: string, Optional. Set a query `{expression}` for querying tenancy units. Your `{expression}` must be in the format: `field_name=literal_string`. The `field_name` is the name of the field you want to compare. Supported fields are `tenant_resources.tag` and `tenant_resources.resource`. For example, to search tenancy units that contain at least one tenant resource with a given tag &#x27;xyz&#x27;, use the query `tenant_resources.tag=xyz`. To search tenancy units that contain at least one tenant resource with a given resource name &#x27;projects/123456&#x27;, use the query `tenant_resources.resource=projects/123456`. Multiple expressions can be joined with `AND`s. Tenancy units must match all expressions to be included in the result set. For example, `tenant_resources.tag=xyz AND tenant_resources.resource=projects/123456`
+    { # Response for the search query.
+  &quot;nextPageToken&quot;: &quot;A String&quot;, # Pagination token for large results.
+  &quot;tenancyUnits&quot;: [ # Tenancy Units matching the request.
+    { # Representation of a tenancy unit.
+      &quot;consumer&quot;: &quot;A String&quot;, # Output only. @OutputOnly Cloud resource name of the consumer of this service. For example &#x27;projects/123456&#x27;.
+      &quot;createTime&quot;: &quot;A String&quot;, # Output only. @OutputOnly The time this tenancy unit was created.
+      &quot;name&quot;: &quot;A String&quot;, # Globally unique identifier of this tenancy unit &quot;services/{service}/{collection id}/{resource id}/tenancyUnits/{unit}&quot;
+      &quot;service&quot;: &quot;A String&quot;, # Output only. Google Cloud API name of the managed service owning this tenancy unit. For example &#x27;serviceconsumermanagement.googleapis.com&#x27;.
+      &quot;tenantResources&quot;: [ # Resources constituting the tenancy unit. There can be at most 512 tenant resources in a tenancy unit.
+        { # Resource constituting the TenancyUnit.
+          &quot;migratedTenantProject&quot;: &quot;A String&quot;, # Output only. The newly created regional resource name of the tenant project that has been migrated from a global service. This field is only set for migrated tenant projects. Format: `services//{collection_id}/{RESOURCE_ID}/locations/{LOCATION}/tenantProjects/{TENANT_ID}`.
+          &quot;resource&quot;: &quot;A String&quot;, # Output only. @OutputOnly Identifier of the tenant resource. For cloud projects, it is in the form &#x27;projects/{number}&#x27;. For example &#x27;projects/123456&#x27;.
+          &quot;status&quot;: &quot;A String&quot;, # Status of tenant resource.
+          &quot;tag&quot;: &quot;A String&quot;, # Unique per single tenancy unit.

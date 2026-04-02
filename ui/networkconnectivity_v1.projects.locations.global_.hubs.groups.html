@@ -1,0 +1,28 @@
+<h1><a href="networkconnectivity_v1.html">Network Connectivity API</a> . <a href="networkconnectivity_v1.projects.html">projects</a> . <a href="networkconnectivity_v1.projects.locations.html">locations</a> . <a href="networkconnectivity_v1.projects.locations.global_.html">global_</a> . <a href="networkconnectivity_v1.projects.locations.global_.hubs.html">hubs</a> . <a href="networkconnectivity_v1.projects.locations.global_.hubs.groups.html">groups</a></h1>
+<p class="firstline">Gets details about a Network Connectivity Center group.</p>
+<p class="firstline">Lists groups in a given hub.</p>
+<p class="firstline">Updates the parameters of a Network Connectivity Center group.</p>
+  <pre>Gets details about a Network Connectivity Center group.
+  name: string, Required. The name of the route table resource. (required)
+    { # A group represents a subset of spokes attached to a hub.
+  &quot;autoAccept&quot;: { # The auto-accept setting for a group controls whether proposed spokes are automatically attached to the hub. If auto-accept is enabled, the spoke immediately is attached to the hub and becomes part of the group. In this case, the new spoke is in the ACTIVE state. If auto-accept is disabled, the spoke goes to the INACTIVE state, and it must be reviewed and accepted by a hub administrator. # Optional. The auto-accept setting for this group.
+    &quot;autoAcceptProjects&quot;: [ # Optional. A list of project ids or project numbers for which you want to enable auto-accept. The auto-accept setting is applied to spokes being created or updated in these projects.
+  &quot;createTime&quot;: &quot;A String&quot;, # Output only. The time the group was created.
+  &quot;labels&quot;: { # Optional. Labels in key-value pair format. For more information about labels, see [Requirements for labels](https://cloud.google.com/resource-manager/docs/creating-managing-labels#requirements).
+  &quot;name&quot;: &quot;A String&quot;, # Immutable. The name of the group. Group names must be unique. They use the following form: `projects/{project_number}/locations/global/hubs/{hub}/groups/{group_id}`
+  &quot;routeTable&quot;: &quot;A String&quot;, # Output only. The name of the route table that corresponds to this group. They use the following form: `projects/{project_number}/locations/global/hubs/{hub_id}/routeTables/{route_table_id}`
+  &quot;state&quot;: &quot;A String&quot;, # Output only. The current lifecycle state of this group.
+  &quot;uid&quot;: &quot;A String&quot;, # Output only. The Google-generated UUID for the group. This value is unique across all group resources. If a group is deleted and another with the same name is created, the new route table is assigned a different unique_id.
+  &quot;updateTime&quot;: &quot;A String&quot;, # Output only. The time the group was last updated.
+  <pre>Lists groups in a given hub.
+  parent: string, Required. The parent resource&#x27;s name. (required)
+  filter: string, An expression that filters the list of results.
+  pageSize: integer, The maximum number of results to return per page.
+    { # Response for HubService.ListGroups method.
+  &quot;groups&quot;: [ # The requested groups.
+  &quot;nextPageToken&quot;: &quot;A String&quot;, # The token for the next page of the response. To see more results, use this value as the page_token for your next request. If this value is empty, there are no more results.
+  &quot;unreachable&quot;: [ # Hubs that could not be reached.
+  <pre>Updates the parameters of a Network Connectivity Center group.
+  name: string, Immutable. The name of the group. Group names must be unique. They use the following form: `projects/{project_number}/locations/global/hubs/{hub}/groups/{group_id}` (required)
+  requestId: string, Optional. A request ID to identify requests. Specify a unique request ID so that if you must retry your request, the server knows to ignore the request if it has already been completed. The server guarantees that a request doesn&#x27;t result in creation of duplicate commitments for at least 60 minutes. For example, consider a situation where you make an initial request and the request times out. If you make the request again with the same request ID, the server can check to see whether the original operation was received. If it was, the server ignores the second request. This behavior prevents clients from mistakenly creating duplicate commitments. The request ID must be a valid UUID, with the exception that zero UUID is not supported (00000000-0000-0000-0000-000000000000).
+  updateMask: string, Optional. In the case of an update to an existing group, field mask is used to specify the fields to be overwritten. The fields specified in the update_mask are relative to the resource, not the full request. A field is overwritten if it is in the mask. If the user does not provide a mask, then all fields are overwritten.

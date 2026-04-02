@@ -1,0 +1,41 @@
+<h1><a href="aiplatform_v1.html">Vertex AI API</a> . <a href="aiplatform_v1.datasets.html">datasets</a> . <a href="aiplatform_v1.datasets.datasetVersions.html">datasetVersions</a></h1>
+<p class="firstline">Create a version from a Dataset.</p>
+<p class="firstline">Deletes a Dataset version.</p>
+  <code><a href="#get">get(name, readMask=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Gets a Dataset version.</p>
+  <code><a href="#list">list(parent, filter=None, orderBy=None, pageSize=None, pageToken=None, readMask=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Lists DatasetVersions in a Dataset.</p>
+<p class="firstline">Updates a DatasetVersion.</p>
+  <code><a href="#restore">restore(name, x__xgafv=None)</a></code></p>
+<p class="firstline">Restores a dataset version.</p>
+  <pre>Create a version from a Dataset.
+  parent: string, Required. The name of the Dataset resource. Format: `projects/{project}/locations/{location}/datasets/{dataset}` (required)
+{ # Describes the dataset version.
+  &quot;bigQueryDatasetName&quot;: &quot;A String&quot;, # Output only. Name of the associated BigQuery dataset.
+  &quot;createTime&quot;: &quot;A String&quot;, # Output only. Timestamp when this DatasetVersion was created.
+  &quot;displayName&quot;: &quot;A String&quot;, # The user-defined name of the DatasetVersion. The name can be up to 128 characters long and can consist of any UTF-8 characters.
+  &quot;etag&quot;: &quot;A String&quot;, # Used to perform consistent read-modify-write updates. If not set, a blind &quot;overwrite&quot; update happens.
+  &quot;metadata&quot;: &quot;&quot;, # Required. Output only. Additional information about the DatasetVersion.
+  &quot;modelReference&quot;: &quot;A String&quot;, # Output only. Reference to the public base model last used by the dataset version. Only set for prompt dataset versions.
+  &quot;name&quot;: &quot;A String&quot;, # Output only. Identifier. The resource name of the DatasetVersion. Format: `projects/{project}/locations/{location}/datasets/{dataset}/datasetVersions/{dataset_version}`
+  &quot;updateTime&quot;: &quot;A String&quot;, # Output only. Timestamp when this DatasetVersion was last updated.
+  <pre>Deletes a Dataset version.
+  name: string, Required. The resource name of the Dataset version to delete. Format: `projects/{project}/locations/{location}/datasets/{dataset}/datasetVersions/{dataset_version}` (required)
+    <code class="details" id="get">get(name, readMask=None, x__xgafv=None)</code>
+  <pre>Gets a Dataset version.
+    <code class="details" id="list">list(parent, filter=None, orderBy=None, pageSize=None, pageToken=None, readMask=None, x__xgafv=None)</code>
+  <pre>Lists DatasetVersions in a Dataset.
+  parent: string, Required. The resource name of the Dataset to list DatasetVersions from. Format: `projects/{project}/locations/{location}/datasets/{dataset}` (required)
+  filter: string, Optional. The standard list filter.
+  orderBy: string, Optional. A comma-separated list of fields to order by, sorted in ascending order. Use &quot;desc&quot; after a field name for descending.
+  pageSize: integer, Optional. The standard list page size.
+  pageToken: string, Optional. The standard list page token.
+  readMask: string, Optional. Mask specifying which fields to read.
+    { # Response message for DatasetService.ListDatasetVersions.
+  &quot;datasetVersions&quot;: [ # A list of DatasetVersions that matches the specified filter in the request.
+  <pre>Updates a DatasetVersion.
+  name: string, Output only. Identifier. The resource name of the DatasetVersion. Format: `projects/{project}/locations/{location}/datasets/{dataset}/datasetVersions/{dataset_version}` (required)
+  updateMask: string, Required. The update mask applies to the resource. For the `FieldMask` definition, see google.protobuf.FieldMask. Updatable fields: * `display_name`
+    <code class="details" id="restore">restore(name, x__xgafv=None)</code>
+  <pre>Restores a dataset version.
+  name: string, Required. The name of the DatasetVersion resource. Format: `projects/{project}/locations/{location}/datasets/{dataset}/datasetVersions/{dataset_version}` (required)

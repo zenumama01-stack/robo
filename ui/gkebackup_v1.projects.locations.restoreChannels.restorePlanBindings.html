@@ -1,0 +1,16 @@
+<h1><a href="gkebackup_v1.html">Backup for GKE API</a> . <a href="gkebackup_v1.projects.html">projects</a> . <a href="gkebackup_v1.projects.locations.html">locations</a> . <a href="gkebackup_v1.projects.locations.restoreChannels.html">restoreChannels</a> . <a href="gkebackup_v1.projects.locations.restoreChannels.restorePlanBindings.html">restorePlanBindings</a></h1>
+<p class="firstline">Retrieve the details of a single RestorePlanBinding.</p>
+<p class="firstline">Lists RestorePlanBindings in a given location.</p>
+  <pre>Retrieve the details of a single RestorePlanBinding.
+  name: string, Required. Fully qualified RestorePlanBinding name. Format: `projects/*/locations/*/restoreChannels/*/restorePlanBindings/*` (required)
+    { # A RestorePlanBinding binds a RestorePlan with a RestoreChannel. This resource is created automatically when a RestorePlan is created using a RestoreChannel. This also serves as a holder for cross-project fields that need to be displayed in the current project.
+  &quot;backupPlan&quot;: &quot;A String&quot;, # Output only. The fully qualified name of the BackupPlan bound to the specified RestorePlan. `projects/*/locations/*/backukpPlans/{backup_plan}`
+  &quot;etag&quot;: &quot;A String&quot;, # Output only. `etag` is used for optimistic concurrency control as a way to help prevent simultaneous updates of a RestorePlanBinding from overwriting each other. It is strongly suggested that systems make use of the &#x27;etag&#x27; in the read-modify-write cycle to perform RestorePlanBinding updates in order to avoid race conditions: An `etag` is returned in the response to `GetRestorePlanBinding`, and systems are expected to put that etag in the request to `UpdateRestorePlanBinding` or `DeleteRestorePlanBinding` to ensure that their change will be applied to the same version of the resource.
+  &quot;name&quot;: &quot;A String&quot;, # Identifier. The fully qualified name of the RestorePlanBinding. `projects/*/locations/*/restoreChannels/*/restorePlanBindings/*`
+  &quot;restorePlan&quot;: &quot;A String&quot;, # Output only. The fully qualified name of the RestorePlan bound to this RestoreChannel. `projects/*/locations/*/restorePlans/{restore_plan}`
+  <pre>Lists RestorePlanBindings in a given location.
+  parent: string, Required. The RestoreChannel that contains the ListRestorePlanBindings to list. Format: `projects/*/locations/*/restoreChannels/*` (required)
+  pageToken: string, Optional. The value of next_page_token received from a previous `ListRestorePlanBindings` call. Provide this to retrieve the subsequent page in a multi-page list of results. When paginating, all other parameters provided to `ListRestorePlanBindings` must match the call that provided the page token.
+    { # Response message for ListRestorePlanBindings.
+  &quot;nextPageToken&quot;: &quot;A String&quot;, # A token which may be sent as page_token in a subsequent `ListRestorePlanBindings` call to retrieve the next page of results. If this field is omitted or empty, then there are no more results to return.
+  &quot;restorePlanBindings&quot;: [ # The list of RestorePlanBindings matching the given criteria.

@@ -1,0 +1,157 @@
+import static java.nio.file.Files.*;
+import java.nio.file.DirectoryStream;
+ * A {@link UsbSerialScanner} that scans the system for USB devices which provide a serial port by inspecting the
+ * so-called 'sysfs' (see also https://en.wikipedia.org/wiki/Sysfs) provided by Linux (a pseudo file system provided by
+ * the Linux kernel usually mounted at '/sys').
+ * A scan starts by inspecting the contents of the directory '/sys/class/tty'. This directory contains a symbolic link
+ * for every serial port style device that points to the device information provided by the sysfs in some subdirectory
+ * of '/sys/devices'.
+ * The scan considers only those serial ports for which the corresponding device file (in folder '/dev'; e.g.:
+ * '/dev/ttyUSB0') is both readable and writable, as otherwise the serial port cannot be used by any binding. For those
+ * serial ports, the scan checks whether the serial port actually originates from a USB device, by inspecting the
+ * information provided by the sysfs in the folder pointed to by the symbolic link.
+ * If the device providing the serial port is a USB device, information about the device (vendor ID, product ID, etc.)
+ * is collected from the sysfs and returned together with the name of the serial port in form of a
+ * {@link UsbSerialDeviceInformation}.
+ * @author Gwendal Roulleau - Adding /serial/by-id scan to discover the symlinks inside and use their more
+ *         human-readable links
+@Component(configurationPid = "discovery.usbserial.linuxsysfs.usbserialscanner")
+public class SysfsUsbSerialScanner implements UsbSerialScanner {
+    private final Logger logger = LoggerFactory.getLogger(SysfsUsbSerialScanner.class);
+    public static final String SYSFS_TTY_DEVICES_DIRECTORY_ATTRIBUTE = "sysfsTtyDevicesPath";
+    public static final String DEV_DIRECTORY_ATTRIBUTE = "devPath";
+    private static final String SYSFS_TTY_DEVICES_DIRECTORY_DEFAULT = "/sys/class/tty";
+    private static final String DEV_DIRECTORY_DEFAULT = "/dev";
+    private static final String SERIAL_BY_ID_DIRECTORY = "/serial/by-id";
+    private String sysfsTtyDevicesDirectory = SYSFS_TTY_DEVICES_DIRECTORY_DEFAULT;
+    private String devDirectory = DEV_DIRECTORY_DEFAULT;
+    private String devSerialByIdDirectory = DEV_DIRECTORY_DEFAULT + SERIAL_BY_ID_DIRECTORY;
+    private static final String SYSFS_FILENAME_USB_VENDOR_ID = "idVendor";
+    private static final String SYSFS_FILENAME_USB_PRODUCT_ID = "idProduct";
+    private static final String SYSFS_FILENAME_USB_SERIAL_NUMBER = "serial";
+    private static final String SYSFS_FILENAME_USB_MANUFACTURER = "manufacturer";
+    private static final String SYSFS_FILENAME_USB_PRODUCT = "product";
+    private static final String SYSFS_FILENAME_USB_INTERFACE_NUMBER = "bInterfaceNumber";
+    private static final String SYSFS_FILENAME_USB_INTERFACE = "interface";
+     * In the sysfs, directories for USB interfaces have the following format (cf., e.g.,
+     * http://www.linux-usb.org/FAQ.html#i6), where there can be one or more USB port numbers separated by dots.
+     * {@code <#bus>-<#port>.<#port>:<#config>:<#interface>}
+     * Example: {@code 3-1.3:1.0}
+     * This format is captured by this {@link Pattern}.
+    private static final Pattern SYSFS_USB_INTERFACE_DIRECTORY_PATTERN = Pattern
+            .compile("\\d+-(\\d+\\.?)*\\d+:\\d+\\.\\d+");
+        extractConfiguration(config);
+    protected void modified(Map<String, Object> config) {
+    public Set<UsbSerialDeviceInformation> scan() throws IOException {
+        Set<UsbSerialDeviceInformation> result = new HashSet<>();
+        for (SerialPortInfo serialPortInfo : getSerialPortInfos()) {
+                UsbSerialDeviceInformation usbSerialDeviceInfo = tryGetUsbSerialDeviceInformation(serialPortInfo);
+                if (usbSerialDeviceInfo != null) {
+                    result.add(usbSerialDeviceInfo);
+                logger.warn("Could not extract USB device information for serial port {}: {}", serialPortInfo,
+        return isReadable(Path.of(sysfsTtyDevicesDirectory)) && isReadable(Path.of(devDirectory));
+     * Gets the set of all found serial ports, by searching through the tty devices directory in the sysfs and
+     * checking for each found serial port if the device file in the devices folder is both readable and writable.
+     * Also search in the serial/by-id directory for symlinks with more user-friendly name.
+     * @throws IOException If there is a problem reading files from the sysfs tty devices directory.
+    private Set<SerialPortInfo> getSerialPortInfos() throws IOException {
+        Set<SerialPortInfo> result = new HashSet<>();
+        try (DirectoryStream<Path> sysfsTtyPaths = newDirectoryStream(Path.of(sysfsTtyDevicesDirectory))) {
+            for (Path sysfsTtyPath : sysfsTtyPaths) {
+                String serialPortName = sysfsTtyPath.getFileName().toString();
+                Path devicePath = Path.of(devDirectory).resolve(serialPortName);
+                Path sysfsDevicePath = getRealDevicePath(sysfsTtyPath);
+                if (sysfsDevicePath != null && isReadable(devicePath) && isWritable(devicePath)) {
+                    result.add(new SerialPortInfo(devicePath, sysfsDevicePath));
+        // optionally compute links and their corresponding SerialInfo :
+        Path devSerialDir = Path.of(devSerialByIdDirectory);
+        if (exists(devSerialDir) && isDirectory(devSerialDir) && isReadable(devSerialDir)) {
+            // browse serial/by-id directory :
+            try (DirectoryStream<Path> directoryStream = newDirectoryStream(devSerialDir)) {
+                for (Path devLinkPath : directoryStream) {
+                    if (Files.isSymbolicLink(devLinkPath)) {
+                        Path devicePath = getRealDevicePath(devLinkPath);
+                        if (devicePath != null) {
+                            String serialPortName = devicePath.getFileName().toString();
+                            // get the corresponding real sysinfo special dir :
+                            Path sysfsDevicePath = getRealDevicePath(
+                                    Path.of(sysfsTtyDevicesDirectory).resolve(serialPortName));
+                                result.add(new SerialPortInfo(devLinkPath, sysfsDevicePath));
+     * In the sysfs or serial-by-id directory, we can found a symbolic link for every serial port style device, i.e.,
+     * also for serial devices. This symbolic link points to the directory for that device within the sysfs device tree,
+     * or directly to the device in the case of serial-by-id directory. This method returns the real path to which this
+     * symbolic link points for a given serial port.
+     * If the symbolic link cannot be converted to the real path, null is returned and a warning is logged.
+    private @Nullable Path getRealDevicePath(Path ttyFile) {
+            return ttyFile.toRealPath();
+            logger.warn("Could not find the device path for {}. Error is: {}", ttyFile, e.getMessage());
+     * Checks whether the provided device path in sysfs points to a folder within the sysfs description of a USB device;
+     * if so, extracts the USB device information from sysfs and constructs a {@link UsbSerialDeviceInformation} using
+     * the {@link SerialPortInfo} and the information about the USB device gathered from sysfs.
+     * Returns null if the path does not point to a folder within the sysfs description of a USB device.
+    private @Nullable UsbSerialDeviceInformation tryGetUsbSerialDeviceInformation(SerialPortInfo serialPortInfo)
+        Path usbInterfacePath = getUsbInterfaceParentPath(serialPortInfo.getSysfsPath());
+        if (usbInterfacePath == null) {
+        Path usbDevicePath = usbInterfacePath.getParent();
+        if (isUsbDevicePath(usbDevicePath)) {
+            return createUsbSerialDeviceInformation(usbDevicePath, usbInterfacePath,
+                    serialPortInfo.getDevicePath().toString());
+     * Walks up the directory structure of a path in the sysfs, trying to find a directory that represents an interface
+     * of a USB device.
+    private @Nullable Path getUsbInterfaceParentPath(Path sysfsPath) {
+        if (sysfsPath.toString().indexOf('-') == -1) {
+            // a fast path to avoid pattern matching for dozens of not matching directories
+        } else if (sysfsPath.getFileName() == null) {
+        } else if (SYSFS_USB_INTERFACE_DIRECTORY_PATTERN.matcher(sysfsPath.getFileName().toString()).matches()) {
+            return sysfsPath;
+            Path parentPath = sysfsPath.getParent();
+            if (parentPath == null) {
+                return getUsbInterfaceParentPath(parentPath);
+    private boolean isUsbDevicePath(Path path) {
+        return containsFile(path, SYSFS_FILENAME_USB_PRODUCT_ID) && containsFile(path, SYSFS_FILENAME_USB_VENDOR_ID);
+     * Constructs a {@link UsbSerialDeviceInformation} from a serial port and the information found in the sysfs about a
+     * USB device.
+    private UsbSerialDeviceInformation createUsbSerialDeviceInformation(Path usbDevicePath, Path usbInterfacePath,
+            String serialPortName) throws IOException {
+        int vendorId = Integer.parseInt(getContent(usbDevicePath.resolve(SYSFS_FILENAME_USB_VENDOR_ID)), 16);
+        int productId = Integer.parseInt(getContent(usbDevicePath.resolve(SYSFS_FILENAME_USB_PRODUCT_ID)), 16);
+        String serialNumber = getContentIfFileExists(usbDevicePath.resolve(SYSFS_FILENAME_USB_SERIAL_NUMBER));
+        String manufacturer = getContentIfFileExists(usbDevicePath.resolve(SYSFS_FILENAME_USB_MANUFACTURER));
+        String product = getContentIfFileExists(usbDevicePath.resolve(SYSFS_FILENAME_USB_PRODUCT));
+        int interfaceNumber = Integer
+                .parseInt(getContent(usbInterfacePath.resolve(SYSFS_FILENAME_USB_INTERFACE_NUMBER)), 16);
+        String interfaceDescription = getContentIfFileExists(usbInterfacePath.resolve(SYSFS_FILENAME_USB_INTERFACE));
+        return new UsbSerialDeviceInformation(vendorId, productId, serialNumber, manufacturer, product, interfaceNumber,
+                interfaceDescription, serialPortName);
+    private boolean containsFile(Path directoryPath, String filename) {
+        Path filePath = directoryPath.resolve(filename);
+        return exists(filePath) && !isDirectory(filePath);
+    private String getContent(Path path) throws IOException {
+        return new String(readAllBytes(path)).trim();
+    private @Nullable String getContentIfFileExists(Path path) throws IOException {
+        return exists(path) ? getContent(path) : null;
+    private void extractConfiguration(Map<String, Object> config) {
+        String newSysfsTtyDevicesDirectory = config
+                .getOrDefault(SYSFS_TTY_DEVICES_DIRECTORY_ATTRIBUTE, SYSFS_TTY_DEVICES_DIRECTORY_DEFAULT).toString();
+        String newDevDirectory = config.getOrDefault(DEV_DIRECTORY_ATTRIBUTE, DEV_DIRECTORY_DEFAULT).toString();
+        boolean configurationIsChanged = !(Objects.equals(sysfsTtyDevicesDirectory, newSysfsTtyDevicesDirectory)
+                && Objects.equals(devDirectory, newDevDirectory));
+        if (configurationIsChanged) {
+            sysfsTtyDevicesDirectory = newSysfsTtyDevicesDirectory;
+            devDirectory = newDevDirectory;
+            devSerialByIdDirectory = devDirectory + SERIAL_BY_ID_DIRECTORY;
+        if (!canPerformScans()) {
+            String message = "Cannot perform scans with this configuration: sysfsTtyDevicesDirectory: {}, devDirectory: {}";
+                // Warn if the configuration was actively changed
+                logger.warn(message, sysfsTtyDevicesDirectory, devDirectory);
+                // Otherwise, only debug log - so that, in particular, on Non-Linux systems users do not see warning
+                logger.debug(message, sysfsTtyDevicesDirectory, devDirectory);
+    private static class SerialPortInfo {
+        private final Path devicePath;
+        private final Path sysfsPath;
+        public SerialPortInfo(Path devicePath, Path sysfsPath) {
+            this.devicePath = devicePath;
+            this.sysfsPath = sysfsPath;
+        public Path getDevicePath() {
+            return devicePath;
+        public Path getSysfsPath() {

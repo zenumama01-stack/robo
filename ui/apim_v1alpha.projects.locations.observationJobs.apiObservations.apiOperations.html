@@ -1,0 +1,29 @@
+<h1><a href="apim_v1alpha.html">API Management API</a> . <a href="apim_v1alpha.projects.html">projects</a> . <a href="apim_v1alpha.projects.locations.html">locations</a> . <a href="apim_v1alpha.projects.locations.observationJobs.html">observationJobs</a> . <a href="apim_v1alpha.projects.locations.observationJobs.apiObservations.html">apiObservations</a> . <a href="apim_v1alpha.projects.locations.observationJobs.apiObservations.apiOperations.html">apiOperations</a></h1>
+<p class="firstline">GetApiOperation retrieves a single ApiOperation by name.</p>
+<p class="firstline">ListApiOperations gets all ApiOperations for a given project and location and ObservationJob and ApiObservation.</p>
+  <pre>GetApiOperation retrieves a single ApiOperation by name.
+  name: string, Required. The name of the ApiOperation to retrieve. Format: projects/{project}/locations/{location}/observationJobs/{observation_job}/apiObservations/{api_observation}/apiOperation/{api_operation} (required)
+    { # Message describing ApiOperation object
+  &quot;count&quot;: &quot;A String&quot;, # The number of occurrences of this API Operation.
+  &quot;firstSeenTime&quot;: &quot;A String&quot;, # First seen time stamp
+  &quot;httpOperation&quot;: { # An HTTP-based API Operation, sometimes called a &quot;REST&quot; Operation. # An HTTP Operation.
+    &quot;method&quot;: &quot;A String&quot;, # HTTP Method.
+    &quot;path&quot;: &quot;A String&quot;, # Path of the HTTP request.
+    &quot;pathParams&quot;: [ # Path params of HttpOperation
+        &quot;dataType&quot;: &quot;A String&quot;, # Data type of path param
+        &quot;position&quot;: 42, # Segment location in the path, 1-indexed
+    &quot;queryParams&quot;: { # Query params of HttpOperation
+        &quot;count&quot;: &quot;A String&quot;, # The number of occurrences of this query parameter across transactions.
+        &quot;name&quot;: &quot;A String&quot;, # Name of query param
+    &quot;request&quot;: { # An aggregation of HTTP requests. # Request metadata.
+      &quot;headers&quot;: { # Unordered map from header name to header metadata
+    &quot;response&quot;: { # An aggregation of HTTP responses. # Response metadata.
+      &quot;responseCodes&quot;: { # Map of status code to observed count
+  &quot;lastSeenTime&quot;: &quot;A String&quot;, # Last seen time stamp
+  &quot;name&quot;: &quot;A String&quot;, # Identifier. Name of resource
+  <pre>ListApiOperations gets all ApiOperations for a given project and location and ObservationJob and ApiObservation.
+  parent: string, Required. The parent, which owns this collection of ApiOperations. Format: projects/{project}/locations/{location}/observationJobs/{observation_job}/apiObservations/{api_observation} (required)
+  pageSize: integer, Optional. The maximum number of ApiOperations to return. The service may return fewer than this value. If unspecified, at most 10 ApiOperations will be returned. The maximum value is 1000; values above 1000 will be coerced to 1000.
+  pageToken: string, Optional. A page token, received from a previous `ListApiApiOperations` call. Provide this to retrieve the subsequent page. When paginating, all other parameters provided to `ListApiApiOperations` must match the call that provided the page token.
+    { # Message for response to listing ApiOperations
+  &quot;apiOperations&quot;: [ # The ApiOperations from the specified project and location and ObservationJob and ApiObservation.

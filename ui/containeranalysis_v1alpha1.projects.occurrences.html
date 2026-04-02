@@ -1,0 +1,51 @@
+<h1><a href="containeranalysis_v1alpha1.html">Container Analysis API</a> . <a href="containeranalysis_v1alpha1.projects.html">projects</a> . <a href="containeranalysis_v1alpha1.projects.occurrences.html">occurrences</a></h1>
+<p class="firstline">Creates a new `Occurrence`. Use this method to create `Occurrences` for a resource.</p>
+<p class="firstline">Deletes the given `Occurrence` from the system. Use this when an `Occurrence` is no longer applicable for the given resource.</p>
+<p class="firstline">Returns the requested `Occurrence`.</p>
+<p class="firstline">Gets the `Note` attached to the given `Occurrence`.</p>
+  <code><a href="#getVulnerabilitySummary">getVulnerabilitySummary(parent, filter=None, x__xgafv=None)</a></code></p>
+  <code><a href="#list">list(parent, filter=None, kind=None, name=None, pageSize=None, pageToken=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Lists active `Occurrences` for a given project matching the filters.</p>
+<p class="firstline">Updates an existing occurrence.</p>
+  <pre>Creates a new `Occurrence`. Use this method to create `Occurrences` for a resource.
+  parent: string, This field contains the project Id for example: &quot;projects/{project_id}&quot; (required)
+  name: string, The name of the project. Should be of the form &quot;projects/{project_id}&quot;. @Deprecated
+  <pre>Deletes the given `Occurrence` from the system. Use this when an `Occurrence` is no longer applicable for the given resource.
+  name: string, The name of the occurrence in the form of &quot;projects/{project_id}/occurrences/{OCCURRENCE_ID}&quot; (required)
+  <pre>Returns the requested `Occurrence`.
+  name: string, The name of the occurrence of the form &quot;projects/{project_id}/occurrences/{OCCURRENCE_ID}&quot; (required)
+  <pre>Gets the `Note` attached to the given `Occurrence`.
+  name: string, The name of the occurrence in the form &quot;projects/{project_id}/occurrences/{OCCURRENCE_ID}&quot; (required)
+    <code class="details" id="getVulnerabilitySummary">getVulnerabilitySummary(parent, filter=None, x__xgafv=None)</code>
+  parent: string, This contains the project Id for example: projects/{project_id} (required)
+    { # A summary of how many vulnz occurrences there are per severity type. counts by groups, or if we should have different summary messages like this.
+  &quot;counts&quot;: [ # A map of how many occurrences were found for each severity.
+    { # The number of occurrences created for a specific severity.
+      &quot;count&quot;: &quot;A String&quot;, # The number of occurrences with the severity.
+      &quot;severity&quot;: &quot;A String&quot;, # The severity of the occurrences.
+    <code class="details" id="list">list(parent, filter=None, kind=None, name=None, pageSize=None, pageToken=None, x__xgafv=None)</code>
+  <pre>Lists active `Occurrences` for a given project matching the filters.
+  parent: string, This contains the project Id for example: projects/{project_id}. (required)
+  kind: string, The kind of occurrences to filter on.
+      KIND_UNSPECIFIED - Unknown
+      PACKAGE_VULNERABILITY - The note and occurrence represent a package vulnerability.
+      BUILD_DETAILS - The note and occurrence assert build provenance.
+      IMAGE_BASIS - This represents an image basis relationship.
+      PACKAGE_MANAGER - This represents a package installed via a package manager.
+      DEPLOYABLE - The note and occurrence track deployment events.
+      DISCOVERY - The note and occurrence track the initial discovery status of a resource.
+      ATTESTATION_AUTHORITY - This represents a logical &quot;role&quot; that can attest to artifacts.
+      UPGRADE - This represents an available software upgrade.
+      COMPLIANCE - This represents a compliance check that can be applied to a resource.
+      SBOM - This represents a software bill of materials.
+      SPDX_PACKAGE - This represents an SPDX Package.
+      SPDX_FILE - This represents an SPDX File.
+      SPDX_RELATIONSHIP - This represents an SPDX Relationship.
+      DSSE_ATTESTATION - This represents a DSSE attestation Note
+      VULNERABILITY_ASSESSMENT - This represents a Vulnerability Assessment.
+      SBOM_REFERENCE - This represents a reference to an SBOM.
+      SECRET - This represents a secret.
+  name: string, The name field contains the project Id. For example: &quot;projects/{project_id} @Deprecated
+    { # Response including listed active occurrences.
+  <pre>Updates an existing occurrence.
+  name: string, The name of the occurrence. Should be of the form &quot;projects/{project_id}/occurrences/{OCCURRENCE_ID}&quot;. (required)

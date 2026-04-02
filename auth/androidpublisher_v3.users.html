@@ -1,0 +1,26 @@
+<h1><a href="androidpublisher_v3.html">Google Play Android Developer API</a> . <a href="androidpublisher_v3.users.html">users</a></h1>
+<p class="firstline">Grant access for a user to the given developer account.</p>
+<p class="firstline">Removes all access for the user to the given developer account.</p>
+<p class="firstline">Lists all users with access to a developer account.</p>
+<p class="firstline">Updates access for the user to the developer account.</p>
+  <pre>Grant access for a user to the given developer account.
+  parent: string, Required. The developer account to add the user to. Format: developers/{developer} (required)
+{ # A user resource.
+  &quot;accessState&quot;: &quot;A String&quot;, # Output only. The state of the user&#x27;s access to the Play Console.
+  &quot;developerAccountPermissions&quot;: [ # Permissions for the user which apply across the developer account.
+  &quot;email&quot;: &quot;A String&quot;, # Immutable. The user&#x27;s email address.
+  &quot;expirationTime&quot;: &quot;A String&quot;, # The time at which the user&#x27;s access expires, if set. When setting this value, it must always be in the future.
+  &quot;grants&quot;: [ # Output only. Per-app permissions for the user.
+  &quot;name&quot;: &quot;A String&quot;, # Required. Resource name for this user, following the pattern &quot;developers/{developer}/users/{email}&quot;.
+  &quot;partial&quot;: True or False, # Output only. Whether there are more permissions for the user that are not represented here. This can happen if the caller does not have permission to manage all apps in the account. This is also `true` if this user is the account owner. If this field is `true`, it should be taken as a signal that this user cannot be fully managed via the API. That is, the API caller is not be able to manage all of the permissions this user holds, either because it doesn&#x27;t know about them or because the user is the account owner.
+  <pre>Removes all access for the user to the given developer account.
+  name: string, Required. The name of the user to delete. Format: developers/{developer}/users/{email} (required)
+  <pre>Lists all users with access to a developer account.
+  parent: string, Required. The developer account to fetch users from. Format: developers/{developer} (required)
+  pageSize: integer, The maximum number of results to return. This must be set to -1 to disable pagination.
+  pageToken: string, A token received from a previous call to this method, in order to retrieve further results.
+    { # A response containing one or more users with access to an account.
+  &quot;nextPageToken&quot;: &quot;A String&quot;, # A token to pass to subsequent calls in order to retrieve subsequent results. This will not be set if there are no more results to return.
+  &quot;users&quot;: [ # The resulting users.
+  <pre>Updates access for the user to the developer account.
+  name: string, Required. Resource name for this user, following the pattern &quot;developers/{developer}/users/{email}&quot;. (required)

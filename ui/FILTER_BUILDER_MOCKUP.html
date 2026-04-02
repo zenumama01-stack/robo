@@ -1,0 +1,277 @@
+  <title>MJ Filter Builder - Design Mockup</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+       MJ FILTER BUILDER - DESIGN MOCKUP
+       ============================================
+       DESIGN GOALS:
+       1. Clean, modern UI that matches MJ's design language
+       2. Intuitive visual hierarchy with clear grouping
+       3. Easy to add/remove/reorder conditions
+       4. Type-aware value editors (date picker, dropdown, number, etc.)
+       5. Clear AND/OR logic with visual connectors
+       6. Compact but not cramped
+       KEY DIFFERENCES FROM KENDO:
+       - More visual clarity with colored group containers
+       - Inline AND/OR toggle instead of dropdown
+       - Pill-style field/operator selectors
+       - Better empty state guidance
+       - Cleaner action buttons
+       - Support for "quick filters" (common presets)
+    .mockup-container {
+    .mockup-title {
+    .mockup-description {
+    .mockup-section {
+    .mockup-section-title {
+    .mockup-section-title i {
+       FILTER BUILDER COMPONENT STYLES
+    .filter-builder {
+    /* Quick Filters Bar */
+    .quick-filters {
+    .quick-filter-chip {
+    .quick-filter-chip:hover {
+    .quick-filter-chip.active {
+    .quick-filter-chip i {
+    /* Filter Group */
+    .filter-group.nested {
+      border-color: #d0d7de;
+    .filter-group.nested::before {
+      left: -16px;
+      top: 20px;
+      background: #d0d7de;
+    /* Group Header */
+    .group-logic-toggle {
+    .logic-btn {
+    .logic-btn.active {
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    .logic-btn:hover:not(.active) {
+    .group-actions {
+    .group-action-btn {
+    .group-action-btn:hover {
+    .group-action-btn.delete:hover {
+    /* Filter Rules */
+    .filter-rules {
+    /* Single Filter Rule */
+    .filter-rule {
+    .filter-rule:hover {
+      border-color: #d0d0d0;
+    .filter-rule.invalid {
+      border-color: #ffcdd2;
+    /* Rule Connector (shows AND/OR between rules) */
+    .rule-connector {
+    .connector-label {
+    .connector-label.and {
+      border-color: #bbdefb;
+    .connector-label.or {
+      color: #7b1fa2;
+      border-color: #e1bee7;
+      background: #f3e5f5;
+    /* Field Selector */
+    .field-select {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23666' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+      background-position: right 10px center;
+    .field-select:focus {
+    /* Operator Selector */
+    .operator-select {
+      min-width: 130px;
+    .operator-select:focus {
+    /* Value Input */
+    .value-input {
+    .value-input:focus {
+    .value-input::placeholder {
+    /* Boolean Toggle for boolean fields */
+    .value-toggle {
+    .value-toggle-btn {
+    .value-toggle-btn.active {
+    .value-toggle-btn.true.active {
+      color: #2e7d32;
+    .value-toggle-btn.false.active {
+    /* Date Input */
+    .value-date {
+    .value-date:focus {
+    /* Rule Actions */
+    .rule-actions {
+    .rule-action-btn {
+      color: #bbb;
+    .rule-action-btn:hover {
+    .rule-action-btn.delete:hover {
+    /* Add Buttons */
+      border-top: 1px dashed #e0e0e0;
+    .add-btn {
+      border: 1px dashed #ccc;
+    .add-btn:hover {
+    .add-btn i {
+    .empty-state .add-btn {
+    /* Filter Summary */
+    .filter-summary-label {
+    .filter-summary-text {
+       ALTERNATIVE DESIGN: COMPACT INLINE
+    .filter-builder-compact {
+    .compact-rule {
+    .compact-rule:last-child {
+    .compact-connector {
+    .compact-connector:first-child {
+      color: transparent;
+    .compact-field {
+    .compact-operator {
+    .compact-value {
+    .compact-actions {
+       NOTES & ANNOTATIONS
+    .design-note {
+      color: #795548;
+    .design-note strong {
+    hr {
+      margin: 32px 0;
+  <div class="mockup-container">
+    <h1 class="mockup-title">MJ Filter Builder - Design Mockup</h1>
+    <p class="mockup-description">
+      A modern, intuitive filter builder component for creating complex boolean filter expressions.
+      Designed to be cleaner and more user-friendly than traditional query builders.
+    <!-- ============================================
+         DESIGN 1: FULL FILTER BUILDER WITH GROUPS
+         ============================================ -->
+    <div class="mockup-section">
+      <div class="mockup-section-title">
+        Design 1: Full Filter Builder (With Grouping)
+      <div class="filter-builder">
+        <div class="quick-filters">
+          <div class="quick-filter-chip">
+            Created Today
+            <i class="fa-solid fa-calendar-week"></i>
+            This Week
+          <div class="quick-filter-chip active">
+            Active Only
+            My Records
+        <!-- Main Filter Group -->
+          <div class="group-header">
+            <div class="group-logic-toggle">
+              <button class="logic-btn active">AND</button>
+              <button class="logic-btn">OR</button>
+            <span class="group-label">Match all of the following</span>
+            <div class="group-actions">
+              <button class="group-action-btn" title="Collapse">
+          <div class="filter-rules">
+            <!-- Rule 1 -->
+            <div class="filter-rule">
+              <select class="field-select">
+                <option selected>Status</option>
+                <option>Name</option>
+                <option>Created At</option>
+                <option>Amount</option>
+              <select class="operator-select">
+                <option selected>equals</option>
+                <option>not equals</option>
+                <option>contains</option>
+              <select class="field-select" style="min-width: 140px;">
+                <option selected>Active</option>
+                <option>Inactive</option>
+                <option>Pending</option>
+              <div class="rule-actions">
+                <button class="rule-action-btn" title="Duplicate">
+                <button class="rule-action-btn delete" title="Remove">
+            <!-- Connector -->
+            <div class="rule-connector">
+              <span class="connector-label and">AND</span>
+            <!-- Rule 2 -->
+                <option>Status</option>
+                <option selected>Amount</option>
+                <option>equals</option>
+                <option selected>greater than</option>
+                <option>less than</option>
+                <option>between</option>
+              <input type="number" class="value-input" placeholder="Enter value..." value="1000">
+            <!-- Nested Group (OR condition) -->
+            <div class="filter-group nested">
+                  <button class="logic-btn">AND</button>
+                  <button class="logic-btn active">OR</button>
+                <span class="group-label">Match any of the following</span>
+                  <button class="group-action-btn delete" title="Remove group">
+                <!-- Nested Rule 1 -->
+                    <option selected>Category</option>
+                    <option>Type</option>
+                  <input type="text" class="value-input" value="Premium">
+                  <span class="connector-label or">OR</span>
+                <!-- Nested Rule 2 -->
+                  <input type="text" class="value-input" value="Enterprise">
+                <button class="add-btn">
+                  Add Condition
+              Add Group
+        <!-- Filter Summary -->
+        <div class="filter-summary">
+          <div class="filter-summary-label">Generated Filter:</div>
+          <div class="filter-summary-text">
+            Status = 'Active' AND Amount > 1000 AND (Category = 'Premium' OR Category = 'Enterprise')
+      <div class="design-note">
+        <strong>Design Notes:</strong>
+        - AND/OR toggle at group level controls how conditions combine<br>
+        - Visual connectors between rules show the logic clearly<br>
+        - Nested groups allow complex expressions like (A AND B) OR (C AND D)<br>
+        - Quick filter chips at top for common presets<br>
+        - Generated SQL/filter shown at bottom for transparency
+    <hr>
+         DESIGN 2: BOOLEAN VALUE EXAMPLE
+        Boolean Field Example
+      <div class="filter-rule" style="background: white; border: 1px solid #e0e0e0;">
+          <option selected>Is Active</option>
+          <option>Is Verified</option>
+          <option>Has Orders</option>
+          <option selected>is</option>
+          <option>is not</option>
+        <div class="value-toggle">
+          <button class="value-toggle-btn true active">True</button>
+          <button class="value-toggle-btn false">False</button>
+        Boolean fields get a special True/False toggle instead of a text input.
+        This is more intuitive than typing "true" or "false".
+         DESIGN 3: DATE FIELD EXAMPLE
+        Date Field Example
+          <option selected>Created At</option>
+          <option>Updated At</option>
+          <option>Due Date</option>
+          <option selected>is after</option>
+          <option>is before</option>
+          <option>is between</option>
+          <option>in the last</option>
+          <option>in the next</option>
+        <input type="date" class="value-date" value="2024-01-01">
+        Date fields get a date picker. Special operators like "in the last 7 days"
+        could show a number input + unit dropdown (days/weeks/months).
+         DESIGN 4: EMPTY STATE
+        Empty State (No Filters)
+          <p>No filters applied. All records will be shown.</p>
+            Add Your First Filter
+         DESIGN 5: COMPACT INLINE VIEW
+        Alternative: Compact Read-Only View
+      <div class="filter-builder-compact">
+        <div class="compact-rule">
+          <span class="compact-connector">WHERE</span>
+          <span class="compact-field">Status</span>
+          <span class="compact-operator">equals</span>
+          <span class="compact-value">"Active"</span>
+          <div class="compact-actions">
+            <button class="rule-action-btn" title="Edit">
+          <span class="compact-connector">AND</span>
+          <span class="compact-field">Amount</span>
+          <span class="compact-operator">greater than</span>
+          <span class="compact-value">1000</span>
+          <span class="compact-field">Created At</span>
+          <span class="compact-operator">is after</span>
+          <span class="compact-value">Jan 1, 2024</span>
+        This compact view could be used to display existing filters in a read-only summary.
+        Click the edit button to expand into the full editor.
+        Good for showing active filters in a toolbar or header area.
+         OPERATOR REFERENCE
+        Operators by Field Type
+      <table style="width: 100%; border-collapse: collapse; font-size: 14px;">
+          <tr style="background: #f5f5f5; text-align: left;">
+            <th style="padding: 10px; border-bottom: 2px solid #e0e0e0;">Field Type</th>
+            <th style="padding: 10px; border-bottom: 2px solid #e0e0e0;">Available Operators</th>
+            <td style="padding: 10px; border-bottom: 1px solid #f0f0f0;"><strong>Text/String</strong></td>
+            <td style="padding: 10px; border-bottom: 1px solid #f0f0f0;">
+              equals, not equals, contains, does not contain, starts with, ends with, is empty, is not empty
+            <td style="padding: 10px; border-bottom: 1px solid #f0f0f0;"><strong>Number</strong></td>
+              equals, not equals, greater than, less than, greater or equal, less or equal, between, is empty, is not empty
+            <td style="padding: 10px; border-bottom: 1px solid #f0f0f0;"><strong>Date</strong></td>
+              equals, is before, is after, is on or before, is on or after, between, in the last (N days/weeks/months), in the next (N days/weeks/months), is empty, is not empty
+            <td style="padding: 10px; border-bottom: 1px solid #f0f0f0;"><strong>Boolean</strong></td>
+              is true, is false, is empty, is not empty
+            <td style="padding: 10px;"><strong>Lookup/Foreign Key</strong></td>
+            <td style="padding: 10px;">
+              equals (with record selector popup), not equals, is one of (multi-select), is empty, is not empty

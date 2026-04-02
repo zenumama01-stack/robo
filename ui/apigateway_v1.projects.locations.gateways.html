@@ -1,0 +1,25 @@
+<h1><a href="apigateway_v1.html">API Gateway API</a> . <a href="apigateway_v1.projects.html">projects</a> . <a href="apigateway_v1.projects.locations.html">locations</a> . <a href="apigateway_v1.projects.locations.gateways.html">gateways</a></h1>
+  <code><a href="#create">create(parent, body=None, gatewayId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Creates a new Gateway in a given project and location.</p>
+<p class="firstline">Deletes a single Gateway.</p>
+<p class="firstline">Gets details of a single Gateway.</p>
+<p class="firstline">Lists Gateways in a given project and location.</p>
+<p class="firstline">Updates the parameters of a single Gateway.</p>
+    <code class="details" id="create">create(parent, body=None, gatewayId=None, x__xgafv=None)</code>
+  <pre>Creates a new Gateway in a given project and location.
+  parent: string, Required. Parent resource of the Gateway, of the form: `projects/*/locations/*` (required)
+{ # A Gateway is an API-aware HTTP proxy. It performs API-Method and/or API-Consumer specific actions based on an API Config such as authentication, policy enforcement, and backend selection.
+  &quot;apiConfig&quot;: &quot;A String&quot;, # Required. Resource name of the API Config for this Gateway. Format: projects/{project}/locations/global/apis/{api}/configs/{apiConfig}
+  &quot;defaultHostname&quot;: &quot;A String&quot;, # Output only. The default API Gateway host name of the form `{gateway_id}-{hash}.{region_code}.gateway.dev`.
+  &quot;name&quot;: &quot;A String&quot;, # Output only. Resource name of the Gateway. Format: projects/{project}/locations/{location}/gateways/{gateway}
+  &quot;state&quot;: &quot;A String&quot;, # Output only. The current state of the Gateway.
+  gatewayId: string, Required. Identifier to assign to the Gateway. Must be unique within scope of the parent resource.
+  <pre>Deletes a single Gateway.
+  name: string, Required. Resource name of the form: `projects/*/locations/*/gateways/*` (required)
+  <pre>Gets details of a single Gateway.
+  <pre>Lists Gateways in a given project and location.
+    { # Response message for ApiGatewayService.ListGateways
+  &quot;gateways&quot;: [ # Gateways.
+  <pre>Updates the parameters of a single Gateway.
+  name: string, Output only. Resource name of the Gateway. Format: projects/{project}/locations/{location}/gateways/{gateway} (required)
+  updateMask: string, Field mask is used to specify the fields to be overwritten in the Gateway resource by the update. The fields specified in the update_mask are relative to the resource, not the full request. A field will be overwritten if it is in the mask. If the user does not provide a mask then all fields will be overwritten.

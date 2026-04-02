@@ -1,0 +1,165 @@
+<div class="model-prompt-priority-matrix">
+  <!-- Header toolbar -->
+  <div class="matrix-toolbar">
+    <div class="toolbar-section">
+      <h5 class="toolbar-title">
+        Model-Prompt Priority Matrix
+        <div class="btn-group" role="group">
+            class="btn-check" 
+            name="viewMode" 
+            id="matrixView" 
+            value="matrix"
+            [(ngModel)]="viewMode"
+            (ngModelChange)="onViewModeChange($event)">
+          <label class="btn btn-outline-primary btn-sm" for="matrixView">
+            Matrix
+            id="listView" 
+            value="list"
+          <label class="btn btn-outline-primary btn-sm" for="listView">
+      <div class="matrix-stats">
+          <i class="fa-solid fa-link text-primary"></i>
+          {{ getAssociationCount() }} associations
+          <i class="fa-solid fa-star text-warning"></i>
+          {{ getAveragePriority() }} avg priority
+        @if (hasUnsavedChanges()) {
+          <span class="stat-item text-warning">
+      @if (selectedCells.size > 0) {
+        <div class="bulk-actions">
+            class="btn btn-sm btn-outline-primary"
+            [class.active]="bulkEditMode"
+            (click)="bulkEditMode = !bulkEditMode"
+            title="Bulk edit selected cells">
+            Edit ({{ selectedCells.size }})
+            class="btn btn-sm btn-outline-danger"
+            (click)="bulkRemoveSelectedCells()"
+            title="Remove selected associations">
+            Remove
+            class="btn btn-sm btn-outline-secondary"
+            (click)="discardChanges()"
+            title="Discard changes">
+            <i class="fa-solid fa-undo"></i>
+            Discard
+            class="btn btn-sm btn-success"
+            (click)="saveChanges()"
+            [disabled]="isLoading"
+          class="btn btn-sm btn-outline-info"
+          (click)="exportMatrix()"
+          title="Export matrix">
+  <!-- Bulk edit panel -->
+  @if (bulkEditMode && selectedCells.size > 0) {
+    <div class="bulk-edit-panel">
+      <div class="bulk-edit-controls">
+          <label for="bulkPriority" class="form-label">Priority:</label>
+            id="bulkPriority"
+            class="form-control form-control-sm"
+            [(ngModel)]="bulkEditPriority"
+            max="10">
+          <label for="bulkStatus" class="form-label">Status:</label>
+            id="bulkStatus"
+            class="form-select form-select-sm"
+            [(ngModel)]="bulkEditStatus">
+            <option value="Inactive">Inactive</option>
+            class="btn btn-sm btn-primary"
+            (click)="bulkUpdateSelectedCells()"
+            title="Apply changes to selected cells">
+            (click)="bulkEditMode = false"
+            title="Cancel bulk edit">
+      <div class="bulk-edit-info">
+        <small class="text-muted">
+          Editing {{ selectedCells.size }} selected cell(s). 
+          Use Ctrl+Click for multi-select, Shift+Click for range select.
+      <mj-loading [text]="loadingMessage" size="large"></mj-loading>
+    <!-- Matrix view -->
+    @if (viewMode === 'matrix') {
+      <div class="matrix-container">
+        <div class="matrix-scroll">
+            <!-- Header row with model names -->
+                <th class="prompt-header">Prompts \\ Models</th>
+                @for (model of models; track model.ID) {
+                  <th class="model-header" [title]="model.Description || model.Name">
+                      <div class="header-name">{{ model.Name }}</div>
+                        <small class="text-muted">{{ getModelAssociationCount(model.ID) }}</small>
+            <!-- Matrix body -->
+              @for (prompt of prompts; track prompt.ID; let promptIndex = $index) {
+                <tr class="matrix-row">
+                  <th class="prompt-header" [title]="prompt.Description || prompt.Name" (click)="selectPrompt(prompt)">
+                      <div class="header-name">{{ prompt.Name }}</div>
+                        <small class="text-muted">{{ getPromptAssociationCount(prompt.ID) }}</small>
+                  @for (model of models; track model.ID; let modelIndex = $index) {
+                      [class]="getCellClass(matrix[promptIndex][modelIndex])"
+                      (click)="onCellClick(promptIndex, modelIndex, $event)"
+                      (dblclick)="onCellDoubleClick(promptIndex, modelIndex)"
+                      [title]="getCellTooltip(matrix[promptIndex][modelIndex])">
+                      @if (matrix[promptIndex][modelIndex].association; as assoc) {
+                        <div class="cell-content">
+                          <div class="priority-badge priority-{{ assoc.priority }}">
+                            {{ assoc.priority }}
+                          @if (assoc.status === 'Inactive') {
+                            <div class="status-indicator inactive">
+                          @if (assoc.isNew) {
+                            <div class="change-indicator new">
+                          } @else if (assoc.isModified) {
+                            <div class="change-indicator modified">
+                          @if (showPerformanceOverlay && performanceData[assoc.promptId + '_' + assoc.modelId]) {
+                            <div class="performance-overlay">
+                              <small>{{ performanceData[assoc.promptId + '_' + assoc.modelId].avgResponseTime }}ms</small>
+                        <div class="cell-content empty">
+                          @if (matrix[promptIndex][modelIndex].canAssign) {
+                            <div class="empty-cell-indicator">
+                            <div class="blocked-cell-indicator">
+    <!-- List view -->
+      <div class="list-container">
+          <div class="list-controls">
+            <div class="sort-controls">
+              <label class="form-label">Sort by:</label>
+                [(ngModel)]="sortBy"
+                (ngModelChange)="sortAssociations()">
+                <option value="prompt">Prompt Name</option>
+                <option value="model">Model Name</option>
+                <option value="priority">Priority</option>
+                (click)="toggleSortDirection()"
+                [title]="'Sort ' + (sortDirection === 'asc' ? 'descending' : 'ascending')">
+                <i class="fa-solid" [class.fa-sort-up]="sortDirection === 'asc'" [class.fa-sort-down]="sortDirection === 'desc'"></i>
+              <div class="form-check form-switch">
+                  id="showInactive"
+                  [(ngModel)]="showInactiveAssociations">
+                <label class="form-check-label" for="showInactive">
+                  Show inactive
+        <div class="associations-list">
+          @for (association of associations; track association.promptId + '_' + association.modelId) {
+            @if (showInactiveAssociations || association.status === 'Active') {
+              <div class="association-item" 
+                   [class.inactive]="association.status === 'Inactive'"
+                   [class.new]="association.isNew"
+                   [class.modified]="association.isModified">
+                <div class="association-header">
+                  <div class="association-names">
+                    <strong class="prompt-name">{{ association.promptName }}</strong>
+                    <i class="fa-solid fa-arrow-right text-muted"></i>
+                    <strong class="model-name">{{ association.modelName }}</strong>
+                  <div class="association-actions">
+                    @if (!readonly) {
+                        title="Edit association">
+                        (click)="removeAssociation(association.promptId, association.modelId)"
+                        title="Remove association">
+                <div class="association-details">
+                    <span class="detail-label">Priority:</span>
+                    <span class="priority-badge priority-{{ association.priority }}">
+                      {{ association.priority }}
+                    <span class="detail-label">Status:</span>
+                    <span class="status-badge" [class.badge-success]="association.status === 'Active'" [class.badge-secondary]="association.status === 'Inactive'">
+                      {{ association.status }}
+                  @if (association.isNew) {
+                      <span class="change-badge new">
+                  } @else if (association.isModified) {
+                      <span class="change-badge modified">
+                        Modified
+          @if (associations.length === 0) {
+            <div class="no-associations-message">
+              <i class="fa-solid fa-info-circle text-muted"></i>
+              <p class="text-muted mb-0">No prompt-model associations found. Click on matrix cells to create associations.</p>
+  <!-- Error state -->
+      <div class="alert alert-danger" role="alert">
+        {{ error }}
+          class="btn btn-sm btn-outline-danger ms-2"
+          (click)="loadData()">

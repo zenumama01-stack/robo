@@ -1,0 +1,27 @@
+<h1><a href="toolresults_v1beta3.html">Cloud Tool Results API</a> . <a href="toolresults_v1beta3.projects.html">projects</a> . <a href="toolresults_v1beta3.projects.histories.html">histories</a> . <a href="toolresults_v1beta3.projects.histories.executions.html">executions</a> . <a href="toolresults_v1beta3.projects.histories.executions.steps.html">steps</a> . <a href="toolresults_v1beta3.projects.histories.executions.steps.perfSampleSeries.html">perfSampleSeries</a></h1>
+  <code><a href="toolresults_v1beta3.projects.histories.executions.steps.perfSampleSeries.samples.html">samples()</a></code>
+<p class="firstline">Returns the samples Resource.</p>
+<p class="firstline">Creates a PerfSampleSeries. May return any of the following error code(s): - ALREADY_EXISTS - PerfMetricSummary already exists for the given Step - NOT_FOUND - The containing Step does not exist</p>
+  <code><a href="#get">get(projectId, historyId, executionId, stepId, sampleSeriesId, x__xgafv=None)</a></code></p>
+<p class="firstline">Gets a PerfSampleSeries. May return any of the following error code(s): - NOT_FOUND - The specified PerfSampleSeries does not exist</p>
+  <code><a href="#list">list(projectId, historyId, executionId, stepId, filter=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Lists PerfSampleSeries for a given Step. The request provides an optional filter which specifies one or more PerfMetricsType to include in the result; if none returns all. The resulting PerfSampleSeries are sorted by ids. May return any of the following canonical error codes: - NOT_FOUND - The containing Step does not exist</p>
+  <pre>Creates a PerfSampleSeries. May return any of the following error code(s): - ALREADY_EXISTS - PerfMetricSummary already exists for the given Step - NOT_FOUND - The containing Step does not exist
+{ # Resource representing a collection of performance samples (or data points)
+  &quot;basicPerfSampleSeries&quot;: { # Encapsulates the metadata for basic sample series represented by a line chart # Basic series represented by a line chart
+    &quot;perfMetricType&quot;: &quot;A String&quot;,
+    &quot;perfUnit&quot;: &quot;A String&quot;,
+    &quot;sampleSeriesLabel&quot;: &quot;A String&quot;,
+  &quot;sampleSeriesId&quot;: &quot;A String&quot;, # A sample series id @OutputOnly
+    <code class="details" id="get">get(projectId, historyId, executionId, stepId, sampleSeriesId, x__xgafv=None)</code>
+  <pre>Gets a PerfSampleSeries. May return any of the following error code(s): - NOT_FOUND - The specified PerfSampleSeries does not exist
+  sampleSeriesId: string, A sample series id (required)
+    <code class="details" id="list">list(projectId, historyId, executionId, stepId, filter=None, x__xgafv=None)</code>
+  <pre>Lists PerfSampleSeries for a given Step. The request provides an optional filter which specifies one or more PerfMetricsType to include in the result; if none returns all. The resulting PerfSampleSeries are sorted by ids. May return any of the following canonical error codes: - NOT_FOUND - The containing Step does not exist
+  filter: string, Specify one or more PerfMetricType values such as CPU to filter the result (repeated)
+      perfMetricTypeUnspecified - 
+      memory - 
+      cpu - 
+      network - 
+      graphics - 
+  &quot;perfSampleSeries&quot;: [ # The resulting PerfSampleSeries sorted by id

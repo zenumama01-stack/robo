@@ -1,0 +1,29 @@
+<h1><a href="connectors_v1.html">Connectors API</a> . <a href="connectors_v1.projects.html">projects</a> . <a href="connectors_v1.projects.locations.html">locations</a> . <a href="connectors_v1.projects.locations.global_.html">global_</a> . <a href="connectors_v1.projects.locations.global_.managedZones.html">managedZones</a></h1>
+  <code><a href="#create">create(parent, body=None, managedZoneId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Creates a new ManagedZone in a given project and location.</p>
+<p class="firstline">Deletes a single ManagedZone.</p>
+<p class="firstline">Gets details of a single ManagedZone.</p>
+  <code><a href="#list">list(parent, filter=None, orderBy=None, pageSize=None, pageToken=None, returnPartialSuccess=None, x__xgafv=None)</a></code></p>
+<p class="firstline">List ManagedZones in a given project</p>
+<p class="firstline">Updates the parameters of a single ManagedZone.</p>
+    <code class="details" id="create">create(parent, body=None, managedZoneId=None, x__xgafv=None)</code>
+  <pre>Creates a new ManagedZone in a given project and location.
+  parent: string, Required. Parent resource of the ManagedZone, of the form: `projects/*/locations/global` (required)
+{ # represents the Connector&#x27;s Managed Zone resource
+  &quot;dns&quot;: &quot;A String&quot;, # Required. DNS Name of the resource
+  &quot;name&quot;: &quot;A String&quot;, # Output only. Resource name of the Managed Zone. Format: projects/{project}/locations/global/managedZones/{managed_zone}
+  &quot;targetProject&quot;: &quot;A String&quot;, # Required. The name of the Target Project
+  &quot;targetVpc&quot;: &quot;A String&quot;, # Required. The name of the Target Project VPC Network
+  managedZoneId: string, Required. Identifier to assign to the ManagedZone. Must be unique within scope of the parent resource.
+  <pre>Deletes a single ManagedZone.
+  name: string, Required. Resource name of the form: `projects/*/locations/global/managedZones/*` (required)
+  <pre>Gets details of a single ManagedZone.
+    <code class="details" id="list">list(parent, filter=None, orderBy=None, pageSize=None, pageToken=None, returnPartialSuccess=None, x__xgafv=None)</code>
+  <pre>List ManagedZones in a given project
+  parent: string, Required. Parent resource of the Managed Zone, of the form: `projects/*/locations/global` (required)
+  returnPartialSuccess: boolean, Optional. If true, allow partial responses for multi-regional Aggregated List requests.
+    { # Response message for ConnectorsService.ListManagedZones
+  &quot;managedZones&quot;: [ # ManagedZones.
+  <pre>Updates the parameters of a single ManagedZone.
+  name: string, Output only. Resource name of the Managed Zone. Format: projects/{project}/locations/global/managedZones/{managed_zone} (required)
+  updateMask: string, Required. The list of fields to update. Fields are specified relative to the managedZone. A field will be overwritten if it is in the mask. You can modify only the fields listed below. To update the managedZone details: * `description` * `labels` * `target_project` * `target_network`

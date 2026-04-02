@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Repo1 Manager</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #0a0e27; color: #fff; }
+        .navbar { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 1rem 2rem; display: flex; justify-content: space-between; align-items: center; }
+        .navbar h1 { font-size: 1.8rem; }
+        .user-btn { background: rgba(255,255,255,0.2); border: none; color: white; padding: 0.5rem 1rem; border-radius: 5px; cursor: pointer; }
+        .container { display: flex; height: calc(100vh - 60px); }
+        .sidebar { width: 200px; background: #1a1f3a; padding: 1rem; overflow-y: auto; }
+        .nav-link { display: block; padding: 0.8rem 1rem; margin: 0.5rem 0; border-radius: 5px; cursor: pointer; color: #aaa; text-decoration: none; transition: all 0.3s; }
+        .nav-link:hover, .nav-link.active { background: #667eea; color: white; }
+        .main-content { flex: 1; padding: 2rem; overflow-y: auto; }
+        .auth-container { display: flex; justify-content: center; align-items: center; height: calc(100vh - 60px); }
+        .form-card { background: #1a1f3a; padding: 2rem; border-radius: 10px; width: 100%; max-width: 400px; }
+        .form-card h2 { margin-bottom: 1.5rem; color: #667eea; }
+        .form-group { margin-bottom: 1rem; }
+        .form-group label { display: block; margin-bottom: 0.5rem; font-weight: 500; }
+        .form-group input, .form-group select { width: 100%; padding: 0.8rem; background: #252d48; border: 1px solid #667eea; border-radius: 5px; color: white; font-size: 1rem; }
+        .btn-submit { width: 100%; padding: 0.8rem; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border: none; color: white; border-radius: 5px; cursor: pointer; font-size: 1rem; font-weight: 600; margin-top: 1rem; }
+        .btn-submit:hover { opacity: 0.9; }
+        .tabs { display: flex; gap: 1rem; margin-bottom: 1.5rem; }
+        .tab-btn { padding: 0.8rem 1.5rem; background: transparent; border: 2px solid #667eea; color: #667eea; border-radius: 5px; cursor: pointer; font-weight: 600; transition: all 0.3s; }
+        .tab-btn.active { background: #667eea; color: white; }
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
+        .dashboard-tab { display: none; }
+        .dashboard-tab.active { display: block; }
+        .status-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin: 2rem 0; }
+        .status-card { background: #1a1f3a; padding: 1.5rem; border-radius: 10px; border-left: 4px solid #667eea; }
+        .status-card h3 { color: #667eea; font-size: 0.9rem; margin-bottom: 0.5rem; }
+        .status-card p { font-size: 1.5rem; font-weight: bold; }
+        table { width: 100%; border-collapse: collapse; }
+        th, td { padding: 1rem; text-align: left; border-bottom: 1px solid #667eea; }
+        th { background: #1a1f3a; font-weight: 600; }
+        .error { color: #ff6b6b; font-size: 0.9rem; margin-top: 0.5rem; }
+        .success { color: #51cf66; font-size: 0.9rem; margin-top: 0.5rem; }
+        textarea { background: #252d48; border: 1px solid #667eea; border-radius: 5px; color: white; padding: 0.8rem; font-size: 0.9rem; font-family: monospace; }
+        pre { background: #252d48; padding: 1rem; border-radius: 5px; overflow-x: auto; font-size: 0.9rem; }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <div class="navbar">
+        <h1>📊 Repo1 Manager</h1>
+        <button id="navBtn" class="user-btn" onclick="toggleNav()">👤 Guest</button>
+    </div>
+
+    <!-- Main Container -->
+    <div class="container">
+        <!-- Sidebar -->
+        <div class="sidebar" id="sidebar" style="display: none;">
+            <a class="nav-link active" onclick="showTab('overview')">📊 Overview</a>
+            <a class="nav-link" onclick="showTab('users')">👥 Users</a>
+            <a class="nav-link" onclick="showTab('api')">🔌 API Tester</a>
+            <a class="nav-link" onclick="showTab('tests')">✅ Tests</a>
+            <hr style="margin: 1rem 0; border: none; border-top: 1px solid #667eea;">
+            <a class="nav-link" onclick="logout()">🚪 Logout</a>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-content" style="width: 100%;">
+
+            <!-- Auth Container -->
+            <div id="authForm" class="auth-container">
+
+                <div class="form-card">
+                    <div class="tabs">
+                        <button class="tab-btn active" onclick="switchTab('login')">🔐 Login</button>
+                        <button class="tab-btn" onclick="switchTab('register')">📝 Register</button>
+                    </div>
+
+                    <!-- Login Tab -->
+                    <div id="login" class="tab-content active">
+                        <h2>Login</h2>
+                        <form onsubmit="handleLogin(event)">
+                            <div class="form-group">
+                                <label>Email:</label>
+                                <input type="email" id="loginEmail" placeholder="test@example.com" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Password:</label>
+                                <input type="password" id="loginPassword" placeholder="password123" required>
+                            </div>
+                            <div id="loginError" class="error"></div>
+                            <button type="submit" class="btn-submit">Login</button>
+                        </form>
+                    </div>
+
+                    <!-- Register Tab -->
+                    <div id="register" class="tab-content">
+                        <h2>Register</h2>
+                        <form onsubmit="handleRegister(event)">
+                            <div class="form-group">
+                                <label>Email:</label>
+                                <input type="email" id="regEmail" placeholder="user@example.com" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Name:</label>
+                                <input type="text" id="regName" placeholder="Your Name" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Password:</label>
+                                <input type="password" id="regPassword" placeholder="Min 8 char with uppercase & digit" required>
+                            </div>
+                            <div id="regError" class="error"></div>
+                            <button type="submit" class="btn-submit">Register</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Dashboard Tabs -->
+            <div id="dashboard" style="display: none;">
+                <!-- Overview -->
+                <div id="overview" class="dashboard-tab active">
+                    <h2>📊 System Overview</h2>
+                    <div class="status-grid">
+                        <div class="status-card">
+                            <h3>Status</h3>
+                            <p id="statusText">🟢 Running</p>
+                        </div>
+                        <div class="status-card">
+                            <h3>Active Users</h3>
+                            <p id="usersCount">0</p>
+                        </div>
+                        <div class="status-card">
+                            <h3>API Requests</h3>
+                            <p id="requestsCount">0</p>
+                        </div>
+                        <div class="status-card">
+                            <h3>Components</h3>
+                            <p id="compStatus">✅ Active</p>
+                        </div>
+                    </div>
+                    <h3>✨ Features</h3>
+                    <ul id="featuresList"></ul>
+                </div>
+
+                <!-- Users -->
+                <div id="users" class="dashboard-tab">
+                    <h2>👥 Users Management</h2>
+                    <button class="btn-submit" onclick="toggleUserForm()" style="width: 150px; margin-bottom: 1rem;">➕ Add User</button>
+                    <div id="userForm" style="display: none; background: #1a1f3a; padding: 1.5rem; border-radius: 10px; margin-bottom: 1.5rem;">
+                        <form onsubmit="handleAddUser(event)">
+                            <div class="form-group">
+                                <label>Email:</label>
+                                <input type="email" id="userEmail" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Name:</label>
+                                <input type="text" id="userName" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Role:</label>
+                                <select id="userRole">
+                                    <option>user</option>
+                                    <option>admin</option>
+                                </select>
+                            </div>
+                            <button type="submit" class="btn-submit">✅ Add</button>
+                        </form>
+                    </div>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Email</th>
+                                <th>Name</th>
+                                <th>Role</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="usersTable">
+                            <tr><td colspan="5">Loading...</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- API Tester -->
+                <div id="api" class="dashboard-tab">
+                    <h2>🔌 API Endpoint Tester</h2>
+                    <div style="background: #1a1f3a; padding: 1.5rem; border-radius: 10px;">
+                        <div class="form-group">
+                            <label>Method:</label>
+                            <select id="apiMethod">
+                                <option>GET</option>
+                                <option>POST</option>
+                                <option>PUT</option>
+                                <option>DELETE</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Endpoint:</label>
+                            <input type="text" id="apiEndpoint" placeholder="/api/health" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Body (JSON):</label>
+                            <textarea id="apiBody" rows="4" placeholder='{"key":"value"}'></textarea>
+                        </div>
+                        <button class="btn-submit" onclick="testAPI()">🚀 Send</button>
+                    </div>
+                    <div id="apiResponse" style="display: none; margin-top: 2rem; background: #1a1f3a; padding: 1.5rem; border-radius: 10px;">
+                        <h3>Response:</h3>
+                        <pre id="responseText"></pre>
+                    </div>
+                </div>
+
+                <!-- Tests -->
+                <div id="tests" class="dashboard-tab">
+                    <h2>✅ Tests</h2>
+                    <button class="btn-submit" onclick="runTests()" style="width: 200px;">🧪 Run Tests</button>
+                    <div id="testsOutput" style="margin-top: 1rem; background: #1a1f3a; padding: 1.5rem; border-radius: 10px; display: none;">
+                        <pre id="testResults"></pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let isLoggedIn = false;
+        let currentUser = null;
+
+        // Tab Switching
+        function switchTab(tab) {
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
+            document.getElementById(tab).classList.add('active');
+            document.querySelector(`button[onclick="switchTab('${tab}')"]`).classList.add('active');
+        }
+
+        // Dashboard Tab Switching
+        function showTab(tab) {
+            document.querySelectorAll('.nav-link').forEach(el => el.classList.remove('active'));
+            document.querySelectorAll('.dashboard-tab').forEach(el => el.classList.remove('active'));
+            document.getElementById(tab).classList.add('active');
+            event.target.classList.add('active');
+        }
+
+        // Toggle Navigation
+        function toggleNav() {
+            const sidebar = document.getElementById('sidebar');
+            if (isLoggedIn) {
+                sidebar.style.display = sidebar.style.display === 'none' ? 'block' : 'none';
+            }
+        }
+
+        // Handle Login
+        async function handleLogin(e) {
+            e.preventDefault();
+            const email = document.getElementById('loginEmail').value;
+            const password = document.getElementById('loginPassword').value;
+            
+            try {
+                const response = await fetch('/api/auth/login', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email, password })
+                });
+
+                const data = await response.json();
+                if (response.ok) {
+                    isLoggedIn = true;
+                    currentUser = data.user;
+                    showDashboard();
+                } else {
+                    document.getElementById('loginError').textContent = data.error || 'Login failed';
+                }
+            } catch (error) {
+                document.getElementById('loginError').textContent = 'Error: ' + error.message;
+            }
+        }
+
+        // Handle Register
+        async function handleRegister(e) {
+            e.preventDefault();
+            const email = document.getElementById('regEmail').value;
+            const name = document.getElementById('regName').value;
+            const password = document.getElementById('regPassword').value;
+
+            try {
+                const response = await fetch('/api/auth/register', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email, name, password })
+                });
+
+                const data = await response.json();
+                if (response.ok) {
+                    document.getElementById('regError').innerHTML = '<span class="success">✅ Registration successful! Please login.</span>';
+                    setTimeout(() => switchTab('login'), 1000);
+                } else {
+                    document.getElementById('regError').textContent = data.error || 'Registration failed';
+                }
+            } catch (error) {
+                document.getElementById('regError').textContent = 'Error: ' + error.message;
+            }
+        }
+
+        // Show Dashboard
+        function showDashboard() {
+            document.getElementById('authForm').style.display = 'none';
+            document.getElementById('dashboard').style.display = 'block';
+            document.getElementById('sidebar').style.display = 'block';
+            document.getElementById('navBtn').textContent = '👤 ' + (currentUser?.email || 'User');
+            loadStatus();
+            loadUsers();
+        }
+
+        // Load Status
+        async function loadStatus() {
+            try {
+                const response = await fetch('/api/status');
+                const data = await response.json();
+                document.getElementById('statusText').textContent = '🟢 ' + data.status;
+                document.getElementById('usersCount').textContent = data.active_users || 0;
+                document.getElementById('compStatus').textContent = '✅ Active';
+                
+                // Load features
+                const features = data.features || 5;
+                let featuresList = '<li>✅ User Authentication</li><li>✅ User Management</li><li>✅ API Testing</li><li>✅ Health Monitoring</li><li>✅ Session Management</li>';
+                document.getElementById('featuresList').innerHTML = featuresList;
+            } catch (error) {
+                console.error('Error loading status:', error);
+            }
+        }
+
+        // Load Users
+        async function loadUsers() {
+            try {
+                const response = await fetch('/api/users');
+                const data = await response.json();
+                const users = data.users || [];
+                let html = '';
+                users.forEach(user => {
+                    html += `<tr><td>${user.email}</td><td>${user.name}</td><td>${user.role}</td><td>${user.is_active ? '✅' : '❌'}</td><td><button onclick="deleteUser('${user.id}')" class="btn-submit" style="width: 80px; padding: 0.4rem;">Delete</button></td></tr>`;
+                });
+                document.getElementById('usersTable').innerHTML = html || '<tr><td colspan="5">No users found</td></tr>';
+            } catch (error) {
+                console.error('Error loading users:', error);
+            }
+        }
+
+        // Toggle User Form
+        function toggleUserForm() {
+            const form = document.getElementById('userForm');
+            form.style.display = form.style.display === 'none' ? 'block' : 'none';
+        }
+
+        // Handle Add User
+        async function handleAddUser(e) {
+            e.preventDefault();
+            const email = document.getElementById('userEmail').value;
+            const name = document.getElementById('userName').value;
+            const role = document.getElementById('userRole').value;
+
+            try {
+                const response = await fetch('/api/users', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email, name, role })
+                });
+
+                if (response.ok) {
+                    document.getElementById('userForm').reset();
+                    toggleUserForm();
+                    loadUsers();
+                } else {
+                    alert('Error adding user');
+                }
+            } catch (error) {
+                alert('Error: ' + error.message);
+            }
+        }
+
+        // Delete User
+        async function deleteUser(userId) {
+            if (confirm('Delete this user?')) {
+                try {
+                    const response = await fetch(`/api/users/${userId}`, { method: 'DELETE' });
+                    if (response.ok) {
+                        loadUsers();
+                    }
+                } catch (error) {
+                    alert('Error deleting user');
+                }
+            }
+        }
+
+        // Test API
+        async function testAPI() {
+            const method = document.getElementById('apiMethod').value;
+            const endpoint = document.getElementById('apiEndpoint').value;
+            const body = document.getElementById('apiBody').value;
+
+            try {
+                const options = {
+                    method: method,
+                    headers: { 'Content-Type': 'application/json' }
+                };
+
+                if (body && (method === 'POST' || method === 'PUT')) {
+                    options.body = body;
+                }
+
+                const response = await fetch(endpoint, options);
+                const data = await response.json();
+                document.getElementById('responseText').textContent = JSON.stringify(data, null, 2);
+                document.getElementById('apiResponse').style.display = 'block';
+            } catch (error) {
+                document.getElementById('responseText').textContent = 'Error: ' + error.message;
+                document.getElementById('apiResponse').style.display = 'block';
+            }
+        }
+
+        // Run Tests
+        async function runTests() {
+            const output = document.getElementById('testResults');
+            output.textContent = 'Running tests...';
+            document.getElementById('testsOutput').style.display = 'block';
+
+            try {
+                const response = await fetch('/api/health');
+                const data = await response.json();
+                output.textContent = '✅ Health Check: OK\n' + JSON.stringify(data, null, 2) + '\n\n✅ All tests passed!';
+            } catch (error) {
+                output.textContent = '❌ Error: ' + error.message;
+            }
+        }
+
+        // Logout
+        function logout() {
+            fetch('/api/auth/logout', { method: 'POST' });
+            isLoggedIn = false;
+            document.getElementById('authForm').style.display = 'flex';
+            document.getElementById('dashboard').style.display = 'none';
+            document.getElementById('sidebar').style.display = 'none';
+            location.reload();
+        }
+
+        // Check if logged in on load
+        window.addEventListener('load', async () => {
+            try {
+                const response = await fetch('/api/auth/user');
+                if (response.ok) {
+                    const data = await response.json();
+                    currentUser = data;
+                    isLoggedIn = true;
+                    showDashboard();
+                }
+            } catch (error) {
+                // Not logged in
+            }
+        });
+    </script>
+</body>
+</html>

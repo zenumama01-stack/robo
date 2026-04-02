@@ -1,0 +1,18 @@
+<h1><a href="datacatalog_v1beta1.html">Google Cloud Data Catalog API</a> . <a href="datacatalog_v1beta1.projects.html">projects</a> . <a href="datacatalog_v1beta1.projects.locations.html">locations</a> . <a href="datacatalog_v1beta1.projects.locations.taxonomies.html">taxonomies</a> . <a href="datacatalog_v1beta1.projects.locations.taxonomies.policyTags.html">policyTags</a></h1>
+<p class="firstline">Creates a policy tag in the specified taxonomy.</p>
+<p class="firstline">Deletes a policy tag. Also deletes all of its descendant policy tags.</p>
+<p class="firstline">Updates a policy tag.</p>
+  <pre>Creates a policy tag in the specified taxonomy.
+{ # Denotes one policy tag in a taxonomy (e.g. ssn). Policy Tags can be defined in a hierarchy. For example, consider the following hierarchy: Geolocation -&gt; (LatLong, City, ZipCode). PolicyTag &quot;Geolocation&quot; contains three child policy tags: &quot;LatLong&quot;, &quot;City&quot;, and &quot;ZipCode&quot;.
+  &quot;description&quot;: &quot;A String&quot;, # Description of this policy tag. It must: contain only unicode characters, tabs, newlines, carriage returns and page breaks; and be at most 2000 bytes long when encoded in UTF-8. If not set, defaults to an empty description. If not set, defaults to an empty description.
+  &quot;displayName&quot;: &quot;A String&quot;, # Required. User defined name of this policy tag. It must: be unique within the parent taxonomy; contain only unicode letters, numbers, underscores, dashes and spaces; not start or end with spaces; and be at most 200 bytes long when encoded in UTF-8.
+  &quot;name&quot;: &quot;A String&quot;, # Identifier. Resource name of this policy tag, whose format is: &quot;projects/{project_number}/locations/{location_id}/taxonomies/{taxonomy_id}/policyTags/{id}&quot;.
+  &quot;parentPolicyTag&quot;: &quot;A String&quot;, # Resource name of this policy tag&#x27;s parent policy tag (e.g. for the &quot;LatLong&quot; policy tag in the example above, this field contains the resource name of the &quot;Geolocation&quot; policy tag). If empty, it means this policy tag is a top level policy tag (e.g. this field is empty for the &quot;Geolocation&quot; policy tag in the example above). If not set, defaults to an empty string.
+  <pre>Deletes a policy tag. Also deletes all of its descendant policy tags.
+  name: string, Required. Resource name of the policy tag to be deleted. All of its descendant policy tags will also be deleted. (required)
+  name: string, Required. Resource name of the requested policy tag. (required)
+  pageToken: string, The next_page_token value returned from a previous List request, if any. If not set, defaults to an empty string.
+  &quot;policyTags&quot;: [ # The policy tags that are in the requested taxonomy.
+  <pre>Updates a policy tag.
+  name: string, Identifier. Resource name of this policy tag, whose format is: &quot;projects/{project_number}/locations/{location_id}/taxonomies/{taxonomy_id}/policyTags/{id}&quot;. (required)
+  updateMask: string, The update mask applies to the resource. Only display_name, description and parent_policy_tag can be updated and thus can be listed in the mask. If update_mask is not provided, all allowed fields (i.e. display_name, description and parent) will be updated. For more information including the `FieldMask` definition, see https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#fieldmask If not set, defaults to all of the fields that are allowed to update.

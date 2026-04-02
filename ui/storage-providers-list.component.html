@@ -1,0 +1,30 @@
+<div class="providers-list">
+    <span class="header-title">Storage Accounts</span>
+      <mj-loading text="Loading accounts..."></mj-loading>
+  @if (!isLoading && !errorMessage && accounts.length === 0) {
+      <p class="empty-message">No storage accounts configured</p>
+      <p class="empty-hint">Contact your administrator to set up file storage accounts</p>
+  <!-- Account List -->
+  @if (!isLoading && !errorMessage && accounts.length > 0) {
+    <div class="providers-container">
+      @for (item of accounts; track item) {
+          class="provider-item"
+          [class.selected]="isSelected(item)"
+          (click)="selectAccount(item)"
+          [title]="item.account.Description || item.account.Name"
+          <div class="provider-icon">
+            <i [class]="getProviderIcon(item.provider.Name)"></i>
+            <div class="provider-name">{{ item.account.Name }}</div>
+            <div class="provider-meta">
+              <!-- Provider type badge -->
+              <span class="provider-type-badge" [title]="item.provider.Name">
+                {{ item.provider.Name }}
+              <!-- Search support badge -->
+              @if (item.provider.SupportsSearch) {
+                <span class="search-badge" title="Supports search">
+              <!-- Credential configured badge -->
+              @if (item.account.CredentialID) {
+                <span class="credential-badge" title="Credentials configured">
+              <!-- No credential warning -->
+              @if (!item.account.CredentialID) {
+                <span class="unconfigured-badge" title="No credentials configured">

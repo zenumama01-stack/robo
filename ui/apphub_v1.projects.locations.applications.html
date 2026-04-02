@@ -1,0 +1,45 @@
+<h1><a href="apphub_v1.html">App Hub API</a> . <a href="apphub_v1.projects.html">projects</a> . <a href="apphub_v1.projects.locations.html">locations</a> . <a href="apphub_v1.projects.locations.applications.html">applications</a></h1>
+  <code><a href="apphub_v1.projects.locations.applications.services.html">services()</a></code>
+  <code><a href="apphub_v1.projects.locations.applications.workloads.html">workloads()</a></code>
+<p class="firstline">Returns the workloads Resource.</p>
+  <code><a href="#create">create(parent, applicationId=None, body=None, requestId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Creates an Application in a host project and location.</p>
+<p class="firstline">Deletes an Application in a host project and location.</p>
+<p class="firstline">Gets an Application in a host project and location.</p>
+<p class="firstline">Lists Applications in a host project and location.</p>
+<p class="firstline">Updates an Application in a host project and location.</p>
+    <code class="details" id="create">create(parent, applicationId=None, body=None, requestId=None, x__xgafv=None)</code>
+  <pre>Creates an Application in a host project and location.
+  parent: string, Required. Project and location to create Application in. Expected format: `projects/{project}/locations/{location}`. (required)
+{ # Application defines the governance boundary for App Hub entities that perform a logical end-to-end business function. App Hub supports application level IAM permission to align with governance requirements.
+  &quot;attributes&quot;: { # Consumer provided attributes. # Optional. Consumer provided attributes.
+    &quot;businessOwners&quot;: [ # Optional. Business team that ensures user needs are met and value is delivered
+      { # Contact information of stakeholders.
+        &quot;displayName&quot;: &quot;A String&quot;, # Optional. Contact&#x27;s name. Can have a maximum length of 63 characters.
+        &quot;email&quot;: &quot;A String&quot;, # Required. Email address of the contacts.
+    &quot;criticality&quot;: { # Criticality of the Application, Service, or Workload # Optional. User-defined criticality information.
+      &quot;type&quot;: &quot;A String&quot;, # Required. Criticality Type.
+    &quot;developerOwners&quot;: [ # Optional. Developer team that owns development and coding.
+    &quot;environment&quot;: { # Environment of the Application, Service, or Workload # Optional. User-defined environment information.
+      &quot;type&quot;: &quot;A String&quot;, # Required. Environment Type.
+    &quot;operatorOwners&quot;: [ # Optional. Operator team that ensures runtime and operations.
+  &quot;description&quot;: &quot;A String&quot;, # Optional. User-defined description of an Application. Can have a maximum length of 2048 characters.
+  &quot;displayName&quot;: &quot;A String&quot;, # Optional. User-defined name for the Application. Can have a maximum length of 63 characters.
+  &quot;name&quot;: &quot;A String&quot;, # Identifier. The resource name of an Application. Format: `&quot;projects/{host-project-id}/locations/{location}/applications/{application-id}&quot;`
+  &quot;scope&quot;: { # Scope of an application. # Required. Immutable. Defines what data can be included into this Application. Limits which Services and Workloads can be registered.
+    &quot;type&quot;: &quot;A String&quot;, # Required. Scope Type.
+  &quot;state&quot;: &quot;A String&quot;, # Output only. Application state.
+  &quot;uid&quot;: &quot;A String&quot;, # Output only. A universally unique identifier (in UUID4 format) for the `Application`.
+  applicationId: string, Required. The Application identifier. Must contain only lowercase letters, numbers or hyphens, with the first character a letter, the last a letter or a number, and a 63 character maximum.
+  <pre>Deletes an Application in a host project and location.
+  name: string, Required. Fully qualified name of the Application to delete. Expected format: `projects/{project}/locations/{location}/applications/{application}`. (required)
+  <pre>Gets an Application in a host project and location.
+  name: string, Required. Fully qualified name of the Application to fetch. Expected format: `projects/{project}/locations/{location}/applications/{application}`. (required)
+  <pre>Lists Applications in a host project and location.
+  parent: string, Required. Project and location to list Applications on. Expected format: `projects/{project}/locations/{location}`. (required)
+  filter: string, Optional. Filtering results.
+    { # Response for ListApplications.
+  &quot;applications&quot;: [ # List of Applications.
+  <pre>Updates an Application in a host project and location.
+  name: string, Identifier. The resource name of an Application. Format: `&quot;projects/{host-project-id}/locations/{location}/applications/{application-id}&quot;` (required)
+  updateMask: string, Required. Field mask is used to specify the fields to be overwritten in the Application resource by the update. The fields specified in the update_mask are relative to the resource, not the full request. The API changes the values of the fields as specified in the update_mask. The API ignores the values of all fields not covered by the update_mask. You can also unset a field by not specifying it in the updated message, but adding the field to the mask. This clears whatever value the field previously had.

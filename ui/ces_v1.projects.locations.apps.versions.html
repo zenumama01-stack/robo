@@ -1,0 +1,39 @@
+<h1><a href="ces_v1.html">Gemini Enterprise for Customer Experience API</a> . <a href="ces_v1.projects.html">projects</a> . <a href="ces_v1.projects.locations.html">locations</a> . <a href="ces_v1.projects.locations.apps.html">apps</a> . <a href="ces_v1.projects.locations.apps.versions.html">versions</a></h1>
+  <code><a href="#create">create(parent, appVersionId=None, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Creates a new app version in the given app.</p>
+<p class="firstline">Deletes the specified app version.</p>
+<p class="firstline">Gets details of the specified app version.</p>
+<p class="firstline">Lists all app versions in the given app.</p>
+<p class="firstline">Restores the specified app version. This will create a new app version from the current draft app and overwrite the current draft with the specified app version.</p>
+    <code class="details" id="create">create(parent, appVersionId=None, body=None, x__xgafv=None)</code>
+  <pre>Creates a new app version in the given app.
+  parent: string, Required. The resource name of the app to create an app version in. (required)
+{ # In Customer Engagement Suite (CES), an app version is a snapshot of the app at a specific point in time. It is immutable and cannot be modified once created.
+  &quot;createTime&quot;: &quot;A String&quot;, # Output only. Timestamp when the app version was created.
+  &quot;creator&quot;: &quot;A String&quot;, # Output only. Email of the user who created the app version.
+  &quot;description&quot;: &quot;A String&quot;, # Optional. The description of the app version.
+  &quot;displayName&quot;: &quot;A String&quot;, # Optional. The display name of the app version.
+  &quot;name&quot;: &quot;A String&quot;, # Identifier. The unique identifier of the app version. Format: `projects/{project}/locations/{location}/apps/{app}/versions/{version}`
+  &quot;snapshot&quot;: { # A snapshot of the app. # Output only. The snapshot of the app when the version is created.
+    &quot;agents&quot;: [ # Optional. List of agents in the app.
+    &quot;app&quot;: { # An app serves as a top-level container for a group of agents, including the root agent and its sub-agents, along with their associated configurations. These agents work together to achieve specific goals within the app&#x27;s context. # Optional. The basic settings for the app.
+    &quot;examples&quot;: [ # Optional. List of examples in the app.
+    &quot;guardrails&quot;: [ # Optional. List of guardrails in the app.
+    &quot;tools&quot;: [ # Optional. List of tools in the app.
+    &quot;toolsets&quot;: [ # Optional. List of toolsets in the app.
+  appVersionId: string, Optional. The ID to use for the app version, which will become the final component of the app version&#x27;s resource name. If not provided, a unique ID will be automatically assigned for the app version.
+  <pre>Deletes the specified app version.
+  name: string, Required. The resource name of the app version to delete. (required)
+  etag: string, Optional. The current etag of the app version. If an etag is not provided, the deletion will overwrite any concurrent changes. If an etag is provided and does not match the current etag of the app version, deletion will be blocked and an ABORTED error will be returned.
+  <pre>Gets details of the specified app version.
+  name: string, Required. The resource name of the app version to retrieve. (required)
+  <pre>Lists all app versions in the given app.
+  parent: string, Required. The resource name of the app to list app versions from. (required)
+  filter: string, Optional. Filter to be applied when listing the app versions. See https://google.aip.dev/160 for more details.
+  pageToken: string, Optional. The next_page_token value returned from a previous list AgentService.ListAppVersions call.
+    { # Response message for AgentService.ListAppVersions.
+  &quot;appVersions&quot;: [ # The list of app versions.
+  &quot;nextPageToken&quot;: &quot;A String&quot;, # A token that can be sent as ListAppVersionsRequest.page_token to retrieve the next page. Absence of this field indicates there are no subsequent pages.
+  <pre>Restores the specified app version. This will create a new app version from the current draft app and overwrite the current draft with the specified app version.
+  name: string, Required. The resource name of the app version to restore. (required)
+{ # Request message for AgentService.RestoreAppVersion

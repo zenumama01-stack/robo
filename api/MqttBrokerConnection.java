@@ -1,0 +1,407 @@
+import org.openhab.core.io.transport.mqtt.internal.Subscription;
+import org.openhab.core.io.transport.mqtt.internal.client.Mqtt3AsyncClientWrapper;
+import org.openhab.core.io.transport.mqtt.internal.client.Mqtt5AsyncClientWrapper;
+import org.openhab.core.io.transport.mqtt.internal.client.MqttAsyncClientWrapper;
+import org.openhab.core.io.transport.mqtt.reconnect.AbstractReconnectStrategy;
+import org.openhab.core.io.transport.mqtt.reconnect.PeriodicReconnectStrategy;
+import org.openhab.core.io.transport.mqtt.ssl.CustomTrustManagerFactory;
+import org.osgi.service.cm.ConfigurationException;
+import com.hivemq.client.mqtt.lifecycle.MqttClientConnectedContext;
+import com.hivemq.client.mqtt.lifecycle.MqttClientConnectedListener;
+import com.hivemq.client.mqtt.lifecycle.MqttClientDisconnectedContext;
+import com.hivemq.client.mqtt.lifecycle.MqttClientDisconnectedListener;
+import io.netty.handler.ssl.util.InsecureTrustManagerFactory;
+ * An MQTTBrokerConnection represents a single client connection to a MQTT broker.
+ * When a connection to an MQTT broker is lost, it will try to reconnect every 60 seconds.
+ * @author David Graeff - All operations are async now. More flexible sslContextProvider and reconnectStrategy added.
+ * @author Markus Rathgeb - added connection state callback
+ * @author Jan N. Klug - changed from PAHO to HiveMQ client
+ * @author Mark Herwege - Added flag for hostname validation
+ * @author Mark Herwege - Added parameter for cleanSession/cleanStart
+public class MqttBrokerConnection {
+    final Logger logger = LoggerFactory.getLogger(MqttBrokerConnection.class);
+    public static final Protocol DEFAULT_PROTOCOL = Protocol.TCP;
+    public static final MqttVersion DEFAULT_MQTT_VERSION = MqttVersion.V3;
+    public static final int DEFAULT_KEEPALIVE_INTERVAL = 60;
+    public static final int DEFAULT_QOS = 0;
+     * MQTT transport protocols
+    public enum Protocol {
+        WEBSOCKETS
+     * MQTT version (currently v3 and v5)
+    public enum MqttVersion {
+        V3,
+        V5
+    // Connection parameters
+    protected final Protocol protocol;
+    protected final String host;
+    protected final int port;
+    protected final boolean secure;
+    protected final boolean hostnameValidated;
+    protected final MqttVersion mqttVersion;
+    private boolean cleanSessionStart = true;
+    private @Nullable TrustManagerFactory trustManagerFactory = InsecureTrustManagerFactory.INSTANCE;
+    protected final String clientId;
+    private @Nullable String user;
+    private @Nullable String password;
+    /// Configuration variables
+    private int qos = DEFAULT_QOS;
+    private @Nullable MqttWillAndTestament lastWill;
+    protected @Nullable AbstractReconnectStrategy reconnectStrategy;
+    private int keepAliveInterval = DEFAULT_KEEPALIVE_INTERVAL;
+    /// Runtime variables
+    protected @Nullable MqttAsyncClientWrapper client;
+    protected boolean isConnecting = false;
+    protected final List<MqttConnectionObserver> connectionObservers = new CopyOnWriteArrayList<>();
+    protected final Map<String, Subscription> subscribers = new ConcurrentHashMap<>();
+    // Connection timeout handling
+    protected final AtomicReference<@Nullable ScheduledFuture<?>> timeoutFuture = new AtomicReference<>(null);
+    protected @Nullable ScheduledExecutorService timeoutExecutor;
+    private int timeout = 1200; /* Connection timeout in milliseconds */
+    // Server quirk flags
+    private boolean unsubscribeOnStop = true;
+     * Create a listener object for being used as a callback for a connection attempt.
+     * The callback will interact with the {@link AbstractReconnectStrategy} as well as inform registered
+     * {@link MqttConnectionObserver}s.
+    public static class ConnectionCallback implements MqttClientConnectedListener, MqttClientDisconnectedListener {
+        private final MqttBrokerConnection connection;
+        private final Runnable cancelTimeoutFuture;
+        private CompletableFuture<Boolean> future = new CompletableFuture<>();
+        public ConnectionCallback(MqttBrokerConnection mqttBrokerConnectionImpl) {
+            this.connection = mqttBrokerConnectionImpl;
+            this.cancelTimeoutFuture = mqttBrokerConnectionImpl::cancelTimeoutFuture;
+        public void onConnected(@Nullable MqttClientConnectedContext context) {
+            cancelTimeoutFuture.run();
+            connection.isConnecting = false;
+            if (connection.reconnectStrategy != null) {
+                connection.reconnectStrategy.connectionEstablished();
+            List<CompletableFuture<Boolean>> futures = new ArrayList<>();
+            connection.subscribers.forEach((topic, subscription) -> {
+                futures.add(connection.subscribeRaw(topic, subscription));
+            // As soon as all subscriptions are performed, turn the connection future complete.
+            CompletableFuture.allOf(futures.toArray(new CompletableFuture[futures.size()])).thenRun(() -> {
+                future.complete(true);
+                connection.connectionObservers
+                        .forEach(o -> o.connectionStateChanged(connection.connectionState(), null));
+        public void onDisconnected(@Nullable MqttClientDisconnectedContext context) {
+                final Throwable throwable = context.getCause();
+                onDisconnected(throwable);
+                onDisconnected(new Throwable("unknown disconnect reason"));
+        public void onDisconnected(Throwable t) {
+            future.complete(false);
+            connection.connectionObservers.forEach(o -> o.connectionStateChanged(MqttConnectionState.DISCONNECTED, t));
+            // If we tried to connect via start(), use the reconnect strategy to try it again
+            if (connection.isConnecting) {
+                connection.reconnectStrategy.lostConnection();
+        public CompletableFuture<Boolean> createFuture() {
+            future = new CompletableFuture<>();
+    // Connection callback object
+    protected ConnectionCallback connectionCallback;
+     * Create a new TCP MQTT3 client connection to a server with the given host and port.
+     * @param host A host name or address
+     * @param port A port or null to select the default port for a secure or insecure connection
+     * @param secure A secure connection
+     * @param clientId Client id. Each client on a MQTT server has a unique client id. Sometimes client ids are
+     *            used for access restriction implementations.
+     *            If none is specified, a default is generated. The client id cannot be longer than 65535
+     *            characters.
+     * @throws IllegalArgumentException If the client id or port is not valid.
+    public MqttBrokerConnection(String host, @Nullable Integer port, boolean secure, @Nullable String clientId) {
+        this(host, port, secure, true, clientId);
+     * @param hostnameValidated Validate hostname from certificate against server hostname for secure connection
+    public MqttBrokerConnection(String host, @Nullable Integer port, boolean secure, boolean hostnameValidated,
+            @Nullable String clientId) {
+        this(Protocol.TCP, MqttVersion.V3, host, port, secure, hostnameValidated, clientId);
+     * Create a new MQTT client connection to a server with the given protocol, host and port.
+     * @param protocol The transport protocol
+     * @param mqttVersion The version of the MQTT client (v3 or v5)
+    public MqttBrokerConnection(Protocol protocol, MqttVersion mqttVersion, String host, @Nullable Integer port,
+            boolean secure, @Nullable String clientId) {
+        this(protocol, mqttVersion, host, port, secure, true, clientId);
+            boolean secure, boolean hostnameValidated, @Nullable String clientId) {
+        this.protocol = protocol;
+        this.secure = secure;
+        this.hostnameValidated = hostnameValidated;
+        this.mqttVersion = mqttVersion;
+        String newClientID = clientId;
+        if (newClientID == null) {
+            newClientID = UUID.randomUUID().toString();
+        } else if (newClientID.length() > 65535) {
+            throw new IllegalArgumentException("Client ID cannot be longer than 65535 characters");
+        if (port != null && (port <= 0 || port > 65535)) {
+            throw new IllegalArgumentException("Port is not within a valid range");
+        this.port = port != null ? port : (secure ? 8883 : 1883);
+        this.clientId = newClientID;
+        setReconnectStrategy(new PeriodicReconnectStrategy());
+        connectionCallback = new ConnectionCallback(this);
+     * Set the reconnect strategy. The implementor will be called when the connection
+     * state to the MQTT broker changed.
+     * The reconnect strategy will not be informed if the initial connection to the broker
+     * timed out. You need a timeout executor additionally, see
+     * {@link #setTimeoutExecutor(ScheduledExecutorService, int)}.
+     * @param reconnectStrategy The reconnect strategy. May not be null.
+    public void setReconnectStrategy(AbstractReconnectStrategy reconnectStrategy) {
+        this.reconnectStrategy = reconnectStrategy;
+        reconnectStrategy.setBrokerConnection(this);
+     * @return Return the reconnect strategy
+    public @Nullable AbstractReconnectStrategy getReconnectStrategy() {
+        return this.reconnectStrategy;
+     * Set a timeout executor. If none is set, you will not be notified of connection timeouts, this
+     * also includes a non-firing reconnect strategy. The default executor is none.
+     * @param executor One timer will be created when a connection attempt happens
+     * @param timeoutInMS Timeout in milliseconds
+    public void setTimeoutExecutor(@Nullable ScheduledExecutorService executor, int timeoutInMS) {
+        timeoutExecutor = executor;
+        this.timeout = timeoutInMS;
+    public void setTrustManagers(TrustManager[] trustManagers) {
+        if (trustManagers.length != 0) {
+            trustManagerFactory = new CustomTrustManagerFactory(trustManagers);
+            trustManagerFactory = null;
+    public TrustManager[] getTrustManagers() {
+        if (trustManagerFactory != null) {
+            return trustManagerFactory.getTrustManagers();
+            return new TrustManager[] {};
+     * Get the MQTT broker protocol
+    public Protocol getProtocol() {
+     * Get the MQTT version
+    public MqttVersion getMqttVersion() {
+        return mqttVersion;
+     * Get the MQTT broker host
+    public String getHost() {
+     * Get the MQTT broker port
+     * Return true if this is or will be an encrypted connection to the broker
+        return secure;
+     * Return true if hostname in certificate is validated against server hostname for secure connection
+    public boolean isHostnameValidated() {
+        return secure & hostnameValidated;
+     * Set the optional user name and optional password to use when connecting to the MQTT broker.
+     * The connection needs to be restarted for the new settings to take effect.
+     * @param user Name to use for connection.
+     * @param password The password
+    public void setCredentials(@Nullable String user, @Nullable String password) {
+        this.password = password;
+     * @return connection password.
+    public @Nullable String getPassword() {
+        return password;
+     * @return optional user name for the MQTT connection.
+     * @return quality of service level.
+    public int getQos() {
+        return qos;
+     * Set quality of service. Valid values are 0, 1, 2 and mean
+     * "at most once", "at least once" and "exactly once" respectively.
+     * @param qos level.
+    public void setQos(int qos) {
+        if (qos < 0 || qos > 2) {
+        this.qos = qos;
+     * Return the last will object or null if there is none.
+    public @Nullable MqttWillAndTestament getLastWill() {
+        return lastWill;
+     * Set the last will object.
+     * @param lastWill The last will object or null.
+     * @param applyImmediately If true, the connection will stopped and started for the new last-will to take effect
+     *            immediately.
+     * @throws MqttException
+     * @throws ConfigurationException
+    public void setLastWill(@Nullable MqttWillAndTestament lastWill, boolean applyImmediately)
+            throws ConfigurationException, MqttException {
+        this.lastWill = lastWill;
+        if (applyImmediately) {
+            stop();
+    public void setLastWill(@Nullable MqttWillAndTestament lastWill) {
+     * Enable / disable sending Unsubscribe command when the connection is closed
+     * Some servers can be quirky, then do not handle Usubscribe request properly.
+     * In this case we have to omit sending it. Example: iRobot built-in MQTT server.
+     * By default this behavior is set to true.
+     * @param unsubscribeOnStop Enable or disable flag.
+    public void setUnsubscribeOnStop(boolean unsubscribeOnStop) {
+        this.unsubscribeOnStop = unsubscribeOnStop;
+     * Get client id to use when connecting to the broker.
+     * @return value clientId to use.
+    public String getClientId() {
+        return clientId;
+     * Returns the connection state
+    public MqttConnectionState connectionState() {
+        if (isConnecting) {
+            return MqttConnectionState.CONNECTING;
+        return (client != null && client.getState().isConnected()) ? MqttConnectionState.CONNECTED
+                : MqttConnectionState.DISCONNECTED;
+     * Set the keep alive interval. The default interval is 60 seconds. If no heartbeat is received within this
+     * timeframe, the connection will be considered dead. Set this to a higher value on systems which may not always be
+     * able to process the heartbeat in time.
+     * @param keepAliveInterval interval in seconds
+    public void setKeepAliveInterval(int keepAliveInterval) {
+        if (keepAliveInterval <= 0) {
+            throw new IllegalArgumentException("Keep alive cannot be <=0");
+        this.keepAliveInterval = keepAliveInterval;
+     * Return the keep alive internal in seconds
+    public int getKeepAliveInterval() {
+        return keepAliveInterval;
+     * Sets the MQTT3 cleanSession or MQTT5 cleanStart configuration.
+     * @param cleanSessionStart
+    public void setCleanSessionStart(boolean cleanSessionStart) {
+        this.cleanSessionStart = cleanSessionStart;
+     * Return MQTT3 cleanSession or MQTT5 cleanStart parameter
+    public boolean getCleanSessionStart() {
+        return cleanSessionStart;
+     * Return true if there are subscribers registered via {@link #subscribe(String, MqttMessageSubscriber)}.
+     * Call {@link #unsubscribe(String, MqttMessageSubscriber)} or {@link #unsubscribeAll()} if necessary.
+    public boolean hasSubscribers() {
+        return !subscribers.isEmpty();
+     * Add a new message consumer to this connection. Multiple subscribers with the same
+     * topic are allowed. This method will not protect you from adding a subscriber object
+     * multiple times!
+     * If there is a retained message for the topic, you are guaranteed to receive a callback
+     * for each new subscriber, even for the same topic.
+     * @param topic The topic to subscribe to.
+     * @param subscriber The callback listener for received messages for the given topic.
+     * @return Completes with true if successful. Completes with false if not connected yet. Exceptionally otherwise.
+    public CompletableFuture<Boolean> subscribe(String topic, MqttMessageSubscriber subscriber) {
+        final Subscription subscription;
+        final boolean needsSubscribe;
+        synchronized (subscribers) {
+            subscription = subscribers.computeIfAbsent(topic, t -> new Subscription());
+            needsSubscribe = subscription.isEmpty();
+            subscription.add(subscriber);
+        if (needsSubscribe) {
+            return subscribeRaw(topic, subscription);
+        return CompletableFuture.completedFuture(true);
+     * Subscribes to a topic on the given connection, but does not alter the subscriber list.
+     * @return Completes with true if successful. Exceptionally otherwise.
+    protected CompletableFuture<Boolean> subscribeRaw(String topic, Subscription subscription) {
+        logger.trace("subscribeRaw message consumer for topic '{}' from broker '{}'", topic, host);
+        final MqttAsyncClientWrapper mqttClient = this.client;
+        if (mqttClient != null && mqttClient.getState().isConnected()) {
+            mqttClient.subscribe(topic, qos, subscription).whenComplete((s, t) -> {
+                    logger.trace("Successfully subscribed to topic {}", topic);
+                    logger.warn("Failed subscribing to topic {}", topic, t);
+                    future.completeExceptionally(new MqttException(t));
+     * Remove a previously registered consumer from this connection.
+     * If no more consumers are registered for a topic, the topic will be unsubscribed from.
+     * @param topic The topic to unsubscribe from.
+     * @param subscriber The callback listener to remove.
+    public CompletableFuture<Boolean> unsubscribe(String topic, MqttMessageSubscriber subscriber) {
+        final boolean needsUnsubscribe;
+            final @Nullable Subscription subscription = subscribers.get(topic);
+            if (subscription == null) {
+                logger.trace("Tried to unsubscribe {} from topic {}, but subscriber list is empty", subscriber, topic);
+            subscription.remove(subscriber);
+            if (subscription.isEmpty()) {
+                needsUnsubscribe = true;
+                subscribers.remove(topic);
+                needsUnsubscribe = false;
+        if (needsUnsubscribe) {
+            MqttAsyncClientWrapper mqttClient = this.client;
+            if (mqttClient != null) {
+                logger.trace("Subscriber list is empty after removing {}, unsubscribing topic {} from client",
+                        subscriber, topic);
+                return unsubscribeRaw(mqttClient, topic);
+     * Unsubscribes from a topic on the given connection, but does not alter the subscriber list.
+     * @param client The client connection
+     * @param topic The topic to unsubscribe from
+     * @return Completes with true if successful. Completes with false if no broker connection is established.
+     *         Exceptionally otherwise.
+    protected CompletableFuture<Boolean> unsubscribeRaw(MqttAsyncClientWrapper client, String topic) {
+        logger.trace("Unsubscribing message consumer for topic '{}' from broker '{}'", topic, host);
+        if (client.getState().isConnected()) {
+            client.unsubscribe(topic).whenComplete((s, t) -> {
+     * Add a new connection observer to this connection.
+     * @param connectionObserver The connection observer that should be added.
+    public synchronized void addConnectionObserver(MqttConnectionObserver connectionObserver) {
+        connectionObservers.add(connectionObserver);
+     * Remove a previously registered connection observer from this connection.
+     * @param connectionObserver The connection observer that should be removed.
+    public synchronized void removeConnectionObserver(MqttConnectionObserver connectionObserver) {
+        connectionObservers.remove(connectionObserver);
+     * Return true if there are connection observers registered via addConnectionObserver().
+    public boolean hasConnectionObservers() {
+        return !connectionObservers.isEmpty();
+     * This will establish a connection to the MQTT broker and if successful, notify all
+     * publishers and subscribers that the connection has become active. This method will
+     * do nothing if there is already an active connection.
+     * @return Returns a future that completes with true if already connected or connecting,
+     *         completes with false if a connection timeout has happened and completes exceptionally otherwise.
+    public CompletableFuture<Boolean> start() {
+        // We don't want multiple concurrent threads to start a connection
+            if (connectionState() != MqttConnectionState.DISCONNECTED) {
+            // Perform the connection attempt
+            isConnecting = true;
+            connectionObservers.forEach(o -> o.connectionStateChanged(MqttConnectionState.CONNECTING, null));
+        // Ensure the reconnect strategy is started
+        if (reconnectStrategy != null) {
+            reconnectStrategy.start();
+        // Close client if there is still one existing
+        if (this.client != null) {
+            this.client.disconnect();
+            this.client = null;
+        CompletableFuture<Boolean> future = connectionCallback.createFuture();
+        // Create the client
+        MqttAsyncClientWrapper client = createClient();
+        this.client = client;
+        // connect
+        client.connect(lastWill, keepAliveInterval, user, password, cleanSessionStart);
+        logger.info("Starting MQTT broker connection to '{}' with clientid {}", host, getClientId());
+        // Connect timeout
+        ScheduledExecutorService executor = timeoutExecutor;
+        if (executor != null) {
+            final ScheduledFuture<?> timeoutFuture = this.timeoutFuture.getAndSet(executor.schedule(
+                    () -> connectionCallback.onDisconnected(new TimeoutException("connect timed out")), timeout,
+                    TimeUnit.MILLISECONDS));
+            if (timeoutFuture != null) {
+                timeoutFuture.cancel(false);
+    protected MqttAsyncClientWrapper createClient() {
+        if (mqttVersion == MqttVersion.V3) {
+            return new Mqtt3AsyncClientWrapper(host, port, clientId, protocol, secure, hostnameValidated,
+                    connectionCallback, trustManagerFactory);
+            return new Mqtt5AsyncClientWrapper(host, port, clientId, protocol, secure, hostnameValidated,
+     * After a successful disconnect, the underlying library objects need to be closed and connection observers want to
+     * be notified.
+     * @param v A passthrough boolean value
+     * @return Returns the value of the parameter v.
+    protected boolean finalizeStopAfterDisconnect(boolean v) {
+        final MqttAsyncClientWrapper client = this.client;
+        if (client != null && connectionState() != MqttConnectionState.DISCONNECTED) {
+            client.disconnect();
+        connectionObservers.forEach(o -> o.connectionStateChanged(MqttConnectionState.DISCONNECTED, null));
+     * Unsubscribe from all topics
+     * @return Returns a future that completes as soon as all subscriptions have been canceled.
+    public CompletableFuture<Void> unsubscribeAll() {
+        MqttAsyncClientWrapper client = this.client;
+        if (client != null) {
+            subscribers.forEach((topic, subscription) -> {
+                futures.add(unsubscribeRaw(client, topic));
+            subscribers.clear();
+        return CompletableFuture.allOf(futures.toArray(new CompletableFuture[futures.size()]));
+     * Unsubscribes from all subscribed topics, stops the reconnect strategy, disconnect and close the client.
+     * You can re-establish a connection calling {@link #start()} again. Do not call start, before the closing process
+     * has finished completely.
+     * @return Returns a future that completes as soon as the disconnect process has finished.
+    public CompletableFuture<Boolean> stop() {
+        if (client == null) {
+        logger.trace("Closing the MQTT broker connection '{}'", host);
+        // Abort a connection attempt
+        isConnecting = false;
+        // Cancel the timeout future. If stop is called we can safely assume there is no interest in a connection
+        cancelTimeoutFuture();
+        // Stop the reconnect strategy
+            reconnectStrategy.stop();
+        // Close connection
+            if (unsubscribeOnStop) {
+                unsubscribeAll().thenRun(() -> {
+                    doDisconnect(future);
+        return future.thenApply(this::finalizeStopAfterDisconnect);
+    private void doDisconnect(CompletableFuture<Boolean> future) {
+        client.disconnect().whenComplete((m, t) -> {
+            future.complete(t == null);
+     * Publish a message to the broker with the given QoS and retained flag.
+     * @param topic The topic
+     * @param payload The message payload
+     * @param qos The quality of service for this message
+     * @param retain Set to true to retain the message on the broker
+     * @return Returns a future that completes with a result of true if the publishing succeeded and completes
+     *         exceptionally on an error or with a result of false if no broker connection is established.
+    public CompletableFuture<Boolean> publish(String topic, byte[] payload, int qos, boolean retain) {
+        // publish message asynchronously
+        client.publish(topic, payload, retain, qos).whenComplete((m, t) -> {
+     * The connection process is limited by a timeout, realized with a {@link CompletableFuture}. Cancel that future
+     * now, if it exists.
+    protected void cancelTimeoutFuture() {
+        final ScheduledFuture<?> timeoutFuture = this.timeoutFuture.getAndSet(null);

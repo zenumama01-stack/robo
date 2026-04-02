@@ -1,0 +1,66 @@
+<h1><a href="compute_alpha.html">Compute Engine API</a> . <a href="compute_alpha.regionHealthAggregationPolicies.html">regionHealthAggregationPolicies</a></h1>
+<p class="firstline">Retrieves the list of all HealthAggregationPolicy resources,</p>
+  <code><a href="#delete">delete(project, region, healthAggregationPolicy, requestId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Deletes the specified HealthAggregationPolicy in the given region.</p>
+  <code><a href="#get">get(project, region, healthAggregationPolicy, x__xgafv=None)</a></code></p>
+<p class="firstline">Returns the specified HealthAggregationPolicy resource in the given region.</p>
+<p class="firstline">Create a HealthAggregationPolicy in the specified project in the given</p>
+<p class="firstline">Lists the HealthAggregationPolicies for a project in the given region.</p>
+  <code><a href="#patch">patch(project, region, healthAggregationPolicy, body=None, requestId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Updates the specified regional HealthAggregationPolicy</p>
+  <pre>Retrieves the list of all HealthAggregationPolicy resources,
+    { # Contains a list of HealthAggregationPoliciesScopedList.
+  &quot;items&quot;: { # A list of HealthAggregationPoliciesScopedList resources.
+    &quot;a_key&quot;: { # Name of the scope containing this set of HealthAggregationPolicies.
+      &quot;healthAggregationPolicies&quot;: [ # A list of HealthAggregationPolicys contained in this scope.
+        { # Represents a health aggregation policy.
+            # A health aggregation policy resource defines a policy to aggregate health.
+            # Health checks overview.
+              # inserting a HealthAggregationPolicy. An up-to-date fingerprint
+              # must be provided in order to patch the HealthAggregationPolicy; Otherwise,
+              # HealthAggregationPolicy.
+          &quot;healthyPercentThreshold&quot;: 42, # Can only be set if the policyType field isBACKEND_SERVICE_POLICY. Specifies the threshold (as a
+              # percentage) of healthy endpoints required in order to consider the
+              # aggregated health result HEALTHY. Defaults to 60. Must be in
+              # range [0, 100]. Not applicable if the policyType field isDNB_PUBLIC_IP_POLICY. Can be mutated. This field is optional,
+              # and will be set to the default if unspecified. Note that both this
+              # threshold and minHealthyThreshold must be satisfied in order
+              # for HEALTHY to be the aggregated result. &quot;Endpoints&quot; refers to network
+              # endpoints within a Network Endpoint Group or instances within an Instance
+              # Group.
+          &quot;kind&quot;: &quot;compute#healthAggregationPolicy&quot;, # Output only. [Output Only] Type of the resource. Alwayscompute#healthAggregationPolicy for health aggregation
+              # policies.
+          &quot;minHealthyThreshold&quot;: 42, # Can only be set if the policyType field isBACKEND_SERVICE_POLICY. Specifies the minimum number of
+              # healthy endpoints required in order to consider the aggregated health
+              # result HEALTHY. Defaults to 1. Must be positive. Not
+              # applicable if the policyType field isDNB_PUBLIC_IP_POLICY. Can be mutated. This field is optional,
+              # threshold and healthyPercentThreshold must be satisfied in
+              # order for HEALTHY to be the aggregated result. &quot;Endpoints&quot; refers to
+              # network endpoints within a Network Endpoint Group or instances within an
+              # Instance Group.
+          &quot;policyType&quot;: &quot;A String&quot;, # Specifies the type of the healthAggregationPolicy. The only allowed value
+              # for global resources is DNS_PUBLIC_IP_POLICY. The only allowed
+              # value for regional resources is BACKEND_SERVICE_POLICY. Must
+              # be specified when the healthAggregationPolicy is created, and cannot be
+              # mutated.
+          &quot;region&quot;: &quot;A String&quot;, # Output only. [Output Only] URL of the region where the health aggregation policy
+              # resides. This field applies only to the regional resource. You must specify
+              # this field as part of the HTTP request URL. It is not settable as a field
+              # in the request body.
+      &quot;warning&quot;: { # Informational warning which replaces the list of health aggregation
+          # policies when the list is empty.
+  &quot;kind&quot;: &quot;compute#healthAggregationPolicyAggregatedList&quot;, # Output only. Type of resource.
+    <code class="details" id="delete">delete(project, region, healthAggregationPolicy, requestId=None, x__xgafv=None)</code>
+  <pre>Deletes the specified HealthAggregationPolicy in the given region.
+  healthAggregationPolicy: string, Name of the HealthAggregationPolicy resource to delete. (required)
+    <code class="details" id="get">get(project, region, healthAggregationPolicy, x__xgafv=None)</code>
+  <pre>Returns the specified HealthAggregationPolicy resource in the given region.
+  healthAggregationPolicy: string, Name of the HealthAggregationPolicy resource to return. (required)
+  <pre>Create a HealthAggregationPolicy in the specified project in the given
+  <pre>Lists the HealthAggregationPolicies for a project in the given region.
+  &quot;items&quot;: [ # A list of HealthAggregationPolicy resources.
+  &quot;kind&quot;: &quot;compute#healthAggregationPolicyList&quot;, # Output only. [Output Only] Type of the resource. Alwayscompute#healthAggregationPolicy for health aggregation
+    <code class="details" id="patch">patch(project, region, healthAggregationPolicy, body=None, requestId=None, x__xgafv=None)</code>
+  <pre>Updates the specified regional HealthAggregationPolicy
+resource with the data included in the request. This method supportsPATCH
+  healthAggregationPolicy: string, Name of the HealthAggregationPolicy to update. The name

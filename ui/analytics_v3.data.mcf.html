@@ -1,0 +1,19 @@
+<h1><a href="analytics_v3.html">Google Analytics API</a> . <a href="analytics_v3.data.html">data</a> . <a href="analytics_v3.data.mcf.html">mcf</a></h1>
+  <code><a href="#get">get(ids, start_date, end_date, metrics, dimensions=None, filters=None, max_results=None, samplingLevel=None, sort=None, start_index=None)</a></code></p>
+<p class="firstline">Returns Analytics Multi-Channel Funnels data for a view (profile).</p>
+    <code class="details" id="get">get(ids, start_date, end_date, metrics, dimensions=None, filters=None, max_results=None, samplingLevel=None, sort=None, start_index=None)</code>
+  <pre>Returns Analytics Multi-Channel Funnels data for a view (profile).
+  end_date: string, End date for fetching Analytics data. Requests can specify a start date formatted as YYYY-MM-DD, or as a relative date (e.g., today, yesterday, or 7daysAgo). The default value is 7daysAgo. (required)
+  metrics: string, A comma-separated list of Multi-Channel Funnels metrics. E.g., &#x27;mcf:totalConversions,mcf:totalConversionValue&#x27;. At least one metric must be specified. (required)
+  dimensions: string, A comma-separated list of Multi-Channel Funnels dimensions. E.g., &#x27;mcf:source,mcf:medium&#x27;.
+  filters: string, A comma-separated list of dimension or metric filters to be applied to the Analytics data.
+  sort: string, A comma-separated list of dimensions or metrics that determine the sort order for the Analytics data.
+    { # Multi-Channel Funnels data for a given view (profile).
+      &quot;dataType&quot;: &quot;A String&quot;, # Data type. Dimension and metric values data types such as INTEGER, DOUBLE, CURRENCY, MCF_SEQUENCE etc.
+  &quot;containsSampledData&quot;: True or False, # Determines if the Analytics data contains sampled data.
+  &quot;kind&quot;: &quot;analytics#mcfData&quot;, # Resource type.
+      { # A union object representing a dimension or metric value. Only one of &quot;primitiveValue&quot; or &quot;conversionPathValue&quot; attribute will be populated.
+        &quot;conversionPathValue&quot;: [ # A conversion path dimension value, containing a list of interactions with their attributes.
+            &quot;interactionType&quot;: &quot;A String&quot;, # Type of an interaction on conversion path. Such as CLICK, IMPRESSION etc.
+            &quot;nodeValue&quot;: &quot;A String&quot;, # Node value of an interaction on conversion path. Such as source, medium etc.
+        &quot;primitiveValue&quot;: &quot;A String&quot;, # A primitive dimension value. A primitive metric value.

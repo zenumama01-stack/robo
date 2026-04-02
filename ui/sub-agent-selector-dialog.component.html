@@ -1,0 +1,62 @@
+<!-- Sub-Agent Selector Dialog -->
+<div class="sub-agent-selector-dialog">
+    <div class="header-info">
+      <h3>{{ config.title || 'Select Sub-Agents' }}</h3>
+      <p class="header-description">
+        Choose existing root agents to convert into sub-agents. Only active agents without parents and not exposed as actions can be selected.
+    <div class="header-stats">
+        <span class="selection-count">{{ selectedCount }} selected</span>
+      <span class="total-count">{{ filteredCount }} of {{ totalAgentCount }} agents</span>
+  <!-- Search and Filter Controls -->
+  <div class="controls-section">
+    <div class="search-controls">
+      <div class="search-input">
+          placeholder="Search agents by name, description, or type..."
+          class="search-field">
+        @if (searchControl.value) {
+                  (click)="clearSearch()"
+                  class="clear-search">
+      <div class="type-filter">
+        <label>Agent Type:</label>
+          [value]="selectedTypeId$ | async"
+          (valueChange)="selectType($event)"
+          [defaultItem]="{ Name: 'All Types', ID: 'all' }"
+          class="type-dropdown">
+      <p>Loading available agents...</p>
+    <!-- Content Area -->
+    <div class="content-area">
+      @if (filteredCount === 0) {
+          <h4>No agents found</h4>
+          @if (totalAgentCount === 0) {
+            <p>No eligible root agents are available to become sub-agents.</p>
+            <p>Try adjusting your search criteria or selecting a different agent type.</p>
+            <button kendoButton (click)="clearSearch()" themeColor="primary">
+              Clear Search
+        <!-- Agents Grid -->
+        <div class="agents-grid">
+          @for (agent of (filteredAgents$ | async); track agent.ID) {
+            <div class="agent-card" 
+                 [class.selected]="agent.selected"
+                 (click)="toggleAgentSelection(agent)">
+                @if (agent.selected) {
+                  <i class="fa-regular fa-circle"></i>
+              <!-- Agent Icon/Logo -->
+              <div class="agent-icon">
+                @if (agent.LogoURL) {
+                  <img [src]="agent.LogoURL" [alt]="agent.Name + ' logo'" class="agent-logo">
+                  <i [class]="getAgentIcon(agent)"></i>
+              <!-- Agent Info -->
+                <div class="agent-name">{{ agent.Name }}</div>
+                @if (agent.Description) {
+                  <div class="agent-description">{{ agent.Description }}</div>
+                  @if (agent.Status) {
+                    <span class="status-badge" [style.background-color]="getAgentStatusColor(agent)">
+                      {{ agent.Status }}
+                  @if (agent.typeName) {
+                    <span class="type-badge">{{ agent.typeName }}</span>
+                  @if (agent.ExecutionMode) {
+                    <span class="execution-badge">{{ agent.ExecutionMode }}</span>
+              (click)="addSelectedAgents()"
+              [disabled]="selectedCount === 0">
+          Add {{ selectedCount > 0 ? selectedCount + ' ' : '' }}Sub-Agent{{ selectedCount !== 1 ? 's' : '' }}
+          Add Sub-Agent

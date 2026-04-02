@@ -1,0 +1,124 @@
+<h1><a href="compute_alpha.html">Compute Engine API</a> . <a href="compute_alpha.resourcePolicies.html">resourcePolicies</a></h1>
+<p class="firstline">Retrieves an aggregated list of resource policies.</p>
+  <code><a href="#delete">delete(project, region, resourcePolicy, requestId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Deletes the specified resource policy.</p>
+  <code><a href="#get">get(project, region, resourcePolicy, x__xgafv=None)</a></code></p>
+<p class="firstline">Retrieves all information of the specified resource policy.</p>
+<p class="firstline">Creates a new resource policy.</p>
+<p class="firstline">A list all the resource policies that have been configured for the</p>
+  <code><a href="#patch">patch(project, region, resourcePolicy, body=None, paths=None, requestId=None, updateMask=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Modify the specified resource policy.</p>
+  <pre>Retrieves an aggregated list of resource policies.
+    { # Contains a list of resourcePolicies.
+  &quot;items&quot;: { # A list of ResourcePolicy resources.
+    &quot;a_key&quot;: { # Name of the scope containing this set of resourcePolicies.
+      &quot;resourcePolicies&quot;: [ # A list of resourcePolicies contained in this scope.
+        { # Represents a Resource Policy resource. You can use resource policies to
+            # schedule actions for some Compute Engine resources. For example, you can
+            # use them toschedule persistent disk
+          &quot;diskConsistencyGroupPolicy&quot;: { # Resource policy for disk consistency groups. # Resource policy for disk consistency groups.
+          &quot;groupPlacementPolicy&quot;: { # A GroupPlacementPolicy specifies resource placement configuration. # Resource policy for instances for placement configuration.
+              # It specifies the failure bucket separation
+            &quot;acceleratorTopologyMode&quot;: &quot;A String&quot;, # Specifies the connection mode for the accelerator topology. If not
+                # specified, the default is AUTO_CONNECT.
+            &quot;availabilityDomainCount&quot;: 42, # The number of availability domains to spread instances across. If two
+                # instances are in different availability domain, they are not in the same
+                # low latency network.
+            &quot;collocation&quot;: &quot;A String&quot;, # Specifies network collocation
+            &quot;gpuTopology&quot;: &quot;A String&quot;, # Specifies the shape of the GPU slice, in slice based GPU families eg.
+                # A4X.
+            &quot;maxDistance&quot;: 42, # Specifies the number of max logical switches.
+            &quot;scope&quot;: &quot;A String&quot;, # Scope specifies the availability domain to which the VMs should be
+                # spread.
+            &quot;sliceCount&quot;: 42, # Specifies the number of slices in a multislice workload.
+            &quot;tpuTopology&quot;: &quot;A String&quot;, # Specifies the shape of the TPU slice
+            &quot;vmCount&quot;: 42, # Number of VMs in this placement group. Google does not recommend that you
+                # use this field unless you use a compact policy and you want your policy
+                # to work only if it contains this exact number of VMs.
+          &quot;instanceSchedulePolicy&quot;: { # An InstanceSchedulePolicy specifies when and how frequent certain # Resource policy for scheduling instance operations.
+              # operations are performed on the instance.
+            &quot;expirationTime&quot;: &quot;A String&quot;, # The expiration time of the schedule. The timestamp is an RFC3339 string.
+            &quot;timeZone&quot;: &quot;A String&quot;, # Specifies the time zone to be used in interpreting Schedule.schedule.
+                # https://wikipedia.org/wiki/Tz_database.
+            &quot;vmStartSchedule&quot;: { # Schedule for an instance operation. # Specifies the schedule for starting instances.
+              &quot;schedule&quot;: &quot;A String&quot;, # Specifies the frequency for the operation, using the unix-cron format.
+            &quot;vmStopSchedule&quot;: { # Schedule for an instance operation. # Specifies the schedule for stopping instances.
+          &quot;kind&quot;: &quot;compute#resourcePolicy&quot;, # Output only. [Output Only] Type of the resource. Alwayscompute#resource_policies for resource policies.
+          &quot;region&quot;: &quot;A String&quot;,
+          &quot;resourceStatus&quot;: { # Contains output only fields. # Output only. [Output Only] The system status of the resource policy.
+              # Use this sub-message for all output fields set on ResourcePolicy.
+              # The internal structure of this &quot;status&quot; field should mimic the structure
+              # of ResourcePolicy proto specification.
+            &quot;instanceSchedulePolicy&quot;: { # Output only. [Output Only] Specifies a set of output values reffering to
+                # the instance_schedule_policy system status.
+                # This field should have the same name as corresponding policy field.
+              &quot;lastRunStartTime&quot;: &quot;A String&quot;, # Output only. [Output Only] The last time the schedule successfully ran.
+                  # The timestamp is an RFC3339 string.
+              &quot;nextRunStartTime&quot;: &quot;A String&quot;, # Output only. [Output Only] The next time the schedule is planned to run.
+                  # The actual time might be slightly different.
+          &quot;snapshotSchedulePolicy&quot;: { # A snapshot schedule policy specifies when and how frequently snapshots are # Resource policy for persistent disks for creating snapshots.
+              # to be created for the target disk. Also specifies how many and how long
+              # these scheduled snapshots should be retained.
+            &quot;retentionPolicy&quot;: { # Policy for retention of scheduled snapshots. # Retention policy applied to snapshots created by this resource policy.
+              &quot;maxRetentionDays&quot;: 42, # Maximum age of the snapshot that is allowed to be kept.
+              &quot;onPolicySwitch&quot;: &quot;A String&quot;,
+              &quot;onSourceDiskDelete&quot;: &quot;A String&quot;, # Specifies the behavior to apply to scheduled snapshots when
+                  # the source disk is deleted.
+            &quot;schedule&quot;: { # A schedule for disks where the schedueled operations are performed. # A Vm Maintenance Policy specifies what kind of infrastructure
+                # maintenance we are allowed to perform on this VM and when. Schedule
+                # that is applied to disks covered by this policy.
+              &quot;dailySchedule&quot;: { # Time window specified for daily operations.
+                &quot;daysInCycle&quot;: 42, # Defines a schedule with units measured in days. The value determines
+                    # how many days pass between the start of each cycle.
+              &quot;hourlySchedule&quot;: { # Time window specified for hourly operations.
+                &quot;duration&quot;: &quot;A String&quot;, # Output only. [Output only] Duration of the time window, automatically chosen to be
+                    # smallest possible in the given scenario.
+                &quot;hoursInCycle&quot;: 42, # Defines a schedule with units measured in hours. The value determines
+                    # how many hours pass between the start of each cycle.
+                &quot;startTime&quot;: &quot;A String&quot;, # Time within the window to start the operations.
+                    # It must be in format &quot;HH:MM&quot;, where HH : [00-23] and MM : [00-00] GMT.
+              &quot;weeklySchedule&quot;: { # Time window specified for weekly operations.
+                &quot;dayOfWeeks&quot;: [ # Up to 7 intervals/windows, one for each day of the week.
+                    &quot;day&quot;: &quot;A String&quot;, # Defines a schedule that runs on specific days of the week. Specify
+                        # one or more days. The following options are available:
+                        # MONDAY, TUESDAY, WEDNESDAY, THURSDAY, FRIDAY, SATURDAY, SUNDAY.
+            &quot;snapshotProperties&quot;: { # Specified snapshot properties for scheduled snapshots created by this # Properties with which snapshots are created such as labels, encryption
+                # keys.
+              &quot;chainName&quot;: &quot;A String&quot;, # Chain name that the snapshot is created in.
+              &quot;guestFlush&quot;: True or False, # Indication to perform a &#x27;guest aware&#x27; snapshot.
+              &quot;labels&quot;: { # Labels to apply to scheduled snapshots. These can be later modified
+                  # by the setLabels method. Label values may be empty.
+              &quot;region&quot;: &quot;A String&quot;, # Region where the snapshot is scoped to.
+              &quot;storageLocations&quot;: [ # Cloud Storage bucket storage location of the auto snapshot (regional or
+          &quot;status&quot;: &quot;A String&quot;, # Output only. [Output Only] The status of resource policy creation.
+          &quot;vmMaintenancePolicy&quot;: { # Resource policy applicable to VMs for infrastructure maintenance.
+            &quot;concurrencyControlGroup&quot;: { # A concurrency control configuration. Defines a group config that, when
+                # attached to an instance, recognizes that instance as part of a group of
+                # instances where only up the concurrency_limit of instances in that group
+                # can undergo simultaneous maintenance.
+                # For more information: go/concurrency-control-design-doc
+              &quot;concurrencyLimit&quot;: 42,
+            &quot;maintenanceWindow&quot;: { # A maintenance window for VMs.  When set, we restrict our # Maintenance windows that are applied to VMs covered by this policy.
+                # maintenance operations to this window.
+              &quot;dailyMaintenanceWindow&quot;: { # Time window specified for daily operations.
+          &quot;workloadPolicy&quot;: { # Represents the workload policy. # Resource policy for defining instance placement for MIGs.
+            &quot;acceleratorTopology&quot;: &quot;A String&quot;, # Specifies the topology required to create a partition for VMs that have
+                # interconnected GPUs.
+            &quot;maxTopologyDistance&quot;: &quot;A String&quot;, # Specifies the maximum distance between instances.
+            &quot;type&quot;: &quot;A String&quot;, # Specifies the intent of the instance placement in the MIG.
+      &quot;warning&quot;: { # Informational warning which replaces the list of resourcePolicies when
+  &quot;kind&quot;: &quot;compute#resourcePolicyAggregatedList&quot;, # Output only. Type of resource.
+    <code class="details" id="delete">delete(project, region, resourcePolicy, requestId=None, x__xgafv=None)</code>
+  <pre>Deletes the specified resource policy.
+  resourcePolicy: string, Name of the resource policy to delete. (required)
+    <code class="details" id="get">get(project, region, resourcePolicy, x__xgafv=None)</code>
+  <pre>Retrieves all information of the specified resource policy.
+  resourcePolicy: string, Name of the resource policy to retrieve. (required)
+  <pre>Creates a new resource policy.
+  <pre>A list all the resource policies that have been configured for the
+specified project in specified region.
+  &quot;items&quot;: [ # [Output Only] A list of ResourcePolicy resources.
+  &quot;kind&quot;: &quot;compute#resourcePolicyList&quot;, # Output only. [Output Only] Type of resource.Alwayscompute#resourcePoliciesList for listsof resourcePolicies
+    <code class="details" id="patch">patch(project, region, resourcePolicy, body=None, paths=None, requestId=None, updateMask=None, x__xgafv=None)</code>
+  <pre>Modify the specified resource policy.
+  resourcePolicy: string, Id of the resource policy to patch. (required)

@@ -1,0 +1,547 @@
+ * @fileoverview Test driver for AI Agent evaluation
+ * @module @memberjunction/testing-engine
+import { UserInfo, Metadata, EntityInfo } from '@memberjunction/core';
+import { MJAIAgentEntity, MJAIAgentRunEntity, MJTestEntity, MJTestRunEntity } from '@memberjunction/core-entities';
+import { BaseTestDriver } from './BaseTestDriver';
+    DriverExecutionContext,
+    DriverExecutionResult,
+    OracleInput,
+    TurnResult,
+    ValidationWarning
+ * Configuration for Agent Evaluation tests.
+export interface AgentEvalConfig {
+     * Agent to test
+     * Oracles to run for evaluation
+    oracles: {
+        config?: Record<string, unknown>;
+     * Scoring weights by oracle type
+    scoringWeights?: Record<string, number>;
+     * Maximum execution time in milliseconds
+    maxExecutionTime?: number;
+     * When to evaluate with oracles in multi-turn tests
+     * - "final-turn-only": Run oracles only on final turn (default)
+     * - "each-turn": Run oracles after each turn
+     * - "all-turns-aggregate": Evaluate all turns together at the end
+    evaluationStrategy?: 'final-turn-only' | 'each-turn' | 'all-turns-aggregate';
+ * Single turn in a multi-turn test
+export interface AgentEvalTurn {
+     * User message for this turn
+     * Input payload for this turn.
+     * - Turn 1: Use this payload (if provided)
+     * - Turn N (N>1): Automatically populated from previous turn's output
+     * Optional: Override execution params for this specific turn
+    executionParams?: {
+        modelOverride?: string;
+        temperatureOverride?: number;
+        maxTokensOverride?: number;
+     * Optional: Expected outcomes specific to this turn
+     * (for per-turn oracle evaluation)
+    expectedOutcomes?: AgentEvalExpectedOutcomes;
+ * Input definition for Agent Evaluation tests.
+export interface AgentEvalInput {
+     * Single-turn: User message to send to agent (backward compatible)
+     * Single-turn: Input payload (backward compatible)
+     * Multi-turn: Array of turns to execute
+    turns?: AgentEvalTurn[];
+     * Optional conversation context
+    conversationContext?: {
+        priorMessages?: Array<{
+            role: 'user' | 'assistant';
+     * Optional agent execution parameters (applies to all turns unless overridden)
+ * Expected outcomes for Agent Evaluation tests.
+export interface AgentEvalExpectedOutcomes {
+     * Expected response patterns (for regex matching)
+    responsePatterns?: string[];
+     * Expected entities mentioned in response
+    expectedEntities?: string[];
+     * Expected actions taken
+    expectedActions?: string[];
+     * Schema for response validation
+    responseSchema?: Record<string, unknown>;
+     * SQL queries to validate database state
+    sqlValidations?: Array<{
+        expectedResult: unknown;
+     * Custom validation criteria for LLM judge
+    judgeValidationCriteria?: string[];
+ * Test driver for AI Agent evaluation.
+ * Executes an AI agent with test input, runs configured oracles,
+ * and creates bidirectional link between TestRun and AgentRun.
+ * // Configuration JSON in Test entity
+ *   "agentId": "agent-123",
+ *   "oracles": [
+ *     { "type": "trace-no-errors", "weight": 0.2 },
+ *     { "type": "llm-judge", "weight": 0.5, "config": { "criteria": [...] } },
+ *     { "type": "schema-validate", "weight": 0.3, "config": { "schema": {...} } }
+ *   "scoringWeights": { "trace-no-errors": 0.2, "llm-judge": 0.5, "schema-validate": 0.3 }
+ * // InputDefinition JSON in Test entity
+ *   "userMessage": "Create a report showing sales by region",
+ *   "conversationContext": null,
+ *   "executionParams": { "temperatureOverride": 0.3 }
+ * // ExpectedOutcomes JSON in Test entity
+ *   "responsePatterns": ["sales.*region", "chart|graph"],
+ *   "expectedEntities": ["Report", "Dashboard"],
+ *   "responseSchema": { "type": "object", "properties": {...} },
+ *   "judgeValidationCriteria": [
+ *     "Response accurately answers the user's question",
+ *     "Report includes proper data visualization",
+ *     "Response is professional and clear"
+@RegisterClass(BaseTestDriver, 'AgentEvalDriver')
+export class AgentEvalDriver extends BaseTestDriver {
+     * Entity name for AI Agent Runs - used for proper FK linkage in TestRun
+    private static readonly AI_AGENT_RUNS_ENTITY_NAME = 'MJ: AI Agent Runs';
+     * Cached Entity ID for AI Agent Runs
+    private _aiAgentRunsEntityId: string | null = null;
+     * Returns true as this driver supports cancellation via AbortSignal.
+     * When timeout occurs, the AbortController signals the agent to stop execution.
+    public override supportsCancellation(): boolean {
+     * Get the Entity ID for "MJ: AI Agent Runs" for proper FK linkage.
+     * Caches the result after first lookup.
+    private getAIAgentRunsEntityId(): string | null {
+        if (this._aiAgentRunsEntityId === null) {
+            const entityInfo = this._metadata.Entities.find(
+                e => e.Name === AgentEvalDriver.AI_AGENT_RUNS_ENTITY_NAME
+            this._aiAgentRunsEntityId = entityInfo?.ID || null;
+            if (!this._aiAgentRunsEntityId) {
+                this.logError(`Could not find Entity ID for ${AgentEvalDriver.AI_AGENT_RUNS_ENTITY_NAME}`);
+        return this._aiAgentRunsEntityId;
+     * Execute agent evaluation test.
+     * Steps:
+     * 1. Parse configuration and input
+     * 2. Load and execute agent via AgentRunner (single or multi-turn)
+     * 3. Create bidirectional link (TestRun ↔ AgentRun(s))
+     * 4. Run oracles to evaluate results
+     * 5. Calculate score and determine status
+     * 6. Return structured results
+     * @returns Execution result
+    public async Execute(context: DriverExecutionContext): Promise<DriverExecutionResult> {
+        this.logToTestRun(context, 'info', 'Starting agent evaluation');
+            // Parse configuration
+            const config = this.parseConfig<AgentEvalConfig>(context.test);
+            const input = this.parseInputDefinition<AgentEvalInput>(context.test);
+            const expected = this.parseExpectedOutcomes<AgentEvalExpectedOutcomes>(context.test);
+            // Load agent
+            const agent = await this.loadAgent(config.agentId, context.contextUser);
+            // Normalize input to multi-turn format
+            const turns = this.normalizeTurns(input);
+            const isMultiTurn = turns.length > 1;
+            this.logToTestRun(context, 'info', `Executing agent: ${agent.Name} (${turns.length} turn${turns.length > 1 ? 's' : ''})`);
+            // Execute agent (single or multi-turn) with timeout/cancellation support
+            const { agentRuns, turnResults, timedOut, timeoutMessage } = await this.executeAgent(
+                context.contextUser,
+                context.test,
+                config.maxExecutionTime,
+                context.testRun,
+            // Handle timeout case
+            if (timedOut) {
+                this.logToTestRun(context, 'error', timeoutMessage || 'Test execution timed out');
+                // Build timeout result with partial data if available
+                const result: DriverExecutionResult = {
+                    targetType: 'AI Agent',
+                    targetLogEntityId: this.getAIAgentRunsEntityId() || undefined,
+                    targetLogId: agentRuns.length > 0 ? agentRuns[agentRuns.length - 1].ID : '',
+                    status: 'Timeout',
+                    score: 0,
+                    oracleResults: [],
+                    passedChecks: 0,
+                    failedChecks: 0,
+                    totalChecks: 0,
+                    inputData: input,
+                    expectedOutput: expected,
+                    actualOutput: agentRuns.length > 0 ? this.extractAgentOutput(agentRuns[agentRuns.length - 1]) : undefined,
+                    errorMessage: timeoutMessage,
+                    totalCost: turnResults.reduce((sum, tr) => sum + (tr.cost || 0), 0),
+                    durationMs: turnResults.reduce((sum, tr) => sum + (tr.durationMs || 0), 0),
+                    totalTurns: isMultiTurn ? turns.length : undefined,
+                    turnResults: isMultiTurn ? turnResults : undefined,
+                    allAgentRunIds: agentRuns.length > 0 ? agentRuns.map(ar => ar.ID) : undefined
+                // Note: Linking already happened via onAgentRunCreated callback for completed turns
+            // Note: Bidirectional linking already happened via onAgentRunCreated callback
+            // Get final agent run and output
+            const finalAgentRun = agentRuns[agentRuns.length - 1];
+            const actualOutput = this.extractAgentOutput(finalAgentRun);
+            // Run oracles
+            this.logToTestRun(context, 'info', 'Running oracles for evaluation');
+            const oracleResults = await this.runOraclesForMultiTurn(
+                turns,
+                turnResults,
+                expected,
+            // Calculate score and status
+            // When oracles are disabled, consider test passed if final agent run succeeded
+            const score = this.calculateScore(oracleResults, config.scoringWeights);
+            const status = oracleResults.length === 0 && finalAgentRun.Status === 'Completed'
+                ? 'Passed'
+                : this.determineStatus(oracleResults);
+            // Count checks
+            const passedChecks = oracleResults.filter(r => r.passed).length;
+            const totalChecks = oracleResults.length;
+            // Calculate total cost and duration across all turns
+            const totalCost = turnResults.reduce((sum, tr) => sum + (tr.cost || 0), 0);
+            const durationMs = turnResults.reduce((sum, tr) => sum + (tr.durationMs || 0), 0);
+                targetLogId: finalAgentRun.ID,
+                score,
+                oracleResults,
+                passedChecks,
+                failedChecks: totalChecks - passedChecks,
+                totalChecks,
+                actualOutput,
+                // Multi-turn specific fields
+                allAgentRunIds: isMultiTurn ? agentRuns.map(ar => ar.ID) : undefined
+            this.logToTestRun(context, 'info', `Agent evaluation completed: ${status} (Score: ${score})`);
+            this.logToTestRun(context, 'error', `Agent evaluation failed: ${errorMessage}`);
+     * Validate agent evaluation test configuration.
+     * Checks:
+     * - Base validation (InputDefinition, ExpectedOutcomes, Configuration)
+     * - Agent ID is valid
+     * - At least one oracle is configured
+     * - Oracle types are registered
+     * - Scoring weights are valid
+     * @param test - Test entity to validate
+    public override async Validate(test: MJTestEntity): Promise<ValidationResult> {
+        // Run base validation
+        const baseResult = await super.Validate(test);
+        if (!baseResult.valid) {
+        const errors = [...baseResult.errors];
+        const warnings = [...baseResult.warnings];
+            // Parse and validate configuration
+            const config = this.parseConfig<AgentEvalConfig>(test);
+            // Validate agent ID
+            if (!config.agentId) {
+                    category: 'configuration',
+                    message: 'agentId is required in Configuration',
+                    field: 'Configuration.agentId',
+                    suggestion: 'Specify the ID of the agent to test'
+            // Note: We cannot validate agent existence without contextUser
+            // That validation will happen at execution time
+            // Validate oracles configuration exists
+            if (!config.oracles || config.oracles.length === 0) {
+                    message: 'At least one oracle is required',
+                    field: 'Configuration.oracles',
+                    suggestion: 'Add oracle configurations (e.g., trace-no-errors, llm-judge)'
+            // Note: Oracle type validation requires registry from execution context
+            // Validate scoring weights
+            if (config.scoringWeights) {
+                const totalWeight = Object.values(config.scoringWeights).reduce(
+                    (sum, w) => sum + w,
+                if (Math.abs(totalWeight - 1.0) > 0.01) {
+                        category: 'best-practice',
+                        message: 'Scoring weights should sum to 1.0',
+                        recommendation: `Current sum: ${totalWeight.toFixed(2)}`
+            // Validate input definition
+            const input = this.parseInputDefinition<AgentEvalInput>(test);
+            // Validate either userMessage OR turns is provided
+            if (!input.userMessage && (!input.turns || input.turns.length === 0)) {
+                    category: 'input',
+                    message: 'Either userMessage or turns array is required in InputDefinition',
+                    field: 'InputDefinition',
+                    suggestion: 'Provide userMessage for single-turn or turns array for multi-turn tests'
+            // Validate turns array if provided
+            if (input.turns) {
+                if (input.turns.length === 0) {
+                        message: 'turns array cannot be empty',
+                        field: 'InputDefinition.turns',
+                        suggestion: 'Provide at least one turn in the turns array'
+                // Validate each turn
+                input.turns.forEach((turn, index) => {
+                    if (!turn.userMessage || turn.userMessage.trim() === '') {
+                            message: `Turn ${index + 1}: userMessage is required`,
+                            field: `InputDefinition.turns[${index}].userMessage`,
+                            suggestion: 'Each turn must have a non-empty userMessage'
+                // Warning if inputPayload provided on non-first turns
+                    if (index > 0 && turn.inputPayload) {
+                            message: `Turn ${index + 1}: inputPayload will be overridden by previous turn output`,
+                            recommendation: 'Only the first turn should have inputPayload defined; subsequent turns automatically receive output from previous turn'
+                message: `Configuration validation failed: ${(error as Error).message}`,
+                field: 'Configuration',
+                suggestion: 'Fix configuration JSON structure'
+     * Load agent entity.
+    private async loadAgent(agentId: string, contextUser: UserInfo): Promise<MJAIAgentEntity> {
+        const agent = await this._metadata.GetEntityObject<MJAIAgentEntity>('MJ: AI Agents', contextUser);
+        await agent.Load(agentId);
+     * Execute agent (single or multi-turn) and return results.
+     * Uses AbortController for proper cancellation support when timeout occurs.
+    private async executeAgent(
+        input: AgentEvalInput,
+        test: MJTestEntity,
+        maxExecutionTime: number | undefined,
+        testRun: MJTestRunEntity,
+        context: DriverExecutionContext
+    ): Promise<{ agentRuns: MJAIAgentRunEntity[], turnResults: TurnResult[], timedOut: boolean, timeoutMessage?: string }> {
+        // Normalize to multi-turn format
+        const agentRuns: MJAIAgentRunEntity[] = [];
+        const turnResults: TurnResult[] = [];
+        // Get effective timeout using priority: config JSON > entity field > default
+        const effectiveTimeout = this.getEffectiveTimeout(test, config);
+        // Create AbortController for cancellation
+        const abortController = new AbortController();
+        let timeoutId: ReturnType<typeof setTimeout> | undefined;
+        let timedOut = false;
+        let timeoutMessage: string | undefined;
+        // Set up timeout to abort execution
+        if (effectiveTimeout > 0) {
+            timeoutId = setTimeout(() => {
+                timedOut = true;
+                timeoutMessage = `Test execution timed out after ${effectiveTimeout}ms`;
+                this.logToTestRun(context, 'warn', timeoutMessage);
+                abortController.abort();
+            }, effectiveTimeout);
+        let conversationId: string | undefined = input.conversationContext?.conversationId;
+        let previousOutputPayload: Record<string, unknown> | undefined;
+            // Execute each turn sequentially
+            for (let i = 0; i < turns.length; i++) {
+                // Check if aborted before starting turn
+                if (abortController.signal.aborted) {
+                    this.logToTestRun(context, 'info', `Skipping turn ${i + 1} due to timeout/cancellation`);
+                const turn = turns[i];
+                const turnNumber = i + 1;
+                // Determine input payload for this turn
+                const inputPayload = i === 0
+                    ? turn.inputPayload  // First turn: use provided payload
+                    : previousOutputPayload;  // Subsequent turns: use previous output
+                this.logToTestRun(context, 'info', `Executing turn ${turnNumber} of ${turns.length}`);
+                // Execute single turn with cancellation token and resolved variables
+                const turnResult = await this.executeSingleTurn({
+                    turn,
+                    turnNumber,
+                    totalTurns: turns.length,
+                    inputPayload,
+                    priorMessages: input.conversationContext?.priorMessages,
+                    testRun,
+                    cancellationToken: abortController.signal,
+                    resolvedVariables: context.resolvedVariables
+                agentRuns.push(turnResult.agentRun);
+                turnResults.push(turnResult);
+                this.logToTestRun(context, 'info', `Turn ${turnNumber} completed: ${turnResult.agentRun.Status}`);
+                // Update context for next turn
+                conversationId = turnResult.agentRun.ConversationID ?? undefined;
+                previousOutputPayload = this.extractOutputPayload(turnResult.agentRun);
+            // Clean up timeout
+        return { agentRuns, turnResults, timedOut, timeoutMessage };
+     * Execute a single turn in a multi-turn test.
+     * Passes cancellation token to agent for proper timeout handling.
+    private async executeSingleTurn(params: {
+        agent: MJAIAgentEntity;
+        turn: AgentEvalTurn;
+        totalTurns: number;
+        priorMessages?: Array<{ role: 'user' | 'assistant'; content: string }>;
+        resolvedVariables?: { values: Record<string, unknown>; sources: Record<string, string> };
+    }): Promise<TurnResult> {
+        // Build conversation messages (only for first turn with priorMessages)
+        const conversationMessages: ChatMessage[] = [];
+        // Add prior messages only if this is the first turn and they're provided
+        if (params.turnNumber === 1 && params.priorMessages) {
+            for (const msg of params.priorMessages) {
+                conversationMessages.push({
+                } as ChatMessage);
+        // Add current user message
+            content: params.turn.userMessage
+        // Build conversation name with format:
+        // - Individual test (no suite): "[Test] TestName" or "[Test][tag1, tag2] TestName"
+        // - Suite test: "[1] TestName" or "[1][tag1, tag2] TestName"
+        const conversationName = this.buildConversationName(
+            params.test.Name,
+            params.testRun.Sequence,
+            params.testRun.Tags,
+            params.turnNumber,
+            params.totalTurns
+        // Get Entity ID for AI Agent Runs for proper FK linkage
+        const aiAgentRunsEntityId = this.getAIAgentRunsEntityId();
+        // Build override from turn execution params and resolved variables
+        const override = this.buildExecutionOverride(params.turn.executionParams, params.resolvedVariables);
+        // Build execution parameters with cancellation token and onAgentRunCreated callback
+            agent: params.agent as any,
+            payload: params.inputPayload,  // Pass payload from previous turn
+            override,
+            cancellationToken: params.cancellationToken,  // Pass cancellation token to agent
+            // Callback to immediately link TestRun <-> AgentRun when AgentRun is created
+                // For the first turn (or single-turn tests), link TestRun.TargetLogID to this AgentRun
+                // Subsequent turns still get TestRunID set on their AgentRun (via testRunId param below)
+                // but the TestRun only points to the first/primary AgentRun
+                if (params.turnNumber === 1) {
+                    params.testRun.TargetLogID = agentRunId;
+                    if (aiAgentRunsEntityId) {
+                        params.testRun.TargetLogEntityID = aiAgentRunsEntityId;
+                    const saved = await params.testRun.Save();
+                        this.log(`✓ Linked TestRun ${params.testRun.ID} -> AgentRun ${agentRunId}`, true);
+                        this.logError(`Failed to link TestRun to AgentRun: ${params.testRun.LatestResult?.Message}`);
+                // Note: AgentRun.TestRunID is set by BaseAgent via the testRunId param passed to RunAgentInConversation
+        // Execute agent - cancellation is handled via AbortSignal, not Promise.race
+        // Note: BaseAgent already sets AgentRun.TestRunID from the testRunId param and invokes onAgentRunCreated callback
+        const runResult = await runner.RunAgentInConversation(runParams, {
+            conversationId: params.conversationId,  // Continue same conversation for multi-turn
+            userMessage: params.turn.userMessage,
+            conversationName: conversationName,
+            testRunId: params.testRun.ID
+        const agentRun = runResult.agentResult.agentRun;
+            turnNumber: params.turnNumber,
+            inputPayload: params.inputPayload,
+            outputPayload: this.extractOutputPayload(agentRun),
+            durationMs: endTime - startTime,
+            cost: agentRun.TotalCost || 0
+     * Normalize input to multi-turn format for consistent processing.
+    private normalizeTurns(input: AgentEvalInput): AgentEvalTurn[] {
+        // If turns array provided, use it
+        if (input.turns && input.turns.length > 0) {
+            return input.turns;
+        // Backward compatibility: convert single message to single turn
+        if (input.userMessage) {
+                userMessage: input.userMessage,
+                inputPayload: input.inputPayload
+        throw new Error('Either userMessage or turns must be provided in InputDefinition');
+     * Extract output payload from agent run.
+     * Parses the FinalPayload string property to get the agent's output for chaining to next turn.
+    private extractOutputPayload(agentRun: MJAIAgentRunEntity): Record<string, unknown> {
+        // Parse the FinalPayload string property (which exists on base MJAIAgentRunEntity)
+        // SafeJSONParse returns the parsed object or an empty object if parsing fails
+        const finalPayloadObject = SafeJSONParse(agentRun.FinalPayload ?? '');
+        return finalPayloadObject ?? {};
+     * Extract agent output from agent run.
+    private extractAgentOutput(agentRun: MJAIAgentRunEntity): Record<string, unknown> {
+            success: agentRun.Success,
+            conversationId: agentRun.ConversationID
+     * Build execution override object from turn params and resolved variables.
+     * Priority (highest to lowest):
+     * 1. Turn-level execution params (modelOverride, temperatureOverride, etc.)
+     * 2. Resolved variables (AIConfiguration, Temperature, etc.)
+    private buildExecutionOverride(
+        turnExecutionParams?: {
+        resolvedVariables?: { values: Record<string, unknown>; sources: Record<string, string> }
+    ): Record<string, unknown> | undefined {
+        const override: Record<string, unknown> = {};
+        // Apply resolved variables (lower priority)
+        if (resolvedVariables?.values) {
+            // AIConfiguration variable maps to aiConfigurationId
+            if (resolvedVariables.values['AIConfiguration']) {
+                override.aiConfigurationId = resolvedVariables.values['AIConfiguration'];
+            // Temperature variable maps to temperature override
+            if (resolvedVariables.values['Temperature'] !== undefined) {
+                override.temperature = resolvedVariables.values['Temperature'];
+            // MaxTokens variable maps to maxTokens override
+            if (resolvedVariables.values['MaxTokens'] !== undefined) {
+                override.maxTokens = resolvedVariables.values['MaxTokens'];
+        // Apply turn execution params (higher priority - overwrites variables)
+        if (turnExecutionParams) {
+            if (turnExecutionParams.modelOverride) {
+                override.modelId = turnExecutionParams.modelOverride;
+            if (turnExecutionParams.temperatureOverride !== undefined) {
+                override.temperature = turnExecutionParams.temperatureOverride;
+            if (turnExecutionParams.maxTokensOverride !== undefined) {
+                override.maxTokens = turnExecutionParams.maxTokensOverride;
+        // Return undefined if no overrides
+        return Object.keys(override).length > 0 ? override : undefined;
+     * Run oracles for multi-turn evaluation.
+    private async runOraclesForMultiTurn(
+        config: AgentEvalConfig,
+        turns: AgentEvalTurn[],
+        turnResults: TurnResult[],
+        expected: AgentEvalExpectedOutcomes,
+    ): Promise<OracleResult[]> {
+        // TODO: Temporarily skip oracle execution while oracles are being finalized
+        // Remove this flag once oracles are ready (SQL schema fixes, LLM Judge prompt creation, etc.)
+        const skipOracles = true;
+        if (skipOracles) {
+            this.log('⚠️  Oracle execution temporarily disabled', context.options.verbose);
+        const strategy = config.evaluationStrategy || 'final-turn-only';
+            case 'final-turn-only':
+                return this.runOraclesForFinalTurn(config, turns, turnResults, expected, context);
+            case 'each-turn':
+                return this.runOraclesForEachTurn(config, turns, turnResults, expected, context);
+            case 'all-turns-aggregate':
+                return this.runOraclesForAllTurns(config, turns, turnResults, expected, context);
+                throw new Error(`Unknown evaluation strategy: ${strategy}`);
+     * Run oracles only on the final turn.
+    private async runOraclesForFinalTurn(
+        const finalTurnResult = turnResults[turnResults.length - 1];
+        const finalTurn = turns[turns.length - 1];
+        return this.runOraclesForSingleTurn(
+            finalTurn,
+            finalTurnResult,
+            finalTurn.expectedOutcomes || expected,
+     * Run oracles after each turn and aggregate results.
+    private async runOraclesForEachTurn(
+        const allResults: OracleResult[] = [];
+        for (let i = 0; i < turnResults.length; i++) {
+            const turnResult = turnResults[i];
+            const turnOracles = await this.runOraclesForSingleTurn(
+                turnResult,
+                turn.expectedOutcomes || expected,
+                `Turn ${i + 1}: `
+            allResults.push(...turnOracles);
+     * Run oracles with all turns data for holistic evaluation.
+    private async runOraclesForAllTurns(
+        const oracleResults: OracleResult[] = [];
+        for (const oracleConfig of config.oracles) {
+            const oracle = context.oracleRegistry.get(oracleConfig.type);
+            if (!oracle) {
+                this.logError(`Oracle not found: ${oracleConfig.type}`);
+                // Pass all turns data to oracle
+                const oracleInput: OracleInput = {
+                    test: context.test,
+                    actualOutput: {
+                        turns: turnResults.map(tr => ({
+                            turnNumber: tr.turnNumber,
+                            inputPayload: tr.inputPayload,
+                            outputPayload: tr.outputPayload,
+                            agentRunId: tr.agentRun.ID
+                        finalOutput: turnResults[turnResults.length - 1].outputPayload
+                    targetEntity: turnResults[turnResults.length - 1].agentRun,
+                    contextUser: context.contextUser
+                const result = await oracle.evaluate(oracleInput, oracleConfig.config || {});
+                oracleResults.push(result);
+                    `Oracle ${oracleConfig.type}: ${result.passed ? 'PASSED' : 'FAILED'} (Score: ${result.score})`,
+                    context.options.verbose
+                this.logError(`Oracle ${oracleConfig.type} failed`, error as Error);
+                oracleResults.push({
+                    oracleType: oracleConfig.type,
+                    message: `Oracle execution failed: ${(error as Error).message}`
+        return oracleResults;
+     * Run oracles for a single turn.
+    private async runOraclesForSingleTurn(
+        turn: AgentEvalTurn,
+        turnResult: TurnResult,
+        context: DriverExecutionContext,
+        messagePrefix: string = ''
+                    actualOutput: turnResult.outputPayload,
+                    targetEntity: turnResult.agentRun,
+                // Add message prefix if provided (for per-turn evaluation)
+                if (messagePrefix) {
+                    result.message = messagePrefix + result.message;
+                    `${messagePrefix}Oracle ${oracleConfig.type}: ${result.passed ? 'PASSED' : 'FAILED'} (Score: ${result.score})`,
+                this.logError(`${messagePrefix}Oracle ${oracleConfig.type} failed`, error as Error);
+                    message: `${messagePrefix}Oracle execution failed: ${(error as Error).message}`
+     * Calculate total cost from agent run.
+    private calculateTotalCost(agentRun: MJAIAgentRunEntity): number {
+        return agentRun.TotalCost || 0;
+     * Calculate duration in milliseconds from agent run.
+    private calculateDurationMs(agentRun: MJAIAgentRunEntity): number {
+        if (!agentRun.StartedAt || !agentRun.CompletedAt) {
+        const start = new Date(agentRun.StartedAt).getTime();
+        const end = new Date(agentRun.CompletedAt).getTime();
+     * Build conversation name with standardized format.
+     * Format:
+     * - Individual test (no suite): "[Test] TestName" or "[Test][tag1, tag2] TestName"
+     * - Suite test: "[1] TestName" or "[1][tag1, tag2] TestName"
+     * - Multi-turn adds " - Turn N" suffix
+     * @param testName - Name of the test
+     * @param sequence - Sequence number within suite (null for standalone tests)
+     * @param tagsJson - JSON string array of tags (null if no tags)
+     * @param turnNumber - Current turn number (1-indexed)
+     * @param totalTurns - Total number of turns
+     * @returns Formatted conversation name
+    private buildConversationName(
+        testName: string,
+        sequence: number | null,
+        tagsJson: string | null,
+        turnNumber: number,
+        totalTurns: number
+        // Build prefix: [Test] for standalone, [sequence] for suite
+        const sequencePrefix = sequence != null ? `[${sequence}]` : '[Test]';
+        // Build tags suffix if tags exist
+        let tagsPrefix = '';
+        if (tagsJson) {
+                    tagsPrefix = `[${tags.join(', ')}]`;
+                // Invalid JSON, skip tags
+        // Build base name
+        const baseName = `${sequencePrefix}${tagsPrefix} ${testName}`;
+        // Add turn suffix for multi-turn tests
+        if (totalTurns > 1) {
+            return `${baseName} - Turn ${turnNumber}`;

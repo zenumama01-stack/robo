@@ -1,0 +1,36 @@
+<h1><a href="cloudcontrolspartner_v1.html">Cloud Controls Partner API</a> . <a href="cloudcontrolspartner_v1.organizations.html">organizations</a> . <a href="cloudcontrolspartner_v1.organizations.locations.html">locations</a> . <a href="cloudcontrolspartner_v1.organizations.locations.customers.html">customers</a></h1>
+  <code><a href="cloudcontrolspartner_v1.organizations.locations.customers.workloads.html">workloads()</a></code>
+  <code><a href="#create">create(parent, body=None, customerId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Creates a new customer.</p>
+<p class="firstline">Delete details of a single customer</p>
+<p class="firstline">Gets details of a single customer</p>
+<p class="firstline">Lists customers of a partner identified by its Google Cloud organization ID</p>
+<p class="firstline">Update details of a single customer</p>
+    <code class="details" id="create">create(parent, body=None, customerId=None, x__xgafv=None)</code>
+  <pre>Creates a new customer.
+  parent: string, Required. Parent resource Format: `organizations/{organization}/locations/{location}` (required)
+{ # Contains metadata around a Cloud Controls Partner Customer
+  &quot;customerOnboardingState&quot;: { # Container for customer onboarding steps # Output only. Container for customer onboarding steps
+    &quot;onboardingSteps&quot;: [ # List of customer onboarding steps
+      { # Container for customer onboarding information
+        &quot;completionState&quot;: &quot;A String&quot;, # Output only. Current state of the step
+        &quot;completionTime&quot;: &quot;A String&quot;, # The completion time of the onboarding step
+        &quot;startTime&quot;: &quot;A String&quot;, # The starting time of the onboarding step
+        &quot;step&quot;: &quot;A String&quot;, # The onboarding step
+  &quot;displayName&quot;: &quot;A String&quot;, # Required. Display name for the customer
+  &quot;isOnboarded&quot;: True or False, # Output only. Indicates whether a customer is fully onboarded
+  &quot;name&quot;: &quot;A String&quot;, # Identifier. Format: `organizations/{organization}/locations/{location}/customers/{customer}`
+  &quot;organizationDomain&quot;: &quot;A String&quot;, # Output only. The customer organization domain, extracted from CRM Organization’s display_name field. e.g. &quot;google.com&quot;
+  customerId: string, Required. The customer id to use for the customer, which will become the final component of the customer&#x27;s resource name. The specified value must be a valid Google cloud organization id.
+  <pre>Delete details of a single customer
+  name: string, Required. name of the resource to be deleted format: name=organizations/*/locations/*/customers/* (required)
+  <pre>Gets details of a single customer
+  name: string, Required. Format: `organizations/{organization}/locations/{location}/customers/{customer}` (required)
+  <pre>Lists customers of a partner identified by its Google Cloud organization ID
+  pageSize: integer, The maximum number of Customers to return. The service may return fewer than this value. If unspecified, at most 500 Customers will be returned.
+  pageToken: string, A page token, received from a previous `ListCustomers` call. Provide this to retrieve the subsequent page.
+    { # Response message for list customer Customers requests
+  &quot;customers&quot;: [ # List of customers
+  <pre>Update details of a single customer
+  name: string, Identifier. Format: `organizations/{organization}/locations/{location}/customers/{customer}` (required)
+  updateMask: string, Optional. The list of fields to update

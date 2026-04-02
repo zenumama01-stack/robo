@@ -1,0 +1,32 @@
+  <kendo-dialog [title]="'Create New Component'" (close)="OnCancel()" [width]="520" [minWidth]="400">
+    <form [formGroup]="form">
+      <div class="dialog-form">
+        <!-- Name field (required) -->
+          <label class="form-label" for="component-name">Name <span class="required">*</span></label>
+            id="component-name"
+            (input)="OnNameChange()"
+            placeholder="e.g. Sales Overview Dashboard"
+            autocomplete="off">
+          <span class="form-hint">A unique name for your component</span>
+        <!-- Type selection (card grid) -->
+          <div class="type-options">
+                class="type-card"
+                [class.selected]="SelectedType === option.value"
+                (click)="OnSelectType(option.value)">
+                <div class="type-card-icon">
+                <div class="type-card-label">{{ option.label }}</div>
+                <div class="type-card-description">{{ option.description }}</div>
+        <!-- Title field (auto-filled from name) -->
+          <label class="form-label" for="component-title">Title</label>
+            id="component-title"
+            formControlName="title"
+            placeholder="Display title (auto-filled from name)"
+          <span class="form-hint">The display title shown in the component header</span>
+        <!-- Description (optional textarea) -->
+          <label class="form-label" for="component-description">Description</label>
+            id="component-description"
+            placeholder="Describe what this component does..."
+          <span class="form-hint">Optional description of the component's purpose</span>
+      <button kendoButton (click)="OnCreate()" [themeColor]="'primary'" [disabled]="!form.valid">
+        <span class="fa-solid fa-plus"></span> Create
+      <button kendoButton (click)="OnCancel()">Cancel</button>

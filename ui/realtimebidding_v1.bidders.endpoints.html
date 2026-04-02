@@ -1,0 +1,22 @@
+<h1><a href="realtimebidding_v1.html">Real-time Bidding API</a> . <a href="realtimebidding_v1.bidders.html">bidders</a> . <a href="realtimebidding_v1.bidders.endpoints.html">endpoints</a></h1>
+<p class="firstline">Gets a bidder endpoint by its name.</p>
+<p class="firstline">Lists all the bidder's endpoints.</p>
+<p class="firstline">Updates a bidder's endpoint.</p>
+  <pre>Gets a bidder endpoint by its name.
+  name: string, Required. Name of the bidder endpoint to get. Format: `bidders/{bidderAccountId}/endpoints/{endpointId}` (required)
+    { # Bidder endpoint that receives bid requests.
+  &quot;bidProtocol&quot;: &quot;A String&quot;, # The protocol that the bidder endpoint is using.
+  &quot;maximumQps&quot;: &quot;A String&quot;, # The maximum number of queries per second allowed to be sent to this server.
+  &quot;name&quot;: &quot;A String&quot;, # Output only. Name of the endpoint resource that must follow the pattern `bidders/{bidderAccountId}/endpoints/{endpointId}`, where {bidderAccountId} is the account ID of the bidder who operates this endpoint, and {endpointId} is a unique ID assigned by the server.
+  &quot;tradingLocation&quot;: &quot;A String&quot;, # The trading location that bid requests should be sent from. See https://developers.google.com/authorized-buyers/rtb/peer-guide#trading-locations for further information.
+  &quot;url&quot;: &quot;A String&quot;, # Output only. The URL that bid requests should be sent to.
+  <pre>Lists all the bidder&#x27;s endpoints.
+  parent: string, Required. Name of the bidder whose endpoints will be listed. Format: `bidders/{bidderAccountId}` (required)
+  pageSize: integer, The maximum number of endpoints to return. If unspecified, at most 100 endpoints will be returned. The maximum value is 500; values above 500 will be coerced to 500.
+  pageToken: string, A token identifying a page of results the server should return. This value is received from a previous `ListEndpoints` call in ListEndpointsResponse.nextPageToken.
+    { # A response containing bidder endpoints.
+  &quot;endpoints&quot;: [ # List of bidder endpoints.
+  &quot;nextPageToken&quot;: &quot;A String&quot;, # A token which can be passed to a subsequent call to the `ListEndpoints` method to retrieve the next page of results in ListEndpointsRequest.pageToken.
+  <pre>Updates a bidder&#x27;s endpoint.
+  name: string, Output only. Name of the endpoint resource that must follow the pattern `bidders/{bidderAccountId}/endpoints/{endpointId}`, where {bidderAccountId} is the account ID of the bidder who operates this endpoint, and {endpointId} is a unique ID assigned by the server. (required)
+  updateMask: string, Field mask to use for partial in-place updates.

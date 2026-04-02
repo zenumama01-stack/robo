@@ -1,0 +1,123 @@
+<!-- Dashboard Browser Resource -->
+<div class="dashboard-browser-resource">
+  <!-- List Mode - Uses Generic DashboardBrowserComponent -->
+  @if (mode === 'list') {
+    <mj-dashboard-browser
+      [Dashboards]="dashboards"
+      [Categories]="categories"
+      [SelectedCategoryId]="selectedCategoryId"
+      [ViewMode]="viewMode"
+      [IsLoading]="isLoading"
+      [ShowCreateButton]="true"
+      [AllowMultiSelect]="true"
+      [AllowDragDrop]="true"
+      [DashboardPermissions]="dashboardPermissionsMap"
+      [EffectiveCategoryMap]="effectiveCategoryMap"
+      (DashboardOpen)="onDashboardOpen($event)"
+      (DashboardEdit)="onDashboardEdit($event)"
+      (DashboardDelete)="onDashboardDelete($event)"
+      (DashboardMove)="onDashboardMove($event)"
+      (DashboardCreate)="onDashboardCreate($event)"
+      (CategoryCreate)="onCategoryCreate($event)"
+      (CategoryDelete)="onCategoryDelete($event)"
+      (CategoryChange)="onCategoryChange($event)"
+      (ViewPreferenceChange)="onViewPreferenceChange($event)">
+    </mj-dashboard-browser>
+  <!-- View/Edit Mode -->
+  @if (mode === 'view' || mode === 'edit') {
+    <!-- View Mode Toolbar - matches browser toolbar structure -->
+    @if (mode === 'view') {
+      <div class="viewer-toolbar">
+        <!-- Breadcrumb navigation (includes its own padding/styling) -->
+        <mj-dashboard-breadcrumb
+          [CurrentCategoryId]="selectedDashboard?.CategoryID || null"
+          [CurrentDashboard]="selectedDashboard"
+          [ShowDashboardName]="true"
+          [AllowDragDrop]="false"
+          Size="large"
+          RootIcon="fa-solid fa-gauge-high"
+          RootLabel="Dashboards"
+          (Navigate)="onBreadcrumbNavigate($event)">
+        </mj-dashboard-breadcrumb>
+        <!-- Right-side Actions -->
+          <!-- Shared indicator for non-owned dashboards -->
+          @if (!selectedDashboardPermissions.IsOwner && selectedDashboardPermissions.CanRead) {
+            <span class="shared-indicator">
+              Shared with you
+            title="Open in its own tab"
+            (click)="openInNewTab()">
+            <i class="fa-solid fa-up-right-from-square"></i>
+          <!-- Share button - only shown if user can share -->
+          @if (selectedDashboardPermissions.CanShare) {
+              title="Share Dashboard"
+              (click)="openShareDialog()">
+              <i class="fa-solid fa-user-plus"></i>
+          <!-- Edit button - only shown if user can edit -->
+          @if (selectedDashboardPermissions.CanEdit) {
+              title="Edit Dashboard"
+              (click)="toggleEditMode()">
+    <!-- Edit Mode Header - different layout -->
+    @if (mode === 'edit') {
+      <div class="viewer-header editing">
+          <!-- Add Part button on the left -->
+            class="btn-add-part"
+            (click)="openAddPartDialog()">
+            Add Part
+          <!-- Separator -->
+          <div class="header-separator"></div>
+          <!-- Editable name/description -->
+          <div class="dashboard-info-edit">
+              class="dashboard-name-input"
+              placeholder="Dashboard name"
+              (blur)="onNameBlur()">
+              class="dashboard-description-input"
+              placeholder="Add a description...">
+          <!-- Save, Cancel buttons -->
+            (click)="saveDashboard()">
+            class="btn-cancel"
+            (click)="cancelEdit()">
+    <!-- Dashboard Viewer -->
+    <div class="viewer-content">
+      <mj-dashboard-viewer
+        #dashboardViewer
+        [dashboard]="selectedDashboard"
+        [isEditing]="mode === 'edit'"
+        [showToolbar]="false"
+        [showBreadcrumb]="false"
+        (panelInteraction)="onPanelInteraction($event)"
+        (navigationRequested)="onNavigationRequested($event)">
+      </mj-dashboard-viewer>
+    <!-- Add Panel Dialog -->
+    @if (dashboardViewer) {
+      <mj-add-panel-dialog
+        [visible]="showAddPanelDialog"
+        [partTypes]="dashboardViewer.getPartTypes()"
+        (panelAdded)="onPanelAdded($event)"
+        (cancelled)="onAddPanelCancelled()">
+      </mj-add-panel-dialog>
+    <!-- Generic Edit Part Dialog - dynamically loads config panels via ClassFactory -->
+    <mj-edit-part-dialog
+      [Visible]="showConfigDialog"
+      [PartType]="configDialogPartType"
+      [Panel]="configDialogPanel"
+      [Config]="configDialogPanel?.config || null"
+      (Saved)="onConfigDialogSaved($event)"
+      (Cancelled)="onConfigDialogCancelled()">
+    </mj-edit-part-dialog>
+    <!-- Remove Part Confirmation Dialog -->
+    <mj-confirm-dialog
+      [visible]="showConfirmDialog"
+      type="danger"
+      title="Remove Part"
+      [message]="'Are you sure you want to remove \'' + confirmPanelTitle + '\' from this dashboard?'"
+      confirmText="Remove"
+      cancelText="Cancel"
+      (confirmed)="onRemoveConfirmed()"
+      (cancelled)="onRemoveCancelled()">
+    </mj-confirm-dialog>
+    <!-- Share Dashboard Dialog -->
+    <mj-dashboard-share-dialog
+      [Visible]="showShareDialog"
+      [Dashboard]="selectedDashboard"
+      (Result)="onShareDialogResult($event)">
+    </mj-dashboard-share-dialog>

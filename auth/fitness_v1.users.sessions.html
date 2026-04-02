@@ -1,0 +1,28 @@
+<h1><a href="fitness_v1.html">Fitness API</a> . <a href="fitness_v1.users.html">users</a> . <a href="fitness_v1.users.sessions.html">sessions</a></h1>
+  <code><a href="#delete">delete(userId, sessionId, x__xgafv=None)</a></code></p>
+<p class="firstline">Deletes a session specified by the given session ID.</p>
+  <code><a href="#list">list(userId, activityType=None, endTime=None, includeDeleted=None, pageToken=None, startTime=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Lists sessions previously created.</p>
+  <code><a href="#update">update(userId, sessionId, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Updates or insert a given session.</p>
+    <code class="details" id="delete">delete(userId, sessionId, x__xgafv=None)</code>
+  <pre>Deletes a session specified by the given session ID.
+  userId: string, Delete a session for the person identified. Use me to indicate the authenticated user. Only me is supported at this time. (required)
+  sessionId: string, The ID of the session to be deleted. (required)
+    <code class="details" id="list">list(userId, activityType=None, endTime=None, includeDeleted=None, pageToken=None, startTime=None, x__xgafv=None)</code>
+  <pre>Lists sessions previously created.
+  userId: string, List sessions for the person identified. Use me to indicate the authenticated user. Only me is supported at this time. (required)
+  activityType: integer, If non-empty, only sessions with these activity types should be returned. (repeated)
+  endTime: string, An RFC3339 timestamp. Only sessions starting before endTime and ending after startTime up to (endTime + 1 day) will be included in the response. If this time is omitted but startTime is specified, all sessions ending after startTime to the end of time will be returned.
+  includeDeleted: boolean, If true, and if both startTime and endTime are omitted, session deletions will be returned.
+  pageToken: string, The continuation token, which is used for incremental syncing. To get the next batch of changes, set this parameter to the value of nextPageToken from the previous response. The page token is ignored if either start or end time is specified. If none of start time, end time, and the page token is specified, sessions modified in the last 30 days are returned.
+  startTime: string, An RFC3339 timestamp. Only sessions starting before endTime and ending after startTime up to (endTime + 1 day) will be included in the response. If this time is omitted but endTime is specified, all sessions starting before endTime and ending after the start of time up to (endTime + 1 day) will be returned.
+  &quot;deletedSession&quot;: [ # If includeDeleted is set to true in the request, and startTime and endTime are omitted, this will include sessions which were deleted since the last sync.
+    { # Sessions contain metadata, such as a user-friendly name and time interval information.
+  &quot;hasMoreData&quot;: True or False, # Flag to indicate server has more data to transfer. DO NOT USE THIS FIELD. It is never populated in responses from the server.
+  &quot;nextPageToken&quot;: &quot;A String&quot;, # The sync token which is used to sync further changes. This will only be provided if both startTime and endTime are omitted from the request.
+  &quot;session&quot;: [ # Sessions starting before endTime of the request and ending after startTime of the request up to (endTime of the request + 1 day).
+    <code class="details" id="update">update(userId, sessionId, body=None, x__xgafv=None)</code>
+  <pre>Updates or insert a given session.
+  userId: string, Create sessions for the person identified. Use me to indicate the authenticated user. Only me is supported at this time. (required)
+  sessionId: string, The ID of the session to be created. (required)

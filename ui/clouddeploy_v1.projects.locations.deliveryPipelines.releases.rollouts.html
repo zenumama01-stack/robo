@@ -1,0 +1,57 @@
+<h1><a href="clouddeploy_v1.html">Cloud Deploy API</a> . <a href="clouddeploy_v1.projects.html">projects</a> . <a href="clouddeploy_v1.projects.locations.html">locations</a> . <a href="clouddeploy_v1.projects.locations.deliveryPipelines.html">deliveryPipelines</a> . <a href="clouddeploy_v1.projects.locations.deliveryPipelines.releases.html">releases</a> . <a href="clouddeploy_v1.projects.locations.deliveryPipelines.releases.rollouts.html">rollouts</a></h1>
+  <code><a href="clouddeploy_v1.projects.locations.deliveryPipelines.releases.rollouts.jobRuns.html">jobRuns()</a></code>
+<p class="firstline">Returns the jobRuns Resource.</p>
+  <code><a href="#advance">advance(name, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Advances a Rollout in a given project and location.</p>
+<p class="firstline">Approves a Rollout.</p>
+<p class="firstline">Cancels a Rollout in a given project and location.</p>
+  <code><a href="#create">create(parent, body=None, overrideDeployPolicy=None, requestId=None, rolloutId=None, startingPhaseId=None, validateOnly=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Creates a new Rollout in a given project and location.</p>
+<p class="firstline">Gets details of a single Rollout.</p>
+  <code><a href="#ignoreJob">ignoreJob(rollout, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Ignores the specified Job in a Rollout.</p>
+<p class="firstline">Lists Rollouts in a given project and location.</p>
+  <code><a href="#retryJob">retryJob(rollout, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Retries the specified Job in a Rollout.</p>
+    <code class="details" id="advance">advance(name, body=None, x__xgafv=None)</code>
+  <pre>Advances a Rollout in a given project and location.
+  name: string, Required. Name of the Rollout. Format is `projects/{project}/locations/{location}/deliveryPipelines/{deliveryPipeline}/releases/{release}/rollouts/{rollout}`. (required)
+{ # The request object used by `AdvanceRollout`.
+  &quot;overrideDeployPolicy&quot;: [ # Optional. Deploy policies to override. Format is `projects/{project}/locations/{location}/deployPolicies/{deployPolicy}`.
+  &quot;phaseId&quot;: &quot;A String&quot;, # Required. The phase ID to advance the `Rollout` to.
+    { # The response object from `AdvanceRollout`.
+  <pre>Approves a Rollout.
+{ # The request object used by `ApproveRollout`.
+  &quot;approved&quot;: True or False, # Required. True = approve; false = reject
+    { # The response object from `ApproveRollout`.
+  <pre>Cancels a Rollout in a given project and location.
+{ # The request object used by `CancelRollout`.
+    { # The response object from `CancelRollout`.
+    <code class="details" id="create">create(parent, body=None, overrideDeployPolicy=None, requestId=None, rolloutId=None, startingPhaseId=None, validateOnly=None, x__xgafv=None)</code>
+  <pre>Creates a new Rollout in a given project and location.
+  parent: string, Required. The parent collection in which the `Rollout` must be created. The format is `projects/{project_id}/locations/{location_name}/deliveryPipelines/{pipeline_name}/releases/{release_name}`. (required)
+{ # A `Rollout` resource in the Cloud Deploy API. A `Rollout` contains information around a specific deployment to a `Target`.
+  rolloutId: string, Required. ID of the `Rollout`.
+  startingPhaseId: string, Optional. The starting phase ID for the `Rollout`. If empty the `Rollout` will start at the first phase.
+  <pre>Gets details of a single Rollout.
+  name: string, Required. Name of the `Rollout`. Format must be `projects/{project_id}/locations/{location_name}/deliveryPipelines/{pipeline_name}/releases/{release_name}/rollouts/{rollout_name}`. (required)
+    <code class="details" id="ignoreJob">ignoreJob(rollout, body=None, x__xgafv=None)</code>
+  <pre>Ignores the specified Job in a Rollout.
+  rollout: string, Required. Name of the Rollout. Format is `projects/{project}/locations/{location}/deliveryPipelines/{deliveryPipeline}/releases/{release}/rollouts/{rollout}`. (required)
+{ # The request object used by `IgnoreJob`.
+  &quot;jobId&quot;: &quot;A String&quot;, # Required. The job ID for the Job to ignore.
+  &quot;phaseId&quot;: &quot;A String&quot;, # Required. The phase ID the Job to ignore belongs to.
+    { # The response object from `IgnoreJob`.
+  <pre>Lists Rollouts in a given project and location.
+  parent: string, Required. The `Release` which owns this collection of `Rollout` objects. (required)
+  filter: string, Optional. Filter rollouts to be returned. See https://google.aip.dev/160 for more details.
+  pageSize: integer, Optional. The maximum number of `Rollout` objects to return. The service may return fewer than this value. If unspecified, at most 50 `Rollout` objects will be returned. The maximum value is 1000; values above 1000 will be set to 1000.
+  pageToken: string, Optional. A page token, received from a previous `ListRollouts` call. Provide this to retrieve the subsequent page. When paginating, all other provided parameters match the call that provided the page token.
+    { # ListRolloutsResponse is the response object returned by `ListRollouts`.
+  &quot;rollouts&quot;: [ # The `Rollout` objects.
+    <code class="details" id="retryJob">retryJob(rollout, body=None, x__xgafv=None)</code>
+  <pre>Retries the specified Job in a Rollout.
+{ # RetryJobRequest is the request object used by `RetryJob`.
+  &quot;jobId&quot;: &quot;A String&quot;, # Required. The job ID for the Job to retry.
+  &quot;phaseId&quot;: &quot;A String&quot;, # Required. The phase ID the Job to retry belongs to.
+    { # The response object from &#x27;RetryJob&#x27;.

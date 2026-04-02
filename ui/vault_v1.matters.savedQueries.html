@@ -1,0 +1,30 @@
+<h1><a href="vault_v1.html">Google Vault API</a> . <a href="vault_v1.matters.html">matters</a> . <a href="vault_v1.matters.savedQueries.html">savedQueries</a></h1>
+<p class="firstline">Creates a saved query.</p>
+  <code><a href="#delete">delete(matterId, savedQueryId, x__xgafv=None)</a></code></p>
+<p class="firstline">Deletes the specified saved query.</p>
+  <code><a href="#get">get(matterId, savedQueryId, x__xgafv=None)</a></code></p>
+<p class="firstline">Retrieves the specified saved query.</p>
+<p class="firstline">Lists the saved queries in a matter.</p>
+  <pre>Creates a saved query.
+  matterId: string, The ID of the matter to create the saved query in. (required)
+{ # The definition of a saved query. To work with Vault resources, the account must have the [required Vault privileges](https://support.google.com/vault/answer/2799699) and access to the matter. To access a matter, the account must have created the matter, have the matter shared with them, or have the **View All Matters** privilege.
+  &quot;createTime&quot;: &quot;A String&quot;, # Output only. The server-generated timestamp when the saved query was created.
+  &quot;displayName&quot;: &quot;A String&quot;, # The name of the saved query.
+  &quot;matterId&quot;: &quot;A String&quot;, # Output only. The matter ID of the matter the saved query is saved in. The server does not use this field during create and always uses matter ID in the URL.
+  &quot;query&quot;: { # The query definition used for search and export. # The search parameters of the saved query.
+  &quot;savedQueryId&quot;: &quot;A String&quot;, # A unique identifier for the saved query.
+    <code class="details" id="delete">delete(matterId, savedQueryId, x__xgafv=None)</code>
+  <pre>Deletes the specified saved query.
+  matterId: string, The ID of the matter to delete the saved query from. (required)
+  savedQueryId: string, ID of the saved query to delete. (required)
+    <code class="details" id="get">get(matterId, savedQueryId, x__xgafv=None)</code>
+  <pre>Retrieves the specified saved query.
+  matterId: string, The ID of the matter to get the saved query from. (required)
+  savedQueryId: string, ID of the saved query to retrieve. (required)
+  <pre>Lists the saved queries in a matter.
+  matterId: string, The ID of the matter to get the saved queries for. (required)
+  pageSize: integer, The maximum number of saved queries to return.
+  pageToken: string, The pagination token as returned in the previous response. An empty token means start from the beginning.
+    { # Definition of the response for method ListSaveQuery.
+  &quot;nextPageToken&quot;: &quot;A String&quot;, # Page token to retrieve the next page of results in the list. If this is empty, then there are no more saved queries to list.
+  &quot;savedQueries&quot;: [ # List of saved queries.

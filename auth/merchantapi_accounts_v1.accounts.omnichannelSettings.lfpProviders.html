@@ -1,0 +1,24 @@
+<h1><a href="merchantapi_accounts_v1.html">Merchant API</a> . <a href="merchantapi_accounts_v1.accounts.html">accounts</a> . <a href="merchantapi_accounts_v1.accounts.omnichannelSettings.html">omnichannelSettings</a> . <a href="merchantapi_accounts_v1.accounts.omnichannelSettings.lfpProviders.html">lfpProviders</a></h1>
+  <code><a href="#find">find(parent, pageSize=None, pageToken=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Find the LFP provider candidates in a given country.</p>
+  <code><a href="#find_next">find_next()</a></code></p>
+  <code><a href="#linkLfpProvider">linkLfpProvider(name, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Link the specified merchant to a LFP provider for the specified country.</p>
+    <code class="details" id="find">find(parent, pageSize=None, pageToken=None, x__xgafv=None)</code>
+  <pre>Find the LFP provider candidates in a given country.
+  parent: string, Required. The name of the parent resource under which the LFP providers are found. Format: `accounts/{account}/omnichannelSettings/{omnichannel_setting}`. (required)
+  pageSize: integer, Optional. The maximum number of `LfpProvider` resources to return. The service returns fewer than this value if the number of lfp providers is less that than the `pageSize`. The default value is 50. The maximum value is 1000; If a value higher than the maximum is specified, then the `pageSize` will default to the maximum.
+  pageToken: string, Optional. A page token, received from a previous `FindLfpProviders` call. Provide the page token to retrieve the subsequent page. When paginating, all other parameters provided to `FindLfpProviders` must match the call that provided the page token.
+    { # Response message for the FindLfpProviders method.
+  &quot;lfpProviders&quot;: [ # The LFP providers from the specified merchant in the specified country.
+    { # Collection of information related to a Local Feed Partnership (LFP) provider.
+      &quot;displayName&quot;: &quot;A String&quot;, # The display name of the LFP provider.
+      &quot;name&quot;: &quot;A String&quot;, # Identifier. The resource name of the LFP provider. Format: `accounts/{account}/omnichannelSettings/{omnichannel_setting}/lfpProviders/{lfp_provider}`
+      &quot;regionCode&quot;: &quot;A String&quot;, # Output only. Region code defined by [CLDR](https://cldr.unicode.org/).
+    <code class="details" id="find_next">find_next()</code>
+    <code class="details" id="linkLfpProvider">linkLfpProvider(name, body=None, x__xgafv=None)</code>
+  <pre>Link the specified merchant to a LFP provider for the specified country.
+  name: string, Required. The name of the LFP provider resource to link. Format: `accounts/{account}/omnichannelSettings/{omnichannel_setting}/lfpProviders/{lfp_provider}`. The `lfp_provider` is the LFP provider ID. (required)
+{ # Request message for the LinkLfpProvider method.
+  &quot;externalAccountId&quot;: &quot;A String&quot;, # Required. The external account ID by which this merchant is known to the LFP provider.
+    { # Response message for the LinkLfpProvider method.

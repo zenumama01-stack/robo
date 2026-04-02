@@ -1,0 +1,36 @@
+<h1><a href="vpcaccess_v1.html">Serverless VPC Access API</a> . <a href="vpcaccess_v1.projects.html">projects</a> . <a href="vpcaccess_v1.projects.locations.html">locations</a> . <a href="vpcaccess_v1.projects.locations.connectors.html">connectors</a></h1>
+<p class="firstline">Creates a Serverless VPC Access connector, returns an operation.</p>
+<p class="firstline">Deletes a Serverless VPC Access connector. Returns NOT_FOUND if the resource does not exist.</p>
+<p class="firstline">Gets a Serverless VPC Access connector. Returns NOT_FOUND if the resource does not exist.</p>
+<p class="firstline">Lists Serverless VPC Access connectors.</p>
+<p class="firstline">Updates a Serverless VPC Access connector, returns an operation.</p>
+  <pre>Creates a Serverless VPC Access connector, returns an operation.
+  parent: string, Required. The project ID and location in which the configuration should be created, specified in the format `projects/*/locations/*`. (required)
+{ # Definition of a Serverless VPC Access connector.
+  &quot;connectedProjects&quot;: [ # Output only. List of projects using the connector.
+  &quot;ipCidrRange&quot;: &quot;A String&quot;, # Optional. The range of internal addresses that follows RFC 4632 notation. Example: `10.132.0.0/28`.
+  &quot;machineType&quot;: &quot;A String&quot;, # Machine type of VM Instance underlying connector. Default is e2-micro
+  &quot;maxInstances&quot;: 42, # Maximum value of instances in autoscaling group underlying the connector.
+  &quot;maxThroughput&quot;: 42, # Maximum throughput of the connector in Mbps. Refers to the expected throughput when using an `e2-micro` machine type. Value must be a multiple of 100 from 300 through 1000. Must be higher than the value specified by --min-throughput. If both max-throughput and max-instances are provided, max-instances takes precedence over max-throughput. The use of `max-throughput` is discouraged in favor of `max-instances`.
+  &quot;minInstances&quot;: 42, # Minimum value of instances in autoscaling group underlying the connector.
+  &quot;minThroughput&quot;: 42, # Minimum throughput of the connector in Mbps. Refers to the expected throughput when using an `e2-micro` machine type. Value must be a multiple of 100 from 200 through 900. Must be lower than the value specified by --max-throughput. If both min-throughput and min-instances are provided, min-instances takes precedence over min-throughput. The use of `min-throughput` is discouraged in favor of `min-instances`.
+  &quot;name&quot;: &quot;A String&quot;, # The resource name in the format `projects/*/locations/*/connectors/*`.
+  &quot;network&quot;: &quot;A String&quot;, # Optional. Name of a VPC network.
+  &quot;state&quot;: &quot;A String&quot;, # Output only. State of the VPC access connector.
+  &quot;subnet&quot;: { # The subnet in which to house the connector # Optional. The subnet in which to house the VPC Access Connector.
+    &quot;name&quot;: &quot;A String&quot;, # Optional. Subnet name (relative, not fully qualified). E.g. if the full subnet selfLink is https://compute.googleapis.com/compute/v1/projects/{project}/regions/{region}/subnetworks/{subnetName} the correct input for this field would be {subnetName}
+    &quot;projectId&quot;: &quot;A String&quot;, # Optional. Project in which the subnet exists. If not set, this project is assumed to be the project for which the connector create request was issued.
+  connectorId: string, Required. The ID to use for this connector.
+  <pre>Deletes a Serverless VPC Access connector. Returns NOT_FOUND if the resource does not exist.
+  name: string, Required. Name of a Serverless VPC Access connector to delete. (required)
+  <pre>Gets a Serverless VPC Access connector. Returns NOT_FOUND if the resource does not exist.
+  name: string, Required. Name of a Serverless VPC Access connector to get. (required)
+  <pre>Lists Serverless VPC Access connectors.
+  parent: string, Required. The project and location from which the routes should be listed. (required)
+  pageToken: string, Continuation token.
+    { # Response for listing Serverless VPC Access connectors.
+  &quot;connectors&quot;: [ # List of Serverless VPC Access connectors.
+  &quot;nextPageToken&quot;: &quot;A String&quot;, # Continuation token.
+  <pre>Updates a Serverless VPC Access connector, returns an operation.
+  name: string, The resource name in the format `projects/*/locations/*/connectors/*`. (required)
+  updateMask: string, The fields to update on the entry group. If absent or empty, all modifiable fields are updated.

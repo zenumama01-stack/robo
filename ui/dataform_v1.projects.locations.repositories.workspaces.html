@@ -1,0 +1,156 @@
+<h1><a href="dataform_v1.html">Dataform API</a> . <a href="dataform_v1.projects.html">projects</a> . <a href="dataform_v1.projects.locations.html">locations</a> . <a href="dataform_v1.projects.locations.repositories.html">repositories</a> . <a href="dataform_v1.projects.locations.repositories.workspaces.html">workspaces</a></h1>
+<p class="firstline">Applies a Git commit for uncommitted files in a Workspace.</p>
+  <code><a href="#create">create(parent, body=None, workspaceId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Creates a new Workspace in a given Repository.</p>
+<p class="firstline">Deletes a single Workspace.</p>
+  <code><a href="#fetchFileDiff">fetchFileDiff(workspace, path=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Fetches Git diff for an uncommitted file in a Workspace.</p>
+  <code><a href="#fetchFileGitStatuses">fetchFileGitStatuses(name, x__xgafv=None)</a></code></p>
+<p class="firstline">Fetches Git statuses for the files in a Workspace.</p>
+  <code><a href="#fetchGitAheadBehind">fetchGitAheadBehind(name, remoteBranch=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Fetches Git ahead/behind against a remote branch.</p>
+<p class="firstline">Fetches a single Workspace.</p>
+  <code><a href="#installNpmPackages">installNpmPackages(workspace, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Installs dependency NPM packages (inside a Workspace).</p>
+<p class="firstline">Lists Workspaces in a given Repository.</p>
+  <code><a href="#makeDirectory">makeDirectory(workspace, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Creates a directory inside a Workspace.</p>
+  <code><a href="#moveDirectory">moveDirectory(workspace, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Moves a directory (inside a Workspace), and all of its contents, to a new location.</p>
+  <code><a href="#moveFile">moveFile(workspace, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Moves a file (inside a Workspace) to a new location.</p>
+  <code><a href="#pull">pull(name, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Pulls Git commits from the Repository's remote into a Workspace.</p>
+<p class="firstline">Pushes Git commits from a Workspace to the Repository's remote.</p>
+  <code><a href="#queryDirectoryContents">queryDirectoryContents(workspace, pageSize=None, pageToken=None, path=None, view=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Returns the contents of a given Workspace directory.</p>
+  <code><a href="#readFile">readFile(workspace, path=None, revision=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Returns the contents of a file (inside a Workspace).</p>
+  <code><a href="#removeDirectory">removeDirectory(workspace, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Deletes a directory (inside a Workspace) and all of its contents.</p>
+  <code><a href="#removeFile">removeFile(workspace, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Deletes a file (inside a Workspace).</p>
+<p class="firstline">Performs a Git reset for uncommitted files in a Workspace.</p>
+  <code><a href="#searchFiles">searchFiles(workspace, filter=None, pageSize=None, pageToken=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Finds the contents of a given Workspace directory by filter.</p>
+  <code><a href="#searchFiles_next">searchFiles_next()</a></code></p>
+  <code><a href="#writeFile">writeFile(workspace, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Writes to a file (inside a Workspace).</p>
+  <pre>Applies a Git commit for uncommitted files in a Workspace.
+  name: string, Required. The workspace&#x27;s name. (required)
+{ # `CommitWorkspaceChanges` request message.
+  &quot;paths&quot;: [ # Optional. Full file paths to commit including filename, rooted at workspace root. If left empty, all files will be committed.
+    { # `CommitWorkspaceChanges` response message.
+    <code class="details" id="create">create(parent, body=None, workspaceId=None, x__xgafv=None)</code>
+  <pre>Creates a new Workspace in a given Repository.
+  parent: string, Required. The repository in which to create the workspace. Must be in the format `projects/*/locations/*/repositories/*`. (required)
+{ # Represents a Dataform Git workspace.
+  &quot;createTime&quot;: &quot;A String&quot;, # Output only. The timestamp of when the workspace was created.
+  &quot;dataEncryptionState&quot;: { # Describes encryption state of a resource. # Output only. A data encryption state of a Git repository if this Workspace is protected by a KMS key.
+  &quot;name&quot;: &quot;A String&quot;, # Identifier. The workspace&#x27;s name.
+  &quot;privateResourceMetadata&quot;: { # Metadata used to identify if a resource is user scoped. # Output only. Metadata indicating whether this resource is user-scoped. For `Workspace` resources, the `user_scoped` field is always `true`.
+  workspaceId: string, Required. The ID to use for the workspace, which will become the final component of the workspace&#x27;s resource name.
+  <pre>Deletes a single Workspace.
+  name: string, Required. The workspace resource&#x27;s name. (required)
+    <code class="details" id="fetchFileDiff">fetchFileDiff(workspace, path=None, x__xgafv=None)</code>
+  <pre>Fetches Git diff for an uncommitted file in a Workspace.
+  workspace: string, Required. The workspace&#x27;s name. (required)
+  path: string, Required. The file&#x27;s full path including filename, relative to the workspace root.
+    { # `FetchFileDiff` response message.
+  &quot;formattedDiff&quot;: &quot;A String&quot;, # The raw formatted Git diff for the file.
+    <code class="details" id="fetchFileGitStatuses">fetchFileGitStatuses(name, x__xgafv=None)</code>
+  <pre>Fetches Git statuses for the files in a Workspace.
+    { # `FetchFileGitStatuses` response message.
+  &quot;uncommittedFileChanges&quot;: [ # A list of all files which have uncommitted Git changes. There will only be a single entry for any given file.
+    { # Represents the Git state of a file with uncommitted changes.
+      &quot;path&quot;: &quot;A String&quot;, # The file&#x27;s full path including filename, relative to the workspace root.
+      &quot;state&quot;: &quot;A String&quot;, # Output only. Indicates the status of the file.
+    <code class="details" id="fetchGitAheadBehind">fetchGitAheadBehind(name, remoteBranch=None, x__xgafv=None)</code>
+  <pre>Fetches Git ahead/behind against a remote branch.
+  remoteBranch: string, Optional. The name of the branch in the Git remote against which this workspace should be compared. If left unset, the repository&#x27;s default branch name will be used.
+    { # `FetchGitAheadBehind` response message.
+  &quot;commitsAhead&quot;: 42, # The number of commits in the remote branch that are not in the workspace.
+  &quot;commitsBehind&quot;: 42, # The number of commits in the workspace that are not in the remote branch.
+  <pre>Fetches a single Workspace.
+    <code class="details" id="installNpmPackages">installNpmPackages(workspace, body=None, x__xgafv=None)</code>
+  <pre>Installs dependency NPM packages (inside a Workspace).
+{ # `InstallNpmPackages` request message.
+    { # `InstallNpmPackages` response message.
+  <pre>Lists Workspaces in a given Repository.
+  parent: string, Required. The repository in which to list workspaces. Must be in the format `projects/*/locations/*/repositories/*`. (required)
+  pageSize: integer, Optional. Maximum number of workspaces to return. The server may return fewer items than requested. If unspecified, the server will pick an appropriate default.
+  pageToken: string, Optional. Page token received from a previous `ListWorkspaces` call. Provide this to retrieve the subsequent page. When paginating, all other parameters provided to `ListWorkspaces`, with the exception of `page_size`, must match the call that provided the page token.
+    { # `ListWorkspaces` response message.
+  &quot;workspaces&quot;: [ # List of workspaces.
+    <code class="details" id="makeDirectory">makeDirectory(workspace, body=None, x__xgafv=None)</code>
+  <pre>Creates a directory inside a Workspace.
+{ # `MakeDirectory` request message.
+  &quot;path&quot;: &quot;A String&quot;, # Required. The directory&#x27;s full path including directory name, relative to the workspace root.
+    { # `MakeDirectory` response message.
+    <code class="details" id="moveDirectory">moveDirectory(workspace, body=None, x__xgafv=None)</code>
+  <pre>Moves a directory (inside a Workspace), and all of its contents, to a new location.
+{ # `MoveDirectory` request message.
+  &quot;newPath&quot;: &quot;A String&quot;, # Required. The new path for the directory including directory name, rooted at workspace root.
+    { # `MoveDirectory` response message.
+    <code class="details" id="moveFile">moveFile(workspace, body=None, x__xgafv=None)</code>
+  <pre>Moves a file (inside a Workspace) to a new location.
+{ # `MoveFile` request message.
+  &quot;newPath&quot;: &quot;A String&quot;, # Required. The file&#x27;s new path including filename, relative to the workspace root.
+  &quot;path&quot;: &quot;A String&quot;, # Required. The file&#x27;s full path including filename, relative to the workspace root.
+    { # `MoveFile` response message.
+    <code class="details" id="pull">pull(name, body=None, x__xgafv=None)</code>
+  <pre>Pulls Git commits from the Repository&#x27;s remote into a Workspace.
+{ # `PullGitCommits` request message.
+  &quot;author&quot;: { # Represents the author of a Git commit. # Required. The author of any merge commit which may be created as a result of merging fetched Git commits into this workspace.
+  &quot;remoteBranch&quot;: &quot;A String&quot;, # Optional. The name of the branch in the Git remote from which to pull commits. If left unset, the repository&#x27;s default branch name will be used.
+    { # `PullGitCommits` response message.
+  <pre>Pushes Git commits from a Workspace to the Repository&#x27;s remote.
+{ # `PushGitCommits` request message.
+  &quot;remoteBranch&quot;: &quot;A String&quot;, # Optional. The name of the branch in the Git remote to which commits should be pushed. If left unset, the repository&#x27;s default branch name will be used.
+    { # `PushGitCommits` response message.
+    <code class="details" id="queryDirectoryContents">queryDirectoryContents(workspace, pageSize=None, pageToken=None, path=None, view=None, x__xgafv=None)</code>
+  <pre>Returns the contents of a given Workspace directory.
+  pageToken: string, Optional. Page token received from a previous `QueryDirectoryContents` call. Provide this to retrieve the subsequent page. When paginating, all other parameters provided to `QueryDirectoryContents`, with the exception of `page_size`, must match the call that provided the page token.
+  path: string, Optional. The directory&#x27;s full path including directory name, relative to the workspace root. If left unset, the workspace root is used.
+  view: string, Optional. Specifies the metadata to return for each directory entry. If unspecified, the default is `DIRECTORY_CONTENTS_VIEW_BASIC`. Currently the `DIRECTORY_CONTENTS_VIEW_METADATA` view is not supported by CMEK-protected workspaces.
+      DIRECTORY_CONTENTS_VIEW_UNSPECIFIED - The default / unset value. Defaults to DIRECTORY_CONTENTS_VIEW_BASIC.
+      DIRECTORY_CONTENTS_VIEW_BASIC - Includes only the file or directory name. This is the default behavior.
+      DIRECTORY_CONTENTS_VIEW_METADATA - Includes all metadata for each file or directory. Currently not supported by CMEK-protected workspaces.
+    { # `QueryDirectoryContents` response message.
+    <code class="details" id="readFile">readFile(workspace, path=None, revision=None, x__xgafv=None)</code>
+  <pre>Returns the contents of a file (inside a Workspace).
+  revision: string, Optional. The Git revision of the file to return. If left empty, the current contents of `path` will be returned.
+    { # `ReadFile` response message.
+  &quot;fileContents&quot;: &quot;A String&quot;, # The file&#x27;s contents.
+    <code class="details" id="removeDirectory">removeDirectory(workspace, body=None, x__xgafv=None)</code>
+  <pre>Deletes a directory (inside a Workspace) and all of its contents.
+{ # `RemoveDirectory` request message.
+    { # `RemoveDirectory` response message.
+    <code class="details" id="removeFile">removeFile(workspace, body=None, x__xgafv=None)</code>
+  <pre>Deletes a file (inside a Workspace).
+{ # `RemoveFile` request message.
+    { # `RemoveFile` response message.
+  <pre>Performs a Git reset for uncommitted files in a Workspace.
+{ # `ResetWorkspaceChanges` request message.
+  &quot;clean&quot;: True or False, # Optional. If set to true, untracked files will be deleted.
+  &quot;paths&quot;: [ # Optional. Full file paths to reset back to their committed state including filename, rooted at workspace root. If left empty, all files will be reset.
+    { # `ResetWorkspaceChanges` response message.
+    <code class="details" id="searchFiles">searchFiles(workspace, filter=None, pageSize=None, pageToken=None, x__xgafv=None)</code>
+  <pre>Finds the contents of a given Workspace directory by filter.
+  filter: string, Optional. Optional filter for the returned list in filtering format. Filtering is only currently supported on the `path` field. See https://google.aip.dev/160 for details.
+  pageSize: integer, Optional. Maximum number of search results to return. The server may return fewer items than requested. If unspecified, the server will pick an appropriate default.
+  pageToken: string, Optional. Page token received from a previous `SearchFilesRequest` call. Provide this to retrieve the subsequent page. When paginating, all other parameters provided to `SearchFilesRequest`, with the exception of `page_size`, must match the call that provided the page token.
+    { # Client-facing representation of a file search response.
+  &quot;nextPageToken&quot;: &quot;A String&quot;, # Optional. A token, which can be sent as `page_token` to retrieve the next page. If this field is omitted, there are no subsequent pages.
+  &quot;searchResults&quot;: [ # List of matched results.
+    { # Client-facing representation of a search result entry.
+      &quot;directory&quot;: { # Client-facing representation of a directory entry in search results. # Details when search result is a directory.
+        &quot;path&quot;: &quot;A String&quot;, # File system path relative to the workspace root.
+      &quot;file&quot;: { # Client-facing representation of a file entry in search results. # Details when search result is a file.
+    <code class="details" id="searchFiles_next">searchFiles_next()</code>
+    <code class="details" id="writeFile">writeFile(workspace, body=None, x__xgafv=None)</code>
+  <pre>Writes to a file (inside a Workspace).
+{ # `WriteFile` request message.
+  &quot;contents&quot;: &quot;A String&quot;, # Required. The file&#x27;s contents.
+  &quot;path&quot;: &quot;A String&quot;, # Required. The file.
+    { # `WriteFile` response message.

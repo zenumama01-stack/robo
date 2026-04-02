@@ -1,0 +1,41 @@
+<h1><a href="dataplex_v1.html">Cloud Dataplex API</a> . <a href="dataplex_v1.projects.html">projects</a> . <a href="dataplex_v1.projects.locations.html">locations</a> . <a href="dataplex_v1.projects.locations.dataProducts.html">dataProducts</a> . <a href="dataplex_v1.projects.locations.dataProducts.dataAssets.html">dataAssets</a></h1>
+  <code><a href="#create">create(parent, body=None, dataAssetId=None, validateOnly=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Creates a data asset.</p>
+<p class="firstline">Deletes a data asset.</p>
+<p class="firstline">Gets a data asset.</p>
+<p class="firstline">Lists data assets for a given data product.</p>
+<p class="firstline">Updates a data asset.</p>
+    <code class="details" id="create">create(parent, body=None, dataAssetId=None, validateOnly=None, x__xgafv=None)</code>
+  <pre>Creates a data asset.
+  parent: string, Required. The parent resource where this data asset will be created. Format: projects/{project_id_or_number}/locations/{location_id}/dataProducts/{data_product_id} (required)
+{ # Represents a data asset resource that can be packaged and shared via a data product.
+  &quot;accessGroupConfigs&quot;: { # Optional. Access groups configurations for this data asset.The key is DataProduct.AccessGroup.id and the value is AccessGroupConfig.Example: { &quot;analyst&quot;: { &quot;iamRoles&quot;: [&quot;roles/bigquery.dataViewer&quot;] } } Currently, at most one IAM role is allowed per access group. For providing multiple predefined IAM roles, wrap them in a custom IAM role as per https://cloud.google.com/iam/docs/creating-custom-roles.
+    &quot;a_key&quot;: { # Configuration for access group inherited from the parent data product.
+      &quot;iamRoles&quot;: [ # Optional. IAM roles granted on the resource to this access group. Role name follows https://cloud.google.com/iam/docs/reference/rest/v1/roles.Example: [ &quot;roles/bigquery.dataViewer&quot; ]
+  &quot;createTime&quot;: &quot;A String&quot;, # Output only. The time at which the data asset was created.
+  &quot;labels&quot;: { # Optional. User-defined labels for the data asset.Example: { &quot;environment&quot;: &quot;production&quot;, &quot;billing&quot;: &quot;marketing-department&quot; }
+  &quot;name&quot;: &quot;A String&quot;, # Identifier. Resource name of the data asset. Format: projects/{project_id_or_number}/locations/{location_id}/dataProducts/{data_product_id}/dataAssets/{data_asset_id}
+  &quot;resource&quot;: &quot;A String&quot;, # Required. Immutable. Full resource name of the cloud resource represented by the data asset. This must follow https://cloud.google.com/iam/docs/full-resource-names. Example: //bigquery.googleapis.com/projects/my_project_123/datasets/dataset_456/tables/table_789 Only BigQuery tables and datasets are currently supported. Data asset creator must have getIamPolicy and setIamPolicy permissions on the resource. Data asset creator must also have resource specific get permission, for instance, bigquery.tables.get for BigQuery tables.
+  &quot;uid&quot;: &quot;A String&quot;, # Output only. System generated globally unique ID for the data asset. This ID will be different if the data asset is deleted and re-created with the same name.
+  &quot;updateTime&quot;: &quot;A String&quot;, # Output only. The time at which the data asset was last updated.
+  dataAssetId: string, Optional. The ID of the data asset to create.The ID must conform to RFC-1034 and contain only lower-case letters (a-z), numbers (0-9), or hyphens, with the first character a letter, the last a letter or a number, and a 63 character maximum. Characters outside of ASCII are not permitted. Valid format regex: ^[a-z]([a-z0-9-]{0,61}[a-z0-9])?$ If not provided, a system generated ID will be used.
+  validateOnly: boolean, Optional. Validates the request without actually creating the data asset. Defaults to false.
+  <pre>Deletes a data asset.
+  name: string, Required. The name of the data asset to delete. Format: projects/{project_id_or_number}/locations/{location_id}/dataProducts/{data_product_id}/dataAssets/{data_asset_id} (required)
+  etag: string, Optional. The etag of the data asset. If this is provided, it must match the server&#x27;s etag. If the etag is provided and does not match the server-computed etag, the request must fail with a ABORTED error code.
+  validateOnly: boolean, Optional. Validates the request without actually deleting the data asset. Defaults to false.
+  <pre>Gets a data asset.
+  name: string, Required. The name of the data asset to retrieve. Format: projects/{project_id_or_number}/locations/{location_id}/dataProducts/{data_product_id}/dataAssets/{data_asset_id} (required)
+  <pre>Lists data assets for a given data product.
+  parent: string, Required. The parent, which has this collection of data assets. Format: projects/{project_id_or_number}/locations/{location_id}/dataProducts/{data_product_id} (required)
+  filter: string, Optional. Filter expression that filters data assets listed in the response.
+  orderBy: string, Optional. Order by expression that orders data assets listed in the response.Supported order_by fields are: name or create_time.If not specified, the ordering is undefined.
+  pageSize: integer, Optional. The maximum number of data assets to return. The service may return fewer than this value. If unspecified, at most 50 data assets will be returned. The maximum value is 1000; values above 1000 will be coerced to 1000.
+  pageToken: string, Optional. A page token, received from a previous ListDataAssets call. Provide this to retrieve the subsequent page.When paginating, all other parameters provided to ListDataAssets must match the call that provided the page token.
+    { # Response message for listing data assets.
+  &quot;dataAssets&quot;: [ # The data assets for the requested filter criteria.
+  &quot;nextPageToken&quot;: &quot;A String&quot;, # A token, which can be sent as page_token to retrieve the next page. If this field is empty, then there are no subsequent pages.
+  <pre>Updates a data asset.
+  name: string, Identifier. Resource name of the data asset. Format: projects/{project_id_or_number}/locations/{location_id}/dataProducts/{data_product_id}/dataAssets/{data_asset_id} (required)
+  updateMask: string, Optional. The list of fields to update. If this is empty or not set, then all the fields will be updated.
+  validateOnly: boolean, Optional. Validates the request without actually updating the data asset. Defaults to false.

@@ -1,0 +1,200 @@
+import { ElementRef, Injectable, Injector } from '@angular/core';
+import { CompositeKey, LocalCacheManager, LogError, Metadata, StartupManager } from '@memberjunction/core';
+import { ArtifactMetadataEngine, DashboardEngine, ResourcePermissionEngine, MJResourceTypeEntity, MJUserNotificationEntity, ViewColumnInfo } from '@memberjunction/core-entities';
+import { EntityCommunicationsEngineBase } from "@memberjunction/entity-communications-base";
+import { MJEventType, MJGlobal, ConvertMarkdownStringToHtmlList, InvokeManualResize } from '@memberjunction/global';
+import { Subject, Observable, BehaviorSubject, firstValueFrom } from 'rxjs';
+import { first, tap } from 'rxjs/operators';
+import { NotificationService } from "@progress/kendo-angular-notification";
+import { NavigationService } from './navigation.service';
+export class SharedService {
+  private static _instance: SharedService;
+  private static _loaded: boolean = false;
+  private static _resourceTypes: MJResourceTypeEntity[] = [];
+  private static isLoading$ = new BehaviorSubject<boolean>(false);
+  private tabChange = new Subject();
+  tabChange$ = this.tabChange.asObservable();
+  private _navigationService: NavigationService | null = null;
+    private notificationService: NotificationService,
+    private mjNotificationsService: MJNotificationService,
+    private injector: Injector
+    if (SharedService._instance) {
+      // return existing instance which will short circuit the creation of a new instance
+      return SharedService._instance;
+    // first time this has been called, so return ourselves since we're in the constructor
+    SharedService._instance = this;
+      switch (event.event) {
+        case MJEventType.LoggedIn:
+          if (SharedService._loaded === false)  {
+            // Handle app startup
+            // Pre-warm other engines in the background (fire and forget)
+            // These are not needed immediately but will be ready when user navigates to
+            // Conversations, Dashboards, or Artifacts. The BaseEngine pattern ensures
+            // subsequent callers will wait for the existing load rather than starting a new one.
+            SharedService.preWarmEngines();
+  public static get Instance(): SharedService {
+   * Pre-warms commonly used engines in the background after login.
+   * This reduces perceived latency when users navigate to features like
+   * Conversations, Dashboards, or Artifacts. Fire-and-forget pattern -
+   * errors are logged but don't block the UI.
+  private static preWarmEngines(): void {
+    // AIEngineBase is the slowest - loads agents, models, prompts, etc.
+    // Critical for Conversations feature
+    AIEngineBase.Instance.Config(false).catch(err =>
+      LogError(`Failed to pre-warm AIEngineBase: ${err}`)
+    // ArtifactMetadataEngine is lightweight (just artifact types)
+    // Used by Conversations and Artifact viewer
+    ArtifactMetadataEngine.Instance.Config(false).catch(err =>
+      LogError(`Failed to pre-warm ArtifactMetadataEngine: ${err}`)
+    // DashboardEngine loads dashboard metadata
+    // Used when viewing dashboards
+    DashboardEngine.Instance.Config(false).catch(err =>
+      LogError(`Failed to pre-warm DashboardEngine: ${err}`)
+    EntityCommunicationsEngineBase.Instance.Config(false).catch(err =>
+   * Get the NavigationService singleton instance
+   * Lazy-loaded to avoid circular dependency issues
+  private get navigationService(): NavigationService {
+    if (!this._navigationService) {
+      this._navigationService = this.injector.get(NavigationService);
+    return this._navigationService;
+   * Get the neutral color used for system-wide resources
+  public get ExplorerAppColor(): string {
+    return this.navigationService.ExplorerAppColor;
+   * Returns the current session ID, which is automatically created when the service is instantiated.
+  public get SessionId(): string {
+    return (<GraphQLDataProvider>Metadata.Provider).sessionId;
+  public get ResourceTypes(): MJResourceTypeEntity[] {
+    return SharedService._resourceTypes;
+  public get ViewResourceType(): MJResourceTypeEntity {
+    return SharedService._resourceTypes.find(rt => rt.Name.trim().toLowerCase() === 'user views')!;
+  public get RecordResourceType(): MJResourceTypeEntity {
+    return SharedService._resourceTypes.find(rt => rt.Name.trim().toLowerCase() === 'records')!;
+  public get DashboardResourceType(): MJResourceTypeEntity {
+    return SharedService._resourceTypes.find(rt => rt.Name.trim().toLowerCase() === 'dashboards')!;
+  public get ReportResourceType(): MJResourceTypeEntity {
+    return SharedService._resourceTypes.find(rt => rt.Name.trim().toLowerCase() === 'reports')!;
+  public get SearchResultsResourceType(): MJResourceTypeEntity {
+    return SharedService._resourceTypes.find(rt => rt.Name.trim().toLowerCase() === 'search results')!;
+  public get ListResourceType(): MJResourceTypeEntity {
+    return SharedService._resourceTypes.find(rt => rt.Name.trim().toLowerCase() === 'lists')!;
+  public ResourceTypeByID(id: string): MJResourceTypeEntity | undefined {
+    return SharedService._resourceTypes.find(rt => rt.ID === id);
+  public ResourceTypeByName(name: string): MJResourceTypeEntity | undefined {
+    return SharedService._resourceTypes.find(rt => rt.Name.trim().toLowerCase() === name.trim().toLowerCase());
+   * Refreshes the data for the service. If OnlyIfNeeded is true, then the data is only refreshed if it hasn't been loaded yet.
+  public static async RefreshData(OnlyIfNeeded: boolean = false) {
+    if (OnlyIfNeeded && SharedService._loaded) {
+    const canProceed$ = SharedService.isLoading$.pipe(
+      first(isLoading => !isLoading),
+      tap(() => SharedService.isLoading$.next(true))
+    await firstValueFrom(canProceed$);
+      // After waiting for the current loading operation to complete, check again
+      // if _loaded is true and OnlyIfNeeded is true, return early
+      await SharedService.handleDataLoading();
+      SharedService._loaded = true;
+      // Ensure we always reset the loading flag
+      SharedService.isLoading$.next(false);
+  private static async handleDataLoading() {
+    // make sure startup is done
+    this._resourceTypes = ResourcePermissionEngine.Instance.ResourceTypes;
+    await SharedService.RefreshUserNotifications();  
+  FormatColumnValue(col: ViewColumnInfo, value: any, maxLength: number = 0, trailingChars: string = "...") {
+    if (value === null || value === undefined)
+      const retVal = col.EntityField.FormatValue(value, 0);
+      if (maxLength > 0 && retVal && retVal.length > maxLength)
+        return retVal.substring(0, maxLength) + trailingChars;
+  public ConvertMarkdownStringToHtmlList(listType: HtmlListType, text: string): string {
+    return ConvertMarkdownStringToHtmlList(listType, text) ?? text;
+  public InvokeManualResize(delay: number = 50) {
+    return InvokeManualResize(delay, this);
+  public PushStatusUpdates(): Observable<string> {
+    const gp: GraphQLDataProvider = <GraphQLDataProvider>Metadata.Provider;
+    return gp.PushStatusUpdates();
+  private _currentUserImage: string | Blob = '/assets/user.png';
+  public get CurrentUserImage(): string | Blob {
+    return this._currentUserImage;
+  public set CurrentUserImage(value: string | Blob) {
+    this._currentUserImage = value;
+   * @deprecated Use MJNotificationService.UserNotifications instead
+  public static get UserNotifications(): MJUserNotificationEntity[] {
+    return MJNotificationService.UserNotifications;
+   * @deprecated Use MJNotificationService.UnreadUserNotifications instead
+  public static get UnreadUserNotifications(): MJUserNotificationEntity[] {
+    return MJNotificationService.UnreadUserNotifications;
+   * @deprecated Use MJNotificationService.UnreadUserNotificationCount instead
+  public static get UnreadUserNotificationCount(): number {
+    return MJNotificationService.UnreadUserNotificationCount;
+   * Utility method that returns true if child is a descendant of parent, false otherwise. 
+  public static IsDescendant(parent: ElementRef, child: ElementRef) {
+    if (parent && child && parent.nativeElement && child.nativeElement) {
+      let node = child.nativeElement.parentNode;
+      while (node != null) {
+        if (node == parent.nativeElement) {
+        node = node.parentNode;
+   * Creates a notification in the database and refreshes the UI. Returns the notification object.
+   * @param title 
+   * @param message 
+   * @param resourceTypeId 
+   * @param resourceRecordId 
+   * @param resourceConfiguration Any object, it is converted to a string by JSON.stringify and stored in the database
+   * @deprecated Use MJNotificationService.CreateNotification instead
+  public async CreateNotification(title: string, message: string, resourceTypeId: string | null, resourceRecordId: string | null, resourceConfiguration: any | null, displayToUser : boolean = true): Promise<MJUserNotificationEntity> {
+    return this.mjNotificationsService.CreateNotification(title, message, resourceTypeId, resourceRecordId, resourceConfiguration, displayToUser);
+   * @deprecated Use MJNotificationService.RefreshUserNotifications instead
+  public static async RefreshUserNotifications() {
+    MJNotificationService.RefreshUserNotifications();
+   * Creates a message that is not saved to the User Notifications table, but is displayed to the user.
+   * @param message - text to display
+   * @param style - display styling
+   * @param hideAfter - option to auto hide after the specified delay in milliseconds
+   * @deprecated Use MJNotificationService.CreateSimpleNotification instead
+  public CreateSimpleNotification(message: string, style: "none" | "success" | "error" | "warning" | "info" = "success", hideAfter?: number) {
+    return this.mjNotificationsService.CreateSimpleNotification(message, style, hideAfter);
+  private _resourceTypeMap = [
+    { routeSegment: 'record', name: 'records' },
+    { routeSegment: 'view', name: 'user views' },
+    { routeSegment: 'search', name: 'search results' },
+    { routeSegment: 'report', name: 'reports' },
+    { routeSegment: 'query', name: 'queries' },
+    { routeSegment: 'dashboard', name: 'dashboards' },
+    { routeSegment: 'list', name: 'lists' },
+   * Maps a Resource Type record Name column to the corresponding route segment
+   * @param resourceTypeName 
+  public mapResourceTypeNameToRouteSegment(resourceTypeName: string) {
+    const item =  this._resourceTypeMap.find(rt => rt.name.trim().toLowerCase() === resourceTypeName.trim().toLowerCase());
+    if (item)
+      return item.routeSegment;
+      return null 
+   * Maps a route segment to the corresponding Resource Type record Name column
+   * @param resourceRouteSegment 
+  public mapResourceTypeRouteSegmentToName(resourceRouteSegment: string) {
+    const item =  this._resourceTypeMap.find(rt => rt.routeSegment.trim().toLowerCase() === resourceRouteSegment.trim().toLowerCase());
+      return item.name;
+   * Opens an entity record in a new or existing tab
+   * Uses the modern NavigationService for tab-based navigation
+  public OpenEntityRecord(entityName: string, recordPkey: CompositeKey) {
+      console.log('SharedService.OpenEntityRecord called:', entityName, recordPkey.ToURLSegment());
+      // Use NavigationService to open in new tab-based UX
+      this.navigationService.OpenEntityRecord(entityName, recordPkey);
+      console.error('Error in OpenEntityRecord:', e);
+export const HtmlListType = {
+  Unordered: 'Unordered',
+  Ordered: 'Ordered',
+export type HtmlListType = typeof HtmlListType[keyof typeof HtmlListType];
+export const EventCodes = {
+  ViewClicked: "ViewClicked",
+  EntityRecordClicked: "EntityRecordClicked",
+  AddDashboard: "AddDashboard",
+  AddReport: "AddReport",
+  AddQuery: "AddQuery",
+  ViewCreated: "ViewCreated",
+  ViewUpdated: "ViewUpdated",
+  RunSearch: "RunSearch",
+  ViewNotifications: "ViewNotifications",
+  PushStatusUpdates: "PushStatusUpdates",
+  UserNotificationsUpdated: "UserNotificationsUpdated",
+  CloseCurrentTab: "CloseCurrentTab",
+  ListCreated: "ListCreated",
+  ListClicked: 'ListClicked',
+  AvatarUpdated: 'AvatarUpdated'
+export type EventCodes = typeof EventCodes[keyof typeof EventCodes];

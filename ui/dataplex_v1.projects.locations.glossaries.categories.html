@@ -1,0 +1,34 @@
+<h1><a href="dataplex_v1.html">Cloud Dataplex API</a> . <a href="dataplex_v1.projects.html">projects</a> . <a href="dataplex_v1.projects.locations.html">locations</a> . <a href="dataplex_v1.projects.locations.glossaries.html">glossaries</a> . <a href="dataplex_v1.projects.locations.glossaries.categories.html">categories</a></h1>
+  <code><a href="#create">create(parent, body=None, categoryId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Creates a new GlossaryCategory resource.</p>
+<p class="firstline">Deletes a GlossaryCategory resource. All the GlossaryCategories and GlossaryTerms nested directly under the specified GlossaryCategory will be moved one level up to the parent in the hierarchy.</p>
+<p class="firstline">Gets a GlossaryCategory resource.</p>
+<p class="firstline">Lists GlossaryCategory resources in a Glossary.</p>
+<p class="firstline">Updates a GlossaryCategory resource.</p>
+    <code class="details" id="create">create(parent, body=None, categoryId=None, x__xgafv=None)</code>
+  <pre>Creates a new GlossaryCategory resource.
+  parent: string, Required. The parent resource where this GlossaryCategory will be created. Format: projects/{project_id_or_number}/locations/{location_id}/glossaries/{glossary_id} where locationId refers to a Google Cloud region. (required)
+{ # A GlossaryCategory represents a collection of GlossaryCategories and GlossaryTerms within a Glossary that are related to each other.
+  &quot;createTime&quot;: &quot;A String&quot;, # Output only. The time at which the GlossaryCategory was created.
+  &quot;description&quot;: &quot;A String&quot;, # Optional. The user-mutable description of the GlossaryCategory.
+  &quot;displayName&quot;: &quot;A String&quot;, # Optional. User friendly display name of the GlossaryCategory. This is user-mutable. This will be same as the GlossaryCategoryId, if not specified.
+  &quot;labels&quot;: { # Optional. User-defined labels for the GlossaryCategory.
+  &quot;name&quot;: &quot;A String&quot;, # Output only. Identifier. The resource name of the GlossaryCategory. Format: projects/{project_id_or_number}/locations/{location_id}/glossaries/{glossary_id}/categories/{category_id}
+  &quot;parent&quot;: &quot;A String&quot;, # Required. The immediate parent of the GlossaryCategory in the resource-hierarchy. It can either be a Glossary or a GlossaryCategory. Format: projects/{project_id_or_number}/locations/{location_id}/glossaries/{glossary_id} OR projects/{project_id_or_number}/locations/{location_id}/glossaries/{glossary_id}/categories/{category_id}
+  &quot;uid&quot;: &quot;A String&quot;, # Output only. System generated unique id for the GlossaryCategory. This ID will be different if the GlossaryCategory is deleted and re-created with the same name.
+  &quot;updateTime&quot;: &quot;A String&quot;, # Output only. The time at which the GlossaryCategory was last updated.
+  categoryId: string, Required. GlossaryCategory identifier.
+  <pre>Deletes a GlossaryCategory resource. All the GlossaryCategories and GlossaryTerms nested directly under the specified GlossaryCategory will be moved one level up to the parent in the hierarchy.
+  name: string, Required. The name of the GlossaryCategory to delete. Format: projects/{project_id_or_number}/locations/{location_id}/glossaries/{glossary_id}/categories/{category_id} (required)
+  <pre>Gets a GlossaryCategory resource.
+  name: string, Required. The name of the GlossaryCategory to retrieve. Format: projects/{project_id_or_number}/locations/{location_id}/glossaries/{glossary_id}/categories/{category_id} (required)
+  <pre>Lists GlossaryCategory resources in a Glossary.
+  parent: string, Required. The parent, which has this collection of GlossaryCategories. Format: projects/{project_id_or_number}/locations/{location_id}/glossaries/{glossary_id} Location is the Google Cloud region. (required)
+  filter: string, Optional. Filter expression that filters GlossaryCategories listed in the response. Filters are supported on the following fields: - immediate_parentExamples of using a filter are: - immediate_parent=&quot;projects/{project_id_or_number}/locations/{location_id}/glossaries/{glossary_id}&quot; - immediate_parent=&quot;projects/{project_id_or_number}/locations/{location_id}/glossaries/{glossary_id}/categories/{category_id}&quot;This will only return the GlossaryCategories that are directly nested under the specified parent.
+  orderBy: string, Optional. Order by expression that orders GlossaryCategories listed in the response. Order by fields are: name or create_time for the result. If not specified, the ordering is undefined.
+  pageSize: integer, Optional. The maximum number of GlossaryCategories to return. The service may return fewer than this value. If unspecified, at most 50 GlossaryCategories will be returned. The maximum value is 1000; values above 1000 will be coerced to 1000.
+  pageToken: string, Optional. A page token, received from a previous ListGlossaryCategories call. Provide this to retrieve the subsequent page. When paginating, all other parameters provided to ListGlossaryCategories must match the call that provided the page token.
+    { # List GlossaryCategories Response
+  &quot;categories&quot;: [ # Lists the GlossaryCategories in the specified parent.
+  <pre>Updates a GlossaryCategory resource.
+  name: string, Output only. Identifier. The resource name of the GlossaryCategory. Format: projects/{project_id_or_number}/locations/{location_id}/glossaries/{glossary_id}/categories/{category_id} (required)

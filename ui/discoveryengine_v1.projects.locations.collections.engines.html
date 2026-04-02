@@ -1,0 +1,99 @@
+<h1><a href="discoveryengine_v1.html">Discovery Engine API</a> . <a href="discoveryengine_v1.projects.html">projects</a> . <a href="discoveryengine_v1.projects.locations.html">locations</a> . <a href="discoveryengine_v1.projects.locations.collections.html">collections</a> . <a href="discoveryengine_v1.projects.locations.collections.engines.html">engines</a></h1>
+  <code><a href="discoveryengine_v1.projects.locations.collections.engines.assistants.html">assistants()</a></code>
+<p class="firstline">Returns the assistants Resource.</p>
+  <code><a href="discoveryengine_v1.projects.locations.collections.engines.completionConfig.html">completionConfig()</a></code>
+  <code><a href="discoveryengine_v1.projects.locations.collections.engines.controls.html">controls()</a></code>
+  <code><a href="discoveryengine_v1.projects.locations.collections.engines.conversations.html">conversations()</a></code>
+  <code><a href="discoveryengine_v1.projects.locations.collections.engines.operations.html">operations()</a></code>
+  <code><a href="discoveryengine_v1.projects.locations.collections.engines.servingConfigs.html">servingConfigs()</a></code>
+  <code><a href="discoveryengine_v1.projects.locations.collections.engines.sessions.html">sessions()</a></code>
+  <code><a href="discoveryengine_v1.projects.locations.collections.engines.widgetConfigs.html">widgetConfigs()</a></code>
+  <code><a href="#create">create(parent, body=None, engineId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Creates an Engine.</p>
+<p class="firstline">Deletes an Engine.</p>
+<p class="firstline">Gets an Engine.</p>
+<p class="firstline">Gets the IAM access control policy for an Engine. A `NOT_FOUND` error is returned if the resource does not exist. An empty policy is returned if the resource exists but does not have a policy set on it.</p>
+<p class="firstline">Lists all the Engines associated with the project.</p>
+<p class="firstline">Updates an Engine</p>
+<p class="firstline">Sets the IAM access control policy for an Engine. A `NOT_FOUND` error is returned if the resource does not exist. **Important:** When setting a policy directly on an Engine resource, the only recommended roles in the bindings are: `roles/discoveryengine.user` and `roles/discoveryengine.agentspaceUser`. Attempting to grant any other role will result in a warning in logging.</p>
+    <code class="details" id="create">create(parent, body=None, engineId=None, x__xgafv=None)</code>
+  <pre>Creates an Engine.
+{ # Metadata that describes the training and serving parameters of an Engine.
+  &quot;agentGatewaySetting&quot;: { # Agent Gateway setting, which may be attached to Gemini Enterprise resources for egress control of Gemini Enterprise agents to agents and tools outside of Gemini Enterprise. # Optional. The agent gateway setting for the engine.
+    &quot;defaultEgressAgentGateway&quot;: { # Reference to an Agent Gateway resource. # Optional. The default egress agent gateway to use, when this setting is applied to a Gemini Enterprise resource. The deployment mode must be GOOGLE_MANAGED, and the governed access path must be AGENT_TO_ANYWHERE.
+      &quot;name&quot;: &quot;A String&quot;, # Required. Immutable. The resource name of the agent gateway. Expected format: `projects/{project_number}/locations/{location}/agentGateways/{agent_gateway}`.
+  &quot;appType&quot;: &quot;A String&quot;, # Optional. Immutable. This the application type which this engine resource represents. NOTE: this is a new concept independ of existing industry vertical or solution type.
+  &quot;chatEngineConfig&quot;: { # Configurations for a Chat Engine. # Configurations for the Chat Engine. Only applicable if solution_type is SOLUTION_TYPE_CHAT.
+    &quot;agentCreationConfig&quot;: { # Configurations for generating a Dialogflow agent. Note that these configurations are one-time consumed by and passed to Dialogflow service. It means they cannot be retrieved using EngineService.GetEngine or EngineService.ListEngines API after engine creation. # The configurationt generate the Dialogflow agent that is associated to this Engine. Note that these configurations are one-time consumed by and passed to Dialogflow service. It means they cannot be retrieved using EngineService.GetEngine or EngineService.ListEngines API after engine creation.
+      &quot;business&quot;: &quot;A String&quot;, # Name of the company, organization or other entity that the agent represents. Used for knowledge connector LLM prompt and for knowledge search.
+      &quot;defaultLanguageCode&quot;: &quot;A String&quot;, # Required. The default language of the agent as a language tag. See [Language Support](https://cloud.google.com/dialogflow/docs/reference/language) for a list of the currently supported language codes.
+      &quot;location&quot;: &quot;A String&quot;, # Agent location for Agent creation, supported values: global/us/eu. If not provided, us Engine will create Agent using us-central-1 by default; eu Engine will create Agent using eu-west-1 by default.
+      &quot;timeZone&quot;: &quot;A String&quot;, # Required. The time zone of the agent from the [time zone database](https://www.iana.org/time-zones), e.g., America/New_York, Europe/Paris.
+    &quot;allowCrossRegion&quot;: True or False, # Optional. If the flag set to true, we allow the agent and engine are in different locations, otherwise the agent and engine are required to be in the same location. The flag is set to false by default. Note that the `allow_cross_region` are one-time consumed by and passed to EngineService.CreateEngine. It means they cannot be retrieved using EngineService.GetEngine or EngineService.ListEngines API after engine creation.
+    &quot;dialogflowAgentToLink&quot;: &quot;A String&quot;, # The resource name of an exist Dialogflow agent to link to this Chat Engine. Customers can either provide `agent_creation_config` to create agent or provide an agent name that links the agent with the Chat engine. Format: `projects//locations//agents/`. Note that the `dialogflow_agent_to_link` are one-time consumed by and passed to Dialogflow service. It means they cannot be retrieved using EngineService.GetEngine or EngineService.ListEngines API after engine creation. Use ChatEngineMetadata.dialogflow_agent for actual agent association after Engine is created.
+  &quot;chatEngineMetadata&quot;: { # Additional information of a Chat Engine. Fields in this message are output only. # Output only. Additional information of the Chat Engine. Only applicable if solution_type is SOLUTION_TYPE_CHAT.
+    &quot;dialogflowAgent&quot;: &quot;A String&quot;, # The resource name of a Dialogflow agent, that this Chat Engine refers to. Format: `projects//locations//agents/`.
+  &quot;cmekConfig&quot;: { # Configurations used to enable CMEK data encryption with Cloud KMS keys. # Output only. CMEK-related information for the Engine.
+  &quot;commonConfig&quot;: { # Common configurations for an Engine. # Common config spec that specifies the metadata of the engine.
+    &quot;companyName&quot;: &quot;A String&quot;, # The name of the company, business or entity that is associated with the engine. Setting this may help improve LLM related features.
+  &quot;configurableBillingApproach&quot;: &quot;A String&quot;, # Optional. Configuration for configurable billing approach.
+  &quot;connectorTenantInfo&quot;: { # Optional. Maps a connector ID (e.g., &quot;hybrid-github&quot;, &quot;shopify&quot;) to tenant-specific information required for that connector. The structure of the tenant information string is connector-dependent.
+  &quot;createTime&quot;: &quot;A String&quot;, # Output only. Timestamp the Recommendation Engine was created at.
+  &quot;dataStoreIds&quot;: [ # Optional. The data stores associated with this engine. For SOLUTION_TYPE_SEARCH and SOLUTION_TYPE_RECOMMENDATION type of engines, they can only associate with at most one data store. If solution_type is SOLUTION_TYPE_CHAT, multiple DataStores in the same Collection can be associated here. Note that when used in CreateEngineRequest, one DataStore id must be provided as the system will use it for necessary initializations.
+  &quot;disableAnalytics&quot;: True or False, # Optional. Whether to disable analytics for searches performed on this engine.
+  &quot;displayName&quot;: &quot;A String&quot;, # Required. The display name of the engine. Should be human readable. UTF-8 encoded string with limit of 1024 characters.
+  &quot;features&quot;: { # Optional. Feature config for the engine to opt in or opt out of features. Supported keys: * `*`: all features, if it&#x27;s present, all other feature state settings are ignored. * `agent-gallery` * `no-code-agent-builder` * `prompt-gallery` * `model-selector` * `notebook-lm` * `people-search` * `people-search-org-chart` * `bi-directional-audio` * `feedback` * `session-sharing` * `personalization-memory` * `personalization-suggested-highlights` * `disable-agent-sharing` * `disable-image-generation` * `disable-video-generation` * `disable-onedrive-upload` * `disable-talk-to-content` * `disable-google-drive-upload` * `disable-welcome-emails`
+  &quot;industryVertical&quot;: &quot;A String&quot;, # Optional. The industry vertical that the engine registers. The restriction of the Engine industry vertical is based on DataStore: Vertical on Engine has to match vertical of the DataStore linked to the engine.
+  &quot;knowledgeGraphConfig&quot;: { # Configuration message for the Knowledge Graph. # Optional. Configurations for the Knowledge Graph. Only applicable if solution_type is SOLUTION_TYPE_SEARCH.
+    &quot;cloudKnowledgeGraphTypes&quot;: [ # Specify entity types to support.
+    &quot;enableCloudKnowledgeGraph&quot;: True or False, # Whether to enable the Cloud Knowledge Graph for the engine. Defaults to false if not specified.
+    &quot;enablePrivateKnowledgeGraph&quot;: True or False, # Whether to enable the Private Knowledge Graph for the engine. Defaults to false if not specified.
+    &quot;featureConfig&quot;: { # Feature config for the Knowledge Graph. # Optional. Feature config for the Knowledge Graph.
+      &quot;disablePrivateKgAutoComplete&quot;: True or False, # Whether to disable the private KG auto complete for the engine. Defaults to false if not specified.
+      &quot;disablePrivateKgEnrichment&quot;: True or False, # Whether to disable the private KG enrichment for the engine. Defaults to false if not specified.
+      &quot;disablePrivateKgQueryUiChips&quot;: True or False, # Whether to disable the private KG for query UI chips. Defaults to false if not specified.
+      &quot;disablePrivateKgQueryUnderstanding&quot;: True or False, # Whether to disable the private KG query understanding for the engine. Defaults to false if not specified.
+    &quot;privateKnowledgeGraphTypes&quot;: [ # Specify entity types to support.
+  &quot;marketplaceAgentVisibility&quot;: &quot;A String&quot;, # Optional. The visibility of marketplace agents in the agent gallery.
+  &quot;mediaRecommendationEngineConfig&quot;: { # Additional config specs for a Media Recommendation engine. # Configurations for the Media Engine. Only applicable on the data stores with solution_type SOLUTION_TYPE_RECOMMENDATION and IndustryVertical.MEDIA vertical.
+    &quot;engineFeaturesConfig&quot;: { # More feature configs of the selected engine type. # Optional. Additional engine features config.
+      &quot;mostPopularConfig&quot;: { # Feature configurations that are required for creating a Most Popular engine. # Most popular engine feature config.
+        &quot;timeWindowDays&quot;: &quot;A String&quot;, # The time window of which the engine is queried at training and prediction time. Positive integers only. The value translates to the last X days of events. Currently required for the `most-popular-items` engine.
+      &quot;recommendedForYouConfig&quot;: { # Additional feature configurations for creating a `recommended-for-you` engine. # Recommended for you engine feature config.
+        &quot;contextEventType&quot;: &quot;A String&quot;, # The type of event with which the engine is queried at prediction time. If set to `generic`, only `view-item`, `media-play`,and `media-complete` will be used as `context-event` in engine training. If set to `view-home-page`, `view-home-page` will also be used as `context-events` in addition to `view-item`, `media-play`, and `media-complete`. Currently supported for the `recommended-for-you` engine. Currently supported values: `view-home-page`, `generic`.
+    &quot;optimizationObjective&quot;: &quot;A String&quot;, # The optimization objective. e.g., `cvr`. This field together with optimization_objective describe engine metadata to use to control engine training and serving. Currently supported values: `ctr`, `cvr`. If not specified, we choose default based on engine type. Default depends on type of recommendation: `recommended-for-you` =&gt; `ctr` `others-you-may-like` =&gt; `ctr`
+    &quot;optimizationObjectiveConfig&quot;: { # Custom threshold for `cvr` optimization_objective. # Name and value of the custom threshold for cvr optimization_objective. For target_field `watch-time`, target_field_value must be an integer value indicating the media progress time in seconds between (0, 86400] (excludes 0, includes 86400) (e.g., 90). For target_field `watch-percentage`, the target_field_value must be a valid float value between (0, 1.0] (excludes 0, includes 1.0) (e.g., 0.5).
+      &quot;targetField&quot;: &quot;A String&quot;, # Required. The name of the field to target. Currently supported values: `watch-percentage`, `watch-time`.
+      &quot;targetFieldValueFloat&quot;: 3.14, # Required. The threshold to be applied to the target (e.g., 0.5).
+    &quot;trainingState&quot;: &quot;A String&quot;, # The training state that the engine is in (e.g. `TRAINING` or `PAUSED`). Since part of the cost of running the service is frequency of training - this can be used to determine when to train engine in order to control cost. If not specified: the default value for `CreateEngine` method is `TRAINING`. The default value for `UpdateEngine` method is to keep the state the same as before.
+    &quot;type&quot;: &quot;A String&quot;, # Required. The type of engine. e.g., `recommended-for-you`. This field together with optimization_objective describe engine metadata to use to control engine training and serving. Currently supported values: `recommended-for-you`, `others-you-may-like`, `more-like-this`, `most-popular-items`.
+  &quot;modelConfigs&quot;: { # Optional. Maps a model name to its specific configuration for this engine. This allows admin users to turn on/off individual models. This only stores models whose states are overridden by the admin. When the state is unspecified, or model_configs is empty for this model, the system will decide if this model should be available or not based on the default configuration. For example, a preview model should be disabled by default if the admin has not chosen to enable it.
+  &quot;name&quot;: &quot;A String&quot;, # Immutable. Identifier. The fully qualified resource name of the engine. This field must be a UTF-8 encoded string with a length limit of 1024 characters. Format: `projects/{project}/locations/{location}/collections/{collection}/engines/{engine}` engine should be 1-63 characters, and valid characters are /a-z0-9*/. Otherwise, an INVALID_ARGUMENT error is returned.
+  &quot;observabilityConfig&quot;: { # Observability config for a resource. # Optional. Observability config for the engine.
+    &quot;observabilityEnabled&quot;: True or False, # Optional. Enables observability. If `false`, all other flags are ignored.
+    &quot;sensitiveLoggingEnabled&quot;: True or False, # Optional. Enables sensitive logging. Sensitive logging includes customer core content (e.g. prompts, responses). If `false`, will sanitize all sensitive fields.
+  &quot;procurementContactEmails&quot;: [ # Optional. The emails of the procurement contacts.
+  &quot;searchEngineConfig&quot;: { # Configurations for a Search Engine. # Configurations for the Search Engine. Only applicable if solution_type is SOLUTION_TYPE_SEARCH.
+    &quot;requiredSubscriptionTier&quot;: &quot;A String&quot;, # Optional. The required subscription tier of this engine. They cannot be modified after engine creation. If the required subscription tier is search, user with higher license tier like assist can still access the standalone app associated with this engine.
+    &quot;searchAddOns&quot;: [ # The add-on that this search engine enables.
+    &quot;searchTier&quot;: &quot;A String&quot;, # The search feature tier of this engine. Different tiers might have different pricing. To learn more, check the pricing documentation. Defaults to SearchTier.SEARCH_TIER_STANDARD if not specified.
+  &quot;solutionType&quot;: &quot;A String&quot;, # Required. The solutions of the engine.
+  &quot;updateTime&quot;: &quot;A String&quot;, # Output only. Timestamp the Recommendation Engine was last updated.
+  engineId: string, Required. The ID to use for the Engine, which will become the final component of the Engine&#x27;s resource name. This field must conform to [RFC-1034](https://tools.ietf.org/html/rfc1034) standard with a length limit of 63 characters. Otherwise, an INVALID_ARGUMENT error is returned.
+  <pre>Deletes an Engine.
+  name: string, Required. Full resource name of Engine, such as `projects/{project}/locations/{location}/collections/{collection_id}/engines/{engine_id}`. If the caller does not have permission to delete the Engine, regardless of whether or not it exists, a PERMISSION_DENIED error is returned. If the Engine to delete does not exist, a NOT_FOUND error is returned. (required)
+  <pre>Gets an Engine.
+  name: string, Required. Full resource name of Engine, such as `projects/{project}/locations/{location}/collections/{collection_id}/engines/{engine_id}`. (required)
+  <pre>Gets the IAM access control policy for an Engine. A `NOT_FOUND` error is returned if the resource does not exist. An empty policy is returned if the resource exists but does not have a policy set on it.
+  <pre>Lists all the Engines associated with the project.
+  parent: string, Required. The parent resource name, such as `projects/{project}/locations/{location}/collections/{collection_id}`. (required)
+  filter: string, Optional. Filter by solution type. For example: solution_type=SOLUTION_TYPE_SEARCH
+  pageSize: integer, Optional. Not supported.
+  pageToken: string, Optional. Not supported.
+    { # Response message for EngineService.ListEngines method.
+  &quot;engines&quot;: [ # All the customer&#x27;s Engines.
+  &quot;nextPageToken&quot;: &quot;A String&quot;, # Not supported.
+  <pre>Updates an Engine
+  name: string, Immutable. Identifier. The fully qualified resource name of the engine. This field must be a UTF-8 encoded string with a length limit of 1024 characters. Format: `projects/{project}/locations/{location}/collections/{collection}/engines/{engine}` engine should be 1-63 characters, and valid characters are /a-z0-9*/. Otherwise, an INVALID_ARGUMENT error is returned. (required)
+  updateMask: string, Indicates which fields in the provided Engine to update. If an unsupported or unknown field is provided, an INVALID_ARGUMENT error is returned.
+  <pre>Sets the IAM access control policy for an Engine. A `NOT_FOUND` error is returned if the resource does not exist. **Important:** When setting a policy directly on an Engine resource, the only recommended roles in the bindings are: `roles/discoveryengine.user` and `roles/discoveryengine.agentspaceUser`. Attempting to grant any other role will result in a warning in logging.

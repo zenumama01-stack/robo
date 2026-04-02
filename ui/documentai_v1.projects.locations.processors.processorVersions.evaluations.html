@@ -1,0 +1,51 @@
+<h1><a href="documentai_v1.html">Cloud Document AI API</a> . <a href="documentai_v1.projects.html">projects</a> . <a href="documentai_v1.projects.locations.html">locations</a> . <a href="documentai_v1.projects.locations.processors.html">processors</a> . <a href="documentai_v1.projects.locations.processors.processorVersions.html">processorVersions</a> . <a href="documentai_v1.projects.locations.processors.processorVersions.evaluations.html">evaluations</a></h1>
+<p class="firstline">Retrieves a specific evaluation.</p>
+<p class="firstline">Retrieves a set of evaluations for a given processor version.</p>
+  <pre>Retrieves a specific evaluation.
+  name: string, Required. The resource name of the Evaluation to get. `projects/{project}/locations/{location}/processors/{processor}/processorVersions/{processorVersion}/evaluations/{evaluation}` (required)
+    { # An evaluation of a ProcessorVersion&#x27;s performance.
+  &quot;allEntitiesMetrics&quot;: { # Metrics across multiple confidence levels. # Metrics for all the entities in aggregate.
+    &quot;auprc&quot;: 3.14, # The calculated area under the precision recall curve (AUPRC), computed by integrating over all confidence thresholds.
+    &quot;auprcExact&quot;: 3.14, # The AUPRC for metrics with fuzzy matching disabled, i.e., exact matching only.
+    &quot;confidenceLevelMetrics&quot;: [ # Metrics across confidence levels with fuzzy matching enabled.
+      { # Evaluations metrics, at a specific confidence level.
+        &quot;confidenceLevel&quot;: 3.14, # The confidence level.
+        &quot;metrics&quot;: { # Evaluation metrics, either in aggregate or about a specific entity. # The metrics at the specific confidence level.
+          &quot;f1Score&quot;: 3.14, # The calculated F1 score.
+          &quot;falseNegativesCount&quot;: 42, # The amount of false negatives.
+          &quot;falsePositivesCount&quot;: 42, # The amount of false positives.
+          &quot;groundTruthDocumentCount&quot;: 42, # The amount of documents with a ground truth occurrence.
+          &quot;groundTruthOccurrencesCount&quot;: 42, # The amount of occurrences in ground truth documents.
+          &quot;precision&quot;: 3.14, # The calculated precision.
+          &quot;predictedDocumentCount&quot;: 42, # The amount of documents with a predicted occurrence.
+          &quot;predictedOccurrencesCount&quot;: 42, # The amount of occurrences in predicted documents.
+          &quot;recall&quot;: 3.14, # The calculated recall.
+          &quot;totalDocumentsCount&quot;: 42, # The amount of documents that had an occurrence of this label.
+          &quot;truePositivesCount&quot;: 42, # The amount of true positives.
+    &quot;confidenceLevelMetricsExact&quot;: [ # Metrics across confidence levels with only exact matching.
+    &quot;estimatedCalibrationError&quot;: 3.14, # The Estimated Calibration Error (ECE) of the confidence of the predicted entities.
+    &quot;estimatedCalibrationErrorExact&quot;: 3.14, # The ECE for the predicted entities with fuzzy matching disabled, i.e., exact matching only.
+    &quot;metricsType&quot;: &quot;A String&quot;, # The metrics type for the label.
+  &quot;createTime&quot;: &quot;A String&quot;, # The time that the evaluation was created.
+  &quot;documentCounters&quot;: { # Evaluation counters for the documents that were used. # Counters for the documents used in the evaluation.
+    &quot;evaluatedDocumentsCount&quot;: 42, # How many documents were used in the evaluation.
+    &quot;failedDocumentsCount&quot;: 42, # How many documents were not included in the evaluation as Document AI failed to process them.
+    &quot;inputDocumentsCount&quot;: 42, # How many documents were sent for evaluation.
+    &quot;invalidDocumentsCount&quot;: 42, # How many documents were not included in the evaluation as they didn&#x27;t pass validation.
+  &quot;entityMetrics&quot;: { # Metrics across confidence levels, for different entities.
+    &quot;a_key&quot;: { # Metrics across multiple confidence levels.
+  &quot;kmsKeyName&quot;: &quot;A String&quot;, # The KMS key name used for encryption.
+  &quot;kmsKeyVersionName&quot;: &quot;A String&quot;, # The KMS key version with which data is encrypted.
+  &quot;name&quot;: &quot;A String&quot;, # The resource name of the evaluation. Format: `projects/{project}/locations/{location}/processors/{processor}/processorVersions/{processor_version}/evaluations/{evaluation}`
+  &quot;revisions&quot;: [ # Contains all revisions of the evaluation, excluding the latest one.
+    { # A revision of the evaluation.
+      &quot;allEntitiesMetrics&quot;: { # Metrics across multiple confidence levels. # Output only. Metrics for all the entities in aggregate.
+      &quot;documentCounters&quot;: { # Evaluation counters for the documents that were used. # Output only. Counters for the documents used in the evaluation.
+      &quot;entityMetrics&quot;: { # Output only. Metrics across confidence levels, for different entities.
+      &quot;revisionId&quot;: &quot;A String&quot;, # Output only. The revision ID of the evaluation.
+  <pre>Retrieves a set of evaluations for a given processor version.
+  parent: string, Required. The resource name of the ProcessorVersion to list evaluations for. `projects/{project}/locations/{location}/processors/{processor}/processorVersions/{processorVersion}` (required)
+  pageSize: integer, The standard list page size. If unspecified, at most `5` evaluations are returned. The maximum value is `100`. Values above `100` are coerced to `100`.
+  pageToken: string, A page token, received from a previous `ListEvaluations` call. Provide this to retrieve the subsequent page.
+    { # The response from `ListEvaluations`.
+  &quot;evaluations&quot;: [ # The evaluations requested.

@@ -1,0 +1,53 @@
+<h1><a href="blockchainnodeengine_v1.html">Blockchain Node Engine API</a> . <a href="blockchainnodeengine_v1.projects.html">projects</a> . <a href="blockchainnodeengine_v1.projects.locations.html">locations</a> . <a href="blockchainnodeengine_v1.projects.locations.blockchainNodes.html">blockchainNodes</a></h1>
+  <code><a href="#create">create(parent, blockchainNodeId=None, body=None, requestId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Creates a new blockchain node in a given project and location.</p>
+<p class="firstline">Deletes a single blockchain node.</p>
+<p class="firstline">Gets details of a single blockchain node.</p>
+<p class="firstline">Lists blockchain nodes in a given project and location.</p>
+<p class="firstline">Updates the parameters of a single blockchain node.</p>
+    <code class="details" id="create">create(parent, blockchainNodeId=None, body=None, requestId=None, x__xgafv=None)</code>
+  <pre>Creates a new blockchain node in a given project and location.
+{ # A representation of a blockchain node.
+  &quot;blockchainType&quot;: &quot;A String&quot;, # Immutable. The blockchain type of the node.
+  &quot;connectionInfo&quot;: { # The connection information through which to interact with a blockchain node. # Output only. The connection information used to interact with a blockchain node.
+    &quot;endpointInfo&quot;: { # Contains endpoint information through which to interact with a blockchain node. # Output only. The endpoint information through which to interact with a blockchain node.
+      &quot;jsonRpcApiEndpoint&quot;: &quot;A String&quot;, # Output only. The assigned URL for the node JSON-RPC API endpoint.
+      &quot;websocketsApiEndpoint&quot;: &quot;A String&quot;, # Output only. The assigned URL for the node WebSockets API endpoint.
+    &quot;serviceAttachment&quot;: &quot;A String&quot;, # Output only. A service attachment that exposes a node, and has the following format: projects/{project}/regions/{region}/serviceAttachments/{service_attachment_name}
+  &quot;createTime&quot;: &quot;A String&quot;, # Output only. The timestamp at which the blockchain node was first created.
+  &quot;ethereumDetails&quot;: { # Ethereum-specific blockchain node details. # Ethereum-specific blockchain node details.
+    &quot;additionalEndpoints&quot;: { # Contains endpoint information specific to Ethereum nodes. # Output only. Ethereum-specific endpoint information.
+      &quot;beaconApiEndpoint&quot;: &quot;A String&quot;, # Output only. The assigned URL for the node&#x27;s Beacon API endpoint.
+      &quot;beaconPrometheusMetricsApiEndpoint&quot;: &quot;A String&quot;, # Output only. The assigned URL for the node&#x27;s Beacon Prometheus metrics endpoint. See [Prometheus Metrics](https://lighthouse-book.sigmaprime.io/advanced_metrics.html) for more details.
+      &quot;executionClientPrometheusMetricsApiEndpoint&quot;: &quot;A String&quot;, # Output only. The assigned URL for the node&#x27;s execution client&#x27;s Prometheus metrics endpoint.
+    &quot;apiEnableAdmin&quot;: True or False, # Immutable. Enables JSON-RPC access to functions in the `admin` namespace. Defaults to `false`.
+    &quot;apiEnableDebug&quot;: True or False, # Immutable. Enables JSON-RPC access to functions in the `debug` namespace. Defaults to `false`.
+    &quot;consensusClient&quot;: &quot;A String&quot;, # Immutable. The consensus client.
+    &quot;executionClient&quot;: &quot;A String&quot;, # Immutable. The execution client
+    &quot;gethDetails&quot;: { # Options for the Geth execution client. See [Command-line Options](https://geth.ethereum.org/docs/fundamentals/command-line-options) for more details. # Details for the Geth execution client.
+      &quot;garbageCollectionMode&quot;: &quot;A String&quot;, # Immutable. Blockchain garbage collection mode.
+    &quot;network&quot;: &quot;A String&quot;, # Immutable. The Ethereum environment being accessed.
+    &quot;nodeType&quot;: &quot;A String&quot;, # Immutable. The type of Ethereum node.
+    &quot;validatorConfig&quot;: { # Configuration for validator-related parameters on the beacon client, and for any GCP-managed validator client. # Configuration for validator-related parameters on the beacon client, and for any GCP-managed validator client.
+      &quot;beaconFeeRecipient&quot;: &quot;A String&quot;, # An Ethereum address which the beacon client will send fee rewards to if no recipient is configured in the validator client. See https://lighthouse-book.sigmaprime.io/suggested-fee-recipient.html or https://docs.prylabs.network/docs/execution-node/fee-recipient for examples of how this is used. Note that while this is often described as &quot;suggested&quot;, as we run the execution node we can trust the execution node, and therefore this is considered enforced.
+      &quot;managedValidatorClient&quot;: True or False, # Immutable. When true, deploys a GCP-managed validator client alongside the beacon client.
+      &quot;mevRelayUrls&quot;: [ # URLs for MEV-relay services to use for block building. When set, a GCP-managed MEV-boost service is configured on the beacon client.
+  &quot;labels&quot;: { # User-provided key-value pairs.
+  &quot;name&quot;: &quot;A String&quot;, # Output only. The fully qualified name of the blockchain node. e.g. `projects/my-project/locations/us-central1/blockchainNodes/my-node`.
+  &quot;privateServiceConnectEnabled&quot;: True or False, # Optional. When true, the node is only accessible via Private Service Connect; no public endpoints are exposed. Otherwise, the node is only accessible via public endpoints. Warning: These nodes are deprecated, please use public endpoints instead.
+  &quot;state&quot;: &quot;A String&quot;, # Output only. A status representing the state of the node.
+  &quot;updateTime&quot;: &quot;A String&quot;, # Output only. The timestamp at which the blockchain node was last updated.
+  blockchainNodeId: string, Required. ID of the requesting object.
+  <pre>Deletes a single blockchain node.
+  name: string, Required. The fully qualified name of the blockchain node to delete. e.g. `projects/my-project/locations/us-central1/blockchainNodes/my-node`. (required)
+  <pre>Gets details of a single blockchain node.
+  name: string, Required. The fully qualified name of the blockchain node to fetch. e.g. `projects/my-project/locations/us-central1/blockchainNodes/my-node`. (required)
+  <pre>Lists blockchain nodes in a given project and location.
+  parent: string, Required. Parent value for `ListNodesRequest`. (required)
+  filter: string, Filtering results.
+  orderBy: string, Hint for how to order the results.
+    { # Message for response to listing blockchain nodes.
+  &quot;blockchainNodes&quot;: [ # The list of nodes
+  <pre>Updates the parameters of a single blockchain node.
+  name: string, Output only. The fully qualified name of the blockchain node. e.g. `projects/my-project/locations/us-central1/blockchainNodes/my-node`. (required)
+  updateMask: string, Required. Field mask is used to specify the fields to be overwritten in the Blockchain node resource by the update. The fields specified in the `update_mask` are relative to the resource, not the full request. A field will be overwritten if it is in the mask. If the user does not provide a mask then all fields will be overwritten.

@@ -1,0 +1,75 @@
+<h1><a href="cloudsearch_v1.html">Cloud Search API</a> . <a href="cloudsearch_v1.indexing.html">indexing</a> . <a href="cloudsearch_v1.indexing.datasources.html">datasources</a> . <a href="cloudsearch_v1.indexing.datasources.items.html">items</a></h1>
+  <code><a href="#delete">delete(name, connectorName=None, debugOptions_enableDebugging=None, mode=None, version=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Deletes Item resource for the specified resource name. This API requires an admin or service account to execute. The service account used is the one whitelisted in the corresponding data source.</p>
+  <code><a href="#deleteQueueItems">deleteQueueItems(name, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Deletes all items in a queue. This method is useful for deleting stale items. This API requires an admin or service account to execute. The service account used is the one whitelisted in the corresponding data source.</p>
+  <code><a href="#get">get(name, connectorName=None, debugOptions_enableDebugging=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Gets Item resource by item name. This API requires an admin or service account to execute. The service account used is the one whitelisted in the corresponding data source.</p>
+  <code><a href="#index">index(name, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Updates Item ACL, metadata, and content. It will insert the Item if it does not exist. This method does not support partial updates. Fields with no provided values are cleared out in the Cloud Search index. This API requires an admin or service account to execute. The service account used is the one whitelisted in the corresponding data source.</p>
+  <code><a href="#list">list(name, brief=None, connectorName=None, debugOptions_enableDebugging=None, pageSize=None, pageToken=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Lists all or a subset of Item resources. This API requires an admin or service account to execute. The service account used is the one whitelisted in the corresponding data source.</p>
+  <code><a href="#poll">poll(name, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Polls for unreserved items from the indexing queue and marks a set as reserved, starting with items that have the oldest timestamp from the highest priority ItemStatus. The priority order is as follows: ERROR MODIFIED NEW_ITEM ACCEPTED Reserving items ensures that polling from other threads cannot create overlapping sets. After handling the reserved items, the client should put items back into the unreserved state, either by calling index, or by calling push with the type REQUEUE. Items automatically become available (unreserved) after 4 hours even if no update or push method is called. This API requires an admin or service account to execute. The service account used is the one whitelisted in the corresponding data source.</p>
+  <code><a href="#push">push(name, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Pushes an item onto a queue for later polling and updating. This API requires an admin or service account to execute. The service account used is the one whitelisted in the corresponding data source.</p>
+  <code><a href="#unreserve">unreserve(name, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Unreserves all items from a queue, making them all eligible to be polled. This method is useful for resetting the indexing queue after a connector has been restarted. This API requires an admin or service account to execute. The service account used is the one whitelisted in the corresponding data source.</p>
+  <code><a href="#upload">upload(name, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Creates an upload session for uploading item content. For items smaller than 100 KB, it's easier to embed the content inline within an index request. This API requires an admin or service account to execute. The service account used is the one whitelisted in the corresponding data source.</p>
+    <code class="details" id="delete">delete(name, connectorName=None, debugOptions_enableDebugging=None, mode=None, version=None, x__xgafv=None)</code>
+  <pre>Deletes Item resource for the specified resource name. This API requires an admin or service account to execute. The service account used is the one whitelisted in the corresponding data source.
+  name: string, Required. The name of the item to delete. Format: datasources/{source_id}/items/{item_id} (required)
+  connectorName: string, The name of connector making this call. Format: datasources/{source_id}/connectors/{ID}
+  mode: string, Required. The RequestMode for this request.
+      UNSPECIFIED - The priority is not specified in the update request. Leaving priority unspecified results in an update failure.
+      SYNCHRONOUS - For real-time updates.
+      ASYNCHRONOUS - For changes that are executed after the response is sent back to the caller.
+  version: string, Required. The incremented version of the item to delete from the index. The indexing system stores the version from the datasource as a byte string and compares the Item version in the index to the version of the queued Item using lexical ordering. Cloud Search Indexing won&#x27;t delete any queued item with a version value that is less than or equal to the version of the currently indexed item. The maximum length for this field is 1024 bytes. For information on how item version affects the deletion process, refer to [Handle revisions after manual deletes](https://developers.google.com/workspace/cloud-search/docs/guides/operations).
+    <code class="details" id="deleteQueueItems">deleteQueueItems(name, body=None, x__xgafv=None)</code>
+  <pre>Deletes all items in a queue. This method is useful for deleting stale items. This API requires an admin or service account to execute. The service account used is the one whitelisted in the corresponding data source.
+  name: string, The name of the Data Source to delete items in a queue. Format: datasources/{source_id} (required)
+  &quot;connectorName&quot;: &quot;A String&quot;, # The name of connector making this call. Format: datasources/{source_id}/connectors/{ID}
+  &quot;queue&quot;: &quot;A String&quot;, # The name of a queue to delete items from.
+    <code class="details" id="get">get(name, connectorName=None, debugOptions_enableDebugging=None, x__xgafv=None)</code>
+  <pre>Gets Item resource by item name. This API requires an admin or service account to execute. The service account used is the one whitelisted in the corresponding data source.
+  name: string, The name of the item to get info. Format: datasources/{source_id}/items/{item_id} (required)
+    <code class="details" id="index">index(name, body=None, x__xgafv=None)</code>
+  <pre>Updates Item ACL, metadata, and content. It will insert the Item if it does not exist. This method does not support partial updates. Fields with no provided values are cleared out in the Cloud Search index. This API requires an admin or service account to execute. The service account used is the one whitelisted in the corresponding data source.
+  name: string, The name of the Item. Format: datasources/{source_id}/items/{item_id} This is a required field. The maximum length is 1536 characters. (required)
+  &quot;indexItemOptions&quot;: {
+    &quot;allowUnknownGsuitePrincipals&quot;: True or False, # Specifies if the index request should allow Google Workspace principals that do not exist or are deleted.
+  &quot;item&quot;: { # Represents a single object that is an item in the search index, such as a file, folder, or a database record. # The name of the item. Format: datasources/{source_id}/items/{item_id}
+  &quot;mode&quot;: &quot;A String&quot;, # Required. The RequestMode for this request.
+    <code class="details" id="list">list(name, brief=None, connectorName=None, debugOptions_enableDebugging=None, pageSize=None, pageToken=None, x__xgafv=None)</code>
+  <pre>Lists all or a subset of Item resources. This API requires an admin or service account to execute. The service account used is the one whitelisted in the corresponding data source.
+  name: string, The name of the Data Source to list Items. Format: datasources/{source_id} (required)
+  brief: boolean, When set to true, the indexing system only populates the following fields: name, version, queue. metadata.hash, metadata.title, metadata.sourceRepositoryURL, metadata.objectType, metadata.createTime, metadata.updateTime, metadata.contentLanguage, metadata.mimeType, structured_data.hash, content.hash, itemType, itemStatus.code, itemStatus.processingError.code, itemStatus.repositoryError.type, If this value is false, then all the fields are populated in Item.
+  pageSize: integer, Maximum number of items to fetch in a request. The max value is 1000 when brief is true. The max value is 10 if brief is false. The default value is 10
+    <code class="details" id="poll">poll(name, body=None, x__xgafv=None)</code>
+  <pre>Polls for unreserved items from the indexing queue and marks a set as reserved, starting with items that have the oldest timestamp from the highest priority ItemStatus. The priority order is as follows: ERROR MODIFIED NEW_ITEM ACCEPTED Reserving items ensures that polling from other threads cannot create overlapping sets. After handling the reserved items, the client should put items back into the unreserved state, either by calling index, or by calling push with the type REQUEUE. Items automatically become available (unreserved) after 4 hours even if no update or push method is called. This API requires an admin or service account to execute. The service account used is the one whitelisted in the corresponding data source.
+  name: string, The name of the Data Source to poll items. Format: datasources/{source_id} (required)
+  &quot;limit&quot;: 42, # Maximum number of items to return. The maximum value is 100 and the default value is 20.
+  &quot;queue&quot;: &quot;A String&quot;, # Queue name to fetch items from. If unspecified, PollItems will fetch from &#x27;default&#x27; queue. The maximum length is 100 characters.
+  &quot;statusCodes&quot;: [ # Limit the items polled to the ones with these statuses.
+  &quot;items&quot;: [ # Set of items from the queue available for connector to process. These items have the following subset of fields populated: version metadata.hash structured_data.hash content.hash payload status queue
+    <code class="details" id="push">push(name, body=None, x__xgafv=None)</code>
+  <pre>Pushes an item onto a queue for later polling and updating. This API requires an admin or service account to execute. The service account used is the one whitelisted in the corresponding data source.
+  name: string, The name of the item to push into the indexing queue. Format: datasources/{source_id}/items/{ID} This is a required field. The maximum length is 1536 characters. (required)
+  &quot;item&quot;: { # Represents an item to be pushed to the indexing queue. # Item to push onto the queue.
+    &quot;contentHash&quot;: &quot;A String&quot;, # Content hash of the item according to the repository. If specified, this is used to determine how to modify this item&#x27;s status. Setting this field and the type field results in argument error. The maximum length is 2048 characters.
+    &quot;metadataHash&quot;: &quot;A String&quot;, # The metadata hash of the item according to the repository. If specified, this is used to determine how to modify this item&#x27;s status. Setting this field and the type field results in argument error. The maximum length is 2048 characters.
+    &quot;payload&quot;: &quot;A String&quot;, # Provides additional document state information for the connector, such as an alternate repository ID and other metadata. The maximum length is 8192 bytes.
+    &quot;queue&quot;: &quot;A String&quot;, # Queue to which this item belongs. The `default` queue is chosen if this field is not specified. The maximum length is 512 characters.
+    &quot;repositoryError&quot;: { # Errors when the connector is communicating to the source repository. # Populate this field to store Connector or repository error details. This information is displayed in the Admin Console. This field may only be populated when the Type is REPOSITORY_ERROR.
+    &quot;structuredDataHash&quot;: &quot;A String&quot;, # Structured data hash of the item according to the repository. If specified, this is used to determine how to modify this item&#x27;s status. Setting this field and the type field results in argument error. The maximum length is 2048 characters.
+    &quot;type&quot;: &quot;A String&quot;, # The type of the push operation that defines the push behavior.
+    <code class="details" id="unreserve">unreserve(name, body=None, x__xgafv=None)</code>
+  <pre>Unreserves all items from a queue, making them all eligible to be polled. This method is useful for resetting the indexing queue after a connector has been restarted. This API requires an admin or service account to execute. The service account used is the one whitelisted in the corresponding data source.
+  name: string, The name of the Data Source to unreserve all items. Format: datasources/{source_id} (required)
+  &quot;queue&quot;: &quot;A String&quot;, # The name of a queue to unreserve items from.
+    <code class="details" id="upload">upload(name, body=None, x__xgafv=None)</code>
+  <pre>Creates an upload session for uploading item content. For items smaller than 100 KB, it&#x27;s easier to embed the content inline within an index request. This API requires an admin or service account to execute. The service account used is the one whitelisted in the corresponding data source.
+  name: string, The name of the Item to start a resumable upload. Format: datasources/{source_id}/items/{item_id}. The maximum length is 1536 bytes. (required)
+{ # Start upload file request.
+    { # Represents an upload session reference. This reference is created via upload method. This reference is valid for 30 days after its creation. Updating of item content may refer to this uploaded content via contentDataRef.

@@ -1,0 +1,38 @@
+    <!-- Version Identity Section -->
+        SectionKey="versionIdentity"
+        SectionName="Version Identity"
+            FieldName="VersionNumber"
+    <!-- Content & Metadata Section -->
+        SectionKey="contentMetadata"
+        SectionName="Content & Metadata"
+            FieldName="Content"
+            FieldName="ContentHash"
+    <!-- Ownership & Attribution Section -->
+        SectionKey="ownershipAttribution"
+        SectionName="Ownership & Attribution"
+    <!-- MJ: Artifact Version Attributes Section -->
+        SectionKey="mJArtifactVersionAttributes"
+        SectionName="MJ: Artifact Version Attributes"
+        [BadgeCount]="GetSectionRowCount('mJArtifactVersionAttributes')"
+                [Params]="BuildRelationshipViewParamsByEntityName('MJ: Artifact Version Attributes','ArtifactVersionID')"
+                [NewRecordValues]="NewRecordValues('MJ: Artifact Version Attributes')"
+                [AllowLoad]="IsSectionExpanded('mJArtifactVersionAttributes')"
+                (AfterDataLoad)="SetSectionRowCount('mJArtifactVersionAttributes', $event.totalRowCount)"
+                [Params]="BuildRelationshipViewParamsByEntityName('MJ: Collection Artifacts','ArtifactVersionID')"
+    <!-- MJ: Artifact Uses Section -->
+        SectionKey="mJArtifactUses"
+        SectionName="MJ: Artifact Uses"
+        Icon="fa fa-eye"
+        [BadgeCount]="GetSectionRowCount('mJArtifactUses')"
+                [Params]="BuildRelationshipViewParamsByEntityName('MJ: Artifact Uses','ArtifactVersionID')"
+                [NewRecordValues]="NewRecordValues('MJ: Artifact Uses')"
+                [AllowLoad]="IsSectionExpanded('mJArtifactUses')"
+                (AfterDataLoad)="SetSectionRowCount('mJArtifactUses', $event.totalRowCount)"
+    <!-- MJ: Conversation Detail Artifacts Section -->
+        SectionKey="mJConversationDetailArtifacts"
+        SectionName="MJ: Conversation Detail Artifacts"
+        [BadgeCount]="GetSectionRowCount('mJConversationDetailArtifacts')"
+                [Params]="BuildRelationshipViewParamsByEntityName('MJ: Conversation Detail Artifacts','ArtifactVersionID')"
+                [NewRecordValues]="NewRecordValues('MJ: Conversation Detail Artifacts')"
+                [AllowLoad]="IsSectionExpanded('mJConversationDetailArtifacts')"
+                (AfterDataLoad)="SetSectionRowCount('mJConversationDetailArtifacts', $event.totalRowCount)"

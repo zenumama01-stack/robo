@@ -1,0 +1,45 @@
+<h1><a href="ces_v1.html">Gemini Enterprise for Customer Experience API</a> . <a href="ces_v1.projects.html">projects</a> . <a href="ces_v1.projects.locations.html">locations</a> . <a href="ces_v1.projects.locations.apps.html">apps</a> . <a href="ces_v1.projects.locations.apps.deployments.html">deployments</a></h1>
+<p class="firstline">Creates a new deployment in the given app.</p>
+<p class="firstline">Deletes the specified deployment.</p>
+<p class="firstline">Gets details of the specified deployment.</p>
+<p class="firstline">Lists deployments in the given app.</p>
+<p class="firstline">Updates the specified deployment.</p>
+  <pre>Creates a new deployment in the given app.
+  parent: string, Required. The parent app. Format: `projects/{project}/locations/{location}/apps/{app}` (required)
+{ # A deployment represents an immutable, queryable version of the app. It is used to deploy an app version with a specific channel profile.
+  &quot;appVersion&quot;: &quot;A String&quot;, # Optional. The resource name of the app version to deploy. Format: `projects/{project}/locations/{location}/apps/{app}/versions/{version}` Use `projects/{project}/locations/{location}/apps/{app}/versions/-` to use the draft app.
+  &quot;channelProfile&quot;: { # A ChannelProfile configures the agent&#x27;s behavior for a specific communication channel, such as web UI or telephony. # Required. The channel profile used in the deployment.
+    &quot;channelType&quot;: &quot;A String&quot;, # Optional. The type of the channel profile.
+    &quot;disableBargeInControl&quot;: True or False, # Optional. Whether to disable user barge-in control in the conversation. - **true**: User interruptions are disabled while the agent is speaking. - **false**: The agent retains automatic control over when the user can interrupt.
+    &quot;disableDtmf&quot;: True or False, # Optional. Whether to disable DTMF (dual-tone multi-frequency).
+    &quot;noiseSuppressionLevel&quot;: &quot;A String&quot;, # Optional. The noise suppression level of the channel profile. Available values are &quot;low&quot;, &quot;moderate&quot;, &quot;high&quot;, &quot;very_high&quot;.
+    &quot;personaProperty&quot;: { # Represents the persona property of a channel. # Optional. The persona property of the channel profile.
+      &quot;persona&quot;: &quot;A String&quot;, # Optional. The persona of the channel.
+    &quot;profileId&quot;: &quot;A String&quot;, # Optional. The unique identifier of the channel profile.
+    &quot;webWidgetConfig&quot;: { # Message for configuration for the web widget. # Optional. The configuration for the web widget.
+      &quot;modality&quot;: &quot;A String&quot;, # Optional. The modality of the web widget.
+      &quot;securitySettings&quot;: { # Security settings for the web widget. # Optional. The security settings of the web widget.
+        &quot;allowedOrigins&quot;: [ # Optional. The origins that are allowed to host the web widget. An origin is defined by RFC 6454. If empty, all origins are allowed. A maximum of 100 origins is allowed. Example: &quot;https://example.com&quot;
+        &quot;enableOriginCheck&quot;: True or False, # Optional. Indicates whether origin check for the web widget is enabled. If `true`, the web widget will check the origin of the website that loads the web widget and only allow it to be loaded in the same origin or any of the allowed origins.
+        &quot;enablePublicAccess&quot;: True or False, # Optional. Indicates whether public access to the web widget is enabled. If `true`, the web widget will be publicly accessible. If `false`, the web widget must be integrated with your own authentication and authorization system to return valid credentials for accessing the CES agent.
+        &quot;enableRecaptcha&quot;: True or False, # Optional. Indicates whether reCAPTCHA verification for the web widget is enabled.
+      &quot;theme&quot;: &quot;A String&quot;, # Optional. The theme of the web widget.
+      &quot;webWidgetTitle&quot;: &quot;A String&quot;, # Optional. The title of the web widget.
+  &quot;createTime&quot;: &quot;A String&quot;, # Output only. Timestamp when this deployment was created.
+  &quot;displayName&quot;: &quot;A String&quot;, # Required. Display name of the deployment.
+  &quot;etag&quot;: &quot;A String&quot;, # Output only. Etag used to ensure the object hasn&#x27;t changed during a read-modify-write operation. If the etag is empty, the update will overwrite any concurrent changes.
+  &quot;name&quot;: &quot;A String&quot;, # Identifier. The resource name of the deployment. Format: `projects/{project}/locations/{location}/apps/{app}/deployments/{deployment}`
+  &quot;updateTime&quot;: &quot;A String&quot;, # Output only. Timestamp when this deployment was last updated.
+  deploymentId: string, Optional. The ID to use for the deployment, which will become the final component of the deployment&#x27;s resource name. If not provided, a unique ID will be automatically assigned for the deployment.
+  <pre>Deletes the specified deployment.
+  name: string, Required. The name of the deployment to delete. Format: `projects/{project}/locations/{location}/apps/{app}/deployments/{deployment}` (required)
+  etag: string, Optional. The etag of the deployment. If an etag is provided and does not match the current etag of the deployment, deletion will be blocked and an ABORTED error will be returned.
+  <pre>Gets details of the specified deployment.
+  name: string, Required. The name of the deployment. Format: `projects/{project}/locations/{location}/apps/{app}/deployments/{deployment}` (required)
+  <pre>Lists deployments in the given app.
+  pageSize: integer, Optional. The maximum number of deployments to return. The service may return fewer than this value. If unspecified, at most 50 deployments will be returned. The maximum value is 1000; values above 1000 will be coerced to 1000.
+  pageToken: string, Optional. A page token, received from a previous `ListDeployments` call. Provide this to retrieve the subsequent page. When paginating, all other parameters provided to `ListDeployments` must match the call that provided the page token.
+    { # Response message for AgentService.ListDeployments.
+  &quot;deployments&quot;: [ # The list of deployments.
+  <pre>Updates the specified deployment.
+  name: string, Identifier. The resource name of the deployment. Format: `projects/{project}/locations/{location}/apps/{app}/deployments/{deployment}` (required)

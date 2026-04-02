@@ -1,0 +1,142 @@
+{% extends "!layout.html" %}
+{% set html5_doctype = True %}
+{% set script_files = script_files + ['_static/instaloaderdoc.js'] %}
+{% block htmltitle %}
+  {% if pagename == "index" %}
+    <title>{{ title|striptags|e }}</title>
+  {% else %}
+    <title>{{ title|striptags|e }}{{ titlesuffix }}</title>
+{% endblock %}
+{% block extrahead %}
+  {{ super() }}
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="google-site-verification" content="FNUsDdkOJM9obm9QEdrNBVd9AtAzHzA-aaSMCUrS6C8"/>
+    <link rel="canonical" href="https://instaloader.github.io/"/>
+    <link rel="canonical" href="https://instaloader.github.io/{{ pagename }}.html"/>
+{% block header %}
+  <nav class="navbar navbar-light navbar-expand bg-light border-bottom">
+    <a class="navbar-brand" href="{{ pathto(master_doc) }}">
+      <img src="{{ pathto('_static/logo.png', 1) }}" width="30" height="30" class="d-inline-block align-top" alt="logo">
+      <span class="ml-3">Instaloader</span>
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item ml-0 ml-sm-2">
+        <a class="nav-link"
+           href="https://github.com/instaloader/instaloader/releases/tag/v{{ current_release }}"
+           title="Released on {{ current_release_date }}" data-toggle="tooltip">
+          v<b>{{ current_release }}</b>
+    <ul class="navbar-nav ml-auto d-none d-sm-flex">
+      <li class="nav-item">
+        <a class="nav-link" href="https://github.com/instaloader/instaloader/issues">
+          Issues
+        <a class="nav-link" href="https://github.com/instaloader/instaloader/releases">
+          Releases
+        <a class="nav-link" href="https://github.com/instaloader/instaloader">
+          GitHub
+    <button class="d-inline-block d-md-none btn btn-outline-primary btn-sm" type="button"
+            data-toggle="collapse" data-target="#instaloaderdocSidebar" aria-controls="instaloaderdocSidebar"
+            aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+{% block relbar1 %}{% endblock %}
+{% block relbar2 %}{% endblock %}
+{% block footer %}{% endblock %}
+{% block content %}
+  <div class="container-fluid">
+    <div class="row">
+      <div class="instaloaderdoc-sidebar collapse d-md-block col-md-3 col-xl-2 bg-light"
+           id="instaloaderdocSidebar">
+        <nav role="navigation" aria-label="Table of Contents">
+          <form action="{{ pathto('search') }}" method="get" role="search" class="border-bottom mr-2 pb-2 mb-2 px-1">
+            <label class="sr-only" for="searchQueryInput">Search</label>
+            <input type="search" name="q" id="searchQueryInput" class="form-control my-2"
+                   placeholder="Search..." aria-label="Search">
+          <h4>Contents</h4>
+          {{ toctree(maxdepth=-1) }}
+      <main class="col-12 col-md-9 col-xl-10 pt-2" role="main">
+        {% block body %}{% endblock %}
+{% extends "basic/layout.html" %}
+{%- macro secondnav() %}
+  {%- if prev %}
+    &laquo; <a href="{{ prev.link|e }}" title="{{ prev.title|e }}">previous</a>
+    {{ reldelim2 }}
+  {%- endif %}
+  {%- if parents %}
+    <a href="{{ parents.0.link|e }}" title="{{ parents.0.title|e }}" accesskey="U">up</a>
+  {%- else %}
+    <a title="{{ docstitle }}" href="{{ pathto('index') }}" accesskey="U">up</a>
+  {%- if next %}
+    <a href="{{ next.link|e }}" title="{{ next.title|e }}">next</a> &raquo;
+{%- endmacro %}
+{# When building htmlhelp (CHM format) disable jQuery inclusion, #}
+{# as it causes problems in compiled CHM files.                  #}
+{% if builder != "htmlhelp" %}
+<script src="{{ pathto('templatebuiltins.js', 1) }}"></script>
+(function($) {
+    if (!django_template_builtins) {
+       // templatebuiltins.js missing, do nothing.
+    $(document).ready(function() {
+        // Hyperlink Django template tags and filters
+        var base = "{{ pathto('ref/templates/builtins') }}";
+        if (base == "#") {
+            // Special case for builtins.html itself
+            base = "";
+        // Tags are keywords, class '.k'
+        $("div.highlight\\-html\\+django span.k").each(function(i, elem) {
+             var tagname = $(elem).text();
+             if ($.inArray(tagname, django_template_builtins.ttags) != -1) {
+                 var fragment = tagname.replace(/_/, '-');
+                 $(elem).html("<a href='" + base + "#" + fragment + "'>" + tagname + "</a>");
+        // Filters are functions, class '.nf'
+        $("div.highlight\\-html\\+django span.nf").each(function(i, elem) {
+             var filtername = $(elem).text();
+             if ($.inArray(filtername, django_template_builtins.tfilters) != -1) {
+                 var fragment = filtername.replace(/_/, '-');
+                 $(elem).html("<a href='" + base + "#" + fragment + "'>" + filtername + "</a>");
+})(jQuery);
+{%- if include_console_assets -%}
+        $(".c-tab-unix").on("click", function() {
+            $("section.c-content-unix").show();
+            $("section.c-content-win").hide();
+            $(".c-tab-unix").prop("checked", true);
+        $(".c-tab-win").on("click", function() {
+            $("section.c-content-win").show();
+            $("section.c-content-unix").hide();
+            $(".c-tab-win").prop("checked", true);
+{%- endif -%}
+<link rel="stylesheet" href="{{ pathto('_static/console-tabs.css', 1) }}">
+{% block document %}
+  <div id="custom-doc" class="{% block bodyclass %}{{ 'yui-t6' if pagename != 'index' else '' }}{% endblock %}">
+    <div id="hd">
+      <h1><a href="{{ pathto('index') }}">{{ docstitle }}</a></h1>
+      <div id="global-nav">
+        <a title="Home page" href="{{ pathto('index') }}">Home</a> {{ reldelim2 }}
+        <a title="Table of contents" href="{{ pathto('contents') }}">Table of contents</a> {{ reldelim2 }}
+        <a title="Global index" href="{{ pathto('genindex') }}">Index</a> {{ reldelim2 }}
+        <a title="Module index" href="{{ pathto('py-modindex') }}">Modules</a>
+      <div class="nav">{{ secondnav() }}</div>
+    <div id="bd">
+      <div id="yui-main">
+        <div class="yui-b">
+          <div class="yui-g" id="{{ pagename|replace('/', '-') }}">
+      {% block sidebarwrapper %}
+        {% if pagename != 'index' %}
+          <div class="yui-b" id="sidebar">
+            {{ sidebar() }}
+            {%- if last_updated %}
+              <h3>Last update:</h3>
+              <p class="topless">{{ last_updated }}</p>
+    <div id="ft">
+{% block sidebarrel %}
+  <h3>Browse</h3>
+    {% if prev %}
+      <li>Prev: <a href="{{ prev.link }}">{{ prev.title }}</a></li>
+    {% if next %}
+      <li>Next: <a href="{{ next.link }}">{{ next.title }}</a></li>
+  <h3>You are here:</h3>
+        <a href="{{ pathto('index') }}">{{ docstitle }}</a>
+        {% for p in parents %}
+          <ul><li><a href="{{ p.link }}">{{ p.title }}</a>
+        <ul><li>{{ title }}</li></ul>
+        {% for p in parents %}</li></ul>{% endfor %}
+{# Empty some default blocks out #}
+{% block sidebar1 %}{% endblock %}
+{% block sidebar2 %}{% endblock %}

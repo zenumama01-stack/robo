@@ -1,0 +1,27 @@
+<h1><a href="clouddeploy_v1.html">Cloud Deploy API</a> . <a href="clouddeploy_v1.projects.html">projects</a> . <a href="clouddeploy_v1.projects.locations.html">locations</a> . <a href="clouddeploy_v1.projects.locations.targets.html">targets</a></h1>
+  <code><a href="#create">create(parent, body=None, requestId=None, targetId=None, validateOnly=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Creates a new Target in a given project and location.</p>
+<p class="firstline">Deletes a single Target.</p>
+<p class="firstline">Gets details of a single Target.</p>
+<p class="firstline">Lists Targets in a given project and location.</p>
+<p class="firstline">Updates the parameters of a single Target.</p>
+    <code class="details" id="create">create(parent, body=None, requestId=None, targetId=None, validateOnly=None, x__xgafv=None)</code>
+  <pre>Creates a new Target in a given project and location.
+  parent: string, Required. The parent collection in which the `Target` must be created. The format is `projects/{project_id}/locations/{location_name}`. (required)
+  targetId: string, Required. ID of the `Target`.
+  <pre>Deletes a single Target.
+  name: string, Required. The name of the `Target` to delete. The format is `projects/{project_id}/locations/{location_name}/targets/{target_name}`. (required)
+  allowMissing: boolean, Optional. If set to true, then deleting an already deleted or non-existing `Target` will succeed.
+  <pre>Gets details of a single Target.
+  name: string, Required. Name of the `Target`. Format must be `projects/{project_id}/locations/{location_name}/targets/{target_name}`. (required)
+  <pre>Lists Targets in a given project and location.
+  parent: string, Required. The parent, which owns this collection of targets. Format must be `projects/{project_id}/locations/{location_name}`. (required)
+  filter: string, Optional. Filter targets to be returned. See https://google.aip.dev/160 for more details.
+  pageSize: integer, Optional. The maximum number of `Target` objects to return. The service may return fewer than this value. If unspecified, at most 50 `Target` objects will be returned. The maximum value is 1000; values above 1000 will be set to 1000.
+  pageToken: string, Optional. A page token, received from a previous `ListTargets` call. Provide this to retrieve the subsequent page. When paginating, all other provided parameters match the call that provided the page token.
+    { # The response object from `ListTargets`.
+  &quot;targets&quot;: [ # The `Target` objects.
+  <pre>Updates the parameters of a single Target.
+  name: string, Identifier. Name of the `Target`. Format is `projects/{project}/locations/{location}/targets/{target}`. The `target` component must match `[a-z]([a-z0-9-]{0,61}[a-z0-9])?` (required)
+  allowMissing: boolean, Optional. If set to true, updating a `Target` that does not exist will result in the creation of a new `Target`.
+  updateMask: string, Required. Field mask is used to specify the fields to be overwritten by the update in the `Target` resource. The fields specified in the update_mask are relative to the resource, not the full request. A field will be overwritten if it&#x27;s in the mask. If the user doesn&#x27;t provide a mask then all fields are overwritten.

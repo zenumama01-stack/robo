@@ -1,0 +1,128 @@
+    /// Inner command class used to manage the sub pipelines
+    /// it determines which command should process the incoming objects
+    /// based on the object type
+    /// This class is the implementation class for out-console and out-file.
+    internal sealed class OutputManagerInner : ImplementationCommandBase
+        [TraceSource("format_out_OutputManagerInner", "OutputManagerInner")]
+        internal static readonly PSTraceSource tracer = PSTraceSource.GetTracer("format_out_OutputManagerInner", "OutputManagerInner");
+        #region LineOutput
+                lock (_syncRoot)
+                    _lo = value;
+                    if (_isStopped)
+                        _lo.StopProcessing();
+        /// Handler for processing each object coming through the pipeline
+        /// it forwards the call to the pipeline manager object.
+            // on demand initialization when the first pipeline
+            // object is initialized
+            if (_mgr == null)
+                _mgr = new SubPipelineManager();
+                _mgr.Initialize(_lo, this.OuterCmdlet().Context);
+            // if the object supports IEnumerable,
+            // unpack the object and process each member separately
+            IEnumerable e = PSObjectHelper.GetEnumerable (so);
+                this.mgr.Process (so);
+                    this.mgr.Process (PSObjectHelper.AsPSObject (obj));
+            _mgr.Process(so);
+        /// Handler for processing shut down. It forwards the call to the
+        /// pipeline manager object.
+            // shut down only if we ever processed a pipeline object
+            _mgr?.ShutDown();
+        internal override void StopProcessing()
+                _lo?.StopProcessing();
+                _isStopped = true;
+        /// Make sure we dispose of the sub pipeline manager.
+            if (_mgr != null)
+                _mgr.Dispose();
+                _mgr = null;
+        /// Instance of the pipeline manager object.
+        private SubPipelineManager _mgr = null;
+        /// True if the cmdlet has been stopped.
+        private bool _isStopped = false;
+        private readonly object _syncRoot = new object();
+    /// Object managing the sub-pipelines that execute
+    /// different output commands (or different instances of the
+    /// default one)
+    internal sealed class SubPipelineManager : IDisposable
+        /// Entry defining a command to be run in a separate pipeline.
+        private sealed class CommandEntry : IDisposable
+            /// Instance of pipeline wrapper object.
+            internal CommandWrapper command = new CommandWrapper();
+            /// <param name="typeName">ETS type name of the object to process.</param>
+            /// <returns>True if there is a match.</returns>
+            internal bool AppliesToType(string typeName)
+                foreach (string s in _applicableTypes)
+                    if (string.Equals(s, typeName, StringComparison.OrdinalIgnoreCase))
+            /// Just dispose of the inner command wrapper.
+                if (this.command == null)
+                this.command.Dispose();
+                this.command = null;
+            /// Ordered list of ETS type names this object is handling.
+            private readonly StringCollection _applicableTypes = new StringCollection();
+        /// Initialize the pipeline manager before any object is processed.
+        /// <param name="lineOutput">LineOutput to pass to the child pipelines.</param>
+        /// <param name="context">ExecutionContext to pass to the child pipelines.</param>
+        internal void Initialize(LineOutput lineOutput, ExecutionContext context)
+            InitializeCommandsHardWired(context);
+        /// Hard wired registration helper for specialized types.
+        /// <param name="context">ExecutionContext to pass to the child pipeline.</param>
+        private void InitializeCommandsHardWired(ExecutionContext context)
+            // set the default handler
+            RegisterCommandDefault(context, "out-lineoutput", typeof(OutLineOutputCommand));
+            NOTE:
+            This is the spot where we could add new specialized handlers for
+            additional types. Adding a handler here would cause a new sub-pipeline
+            to be created.
+            For example, the following line would add a new handler named "out-example"
+            to be invoked when the incoming object type is "MyNamespace.Whatever.Example"
+            RegisterCommandForTypes (context, "out-example", new string[] { "MyNamespace.Whatever.Example" });
+            And the method can be like this:
+            private void RegisterCommandForTypes (ExecutionContext context, string commandName, Type commandType, string[] types)
+                CommandEntry ce = new CommandEntry ();
+                ce.command.Initialize (context, commandName, commandType);
+                ce.command.AddNamedParameter ("LineOutput", this.lo);
+                for (int k = 0; k < types.Length; k++)
+                    ce.AddApplicableType (types[k]);
+                this.commandEntryList.Add (ce);
+        /// Register the default output command.
+        /// <param name="commandName">Name of the command to execute.</param>
+        /// <param name="commandType">Type of the command to execute.</param>
+        private void RegisterCommandDefault(ExecutionContext context, string commandName, Type commandType)
+            CommandEntry ce = new CommandEntry();
+            ce.command.Initialize(context, commandName, commandType);
+            ce.command.AddNamedParameter("LineOutput", _lo);
+            _defaultCommandEntry = ce;
+        /// Process an incoming parent pipeline object.
+        /// <param name="so">Pipeline object to process.</param>
+        internal void Process(PSObject so)
+            // select which pipeline should handle the object
+            CommandEntry ce = this.GetActiveCommandEntry(so);
+            Diagnostics.Assert(ce != null, "CommandEntry ce must not be null");
+            // delegate the processing
+            ce.command.Process(so);
+        /// Shut down the child pipelines.
+        internal void ShutDown()
+            // we assume that command entries are never null
+            foreach (CommandEntry ce in _commandEntryList)
+                Diagnostics.Assert(ce != null, "ce != null");
+                ce.command.ShutDown();
+                ce.command = null;
+            // we assume we always have a default command entry
+            Diagnostics.Assert(_defaultCommandEntry != null, "defaultCommandEntry != null");
+            _defaultCommandEntry.command.ShutDown();
+            _defaultCommandEntry.command = null;
+                ce.Dispose();
+            _defaultCommandEntry.Dispose();
+        /// It selects the applicable out command (it can be the default one)
+        /// to process the current pipeline object.
+        /// <param name="so">Pipeline object to be processed.</param>
+        /// <returns>Applicable command entry.</returns>
+        private CommandEntry GetActiveCommandEntry(PSObject so)
+            string typeName = PSObjectHelper.PSObjectIsOfExactType(so.InternalTypeNames);
+                if (ce.AppliesToType(typeName))
+                    return ce;
+            // failed any match: return the default handler
+            return _defaultCommandEntry;
+        /// List of command entries, each with a set of applicable types.
+        private readonly List<CommandEntry> _commandEntryList = new List<CommandEntry>();
+        /// Default command entry to be executed when all type matches fail.
+        private CommandEntry _defaultCommandEntry = new CommandEntry();

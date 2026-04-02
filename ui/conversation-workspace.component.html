@@ -1,0 +1,58 @@
+<div class="conversation-workspace" [attr.data-layout]="layout" mjSearchShortcut (searchTriggered)="openSearch()" kendoDialogContainer>
+  <!-- Top Navigation Bar -->
+  <div class="workspace-navigation">
+    <mj-conversation-navigation
+      [activeTab]="activeTab"
+      (tabChanged)="onTabChanged($event)"
+      (sidebarToggled)="toggleSidebar()"
+      (searchTriggered)="openSearch()"
+      (refreshTriggered)="onRefreshAgentCache()">
+    </mj-conversation-navigation>
+  <!-- Loading spinner while initializing agents -->
+  @if (!isWorkspaceReady) {
+    <div class="workspace-loading">
+  <!-- Main workspace content - only renders when agents are ready -->
+  @if (isWorkspaceReady) {
+    <div class="workspace-content">
+      <!-- Mobile sidebar backdrop -->
+      @if (isMobileView && isSidebarVisible && activeTab !== 'collections' && activeTab !== 'tasks') {
+        <div class="mobile-sidebar-backdrop visible" (click)="closeSidebar()"></div>
+      <!-- Left Sidebar (hidden when Collections or Tasks view is active) -->
+      @if (activeTab !== 'collections' && activeTab !== 'tasks' && isSidebarSettingsLoaded) {
+        <div class="workspace-sidebar"
+          [class.open]="isSidebarVisible"
+          <mj-conversation-sidebar
+            (newConversationRequested)="startNewConversation()"
+          </mj-conversation-sidebar>
+      <!-- Floating toggle button (only visible when sidebar is collapsed and settings loaded) -->
+      @if (activeTab !== 'collections' && activeTab !== 'tasks' && isSidebarCollapsed && isSidebarSettingsLoaded) {
+        <button class="sidebar-floating-toggle"
+          (click)="expandSidebar()"
+      @if (isSidebarVisible && !isSidebarCollapsed && activeTab !== 'collections' && activeTab !== 'tasks' && isSidebarSettingsLoaded) {
+      <!-- Collections Full-Panel View -->
+        <div class="workspace-main">
+            (collectionNavigated)="onCollectionNavigated($event)">
+      <!-- Tasks Full-Panel View -->
+      @if (activeTab === 'tasks') {
+            [baseFilter]="tasksFilter"
+            (openEntityRecord)="onOpenEntityRecordFromTasks($event)">
+      <!-- Main Chat Area (only shown when not in Collections or Tasks view) -->
+      @if (activeTab !== 'collections' && activeTab !== 'tasks') {
+            (taskClicked)="onTaskClicked($event)"
+            (artifactLinkClicked)="onArtifactLinkNavigation($event)"
+            (pendingArtifactConsumed)="pendingArtifactId = null; pendingArtifactVersionNumber = null"
+            (pendingMessageConsumed)="pendingMessageToSend = null; pendingAttachmentsToSend = null"
+            (pendingMessageRequested)="onPendingMessageRequested($event)">
+      <!-- Right Artifact Panel -->
+          <div class="artifact-panel-resize-handle" (mousedown)="onArtifactPanelResizeStart($event)"></div>
+        <div class="workspace-artifact-panel"
+            [showSaveToCollection]="activeTab !== 'collections'"
+            [viewContext]="activeTab === 'collections' ? 'collection' : 'conversation'"
+            (maximizeToggled)="toggleMaximizeArtifactPanel()">
+  <!-- Global Search Panel -->
+  <mj-search-panel
+    [isOpen]="isSearchPanelOpen"
+    (close)="closeSearch()"
+    (resultSelected)="handleSearchResult($event)">
+  </mj-search-panel>
+  <!-- Toast Notifications -->

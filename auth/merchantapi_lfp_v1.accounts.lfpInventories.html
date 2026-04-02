@@ -1,0 +1,17 @@
+<h1><a href="merchantapi_lfp_v1.html">Merchant API</a> . <a href="merchantapi_lfp_v1.accounts.html">accounts</a> . <a href="merchantapi_lfp_v1.accounts.lfpInventories.html">lfpInventories</a></h1>
+<p class="firstline">Inserts a `LfpInventory` resource for the given target merchant account. If the resource already exists, it will be replaced. The inventory automatically expires after 30 days.</p>
+  <pre>Inserts a `LfpInventory` resource for the given target merchant account. If the resource already exists, it will be replaced. The inventory automatically expires after 30 days.
+  parent: string, Required. The LFP provider account. Format: `accounts/{account}` (required)
+{ # Local Inventory for the merchant.
+  &quot;availability&quot;: &quot;A String&quot;, # Required. Availability of the product at this store. For accepted attribute values, see the [local product inventory data specification](https://support.google.com/merchants/answer/3061342)
+  &quot;collectionTime&quot;: &quot;A String&quot;, # Optional. The time when the inventory is collected. If not set, it will be set to the time when the inventory is submitted.
+  &quot;feedLabel&quot;: &quot;A String&quot;, # Optional. The [feed label](https://developers.google.com/shopping-content/guides/products/feed-labels) for the product. If this is not set, it will default to `regionCode`.
+  &quot;gtin&quot;: &quot;A String&quot;, # Optional. The Global Trade Item Number of the product.
+  &quot;name&quot;: &quot;A String&quot;, # Output only. Identifier. The name for the `LfpInventory` resource. Format: `accounts/{account}/lfpInventories/{target_merchant}~{store_code}~{offer}`
+  &quot;offerId&quot;: &quot;A String&quot;, # Required. Immutable. A unique identifier for the product. If both inventories and sales are submitted for a merchant, this id should match for the same product. **Note**: if the merchant sells the same product new and used, they should have different IDs.
+  &quot;pickupMethod&quot;: &quot;A String&quot;, # Optional. Supported pickup method for this offer. Unless the value is &quot;not supported&quot;, this field must be submitted together with `pickupSla`. For accepted attribute values, see the [local product inventory data specification](https://support.google.com/merchants/answer/3061342).
+  &quot;pickupSla&quot;: &quot;A String&quot;, # Optional. Expected date that an order will be ready for pickup relative to the order date. Must be submitted together with `pickupMethod`. For accepted attribute values, see the [local product inventory data specification](https://support.google.com/merchants/answer/3061342).
+  &quot;price&quot;: { # The price represented as a number and currency. # Optional. The current price of the product.
+  &quot;regionCode&quot;: &quot;A String&quot;, # Required. The [CLDR territory code](https://github.com/unicode-org/cldr/blob/latest/common/main/en.xml) for the country where the product is sold.
+  &quot;storeCode&quot;: &quot;A String&quot;, # Required. The identifier of the merchant&#x27;s store. Either the store code inserted through `InsertLfpStore` or the store code in the Business Profile.
+  &quot;targetAccount&quot;: &quot;A String&quot;, # Required. The Merchant Center ID of the merchant to submit the inventory for.

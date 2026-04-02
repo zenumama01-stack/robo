@@ -1,0 +1,84 @@
+<div class="record-form-container action-execution-log-form">
+    <div class="record-form">
+                <div class="header-left">
+                    <div class="icon-wrapper">
+                        <i class="fas fa-terminal"></i>
+                        <h2>Action Execution Log</h2>
+                        <div class="meta-info">
+                            @if (action) {
+                                <span class="action-name">{{ action.Name }}</span>
+                            <span class="log-id">{{ record.ID }}</span>
+                <div class="header-right">
+                    <div class="status-badge" [attr.data-status]="record.ResultCode?.toLowerCase()">
+                        <i class="fas" [ngClass]="getResultCodeIcon()"></i>
+                        {{ record.ResultCode || 'UNKNOWN' }}
+                    <div class="execution-time">
+                        <i class="fas fa-clock"></i>
+                        {{ formatDuration(getExecutionDuration()) }}
+                <div class="stat">
+                    <span class="label">Started</span>
+                    <span class="value">{{ record.StartedAt | date:'short' }}</span>
+                @if (record.EndedAt) {
+                        <span class="label">Ended</span>
+                        <span class="value">{{ record.EndedAt | date:'short' }}</span>
+                        <span class="label">Action</span>
+                        <span class="value">
+                            <button class="btn-link" (click)="navigateToAction()">
+                                <i class="fas fa-external-link-alt"></i>
+                @if (user) {
+                        <span class="label">User</span>
+                            <button class="btn-link" (click)="navigateToUser()">
+                                {{ user.Name }}
+                <!-- Execution Details -->
+                <kendo-panelbar-item title="Execution Details" [expanded]="true">
+                        <div class="details-grid">
+                            <div class="detail-item">
+                                <label>Execution ID</label>
+                                <span class="monospace">{{ record.ID }}</span>
+                                <label>Action ID</label>
+                                <span class="monospace">{{ record.ActionID }}</span>
+                                <label>User ID</label>
+                                <span class="monospace">{{ record.UserID }}</span>
+                                <label>Result Code</label>
+                                <span class="detail-value">
+                                    <i class="fas" [ngClass]="getResultCodeIcon()" [style.color]="getResultCodeColor()"></i>
+                                    <span [style.color]="getResultCodeColor()">{{ record.ResultCode || 'N/A' }}</span>
+                                <label>Duration</label>
+                                <span>{{ formatDuration(getExecutionDuration()) }}</span>
+                                <label>Retention Period</label>
+                                <span>{{ record.RetentionPeriod ? record.RetentionPeriod + ' days' : 'Indefinite' }}</span>
+                <!-- Input Parameters Only -->
+                @if (hasInputParams && formattedInputParams) {
+                    <kendo-panelbar-item title="Input Parameters" [expanded]="expandedSections.inputParams">
+                            <div class="json-viewer">
+                                    <span class="json-label">JSON (Input Parameters Only)</span>
+                                    <button class="btn-icon" title="Copy JSON" (click)="copyToClipboard(formattedInputParams)">
+                                        <i class="fas fa-copy"></i>
+                                    [(ngModel)]="formattedInputParams"
+                                    name="formattedInputParams"
+                <!-- Output Parameters Only -->
+                @if (hasOutputParams && formattedOutputParams) {
+                    <kendo-panelbar-item title="Output Parameters" [expanded]="expandedSections.outputParams">
+                                    <span class="json-label">JSON (Output Parameters Only)</span>
+                                    <button class="btn-icon" title="Copy JSON" (click)="copyToClipboard(formattedOutputParams)">
+                                    [(ngModel)]="formattedOutputParams"
+                                    name="formattedOutputParams"
+                <!-- Input+Output Parameters -->
+                @if (hasBothParams && formattedBothParams) {
+                    <kendo-panelbar-item title="Input+Output Parameters" [expanded]="expandedSections.bothParams">
+                                    <span class="json-label">JSON (Input+Output Parameters)</span>
+                                    <button class="btn-icon" title="Copy JSON" (click)="copyToClipboard(formattedBothParams)">
+                                    [(ngModel)]="formattedBothParams"
+                                    name="formattedBothParams"
+                <!-- Output Message -->
+                @if (record.Message) {
+                    <kendo-panelbar-item title="Output Message" [expanded]="expandedSections.output">
+                                    <span class="json-label">JSON</span>
+                                    <button class="btn-icon" title="Copy JSON" (click)="copyToClipboard(formattedMessage)">
+                                    [(ngModel)]="formattedMessage"
+                                    name="formattedMessage"
+                <!-- Empty States for missing data -->
+                @if (!record.Params && !record.Message && !hasInputParams && !hasOutputParams && !hasBothParams) {
+                    <kendo-panelbar-item title="Execution Data" [expanded]="true">
+                                <i class="fas fa-inbox"></i>
+                                <p>No execution data recorded</p>

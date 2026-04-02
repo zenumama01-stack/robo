@@ -1,0 +1,22 @@
+<h1><a href="chromemanagement_v1.html">Chrome Management API</a> . <a href="chromemanagement_v1.customers.html">customers</a> . <a href="chromemanagement_v1.customers.telemetry.html">telemetry</a> . <a href="chromemanagement_v1.customers.telemetry.users.html">users</a></h1>
+<p class="firstline">Get telemetry user.</p>
+<p class="firstline">List all telemetry users.</p>
+  <pre>Get telemetry user.
+  name: string, Required. Name of the `TelemetryUser` to return. (required)
+  readMask: string, Read mask to specify which fields to return. Supported read_mask paths are: - name - org_unit_id - user_id - user_email - user_device.device_id - user_device.audio_status_report - user_device.device_activity_report - user_device.network_bandwidth_report - user_device.peripherals_report - user_device.app_report 
+    { # Telemetry data collected from a managed user. * Granular permission needed: TELEMETRY_API_USER
+  &quot;customer&quot;: &quot;A String&quot;, # G Suite Customer whose enterprise enrolled the device.
+  &quot;name&quot;: &quot;A String&quot;, # Resource name of the user.
+  &quot;orgUnitId&quot;: &quot;A String&quot;, # Organization unit of the user.
+  &quot;userDevice&quot;: [ # Telemetry data collected from a managed user and device.
+    { # Telemetry data collected for a managed user and device. * Granular permission needed: TELEMETRY_API_DEVICE
+      &quot;deviceActivityReport&quot;: [ # Output only. Device activity reports collected periodically sorted in a decreasing order of report_time.
+        { # Device activity report. * Granular permission needed: TELEMETRY_API_DEVICE_ACTIVITY_REPORT
+          &quot;deviceActivityState&quot;: &quot;A String&quot;, # Output only. Device activity state.
+      &quot;deviceId&quot;: &quot;A String&quot;, # The unique Directory API ID of the device. This value is the same as the Admin Console&#x27;s Directory API ID in the ChromeOS Devices tab.
+  &quot;userEmail&quot;: &quot;A String&quot;, # Email address of the user.
+  &quot;userId&quot;: &quot;A String&quot;, # Directory ID of the user.
+  <pre>List all telemetry users.
+  filter: string, Only include resources that match the filter. Supported filter fields: - user_id - user_org_unit_id 
+    { # Response message for listing telemetry users for a customer.
+  &quot;telemetryUsers&quot;: [ # Telemetry users returned in the response.

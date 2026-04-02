@@ -1,0 +1,14 @@
+<h1><a href="servicedirectory_v1beta1.html">Service Directory API</a> . <a href="servicedirectory_v1beta1.projects.html">projects</a> . <a href="servicedirectory_v1beta1.projects.locations.html">locations</a> . <a href="servicedirectory_v1beta1.projects.locations.namespaces.html">namespaces</a></h1>
+  <code><a href="servicedirectory_v1beta1.projects.locations.namespaces.services.html">services()</a></code>
+  <code><a href="servicedirectory_v1beta1.projects.locations.namespaces.workloads.html">workloads()</a></code>
+<p class="firstline">Gets the IAM Policy for a resource</p>
+<p class="firstline">Sets the IAM Policy for a resource</p>
+<p class="firstline">Tests IAM permissions for a resource (namespace, service or service workload only).</p>
+  &quot;createTime&quot;: &quot;A String&quot;, # Output only. The timestamp when the namespace was created.
+  &quot;uid&quot;: &quot;A String&quot;, # Output only. A globally unique identifier (in UUID4 format) for this namespace.
+  &quot;updateTime&quot;: &quot;A String&quot;, # Output only. The timestamp when the namespace was last updated.
+  <pre>Gets the IAM Policy for a resource
+  filter: string, Optional. The filter to list results by. General `filter` string syntax: ` ()` * `` can be `name`, `labels.` for map field, or `attributes.` for attributes field * `` can be `&lt;`, `&gt;`, `&lt;=`, `&gt;=`, `!=`, `=`, `:`. Of which `:` means `HAS`, and is roughly the same as `=` * `` must be the same data type as field * `` can be `AND`, `OR`, `NOT` Examples of valid filters: * `labels.owner` returns namespaces that have a label with the key `owner`, this is the same as `labels:owner` * `labels.owner=sd` returns namespaces that have key/value `owner=sd` * `name&gt;projects/my-project/locations/us-east1/namespaces/namespace-c` returns namespaces that have name that is alphabetically later than the string, so &quot;namespace-e&quot; is returned but &quot;namespace-a&quot; is not * `labels.owner!=sd AND labels.foo=bar` returns namespaces that have `owner` in label key but value is not `sd` AND have key/value `foo=bar` * `doesnotexist.foo=bar` returns an empty list. Note that namespace doesn&#x27;t have a field called &quot;doesnotexist&quot;. Since the filter does not match any namespaces, it returns no results * `attributes.managed_registration=true` returns namespaces that are managed by a GCP product or service For more information about filtering, see [API Filtering](https://aip.dev/160).
+  pageSize: integer, Optional. The maximum number of items to return. The default value is 100.
+  <pre>Sets the IAM Policy for a resource
+  <pre>Tests IAM permissions for a resource (namespace, service or service workload only).

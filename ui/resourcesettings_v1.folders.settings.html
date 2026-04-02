@@ -1,0 +1,40 @@
+<h1><a href="resourcesettings_v1.html">Resource Settings API</a> . <a href="resourcesettings_v1.folders.html">folders</a> . <a href="resourcesettings_v1.folders.settings.html">settings</a></h1>
+<p class="firstline">Returns a specified setting. Returns a `google.rpc.Status` with `google.rpc.Code.NOT_FOUND` if the setting does not exist.</p>
+<p class="firstline">Lists all the settings that are available on the Cloud resource `parent`.</p>
+<p class="firstline">Updates a specified setting. Returns a `google.rpc.Status` with `google.rpc.Code.NOT_FOUND` if the setting does not exist. Returns a `google.rpc.Status` with `google.rpc.Code.FAILED_PRECONDITION` if the setting is flagged as read only. Returns a `google.rpc.Status` with `google.rpc.Code.ABORTED` if the etag supplied in the request does not match the persisted etag of the setting value. On success, the response will contain only `name`, `local_value` and `etag`. The `metadata` and `effective_value` cannot be updated through this API. Note: the supplied setting will perform a full overwrite of the `local_value` field.</p>
+  <pre>Returns a specified setting. Returns a `google.rpc.Status` with `google.rpc.Code.NOT_FOUND` if the setting does not exist.
+  name: string, Required. The name of the setting to get. See Setting for naming requirements. (required)
+  view: string, The SettingView for this request.
+      SETTING_VIEW_UNSPECIFIED - The default / unset value. The API will default to the SETTING_VIEW_BASIC view.
+      SETTING_VIEW_BASIC - Include Setting.metadata, but nothing else. This is the default value (for both ListSettings and GetSetting).
+      SETTING_VIEW_EFFECTIVE_VALUE - Include Setting.effective_value, but nothing else.
+      SETTING_VIEW_LOCAL_VALUE - Include Setting.local_value, but nothing else.
+    { # The schema for settings.
+  &quot;effectiveValue&quot;: { # The data in a setting value. # Output only. The effective value of the setting at the given parent resource, evaluated based on the resource hierarchy The effective value evaluates to one of the following options, in this order. If an option is not valid or doesn&#x27;t exist, then the next option is used: 1. The local setting value on the given resource: Setting.local_value 2. If one of the given resource&#x27;s ancestors in the resource hierarchy have a local setting value, the local value at the nearest such ancestor. 3. The setting&#x27;s default value: SettingMetadata.default_value 4. An empty value, defined as a `Value` with all fields unset. The data type of Value must always be consistent with the data type defined in Setting.metadata.
+    &quot;booleanValue&quot;: True or False, # Defines this value as being a boolean value.
+    &quot;durationValue&quot;: &quot;A String&quot;, # Defines this value as being a Duration.
+    &quot;enumValue&quot;: { # A enum value that can hold any enum type setting values. Each enum type is represented by a number, this representation is stored in the definitions. # Defines this value as being a Enum.
+      &quot;value&quot;: &quot;A String&quot;, # The value of this enum
+    &quot;stringMapValue&quot;: { # A string-&gt;string map value that can hold a map of string keys to string values. The maximum length of each string is 200 characters and there can be a maximum of 50 key-value pairs in the map. # Defines this value as being a StringMap.
+      &quot;mappings&quot;: { # The key-value pairs in the map
+    &quot;stringSetValue&quot;: { # A string set value that can hold a set of strings. The maximum length of each string is 200 characters and there can be a maximum of 50 strings in the string set. # Defines this value as being a StringSet.
+      &quot;values&quot;: [ # The strings in the set
+    &quot;stringValue&quot;: &quot;A String&quot;, # Defines this value as being a string value.
+  &quot;etag&quot;: &quot;A String&quot;, # A fingerprint used for optimistic concurrency. See UpdateSetting for more details.
+  &quot;localValue&quot;: { # The data in a setting value. # The configured value of the setting at the given parent resource, ignoring the resource hierarchy. The data type of Value must always be consistent with the data type defined in Setting.metadata.
+  &quot;metadata&quot;: { # Metadata about a setting which is not editable by the end user. # Output only. Metadata about a setting which is not editable by the end user.
+    &quot;dataType&quot;: &quot;A String&quot;, # The data type for this setting.
+    &quot;defaultValue&quot;: { # The data in a setting value. # The value provided by Setting.effective_value if no setting value is explicitly set. Note: not all settings have a default value.
+    &quot;description&quot;: &quot;A String&quot;, # A detailed description of what this setting does.
+    &quot;displayName&quot;: &quot;A String&quot;, # The human readable name for this setting.
+    &quot;readOnly&quot;: True or False, # A flag indicating that values of this setting cannot be modified. See documentation for the specific setting for updates and reasons.
+  &quot;name&quot;: &quot;A String&quot;, # The resource name of the setting. Must be in one of the following forms: * `projects/{project_number}/settings/{setting_name}` * `folders/{folder_id}/settings/{setting_name}` * `organizations/{organization_id}/settings/{setting_name}` For example, &quot;/projects/123/settings/gcp-enableMyFeature&quot;
+  <pre>Lists all the settings that are available on the Cloud resource `parent`.
+  parent: string, Required. The project, folder, or organization that is the parent resource for this setting. Must be in one of the following forms: * `projects/{project_number}` * `projects/{project_id}` * `folders/{folder_id}` * `organizations/{organization_id}` (required)
+  pageSize: integer, Unused. The size of the page to be returned.
+  pageToken: string, Unused. A page token used to retrieve the next page.
+    { # The response from ListSettings.
+  &quot;nextPageToken&quot;: &quot;A String&quot;, # Unused. A page token used to retrieve the next page.
+  &quot;settings&quot;: [ # A list of settings that are available at the specified Cloud resource.
+  <pre>Updates a specified setting. Returns a `google.rpc.Status` with `google.rpc.Code.NOT_FOUND` if the setting does not exist. Returns a `google.rpc.Status` with `google.rpc.Code.FAILED_PRECONDITION` if the setting is flagged as read only. Returns a `google.rpc.Status` with `google.rpc.Code.ABORTED` if the etag supplied in the request does not match the persisted etag of the setting value. On success, the response will contain only `name`, `local_value` and `etag`. The `metadata` and `effective_value` cannot be updated through this API. Note: the supplied setting will perform a full overwrite of the `local_value` field.
+  name: string, The resource name of the setting. Must be in one of the following forms: * `projects/{project_number}/settings/{setting_name}` * `folders/{folder_id}/settings/{setting_name}` * `organizations/{organization_id}/settings/{setting_name}` For example, &quot;/projects/123/settings/gcp-enableMyFeature&quot; (required)

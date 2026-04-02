@@ -1,0 +1,64 @@
+<h1><a href="dataflow_v1b3.html">Dataflow API</a> . <a href="dataflow_v1b3.projects.html">projects</a> . <a href="dataflow_v1b3.projects.locations.html">locations</a> . <a href="dataflow_v1b3.projects.locations.jobs.html">jobs</a></h1>
+  <code><a href="dataflow_v1b3.projects.locations.jobs.debug.html">debug()</a></code>
+  <code><a href="dataflow_v1b3.projects.locations.jobs.messages.html">messages()</a></code>
+  <code><a href="dataflow_v1b3.projects.locations.jobs.snapshots.html">snapshots()</a></code>
+  <code><a href="dataflow_v1b3.projects.locations.jobs.stages.html">stages()</a></code>
+<p class="firstline">Returns the stages Resource.</p>
+  <code><a href="dataflow_v1b3.projects.locations.jobs.workItems.html">workItems()</a></code>
+  <code><a href="#create">create(projectId, location, body=None, replaceJobId=None, view=None, x__xgafv=None)</a></code></p>
+  <code><a href="#get">get(projectId, location, jobId, view=None, x__xgafv=None)</a></code></p>
+  <code><a href="#getExecutionDetails">getExecutionDetails(projectId, location, jobId, pageSize=None, pageToken=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Request detailed information about the execution status of the job. EXPERIMENTAL. This API is subject to change or removal without notice.</p>
+  <code><a href="#getExecutionDetails_next">getExecutionDetails_next()</a></code></p>
+  <code><a href="#getMetrics">getMetrics(projectId, location, jobId, startTime=None, x__xgafv=None)</a></code></p>
+  <code><a href="#list">list(projectId, location, filter=None, name=None, pageSize=None, pageToken=None, view=None, x__xgafv=None)</a></code></p>
+  <code><a href="#snapshot">snapshot(projectId, location, jobId, body=None, x__xgafv=None)</a></code></p>
+  <code><a href="#update">update(projectId, location, jobId, body=None, updateMask=None, x__xgafv=None)</a></code></p>
+    <code class="details" id="create">create(projectId, location, body=None, replaceJobId=None, view=None, x__xgafv=None)</code>
+  location: string, The [regional endpoint] (https://cloud.google.com/dataflow/docs/concepts/regional-endpoints) that contains this job. (required)
+    <code class="details" id="get">get(projectId, location, jobId, view=None, x__xgafv=None)</code>
+    <code class="details" id="getExecutionDetails">getExecutionDetails(projectId, location, jobId, pageSize=None, pageToken=None, x__xgafv=None)</code>
+  <pre>Request detailed information about the execution status of the job. EXPERIMENTAL. This API is subject to change or removal without notice.
+  jobId: string, The job to get execution details for. (required)
+  pageSize: integer, If specified, determines the maximum number of stages to return. If unspecified, the service may choose an appropriate default, or may return an arbitrarily large number of results.
+    { # Information about the execution of a job.
+  &quot;nextPageToken&quot;: &quot;A String&quot;, # If present, this response does not contain all requested tasks. To obtain the next page of results, repeat the request with page_token set to this value.
+  &quot;stages&quot;: [ # The stages of the job execution.
+    { # Information about a particular execution stage of a job.
+      &quot;endTime&quot;: &quot;A String&quot;, # End time of this stage. If the work item is completed, this is the actual end time of the stage. Otherwise, it is the predicted end time.
+      &quot;metrics&quot;: [ # Metrics for this stage.
+      &quot;progress&quot;: { # Information about the progress of some component of job execution. # Progress for this stage. Only applicable to Batch jobs.
+        &quot;currentProgress&quot;: 3.14, # The current progress of the component, in the range [0,1].
+        &quot;dataPoints&quot;: [ # History of progress for the component. Points are sorted by time.
+          { # A point in the timeseries.
+            &quot;time&quot;: &quot;A String&quot;, # The timestamp of the point.
+            &quot;value&quot;: 3.14, # The value of the point.
+      &quot;stageId&quot;: &quot;A String&quot;, # ID of this stage
+      &quot;startTime&quot;: &quot;A String&quot;, # Start time of this stage.
+      &quot;state&quot;: &quot;A String&quot;, # State of this stage.
+      &quot;stragglerSummary&quot;: { # Summarized straggler identification details. # Straggler summary for this stage.
+        &quot;recentStragglers&quot;: [ # The most recent stragglers.
+          { # Information for a straggler.
+            &quot;batchStraggler&quot;: { # Information useful for straggler identification and debugging. # Batch straggler identification and debugging information.
+              &quot;causes&quot;: { # The straggler causes, keyed by the string representation of the StragglerCause enum and contains specialized debugging information for each straggler cause.
+                &quot;a_key&quot;: { # Information useful for debugging a straggler. Each type will provide specialized debugging information relevant for a particular cause. The StragglerDebuggingInfo will be 1:1 mapping to the StragglerCause enum.
+                  &quot;hotKey&quot;: { # Information useful for debugging a hot key detection. # Hot key debugging details.
+                    &quot;detectedHotKeys&quot;: { # Debugging information for each detected hot key. Keyed by a hash of the key.
+                      &quot;a_key&quot;: { # Information about a hot key.
+                        &quot;key&quot;: &quot;A String&quot;, # A detected hot key that is causing limited parallelism. This field will be populated only if the following flag is set to true: &quot;--enable_hot_key_logging&quot;.
+                        &quot;keyTruncated&quot;: True or False, # If true, then the above key is truncated and cannot be deserialized. This occurs if the key above is populated and the key size is &gt;5MB.
+              &quot;startTime&quot;: &quot;A String&quot;, # The time when the work item attempt became a straggler.
+            &quot;streamingStraggler&quot;: { # Information useful for streaming straggler identification and debugging. # Streaming straggler identification and debugging information.
+              &quot;dataWatermarkLag&quot;: &quot;A String&quot;, # The event-time watermark lag at the time of the straggler detection.
+              &quot;endTime&quot;: &quot;A String&quot;, # End time of this straggler.
+              &quot;startTime&quot;: &quot;A String&quot;, # Start time of this straggler.
+              &quot;systemWatermarkLag&quot;: &quot;A String&quot;, # The system watermark lag at the time of the straggler detection.
+              &quot;workerName&quot;: &quot;A String&quot;, # Name of the worker where the straggler was detected.
+        &quot;stragglerCauseCount&quot;: { # Aggregated counts of straggler causes, keyed by the string representation of the StragglerCause enum.
+        &quot;totalStragglerCount&quot;: &quot;A String&quot;, # The total count of stragglers.
+    <code class="details" id="getExecutionDetails_next">getExecutionDetails_next()</code>
+    <code class="details" id="getMetrics">getMetrics(projectId, location, jobId, startTime=None, x__xgafv=None)</code>
+    <code class="details" id="list">list(projectId, location, filter=None, name=None, pageSize=None, pageToken=None, view=None, x__xgafv=None)</code>
+    <code class="details" id="snapshot">snapshot(projectId, location, jobId, body=None, x__xgafv=None)</code>
+  location: string, The location that contains this job. (required)
+    <code class="details" id="update">update(projectId, location, jobId, body=None, updateMask=None, x__xgafv=None)</code>

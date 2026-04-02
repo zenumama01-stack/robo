@@ -1,0 +1,34 @@
+<h1><a href="dfareporting_v3_3.html">Campaign Manager 360 API</a> . <a href="dfareporting_v3_3.orderDocuments.html">orderDocuments</a></h1>
+<p class="firstline">Gets one order document by ID.</p>
+  <code><a href="#list">list(profileId, projectId, approved=None, ids=None, maxResults=None, orderId=None, pageToken=None, searchString=None, siteId=None, sortField=None, sortOrder=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Retrieves a list of order documents, possibly filtered. This method supports paging.</p>
+  <pre>Gets one order document by ID.
+  id: string, Order document ID. (required)
+    { # Contains properties of a Planning order document.
+  &quot;accountId&quot;: &quot;A String&quot;, # Account ID of this order document.
+  &quot;advertiserId&quot;: &quot;A String&quot;, # Advertiser ID of this order document.
+  &quot;amendedOrderDocumentId&quot;: &quot;A String&quot;, # The amended order document ID of this order document. An order document can be created by optionally amending another order document so that the change history can be preserved.
+  &quot;approvedByUserProfileIds&quot;: [ # IDs of users who have approved this order document.
+  &quot;cancelled&quot;: True or False, # Whether this order document is cancelled.
+  &quot;createdInfo&quot;: { # Modification timestamp. # Information about the creation of this order document.
+  &quot;effectiveDate&quot;: &quot;A String&quot;,
+  &quot;id&quot;: &quot;A String&quot;, # ID of this order document.
+  &quot;kind&quot;: &quot;A String&quot;, # Identifies what kind of resource this is. Value: the fixed string &quot;dfareporting#orderDocument&quot;.
+  &quot;lastSentRecipients&quot;: [ # List of email addresses that received the last sent document.
+  &quot;lastSentTime&quot;: &quot;A String&quot;,
+  &quot;orderId&quot;: &quot;A String&quot;, # ID of the order from which this order document is created.
+  &quot;projectId&quot;: &quot;A String&quot;, # Project ID of this order document.
+  &quot;signed&quot;: True or False, # Whether this order document has been signed.
+  &quot;subaccountId&quot;: &quot;A String&quot;, # Subaccount ID of this order document.
+  &quot;title&quot;: &quot;A String&quot;, # Title of this order document.
+  &quot;type&quot;: &quot;A String&quot;, # Type of this order document
+    <code class="details" id="list">list(profileId, projectId, approved=None, ids=None, maxResults=None, orderId=None, pageToken=None, searchString=None, siteId=None, sortField=None, sortOrder=None, x__xgafv=None)</code>
+  <pre>Retrieves a list of order documents, possibly filtered. This method supports paging.
+  approved: boolean, Select only order documents that have been approved by at least one user.
+  ids: string, Select only order documents with these IDs. (repeated)
+  orderId: string, Select only order documents for specified orders. (repeated)
+  searchString: string, Allows searching for order documents by name or ID. Wildcards (*) are allowed. For example, &quot;orderdocument*2015&quot; will return order documents with names like &quot;orderdocument June 2015&quot;, &quot;orderdocument April 2015&quot;, or simply &quot;orderdocument 2015&quot;. Most of the searches also add wildcards implicitly at the start and the end of the search string. For example, a search string of &quot;orderdocument&quot; will match order documents with name &quot;my orderdocument&quot;, &quot;orderdocument 2015&quot;, or simply &quot;orderdocument&quot;.
+  siteId: string, Select only order documents that are associated with these sites. (repeated)
+    { # Order document List Response
+  &quot;kind&quot;: &quot;A String&quot;, # Identifies what kind of resource this is. Value: the fixed string &quot;dfareporting#orderDocumentsListResponse&quot;.
+  &quot;orderDocuments&quot;: [ # Order document collection

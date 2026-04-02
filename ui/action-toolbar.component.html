@@ -1,0 +1,92 @@
+<div class="action-toolbar">
+  <div class="toolbar-left">
+    <!-- Search -->
+        [placeholder]="'Search actions...'"
+        [value]="Filters.searchTerm"
+        (valueChange)="onSearchInput($event)">
+        @if (Filters.searchTerm) {
+          <ng-template kendoTextBoxSuffixTemplate>
+              (click)="clearSearch()">
+    <!-- Filters Dropdown -->
+    <div class="dropdown-container" (clickOutside)="ShowFiltersDropdown = false">
+        [class.active]="hasActiveFilters()"
+        (click)="toggleFiltersDropdown()">
+        @if (getActiveFilterCount() > 0) {
+          <span class="filter-badge">{{ getActiveFilterCount() }}</span>
+        <i [class]="ShowFiltersDropdown ? 'fa-solid fa-chevron-up' : 'fa-solid fa-chevron-down'"></i>
+      @if (ShowFiltersDropdown) {
+        <div class="dropdown-menu filters-menu">
+          <div class="dropdown-section">
+              <span>Status</span>
+              @if (Filters.statuses.length > 0) {
+                  (click)="StateService.setStatusFilter([])">
+            <div class="filter-options">
+              @for (status of StatusOptions; track status.value) {
+                <label class="filter-option" [class.selected]="isStatusSelected(status.value)">
+                    [checked]="isStatusSelected(status.value)"
+                    (change)="toggleStatus(status.value)">
+                  <span class="status-dot" [attr.data-status]="status.value"></span>
+                  {{ status.label }}
+              <span>Type</span>
+              @if (Filters.types.length > 0) {
+                  (click)="StateService.setTypeFilter([])">
+              @for (type of TypeOptions; track type.value) {
+                <label class="filter-option" [class.selected]="isTypeSelected(type.value)">
+                    [checked]="isTypeSelected(type.value)"
+                    (change)="toggleType(type.value)">
+                  <i [class]="type.icon"></i>
+                  {{ type.label }}
+          @if (hasActiveFilters()) {
+            <div class="dropdown-footer">
+                [themeColor]="'error'"
+                (click)="clearFilters()">
+    <!-- Active Filter Chips -->
+      <div class="active-filters">
+        @for (status of Filters.statuses; track status) {
+            [removable]="true"
+            (remove)="toggleStatus(status)">
+            Status: {{ status }}
+        @for (type of Filters.types; track type) {
+            (remove)="toggleType(type)">
+            Type: {{ type === 'Generated' ? 'AI Generated' : type }}
+  <div class="toolbar-right">
+    <!-- Results Count -->
+    <div class="results-count">
+      <span class="count">{{ FilteredCount }}</span>
+      @if (FilteredCount !== TotalCount) {
+        <span class="of-total">of {{ TotalCount }}</span>
+      <span class="label">actions</span>
+    <!-- Sort Dropdown -->
+    <div class="dropdown-container" (clickOutside)="ShowSortDropdown = false">
+        (click)="toggleSortDropdown()">
+        <i [class]="getSortIcon()"></i>
+        {{ getSortLabel() }}
+        <i [class]="ShowSortDropdown ? 'fa-solid fa-chevron-up' : 'fa-solid fa-chevron-down'"></i>
+      @if (ShowSortDropdown) {
+        <div class="dropdown-menu sort-menu">
+          @for (option of SortOptions; track option.field) {
+            <button class="sort-option"
+              [class.selected]="SortField === option.field"
+              (click)="setSortField(option.field)">
+              <i [class]="option.icon"></i>
+              {{ option.label }}
+              @if (SortField === option.field) {
+                <i [class]="SortDirection === 'asc' ? 'fa-solid fa-arrow-up' : 'fa-solid fa-arrow-down'" class="direction-icon"></i>
+        [fillMode]="ViewMode === 'card' ? 'solid' : 'outline'"
+        [themeColor]="ViewMode === 'card' ? 'primary' : 'base'"
+        title="Card View"
+        (click)="setViewMode('card')">
+        [fillMode]="ViewMode === 'list' ? 'solid' : 'outline'"
+        [themeColor]="ViewMode === 'list' ? 'primary' : 'base'"
+        title="List View"
+        (click)="setViewMode('list')">
+        [fillMode]="ViewMode === 'compact' ? 'solid' : 'outline'"
+        [themeColor]="ViewMode === 'compact' ? 'primary' : 'base'"
+        title="Compact View"
+        (click)="setViewMode('compact')">
+        <i class="fa-solid fa-bars"></i>
+    <!-- Refresh Button -->
+      title="Refresh"
+      (click)="onRefresh()">
+    <!-- New Action Button -->
+      New Action

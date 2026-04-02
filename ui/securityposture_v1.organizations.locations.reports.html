@@ -1,0 +1,44 @@
+<h1><a href="securityposture_v1.html">Security Posture API</a> . <a href="securityposture_v1.organizations.html">organizations</a> . <a href="securityposture_v1.organizations.locations.html">locations</a> . <a href="securityposture_v1.organizations.locations.reports.html">reports</a></h1>
+  <code><a href="#createIaCValidationReport">createIaCValidationReport(parent, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Validates a specified infrastructure-as-code (IaC) configuration, and creates a Report with the validation results. Only Terraform configurations are supported. Only modified assets are validated.</p>
+<p class="firstline">Gets details for a Report.</p>
+<p class="firstline">Lists every Report in a given organization and location.</p>
+    <code class="details" id="createIaCValidationReport">createIaCValidationReport(parent, body=None, x__xgafv=None)</code>
+  <pre>Validates a specified infrastructure-as-code (IaC) configuration, and creates a Report with the validation results. Only Terraform configurations are supported. Only modified assets are validated.
+{ # Request message for CreateIaCValidationReport.
+  &quot;iac&quot;: { # Details of an infrastructure-as-code (IaC) configuration. # Required. The infrastructure-as-code (IaC) configuration to validate.
+    &quot;tfPlan&quot;: &quot;A String&quot;, # Optional. A Terraform plan file, formatted as a stringified JSON object. To learn how to generate a Terraform plan file in JSON format, see [JSON output format](https://developer.hashicorp.com/terraform/internals/json-format) in the Terraform documentation.
+  <pre>Gets details for a Report.
+  name: string, Required. The name of the report, in the format `organizations/{organization}/locations/global/reports/{report_id}`. (required)
+    { # Details of a report.
+  &quot;createTime&quot;: &quot;A String&quot;, # Output only. The time at which the report was created.
+  &quot;iacValidationReport&quot;: { # Details of an infrastructure-as-code (IaC) validation report. # Output only. An infrastructure-as-code (IaC) validation report.
+    &quot;note&quot;: &quot;A String&quot;, # Additional information about the report.
+    &quot;violations&quot;: [ # A list of every Violation found in the IaC configuration.
+      { # Details of a violation.
+        &quot;assetId&quot;: &quot;A String&quot;, # The full resource name of the asset that caused the violation. For details about the format of the full resource name for each asset type, see [Resource name format](https://cloud.google.com/asset-inventory/docs/resource-name-format).
+        &quot;nextSteps&quot;: &quot;A String&quot;, # A description of the steps that you can take to fix the violation.
+        &quot;policyId&quot;: &quot;A String&quot;, # The policy that was violated.
+        &quot;severity&quot;: &quot;A String&quot;, # The severity of the violation.
+        &quot;violatedAsset&quot;: { # Details of a Cloud Asset Inventory asset that caused a violation. # Details of the Cloud Asset Inventory asset that caused the violation.
+          &quot;asset&quot;: &quot;A String&quot;, # Information about the Cloud Asset Inventory asset that violated a policy. The format of this information can change at any time without prior notice. Your application must not depend on this information in any way.
+          &quot;assetType&quot;: &quot;A String&quot;, # The type of Cloud Asset Inventory asset. For a list of asset types, see [Supported asset types](https://cloud.google.com/asset-inventory/docs/supported-asset-types).
+        &quot;violatedPolicy&quot;: { # Details of a policy that was violated. # Details of the policy that was violated.
+          &quot;complianceStandards&quot;: [ # The compliance standards that the policy maps to. For example, `CIS-2.0 1.15`.
+          &quot;constraint&quot;: &quot;A String&quot;, # Information about the constraint that was violated. The format of this information can change at any time without prior notice. Your application must not depend on this information in any way.
+          &quot;constraintType&quot;: &quot;A String&quot;, # The type of constraint that was violated.
+          &quot;description&quot;: &quot;A String&quot;, # A description of the policy.
+        &quot;violatedPosture&quot;: { # Details of a posture deployment. # Details for the posture that was violated. This field is present only if the violated policy belongs to a deployed posture.
+          &quot;policySet&quot;: &quot;A String&quot;, # The identifier for the PolicySet that the relevant policy belongs to.
+          &quot;posture&quot;: &quot;A String&quot;, # The posture used in the deployment, in the format `organizations/{organization}/locations/global/postures/{posture_id}`.
+          &quot;postureDeployment&quot;: &quot;A String&quot;, # The name of the posture deployment, in the format `organizations/{organization}/locations/global/postureDeployments/{deployment_id}`.
+          &quot;postureDeploymentTargetResource&quot;: &quot;A String&quot;, # The organization, folder, or project where the posture is deployed. Uses one of the following formats: * `organizations/{organization_number}` * `folders/{folder_number}` * `projects/{project_number}`
+          &quot;postureRevisionId&quot;: &quot;A String&quot;, # The revision ID of the posture used in the deployment.
+  &quot;name&quot;: &quot;A String&quot;, # Required. The name of the report, in the format `organizations/{organization}/locations/global/reports/{report_id}`.
+  &quot;updateTime&quot;: &quot;A String&quot;, # Output only. The time at which the report was last updated.
+  <pre>Lists every Report in a given organization and location.
+  filter: string, Optional. A filter to apply to the list of reports, in the format defined in [AIP-160: Filtering](https://google.aip.dev/160).
+  pageSize: integer, Optional. The maximum number of reports to return. The default value is `500`. If you exceed the maximum value of `1000`, then the service uses the maximum value.
+  pageToken: string, Optional. A pagination token returned from a previous request to list reports. Provide this token to retrieve the next page of results.
+    { # Response message for ListReports.
+  &quot;reports&quot;: [ # The list of Report resources.

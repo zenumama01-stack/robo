@@ -1,0 +1,204 @@
+<h1><a href="ces_v1beta.html">Gemini Enterprise for Customer Experience API</a> . <a href="ces_v1beta.projects.html">projects</a> . <a href="ces_v1beta.projects.locations.html">locations</a> . <a href="ces_v1beta.projects.locations.apps.html">apps</a> . <a href="ces_v1beta.projects.locations.apps.evaluations.html">evaluations</a></h1>
+  <code><a href="ces_v1beta.projects.locations.apps.evaluations.results.html">results()</a></code>
+<p class="firstline">Returns the results Resource.</p>
+  <code><a href="#create">create(parent, body=None, evaluationId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Creates an evaluation.</p>
+<p class="firstline">Deletes an evaluation.</p>
+<p class="firstline">Gets details of the specified evaluation.</p>
+  <code><a href="#list">list(parent, evaluationFilter=None, evaluationRunFilter=None, filter=None, lastTenResults=None, orderBy=None, pageSize=None, pageToken=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Lists all evaluations in the given app.</p>
+<p class="firstline">Updates an evaluation.</p>
+  <code><a href="#uploadEvaluationAudio">uploadEvaluationAudio(name, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Uploads audio for use in Golden Evaluations. Stores the audio in the Cloud Storage bucket defined in 'App.logging_settings.evaluation_audio_recording_config.gcs_bucket' and returns a transcript.</p>
+    <code class="details" id="create">create(parent, body=None, evaluationId=None, x__xgafv=None)</code>
+  <pre>Creates an evaluation.
+{ # An evaluation represents all of the information needed to simulate and evaluate an agent.
+  &quot;aggregatedMetrics&quot;: { # Aggregated metrics for an evaluation or evaluation dataset. # Output only. The aggregated metrics for this evaluation across all runs.
+  &quot;createTime&quot;: &quot;A String&quot;, # Output only. Timestamp when the evaluation was created.
+  &quot;createdBy&quot;: &quot;A String&quot;, # Output only. The user who created the evaluation.
+  &quot;description&quot;: &quot;A String&quot;, # Optional. User-defined description of the evaluation.
+  &quot;displayName&quot;: &quot;A String&quot;, # Required. User-defined display name of the evaluation. Unique within an App.
+  &quot;evaluationDatasets&quot;: [ # Output only. List of evaluation datasets the evaluation belongs to. Format: `projects/{project}/locations/{location}/apps/{app}/evaluationDatasets/{evaluationDataset}`
+  &quot;evaluationRuns&quot;: [ # Output only. The EvaluationRuns that this Evaluation is associated with.
+  &quot;golden&quot;: { # The steps required to replay a golden conversation. # Optional. The golden steps to be evaluated.
+    &quot;evaluationExpectations&quot;: [ # Optional. The evaluation expectations to evaluate the replayed conversation against. Format: `projects/{project}/locations/{location}/apps/{app}/evaluationExpectations/{evaluationExpectation}`
+    &quot;turns&quot;: [ # Required. The golden turns required to replay a golden conversation.
+      { # A golden turn defines a single turn in a golden conversation.
+        &quot;rootSpan&quot;: { # A span is a unit of work or a single operation during the request processing. # Optional. The root span of the golden turn for processing and maintaining audio information.
+        &quot;steps&quot;: [ # Required. The steps required to replay a golden conversation.
+          { # A step defines a singular action to happen during the evaluation.
+            &quot;agentTransfer&quot;: { # Represents an event indicating the transfer of a conversation to a different agent. # Optional. Transfer the conversation to a different agent.
+            &quot;expectation&quot;: { # Represents a single, checkable requirement. # Optional. Executes an expectation on the current turn.
+              &quot;agentResponse&quot;: { # A message within a conversation. # Optional. Check that the agent responded with the correct response. The role &quot;agent&quot; is implied.
+              &quot;agentTransfer&quot;: { # Represents an event indicating the transfer of a conversation to a different agent. # Optional. Check that the agent transferred the conversation to a different agent.
+              &quot;mockToolResponse&quot;: { # The execution result of a specific tool from the client or the agent. # Optional. The tool response to mock, with the parameters of interest specified. Any parameters not specified will be hallucinated by the LLM.
+              &quot;note&quot;: &quot;A String&quot;, # Optional. A note for this requirement, useful in reporting when specific checks fail. E.g., &quot;Check_Payment_Tool_Called&quot;.
+              &quot;toolCall&quot;: { # Request for the client or the agent to execute the specified tool. # Optional. Check that a specific tool was called with the parameters.
+              &quot;toolResponse&quot;: { # The execution result of a specific tool from the client or the agent. # Optional. Check that a specific tool had the expected response.
+              &quot;updatedVariables&quot;: { # Optional. Check that the agent updated the session variables to the expected values. Used to also capture agent variable updates for golden evals.
+            &quot;userInput&quot;: { # Input for the session. # Optional. User input for the conversation.
+  &quot;invalid&quot;: True or False, # Output only. Whether the evaluation is invalid. This can happen if an evaluation is referencing a tool, toolset, or agent that has since been deleted.
+  &quot;lastCompletedResult&quot;: { # An evaluation result represents the output of running an Evaluation. # Output only. The latest evaluation result for this evaluation.
+    &quot;appVersion&quot;: &quot;A String&quot;, # Output only. The app version used to generate the conversation that resulted in this result. Format: `projects/{project}/locations/{location}/apps/{app}/versions/{version}`
+    &quot;config&quot;: { # EvaluationConfig configures settings for running the evaluation. # Output only. The configuration used in the evaluation run that resulted in this result.
+    &quot;createTime&quot;: &quot;A String&quot;, # Output only. Timestamp when the evaluation result was created.
+    &quot;displayName&quot;: &quot;A String&quot;, # Required. Display name of the Evaluation Result. Unique within an Evaluation. By default, it has the following format: &quot; result - &quot;.
+    &quot;error&quot;: { # The `Status` type defines a logical error model that is suitable for different programming environments, including REST APIs and RPC APIs. It is used by [gRPC](https://github.com/grpc). Each `Status` message contains three pieces of data: error code, error message, and error details. You can find out more about this error model and how to work with it in the [API Design Guide](https://cloud.google.com/apis/design/errors). # Output only. Deprecated: Use `error_info` instead. Errors encountered during execution.
+    &quot;errorInfo&quot;: { # Information about an error encountered during an evaluation execution. # Output only. Error information for the evaluation result.
+    &quot;evaluationMetricsThresholds&quot;: { # Threshold settings for metrics in an Evaluation. # Output only. The evaluation thresholds for the result.
+    &quot;evaluationRun&quot;: &quot;A String&quot;, # Output only. The evaluation run that produced this result. Format: `projects/{project}/locations/{location}/apps/{app}/evaluationRuns/{evaluationRun}`
+    &quot;evaluationStatus&quot;: &quot;A String&quot;, # Output only. The outcome of the evaluation. Only populated if execution_state is COMPLETE.
+    &quot;executionState&quot;: &quot;A String&quot;, # Output only. The state of the evaluation result execution.
+    &quot;goldenResult&quot;: { # The result of a golden evaluation. # Output only. The outcome of a golden evaluation.
+      &quot;evaluationExpectationResults&quot;: [ # Output only. The results of the evaluation expectations.
+        { # The result of a single evaluation expectation.
+          &quot;evaluationExpectation&quot;: &quot;A String&quot;, # Output only. The evaluation expectation. Format: `projects/{project}/locations/{location}/apps/{app}/evaluationExpectations/{evaluation_expectation}`
+          &quot;explanation&quot;: &quot;A String&quot;, # Output only. The explanation for the result.
+          &quot;outcome&quot;: &quot;A String&quot;, # Output only. The outcome of the evaluation expectation.
+          &quot;prompt&quot;: &quot;A String&quot;, # Output only. The prompt that was used for the evaluation.
+      &quot;turnReplayResults&quot;: [ # Output only. The result of running each turn of the golden conversation.
+        { # The result of running a single turn of the golden conversation.
+          &quot;conversation&quot;: &quot;A String&quot;, # Output only. The conversation that was generated for this turn.
+          &quot;errorInfo&quot;: { # Information about an error encountered during an evaluation execution. # Output only. Information about the error that occurred during this turn.
+          &quot;expectationOutcome&quot;: [ # Output only. The outcome of each expectation.
+            { # Specifies the expectation and the result of that expectation.
+              &quot;expectation&quot;: { # Represents a single, checkable requirement. # Output only. The expectation that was evaluated.
+              &quot;observedAgentResponse&quot;: { # A message within a conversation. # Output only. The result of the agent response expectation.
+              &quot;observedAgentTransfer&quot;: { # Represents an event indicating the transfer of a conversation to a different agent. # Output only. The result of the agent transfer expectation.
+              &quot;observedToolCall&quot;: { # Request for the client or the agent to execute the specified tool. # Output only. The result of the tool call expectation.
+              &quot;observedToolResponse&quot;: { # The execution result of a specific tool from the client or the agent. # Output only. The result of the tool response expectation.
+              &quot;outcome&quot;: &quot;A String&quot;, # Output only. The outcome of the expectation.
+              &quot;semanticSimilarityResult&quot;: { # The result of the semantic similarity check. # Output only. The result of the semantic similarity check.
+                &quot;explanation&quot;: &quot;A String&quot;, # Output only. The explanation for the semantic similarity score.
+                &quot;label&quot;: &quot;A String&quot;, # Output only. The label associated with each score. Score 4: Fully Consistent Score 3: Mostly Consistent Score 2: Partially Consistent (Minor Omissions) Score 1: Largely Inconsistent (Major Omissions) Score 0: Completely Inconsistent / Contradictory
+                &quot;outcome&quot;: &quot;A String&quot;, # Output only. The outcome of the semantic similarity check. This is determined by comparing the score to the semantic_similarity_success_threshold. If the score is equal to or above the threshold, the outcome will be PASS. Otherwise, the outcome will be FAIL.
+                &quot;score&quot;: 42, # Output only. The semantic similarity score. Can be 0, 1, 2, 3, or 4.
+              &quot;toolInvocationResult&quot;: { # The result of the tool invocation check. # Output only. The result of the tool invocation check.
+                &quot;explanation&quot;: &quot;A String&quot;, # Output only. A free text explanation for the tool invocation result.
+                &quot;outcome&quot;: &quot;A String&quot;, # Output only. The outcome of the tool invocation check. This is determined by comparing the parameter_correctness_score to the threshold. If the score is equal to or above the threshold, the outcome will be PASS. Otherwise, the outcome will be FAIL.
+                &quot;parameterCorrectnessScore&quot;: 3.14, # Output only. The tool invocation parameter correctness score. This indicates the percent of parameters from the expected tool call that were also present in the actual tool call.
+          &quot;hallucinationResult&quot;: { # The result of the hallucination check for a single turn. # Output only. The result of the hallucination check.
+            &quot;explanation&quot;: &quot;A String&quot;, # Output only. The explanation for the hallucination score.
+            &quot;label&quot;: &quot;A String&quot;, # Output only. The label associated with each score. Score 1: Justified Score 0: Not Justified Score -1: No Claim To Assess
+            &quot;score&quot;: 42, # Output only. The hallucination score. Can be -1, 0, 1.
+          &quot;overallToolInvocationResult&quot;: { # The result of the overall tool invocation check. # Output only. The result of the overall tool invocation check.
+            &quot;outcome&quot;: &quot;A String&quot;, # Output only. The outcome of the tool invocation check. This is determined by comparing the tool_invocation_score to the overall_tool_invocation_correctness_threshold. If the score is equal to or above the threshold, the outcome will be PASS. Otherwise, the outcome will be FAIL.
+            &quot;toolInvocationScore&quot;: 3.14, # The overall tool invocation score for this turn. This indicates the overall percent of tools from the expected turn that were actually invoked.
+          &quot;spanLatencies&quot;: [ # Output only. The latency of spans in the turn.
+            { # The latency of a span execution.
+              &quot;callback&quot;: &quot;A String&quot;, # Output only. The name of the user callback span.
+              &quot;displayName&quot;: &quot;A String&quot;, # Output only. The display name of the span. Applicable to tool and guardrail spans.
+              &quot;endTime&quot;: &quot;A String&quot;, # Output only. The end time of span.
+              &quot;executionLatency&quot;: &quot;A String&quot;, # Output only. The latency of span.
+              &quot;model&quot;: &quot;A String&quot;, # Output only. The name of the LLM span.
+              &quot;resource&quot;: &quot;A String&quot;, # Output only. The resource name of the guardrail or tool spans.
+              &quot;startTime&quot;: &quot;A String&quot;, # Output only. The start time of span.
+              &quot;toolset&quot;: { # A tool that is created from a toolset. # Output only. The toolset tool identifier.
+              &quot;type&quot;: &quot;A String&quot;, # Output only. The type of span.
+          &quot;toolCallLatencies&quot;: [ # Output only. The latency of each tool call in the turn.
+            { # The latency of a tool call execution.
+              &quot;displayName&quot;: &quot;A String&quot;, # Output only. The display name of the tool.
+              &quot;endTime&quot;: &quot;A String&quot;, # Output only. The end time of the tool call execution.
+              &quot;executionLatency&quot;: &quot;A String&quot;, # Output only. The latency of the tool call execution.
+              &quot;startTime&quot;: &quot;A String&quot;, # Output only. The start time of the tool call execution.
+              &quot;tool&quot;: &quot;A String&quot;, # Output only. The name of the tool that got executed. Format: `projects/{project}/locations/{location}/apps/{app}/tools/{tool}`.
+          &quot;toolInvocationScore&quot;: 3.14, # Output only. Deprecated. Use OverallToolInvocationResult instead.
+          &quot;toolOrderedInvocationScore&quot;: 3.14, # Output only. The overall tool ordered invocation score for this turn. This indicates the overall percent of tools from the expected turn that were actually invoked in the expected order.
+          &quot;turnLatency&quot;: &quot;A String&quot;, # Output only. Duration of the turn.
+    &quot;goldenRunMethod&quot;: &quot;A String&quot;, # Output only. The method used to run the golden evaluation.
+    &quot;initiatedBy&quot;: &quot;A String&quot;, # Output only. The user who initiated the evaluation run that resulted in this result.
+    &quot;name&quot;: &quot;A String&quot;, # Identifier. The unique identifier of the evaluation result. Format: `projects/{project}/locations/{location}/apps/{app}/evaluations/{evaluation}/results/{result}`
+    &quot;persona&quot;: { # A persona represents an end user in an evaluation. # Output only. The persona used to generate the conversation for the evaluation result.
+      &quot;description&quot;: &quot;A String&quot;, # Optional. The description of the persona.
+      &quot;displayName&quot;: &quot;A String&quot;, # Required. The display name of the persona. Unique within an app.
+      &quot;name&quot;: &quot;A String&quot;, # Required. The unique identifier of the persona. Format: `projects/{project}/locations/{location}/apps/{app}/evaluationPersonas/{evaluationPersona}`
+      &quot;personality&quot;: &quot;A String&quot;, # Required. An instruction for the agent on how to behave in the evaluation.
+      &quot;speechConfig&quot;: { # Configuration for Text-to-Speech generation. # Optional. Configuration for how the persona sounds (TTS settings).
+        &quot;environment&quot;: &quot;A String&quot;, # Optional. The simulated audio environment.
+        &quot;speakingRate&quot;: 3.14, # Optional. The speaking rate. 1.0 is normal. Lower is slower (e.g., 0.8), higher is faster (e.g., 1.5). Useful for testing how the agent handles fast talkers.
+        &quot;voiceId&quot;: &quot;A String&quot;, # Optional. The specific voice identifier/accent to use. Example: &quot;en-US-Wavenet-D&quot; or &quot;en-GB-Standard-A&quot;
+    &quot;scenarioResult&quot;: { # The outcome of a scenario evaluation. # Output only. The outcome of a scenario evaluation.
+      &quot;allExpectationsSatisfied&quot;: True or False, # Output only. Whether all expectations were satisfied for this turn.
+      &quot;conversation&quot;: &quot;A String&quot;, # Output only. The conversation that was generated in the scenario.
+      &quot;expectationOutcomes&quot;: [ # Output only. The outcome of each expectation.
+        { # The outcome of a scenario expectation.
+          &quot;expectation&quot;: { # The expectation to evaluate the conversation produced by the simulation. # Output only. The expectation that was evaluated.
+            &quot;agentResponse&quot;: { # A message within a conversation. # Optional. The agent response to be evaluated.
+            &quot;toolExpectation&quot;: { # The tool call and response pair to be evaluated. # Optional. The tool call and response pair to be evaluated.
+              &quot;expectedToolCall&quot;: { # Request for the client or the agent to execute the specified tool. # Required. The expected tool call, with the parameters of interest specified. Any parameters not specified will be hallucinated by the LLM.
+              &quot;mockToolResponse&quot;: { # The execution result of a specific tool from the client or the agent. # Required. The tool response to mock, with the parameters of interest specified. Any parameters not specified will be hallucinated by the LLM.
+          &quot;observedAgentResponse&quot;: { # A message within a conversation. # Output only. The observed agent response.
+          &quot;observedToolCall&quot;: { # The observed tool call and response. # Output only. The observed tool call.
+            &quot;toolCall&quot;: { # Request for the client or the agent to execute the specified tool. # Output only. The observed tool call.
+            &quot;toolResponse&quot;: { # The execution result of a specific tool from the client or the agent. # Output only. The observed tool response.
+          &quot;outcome&quot;: &quot;A String&quot;, # Output only. The outcome of the ScenarioExpectation.
+      &quot;hallucinationResult&quot;: [ # Output only. The result of the hallucination check. There will be one hallucination result for each turn in the conversation.
+        { # The result of the hallucination check for a single turn.
+      &quot;rubricOutcomes&quot;: [ # Output only. The outcome of the rubric.
+        { # The outcome of the evaluation against the rubric.
+          &quot;rubric&quot;: &quot;A String&quot;, # Output only. The rubric that was used to evaluate the conversation.
+          &quot;score&quot;: 3.14, # Output only. The score of the conversation against the rubric.
+          &quot;scoreExplanation&quot;: &quot;A String&quot;, # Output only. The rater&#x27;s response to the rubric.
+      &quot;spanLatencies&quot;: [ # Output only. The latency of spans in the conversation.
+      &quot;task&quot;: &quot;A String&quot;, # Output only. The task that was used when running the scenario for this result.
+      &quot;taskCompleted&quot;: True or False, # Output only. Whether the task was completed for this turn. This is a composite of all expectations satisfied, no hallucinations, and user goal satisfaction.
+      &quot;taskCompletionResult&quot;: { # The result of the task completion check for the conversation. # Output only. The result of the task completion check.
+        &quot;explanation&quot;: &quot;A String&quot;, # Output only. The explanation for the task completion score.
+        &quot;label&quot;: &quot;A String&quot;, # Output only. The label associated with each score. Score 1: Task Completed Score 0: Task Not Completed Score -1: User Goal Undefined
+        &quot;score&quot;: 42, # Output only. The task completion score. Can be -1, 0, 1
+      &quot;toolCallLatencies&quot;: [ # Output only. The latency of each tool call execution in the conversation.
+      &quot;userFacts&quot;: [ # Output only. The user facts that were used by the scenario for this result.
+        { # Facts about the user as a key value pair.
+          &quot;name&quot;: &quot;A String&quot;, # Required. The name of the user fact.
+          &quot;value&quot;: &quot;A String&quot;, # Required. The value of the user fact.
+      &quot;userGoalSatisfactionResult&quot;: { # The result of a user goal satisfaction check for a conversation. # Output only. The result of the user goal satisfaction check.
+        &quot;explanation&quot;: &quot;A String&quot;, # Output only. The explanation for the user task satisfaction score.
+        &quot;label&quot;: &quot;A String&quot;, # Output only. The label associated with each score. Score 1: User Task Satisfied Score 0: User Task Not Satisfied Score -1: User Task Unspecified
+        &quot;score&quot;: 42, # Output only. The user task satisfaction score. Can be -1, 0, 1.
+  &quot;lastTenResults&quot;: [ # Output only. The last 10 evaluation results for this evaluation. This is only populated if include_last_ten_results is set to true in the ListEvaluationsRequest or GetEvaluationRequest.
+    { # An evaluation result represents the output of running an Evaluation.
+  &quot;lastUpdatedBy&quot;: &quot;A String&quot;, # Output only. The user who last updated the evaluation.
+  &quot;name&quot;: &quot;A String&quot;, # Identifier. The unique identifier of this evaluation. Format: `projects/{project}/locations/{location}/apps/{app}/evaluations/{evaluation}`
+  &quot;scenario&quot;: { # The config for a scenario # Optional. The config for a scenario.
+    &quot;evaluationExpectations&quot;: [ # Optional. The evaluation expectations to evaluate the conversation produced by the simulation against. Format: `projects/{project}/locations/{location}/apps/{app}/evaluationExpectations/{evaluationExpectation}`
+    &quot;maxTurns&quot;: 42, # Optional. The maximum number of turns to simulate. If not specified, the simulation will continue until the task is complete.
+    &quot;rubrics&quot;: [ # Required. The rubrics to score the scenario against.
+    &quot;scenarioExpectations&quot;: [ # Required. The ScenarioExpectations to evaluate the conversation produced by the user simulation.
+      { # The expectation to evaluate the conversation produced by the simulation.
+    &quot;task&quot;: &quot;A String&quot;, # Required. The task to be targeted by the scenario.
+    &quot;taskCompletionBehavior&quot;: &quot;A String&quot;, # Optional. Deprecated. Use user_goal_behavior instead.
+    &quot;userFacts&quot;: [ # Optional. The user facts to be used by the scenario.
+    &quot;userGoalBehavior&quot;: &quot;A String&quot;, # Optional. The expected behavior of the user goal.
+    &quot;variableOverrides&quot;: { # Optional. Variables / Session Parameters as context for the session, keyed by variable names. Members of this struct will override any default values set by the system. Note, these are different from user facts, which are facts known to the user. Variables are parameters known to the agent: i.e. MDN (phone number) passed by the telephony system.
+  &quot;tags&quot;: [ # Optional. User defined tags to categorize the evaluation.
+  &quot;updateTime&quot;: &quot;A String&quot;, # Output only. Timestamp when the evaluation was last updated.
+  evaluationId: string, Optional. The ID to use for the evaluation, which will become the final component of the evaluation&#x27;s resource name. If not provided, a unique ID will be automatically assigned for the evaluation.
+  <pre>Deletes an evaluation.
+  name: string, Required. The resource name of the evaluation to delete. (required)
+  etag: string, Optional. The current etag of the evaluation. If an etag is not provided, the deletion will overwrite any concurrent changes. If an etag is provided and does not match the current etag of the evaluation, deletion will be blocked and an ABORTED error will be returned.
+  force: boolean, Optional. Indicates whether to forcefully delete the evaluation, even if it is still referenced by evaluation datasets. * If `force = false`, the deletion will fail if any datasets still reference the evaluation. * If `force = true`, all existing references from datasets will be removed and the evaluation will be deleted.
+  <pre>Gets details of the specified evaluation.
+  name: string, Required. The resource name of the evaluation to retrieve. (required)
+    <code class="details" id="list">list(parent, evaluationFilter=None, evaluationRunFilter=None, filter=None, lastTenResults=None, orderBy=None, pageSize=None, pageToken=None, x__xgafv=None)</code>
+  <pre>Lists all evaluations in the given app.
+  parent: string, Required. The resource name of the app to list evaluations from. (required)
+  evaluationFilter: string, Optional. Filter to be applied on the evaluation when listing the evaluations. See https://google.aip.dev/160 for more details. Supported fields: evaluation_datasets
+  evaluationRunFilter: string, Optional. Filter string for fields on the associated EvaluationRun resources. See https://google.aip.dev/160 for more details. Supported fields: create_time, initiated_by, app_version_display_name
+  filter: string, Optional. Deprecated: Use evaluation_filter and evaluation_run_filter instead.
+  lastTenResults: boolean, Optional. Whether to include the last 10 evaluation results for each evaluation in the response.
+  pageToken: string, Optional. The next_page_token value returned from a previous list EvaluationService.ListEvaluations call.
+    { # Response message for EvaluationService.ListEvaluations.
+  &quot;evaluations&quot;: [ # The list of evaluations.
+  &quot;nextPageToken&quot;: &quot;A String&quot;, # A token that can be sent as ListEvaluationsRequest.page_token to retrieve the next page. Absence of this field indicates there are no subsequent pages.
+  <pre>Updates an evaluation.
+  name: string, Identifier. The unique identifier of this evaluation. Format: `projects/{project}/locations/{location}/apps/{app}/evaluations/{evaluation}` (required)
+    <code class="details" id="uploadEvaluationAudio">uploadEvaluationAudio(name, body=None, x__xgafv=None)</code>
+  <pre>Uploads audio for use in Golden Evaluations. Stores the audio in the Cloud Storage bucket defined in &#x27;App.logging_settings.evaluation_audio_recording_config.gcs_bucket&#x27; and returns a transcript.
+  name: string, Required. The resource name of the Evaluation for which to upload the evaluation audio. Format: `projects/{project}/locations/{location}/apps/{app}/evaluations/{evaluation}` (required)
+{ # Request message for EvaluationService.UploadEvaluationAudio.
+  &quot;audioContent&quot;: &quot;A String&quot;, # Required. The raw audio bytes. The format of the audio must be single-channel LINEAR16 with a sample rate of 16kHz (default InputAudioConfig).
+  &quot;previousAudioGcsUri&quot;: &quot;A String&quot;, # Optional. The Google Cloud Storage URI of the previously uploaded audio file to be deleted. Format: `gs:///`
+    { # Response message for EvaluationService.UploadEvaluationAudio.
+  &quot;audioGcsUri&quot;: &quot;A String&quot;, # The Google Cloud Storage URI where the uploaded audio file is stored. Format: `gs:///`
+  &quot;duration&quot;: &quot;A String&quot;, # The duration of the audio.
+  &quot;transcript&quot;: &quot;A String&quot;, # The transcript of the audio, generated by Cloud Speech-to-Text.

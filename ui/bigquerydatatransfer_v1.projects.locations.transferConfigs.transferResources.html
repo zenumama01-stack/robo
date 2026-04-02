@@ -1,0 +1,39 @@
+<h1><a href="bigquerydatatransfer_v1.html">BigQuery Data Transfer API</a> . <a href="bigquerydatatransfer_v1.projects.html">projects</a> . <a href="bigquerydatatransfer_v1.projects.locations.html">locations</a> . <a href="bigquerydatatransfer_v1.projects.locations.transferConfigs.html">transferConfigs</a> . <a href="bigquerydatatransfer_v1.projects.locations.transferConfigs.transferResources.html">transferResources</a></h1>
+<p class="firstline">Returns a transfer resource.</p>
+<p class="firstline">Returns information about transfer resources.</p>
+  <pre>Returns a transfer resource.
+  name: string, Required. The name of the transfer resource in the form of: * `projects/{project}/transferConfigs/{transfer_config}/transferResources/{transfer_resource}` * `projects/{project}/locations/{location}/transferConfigs/{transfer_config}/transferResources/{transfer_resource}` (required)
+    { # Resource(table/partition) that is being transferred.
+  &quot;destination&quot;: &quot;A String&quot;, # Optional. Resource destination.
+  &quot;hierarchyDetail&quot;: { # Details about the hierarchy. # Optional. Details about the hierarchy.
+    &quot;partitionDetail&quot;: { # Partition details related to hierarchy. # Optional. Partition details related to hierarchy.
+      &quot;table&quot;: &quot;A String&quot;, # Optional. Name of the table which has the partitions.
+    &quot;tableDetail&quot;: { # Table details related to hierarchy. # Optional. Table details related to hierarchy.
+      &quot;partitionCount&quot;: &quot;A String&quot;, # Optional. Total number of partitions being tracked within the table.
+  &quot;lastSuccessfulRun&quot;: { # Basic information about a transfer run. # Output only. Run details for the last successful run.
+    &quot;run&quot;: &quot;A String&quot;, # Optional. Run URI. Format projects/{project}/locations/{location}/transferConfigs/{config}/run/{run}
+    &quot;startTime&quot;: &quot;A String&quot;, # Optional. Start time of the transfer run.
+  &quot;latestRun&quot;: { # Basic information about a transfer run. # Optional. Run details for the latest run.
+  &quot;latestStatusDetail&quot;: { # Status details of the resource being transferred. # Optional. Status details for the latest run.
+    &quot;completedPercentage&quot;: 3.14, # Output only. Percentage of the transfer completed. Valid values: 0-100.
+    &quot;error&quot;: { # The `Status` type defines a logical error model that is suitable for different programming environments, including REST APIs and RPC APIs. It is used by [gRPC](https://github.com/grpc). Each `Status` message contains three pieces of data: error code, error message, and error details. You can find out more about this error model and how to work with it in the [API Design Guide](https://cloud.google.com/apis/design/errors). # Optional. Transfer error details for the resource.
+    &quot;state&quot;: &quot;A String&quot;, # Optional. Transfer state of the resource.
+    &quot;summary&quot;: { # Status summary of the resource being transferred. # Optional. Transfer status summary of the resource.
+      &quot;metrics&quot;: [ # Optional. List of transfer status metrics.
+        { # Metrics for tracking the transfer status.
+          &quot;completed&quot;: &quot;A String&quot;, # Optional. Number of units transferred successfully.
+          &quot;failed&quot;: &quot;A String&quot;, # Optional. Number of units that failed to transfer.
+          &quot;pending&quot;: &quot;A String&quot;, # Optional. Number of units pending transfer.
+          &quot;total&quot;: &quot;A String&quot;, # Optional. Total number of units for the transfer.
+          &quot;unit&quot;: &quot;A String&quot;, # Optional. Unit for measuring progress (e.g., BYTES).
+      &quot;progressUnit&quot;: &quot;A String&quot;, # Input only. Unit based on which transfer status progress should be calculated.
+  &quot;name&quot;: &quot;A String&quot;, # Identifier. Resource name.
+  &quot;type&quot;: &quot;A String&quot;, # Optional. Resource type.
+  &quot;updateTime&quot;: &quot;A String&quot;, # Output only. Time when the resource was last updated.
+  <pre>Returns information about transfer resources.
+  parent: string, Required. Name of transfer configuration for which transfer resources should be retrieved. The name should be in one of the following form: * `projects/{project_id}/transferConfigs/{config_id}` * `projects/{project_id}/locations/{location_id}/transferConfigs/{config_id}` (required)
+  filter: string, Optional. Filter for the transfer resources. Currently supported filters include: * Resource name: `name` - Wildcard supported * Resource type: `type` * Resource destination: `destination` * Latest resource state: `latest_status_detail.state` * Last update time: `update_time` - RFC-3339 format * Parent table name: `hierarchy_detail.partition_detail.table` Multiple filters can be applied using the `AND/OR` operator. Examples: * `name=&quot;*123&quot; AND (type=&quot;TABLE&quot; OR latest_status_detail.state=&quot;SUCCEEDED&quot;)` * `update_time &gt;= &quot;2012-04-21T11:30:00-04:00` * `hierarchy_detail.partition_detail.table = &quot;table1&quot;`
+  pageSize: integer, Optional. The maximum number of transfer resources to return. The maximum value is 1000; values above 1000 will be coerced to 1000. The default page size is the maximum value of 1000 results.
+  pageToken: string, Optional. A page token, received from a previous `ListTransferResources` call. Provide this to retrieve the subsequent page. When paginating, all other parameters provided to `ListTransferResources` must match the call that provided the page token.
+    { # Response for the ListTransferResources RPC.
+  &quot;transferResources&quot;: [ # Output only. The transfer resources.

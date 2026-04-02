@@ -1,0 +1,115 @@
+  <title>googleapiclient._helpers</title>
+        Module&nbsp;_helpers
+            >]&nbsp;|&nbsp;<a href="googleapiclient._helpers-module.html"
+<h1 class="epydoc">Module _helpers</h1><p class="nomargin-top"><span class="codelink"><a href="googleapiclient._helpers-pysrc.html">source&nbsp;code</a></span></p>
+<p>Helper functions for commonly used utilities.</p>
+          <td><span class="summary-sig"><a href="googleapiclient._helpers-module.html#positional" class="summary-sig-name">positional</a>(<span class="summary-sig-arg">max_positional_args</span>)</span><br />
+      A decorator to declare that only the first N arguments may be positional.</td>
+            <span class="codelink"><a href="googleapiclient._helpers-pysrc.html#positional">source&nbsp;code</a></span>
+          <td><span class="summary-sig"><a href="googleapiclient._helpers-module.html#parse_unique_urlencoded" class="summary-sig-name">parse_unique_urlencoded</a>(<span class="summary-sig-arg">content</span>)</span><br />
+      Parses unique key-value parameters from urlencoded content.</td>
+            <span class="codelink"><a href="googleapiclient._helpers-pysrc.html#parse_unique_urlencoded">source&nbsp;code</a></span>
+          <td><span class="summary-sig"><a href="googleapiclient._helpers-module.html#update_query_params" class="summary-sig-name">update_query_params</a>(<span class="summary-sig-arg">uri</span>,
+        <span class="summary-sig-arg">params</span>)</span><br />
+      Updates a URI with new query parameters.</td>
+            <span class="codelink"><a href="googleapiclient._helpers-pysrc.html#update_query_params">source&nbsp;code</a></span>
+<tr class="private">
+          <td><span class="summary-sig"><a href="googleapiclient._helpers-module.html#_add_query_parameter" class="summary-sig-name" onclick="show_private();">_add_query_parameter</a>(<span class="summary-sig-arg">url</span>,
+        <span class="summary-sig-arg">name</span>,
+        <span class="summary-sig-arg">value</span>)</span><br />
+      Adds a query parameter to a url.</td>
+            <span class="codelink"><a href="googleapiclient._helpers-pysrc.html#_add_query_parameter">source&nbsp;code</a></span>
+        <a name="logger"></a><span class="summary-name">logger</span> = <code title="logging.getLogger(__name__)">logging.getLogger(__name__)</code>
+        <a name="POSITIONAL_WARNING"></a><span class="summary-name">POSITIONAL_WARNING</span> = <code title="'WARNING'"><code class="variable-quote">'</code><code class="variable-string">WARNING</code><code class="variable-quote">'</code></code>
+        <a name="POSITIONAL_EXCEPTION"></a><span class="summary-name">POSITIONAL_EXCEPTION</span> = <code title="'EXCEPTION'"><code class="variable-quote">'</code><code class="variable-string">EXCEPTION</code><code class="variable-quote">'</code></code>
+        <a name="POSITIONAL_IGNORE"></a><span class="summary-name">POSITIONAL_IGNORE</span> = <code title="'IGNORE'"><code class="variable-quote">'</code><code class="variable-string">IGNORE</code><code class="variable-quote">'</code></code>
+        <a name="POSITIONAL_SET"></a><span class="summary-name">POSITIONAL_SET</span> = <code title="frozenset(['EXCEPTION', 'IGNORE', 'WARNING'])"><code class="variable-group">frozenset([</code><code class="variable-quote">'</code><code class="variable-string">EXCEPTION</code><code class="variable-quote">'</code><code class="variable-op">, </code><code class="variable-quote">'</code><code class="variable-string">IGNORE</code><code class="variable-quote">'</code><code class="variable-op">, </code><code class="variable-quote">'</code><code class="variable-string">WARNING</code><code class="variable-quote">'</code><code class="variable-group">])</code></code>
+        <a name="positional_parameters_enforcement"></a><span class="summary-name">positional_parameters_enforcement</span> = <code title="'WARNING'"><code class="variable-quote">'</code><code class="variable-string">WARNING</code><code class="variable-quote">'</code></code>
+        <a name="_SYM_LINK_MESSAGE"></a><span class="summary-name">_SYM_LINK_MESSAGE</span> = <code title="'File: {0}: Is a symbolic link.'"><code class="variable-quote">'</code><code class="variable-string">File: {0}: Is a symbolic link.</code><code class="variable-quote">'</code></code>
+        <a name="_IS_DIR_MESSAGE"></a><span class="summary-name">_IS_DIR_MESSAGE</span> = <code title="'{0}: Is a directory'"><code class="variable-quote">'</code><code class="variable-string">{0}: Is a directory</code><code class="variable-quote">'</code></code>
+        <a href="googleapiclient._helpers-module.html#_MISSING_FILE_MESSAGE" class="summary-name" onclick="show_private();">_MISSING_FILE_MESSAGE</a> = <code title="'Cannot access {0}: No such file or directory'"><code class="variable-quote">'</code><code class="variable-string">Cannot access {0}: No such file or di</code><code class="variable-ellipsis">...</code></code>
+<a name="positional"></a>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">positional</span>(<span class="sig-arg">max_positional_args</span>)</span>
+    ><span class="codelink"><a href="googleapiclient._helpers-pysrc.html#positional">source&nbsp;code</a></span>&nbsp;
+A decorator to declare that only the first N arguments may be positional.
+This decorator makes it easy to support Python 3 style keyword-only
+parameters. For example, in Python 3 it is possible to write::
+    def fn(pos1, *, kwonly1=None, kwonly1=None):
+All named parameters after ``*`` must be a keyword::
+    fn(10, 'kw1', 'kw2')  # Raises exception.
+    fn(10, kwonly1='kw1')  # Ok.
+Example
+^^^^^^^
+To define a function like above, do::
+    @positional(1)
+    def fn(pos1, kwonly1=None, kwonly2=None):
+If no default value is provided to a keyword argument, it becomes a
+required keyword argument::
+    @positional(0)
+    def fn(required_kw):
+This must be called with the keyword parameter::
+    fn()  # Raises exception.
+    fn(10)  # Raises exception.
+    fn(required_kw=10)  # Ok.
+When defining instance or class methods always remember to account for
+``self`` and ``cls``::
+    class MyClass(object):
+        @positional(2)
+        def my_method(self, pos1, kwonly1=None):
+        def my_method(cls, pos1, kwonly1=None):
+The positional decorator behavior is controlled by
+``_helpers.positional_parameters_enforcement``, which may be set to
+``POSITIONAL_EXCEPTION``, ``POSITIONAL_WARNING`` or
+``POSITIONAL_IGNORE`` to raise an exception, log a warning, or do
+nothing, respectively, if a declaration is violated.
+    max_positional_arguments: Maximum number of positional arguments. All
+                              parameters after the this index must be
+                              keyword only.
+    A decorator that prevents using arguments after max_positional_args
+    from being used as positional parameters.
+    TypeError: if a key-word only argument is provided as a positional
+               parameter, but only if
+               _helpers.positional_parameters_enforcement is set to
+               POSITIONAL_EXCEPTION.
+<a name="parse_unique_urlencoded"></a>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">parse_unique_urlencoded</span>(<span class="sig-arg">content</span>)</span>
+    ><span class="codelink"><a href="googleapiclient._helpers-pysrc.html#parse_unique_urlencoded">source&nbsp;code</a></span>&nbsp;
+Parses unique key-value parameters from urlencoded content.
+    content: string, URL-encoded key-value pairs.
+    dict, The key-value pairs from ``content``.
+    ValueError: if one of the keys is repeated.
+<a name="update_query_params"></a>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">update_query_params</span>(<span class="sig-arg">uri</span>,
+        <span class="sig-arg">params</span>)</span>
+    ><span class="codelink"><a href="googleapiclient._helpers-pysrc.html#update_query_params">source&nbsp;code</a></span>&nbsp;
+Updates a URI with new query parameters.
+If a given key from ``params`` is repeated in the ``uri``, then
+the URI will be considered invalid and an error will occur.
+If the URI is valid, then each value from ``params`` will
+replace the corresponding value in the query parameters (if
+it exists).
+    uri: string, A valid URI, with potential existing query parameters.
+    params: dict, A dictionary of query parameters.
+    The same URI but with the new query parameters added.
+<a name="_add_query_parameter"></a>
+<div class="private">
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">_add_query_parameter</span>(<span class="sig-arg">url</span>,
+        <span class="sig-arg">name</span>,
+        <span class="sig-arg">value</span>)</span>
+    ><span class="codelink"><a href="googleapiclient._helpers-pysrc.html#_add_query_parameter">source&nbsp;code</a></span>&nbsp;
+Adds a query parameter to a url.
+Replaces the current value if it already exists in the URL.
+    url: string, url to add the query parameter to.
+    name: string, query parameter name.
+    value: string, query parameter value.
+    Updated query parameter. Does not update the url if value is None.
+<!-- ==================== VARIABLES DETAILS ==================== -->
+<a name="section-VariablesDetails"></a>
+        <td align="left"><span class="table-header">Variables Details</span></td>
+         ><span class="options">[<a href="#section-VariablesDetails"
+<a name="_MISSING_FILE_MESSAGE"></a>
+  <h3 class="epydoc">_MISSING_FILE_MESSAGE</h3>
+    <dt>Value:</dt>
+      <dd><table><tr><td><pre class="variable">
+<code class="variable-quote">'</code><code class="variable-string">Cannot access {0}: No such file or directory</code><code class="variable-quote">'</code>
+</pre></td></tr></table>

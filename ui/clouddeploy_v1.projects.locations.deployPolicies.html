@@ -1,0 +1,59 @@
+<h1><a href="clouddeploy_v1.html">Cloud Deploy API</a> . <a href="clouddeploy_v1.projects.html">projects</a> . <a href="clouddeploy_v1.projects.locations.html">locations</a> . <a href="clouddeploy_v1.projects.locations.deployPolicies.html">deployPolicies</a></h1>
+  <code><a href="#create">create(parent, body=None, deployPolicyId=None, requestId=None, validateOnly=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Creates a new DeployPolicy in a given project and location.</p>
+<p class="firstline">Deletes a single DeployPolicy.</p>
+<p class="firstline">Gets details of a single DeployPolicy.</p>
+<p class="firstline">Lists DeployPolicies in a given project and location.</p>
+<p class="firstline">Updates the parameters of a single DeployPolicy.</p>
+    <code class="details" id="create">create(parent, body=None, deployPolicyId=None, requestId=None, validateOnly=None, x__xgafv=None)</code>
+  <pre>Creates a new DeployPolicy in a given project and location.
+  parent: string, Required. The parent collection in which the `DeployPolicy` must be created. The format is `projects/{project_id}/locations/{location_name}`. (required)
+{ # A `DeployPolicy` resource in the Cloud Deploy API. A `DeployPolicy` inhibits manual or automation-driven actions within a Delivery Pipeline or Target.
+  &quot;createTime&quot;: &quot;A String&quot;, # Output only. Time at which the deploy policy was created.
+  &quot;description&quot;: &quot;A String&quot;, # Optional. Description of the `DeployPolicy`. Max length is 255 characters.
+  &quot;etag&quot;: &quot;A String&quot;, # The weak etag of the `DeployPolicy` resource. This checksum is computed by the server based on the value of other fields, and may be sent on update and delete requests to ensure the client has an up-to-date value before proceeding.
+  &quot;name&quot;: &quot;A String&quot;, # Output only. Name of the `DeployPolicy`. Format is `projects/{project}/locations/{location}/deployPolicies/{deployPolicy}`. The `deployPolicy` component must match `[a-z]([a-z0-9-]{0,61}[a-z0-9])?`
+  &quot;rules&quot;: [ # Required. Rules to apply. At least one rule must be present.
+    { # Deploy Policy rule.
+      &quot;rolloutRestriction&quot;: { # Rollout restrictions. # Optional. Rollout restrictions.
+        &quot;actions&quot;: [ # Optional. Rollout actions to be restricted as part of the policy. If left empty, all actions will be restricted.
+        &quot;id&quot;: &quot;A String&quot;, # Required. Restriction rule ID. Required and must be unique within a DeployPolicy. The format is `[a-z]([a-z0-9-]{0,61}[a-z0-9])?`.
+        &quot;invokers&quot;: [ # Optional. What invoked the action. If left empty, all invoker types will be restricted.
+        &quot;timeWindows&quot;: { # Time windows within which actions are restricted. See the [documentation](https://cloud.google.com/deploy/docs/deploy-policy#dates_times) for more information on how to configure dates/times. # Required. Time window within which actions are restricted.
+          &quot;oneTimeWindows&quot;: [ # Optional. One-time windows within which actions are restricted.
+            { # One-time window within which actions are restricted. For example, blocking actions over New Year&#x27;s Eve from December 31st at 5pm to January 1st at 9am.
+              &quot;endDate&quot;: { # Represents a whole or partial calendar date, such as a birthday. The time of day and time zone are either specified elsewhere or are insignificant. The date is relative to the Gregorian Calendar. This can represent one of the following: * A full date, with non-zero year, month, and day values. * A month and day, with a zero year (for example, an anniversary). * A year on its own, with a zero month and a zero day. * A year and month, with a zero day (for example, a credit card expiration date). Related types: * google.type.TimeOfDay * google.type.DateTime * google.protobuf.Timestamp # Required. End date.
+              &quot;endTime&quot;: { # Represents a time of day. The date and time zone are either not significant or are specified elsewhere. An API may choose to allow leap seconds. Related types are google.type.Date and `google.protobuf.Timestamp`. # Required. End time (exclusive). You may use 24:00 for the end of the day.
+              &quot;startDate&quot;: { # Represents a whole or partial calendar date, such as a birthday. The time of day and time zone are either specified elsewhere or are insignificant. The date is relative to the Gregorian Calendar. This can represent one of the following: * A full date, with non-zero year, month, and day values. * A month and day, with a zero year (for example, an anniversary). * A year on its own, with a zero month and a zero day. * A year and month, with a zero day (for example, a credit card expiration date). Related types: * google.type.TimeOfDay * google.type.DateTime * google.protobuf.Timestamp # Required. Start date.
+              &quot;startTime&quot;: { # Represents a time of day. The date and time zone are either not significant or are specified elsewhere. An API may choose to allow leap seconds. Related types are google.type.Date and `google.protobuf.Timestamp`. # Required. Start time (inclusive). Use 00:00 for the beginning of the day.
+          &quot;weeklyWindows&quot;: [ # Optional. Recurring weekly windows within which actions are restricted.
+            { # Weekly windows. For example, blocking actions every Saturday and Sunday. Another example would be blocking actions every weekday from 5pm to midnight.
+              &quot;daysOfWeek&quot;: [ # Optional. Days of week. If left empty, all days of the week will be included.
+              &quot;endTime&quot;: { # Represents a time of day. The date and time zone are either not significant or are specified elsewhere. An API may choose to allow leap seconds. Related types are google.type.Date and `google.protobuf.Timestamp`. # Optional. End time (exclusive). Use 24:00 to indicate midnight. If you specify end_time you must also specify start_time. If left empty, this will block for the entire day for the days specified in days_of_week.
+              &quot;startTime&quot;: { # Represents a time of day. The date and time zone are either not significant or are specified elsewhere. An API may choose to allow leap seconds. Related types are google.type.Date and `google.protobuf.Timestamp`. # Optional. Start time (inclusive). Use 00:00 for the beginning of the day. If you specify start_time you must also specify end_time. If left empty, this will block for the entire day for the days specified in days_of_week.
+  &quot;selectors&quot;: [ # Required. Selected resources to which the policy will be applied. At least one selector is required. If one selector matches the resource the policy applies. For example, if there are two selectors and the action being attempted matches one of them, the policy will apply to that action.
+    { # Contains information on the resources to select for a deploy policy. Attributes provided must all match the resource in order for policy restrictions to apply. For example, if delivery pipelines attributes given are an id &quot;prod&quot; and labels &quot;foo: bar&quot;, a delivery pipeline resource must match both that id and have that label in order to be subject to the policy.
+      &quot;deliveryPipeline&quot;: { # Contains criteria for selecting DeliveryPipelines. # Optional. Contains attributes about a delivery pipeline.
+        &quot;id&quot;: &quot;A String&quot;, # Optional. ID of the `DeliveryPipeline`. The value of this field could be one of the following: * The last segment of a pipeline name * &quot;*&quot;, all delivery pipelines in a location
+        &quot;labels&quot;: { # DeliveryPipeline labels.
+      &quot;target&quot;: { # Contains criteria for selecting Targets. This could be used to select targets for a Deploy Policy or for an Automation. # Optional. Contains attributes about a target.
+  &quot;suspended&quot;: True or False, # Optional. When suspended, the policy will not prevent actions from occurring, even if the action violates the policy.
+  &quot;uid&quot;: &quot;A String&quot;, # Output only. Unique identifier of the `DeployPolicy`.
+  &quot;updateTime&quot;: &quot;A String&quot;, # Output only. Most recent time at which the deploy policy was updated.
+  deployPolicyId: string, Required. ID of the `DeployPolicy`.
+  <pre>Deletes a single DeployPolicy.
+  name: string, Required. The name of the `DeployPolicy` to delete. The format is `projects/{project_id}/locations/{location_name}/deployPolicies/{deploy_policy_name}`. (required)
+  allowMissing: boolean, Optional. If set to true, then deleting an already deleted or non-existing `DeployPolicy` will succeed.
+  <pre>Gets details of a single DeployPolicy.
+  name: string, Required. Name of the `DeployPolicy`. Format must be `projects/{project_id}/locations/{location_name}/deployPolicies/{deploy_policy_name}`. (required)
+  <pre>Lists DeployPolicies in a given project and location.
+  parent: string, Required. The parent, which owns this collection of deploy policies. Format must be `projects/{project_id}/locations/{location_name}`. (required)
+  filter: string, Filter deploy policies to be returned. See https://google.aip.dev/160 for more details. All fields can be used in the filter.
+  pageSize: integer, The maximum number of deploy policies to return. The service may return fewer than this value. If unspecified, at most 50 deploy policies will be returned. The maximum value is 1000; values above 1000 will be set to 1000.
+  pageToken: string, A page token, received from a previous `ListDeployPolicies` call. Provide this to retrieve the subsequent page. When paginating, all other provided parameters match the call that provided the page token.
+    { # The response object from `ListDeployPolicies`.
+  &quot;deployPolicies&quot;: [ # The `DeployPolicy` objects.
+  <pre>Updates the parameters of a single DeployPolicy.
+  name: string, Output only. Name of the `DeployPolicy`. Format is `projects/{project}/locations/{location}/deployPolicies/{deployPolicy}`. The `deployPolicy` component must match `[a-z]([a-z0-9-]{0,61}[a-z0-9])?` (required)
+  allowMissing: boolean, Optional. If set to true, updating a `DeployPolicy` that does not exist will result in the creation of a new `DeployPolicy`.
+  updateMask: string, Required. Field mask is used to specify the fields to be overwritten by the update in the `DeployPolicy` resource. The fields specified in the update_mask are relative to the resource, not the full request. A field will be overwritten if it&#x27;s in the mask. If the user doesn&#x27;t provide a mask then all fields are overwritten.

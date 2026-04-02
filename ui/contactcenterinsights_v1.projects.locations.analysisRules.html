@@ -1,0 +1,49 @@
+<h1><a href="contactcenterinsights_v1.html">Contact Center AI Insights API</a> . <a href="contactcenterinsights_v1.projects.html">projects</a> . <a href="contactcenterinsights_v1.projects.locations.html">locations</a> . <a href="contactcenterinsights_v1.projects.locations.analysisRules.html">analysisRules</a></h1>
+<p class="firstline">Creates a analysis rule.</p>
+<p class="firstline">Deletes a analysis rule.</p>
+<p class="firstline">Get a analysis rule.</p>
+<p class="firstline">Lists analysis rules.</p>
+<p class="firstline">Updates a analysis rule.</p>
+  <pre>Creates a analysis rule.
+  parent: string, Required. The parent resource of the analysis rule. Required. The location to create a analysis rule for. Format: `projects//locations/` or `projects//locations/` (required)
+{ # The CCAI Insights project wide analysis rule. This rule will be applied to all conversations that match the filter defined in the rule. For a conversation matches the filter, the annotators specified in the rule will be run. If a conversation matches multiple rules, a union of all the annotators will be run. One project can have multiple analysis rules.
+  &quot;active&quot;: True or False, # If true, apply this rule to conversations. Otherwise, this rule is inactive and saved as a draft.
+  &quot;analysisPercentage&quot;: 3.14, # Percentage of conversations that we should apply this analysis setting automatically, between [0, 1]. For example, 0.1 means 10%. Conversations are sampled in a determenestic way. The original runtime_percentage &amp; upload percentage will be replaced by defining filters on the conversation.
+  &quot;annotatorSelector&quot;: { # Selector of all available annotators and phrase matchers to run. # Selector of annotators to run and the phrase matchers to use for conversations that matches the conversation_filter. If not specified, NO annotators will be run.
+    &quot;issueModels&quot;: [ # The issue model to run. If not provided, the most recently deployed topic model will be used. The provided issue model will only be used for inference if the issue model is deployed and if run_issue_model_annotator is set to true. If more than one issue model is provided, only the first provided issue model will be used for inference.
+    &quot;phraseMatchers&quot;: [ # The list of phrase matchers to run. If not provided, all active phrase matchers will be used. If inactive phrase matchers are provided, they will not be used. Phrase matchers will be run only if run_phrase_matcher_annotator is set to true. Format: projects/{project}/locations/{location}/phraseMatchers/{phrase_matcher}
+    &quot;qaConfig&quot;: { # Configuration for the QA feature. # Configuration for the QA annotator.
+      &quot;scorecardList&quot;: { # Container for a list of scorecards. # A manual list of scorecards to score.
+        &quot;qaScorecardRevisions&quot;: [ # List of QaScorecardRevisions.
+    &quot;runAutoLabelingAnnotator&quot;: True or False, # Optional. Whether to run the auto-labeling annotator. If true, the auto-labeling annotator will be run. This is a non-billable operation designed for fixing or backfilling custom labels.
+    &quot;runEntityAnnotator&quot;: True or False, # Whether to run the entity annotator.
+    &quot;runIntentAnnotator&quot;: True or False, # Whether to run the intent annotator.
+    &quot;runInterruptionAnnotator&quot;: True or False, # Whether to run the interruption annotator.
+    &quot;runIssueModelAnnotator&quot;: True or False, # Whether to run the issue model annotator. A model should have already been deployed for this to take effect.
+    &quot;runPhraseMatcherAnnotator&quot;: True or False, # Whether to run the active phrase matcher annotator(s).
+    &quot;runQaAnnotator&quot;: True or False, # Whether to run the QA annotator.
+    &quot;runSentimentAnnotator&quot;: True or False, # Whether to run the sentiment annotator.
+    &quot;runSilenceAnnotator&quot;: True or False, # Whether to run the silence annotator.
+    &quot;runSummarizationAnnotator&quot;: True or False, # Whether to run the summarization annotator.
+    &quot;summarizationConfig&quot;: { # Configuration for summarization. # Configuration for the summarization annotator.
+      &quot;conversationProfile&quot;: &quot;A String&quot;, # Resource name of the Dialogflow conversation profile. Format: projects/{project}/locations/{location}/conversationProfiles/{conversation_profile}
+      &quot;generator&quot;: &quot;A String&quot;, # The resource name of the existing created generator. Format: projects//locations//generators/
+      &quot;summarizationModel&quot;: &quot;A String&quot;, # Default summarization model to be used.
+  &quot;conversationFilter&quot;: &quot;A String&quot;, # Filter for the conversations that should apply this analysis rule. An empty filter means this analysis rule applies to all conversations. Refer to https://cloud.google.com/contact-center/insights/docs/filtering for details.
+  &quot;createTime&quot;: &quot;A String&quot;, # Output only. The time at which this analysis rule was created.
+  &quot;displayName&quot;: &quot;A String&quot;, # Display Name of the analysis rule.
+  &quot;name&quot;: &quot;A String&quot;, # Identifier. The resource name of the analysis rule. Format: projects/{project}/locations/{location}/analysisRules/{analysis_rule}
+  &quot;updateTime&quot;: &quot;A String&quot;, # Output only. The most recent time at which this analysis rule was updated.
+  <pre>Deletes a analysis rule.
+  name: string, Required. The name of the analysis rule to delete. (required)
+  <pre>Get a analysis rule.
+  name: string, Required. The name of the AnalysisRule to get. (required)
+  <pre>Lists analysis rules.
+  parent: string, Required. The parent resource of the analysis rules. (required)
+  pageSize: integer, Optional. The maximum number of analysis rule to return in the response. If this value is zero, the service will select a default size. A call may return fewer objects than requested. A non-empty `next_page_token` in the response indicates that more data is available.
+  pageToken: string, Optional. The value returned by the last `ListAnalysisRulesResponse`; indicates that this is a continuation of a prior `ListAnalysisRules` call and the system should return the next page of data.
+    { # The response of listing views.
+  &quot;analysisRules&quot;: [ # The analysis_rule that match the request.
+  <pre>Updates a analysis rule.
+  name: string, Identifier. The resource name of the analysis rule. Format: projects/{project}/locations/{location}/analysisRules/{analysis_rule} (required)
+  updateMask: string, Optional. The list of fields to be updated. If the update_mask is not provided, the update will be applied to all fields.

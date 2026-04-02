@@ -1,0 +1,51 @@
+<h1><a href="androidpublisher_v3.html">Google Play Android Developer API</a> . <a href="androidpublisher_v3.applications.html">applications</a> . <a href="androidpublisher_v3.applications.deviceTierConfigs.html">deviceTierConfigs</a></h1>
+  <code><a href="#create">create(packageName, allowUnknownDevices=None, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Creates a new device tier config for an app.</p>
+  <code><a href="#get">get(packageName, deviceTierConfigId, x__xgafv=None)</a></code></p>
+<p class="firstline">Returns a particular device tier config.</p>
+  <code><a href="#list">list(packageName, pageSize=None, pageToken=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Returns created device tier configs, ordered by descending creation time.</p>
+    <code class="details" id="create">create(packageName, allowUnknownDevices=None, body=None, x__xgafv=None)</code>
+  <pre>Creates a new device tier config for an app.
+  packageName: string, Package name of the app. (required)
+{ # Configuration describing device targeting criteria for the content of an app.
+  &quot;deviceGroups&quot;: [ # Definition of device groups for the app.
+    { # A group of devices. A group is defined by a set of device selectors. A device belongs to the group if it matches any selector (logical OR).
+      &quot;deviceSelectors&quot;: [ # Device selectors for this group. A device matching any of the selectors is included in this group.
+        { # Selector for a device group. A selector consists of a set of conditions on the device that should all match (logical AND) to determine a device group eligibility. For instance, if a selector specifies RAM conditions, device model inclusion and device model exclusion, a device is considered to match if: device matches RAM conditions AND device matches one of the included device models AND device doesn&#x27;t match excluded device models
+          &quot;deviceRam&quot;: { # Conditions about a device&#x27;s RAM capabilities. # Conditions on the device&#x27;s RAM.
+            &quot;maxBytes&quot;: &quot;A String&quot;, # Maximum RAM in bytes (bound excluded).
+            &quot;minBytes&quot;: &quot;A String&quot;, # Minimum RAM in bytes (bound included).
+          &quot;excludedDeviceIds&quot;: [ # Device models excluded by this selector, even if they match all other conditions.
+            { # Identifier of a device.
+              &quot;buildBrand&quot;: &quot;A String&quot;, # Value of Build.BRAND.
+              &quot;buildDevice&quot;: &quot;A String&quot;, # Value of Build.DEVICE.
+          &quot;forbiddenSystemFeatures&quot;: [ # A device that has any of these system features is excluded by this selector, even if it matches all other conditions.
+            { # Representation of a system feature.
+          &quot;includedDeviceIds&quot;: [ # Device models included by this selector.
+          &quot;requiredSystemFeatures&quot;: [ # A device needs to have all these system features to be included by the selector.
+          &quot;systemOnChips&quot;: [ # Optional. The SoCs included by this selector. Only works for Android S+ devices.
+            { # Representation of a System-on-Chip (SoC) of an Android device. Can be used to target S+ devices.
+              &quot;manufacturer&quot;: &quot;A String&quot;, # Required. The designer of the SoC, eg. &quot;Google&quot; Value of build property &quot;ro.soc.manufacturer&quot; https://developer.android.com/reference/android/os/Build#SOC_MANUFACTURER Required.
+              &quot;model&quot;: &quot;A String&quot;, # Required. The model of the SoC, eg. &quot;Tensor&quot; Value of build property &quot;ro.soc.model&quot; https://developer.android.com/reference/android/os/Build#SOC_MODEL Required.
+      &quot;name&quot;: &quot;A String&quot;, # The name of the group.
+  &quot;deviceTierConfigId&quot;: &quot;A String&quot;, # Output only. The device tier config ID.
+  &quot;deviceTierSet&quot;: { # A set of device tiers. A tier set determines what variation of app content gets served to a specific device, for device-targeted content. You should assign a priority level to each tier, which determines the ordering by which they are evaluated by Play. See the documentation of DeviceTier.level for more details. # Definition of the set of device tiers for the app.
+    &quot;deviceTiers&quot;: [ # Device tiers belonging to the set.
+      { # A single device tier. Devices matching any of the device groups in device_group_names are considered to match the tier.
+        &quot;deviceGroupNames&quot;: [ # Groups of devices included in this tier. These groups must be defined explicitly under device_groups in this configuration.
+        &quot;level&quot;: 42, # The priority level of the tier. Tiers are evaluated in descending order of level: the highest level tier has the highest priority. The highest tier matching a given device is selected for that device. You should use a contiguous range of levels for your tiers in a tier set; tier levels in a tier set must be unique. For instance, if your tier set has 4 tiers (including the global fallback), you should define tiers 1, 2 and 3 in this configuration. Note: tier 0 is implicitly defined as a global fallback and selected for devices that don&#x27;t match any of the tiers explicitly defined here. You mustn&#x27;t define level 0 explicitly in this configuration.
+  &quot;userCountrySets&quot;: [ # Definition of user country sets for the app.
+    { # A set of user countries. A country set determines what variation of app content gets served to a specific location.
+      &quot;countryCodes&quot;: [ # List of country codes representing countries. A Country code is represented in ISO 3166 alpha-2 format. For Example:- &quot;IT&quot; for Italy, &quot;GE&quot; for Georgia.
+      &quot;name&quot;: &quot;A String&quot;, # Country set name.
+  allowUnknownDevices: boolean, Whether the service should accept device IDs that are unknown to Play&#x27;s device catalog.
+    <code class="details" id="get">get(packageName, deviceTierConfigId, x__xgafv=None)</code>
+  <pre>Returns a particular device tier config.
+  deviceTierConfigId: string, Required. Id of an existing device tier config. (required)
+    <code class="details" id="list">list(packageName, pageSize=None, pageToken=None, x__xgafv=None)</code>
+  <pre>Returns created device tier configs, ordered by descending creation time.
+  pageSize: integer, The maximum number of device tier configs to return. The service may return fewer than this value. If unspecified, at most 10 device tier configs will be returned. The maximum value for this field is 100; values above 100 will be coerced to 100. Device tier configs will be ordered by descending creation time.
+  pageToken: string, A page token, received from a previous `ListDeviceTierConfigs` call. Provide this to retrieve the subsequent page.
+    { # Response listing existing device tier configs.
+  &quot;deviceTierConfigs&quot;: [ # Device tier configs created by the developer.

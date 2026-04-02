@@ -1,0 +1,21 @@
+            FieldName="SharingScope"
+    <!-- Conversation Context Section -->
+        SectionKey="conversationContext"
+        SectionName="Conversation Context"
+    <!-- MJ: Conversation Artifact Permissions Section -->
+        SectionKey="mJConversationArtifactPermissions"
+        SectionName="MJ: Conversation Artifact Permissions"
+        [BadgeCount]="GetSectionRowCount('mJConversationArtifactPermissions')"
+                [Params]="BuildRelationshipViewParamsByEntityName('MJ: Conversation Artifact Permissions','ConversationArtifactID')"
+                [NewRecordValues]="NewRecordValues('MJ: Conversation Artifact Permissions')"
+                [AllowLoad]="IsSectionExpanded('mJConversationArtifactPermissions')"
+                (AfterDataLoad)="SetSectionRowCount('mJConversationArtifactPermissions', $event.totalRowCount)"
+    <!-- MJ: Conversation Artifact Versions Section -->
+        SectionKey="mJConversationArtifactVersions"
+        SectionName="MJ: Conversation Artifact Versions"
+        [BadgeCount]="GetSectionRowCount('mJConversationArtifactVersions')"
+                [Params]="BuildRelationshipViewParamsByEntityName('MJ: Conversation Artifact Versions','ConversationArtifactID')"
+                [NewRecordValues]="NewRecordValues('MJ: Conversation Artifact Versions')"
+                [AllowLoad]="IsSectionExpanded('mJConversationArtifactVersions')"
+                (AfterDataLoad)="SetSectionRowCount('mJConversationArtifactVersions', $event.totalRowCount)"
+                [Params]="BuildRelationshipViewParamsByEntityName('MJ: Conversation Details','ArtifactID')"

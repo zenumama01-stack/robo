@@ -1,0 +1,13 @@
+<h1><a href="meet_v2.html">Google Meet API</a> . <a href="meet_v2.conferenceRecords.html">conferenceRecords</a> . <a href="meet_v2.conferenceRecords.participants.html">participants</a> . <a href="meet_v2.conferenceRecords.participants.participantSessions.html">participantSessions</a></h1>
+<p class="firstline">Gets a participant session by participant session ID.</p>
+<p class="firstline">Lists the participant sessions of a participant in a conference record. By default, ordered by join time and in descending order. This API supports `fields` as standard parameters like every other API. However, when the `fields` request parameter is omitted this API defaults to `'participantsessions/*, next_page_token'`.</p>
+  <pre>Gets a participant session by participant session ID.
+    { # Refers to each unique join or leave session when a user joins a conference from a device. Note that any time a user joins the conference a new unique ID is assigned. That means if a user joins a space multiple times from the same device, they&#x27;re assigned different IDs, and are also be treated as different participant sessions.
+  &quot;endTime&quot;: &quot;A String&quot;, # Output only. Timestamp when the user session ends. Unset if the user session hasn’t ended.
+  &quot;name&quot;: &quot;A String&quot;, # Identifier. Session id.
+  &quot;startTime&quot;: &quot;A String&quot;, # Output only. Timestamp when the user session starts.
+  <pre>Lists the participant sessions of a participant in a conference record. By default, ordered by join time and in descending order. This API supports `fields` as standard parameters like every other API. However, when the `fields` request parameter is omitted this API defaults to `&#x27;participantsessions/*, next_page_token&#x27;`.
+  parent: string, Required. Format: `conferenceRecords/{conference_record}/participants/{participant}` (required)
+  filter: string, Optional. User specified filtering condition in [EBNF format](https://en.wikipedia.org/wiki/Extended_Backus%E2%80%93Naur_form). The following are the filterable fields: * `start_time` * `end_time` For example, `end_time IS NULL` returns active participant sessions in the conference record.
+  pageSize: integer, Optional. Maximum number of participant sessions to return. The service might return fewer than this value. If unspecified, at most 100 participants are returned. The maximum value is 250; values above 250 are coerced to 250. Maximum might change in the future.
+  &quot;participantSessions&quot;: [ # List of participants in one page.

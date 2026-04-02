@@ -1,0 +1,58 @@
+<h1><a href="admin_directory_v1.html">Admin SDK API</a> . <a href="admin_directory_v1.customers.html">customers</a> . <a href="admin_directory_v1.customers.chrome.html">chrome</a> . <a href="admin_directory_v1.customers.chrome.printServers.html">printServers</a></h1>
+  <code><a href="#batchCreatePrintServers">batchCreatePrintServers(parent, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Creates multiple print servers.</p>
+  <code><a href="#batchDeletePrintServers">batchDeletePrintServers(parent, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Deletes multiple print servers.</p>
+<p class="firstline">Creates a print server.</p>
+<p class="firstline">Deletes a print server.</p>
+<p class="firstline">Returns a print server's configuration.</p>
+  <code><a href="#list">list(parent, filter=None, orderBy=None, orgUnitId=None, pageSize=None, pageToken=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Lists print server configurations.</p>
+<p class="firstline">Updates a print server's configuration.</p>
+    <code class="details" id="batchCreatePrintServers">batchCreatePrintServers(parent, body=None, x__xgafv=None)</code>
+  <pre>Creates multiple print servers.
+  parent: string, Required. The [unique ID](https://developers.google.com/workspace/admin/directory/reference/rest/v1/customers) of the customer&#x27;s Google Workspace account. Format: `customers/{id}` (required)
+{ # Request to add multiple new print servers in a batch.
+  &quot;requests&quot;: [ # Required. A list of `PrintServer` resources to be created (max `50` per batch).
+    { # Request for adding a new print server.
+      &quot;parent&quot;: &quot;A String&quot;, # Required. The [unique ID](https://developers.google.com/workspace/admin/directory/reference/rest/v1/customers) of the customer&#x27;s Google Workspace account. Format: `customers/{id}`
+      &quot;printServer&quot;: { # Configuration for a print server. # Required. A print server to create. If you want to place the print server under a specific organizational unit (OU), then populate the `org_unit_id`. Otherwise the print server is created under the root OU. The `org_unit_id` can be retrieved using the [Directory API](https://developers.google.com/workspace/admin/directory/v1/guides/manage-org-units).
+        &quot;createTime&quot;: &quot;A String&quot;, # Output only. Time when the print server was created.
+        &quot;description&quot;: &quot;A String&quot;, # Editable. Description of the print server (as shown in the Admin console).
+        &quot;displayName&quot;: &quot;A String&quot;, # Editable. Display name of the print server (as shown in the Admin console).
+        &quot;id&quot;: &quot;A String&quot;, # Immutable. ID of the print server. Leave empty when creating.
+        &quot;name&quot;: &quot;A String&quot;, # Identifier. Resource name of the print server. Leave empty when creating. Format: `customers/{customer.id}/printServers/{print_server.id}`
+        &quot;orgUnitId&quot;: &quot;A String&quot;, # ID of the organization unit (OU) that owns this print server. This value can only be set when the print server is initially created. If it&#x27;s not populated, the print server is placed under the root OU. The `org_unit_id` can be retrieved using the [Directory API](https://developers.google.com/workspace/admin/directory/reference/rest/v1/orgunits).
+        &quot;uri&quot;: &quot;A String&quot;, # Editable. Print server URI.
+  &quot;failures&quot;: [ # A list of create failures. `PrintServer` IDs are not populated, as print servers were not created.
+    { # Info about failures
+      &quot;errorCode&quot;: &quot;A String&quot;, # Canonical code for why the update failed to apply.
+      &quot;errorMessage&quot;: &quot;A String&quot;, # Failure reason message.
+      &quot;printServer&quot;: { # Configuration for a print server. # Failed print server.
+      &quot;printServerId&quot;: &quot;A String&quot;, # ID of a failed print server.
+  &quot;printServers&quot;: [ # A list of successfully created print servers with their IDs populated.
+    { # Configuration for a print server.
+    <code class="details" id="batchDeletePrintServers">batchDeletePrintServers(parent, body=None, x__xgafv=None)</code>
+  <pre>Deletes multiple print servers.
+  parent: string, Required. The [unique ID](https://developers.google.com/workspace/admin/directory/reference/rest/v1/customers) of the customer&#x27;s Google Workspace account. Format: `customers/{customer.id}` (required)
+{ # Request to delete multiple existing print servers in a batch.
+  &quot;printServerIds&quot;: [ # A list of print server IDs that should be deleted (max `100` per batch).
+  &quot;failedPrintServers&quot;: [ # A list of update failures.
+  &quot;printServerIds&quot;: [ # A list of print server IDs that were successfully deleted.
+  <pre>Creates a print server.
+  <pre>Deletes a print server.
+  name: string, Required. The name of the print server to be deleted. Format: `customers/{customer.id}/chrome/printServers/{print_server.id}` (required)
+  <pre>Returns a print server&#x27;s configuration.
+  name: string, Required. The [unique ID](https://developers.google.com/workspace/admin/directory/reference/rest/v1/customers) of the customer&#x27;s Google Workspace account. Format: `customers/{id}` (required)
+    <code class="details" id="list">list(parent, filter=None, orderBy=None, orgUnitId=None, pageSize=None, pageToken=None, x__xgafv=None)</code>
+  <pre>Lists print server configurations.
+  filter: string, Search query in [Common Expression Language syntax](https://github.com/google/cel-spec). Supported filters are `display_name`, `description`, and `uri`. Example: `printServer.displayName==&#x27;marketing-queue&#x27;`.
+  orderBy: string, Sort order for results. Supported values are `display_name`, `description`, or `create_time`. Default order is ascending, but descending order can be returned by appending &quot;desc&quot; to the `order_by` field. For instance, `orderBy==&#x27;description desc&#x27;` returns the print servers sorted by description in descending order.
+  orgUnitId: string, If `org_unit_id` is present in the request, only print servers owned or inherited by the organizational unit (OU) are returned. If the `PrintServer` resource&#x27;s `org_unit_id` matches the one in the request, the OU owns the server. If `org_unit_id` is not specified in the request, all print servers are returned or filtered against.
+  pageSize: integer, The maximum number of objects to return (default `100`, max `100`). The service might return fewer than this value.
+  pageToken: string, A generated token to paginate results (the `next_page_token` from a previous call).
+  &quot;nextPageToken&quot;: &quot;A String&quot;, # A token that can be sent as `page_token` in a request to retrieve the next page. If this field is omitted, there are no subsequent pages.
+  &quot;printServers&quot;: [ # List of print servers.
+  <pre>Updates a print server&#x27;s configuration.
+  name: string, Identifier. Resource name of the print server. Leave empty when creating. Format: `customers/{customer.id}/printServers/{print_server.id}` (required)
+  updateMask: string, The list of fields to update. Some fields are read-only and cannot be updated. Values for unspecified fields are patched.

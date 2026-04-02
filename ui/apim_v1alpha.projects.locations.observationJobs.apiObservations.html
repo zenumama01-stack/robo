@@ -1,0 +1,36 @@
+<h1><a href="apim_v1alpha.html">API Management API</a> . <a href="apim_v1alpha.projects.html">projects</a> . <a href="apim_v1alpha.projects.locations.html">locations</a> . <a href="apim_v1alpha.projects.locations.observationJobs.html">observationJobs</a> . <a href="apim_v1alpha.projects.locations.observationJobs.apiObservations.html">apiObservations</a></h1>
+  <code><a href="apim_v1alpha.projects.locations.observationJobs.apiObservations.apiOperations.html">apiOperations()</a></code>
+<p class="firstline">Returns the apiOperations Resource.</p>
+  <code><a href="#batchEditTags">batchEditTags(parent, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">BatchEditTagsApiObservations adds or removes Tags for ApiObservations.</p>
+<p class="firstline">GetApiObservation retrieves a single ApiObservation by name.</p>
+<p class="firstline">ListApiObservations gets all ApiObservations for a given project and location and ObservationJob.</p>
+    <code class="details" id="batchEditTags">batchEditTags(parent, body=None, x__xgafv=None)</code>
+  <pre>BatchEditTagsApiObservations adds or removes Tags for ApiObservations.
+  parent: string, Required. The parent resource shared by all ApiObservations being edited. Format: projects/{project}/locations/{location}/observationJobs/{observation_job} (required)
+{ # Message for requesting batch edit tags for ApiObservations
+  &quot;requests&quot;: [ # Required. The request message specifying the resources to update. A maximum of 1000 apiObservations can be modified in a batch.
+    { # Message for requesting edit tags for ApiObservation
+      &quot;apiObservationId&quot;: &quot;A String&quot;, # Required. Identifier of ApiObservation need to be edit tags Format example: &quot;apigee.googleapis.com|us-west1|443&quot;
+      &quot;tagActions&quot;: [ # Required. Tag actions to be applied
+        { # Message for edit tag action
+          &quot;action&quot;: &quot;A String&quot;, # Required. Action to be applied
+          &quot;tag&quot;: &quot;A String&quot;, # Required. Tag to be added or removed
+    { # Message for response to edit Tags for ApiObservations
+  &quot;apiObservations&quot;: [ # ApiObservations that were changed
+    { # Message describing ApiObservation object
+      &quot;apiOperationCount&quot;: &quot;A String&quot;, # The number of observed API Operations.
+      &quot;createTime&quot;: &quot;A String&quot;, # Create time stamp
+      &quot;hostname&quot;: &quot;A String&quot;, # The hostname of requests processed for this Observation.
+      &quot;lastEventDetectedTime&quot;: &quot;A String&quot;, # Last event detected time stamp
+      &quot;serverIps&quot;: [ # The IP address (IPv4 or IPv6) of the origin server that the request was sent to. This field can include port information. Examples: `&quot;192.168.1.1&quot;`, `&quot;10.0.0.1:80&quot;`, `&quot;FE80::0202:B3FF:FE1E:8329&quot;`.
+      &quot;sourceLocations&quot;: [ # Location of the Observation Source, for example &quot;us-central1&quot; or &quot;europe-west1.&quot;
+      &quot;style&quot;: &quot;A String&quot;, # Style of ApiObservation
+      &quot;tags&quot;: [ # User-defined tags to organize and sort
+      &quot;updateTime&quot;: &quot;A String&quot;, # Update time stamp
+  <pre>GetApiObservation retrieves a single ApiObservation by name.
+  name: string, Required. The name of the ApiObservation to retrieve. Format: projects/{project}/locations/{location}/observationJobs/{observation_job}/apiObservations/{api_observation} (required)
+  <pre>ListApiObservations gets all ApiObservations for a given project and location and ObservationJob.
+  parent: string, Required. The parent, which owns this collection of ApiObservations. Format: projects/{project}/locations/{location}/observationJobs/{observation_job} (required)
+    { # Message for response to listing ApiObservations
+  &quot;apiObservations&quot;: [ # The ApiObservation from the specified project and location and ObservationJobs.

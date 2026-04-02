@@ -1,0 +1,27 @@
+<h1><a href="libraryagent_v1.html">Library Agent API</a> . <a href="libraryagent_v1.shelves.html">shelves</a> . <a href="libraryagent_v1.shelves.books.html">books</a></h1>
+  <code><a href="#borrow">borrow(name, x__xgafv=None)</a></code></p>
+<p class="firstline">Borrow a book from the library. Returns the book if it is borrowed successfully. Returns NOT_FOUND if the book does not exist in the library. Returns quota exceeded error if the amount of books borrowed exceeds allocation quota in any dimensions.</p>
+<p class="firstline">Gets a book. Returns NOT_FOUND if the book does not exist.</p>
+<p class="firstline">Lists books in a shelf. The order is unspecified but deterministic. Newly created books will not necessarily be added to the end of this list. Returns NOT_FOUND if the shelf does not exist.</p>
+  <code><a href="#return_">return_(name, x__xgafv=None)</a></code></p>
+<p class="firstline">Return a book to the library. Returns the book if it is returned to the library successfully. Returns error if the book does not belong to the library or the users didn't borrow before.</p>
+    <code class="details" id="borrow">borrow(name, x__xgafv=None)</code>
+  <pre>Borrow a book from the library. Returns the book if it is borrowed successfully. Returns NOT_FOUND if the book does not exist in the library. Returns quota exceeded error if the amount of books borrowed exceeds allocation quota in any dimensions.
+  name: string, Required. The name of the book to borrow. (required)
+    { # A single book in the library.
+  &quot;author&quot;: &quot;A String&quot;, # The name of the book author.
+  &quot;name&quot;: &quot;A String&quot;, # The resource name of the book. Book names have the form `shelves/{shelf_id}/books/{book_id}`. The name is ignored when creating a book.
+  &quot;read&quot;: True or False, # Value indicating whether the book has been read.
+  &quot;title&quot;: &quot;A String&quot;, # The title of the book.
+  <pre>Gets a book. Returns NOT_FOUND if the book does not exist.
+  name: string, Required. The name of the book to retrieve. (required)
+  <pre>Lists books in a shelf. The order is unspecified but deterministic. Newly created books will not necessarily be added to the end of this list. Returns NOT_FOUND if the shelf does not exist.
+  parent: string, Required. The name of the shelf whose books we&#x27;d like to list. (required)
+  pageSize: integer, Requested page size. Server may return fewer books than requested. If unspecified, server will pick an appropriate default.
+  pageToken: string, A token identifying a page of results the server should return. Typically, this is the value of ListBooksResponse.next_page_token. returned from the previous call to `ListBooks` method.
+    { # Response message for LibraryAgent.ListBooks.
+  &quot;books&quot;: [ # The list of books.
+  &quot;nextPageToken&quot;: &quot;A String&quot;, # A token to retrieve next page of results. Pass this value in the ListBooksRequest.page_token field in the subsequent call to `ListBooks` method to retrieve the next page of results.
+    <code class="details" id="return_">return_(name, x__xgafv=None)</code>
+  <pre>Return a book to the library. Returns the book if it is returned to the library successfully. Returns error if the book does not belong to the library or the users didn&#x27;t borrow before.
+  name: string, Required. The name of the book to return. (required)

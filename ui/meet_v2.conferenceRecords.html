@@ -1,0 +1,25 @@
+<h1><a href="meet_v2.html">Google Meet API</a> . <a href="meet_v2.conferenceRecords.html">conferenceRecords</a></h1>
+  <code><a href="meet_v2.conferenceRecords.participants.html">participants()</a></code>
+  <code><a href="meet_v2.conferenceRecords.recordings.html">recordings()</a></code>
+<p class="firstline">Returns the recordings Resource.</p>
+  <code><a href="meet_v2.conferenceRecords.smartNotes.html">smartNotes()</a></code>
+<p class="firstline">Returns the smartNotes Resource.</p>
+  <code><a href="meet_v2.conferenceRecords.transcripts.html">transcripts()</a></code>
+<p class="firstline">Returns the transcripts Resource.</p>
+<p class="firstline">Gets a conference record by conference ID.</p>
+<p class="firstline">Lists the conference records. By default, ordered by start time and in descending order.</p>
+  <pre>Gets a conference record by conference ID.
+  name: string, Required. Resource name of the conference. (required)
+    { # Single instance of a meeting held in a space.
+  &quot;endTime&quot;: &quot;A String&quot;, # Output only. Timestamp when the conference ended. Set for past conferences. Unset if the conference is ongoing.
+  &quot;expireTime&quot;: &quot;A String&quot;, # Output only. Server enforced expiration time for when this conference record resource is deleted. The resource is deleted 30 days after the conference ends.
+  &quot;name&quot;: &quot;A String&quot;, # Identifier. Resource name of the conference record. Format: `conferenceRecords/{conference_record}` where `{conference_record}` is a unique ID for each instance of a call within a space.
+  &quot;space&quot;: &quot;A String&quot;, # Output only. The space where the conference was held.
+  &quot;startTime&quot;: &quot;A String&quot;, # Output only. Timestamp when the conference started. Always set.
+  <pre>Lists the conference records. By default, ordered by start time and in descending order.
+  filter: string, Optional. User specified filtering condition in [EBNF format](https://en.wikipedia.org/wiki/Extended_Backus%E2%80%93Naur_form). The following are the filterable fields: * `space.meeting_code` * `space.name` * `start_time` * `end_time` For example, consider the following filters: * `space.name = &quot;spaces/NAME&quot;` * `space.meeting_code = &quot;abc-mnop-xyz&quot;` * `start_time&gt;=&quot;2024-01-01T00:00:00.000Z&quot; AND start_time&lt;=&quot;2024-01-02T00:00:00.000Z&quot;` * `end_time IS NULL`
+  pageSize: integer, Optional. Maximum number of conference records to return. The service might return fewer than this value. If unspecified, at most 25 conference records are returned. The maximum value is 100; values above 100 are coerced to 100. Maximum might change in the future.
+  pageToken: string, Optional. Page token returned from previous List Call.
+    { # Response of ListConferenceRecords method.
+  &quot;conferenceRecords&quot;: [ # List of conferences in one page.
+  &quot;nextPageToken&quot;: &quot;A String&quot;, # Token to be circulated back for further List call if current List does NOT include all the Conferences. Unset if all conferences have been returned.

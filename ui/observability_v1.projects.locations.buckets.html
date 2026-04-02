@@ -1,0 +1,21 @@
+<h1><a href="observability_v1.html">Observability API</a> . <a href="observability_v1.projects.html">projects</a> . <a href="observability_v1.projects.locations.html">locations</a> . <a href="observability_v1.projects.locations.buckets.html">buckets</a></h1>
+  <code><a href="observability_v1.projects.locations.buckets.datasets.html">datasets()</a></code>
+<p class="firstline">Get bucket resource.</p>
+<p class="firstline">List buckets of a project in a particular location.</p>
+  <pre>Get bucket resource.
+  name: string, Required. Name of the bucket to retrieve. The format is: projects/[PROJECT_ID]/locations/[LOCATION]/buckets/[BUCKET_ID] (required)
+    { # Bucket configuration for storing observability data.
+  &quot;cmekSettings&quot;: { # Settings for configuring CMEK for a bucket. # Optional. Settings for configuring CMEK on a bucket.
+    &quot;kmsKey&quot;: &quot;A String&quot;, # Optional. The resource name for the configured Cloud KMS key. The format is: projects/[PROJECT_ID]/locations/[LOCATION]/keyRings/[KEYRING]/cryptoKeys/[KEY] For example: projects/my-project/locations/us-central1/keyRings/my-ring/cryptoKeys/my-key
+    &quot;kmsKeyVersion&quot;: &quot;A String&quot;, # Output only. The CryptoKeyVersion resource name for the configured Cloud KMS key. The format is: projects/[PROJECT_ID]/locations/[LOCATION]/keyRings/[KEYRING]/cryptoKeys/[KEY]/cryptoKeyVersions/[VERSION] For example: projects/my-project/locations/us-central1/keyRings/my-ring/cryptoKeys/my-key/cryptoKeyVersions/1 This read-only field is used to convey the specific configured CryptoKeyVersion of the `kms_key` that has been configured. It is populated when the CMEK settings are bound to a single key version.
+    &quot;serviceAccountId&quot;: &quot;A String&quot;, # Output only. The service account used to access the key.
+  &quot;description&quot;: &quot;A String&quot;, # Optional. Description of the bucket.
+  &quot;name&quot;: &quot;A String&quot;, # Identifier. Name of the bucket. The format is: projects/[PROJECT_ID]/locations/[LOCATION]/buckets/[BUCKET_ID]
+  &quot;purgeTime&quot;: &quot;A String&quot;, # Output only. Timestamp when the bucket in soft-deleted state is purged.
+  <pre>List buckets of a project in a particular location.
+  parent: string, Required. The parent, which owns this collection of buckets. The format is: projects/[PROJECT_ID]/locations/[LOCATION] (required)
+  pageSize: integer, Optional. The maximum number of buckets to return. If unspecified, then at most 100 buckets are returned. The maximum value is 1000; values above 1000 are coerced to 1000.
+  pageToken: string, Optional. A page token, received from a previous `ListBuckets` call. Provide this to retrieve the subsequent page.
+  showDeleted: boolean, Optional. If true, then the response will include deleted buckets.
+    { # Response for listing buckets.
+  &quot;buckets&quot;: [ # Optional. The list of buckets.

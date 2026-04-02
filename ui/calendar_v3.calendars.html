@@ -1,0 +1,28 @@
+<h1><a href="calendar_v3.html">Calendar API</a> . <a href="calendar_v3.calendars.html">calendars</a></h1>
+  <code><a href="#clear">clear(calendarId)</a></code></p>
+<p class="firstline">Clears a primary calendar. This operation deletes all events associated with the primary calendar of an account.</p>
+<p class="firstline">Deletes a secondary calendar. Use calendars.clear for clearing all events on primary calendars.</p>
+<p class="firstline">Returns metadata for a calendar.</p>
+<p class="firstline">Creates a secondary calendar.</p>
+  <code><a href="#patch">patch(calendarId, body=None)</a></code></p>
+<p class="firstline">Updates metadata for a calendar. This method supports patch semantics.</p>
+  <code><a href="#update">update(calendarId, body=None)</a></code></p>
+<p class="firstline">Updates metadata for a calendar.</p>
+    <code class="details" id="clear">clear(calendarId)</code>
+  <pre>Clears a primary calendar. This operation deletes all events associated with the primary calendar of an account.
+  <pre>Deletes a secondary calendar. Use calendars.clear for clearing all events on primary calendars.
+  <pre>Returns metadata for a calendar.
+  &quot;autoAcceptInvitations&quot;: True or False, # Whether this calendar automatically accepts invitations. Only valid for resource calendars.
+  &quot;description&quot;: &quot;A String&quot;, # Description of the calendar. Optional.
+  &quot;id&quot;: &quot;A String&quot;, # Identifier of the calendar. To retrieve IDs call the calendarList.list() method.
+  &quot;kind&quot;: &quot;calendar#calendar&quot;, # Type of the resource (&quot;calendar#calendar&quot;).
+  &quot;location&quot;: &quot;A String&quot;, # Geographic location of the calendar as free-form text. Optional.
+  &quot;summary&quot;: &quot;A String&quot;, # Title of the calendar.
+  &quot;timeZone&quot;: &quot;A String&quot;, # The time zone of the calendar. (Formatted as an IANA Time Zone Database name, e.g. &quot;Europe/Zurich&quot;.) Optional.
+  <pre>Creates a secondary calendar.
+The authenticated user for the request is made the data owner of the new calendar.
+Note: We recommend to authenticate as the intended data owner of the calendar. You can use domain-wide delegation of authority to allow applications to act on behalf of a specific user. Don&#x27;t use a service account for authentication. If you use a service account for authentication, the service account is the data owner, which can lead to unexpected behavior. For example, if a service account is the data owner, data ownership cannot be transferred.
+    <code class="details" id="patch">patch(calendarId, body=None)</code>
+  <pre>Updates metadata for a calendar. This method supports patch semantics.
+    <code class="details" id="update">update(calendarId, body=None)</code>
+  <pre>Updates metadata for a calendar.

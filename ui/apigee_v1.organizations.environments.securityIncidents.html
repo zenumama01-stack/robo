@@ -1,0 +1,37 @@
+<h1><a href="apigee_v1.html">Apigee API</a> . <a href="apigee_v1.organizations.html">organizations</a> . <a href="apigee_v1.organizations.environments.html">environments</a> . <a href="apigee_v1.organizations.environments.securityIncidents.html">securityIncidents</a></h1>
+<p class="firstline">BatchUpdateSecurityIncident updates multiple existing security incidents.</p>
+<p class="firstline">GetSecurityIncident gets the specified security incident. Returns NOT_FOUND if security incident is not present for the specified organization and environment.</p>
+<p class="firstline">ListSecurityIncidents lists all the security incident associated with the environment.</p>
+<p class="firstline">UpdateSecurityIncidents updates an existing security incident.</p>
+  <pre>BatchUpdateSecurityIncident updates multiple existing security incidents.
+  parent: string, Optional. The parent resource shared by all security incidents being updated. If this is set, the parent field in the UpdateSecurityIncidentRequest messages must either be empty or match this field. (required)
+{ # Request for BatchUpdateSecurityIncident.
+  &quot;requests&quot;: [ # Optional. Required. The request message specifying the resources to update. A maximum of 1000 can be modified in a batch.
+    { # Request for UpdateSecurityIncident.
+      &quot;securityIncident&quot;: { # Represents an SecurityIncident resource. # Required. The security incident to update. Must contain all existing populated fields of the current incident.
+        &quot;detectionTypes&quot;: [ # Output only. Detection types which are part of the incident. Examples: Flooder, OAuth Abuser, Static Content Scraper, Anomaly Detection.
+        &quot;displayName&quot;: &quot;A String&quot;, # Optional. Display name of the security incident.
+        &quot;firstDetectedTime&quot;: &quot;A String&quot;, # Output only. The time when events associated with the incident were first detected.
+        &quot;lastDetectedTime&quot;: &quot;A String&quot;, # Output only. The time when events associated with the incident were last detected.
+        &quot;lastObservabilityChangeTime&quot;: &quot;A String&quot;, # Output only. The time when the incident observability was last changed.
+        &quot;name&quot;: &quot;A String&quot;, # Immutable. Name of the security incident resource. Format: organizations/{org}/environments/{environment}/securityIncidents/{incident} Example: organizations/apigee-org/environments/dev/securityIncidents/1234-5678-9101-1111
+        &quot;observability&quot;: &quot;A String&quot;, # Optional. Indicates if the user archived this incident.
+        &quot;riskLevel&quot;: &quot;A String&quot;, # Output only. Risk level of the incident.
+        &quot;trafficCount&quot;: &quot;A String&quot;, # Total traffic detected as part of the incident.
+      &quot;updateMask&quot;: &quot;A String&quot;, # Required. The list of fields to update. Allowed fields are: LINT.IfChange(allowed_update_fields_comment) - observability LINT.ThenChange()
+    { # Response for BatchUpdateSecurityIncident.
+  &quot;securityIncidents&quot;: [ # Output only. Updated security incidents
+    { # Represents an SecurityIncident resource.
+  <pre>GetSecurityIncident gets the specified security incident. Returns NOT_FOUND if security incident is not present for the specified organization and environment.
+  name: string, Required. Security incident in the following format: `organizations/{org}/environments/{environment}/securityIncidents/{incident}&#x27;. Example: organizations/testOrg/environments/testEnv/securityIncidents/1234-4567-890-111 (required)
+  <pre>ListSecurityIncidents lists all the security incident associated with the environment.
+  parent: string, Required. For a specific organization, list of all the security incidents. Format: `organizations/{org}/environments/{environment}` (required)
+  filter: string, The filter expression to be used to get the list of security incidents, where filtering can be done on API Proxies. Example: filter = &quot;api_proxy = /&quot;, &quot;first_detected_time &gt;&quot;, &quot;last_detected_time &lt;&quot;
+  pageSize: integer, Optional. The maximum number of incidents to return. The service may return fewer than this value. If unspecified, at most 50 incidents will be returned.
+  pageToken: string, Optional. A page token, received from a previous `ListSecurityIncident` call. Provide this to retrieve the subsequent page.
+    { # Response for ListSecurityIncidents.
+  &quot;nextPageToken&quot;: &quot;A String&quot;, # A token that can be sent as `page_token` to retrieve the next page. If this field is omitted, there are no subsequent pages.
+  &quot;securityIncidents&quot;: [ # List of security incidents in the organization
+  <pre>UpdateSecurityIncidents updates an existing security incident.
+  name: string, Immutable. Name of the security incident resource. Format: organizations/{org}/environments/{environment}/securityIncidents/{incident} Example: organizations/apigee-org/environments/dev/securityIncidents/1234-5678-9101-1111 (required)
+  updateMask: string, Required. The list of fields to update. Allowed fields are: LINT.IfChange(allowed_update_fields_comment) - observability LINT.ThenChange()

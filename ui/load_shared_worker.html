@@ -1,0 +1,6 @@
+  function loadSharedWorker(url) {
+        const w = new SharedWorker(url);
+        w.onerror = () => resolve('failed');
+        w.port.onmessage = (m) => resolve(m.data);
+        w.port.postMessage('success');
+        resolve('failed');

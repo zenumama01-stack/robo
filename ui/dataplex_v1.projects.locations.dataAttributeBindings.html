@@ -1,0 +1,38 @@
+<h1><a href="dataplex_v1.html">Cloud Dataplex API</a> . <a href="dataplex_v1.projects.html">projects</a> . <a href="dataplex_v1.projects.locations.html">locations</a> . <a href="dataplex_v1.projects.locations.dataAttributeBindings.html">dataAttributeBindings</a></h1>
+  <code><a href="#create">create(parent, body=None, dataAttributeBindingId=None, validateOnly=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Create a DataAttributeBinding resource.</p>
+<p class="firstline">Deletes a DataAttributeBinding resource. All attributes within the DataAttributeBinding must be deleted before the DataAttributeBinding can be deleted.</p>
+<p class="firstline">Retrieves a DataAttributeBinding resource.</p>
+<p class="firstline">Lists DataAttributeBinding resources in a project and location.</p>
+<p class="firstline">Updates a DataAttributeBinding resource.</p>
+    <code class="details" id="create">create(parent, body=None, dataAttributeBindingId=None, validateOnly=None, x__xgafv=None)</code>
+  <pre>Create a DataAttributeBinding resource.
+  parent: string, Required. The resource name of the parent data taxonomy projects/{project_number}/locations/{location_id} (required)
+{ # DataAttributeBinding represents binding of attributes to resources. Eg: Bind &#x27;CustomerInfo&#x27; entity with &#x27;PII&#x27; attribute.
+  &quot;attributes&quot;: [ # Optional. List of attributes to be associated with the resource, provided in the form: projects/{project}/locations/{location}/dataTaxonomies/{dataTaxonomy}/attributes/{data_attribute_id}
+  &quot;createTime&quot;: &quot;A String&quot;, # Output only. The time when the DataAttributeBinding was created.
+  &quot;description&quot;: &quot;A String&quot;, # Optional. Description of the DataAttributeBinding.
+  &quot;etag&quot;: &quot;A String&quot;, # This checksum is computed by the server based on the value of other fields, and may be sent on update and delete requests to ensure the client has an up-to-date value before proceeding. Etags must be used when calling the DeleteDataAttributeBinding and the UpdateDataAttributeBinding method.
+  &quot;labels&quot;: { # Optional. User-defined labels for the DataAttributeBinding.
+  &quot;name&quot;: &quot;A String&quot;, # Output only. The relative resource name of the Data Attribute Binding, of the form: projects/{project_number}/locations/{location}/dataAttributeBindings/{data_attribute_binding_id}
+  &quot;paths&quot;: [ # Optional. The list of paths for items within the associated resource (eg. columns and partitions within a table) along with attribute bindings.
+    { # Represents a subresource of the given resource, and associated bindings with it. Currently supported subresources are column and partition schema fields within a table.
+      &quot;attributes&quot;: [ # Optional. List of attributes to be associated with the path of the resource, provided in the form: projects/{project}/locations/{location}/dataTaxonomies/{dataTaxonomy}/attributes/{data_attribute_id}
+      &quot;name&quot;: &quot;A String&quot;, # Required. The name identifier of the path. Nested columns should be of the form: &#x27;address.city&#x27;.
+  &quot;resource&quot;: &quot;A String&quot;, # Optional. Immutable. The resource name of the resource that is associated to attributes. Presently, only entity resource is supported in the form: projects/{project}/locations/{location}/lakes/{lake}/zones/{zone}/entities/{entity_id} Must belong in the same project and region as the attribute binding, and there can only exist one active binding for a resource.
+  &quot;uid&quot;: &quot;A String&quot;, # Output only. System generated globally unique ID for the DataAttributeBinding. This ID will be different if the DataAttributeBinding is deleted and re-created with the same name.
+  &quot;updateTime&quot;: &quot;A String&quot;, # Output only. The time when the DataAttributeBinding was last updated.
+  dataAttributeBindingId: string, Required. DataAttributeBinding identifier. * Must contain only lowercase letters, numbers and hyphens. * Must start with a letter. * Must be between 1-63 characters. * Must end with a number or a letter. * Must be unique within the Location.
+  <pre>Deletes a DataAttributeBinding resource. All attributes within the DataAttributeBinding must be deleted before the DataAttributeBinding can be deleted.
+  name: string, Required. The resource name of the DataAttributeBinding: projects/{project_number}/locations/{location_id}/dataAttributeBindings/{data_attribute_binding_id} (required)
+  etag: string, Required. If the client provided etag value does not match the current etag value, the DeleteDataAttributeBindingRequest method returns an ABORTED error response. Etags must be used when calling the DeleteDataAttributeBinding.
+  <pre>Retrieves a DataAttributeBinding resource.
+  <pre>Lists DataAttributeBinding resources in a project and location.
+  parent: string, Required. The resource name of the Location: projects/{project_number}/locations/{location_id} (required)
+  filter: string, Optional. Filter request. Filter using resource: filter=resource:&quot;resource-name&quot; Filter using attribute: filter=attributes:&quot;attribute-name&quot; Filter using attribute in paths list: filter=paths.attributes:&quot;attribute-name&quot;
+  pageSize: integer, Optional. Maximum number of DataAttributeBindings to return. The service may return fewer than this value. If unspecified, at most 10 DataAttributeBindings will be returned. The maximum value is 1000; values above 1000 will be coerced to 1000.
+  pageToken: string, Optional. Page token received from a previous ListDataAttributeBindings call. Provide this to retrieve the subsequent page. When paginating, all other parameters provided to ListDataAttributeBindings must match the call that provided the page token.
+    { # List DataAttributeBindings response.
+  &quot;dataAttributeBindings&quot;: [ # DataAttributeBindings under the given parent Location.
+  <pre>Updates a DataAttributeBinding resource.
+  name: string, Output only. The relative resource name of the Data Attribute Binding, of the form: projects/{project_number}/locations/{location}/dataAttributeBindings/{data_attribute_binding_id} (required)

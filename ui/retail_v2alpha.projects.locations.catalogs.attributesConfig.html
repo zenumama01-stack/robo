@@ -1,0 +1,12 @@
+<h1><a href="retail_v2alpha.html">Vertex AI Search for commerce API</a> . <a href="retail_v2alpha.projects.html">projects</a> . <a href="retail_v2alpha.projects.locations.html">locations</a> . <a href="retail_v2alpha.projects.locations.catalogs.html">catalogs</a> . <a href="retail_v2alpha.projects.locations.catalogs.attributesConfig.html">attributesConfig</a></h1>
+  <code><a href="#batchRemoveCatalogAttributes">batchRemoveCatalogAttributes(attributesConfig, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Removes all specified CatalogAttributes from the AttributesConfig.</p>
+    &quot;recommendationsFilteringOption&quot;: &quot;A String&quot;, # When AttributesConfig.attribute_config_level is CATALOG_LEVEL_ATTRIBUTE_CONFIG, if RECOMMENDATIONS_FILTERING_ENABLED, attribute values are filterable for recommendations. This option works for categorical features only, does not work for numerical features, inventory filtering.
+    <code class="details" id="batchRemoveCatalogAttributes">batchRemoveCatalogAttributes(attributesConfig, body=None, x__xgafv=None)</code>
+  <pre>Removes all specified CatalogAttributes from the AttributesConfig.
+  attributesConfig: string, Required. The attributes config resource shared by all catalog attributes being deleted. Format: `projects/{project_number}/locations/{location_id}/catalogs/{catalog_id}/attributesConfig` (required)
+{ # Request for CatalogService.BatchRemoveCatalogAttributes method.
+  &quot;attributeKeys&quot;: [ # Required. The attribute name keys of the CatalogAttributes to delete. A maximum of 1000 catalog attributes can be deleted in a batch.
+    { # Response of the CatalogService.BatchRemoveCatalogAttributes.
+  &quot;deletedCatalogAttributes&quot;: [ # Catalog attributes that were deleted. Only pre-loaded catalog attributes that are neither in use by products nor predefined can be deleted.
+  &quot;resetCatalogAttributes&quot;: [ # Catalog attributes that were reset. Catalog attributes that are either in use by products or are predefined attributes cannot be deleted; however, their configuration properties will reset to default values upon removal request.

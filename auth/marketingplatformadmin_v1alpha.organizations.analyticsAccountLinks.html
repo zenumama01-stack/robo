@@ -1,0 +1,28 @@
+<h1><a href="marketingplatformadmin_v1alpha.html">Google Marketing Platform Admin API</a> . <a href="marketingplatformadmin_v1alpha.organizations.html">organizations</a> . <a href="marketingplatformadmin_v1alpha.organizations.analyticsAccountLinks.html">analyticsAccountLinks</a></h1>
+<p class="firstline">Creates the link between the Analytics account and the Google Marketing Platform organization. User needs to be an org user, and admin on the Analytics account to create the link. If the account is already linked to an organization, user needs to unlink the account from the current organization, then try link again.</p>
+<p class="firstline">Deletes the AnalyticsAccountLink, which detaches the Analytics account from the Google Marketing Platform organization. User needs to be an org user, and admin on the Analytics account in order to delete the link.</p>
+<p class="firstline">Lists the Google Analytics accounts link to the specified Google Marketing Platform organization.</p>
+  <code><a href="#setPropertyServiceLevel">setPropertyServiceLevel(analyticsAccountLink, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Updates the service level for an Analytics property.</p>
+  <pre>Creates the link between the Analytics account and the Google Marketing Platform organization. User needs to be an org user, and admin on the Analytics account to create the link. If the account is already linked to an organization, user needs to unlink the account from the current organization, then try link again.
+  parent: string, Required. The parent resource where this Analytics account link will be created. Format: organizations/{org_id} (required)
+{ # A resource message representing the link between a Google Analytics account and a Google Marketing Platform organization.
+  &quot;analyticsAccount&quot;: &quot;A String&quot;, # Required. Immutable. The resource name of the AnalyticsAdmin API account. The account ID will be used as the ID of this AnalyticsAccountLink resource, which will become the final component of the resource name. Format: analyticsadmin.googleapis.com/accounts/{account_id}
+  &quot;displayName&quot;: &quot;A String&quot;, # Output only. The human-readable name for the Analytics account.
+  &quot;linkVerificationState&quot;: &quot;A String&quot;, # Output only. The verification state of the link between the Analytics account and the parent organization.
+  &quot;name&quot;: &quot;A String&quot;, # Identifier. Resource name of this AnalyticsAccountLink. Note the resource ID is the same as the ID of the Analtyics account. Format: organizations/{org_id}/analyticsAccountLinks/{analytics_account_link_id} Example: &quot;organizations/xyz/analyticsAccountLinks/1234&quot;
+  <pre>Deletes the AnalyticsAccountLink, which detaches the Analytics account from the Google Marketing Platform organization. User needs to be an org user, and admin on the Analytics account in order to delete the link.
+  name: string, Required. The name of the Analytics account link to delete. Format: organizations/{org_id}/analyticsAccountLinks/{analytics_account_link_id} (required)
+  <pre>Lists the Google Analytics accounts link to the specified Google Marketing Platform organization.
+  parent: string, Required. The parent organization, which owns this collection of Analytics account links. Format: organizations/{org_id} (required)
+  pageSize: integer, Optional. The maximum number of Analytics account links to return in one call. The service may return fewer than this value. If unspecified, at most 50 Analytics account links will be returned. The maximum value is 1000; values above 1000 will be coerced to 1000.
+  pageToken: string, Optional. A page token, received from a previous ListAnalyticsAccountLinks call. Provide this to retrieve the subsequent page. When paginating, all other parameters provided to `ListAnalyticsAccountLinks` must match the call that provided the page token.
+    { # Response message for ListAnalyticsAccountLinks RPC.
+  &quot;analyticsAccountLinks&quot;: [ # Analytics account links in this organization.
+    <code class="details" id="setPropertyServiceLevel">setPropertyServiceLevel(analyticsAccountLink, body=None, x__xgafv=None)</code>
+  <pre>Updates the service level for an Analytics property.
+  analyticsAccountLink: string, Required. The parent AnalyticsAccountLink scope where this property is in. Format: organizations/{org_id}/analyticsAccountLinks/{analytics_account_link_id} (required)
+{ # Request message for SetPropertyServiceLevel RPC.
+  &quot;analyticsProperty&quot;: &quot;A String&quot;, # Required. The Analytics property to change the ServiceLevel setting. This field is the name of the Google Analytics Admin API property resource. Format: analyticsadmin.googleapis.com/properties/{property_id}
+  &quot;serviceLevel&quot;: &quot;A String&quot;, # Required. The service level to set for this property.
+    { # Response message for SetPropertyServiceLevel RPC.

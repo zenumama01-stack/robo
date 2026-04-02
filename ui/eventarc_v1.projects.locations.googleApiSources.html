@@ -1,0 +1,34 @@
+<h1><a href="eventarc_v1.html">Eventarc API</a> . <a href="eventarc_v1.projects.html">projects</a> . <a href="eventarc_v1.projects.locations.html">locations</a> . <a href="eventarc_v1.projects.locations.googleApiSources.html">googleApiSources</a></h1>
+  <code><a href="#create">create(parent, body=None, googleApiSourceId=None, validateOnly=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Create a new GoogleApiSource in a particular project and location.</p>
+<p class="firstline">Delete a single GoogleApiSource.</p>
+<p class="firstline">Get a single GoogleApiSource.</p>
+<p class="firstline">List GoogleApiSources.</p>
+<p class="firstline">Update a single GoogleApiSource.</p>
+    <code class="details" id="create">create(parent, body=None, googleApiSourceId=None, validateOnly=None, x__xgafv=None)</code>
+  <pre>Create a new GoogleApiSource in a particular project and location.
+  parent: string, Required. The parent collection in which to add this google api source. (required)
+{ # A GoogleApiSource represents a subscription of 1P events from a MessageBus.
+  &quot;destination&quot;: &quot;A String&quot;, # Required. Destination is the message bus that the GoogleApiSource is delivering to. It must be point to the full resource name of a MessageBus. Format: &quot;projects/{PROJECT_ID}/locations/{region}/messagesBuses/{MESSAGE_BUS_ID)
+  &quot;loggingConfig&quot;: { # The configuration for Platform Telemetry logging for Eventarc Advanced resources. # Optional. Config to control Platform logging for the GoogleApiSource.
+    &quot;logSeverity&quot;: &quot;A String&quot;, # Optional. The minimum severity of logs that will be sent to Stackdriver/Platform Telemetry. Logs at severitiy ≥ this value will be sent, unless it is NONE.
+  &quot;name&quot;: &quot;A String&quot;, # Identifier. Resource name of the form projects/{project}/locations/{location}/googleApiSources/{google_api_source}
+  &quot;organizationSubscription&quot;: { # Config to enabled subscribing to events from other projects in the org. # Optional. Config to enable subscribing to events from all projects in the GoogleApiSource&#x27;s org.
+    &quot;enabled&quot;: True or False, # Required. Enable org level subscription.
+  &quot;projectSubscriptions&quot;: { # Config to enable subscribing to all events from a list of projects. # Optional. Config to enable subscribing to all events from a list of projects. All the projects must be in the same org as the GoogleApiSource.
+    &quot;list&quot;: [ # Required. A list of projects to receive events from. All the projects must be in the same org. The listed projects should have the format project/{identifier} where identifier can be either the project id for project number. A single list may contain both formats. At most 100 projects can be listed.
+  googleApiSourceId: string, Required. The user-provided ID to be assigned to the GoogleApiSource. It should match the format `^[a-z]([a-z0-9-]{0,61}[a-z0-9])?$`.
+  <pre>Delete a single GoogleApiSource.
+  name: string, Required. The name of the GoogleApiSource to be deleted. (required)
+  allowMissing: boolean, Optional. If set to true, and the MessageBus is not found, the request will succeed but no action will be taken on the server.
+  etag: string, Optional. If provided, the MessageBus will only be deleted if the etag matches the current etag on the resource.
+  <pre>Get a single GoogleApiSource.
+  name: string, Required. The name of the google api source to get. (required)
+  <pre>List GoogleApiSources.
+  parent: string, Required. The parent collection to list GoogleApiSources on. (required)
+    { # The response message for the `ListGoogleApiSources` method.
+  &quot;googleApiSources&quot;: [ # The requested GoogleApiSources, up to the number specified in `page_size`.
+  &quot;nextPageToken&quot;: &quot;A String&quot;, # A page token that can be sent to `ListMessageBusEnrollments` to request the next page. If this is empty, then there are no more pages.
+  <pre>Update a single GoogleApiSource.
+  name: string, Identifier. Resource name of the form projects/{project}/locations/{location}/googleApiSources/{google_api_source} (required)
+  allowMissing: boolean, Optional. If set to true, and the GoogleApiSource is not found, a new GoogleApiSource will be created. In this situation, `update_mask` is ignored.

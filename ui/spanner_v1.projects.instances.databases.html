@@ -1,0 +1,199 @@
+<h1><a href="spanner_v1.html">Cloud Spanner API</a> . <a href="spanner_v1.projects.html">projects</a> . <a href="spanner_v1.projects.instances.html">instances</a> . <a href="spanner_v1.projects.instances.databases.html">databases</a></h1>
+  <code><a href="spanner_v1.projects.instances.databases.backupSchedules.html">backupSchedules()</a></code>
+  <code><a href="spanner_v1.projects.instances.databases.databaseRoles.html">databaseRoles()</a></code>
+<p class="firstline">Returns the databaseRoles Resource.</p>
+  <code><a href="spanner_v1.projects.instances.databases.operations.html">operations()</a></code>
+  <code><a href="spanner_v1.projects.instances.databases.sessions.html">sessions()</a></code>
+  <code><a href="#addSplitPoints">addSplitPoints(database, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Adds split points to specified tables and indexes of a database.</p>
+  <code><a href="#changequorum">changequorum(name, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">`ChangeQuorum` is strictly restricted to databases that use dual-region instance configurations. Initiates a background operation to change the quorum of a database from dual-region mode to single-region mode or vice versa. The returned long-running operation has a name of the format `projects//instances//databases//operations/` and can be used to track execution of the `ChangeQuorum`. The metadata field type is ChangeQuorumMetadata. Authorization requires `spanner.databases.changequorum` permission on the resource database.</p>
+<p class="firstline">Creates a new Spanner database and starts to prepare it for serving. The returned long-running operation will have a name of the format `/operations/` and can be used to track preparation of the database. The metadata field type is CreateDatabaseMetadata. The response field type is Database, if successful.</p>
+  <code><a href="#dropDatabase">dropDatabase(database, x__xgafv=None)</a></code></p>
+<p class="firstline">Drops (aka deletes) a Cloud Spanner database. Completed backups for the database will be retained according to their `expire_time`. Note: Cloud Spanner might continue to accept requests for a few seconds after the database has been deleted.</p>
+<p class="firstline">Gets the state of a Cloud Spanner database.</p>
+  <code><a href="#getDdl">getDdl(database, x__xgafv=None)</a></code></p>
+<p class="firstline">Returns the schema of a Cloud Spanner database as a list of formatted DDL statements. This method does not show pending schema updates, those may be queried using the Operations API.</p>
+  <code><a href="#getScans">getScans(name, endTime=None, startTime=None, view=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Request a specific scan with Database-specific data for Cloud Key Visualizer.</p>
+<p class="firstline">Lists Cloud Spanner databases.</p>
+<p class="firstline">Updates a Cloud Spanner database. The returned long-running operation can be used to track the progress of updating the database. If the named database does not exist, returns `NOT_FOUND`. While the operation is pending: * The database's reconciling field is set to true. * Cancelling the operation is best-effort. If the cancellation succeeds, the operation metadata's cancel_time is set, the updates are reverted, and the operation terminates with a `CANCELLED` status. * New UpdateDatabase requests will return a `FAILED_PRECONDITION` error until the pending operation is done (returns successfully or with error). * Reading the database via the API continues to give the pre-request values. Upon completion of the returned operation: * The new values are in effect and readable via the API. * The database's reconciling field becomes false. The returned long-running operation will have a name of the format `projects//instances//databases//operations/` and can be used to track the database modification. The metadata field type is UpdateDatabaseMetadata. The response field type is Database, if successful.</p>
+<p class="firstline">Create a new database by restoring from a completed backup. The new database must be in the same project and in an instance with the same instance configuration as the instance containing the backup. The returned database long-running operation has a name of the format `projects//instances//databases//operations/`, and can be used to track the progress of the operation, and to cancel it. The metadata field type is RestoreDatabaseMetadata. The response type is Database, if successful. Cancelling the returned operation will stop the restore and delete the database. There can be only one database being restored into an instance at a time. Once the restore operation completes, a new restore operation can be initiated, without waiting for the optimize operation associated with the first restore to complete.</p>
+  <code><a href="#updateDdl">updateDdl(database, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Updates the schema of a Cloud Spanner database by creating/altering/dropping tables, columns, indexes, etc. The returned long-running operation will have a name of the format `/operations/` and can be used to track execution of the schema changes. The metadata field type is UpdateDatabaseDdlMetadata. The operation has no response.</p>
+    <code class="details" id="addSplitPoints">addSplitPoints(database, body=None, x__xgafv=None)</code>
+  <pre>Adds split points to specified tables and indexes of a database.
+  database: string, Required. The database on whose tables or indexes the split points are to be added. Values are of the form `projects//instances//databases/`. (required)
+{ # The request for AddSplitPoints.
+  &quot;initiator&quot;: &quot;A String&quot;, # Optional. A user-supplied tag associated with the split points. For example, &quot;initial_data_load&quot;, &quot;special_event_1&quot;. Defaults to &quot;CloudAddSplitPointsAPI&quot; if not specified. The length of the tag must not exceed 50 characters, or else it is trimmed. Only valid UTF8 characters are allowed.
+  &quot;splitPoints&quot;: [ # Required. The split points to add.
+    { # The split points of a table or an index.
+      &quot;expireTime&quot;: &quot;A String&quot;, # Optional. The expiration timestamp of the split points. A timestamp in the past means immediate expiration. The maximum value can be 30 days in the future. Defaults to 10 days in the future if not specified.
+      &quot;index&quot;: &quot;A String&quot;, # The index to split. If specified, the `table` field must refer to the index&#x27;s base table.
+      &quot;keys&quot;: [ # Required. The list of split keys. In essence, the split boundaries.
+        { # A split key.
+          &quot;keyParts&quot;: [ # Required. The column values making up the split key.
+      &quot;table&quot;: &quot;A String&quot;, # The table to split.
+    { # The response for AddSplitPoints.
+    <code class="details" id="changequorum">changequorum(name, body=None, x__xgafv=None)</code>
+  <pre>`ChangeQuorum` is strictly restricted to databases that use dual-region instance configurations. Initiates a background operation to change the quorum of a database from dual-region mode to single-region mode or vice versa. The returned long-running operation has a name of the format `projects//instances//databases//operations/` and can be used to track execution of the `ChangeQuorum`. The metadata field type is ChangeQuorumMetadata. Authorization requires `spanner.databases.changequorum` permission on the resource database.
+  name: string, Required. Name of the database in which to apply `ChangeQuorum`. Values are of the form `projects//instances//databases/`. (required)
+{ # The request for ChangeQuorum.
+  &quot;etag&quot;: &quot;A String&quot;, # Optional. The etag is the hash of the `QuorumInfo`. The `ChangeQuorum` operation is only performed if the etag matches that of the `QuorumInfo` in the current database resource. Otherwise the API returns an `ABORTED` error. The etag is used for optimistic concurrency control as a way to help prevent simultaneous change quorum requests that could create a race condition.
+  &quot;name&quot;: &quot;A String&quot;, # Required. Name of the database in which to apply `ChangeQuorum`. Values are of the form `projects//instances//databases/`.
+  &quot;quorumType&quot;: { # Information about the database quorum type. This only applies to dual-region instance configs. # Required. The type of this quorum.
+    &quot;dualRegion&quot;: { # Message type for a dual-region quorum. Currently this type has no options. # Dual-region quorum type.
+    &quot;singleRegion&quot;: { # Message type for a single-region quorum. # Single-region quorum type.
+      &quot;servingLocation&quot;: &quot;A String&quot;, # Required. The location of the serving region, for example, &quot;us-central1&quot;. The location must be one of the regions within the dual-region instance configuration of your database. The list of valid locations is available using the GetInstanceConfig API. This should only be used if you plan to change quorum to the single-region quorum type.
+  <pre>Creates a new Spanner database and starts to prepare it for serving. The returned long-running operation will have a name of the format `/operations/` and can be used to track preparation of the database. The metadata field type is CreateDatabaseMetadata. The response field type is Database, if successful.
+  parent: string, Required. The name of the instance that will serve the new database. Values are of the form `projects//instances/`. (required)
+{ # The request for CreateDatabase.
+  &quot;createStatement&quot;: &quot;A String&quot;, # Required. A `CREATE DATABASE` statement, which specifies the ID of the new database. The database ID must conform to the regular expression `a-z*[a-z0-9]` and be between 2 and 30 characters in length. If the database ID is a reserved word or if it contains a hyphen, the database ID must be enclosed in backticks (`` ` ``).
+  &quot;databaseDialect&quot;: &quot;A String&quot;, # Optional. The dialect of the Cloud Spanner Database.
+  &quot;encryptionConfig&quot;: { # Encryption configuration for a Cloud Spanner database. # Optional. The encryption configuration for the database. If this field is not specified, Cloud Spanner will encrypt/decrypt all data at rest using Google default encryption.
+    &quot;kmsKeyName&quot;: &quot;A String&quot;, # The Cloud KMS key to be used for encrypting and decrypting the database. Values are of the form `projects//locations//keyRings//cryptoKeys/`.
+    &quot;kmsKeyNames&quot;: [ # Specifies the KMS configuration for one or more keys used to encrypt the database. Values are of the form `projects//locations//keyRings//cryptoKeys/`. The keys referenced by `kms_key_names` must fully cover all regions of the database&#x27;s instance configuration. Some examples: * For regional (single-region) instance configurations, specify a regional location KMS key. * For multi-region instance configurations of type `GOOGLE_MANAGED`, either specify a multi-region location KMS key or multiple regional location KMS keys that cover all regions in the instance configuration. * For an instance configuration of type `USER_MANAGED`, specify only regional location KMS keys to cover each region in the instance configuration. Multi-region location KMS keys aren&#x27;t supported for `USER_MANAGED` type instance configurations.
+  &quot;extraStatements&quot;: [ # Optional. A list of DDL statements to run inside the newly created database. Statements can create tables, indexes, etc. These statements execute atomically with the creation of the database: if there is an error in any statement, the database is not created.
+  &quot;protoDescriptors&quot;: &quot;A String&quot;, # Optional. Proto descriptors used by `CREATE/ALTER PROTO BUNDLE` statements in &#x27;extra_statements&#x27;. Contains a protobuf-serialized [`google.protobuf.FileDescriptorSet`](https://github.com/protocolbuffers/protobuf/blob/main/src/google/protobuf/descriptor.proto) descriptor set. To generate it, [install](https://grpc.io/docs/protoc-installation/) and run `protoc` with --include_imports and --descriptor_set_out. For example, to generate for moon/shot/app.proto, run ``` $protoc --proto_path=/app_path --proto_path=/lib_path \ --include_imports \ --descriptor_set_out=descriptors.data \ moon/shot/app.proto ``` For more details, see protobuffer [self description](https://developers.google.com/protocol-buffers/docs/techniques#self-description).
+    <code class="details" id="dropDatabase">dropDatabase(database, x__xgafv=None)</code>
+  <pre>Drops (aka deletes) a Cloud Spanner database. Completed backups for the database will be retained according to their `expire_time`. Note: Cloud Spanner might continue to accept requests for a few seconds after the database has been deleted.
+  database: string, Required. The database to be dropped. (required)
+  <pre>Gets the state of a Cloud Spanner database.
+  name: string, Required. The name of the requested database. Values are of the form `projects//instances//databases/`. (required)
+    { # A Cloud Spanner database.
+  &quot;createTime&quot;: &quot;A String&quot;, # Output only. If exists, the time at which the database creation started.
+  &quot;databaseDialect&quot;: &quot;A String&quot;, # Output only. The dialect of the Cloud Spanner Database.
+  &quot;defaultLeader&quot;: &quot;A String&quot;, # Output only. The read-write region which contains the database&#x27;s leader replicas. This is the same as the value of default_leader database option set using DatabaseAdmin.CreateDatabase or DatabaseAdmin.UpdateDatabaseDdl. If not explicitly set, this is empty.
+  &quot;earliestVersionTime&quot;: &quot;A String&quot;, # Output only. Earliest timestamp at which older versions of the data can be read. This value is continuously updated by Cloud Spanner and becomes stale the moment it is queried. If you are using this value to recover data, make sure to account for the time from the moment when the value is queried to the moment when you initiate the recovery.
+  &quot;enableDropProtection&quot;: True or False, # Optional. Whether drop protection is enabled for this database. Defaults to false, if not set. For more details, please see how to [prevent accidental database deletion](https://cloud.google.com/spanner/docs/prevent-database-deletion).
+  &quot;encryptionConfig&quot;: { # Encryption configuration for a Cloud Spanner database. # Output only. For databases that are using customer managed encryption, this field contains the encryption configuration for the database. For databases that are using Google default or other types of encryption, this field is empty.
+  &quot;encryptionInfo&quot;: [ # Output only. For databases that are using customer managed encryption, this field contains the encryption information for the database, such as all Cloud KMS key versions that are in use. The `encryption_status` field inside of each `EncryptionInfo` is not populated. For databases that are using Google default or other types of encryption, this field is empty. This field is propagated lazily from the backend. There might be a delay from when a key version is being used and when it appears in this field.
+  &quot;name&quot;: &quot;A String&quot;, # Required. The name of the database. Values are of the form `projects//instances//databases/`, where `` is as specified in the `CREATE DATABASE` statement. This name can be passed to other API methods to identify the database.
+  &quot;quorumInfo&quot;: { # Information about the dual-region quorum. # Output only. Applicable only for databases that use dual-region instance configurations. Contains information about the quorum.
+    &quot;etag&quot;: &quot;A String&quot;, # Output only. The etag is used for optimistic concurrency control as a way to help prevent simultaneous `ChangeQuorum` requests that might create a race condition.
+    &quot;initiator&quot;: &quot;A String&quot;, # Output only. Whether this `ChangeQuorum` is Google or User initiated.
+    &quot;quorumType&quot;: { # Information about the database quorum type. This only applies to dual-region instance configs. # Output only. The type of this quorum. See QuorumType for more information about quorum type specifications.
+    &quot;startTime&quot;: &quot;A String&quot;, # Output only. The timestamp when the request was triggered.
+  &quot;reconciling&quot;: True or False, # Output only. If true, the database is being updated. If false, there are no ongoing update operations for the database.
+  &quot;restoreInfo&quot;: { # Information about the database restore. # Output only. Applicable only for restored databases. Contains information about the restore source.
+    &quot;backupInfo&quot;: { # Information about a backup. # Information about the backup used to restore the database. The backup may no longer exist.
+      &quot;backup&quot;: &quot;A String&quot;, # Name of the backup.
+      &quot;createTime&quot;: &quot;A String&quot;, # The time the CreateBackup request was received.
+      &quot;sourceDatabase&quot;: &quot;A String&quot;, # Name of the database the backup was created from.
+      &quot;versionTime&quot;: &quot;A String&quot;, # The backup contains an externally consistent copy of `source_database` at the timestamp specified by `version_time`. If the CreateBackup request did not specify `version_time`, the `version_time` of the backup is equivalent to the `create_time`.
+  &quot;state&quot;: &quot;A String&quot;, # Output only. The current database state.
+  &quot;versionRetentionPeriod&quot;: &quot;A String&quot;, # Output only. The period in which Cloud Spanner retains all versions of data for the database. This is the same as the value of version_retention_period database option set using UpdateDatabaseDdl. Defaults to 1 hour, if not set.
+    <code class="details" id="getDdl">getDdl(database, x__xgafv=None)</code>
+  <pre>Returns the schema of a Cloud Spanner database as a list of formatted DDL statements. This method does not show pending schema updates, those may be queried using the Operations API.
+  database: string, Required. The database whose schema we wish to get. Values are of the form `projects//instances//databases/` (required)
+    { # The response for GetDatabaseDdl.
+  &quot;protoDescriptors&quot;: &quot;A String&quot;, # Proto descriptors stored in the database. Contains a protobuf-serialized [google.protobuf.FileDescriptorSet](https://github.com/protocolbuffers/protobuf/blob/main/src/google/protobuf/descriptor.proto). For more details, see protobuffer [self description](https://developers.google.com/protocol-buffers/docs/techniques#self-description).
+  &quot;statements&quot;: [ # A list of formatted DDL statements defining the schema of the database specified in the request.
+    <code class="details" id="getScans">getScans(name, endTime=None, startTime=None, view=None, x__xgafv=None)</code>
+  <pre>Request a specific scan with Database-specific data for Cloud Key Visualizer.
+  name: string, Required. The unique name of the scan containing the requested information, specific to the Database service implementing this interface. (required)
+  endTime: string, The upper bound for the time range to retrieve Scan data for.
+  startTime: string, These fields restrict the Database-specific information returned in the `Scan.data` field. If a `View` is provided that does not include the `Scan.data` field, these are ignored. This range of time must be entirely contained within the defined time range of the targeted scan. The lower bound for the time range to retrieve Scan data for.
+  view: string, Specifies which parts of the Scan should be returned in the response. Note, if left unspecified, the FULL view is assumed.
+      VIEW_UNSPECIFIED - Not specified, equivalent to SUMMARY.
+      SUMMARY - Server responses only include `name`, `details`, `start_time` and `end_time`. The default value. Note, the ListScans method may only use this view type, others view types are not supported.
+      FULL - Full representation of the scan is returned in the server response, including `data`.
+    { # Scan is a structure which describes Cloud Key Visualizer scan information.
+  &quot;details&quot;: { # Additional information provided by the implementer.
+  &quot;endTime&quot;: &quot;A String&quot;, # The upper bound for when the scan is defined.
+  &quot;name&quot;: &quot;A String&quot;, # The unique name of the scan, specific to the Database service implementing this interface.
+  &quot;scanData&quot;: { # ScanData contains Cloud Key Visualizer scan data used by the caller to construct a visualization. # Output only. Cloud Key Visualizer scan data. Note, this field is not available to the ListScans method.
+    &quot;data&quot;: { # Cloud Key Visualizer scan data. The range of time this information covers is captured via the above time range fields. Note, this field is not available to the ListScans method.
+      &quot;dataSourceEndToken&quot;: &quot;A String&quot;, # The token signifying the end of a data_source.
+      &quot;dataSourceSeparatorToken&quot;: &quot;A String&quot;, # The token delimiting a datasource name from the rest of a key in a data_source.
+      &quot;diagnosticMessages&quot;: [ # The list of messages (info, alerts, ...)
+        { # A message representing the key visualizer diagnostic messages.
+          &quot;info&quot;: { # A message representing a user-facing string whose value may need to be translated before being displayed. # Information about this diagnostic information.
+            &quot;args&quot;: { # A map of arguments used when creating the localized message. Keys represent parameter names which may be used by the localized version when substituting dynamic values.
+            &quot;message&quot;: &quot;A String&quot;, # The canonical English version of this message. If no token is provided or the front-end has no message associated with the token, this text will be displayed as-is.
+            &quot;token&quot;: &quot;A String&quot;, # The token identifying the message, e.g. &#x27;METRIC_READ_CPU&#x27;. This should be unique within the service.
+          &quot;metric&quot;: { # A message representing a user-facing string whose value may need to be translated before being displayed. # The metric.
+          &quot;metricSpecific&quot;: True or False, # Whether this message is specific only for the current metric. By default Diagnostics are shown for all metrics, regardless which metric is the currently selected metric in the UI. However occasionally a metric will generate so many messages that the resulting visual clutter becomes overwhelming. In this case setting this to true, will show the diagnostic messages for that metric only if it is the currently selected metric.
+          &quot;severity&quot;: &quot;A String&quot;, # The severity of the diagnostic message.
+          &quot;shortMessage&quot;: { # A message representing a user-facing string whose value may need to be translated before being displayed. # The short message.
+      &quot;endKeyStrings&quot;: [ # We discretize the entire keyspace into buckets. Assuming each bucket has an inclusive keyrange and covers keys from k(i) ... k(n). In this case k(n) would be an end key for a given range. end_key_string is the collection of all such end keys
+      &quot;hasPii&quot;: True or False, # Whether this scan contains PII.
+      &quot;indexedKeys&quot;: [ # Keys of key ranges that contribute significantly to a given metric Can be thought of as heavy hitters.
+      &quot;keySeparator&quot;: &quot;A String&quot;, # The token delimiting the key prefixes.
+      &quot;keyUnit&quot;: &quot;A String&quot;, # The unit for the key: e.g. &#x27;key&#x27; or &#x27;chunk&#x27;.
+      &quot;metrics&quot;: [ # The list of data objects for each metric.
+        { # A message representing the actual monitoring data, values for each key bucket over time, of a metric.
+          &quot;aggregation&quot;: &quot;A String&quot;, # The aggregation function used to aggregate each key bucket
+          &quot;category&quot;: { # A message representing a user-facing string whose value may need to be translated before being displayed. # The category of the metric, e.g. &quot;Activity&quot;, &quot;Alerts&quot;, &quot;Reads&quot;, etc.
+          &quot;derived&quot;: { # A message representing a derived metric. # The references to numerator and denominator metrics for a derived metric.
+            &quot;denominator&quot;: { # A message representing a user-facing string whose value may need to be translated before being displayed. # The name of the denominator metric. e.g. &quot;rows&quot;.
+            &quot;numerator&quot;: { # A message representing a user-facing string whose value may need to be translated before being displayed. # The name of the numerator metric. e.g. &quot;latency&quot;.
+          &quot;displayLabel&quot;: { # A message representing a user-facing string whose value may need to be translated before being displayed. # The displayed label of the metric.
+          &quot;hasNonzeroData&quot;: True or False, # Whether the metric has any non-zero data.
+          &quot;hotValue&quot;: 3.14, # The value that is considered hot for the metric. On a per metric basis hotness signals high utilization and something that might potentially be a cause for concern by the end user. hot_value is used to calibrate and scale visual color scales.
+          &quot;indexedHotKeys&quot;: { # The (sparse) mapping from time index to an IndexedHotKey message, representing those time intervals for which there are hot keys.
+            &quot;a_key&quot;: { # A message representing a (sparse) collection of hot keys for specific key buckets.
+              &quot;sparseHotKeys&quot;: { # A (sparse) mapping from key bucket index to the index of the specific hot row key for that key bucket. The index of the hot row key can be translated to the actual row key via the ScanData.VisualizationData.indexed_keys repeated field.
+          &quot;indexedKeyRangeInfos&quot;: { # The (sparse) mapping from time interval index to an IndexedKeyRangeInfos message, representing those time intervals for which there are informational messages concerning key ranges.
+            &quot;a_key&quot;: { # A message representing a (sparse) collection of KeyRangeInfos for specific key buckets.
+              &quot;keyRangeInfos&quot;: { # A (sparse) mapping from key bucket index to the KeyRangeInfos for that key bucket.
+                &quot;a_key&quot;: { # A message representing a list of specific information for multiple key ranges.
+                  &quot;infos&quot;: [ # The list individual KeyRangeInfos.
+                    { # A message representing information for a key range (possibly one key).
+                      &quot;contextValues&quot;: [ # The list of context values for this key range.
+                        { # A message representing context for a KeyRangeInfo, including a label, value, unit, and severity.
+                          &quot;label&quot;: { # A message representing a user-facing string whose value may need to be translated before being displayed. # The label for the context value. e.g. &quot;latency&quot;.
+                          &quot;severity&quot;: &quot;A String&quot;, # The severity of this context.
+                          &quot;unit&quot;: &quot;A String&quot;, # The unit of the context value.
+                          &quot;value&quot;: 3.14, # The value for the context.
+                      &quot;endKeyIndex&quot;: 42, # The index of the end key in indexed_keys.
+                      &quot;info&quot;: { # A message representing a user-facing string whose value may need to be translated before being displayed. # Information about this key range, for all metrics.
+                      &quot;keysCount&quot;: &quot;A String&quot;, # The number of keys this range covers.
+                      &quot;metric&quot;: { # A message representing a user-facing string whose value may need to be translated before being displayed. # The name of the metric. e.g. &quot;latency&quot;.
+                      &quot;startKeyIndex&quot;: 42, # The index of the start key in indexed_keys.
+                      &quot;timeOffset&quot;: &quot;A String&quot;, # The time offset. This is the time since the start of the time interval.
+                      &quot;unit&quot;: { # A message representing a user-facing string whose value may need to be translated before being displayed. # The unit of the metric. This is an unstructured field and will be mapped as is to the user.
+                      &quot;value&quot;: 3.14, # The value of the metric.
+                  &quot;totalSize&quot;: 42, # The total size of the list of all KeyRangeInfos. This may be larger than the number of repeated messages above. If that is the case, this number may be used to determine how many are not being shown.
+          &quot;info&quot;: { # A message representing a user-facing string whose value may need to be translated before being displayed. # Information about the metric.
+          &quot;matrix&quot;: { # A message representing a matrix of floats. # The data for the metric as a matrix.
+            &quot;rows&quot;: [ # The rows of the matrix.
+              { # A message representing a row of a matrix of floats.
+                &quot;cols&quot;: [ # The columns of the row.
+          &quot;unit&quot;: { # A message representing a user-facing string whose value may need to be translated before being displayed. # The unit of the metric.
+          &quot;visible&quot;: True or False, # Whether the metric is visible to the end user.
+      &quot;prefixNodes&quot;: [ # The list of extracted key prefix nodes used in the key prefix hierarchy.
+        { # A message representing a key prefix node in the key prefix hierarchy. for eg. Bigtable keyspaces are lexicographically ordered mappings of keys to values. Keys often have a shared prefix structure where users use the keys to organize data. Eg ///employee In this case Keysight will possibly use one node for a company and reuse it for all employees that fall under the company. Doing so improves legibility in the UI.
+          &quot;dataSourceNode&quot;: True or False, # Whether this corresponds to a data_source name.
+          &quot;depth&quot;: 42, # The depth in the prefix hierarchy.
+          &quot;endIndex&quot;: 42, # The index of the end key bucket of the range that this node spans.
+          &quot;startIndex&quot;: 42, # The index of the start key bucket of the range that this node spans.
+          &quot;word&quot;: &quot;A String&quot;, # The string represented by the prefix node.
+    &quot;endTime&quot;: &quot;A String&quot;, # The upper bound for when the contained data is defined.
+    &quot;startTime&quot;: &quot;A String&quot;, # A range of time (inclusive) for when the contained data is defined. The lower bound for when the contained data is defined.
+  &quot;startTime&quot;: &quot;A String&quot;, # A range of time (inclusive) for when the scan is defined. The lower bound for when the scan is defined.
+  <pre>Lists Cloud Spanner databases.
+  parent: string, Required. The instance whose databases should be listed. Values are of the form `projects//instances/`. (required)
+  pageSize: integer, Number of databases to be returned in the response. If 0 or less, defaults to the server&#x27;s maximum allowed page size.
+  pageToken: string, If non-empty, `page_token` should contain a next_page_token from a previous ListDatabasesResponse.
+    { # The response for ListDatabases.
+  &quot;databases&quot;: [ # Databases that matched the request.
+  &quot;nextPageToken&quot;: &quot;A String&quot;, # `next_page_token` can be sent in a subsequent ListDatabases call to fetch more of the matching databases.
+  <pre>Updates a Cloud Spanner database. The returned long-running operation can be used to track the progress of updating the database. If the named database does not exist, returns `NOT_FOUND`. While the operation is pending: * The database&#x27;s reconciling field is set to true. * Cancelling the operation is best-effort. If the cancellation succeeds, the operation metadata&#x27;s cancel_time is set, the updates are reverted, and the operation terminates with a `CANCELLED` status. * New UpdateDatabase requests will return a `FAILED_PRECONDITION` error until the pending operation is done (returns successfully or with error). * Reading the database via the API continues to give the pre-request values. Upon completion of the returned operation: * The new values are in effect and readable via the API. * The database&#x27;s reconciling field becomes false. The returned long-running operation will have a name of the format `projects//instances//databases//operations/` and can be used to track the database modification. The metadata field type is UpdateDatabaseMetadata. The response field type is Database, if successful.
+  name: string, Required. The name of the database. Values are of the form `projects//instances//databases/`, where `` is as specified in the `CREATE DATABASE` statement. This name can be passed to other API methods to identify the database. (required)
+  updateMask: string, Required. The list of fields to update. Currently, only `enable_drop_protection` field can be updated.
+  <pre>Create a new database by restoring from a completed backup. The new database must be in the same project and in an instance with the same instance configuration as the instance containing the backup. The returned database long-running operation has a name of the format `projects//instances//databases//operations/`, and can be used to track the progress of the operation, and to cancel it. The metadata field type is RestoreDatabaseMetadata. The response type is Database, if successful. Cancelling the returned operation will stop the restore and delete the database. There can be only one database being restored into an instance at a time. Once the restore operation completes, a new restore operation can be initiated, without waiting for the optimize operation associated with the first restore to complete.
+  parent: string, Required. The name of the instance in which to create the restored database. This instance must be in the same project and have the same instance configuration as the instance containing the source backup. Values are of the form `projects//instances/`. (required)
+{ # The request for RestoreDatabase.
+  &quot;backup&quot;: &quot;A String&quot;, # Name of the backup from which to restore. Values are of the form `projects//instances//backups/`.
+  &quot;databaseId&quot;: &quot;A String&quot;, # Required. The id of the database to create and restore to. This database must not already exist. The `database_id` appended to `parent` forms the full database name of the form `projects//instances//databases/`.
+  &quot;encryptionConfig&quot;: { # Encryption configuration for the restored database. # Optional. An encryption configuration describing the encryption type and key resources in Cloud KMS used to encrypt/decrypt the database to restore to. If this field is not specified, the restored database will use the same encryption configuration as the backup by default, namely encryption_type = `USE_CONFIG_DEFAULT_OR_BACKUP_ENCRYPTION`.
+    &quot;encryptionType&quot;: &quot;A String&quot;, # Required. The encryption type of the restored database.
+    &quot;kmsKeyNames&quot;: [ # Optional. Specifies the KMS configuration for one or more keys used to encrypt the database. Values have the form `projects//locations//keyRings//cryptoKeys/`. The keys referenced by `kms_key_names` must fully cover all regions of the database&#x27;s instance configuration. Some examples: * For regional (single-region) instance configurations, specify a regional location KMS key. * For multi-region instance configurations of type `GOOGLE_MANAGED`, either specify a multi-region location KMS key or multiple regional location KMS keys that cover all regions in the instance configuration. * For an instance configuration of type `USER_MANAGED`, specify only regional location KMS keys to cover each region in the instance configuration. Multi-region location KMS keys aren&#x27;t supported for `USER_MANAGED` type instance configurations.
+    <code class="details" id="updateDdl">updateDdl(database, body=None, x__xgafv=None)</code>
+  <pre>Updates the schema of a Cloud Spanner database by creating/altering/dropping tables, columns, indexes, etc. The returned long-running operation will have a name of the format `/operations/` and can be used to track execution of the schema changes. The metadata field type is UpdateDatabaseDdlMetadata. The operation has no response.
+  database: string, Required. The database to update. (required)
+{ # Enqueues the given DDL statements to be applied, in order but not necessarily all at once, to the database schema at some point (or points) in the future. The server checks that the statements are executable (syntactically valid, name tables that exist, etc.) before enqueueing them, but they may still fail upon later execution (for example, if a statement from another batch of statements is applied first and it conflicts in some way, or if there is some data-related problem like a `NULL` value in a column to which `NOT NULL` would be added). If a statement fails, all subsequent statements in the batch are automatically cancelled. Each batch of statements is assigned a name which can be used with the Operations API to monitor progress. See the operation_id field for more details.
+  &quot;operationId&quot;: &quot;A String&quot;, # If empty, the new update request is assigned an automatically-generated operation ID. Otherwise, `operation_id` is used to construct the name of the resulting Operation. Specifying an explicit operation ID simplifies determining whether the statements were executed in the event that the UpdateDatabaseDdl call is replayed, or the return value is otherwise lost: the database and `operation_id` fields can be combined to form the `name` of the resulting longrunning.Operation: `/operations/`. `operation_id` should be unique within the database, and must be a valid identifier: `a-z*`. Note that automatically-generated operation IDs always begin with an underscore. If the named operation already exists, UpdateDatabaseDdl returns `ALREADY_EXISTS`.
+  &quot;protoDescriptors&quot;: &quot;A String&quot;, # Optional. Proto descriptors used by CREATE/ALTER PROTO BUNDLE statements. Contains a protobuf-serialized [google.protobuf.FileDescriptorSet](https://github.com/protocolbuffers/protobuf/blob/main/src/google/protobuf/descriptor.proto). To generate it, [install](https://grpc.io/docs/protoc-installation/) and run `protoc` with --include_imports and --descriptor_set_out. For example, to generate for moon/shot/app.proto, run ``` $protoc --proto_path=/app_path --proto_path=/lib_path \ --include_imports \ --descriptor_set_out=descriptors.data \ moon/shot/app.proto ``` For more details, see protobuffer [self description](https://developers.google.com/protocol-buffers/docs/techniques#self-description).
+  &quot;statements&quot;: [ # Required. DDL statements to be applied to the database.

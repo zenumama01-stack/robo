@@ -1,0 +1,18 @@
+from typing import List, Generic, TypeVar, Optional
+from ..._models import GenericModel
+from .chat_completion import Choice, ChatCompletion
+from .parsed_function_tool_call import ParsedFunctionToolCall
+__all__ = ["ParsedChatCompletion", "ParsedChoice"]
+ContentType = TypeVar("ContentType")
+# we need to disable this check because we're overriding properties
+# with subclasses of their types which is technically unsound as
+# properties can be mutated.
+# pyright: reportIncompatibleVariableOverride=false
+class ParsedChatCompletionMessage(ChatCompletionMessage, GenericModel, Generic[ContentType]):
+    parsed: Optional[ContentType] = None
+    """The auto-parsed message contents"""
+    tool_calls: Optional[List[ParsedFunctionToolCall]] = None  # type: ignore[assignment]
+class ParsedChoice(Choice, GenericModel, Generic[ContentType]):
+    message: ParsedChatCompletionMessage[ContentType]
+class ParsedChatCompletion(ChatCompletion, GenericModel, Generic[ContentType]):
+    choices: List[ParsedChoice[ContentType]]  # type: ignore[assignment]

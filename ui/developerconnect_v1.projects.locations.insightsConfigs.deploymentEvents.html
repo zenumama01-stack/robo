@@ -1,0 +1,45 @@
+<h1><a href="developerconnect_v1.html">Developer Connect API</a> . <a href="developerconnect_v1.projects.html">projects</a> . <a href="developerconnect_v1.projects.locations.html">locations</a> . <a href="developerconnect_v1.projects.locations.insightsConfigs.html">insightsConfigs</a> . <a href="developerconnect_v1.projects.locations.insightsConfigs.deploymentEvents.html">deploymentEvents</a></h1>
+<p class="firstline">Gets a single Deployment Event.</p>
+<p class="firstline">Lists Deployment Events in a given insights config.</p>
+  <pre>Gets a single Deployment Event.
+  name: string, Required. The name of the deployment event to retrieve. Format: projects/{project}/locations/{location}/insightsConfigs/{insights_config}/deploymentEvents/{uuid} (required)
+    { # The DeploymentEvent resource represents the deployment of the artifact within the InsightsConfig resource.
+  &quot;artifactDeployments&quot;: [ # Output only. The artifact deployments of the DeploymentEvent. Each artifact deployment contains the artifact uri and the runtime configuration uri. For GKE, this would be all the containers images that are deployed in the pod.
+    { # The ArtifactDeployment resource represents the deployment of the artifact within the InsightsConfig resource.
+      &quot;artifactAlias&quot;: &quot;A String&quot;, # Output only. The artifact alias in the deployment spec, with Tag/SHA. e.g. us-docker.pkg.dev/my-project/my-repo/image:1.0.0
+      &quot;artifactReference&quot;: &quot;A String&quot;, # Output only. The artifact that is deployed.
+      &quot;containerStatusSummary&quot;: &quot;A String&quot;, # Output only. The summary of container status of the artifact deployment. Format as `ContainerStatusState-Reason : restartCount` e.g. &quot;Waiting-ImagePullBackOff : 3&quot;
+      &quot;deployTime&quot;: &quot;A String&quot;, # Output only. The time at which the deployment was deployed.
+      &quot;id&quot;: &quot;A String&quot;, # Output only. Unique identifier of `ArtifactDeployment`.
+      &quot;sourceCommitUris&quot;: [ # Output only. The source commits at which this artifact was built. Extracted from provenance.
+      &quot;undeployTime&quot;: &quot;A String&quot;, # Output only. The time at which the deployment was undeployed, all artifacts are considered undeployed once this time is set.
+  &quot;createTime&quot;: &quot;A String&quot;, # Output only. The create time of the DeploymentEvent.
+  &quot;deployTime&quot;: &quot;A String&quot;, # Output only. The time at which the DeploymentEvent was deployed. This would be the min of all ArtifactDeployment deploy_times.
+  &quot;name&quot;: &quot;A String&quot;, # Identifier. The name of the DeploymentEvent. This name is provided by Developer Connect insights. Format: projects/{project}/locations/{location}/insightsConfigs/{insights_config}/deploymentEvents/{uuid}
+  &quot;runtimeConfig&quot;: { # RuntimeConfig represents the runtimes where the application is deployed. # Output only. The runtime configurations where the DeploymentEvent happened.
+    &quot;appHubService&quot;: { # AppHubService represents the App Hub Service. # Output only. App Hub Service.
+      &quot;apphubService&quot;: &quot;A String&quot;, # Required. Output only. Immutable. The name of the App Hub Service. Format: `projects/{project}/locations/{location}/applications/{application}/services/{service}`.
+      &quot;criticality&quot;: &quot;A String&quot;, # Output only. The criticality of the App Hub Service.
+      &quot;environment&quot;: &quot;A String&quot;, # Output only. The environment of the App Hub Service.
+    &quot;appHubWorkload&quot;: { # AppHubWorkload represents the App Hub Workload. # Output only. App Hub Workload.
+      &quot;criticality&quot;: &quot;A String&quot;, # Output only. The criticality of the App Hub Workload.
+      &quot;environment&quot;: &quot;A String&quot;, # Output only. The environment of the App Hub Workload.
+      &quot;workload&quot;: &quot;A String&quot;, # Required. Output only. Immutable. The name of the App Hub Workload. Format: `projects/{project}/locations/{location}/applications/{application}/workloads/{workload}`.
+    &quot;gkeWorkload&quot;: { # GKEWorkload represents the Google Kubernetes Engine runtime. # Output only. Google Kubernetes Engine runtime.
+      &quot;cluster&quot;: &quot;A String&quot;, # Required. Immutable. The name of the GKE cluster. Format: `projects/{project}/locations/{location}/clusters/{cluster}`.
+      &quot;deployment&quot;: &quot;A String&quot;, # Output only. The name of the GKE deployment. Format: `projects/{project}/locations/{location}/clusters/{cluster}/namespaces/{namespace}/deployments/{deployment}`.
+    &quot;googleCloudRun&quot;: { # GoogleCloudRun represents the Cloud Run runtime. # Output only. Cloud Run runtime.
+      &quot;serviceUri&quot;: &quot;A String&quot;, # Required. Immutable. The name of the Cloud Run service. Format: `projects/{project}/locations/{location}/services/{service}`.
+    &quot;state&quot;: &quot;A String&quot;, # Output only. The state of the Runtime.
+    &quot;uri&quot;: &quot;A String&quot;, # Required. Immutable. The URI of the runtime configuration. For GKE, this is the cluster name. For Cloud Run, this is the service name.
+  &quot;runtimeDeploymentUri&quot;: &quot;A String&quot;, # Output only. The runtime assigned URI of the DeploymentEvent. For GKE, this is the fully qualified replica set uri. e.g. container.googleapis.com/projects/{project}/locations/{location}/clusters/{cluster}/k8s/namespaces/{namespace}/apps/replicasets/{replica-set-id} For Cloud Run, this is the revision name.
+  &quot;state&quot;: &quot;A String&quot;, # Output only. The state of the DeploymentEvent.
+  &quot;undeployTime&quot;: &quot;A String&quot;, # Output only. The time at which the DeploymentEvent was undeployed, all artifacts are considered undeployed once this time is set. This would be the max of all ArtifactDeployment undeploy_times. If any ArtifactDeployment is still active (i.e. does not have an undeploy_time), this field will be empty.
+  &quot;updateTime&quot;: &quot;A String&quot;, # Output only. The update time of the DeploymentEvent.
+  <pre>Lists Deployment Events in a given insights config.
+  parent: string, Required. The parent insights config that owns this collection of deployment events. Format: projects/{project}/locations/{location}/insightsConfigs/{insights_config} (required)
+  filter: string, Optional. Filter expression that matches a subset of the DeploymentEvents. https://google.aip.dev/160.
+  pageSize: integer, Optional. The maximum number of deployment events to return. The service may return fewer than this value. If unspecified, at most 50 deployment events will be returned. The maximum value is 1000; values above 1000 will be coerced to 1000.
+  pageToken: string, Optional. A page token, received from a previous `ListDeploymentEvents` call. Provide this to retrieve the subsequent page. When paginating, all other parameters provided to `ListDeploymentEvents` must match the call that provided the page token.
+    { # Response to listing DeploymentEvents.
+  &quot;deploymentEvents&quot;: [ # The list of DeploymentEvents.

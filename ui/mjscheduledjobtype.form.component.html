@@ -1,0 +1,17 @@
+    <!-- Job Type Details Section -->
+        SectionKey="jobTypeDetails"
+        SectionName="Job Type Details"
+            FieldName="NotificationsAvailable"
+    <!-- Execution Integration Section -->
+        SectionKey="executionIntegration"
+        SectionName="Execution Integration"
+            FieldName="DomainRunEntity"
+            FieldName="DomainRunEntityFKey"
+    <!-- MJ: Scheduled Jobs Section -->
+        SectionKey="mJScheduledJobs"
+        SectionName="MJ: Scheduled Jobs"
+        [BadgeCount]="GetSectionRowCount('mJScheduledJobs')"
+                [Params]="BuildRelationshipViewParamsByEntityName('MJ: Scheduled Jobs','JobTypeID')"
+                [NewRecordValues]="NewRecordValues('MJ: Scheduled Jobs')"
+                [AllowLoad]="IsSectionExpanded('mJScheduledJobs')"
+                (AfterDataLoad)="SetSectionRowCount('mJScheduledJobs', $event.totalRowCount)"

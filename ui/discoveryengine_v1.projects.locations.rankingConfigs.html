@@ -1,0 +1,19 @@
+<h1><a href="discoveryengine_v1.html">Discovery Engine API</a> . <a href="discoveryengine_v1.projects.html">projects</a> . <a href="discoveryengine_v1.projects.locations.html">locations</a> . <a href="discoveryengine_v1.projects.locations.rankingConfigs.html">rankingConfigs</a></h1>
+  <code><a href="#rank">rank(rankingConfig, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Ranks a list of text records based on the given input query.</p>
+    <code class="details" id="rank">rank(rankingConfig, body=None, x__xgafv=None)</code>
+  <pre>Ranks a list of text records based on the given input query.
+  rankingConfig: string, Required. The resource name of the rank service config, such as `projects/{project_num}/locations/{location}/rankingConfigs/default_ranking_config`. (required)
+{ # Request message for RankService.Rank method.
+  &quot;ignoreRecordDetailsInResponse&quot;: True or False, # If true, the response will contain only record ID and score. By default, it is false, the response will contain record details.
+  &quot;model&quot;: &quot;A String&quot;, # The identifier of the model to use. It is one of: * `semantic-ranker-512@latest`: Semantic ranking model with maximum input token size 512. It is set to `semantic-ranker-512@latest` by default if unspecified.
+  &quot;query&quot;: &quot;A String&quot;, # The query to use.
+  &quot;records&quot;: [ # Required. A list of records to rank.
+    { # Record message for RankService.Rank method.
+      &quot;content&quot;: &quot;A String&quot;, # The content of the record. Empty by default. At least one of title or content should be set otherwise an INVALID_ARGUMENT error is thrown.
+      &quot;id&quot;: &quot;A String&quot;, # The unique ID to represent the record.
+      &quot;score&quot;: 3.14, # The score of this record based on the given query and selected model. The score will be rounded to 2 decimal places. If the score is close to 0, it will be rounded to 0.0001 to avoid returning unset.
+      &quot;title&quot;: &quot;A String&quot;, # The title of the record. Empty by default. At least one of title or content should be set otherwise an INVALID_ARGUMENT error is thrown.
+  &quot;topN&quot;: 42, # The number of results to return. If this is unset or no bigger than zero, returns all results.
+    { # Response message for RankService.Rank method.
+  &quot;records&quot;: [ # A list of records sorted by descending score.

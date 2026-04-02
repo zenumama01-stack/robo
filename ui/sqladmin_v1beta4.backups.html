@@ -1,0 +1,36 @@
+<h1><a href="sqladmin_v1beta4.html">Cloud SQL Admin API</a> . <a href="sqladmin_v1beta4.backups.html">backups</a></h1>
+  <code><a href="#createBackup">createBackup(parent, body=None, x__xgafv=None)</a></code></p>
+  <code><a href="#deleteBackup">deleteBackup(name, x__xgafv=None)</a></code></p>
+  <code><a href="#getBackup">getBackup(name, x__xgafv=None)</a></code></p>
+  <code><a href="#listBackups">listBackups(parent, filter=None, pageSize=None, pageToken=None, x__xgafv=None)</a></code></p>
+  <code><a href="#listBackups_next">listBackups_next()</a></code></p>
+  <code><a href="#updateBackup">updateBackup(name, body=None, updateMask=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Updates the retention period and the description of the backup. You can use this API to update final backups only.</p>
+    <code class="details" id="createBackup">createBackup(parent, body=None, x__xgafv=None)</code>
+  &quot;expiryTime&quot;: &quot;A String&quot;, # Backup expiration time. A UTC timestamp of when this resource expired.
+  &quot;instance&quot;: &quot;A String&quot;, # The name of the database instance.
+  &quot;instanceSettings&quot;: { # A Cloud SQL instance resource. # Optional. Output only. Instance setting of the source instance that&#x27;s associated with this backup.
+      &quot;sslOption&quot;: &quot;A String&quot;, # Optional. SslOption for replica connection to the on-premises source.
+      &quot;failoverTarget&quot;: True or False, # Specifies if the replica is the failover target. If the field is set to `true` the replica will be designated as a failover replica. In case the primary instance fails, the replica instance will be promoted as the new primary instance. Only one replica can be specified as failover target, and the replica has to be in different zone with the primary instance.
+    &quot;replicationCluster&quot;: { # A primary instance and disaster recovery (DR) replica pair. A DR replica is a cross-region replica that you designate for failover in the event that the primary instance has regional failure. Applicable to MySQL and PostgreSQL. # A primary instance and disaster recovery (DR) replica pair. A DR replica is a cross-region replica that you designate for failover in the event that the primary instance experiences regional failure. Applicable to MySQL and PostgreSQL.
+      &quot;createTime&quot;: &quot;A String&quot;, # The time when the certificate was created in [RFC 3339](https://tools.ietf.org/html/rfc3339) format, for example `2012-11-15T16:19:00.094Z`.
+    &quot;serviceAccountEmailAddress&quot;: &quot;A String&quot;, # The service account email address assigned to the instance. \This property is read-only.
+      &quot;acceleratedReplicaMode&quot;: True or False, # Optional. Configures whether the replica is in accelerated mode. This feature is in private preview and requires allowlisting to take effect.
+        &quot;transactionalLogStorageState&quot;: &quot;A String&quot;, # Output only. This value contains the storage location of transactional logs for the database for point-in-time recovery.
+      &quot;connectorEnforcement&quot;: &quot;A String&quot;, # Specifies if connections must use Cloud SQL connectors. Option values include the following: `NOT_REQUIRED` (Cloud SQL instances can be connected without Cloud SQL Connectors) and `REQUIRED` (Only allow connections that use Cloud SQL Connectors) Note that using REQUIRED disables all existing authorized networks. If this field is not specified when creating a new instance, NOT_REQUIRED is used. If this field is not specified when patching or updating an existing instance, it is left unchanged in the instance.
+        { # Deny Maintenance Periods. This specifies a date range during when all CSA rollout will be denied.
+          &quot;endDate&quot;: &quot;A String&quot;, # &quot;deny maintenance period&quot; end date. If the year of the end date is empty, the year of the start date also must be empty. In this case, it means the deny maintenance period recurs every year. The date is in format yyyy-mm-dd i.e., 2020-11-01, or mm-dd, i.e., 11-01
+        &quot;requireSsl&quot;: True or False, # Use `ssl_mode` instead. Whether SSL/TLS connections over IP are enforced. If set to false, then allow both non-SSL/non-TLS and SSL/TLS connections. For SSL/TLS connections, the client certificate won&#x27;t be verified. If set to true, then only allow connections encrypted with SSL/TLS and with valid client certificates. If you want to enforce SSL/TLS without enforcing the requirement for valid client certificates, then use the `ssl_mode` flag instead of the legacy `require_ssl` flag.
+        &quot;enabled&quot;: True or False, # Optional. Enable or disable the Performance Capture.
+        &quot;scaleInCooldownSeconds&quot;: 42, # The cooldown period for scale in operations.
+        &quot;scaleOutCooldownSeconds&quot;: 42, # The cooldown period for scale out operations.
+      &quot;replicationLagMaxSeconds&quot;: 42, # Optional. Configuration value for recreation of replica after certain replication lag.
+    &quot;sqlNetworkArchitecture&quot;: &quot;A String&quot;, # The SQL network architecture for the instance.
+  &quot;state&quot;: &quot;A String&quot;, # Output only. The state of this backup.
+  &quot;type&quot;: &quot;A String&quot;, # Output only. The type of this backup. The type can be &quot;AUTOMATED&quot;, &quot;ON_DEMAND&quot;, or “FINAL”.
+    <code class="details" id="deleteBackup">deleteBackup(name, x__xgafv=None)</code>
+    <code class="details" id="getBackup">getBackup(name, x__xgafv=None)</code>
+    <code class="details" id="listBackups">listBackups(parent, filter=None, pageSize=None, pageToken=None, x__xgafv=None)</code>
+    <code class="details" id="listBackups_next">listBackups_next()</code>
+    <code class="details" id="updateBackup">updateBackup(name, body=None, updateMask=None, x__xgafv=None)</code>
+  <pre>Updates the retention period and the description of the backup. You can use this API to update final backups only.

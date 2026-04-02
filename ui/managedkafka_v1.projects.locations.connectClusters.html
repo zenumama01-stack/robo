@@ -1,0 +1,38 @@
+<h1><a href="managedkafka_v1.html">Managed Service for Apache Kafka API</a> . <a href="managedkafka_v1.projects.html">projects</a> . <a href="managedkafka_v1.projects.locations.html">locations</a> . <a href="managedkafka_v1.projects.locations.connectClusters.html">connectClusters</a></h1>
+  <code><a href="managedkafka_v1.projects.locations.connectClusters.connectors.html">connectors()</a></code>
+  <code><a href="#create">create(parent, body=None, connectClusterId=None, requestId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Creates a new Kafka Connect cluster in a given project and location.</p>
+<p class="firstline">Deletes a single Connect cluster.</p>
+<p class="firstline">Returns the properties of a single Kafka Connect cluster.</p>
+<p class="firstline">Lists the Kafka Connect clusters in a given project and location.</p>
+<p class="firstline">Updates the properties of a single Kafka Connect cluster.</p>
+    <code class="details" id="create">create(parent, body=None, connectClusterId=None, requestId=None, x__xgafv=None)</code>
+  <pre>Creates a new Kafka Connect cluster in a given project and location.
+  parent: string, Required. The parent project/location in which to create the Kafka Connect cluster. Structured like `projects/{project}/locations/{location}/`. (required)
+{ # An Apache Kafka Connect cluster deployed in a location.
+  &quot;capacityConfig&quot;: { # A capacity configuration of a Kafka cluster. # Required. Capacity configuration for the Kafka Connect cluster.
+  &quot;config&quot;: { # Optional. Configurations for the worker that are overridden from the defaults. The key of the map is a Kafka Connect worker property name, for example: `exactly.once.source.support`.
+  &quot;gcpConfig&quot;: { # Configuration properties for a Kafka Connect cluster deployed to Google Cloud Platform. # Required. Configuration properties for a Kafka Connect cluster deployed to Google Cloud Platform.
+    &quot;accessConfig&quot;: { # The configuration of access to the Kafka Connect cluster. # Required. Access configuration for the Kafka Connect cluster.
+      &quot;networkConfigs&quot;: [ # Required. Virtual Private Cloud (VPC) networks that must be granted direct access to the Kafka Connect cluster. Minimum of 1 network is required. Maximum 10 networks can be specified.
+        { # The configuration of a Virtual Private Cloud (VPC) network that can access the Kafka Connect cluster.
+          &quot;additionalSubnets&quot;: [ # Optional. Deprecated: Managed Kafka Connect clusters can now reach any endpoint accessible from the primary subnet without the need to define additional subnets. Please see https://cloud.google.com/managed-service-for-apache-kafka/docs/connect-cluster/create-connect-cluster#worker-subnet for more information.
+          &quot;dnsDomainNames&quot;: [ # Optional. Additional DNS domain names from the subnet&#x27;s network to be made visible to the Connect Cluster. When using MirrorMaker2, it&#x27;s necessary to add the bootstrap address&#x27;s dns domain name of the target cluster to make it visible to the connector. For example: my-kafka-cluster.us-central1.managedkafka.my-project.cloud.goog
+          &quot;primarySubnet&quot;: &quot;A String&quot;, # Required. VPC subnet to make available to the Kafka Connect cluster. Structured like: projects/{project}/regions/{region}/subnetworks/{subnet_id} It is used to create a Private Service Connect (PSC) interface for the Kafka Connect workers. It must be located in the same region as the Kafka Connect cluster. The CIDR range of the subnet must be within the IPv4 address ranges for private networks, as specified in RFC 1918. The primary subnet CIDR range must have a minimum size of /22 (1024 addresses).
+    &quot;secretPaths&quot;: [ # Optional. Secrets to load into workers. Exact SecretVersions from Secret Manager must be provided -- aliases are not supported. Up to 32 secrets may be loaded into one cluster. Format: projects//secrets//versions/
+  &quot;kafkaCluster&quot;: &quot;A String&quot;, # Required. Immutable. The name of the Kafka cluster this Kafka Connect cluster is attached to. Structured like: projects/{project}/locations/{location}/clusters/{cluster}
+  &quot;name&quot;: &quot;A String&quot;, # Identifier. The name of the Kafka Connect cluster. Structured like: projects/{project_number}/locations/{location}/connectClusters/{connect_cluster_id}
+  &quot;state&quot;: &quot;A String&quot;, # Output only. The current state of the Kafka Connect cluster.
+  connectClusterId: string, Required. The ID to use for the Connect cluster, which will become the final component of the cluster&#x27;s name. The ID must be 1-63 characters long, and match the regular expression `[a-z]([-a-z0-9]*[a-z0-9])?` to comply with RFC 1035. This value is structured like: `my-cluster-id`.
+  <pre>Deletes a single Connect cluster.
+  name: string, Required. The name of the Kafka Connect cluster to delete. Structured like `projects/{project}/locations/{location}/connectClusters/{connect_cluster_id}`. (required)
+  <pre>Returns the properties of a single Kafka Connect cluster.
+  name: string, Required. The name of the Kafka Connect cluster whose configuration to return. Structured like `projects/{project}/locations/{location}/connectClusters/{connect_cluster_id}`. (required)
+  <pre>Lists the Kafka Connect clusters in a given project and location.
+  parent: string, Required. The parent project/location whose Connect clusters are to be listed. Structured like `projects/{project}/locations/{location}`. (required)
+  pageSize: integer, Optional. The maximum number of Connect clusters to return. The service may return fewer than this value. If unspecified, server will pick an appropriate default.
+  pageToken: string, Optional. A page token, received from a previous `ListConnectClusters` call. Provide this to retrieve the subsequent page. When paginating, all other parameters provided to `ListConnectClusters` must match the call that provided the page token.
+    { # Response for ListConnectClusters.
+  &quot;connectClusters&quot;: [ # The list of Connect clusters in the requested parent.
+  <pre>Updates the properties of a single Kafka Connect cluster.
+  name: string, Identifier. The name of the Kafka Connect cluster. Structured like: projects/{project_number}/locations/{location}/connectClusters/{connect_cluster_id} (required)

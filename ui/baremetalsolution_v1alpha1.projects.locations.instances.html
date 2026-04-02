@@ -1,0 +1,61 @@
+<h1><a href="baremetalsolution_v1alpha1.html">Bare Metal Solution API</a> . <a href="baremetalsolution_v1alpha1.projects.html">projects</a> . <a href="baremetalsolution_v1alpha1.projects.locations.html">locations</a> . <a href="baremetalsolution_v1alpha1.projects.locations.instances.html">instances</a></h1>
+  <code><a href="#disableInteractiveSerialConsole">disableInteractiveSerialConsole(instance, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Disable the interactive serial console feature on a specific machine.</p>
+  <code><a href="#enableInteractiveSerialConsole">enableInteractiveSerialConsole(instance, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Enable the interactive serial console feature on a specific machine.</p>
+<p class="firstline">Get details for a specific named Instance.</p>
+<p class="firstline">List Instances (physical servers).</p>
+  <code><a href="#readSerialPortOutput">readSerialPortOutput(instance, startByte=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Read the most recent serial port output from a machine.</p>
+<p class="firstline">Perform an ungraceful, hard reset on a machine (equivalent to physically turning power off and then back on).</p>
+    <code class="details" id="disableInteractiveSerialConsole">disableInteractiveSerialConsole(instance, body=None, x__xgafv=None)</code>
+  <pre>Disable the interactive serial console feature on a specific machine.
+  instance: string, Required. Name of the instance to disable the interactive serial console feature on. (required)
+{ # Request for DisableInteractiveSerialConsole.
+    { # Response for DisableInteractiveSerialConsole.
+    <code class="details" id="enableInteractiveSerialConsole">enableInteractiveSerialConsole(instance, body=None, x__xgafv=None)</code>
+  <pre>Enable the interactive serial console feature on a specific machine.
+  instance: string, Required. Name of the instance to enable the interactive serial console feature on. (required)
+{ # Request for EnableInteractiveSerialConsole.
+    { # Response for EnableInteractiveSerialConsole.
+  <pre>Get details for a specific named Instance.
+  name: string, Required. The name of the Instance to retrieve. (required)
+    { # An Instance.
+  &quot;hyperthreadingEnabled&quot;: True or False, # Is hyperthreading enabled for this instance?
+  &quot;luns&quot;: [ # The Luns attached to this instance
+    { # A storage Lun.
+      &quot;isBoot&quot;: True or False, # Whether this Lun is a boot Lun.
+      &quot;multiprotocolType&quot;: &quot;A String&quot;, # The multiprotocol type of this Lun.
+      &quot;name&quot;: &quot;A String&quot;, # Output only. The name of this Lun.
+      &quot;remoteVolume&quot;: { # Volume registered in the project. # The storage volume that this Lun is attached to.
+        &quot;autoGrownSizeGb&quot;: &quot;A String&quot;, # The size, in GB, that this Volume has expanded as a result of an auto grow policy.
+        &quot;currentSizeGb&quot;: &quot;A String&quot;, # The current size of this Volume, in GB, including space reserved for snapshots. This size may be different than the requested size if the Volume has been configured with auto grow or auto shrink.
+        &quot;name&quot;: &quot;A String&quot;, # Output only. The name of this Volume.
+        &quot;remainingSpaceGb&quot;: &quot;A String&quot;, # The space remaining in the Volume for new LUNs, in GB, excluding space reserved for snapshots.
+        &quot;requestedSizeGb&quot;: &quot;A String&quot;, # The requested size of this Volume, in GB.
+        &quot;snapshotReservedSpacePercent&quot;: 42, # The percent of space on this Volume reserved for snapshots.
+        &quot;snapshotReservedSpaceRemainingGb&quot;: &quot;A String&quot;, # The amount, in GB, of space available in this Volume&#x27;s reserved snapshot space.
+        &quot;snapshotReservedSpaceUsedPercent&quot;: 42, # The percent of reserved snapshot space on this Volume that is actually used by snapshot copies. This may be higher than 100% if snapshot copies are occupying more space than has been reserved on the Volume.
+        &quot;state&quot;: &quot;A String&quot;, # The state of this Volume.
+      &quot;shareable&quot;: True or False, # Whether this Lun is allowed to be shared between multiple physical servers.
+      &quot;sizeGb&quot;: &quot;A String&quot;, # The size of this Lun, in gigabytes.
+      &quot;state&quot;: &quot;A String&quot;, # The state of this Lun.
+  &quot;name&quot;: &quot;A String&quot;, # Output only. The name of this Instance.
+  &quot;scheduledPowerResetTime&quot;: &quot;A String&quot;, # The scheduled power reset time.
+  &quot;sshEnabled&quot;: True or False, # Is SSH enabled for this instance?
+  &quot;state&quot;: &quot;A String&quot;, # The state of this Instance.
+  <pre>List Instances (physical servers).
+  parent: string, Required. The location to list Instances in. (required)
+  pageSize: integer, The maximum number of items to return.
+  pageToken: string, The next_page_token value returned from a previous List request, if any.
+  &quot;instances&quot;: [ # The Instances in this project.
+  &quot;nextPageToken&quot;: &quot;A String&quot;, # Token to retrieve the next page of results, or empty if there are no more results in the list.
+    <code class="details" id="readSerialPortOutput">readSerialPortOutput(instance, startByte=None, x__xgafv=None)</code>
+  <pre>Read the most recent serial port output from a machine.
+  instance: string, Required. Name of the instance to get serial port output of. (required)
+  startByte: string, Optional. The start byte of the serial port output to return.
+    { # Response for ReadSerialPortOutput.
+  &quot;contents&quot;: &quot;A String&quot;, # The serial port output.
+  &quot;nextStartByte&quot;: &quot;A String&quot;, # The byte index to use in a subsequent call to ReadSerialPortOutput to get more output.
+  &quot;start&quot;: &quot;A String&quot;, # The start byte index of the included contents.
+  <pre>Perform an ungraceful, hard reset on a machine (equivalent to physically turning power off and then back on).

@@ -1,0 +1,72 @@
+<div class="action-gallery" [class.dark-theme]="config.theme === 'dark'" [class.selection-mode]="config.selectionMode">
+  <!-- Gallery Header -->
+  @if (config.showSearch) {
+    <div class="gallery-header">
+            <i class="fa-solid" [class.fa-th]="(viewMode$ | async) === 'grid'" [class.fa-list]="(viewMode$ | async) === 'list'"></i>
+            {{ (filteredActions$ | async)?.length }} of {{ totalActions }} actions
+  <div class="gallery-content" [class.no-categories]="!config.showCategories">
+    @if (config.showCategories) {
+               [class.selected]="(selectedCategory$ | async) === category.id"
+               [class.has-children]="category.children && category.children.length > 0"
+              @if (category.children && category.children.length > 0) {
+                   [class.expanded]="expandedCategories.has(category.id)"
+                   (click)="toggleCategoryExpanded(category.id); $event.stopPropagation()"></i>
+            <!-- Sub-categories -->
+            @if (category.children && expandedCategories.has(category.id)) {
+              <div class="sub-categories">
+                @for (subCategory of category.children; track subCategory.id) {
+                  <div class="category-item sub-category" 
+                       [class.selected]="(selectedCategory$ | async) === subCategory.id"
+                       (click)="selectCategory(subCategory.id); $event.stopPropagation()">
+                  <i class="fa-solid {{ subCategory.icon }} category-icon"></i>
+                  <span class="category-name">{{ subCategory.name }}</span>
+                  <span class="category-count">{{ subCategory.count }}</span>
+          <mj-loading text="Loading actions..." size="large"></mj-loading>
+      @if (!(isLoading$ | async) && (filteredActions$ | async)?.length === 0) {
+      @if (!(isLoading$ | async) && (viewMode$ | async) === 'grid' && (filteredActions$ | async) && (filteredActions$ | async)!.length > 0) {
+        <div class="actions-grid" 
+             [style.grid-template-columns]="'repeat(' + (config.gridColumns || 3) + ', 1fr)'">
+                 [class.expanded]="action.expanded"
+                 [class.animate]="animateCards"
+                 [class.hover]="hoveredAction === action.ID"
+                 (mouseenter)="hoveredAction = action.ID"
+                 (mouseleave)="hoveredAction = null"
+          <div class="card-header" (click)="toggleActionExpanded(action); $event.stopPropagation()">
+                @if (action.Category) {
+                  <span class="category-badge">
+                    {{ action.Category }}
+              @if (config.enableQuickTest) {
+                        icon="play"
+                        (click)="testAction(action, $event)"
+                        title="Test this action">
+              <i class="fa-solid expand-indicator"
+                 [class.fa-chevron-down]="!action.expanded"
+                 [class.fa-chevron-up]="action.expanded"></i>
+            <!-- Quick Stats -->
+            <div class="action-stats">
+              @if (action.parameters?.length) {
+                  {{ action.parameters?.length || 0 }} params
+              @if (action.resultCodes?.length) {
+                  {{ action.resultCodes?.length || 0 }} results
+          @if (action.expanded) {
+              <!-- Parameters -->
+              @if (action.parameters && action.parameters.length > 0) {
+              <div class="parameters-list">
+                @for (param of action.parameters; track param.ID) {
+                  <div class="parameter-item">
+                      <span class="param-required">Required</span>
+              <!-- Result Codes -->
+              @if (action.resultCodes && action.resultCodes.length > 0) {
+              <div class="result-codes-list">
+                @for (code of action.resultCodes; track code.ID) {
+                  <div class="result-code-item">
+                    <span class="code-value">{{ code.ResultCode }}</span>
+                    <span class="code-desc">{{ code.Description }}</span>
+          @if (config.selectionMode) {
+              <i class="fa-solid" [class.fa-check-circle]="action.selected" [class.fa-circle]="!action.selected"></i>
+      @if (!(isLoading$ | async) && (viewMode$ | async) === 'list' && (filteredActions$ | async) && (filteredActions$ | async)!.length > 0) {
+          <span class="col-params">Parameters</span>
+          <span class="col-actions">Actions</span>
+          <span class="col-category">{{ action.Category || '-' }}</span>
+          <span class="col-params">{{ action.parameters?.length || 0 }}</span>
+          <span class="col-actions">

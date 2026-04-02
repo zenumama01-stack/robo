@@ -1,0 +1,22 @@
+<h1><a href="retail_v2alpha.html">Vertex AI Search for commerce API</a> . <a href="retail_v2alpha.projects.html">projects</a> . <a href="retail_v2alpha.projects.locations.html">locations</a> . <a href="retail_v2alpha.projects.locations.catalogs.html">catalogs</a> . <a href="retail_v2alpha.projects.locations.catalogs.merchantCenterAccountLinks.html">merchantCenterAccountLinks</a></h1>
+<p class="firstline">Creates a MerchantCenterAccountLink.</p>
+<p class="firstline">Deletes a MerchantCenterAccountLink. If the MerchantCenterAccountLink to delete does not exist, a NOT_FOUND error is returned.</p>
+<p class="firstline">Lists all MerchantCenterAccountLinks under the specified parent Catalog.</p>
+  <pre>Creates a MerchantCenterAccountLink.
+  parent: string, Required. The branch resource where this MerchantCenterAccountLink will be created. Format: `projects/{PROJECT_NUMBER}/locations/global/catalogs/{CATALOG_ID}` (required)
+  &quot;branchId&quot;: &quot;A String&quot;, # Required. The branch ID (e.g. 0/1/2) within the catalog that products from merchant_center_account_id are streamed to. When updating this field, an empty value will use the currently configured default branch. However, changing the default branch later on won&#x27;t change the linked branch here. A single branch ID can only have one linked Merchant Center account ID.
+  &quot;feedFilters&quot;: [ # Criteria for the Merchant Center feeds to be ingested via the link. All offers will be ingested if the list is empty. Otherwise the offers will be ingested from selected feeds.
+  &quot;feedLabel&quot;: &quot;A String&quot;, # The FeedLabel used to perform filtering. Note: this replaces [region_id](https://developers.google.com/shopping-content/reference/rest/v2.1/products#Product.FIELDS.feed_label). Example value: `US`. Example value: `FeedLabel1`.
+  &quot;id&quot;: &quot;A String&quot;, # Output only. Immutable. MerchantCenterAccountLink identifier, which is the final component of name. This field is auto generated and follows the convention: `BranchId_MerchantCenterAccountId`. `projects/*/locations/global/catalogs/default_catalog/merchantCenterAccountLinks/id_1`.
+  &quot;languageCode&quot;: &quot;A String&quot;, # Language of the title/description and other string attributes. Use language tags defined by [BCP 47](https://www.rfc-editor.org/rfc/bcp/bcp47.txt). ISO 639-1. This specifies the language of offers in Merchant Center that will be accepted. If empty, no language filtering will be performed. Example value: `en`.
+  &quot;merchantCenterAccountId&quot;: &quot;A String&quot;, # Required. The linked [Merchant center account id](https://developers.google.com/shopping-content/guides/accountstatuses). The account must be a standalone account or a sub-account of a MCA.
+  &quot;name&quot;: &quot;A String&quot;, # Output only. Immutable. Full resource name of the Merchant Center Account Link, such as `projects/*/locations/global/catalogs/default_catalog/merchantCenterAccountLinks/merchant_center_account_link`.
+  &quot;projectId&quot;: &quot;A String&quot;, # Output only. Google Cloud project ID.
+  &quot;source&quot;: &quot;A String&quot;, # Optional. An optional arbitrary string that could be used as a tag for tracking link source.
+  &quot;state&quot;: &quot;A String&quot;, # Output only. Represents the state of the link.
+  <pre>Deletes a MerchantCenterAccountLink. If the MerchantCenterAccountLink to delete does not exist, a NOT_FOUND error is returned.
+  name: string, Required. Full resource name. Format: `projects/{project_number}/locations/{location_id}/catalogs/{catalog_id}/merchantCenterAccountLinks/{merchant_center_account_link_id}` (required)
+  <pre>Lists all MerchantCenterAccountLinks under the specified parent Catalog.
+  parent: string, Required. The parent Catalog of the resource. It must match this format: `projects/{PROJECT_NUMBER}/locations/global/catalogs/{CATALOG_ID}` (required)
+    { # Response for MerchantCenterAccountLinkService.ListMerchantCenterAccountLinks method.
+  &quot;merchantCenterAccountLinks&quot;: [ # The links.

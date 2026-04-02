@@ -1,0 +1,29 @@
+<h1><a href="adsensehost_v4_1.html">AdSense Host API</a> . <a href="adsensehost_v4_1.associationsessions.html">associationsessions</a></h1>
+  <code><a href="#start">start(productCode, websiteUrl, callbackUrl=None, userLocale=None, websiteLocale=None)</a></code></p>
+<p class="firstline">Create an association session for initiating an association with an AdSense user.</p>
+  <code><a href="#verify">verify(token)</a></code></p>
+<p class="firstline">Verify an association session after the association callback returns from AdSense signup.</p>
+    <code class="details" id="start">start(productCode, websiteUrl, callbackUrl=None, userLocale=None, websiteLocale=None)</code>
+  <pre>Create an association session for initiating an association with an AdSense user.
+  productCode: string, Products to associate with the user. (required) (repeated)
+      AFC - AdSense For Content
+      AFG - AdSense For Games
+      AFMC - AdSense For Mobile Content - deprecated
+      AFS - AdSense For Search - deprecated
+      AFV - AdSense For Video
+  websiteUrl: string, The URL of the user&#x27;s hosted website. (required)
+  callbackUrl: string, The URL to redirect the user to once association is completed. It receives a token parameter that can then be used to retrieve the associated account.
+  userLocale: string, The preferred locale of the user.
+  websiteLocale: string, The locale of the user&#x27;s hosted website.
+  &quot;accountId&quot;: &quot;A String&quot;, # Hosted account id of the associated publisher after association. Present if status is ACCEPTED.
+  &quot;id&quot;: &quot;A String&quot;, # Unique identifier of this association session.
+  &quot;kind&quot;: &quot;adsensehost#associationSession&quot;, # Kind of resource this is, in this case adsensehost#associationSession.
+  &quot;productCodes&quot;: [ # The products to associate with the user. Options: AFC, AFG, AFV, AFS (deprecated), AFMC (deprecated)
+  &quot;redirectUrl&quot;: &quot;A String&quot;, # Redirect URL of this association session. Used to redirect users into the AdSense association flow.
+  &quot;status&quot;: &quot;A String&quot;, # Status of the completed association, available once the association callback token has been verified. One of ACCEPTED, REJECTED, or ERROR.
+  &quot;userLocale&quot;: &quot;A String&quot;, # The preferred locale of the user themselves when going through the AdSense association flow.
+  &quot;websiteLocale&quot;: &quot;A String&quot;, # The locale of the user&#x27;s hosted website.
+  &quot;websiteUrl&quot;: &quot;A String&quot;, # The URL of the user&#x27;s hosted website.
+    <code class="details" id="verify">verify(token)</code>
+  <pre>Verify an association session after the association callback returns from AdSense signup.
+  token: string, The token returned to the association callback URL. (required)

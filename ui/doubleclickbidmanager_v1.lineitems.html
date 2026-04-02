@@ -1,0 +1,31 @@
+<h1><a href="doubleclickbidmanager_v1.html">DoubleClick Bid Manager API</a> . <a href="doubleclickbidmanager_v1.lineitems.html">lineitems</a></h1>
+  <code><a href="#downloadlineitems">downloadlineitems(body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Retrieves line items in CSV format. YouTube & partners line items are not supported.</p>
+  <code><a href="#uploadlineitems">uploadlineitems(body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Uploads line items in CSV format. YouTube & partners line items are not supported.</p>
+    <code class="details" id="downloadlineitems">downloadlineitems(body=None, x__xgafv=None)</code>
+  <pre>Retrieves line items in CSV format. YouTube &amp; partners line items are not supported.
+{ # Request to fetch stored line items.
+  &quot;fileSpec&quot;: &quot;A String&quot;, # File specification (column names, types, order) in which the line items will be returned. Default to EWF.
+  &quot;filterIds&quot;: [ # Ids of the specified filter type used to filter line items to fetch. If omitted, all the line items will be returned.
+  &quot;filterType&quot;: &quot;A String&quot;, # Filter type used to filter line items to fetch.
+  &quot;format&quot;: &quot;A String&quot;, # Format in which the line items will be returned. Default to CSV.
+    { # Download line items response.
+  &quot;lineItems&quot;: &quot;A String&quot;, # Retrieved line items in CSV format. For more information about file formats, see Entity Write File Format.
+    <code class="details" id="uploadlineitems">uploadlineitems(body=None, x__xgafv=None)</code>
+  <pre>Uploads line items in CSV format. YouTube &amp; partners line items are not supported.
+{ # Request to upload line items.
+  &quot;dryRun&quot;: True or False, # Set to true to get upload status without actually persisting the line items.
+  &quot;format&quot;: &quot;A String&quot;, # Format the line items are in. Default to CSV.
+  &quot;lineItems&quot;: &quot;A String&quot;, # Line items in CSV to upload. Refer to Entity Write File Format for more information on file format.
+    { # Upload line items response.
+  &quot;uploadStatus&quot;: { # Represents the status of upload. # Status of upload.
+    &quot;errors&quot;: [ # Reasons why upload can&#x27;t be completed.
+    &quot;rowStatus&quot;: [ # Per-row upload status.
+      { # Represents the upload status of a row in the request.
+        &quot;changed&quot;: True or False, # Whether the stored entity is changed as a result of upload.
+        &quot;entityId&quot;: &quot;A String&quot;, # Entity Id.
+        &quot;entityName&quot;: &quot;A String&quot;, # Entity name.
+        &quot;errors&quot;: [ # Reasons why the entity can&#x27;t be uploaded.
+        &quot;persisted&quot;: True or False, # Whether the entity is persisted.
+        &quot;rowNumber&quot;: 42, # Row number.

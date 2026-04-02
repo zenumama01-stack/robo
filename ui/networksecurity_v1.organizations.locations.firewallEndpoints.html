@@ -1,0 +1,31 @@
+<h1><a href="networksecurity_v1.html">Network Security API</a> . <a href="networksecurity_v1.organizations.html">organizations</a> . <a href="networksecurity_v1.organizations.locations.html">locations</a> . <a href="networksecurity_v1.organizations.locations.firewallEndpoints.html">firewallEndpoints</a></h1>
+  <code><a href="#create">create(parent, body=None, firewallEndpointId=None, requestId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Creates a new FirewallEndpoint in a given organization and location.</p>
+<p class="firstline">Deletes a single org Endpoint.</p>
+<p class="firstline">Gets details of a single org Endpoint.</p>
+<p class="firstline">Lists FirewallEndpoints in a given organization and location.</p>
+<p class="firstline">Update a single org Endpoint.</p>
+    <code class="details" id="create">create(parent, body=None, firewallEndpointId=None, requestId=None, x__xgafv=None)</code>
+  <pre>Creates a new FirewallEndpoint in a given organization and location.
+{ # Message describing Endpoint object.
+  &quot;associatedNetworks&quot;: [ # Output only. List of networks that are associated with this endpoint in the local zone. This is a projection of the FirewallEndpointAssociations pointing at this endpoint. A network will only appear in this list after traffic routing is fully configured. Format: projects/{project}/global/networks/{name}.
+  &quot;associations&quot;: [ # Output only. List of FirewallEndpointAssociations that are associated to this endpoint. An association will only appear in this list after traffic routing is fully configured.
+    { # This is a subset of the FirewallEndpointAssociation message, containing fields to be used by the consumer.
+      &quot;name&quot;: &quot;A String&quot;, # Output only. The resource name of the FirewallEndpointAssociation. Format: projects/{project}/locations/{location}/firewallEndpointAssociations/{id}
+      &quot;network&quot;: &quot;A String&quot;, # Output only. The VPC network associated. Format: projects/{project}/global/networks/{name}.
+  &quot;billingProjectId&quot;: &quot;A String&quot;, # Required. Project to bill on endpoint uptime usage.
+  &quot;createTime&quot;: &quot;A String&quot;, # Output only. Create time stamp.
+  &quot;description&quot;: &quot;A String&quot;, # Optional. Description of the firewall endpoint. Max length 2048 characters.
+  &quot;endpointSettings&quot;: { # Settings for the endpoint. # Optional. Settings for the endpoint.
+    &quot;jumboFramesEnabled&quot;: True or False, # Optional. Immutable. Indicates whether Jumbo Frames are enabled. Default value is false.
+  &quot;name&quot;: &quot;A String&quot;, # Immutable. Identifier. Name of resource.
+  &quot;reconciling&quot;: True or False, # Output only. Whether reconciling is in progress, recommended per https://google.aip.dev/128.
+  firewallEndpointId: string, Required. Id of the requesting object. If auto-generating Id server-side, remove this field and firewall_endpoint_id from the method_signature of Create RPC.
+  <pre>Deletes a single org Endpoint.
+  <pre>Gets details of a single org Endpoint.
+  <pre>Lists FirewallEndpoints in a given organization and location.
+  parent: string, Required. Parent value for ListEndpointsRequest (required)
+  &quot;firewallEndpoints&quot;: [ # The list of Endpoint
+  <pre>Update a single org Endpoint.
+  name: string, Immutable. Identifier. Name of resource. (required)
+  updateMask: string, Required. Field mask is used to specify the fields to be overwritten in the Endpoint resource by the update. The fields specified in the update_mask are relative to the resource, not the full request. A field will be overwritten if it is in the mask. If the user does not provide a mask then all fields will be overwritten.

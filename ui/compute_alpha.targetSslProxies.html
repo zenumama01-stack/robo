@@ -1,0 +1,64 @@
+<h1><a href="compute_alpha.html">Compute Engine API</a> . <a href="compute_alpha.targetSslProxies.html">targetSslProxies</a></h1>
+  <code><a href="#delete">delete(project, targetSslProxy, requestId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Deletes the specified TargetSslProxy resource.</p>
+  <code><a href="#get">get(project, targetSslProxy, x__xgafv=None)</a></code></p>
+<p class="firstline">Returns the specified TargetSslProxy resource.</p>
+<p class="firstline">Creates a TargetSslProxy resource in the specified project using</p>
+<p class="firstline">Retrieves the list of TargetSslProxy resources</p>
+  <code><a href="#setBackendService">setBackendService(project, targetSslProxy, body=None, requestId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Changes the BackendService for TargetSslProxy.</p>
+  <code><a href="#setCertificateMap">setCertificateMap(project, targetSslProxy, body=None, requestId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Changes the Certificate Map for TargetSslProxy.</p>
+  <code><a href="#setProxyHeader">setProxyHeader(project, targetSslProxy, body=None, requestId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Changes the ProxyHeaderType for TargetSslProxy.</p>
+  <code><a href="#setSslCertificates">setSslCertificates(project, targetSslProxy, body=None, requestId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Changes SslCertificates for TargetSslProxy.</p>
+  <code><a href="#setSslPolicy">setSslPolicy(project, targetSslProxy, body=None, requestId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Sets the SSL policy for TargetSslProxy. The SSL policy specifies the</p>
+    <code class="details" id="delete">delete(project, targetSslProxy, requestId=None, x__xgafv=None)</code>
+  <pre>Deletes the specified TargetSslProxy resource.
+  targetSslProxy: string, Name of the TargetSslProxy resource to delete. (required)
+    <code class="details" id="get">get(project, targetSslProxy, x__xgafv=None)</code>
+  <pre>Returns the specified TargetSslProxy resource.
+  targetSslProxy: string, Name of the TargetSslProxy resource to return. (required)
+    { # Represents a Target SSL Proxy resource.
+    # A target SSL proxy is a component of a Proxy Network Load Balancer.
+    # The forwarding rule references the target SSL proxy, and the target proxy
+      # This field can only be set for global target proxies.
+  &quot;kind&quot;: &quot;compute#targetSslProxy&quot;, # Output only. [Output Only] Type of the resource. Alwayscompute#targetSslProxy for target SSL proxies.
+  &quot;sslCertificates&quot;: [ # URLs to SslCertificate resources that are used to
+      # authenticate connections to Backends. At least one SSL certificate
+      # must be specified. Currently, you may specify up to 15 SSL certificates.
+      # sslCertificates do not apply when the load balancing scheme is set to
+      # INTERNAL_SELF_MANAGED.
+  &quot;sslPolicy&quot;: &quot;A String&quot;, # URL of SslPolicy resource that will be associated with the TargetSslProxy
+      # resource. If not set, the TargetSslProxy resource will not have any
+  <pre>Creates a TargetSslProxy resource in the specified project using
+  <pre>Retrieves the list of TargetSslProxy resources
+    { # Contains a list of TargetSslProxy resources.
+  &quot;items&quot;: [ # A list of TargetSslProxy resources.
+  &quot;kind&quot;: &quot;compute#targetSslProxyList&quot;, # Output only. Type of resource.
+    <code class="details" id="setBackendService">setBackendService(project, targetSslProxy, body=None, requestId=None, x__xgafv=None)</code>
+  <pre>Changes the BackendService for TargetSslProxy.
+  targetSslProxy: string, Name of the TargetSslProxy resource whose BackendService resource
+is to be set. (required)
+  &quot;service&quot;: &quot;A String&quot;, # The URL of the new BackendService resource for the targetSslProxy.
+    <code class="details" id="setCertificateMap">setCertificateMap(project, targetSslProxy, body=None, requestId=None, x__xgafv=None)</code>
+  <pre>Changes the Certificate Map for TargetSslProxy.
+  targetSslProxy: string, Name of the TargetSslProxy resource whose CertificateMap is
+  &quot;certificateMap&quot;: &quot;A String&quot;, # URL of the Certificate Map to associate with this TargetSslProxy.
+    <code class="details" id="setProxyHeader">setProxyHeader(project, targetSslProxy, body=None, requestId=None, x__xgafv=None)</code>
+  <pre>Changes the ProxyHeaderType for TargetSslProxy.
+  targetSslProxy: string, Name of the TargetSslProxy resource whose ProxyHeader is to be set. (required)
+  &quot;proxyHeader&quot;: &quot;A String&quot;, # The new type of proxy header to append before sending data to the
+      # backend.  NONE or PROXY_V1 are allowed.
+    <code class="details" id="setSslCertificates">setSslCertificates(project, targetSslProxy, body=None, requestId=None, x__xgafv=None)</code>
+  <pre>Changes SslCertificates for TargetSslProxy.
+  targetSslProxy: string, Name of the TargetSslProxy resource whose SslCertificate resource
+  &quot;sslCertificates&quot;: [ # New set of URLs to SslCertificate resources to associate with this
+      # TargetSslProxy. At least one SSL certificate must be specified.
+      # Currently, you may specify up to 15 SSL certificates.
+    <code class="details" id="setSslPolicy">setSslPolicy(project, targetSslProxy, body=None, requestId=None, x__xgafv=None)</code>
+  <pre>Sets the SSL policy for TargetSslProxy. The SSL policy specifies the
+clients and the load balancer. They do not affect the
+  targetSslProxy: string, Name of the TargetSslProxy resource whose SSL policy is

@@ -1,0 +1,27 @@
+<h1><a href="networkservices_v1beta1.html">Network Services API</a> . <a href="networkservices_v1beta1.projects.html">projects</a> . <a href="networkservices_v1beta1.projects.locations.html">locations</a> . <a href="networkservices_v1beta1.projects.locations.lbTcpExtensions.html">lbTcpExtensions</a></h1>
+  <code><a href="#create">create(parent, body=None, lbTcpExtensionId=None, requestId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Creates a new `LbTcpExtension` resource in a given project and location.</p>
+<p class="firstline">Deletes the specified `LbTcpExtension` resource.</p>
+<p class="firstline">Gets details of the specified `LbTcpExtension` resource.</p>
+<p class="firstline">Lists `LbTcpExtension` resources in a given project and location.</p>
+<p class="firstline">Updates the parameters of the specified `LbTcpExtension` resource.</p>
+    <code class="details" id="create">create(parent, body=None, lbTcpExtensionId=None, requestId=None, x__xgafv=None)</code>
+  <pre>Creates a new `LbTcpExtension` resource in a given project and location.
+  parent: string, Required. The parent resource of the `LbTcpExtension` resource. Must be in the format `projects/{project}/locations/{location}`. (required)
+{ # `LbTcpExtension` is a resource that allows traffic forwarding to different backend services to make allow/deny decisions on TCP connections for all L7 Load Balancers within a network. Currently only internal load-balancers are supported.
+  &quot;labels&quot;: { # Optional. Set of labels associated with the `LbTcpExtension` resource. The format must comply with [the requirements for labels](/compute/docs/labeling-resources#requirements) for Google Cloud resources.
+  &quot;loadBalancingScheme&quot;: &quot;A String&quot;, # Required. All backend services and forwarding rules referenced by this extension must share the same load balancing scheme. Supported values: `INTERNAL_MANAGED`. For more information, refer to [Backend services overview](https://cloud.google.com/load-balancing/docs/backend-service).
+  &quot;name&quot;: &quot;A String&quot;, # Required. Identifier. Name of the `LbTcpExtension` resource in the following format: `projects/{project}/locations/{location}/LbTcpExtension/{lb_tcp_extension}`
+  &quot;networks&quot;: [ # Optional. If set, this `LbTcpExtension` resource applies to all `ForwardingRule` resources in these VPC networks. Values should be relative resource names identifying VPC networks, for example `projects/*/global/networks/network-1`. Currently limited to 1 network per resource. Limited to 1 network per resource.
+  lbTcpExtensionId: string, Required. User-provided ID of the `LbTcpExtension` resource to be created.
+  <pre>Deletes the specified `LbTcpExtension` resource.
+  name: string, Required. The name of the `LbTcpExtension` resource to delete. Must be in the format `projects/{project}/locations/{location}/LbTcpExtensions/{lb_tcp_extension}`. (required)
+  <pre>Gets details of the specified `LbTcpExtension` resource.
+  name: string, Required. A name of the `LbTcpExtension` resource to get. Must be in the format `projects/{project}/locations/{location}/LbTcpExtensions/{lb_tcp_extension}`. (required)
+  <pre>Lists `LbTcpExtension` resources in a given project and location.
+  parent: string, Required. The project and location from which the `LbTcpExtension` resources are listed, specified in the following format: `projects/{project}/locations/{location}`. (required)
+    { # Message for response to listing `LbTcpExtension` resources.
+  &quot;lbTcpExtensions&quot;: [ # The list of `LbTcpExtension` resources.
+  <pre>Updates the parameters of the specified `LbTcpExtension` resource.
+  name: string, Required. Identifier. Name of the `LbTcpExtension` resource in the following format: `projects/{project}/locations/{location}/LbTcpExtension/{lb_tcp_extension}` (required)
+  updateMask: string, Optional. Used to specify the fields to be overwritten in the `LbTcpExtension` resource by the update. The fields specified in the update_mask are relative to the resource, not the full request. A field is overwritten if it is in the mask. If the user does not specify a mask, then all fields are overwritten.

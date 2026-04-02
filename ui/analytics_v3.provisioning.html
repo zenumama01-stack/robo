@@ -1,0 +1,26 @@
+<h1><a href="analytics_v3.html">Google Analytics API</a> . <a href="analytics_v3.provisioning.html">provisioning</a></h1>
+  <code><a href="#createAccountTicket">createAccountTicket(body=None)</a></code></p>
+<p class="firstline">Creates an account ticket.</p>
+  <code><a href="#createAccountTree">createAccountTree(body=None)</a></code></p>
+<p class="firstline">Provision account.</p>
+    <code class="details" id="createAccountTicket">createAccountTicket(body=None)</code>
+  <pre>Creates an account ticket.
+{ # JSON template for an Analytics account ticket. The account ticket consists of the ticket ID and the basic information for the account, property and profile.
+  &quot;account&quot;: { # JSON template for Analytics account entry. # Account for this ticket.
+  &quot;id&quot;: &quot;A String&quot;, # Account ticket ID used to access the account ticket.
+  &quot;kind&quot;: &quot;analytics#accountTicket&quot;, # Resource type for account ticket.
+  &quot;profile&quot;: { # JSON template for an Analytics view (profile). # View (Profile) for the account.
+  &quot;redirectUri&quot;: &quot;A String&quot;, # Redirect URI where the user will be sent after accepting Terms of Service. Must be configured in APIs console as a callback URL.
+  &quot;webproperty&quot;: { # JSON template for an Analytics web property. # Web property for the account.
+    <code class="details" id="createAccountTree">createAccountTree(body=None)</code>
+  <pre>Provision account.
+{ # JSON template for an Analytics account tree requests. The account tree request is used in the provisioning api to create an account, property, and view (profile). It contains the basic information required to make these fields.
+  &quot;accountName&quot;: &quot;A String&quot;,
+  &quot;kind&quot;: &quot;analytics#accountTreeRequest&quot;, # Resource type for account ticket.
+  &quot;profileName&quot;: &quot;A String&quot;,
+  &quot;timezone&quot;: &quot;A String&quot;,
+  &quot;webpropertyName&quot;: &quot;A String&quot;,
+  &quot;websiteUrl&quot;: &quot;A String&quot;,
+    { # JSON template for an Analytics account tree response. The account tree response is used in the provisioning api to return the result of creating an account, property, and view (profile).
+  &quot;account&quot;: { # JSON template for Analytics account entry. # The account created.
+  &quot;kind&quot;: &quot;analytics#accountTreeResponse&quot;, # Resource type for account ticket.

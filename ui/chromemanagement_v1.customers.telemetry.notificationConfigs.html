@@ -1,0 +1,25 @@
+<h1><a href="chromemanagement_v1.html">Chrome Management API</a> . <a href="chromemanagement_v1.customers.html">customers</a> . <a href="chromemanagement_v1.customers.telemetry.html">telemetry</a> . <a href="chromemanagement_v1.customers.telemetry.notificationConfigs.html">notificationConfigs</a></h1>
+<p class="firstline">Create a telemetry notification config.</p>
+<p class="firstline">Delete a telemetry notification config.</p>
+<p class="firstline">List all telemetry notification configs.</p>
+  <pre>Create a telemetry notification config.
+  parent: string, Required. The parent resource where this notification config will be created. Format: `customers/{customer}` (required)
+{ # Configuration to receive notifications of telemetry data.
+  &quot;customer&quot;: &quot;A String&quot;, # Output only. Google Workspace customer that owns the resource.
+  &quot;filter&quot;: { # Configures how the telemetry data should be filtered. # Only send notifications for telemetry data matching this filter.
+    &quot;deviceId&quot;: &quot;A String&quot;, # If set, only sends notifications for telemetry data coming from this device.
+    &quot;deviceOrgUnitId&quot;: &quot;A String&quot;, # If set, only sends notifications for telemetry data coming from devices in this org unit.
+    &quot;telemetryEventNotificationFilter&quot;: { # Configures how the telemetry events should be filtered. # Only sends notifications for the telemetry events matching this filter.
+      &quot;eventTypes&quot;: [ # Only sends the notifications for events of these types. Must not be empty.
+    &quot;userEmail&quot;: &quot;A String&quot;, # If set, only sends notifications for telemetry data coming from devices owned by this user.
+    &quot;userOrgUnitId&quot;: &quot;A String&quot;, # If set, only sends notifications for telemetry data coming from devices owned by users in this org unit.
+  &quot;googleCloudPubsubTopic&quot;: &quot;A String&quot;, # The pubsub topic to which notifications are published to.
+  &quot;name&quot;: &quot;A String&quot;, # Output only. Resource name of the notification configuration.
+  <pre>Delete a telemetry notification config.
+  name: string, Required. The name of the notification config to delete. Format: `customers/{customer}/telemetry/notificationConfigs/{notification_config}` (required)
+  <pre>List all telemetry notification configs.
+  parent: string, Required. The parent which owns the notification configs. (required)
+  pageSize: integer, The maximum number of notification configs to return. The service may return fewer than this value. If unspecified, at most 100 notification configs will be returned. The maximum value is 100; values above 100 will be coerced to 100.
+  pageToken: string, A page token, received from a previous `ListTelemetryNotificationConfigs` call. Provide this to retrieve the subsequent page. When paginating, all other parameters provided to `ListTelemetryNotificationConfigs` must match the call that provided the page token.
+    { # Response message for listing notification configs for a customer.
+  &quot;telemetryNotificationConfigs&quot;: [ # The telemetry notification configs from the specified customer.

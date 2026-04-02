@@ -1,0 +1,128 @@
+<h1><a href="compute_alpha.html">Compute Engine API</a> . <a href="compute_alpha.storagePools.html">storagePools</a></h1>
+<p class="firstline">Retrieves an aggregated list of storage pools.</p>
+  <code><a href="#delete">delete(project, zone, storagePool, requestId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Deletes the specified storage pool. Deleting a storagePool</p>
+  <code><a href="#get">get(project, zone, storagePool, x__xgafv=None)</a></code></p>
+<p class="firstline">Returns a specified storage pool. Gets a list of available</p>
+<p class="firstline">Creates a storage pool in the specified project using the data</p>
+<p class="firstline">Retrieves a list of storage pools contained within</p>
+  <code><a href="#listDisks">listDisks(project, zone, storagePool, filter=None, maxResults=None, orderBy=None, pageToken=None, returnPartialSuccess=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Lists the disks in a specified storage pool.</p>
+  <code><a href="#listDisks_next">listDisks_next()</a></code></p>
+<p class="firstline">Sets the labels on a storage pools. To learn more about labels, read theLabeling</p>
+  <code><a href="#update">update(project, zone, storagePool, body=None, requestId=None, updateMask=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Updates the specified storagePool with the data included in the request.</p>
+  <pre>Retrieves an aggregated list of storage pools.
+  &quot;items&quot;: { # A list of StoragePoolsScopedList resources.
+    &quot;a_key&quot;: { # [Output Only] Name of the scope containing this set of storage pool.
+      &quot;storagePools&quot;: [ # [Output Only] A list of storage pool contained in this scope.
+        { # Represents a zonal storage pool resource.
+          &quot;capacityProvisioningType&quot;: &quot;A String&quot;, # Provisioning type of the byte capacity of the pool.
+          &quot;exapoolProvisionedCapacityGb&quot;: { # Exapool provisioned capacities for each SKU type # Output only. [Output Only] Provisioned capacities for each SKU for this Exapool in GiB
+            &quot;capacityOptimized&quot;: &quot;A String&quot;, # Size, in GiB, of provisioned capacity-optimized capacity for this Exapool
+            &quot;readOptimized&quot;: &quot;A String&quot;, # Size, in GiB, of provisioned read-optimized capacity for this Exapool
+            &quot;writeOptimized&quot;: &quot;A String&quot;, # Size, in GiB, of provisioned write-optimized capacity for this Exapool
+          &quot;kind&quot;: &quot;compute#storagePool&quot;, # Output only. [Output Only] Type of the resource. Always compute#storagePool
+              # for storage pools.
+          &quot;labelFingerprint&quot;: &quot;A String&quot;, # A fingerprint for the labels being applied to this storage pool, which is
+              # retrieve a storage pool.
+          &quot;labels&quot;: { # Labels to apply to this storage pool. These can be later modified by
+          &quot;params&quot;: { # Additional storage pool params. # Input only. Additional params passed with the request, but not persisted
+            &quot;resourceManagerTags&quot;: { # Input only. Resource manager tags to be bound to the storage pool. Tag keys and values
+          &quot;performanceProvisioningType&quot;: &quot;A String&quot;, # Provisioning type of the performance-related parameters of the pool,
+              # such as throughput and IOPS.
+          &quot;poolProvisionedCapacityGb&quot;: &quot;A String&quot;, # Size of the storage pool in GiB. For more information about the size
+              # limits, see https://cloud.google.com/compute/docs/disks/storage-pools.
+          &quot;poolProvisionedIops&quot;: &quot;A String&quot;, # Provisioned IOPS of the storage pool. Only relevant if the storage pool
+              # type is hyperdisk-balanced.
+          &quot;poolProvisionedThroughput&quot;: &quot;A String&quot;, # Provisioned throughput of the storage pool in MiB/s. Only relevant if the
+              # storage pool type is hyperdisk-balanced or hyperdisk-throughput.
+          &quot;provisionedIops&quot;: &quot;A String&quot;, # DEPRECATED -- use &quot;pool provisioned IOPS&quot;.
+          &quot;provisionedThroughput&quot;: &quot;A String&quot;, # DEPRECATED -- use &quot;pool provisioned throughput&quot;.
+          &quot;resourceStatus&quot;: { # [Output Only] Contains output only fields. # Output only. [Output Only] Status information for the storage pool resource.
+            &quot;aggregateDiskProvisionedIops&quot;: &quot;A String&quot;, # DEPRECATED -- use &quot;total_provisioned_disk_iops&quot;.
+            &quot;aggregateDiskSizeGb&quot;: &quot;A String&quot;, # DEPRECATED -- use &quot;total provisioned disk size gb&quot;.
+            &quot;diskCount&quot;: &quot;A String&quot;, # [Output Only] Number of disks used.
+            &quot;exapoolMaxReadIops&quot;: &quot;A String&quot;, # Output only. [Output Only] Maximum allowed read IOPS for this Exapool.
+            &quot;exapoolMaxReadThroughput&quot;: &quot;A String&quot;, # Output only. [Output Only] Maximum allowed read throughput in MiB/s for
+                # this Exapool.
+            &quot;exapoolMaxWriteIops&quot;: &quot;A String&quot;, # Output only. [Output Only] Maximum allowed write IOPS for this Exapool.
+            &quot;exapoolMaxWriteThroughput&quot;: &quot;A String&quot;, # Output only. [Output Only] Maximum allowed write throughput in MiB/s
+                # for this Exapool.
+            &quot;lastResizeTimestamp&quot;: &quot;A String&quot;, # Output only. [Output Only] Timestamp of the last successful resize inRFC3339 text format.
+            &quot;maxAggregateDiskSizeGb&quot;: &quot;A String&quot;, # DEPRECATED -- use &quot;max provisioned disk size gb&quot;
+            &quot;maxTotalProvisionedDiskCapacityGb&quot;: &quot;A String&quot;, # [Output Only] Maximum allowed aggregate disk size in GiB.
+            &quot;numberOfDisks&quot;: &quot;A String&quot;, # DEPRECATED -- use &quot;disk count&quot;.
+            &quot;poolUsedCapacityBytes&quot;: &quot;A String&quot;, # [Output Only] Space used by data stored in disks within the storage pool
+                # (in bytes). This will reflect the total number of bytes written to the
+                # disks in the pool, in contrast to the capacity of those disks.
+            &quot;poolUsedIops&quot;: &quot;A String&quot;, # [Output Only] Sum of all the disks&#x27; provisioned IOPS, minus some amount
+                # that is allowed per disk that is not counted towards pool&#x27;s IOPS
+                # capacity. For more information, see
+                # https://cloud.google.com/compute/docs/disks/storage-pools.
+            &quot;poolUsedThroughput&quot;: &quot;A String&quot;, # [Output Only] Sum of all the disks&#x27; provisioned throughput in MiB/s.
+            &quot;poolUserWrittenBytes&quot;: &quot;A String&quot;, # [Output Only] Amount of data written into the pool, before it is
+                # compacted.
+            &quot;totalProvisionedDiskCapacityGb&quot;: &quot;A String&quot;, # [Output Only] Sum of all the disks&#x27; provisioned capacity (in GiB) in
+                # this storage pool. A disk&#x27;s provisioned capacity is the same as its total
+                # capacity.
+            &quot;totalProvisionedDiskIops&quot;: &quot;A String&quot;, # [Output Only] Sum of all the disks&#x27; provisioned IOPS.
+            &quot;totalProvisionedDiskThroughput&quot;: &quot;A String&quot;, # [Output Only] Sum of all the disks&#x27; provisioned throughput in MiB/s,
+                # minus some amount that is allowed per disk that is not counted towards
+                # pool&#x27;s throughput capacity.
+            &quot;usedBytes&quot;: &quot;A String&quot;, # DEPRECATED -- use &quot;pool used capacity&quot;.
+            &quot;usedReducedBytes&quot;: &quot;A String&quot;, # DEPRECATED -- do not use, will be removed.
+            &quot;usedThroughput&quot;: &quot;A String&quot;, # DEPRECATED -- use &quot;pool used throughput&quot;.
+          &quot;sizeGb&quot;: &quot;A String&quot;, # DEPRECATED -- use &quot;pool provisioned capacity gb&quot;.
+          &quot;state&quot;: &quot;A String&quot;, # Output only. [Output Only] The status of storage pool creation.
+              #      - CREATING: Storage pool is provisioning.
+              #      storagePool.
+              #      - FAILED: Storage pool creation failed.
+              #      - READY: Storage pool is ready for use.
+              #      - DELETING: Storage pool is deleting.
+          &quot;status&quot;: { # [Output Only] Contains output only fields. # Output only. [Output Only] Status information for the storage pool resource.
+          &quot;storagePoolType&quot;: &quot;A String&quot;, # Type of the storage pool.
+          &quot;zone&quot;: &quot;A String&quot;, # Output only. [Output Only] URL of the zone where the storage pool resides.
+  &quot;kind&quot;: &quot;compute#storagePoolAggregatedList&quot;, # Output only. [Output Only] Type of resource. Alwayscompute#storagePoolAggregatedList for aggregated lists of
+      # storage pools.
+    <code class="details" id="delete">delete(project, zone, storagePool, requestId=None, x__xgafv=None)</code>
+  <pre>Deletes the specified storage pool. Deleting a storagePool
+removes its data permanently and is irreversible. However, deleting a
+storagePool does not delete any snapshots previously
+made from the storagePool. You must separately delete
+  storagePool: string, Name of the storage pool to delete. (required)
+    <code class="details" id="get">get(project, zone, storagePool, x__xgafv=None)</code>
+  <pre>Returns a specified storage pool. Gets a list of available
+storage pools by making a list() request.
+  storagePool: string, Name of the storage pool to return. (required)
+  <pre>Creates a storage pool in the specified project using the data
+  <pre>Retrieves a list of storage pools contained within
+    { # A list of StoragePool resources.
+  &quot;items&quot;: [ # A list of StoragePool resources.
+  &quot;kind&quot;: &quot;compute#storagePoolList&quot;, # Output only. [Output Only] Type of resource. Always compute#storagePoolList
+      # for lists of storagePools.
+    <code class="details" id="listDisks">listDisks(project, zone, storagePool, filter=None, maxResults=None, orderBy=None, pageToken=None, returnPartialSuccess=None, x__xgafv=None)</code>
+  <pre>Lists the disks in a specified storage pool.
+  storagePool: string, Name of the storage pool to list disks of. (required)
+  &quot;items&quot;: [ # A list of StoragePoolDisk resources.
+      &quot;attachedInstances&quot;: [ # Output only. [Output Only] Instances this disk is attached to.
+      &quot;disk&quot;: &quot;A String&quot;, # Output only. [Output Only] The URL of the disk.
+      &quot;name&quot;: &quot;A String&quot;, # Output only. [Output Only] The name of the disk.
+      &quot;provisionedIops&quot;: &quot;A String&quot;, # Output only. [Output Only] The number of IOPS provisioned for the disk.
+      &quot;provisionedThroughput&quot;: &quot;A String&quot;, # Output only. [Output Only] The throughput provisioned for the disk.
+      &quot;resourcePolicies&quot;: [ # Output only. [Output Only] Resource policies applied to disk for automatic snapshot
+          # creations.
+      &quot;sizeGb&quot;: &quot;A String&quot;, # Output only. [Output Only] The disk size, in GB.
+      &quot;status&quot;: &quot;A String&quot;, # Output only. [Output Only] The disk status.
+      &quot;type&quot;: &quot;A String&quot;, # Output only. [Output Only] The disk type.
+      &quot;usedBytes&quot;: &quot;A String&quot;, # Output only. [Output Only] Amount of disk space used.
+  &quot;kind&quot;: &quot;compute#storagePoolListDisks&quot;, # Output only. [Output Only] Type of resource. Alwayscompute#storagePoolListDisks for lists of disks in a
+      # storagePool.
+    <code class="details" id="listDisks_next">listDisks_next()</code>
+  <pre>Sets the labels on a storage pools. To learn more about labels, read theLabeling
+    <code class="details" id="update">update(project, zone, storagePool, body=None, requestId=None, updateMask=None, x__xgafv=None)</code>
+  <pre>Updates the specified storagePool with the data included in the request.
+of update-mask. Only the following fields can be modified:
+pool_provisioned_capacity_gb, pool_provisioned_iops and
+pool_provisioned_throughput.
+  storagePool: string, The storagePool name for this request. (required)

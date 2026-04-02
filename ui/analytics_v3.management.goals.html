@@ -1,0 +1,76 @@
+<h1><a href="analytics_v3.html">Google Analytics API</a> . <a href="analytics_v3.management.html">management</a> . <a href="analytics_v3.management.goals.html">goals</a></h1>
+  <code><a href="#get">get(accountId, webPropertyId, profileId, goalId)</a></code></p>
+<p class="firstline">Gets a goal to which the user has access.</p>
+<p class="firstline">Create a new goal.</p>
+<p class="firstline">Lists goals to which the user has access.</p>
+  <code><a href="#patch">patch(accountId, webPropertyId, profileId, goalId, body=None)</a></code></p>
+<p class="firstline">Updates an existing goal. This method supports patch semantics.</p>
+  <code><a href="#update">update(accountId, webPropertyId, profileId, goalId, body=None)</a></code></p>
+<p class="firstline">Updates an existing goal.</p>
+    <code class="details" id="get">get(accountId, webPropertyId, profileId, goalId)</code>
+  <pre>Gets a goal to which the user has access.
+  accountId: string, Account ID to retrieve the goal for. (required)
+  webPropertyId: string, Web property ID to retrieve the goal for. (required)
+  profileId: string, View (Profile) ID to retrieve the goal for. (required)
+  goalId: string, Goal ID to retrieve the goal for. (required)
+    { # JSON template for Analytics goal resource.
+  &quot;accountId&quot;: &quot;A String&quot;, # Account ID to which this goal belongs.
+  &quot;active&quot;: True or False, # Determines whether this goal is active.
+  &quot;created&quot;: &quot;A String&quot;, # Time this goal was created.
+  &quot;eventDetails&quot;: { # Details for the goal of the type EVENT.
+    &quot;eventConditions&quot;: [ # List of event conditions.
+        &quot;comparisonType&quot;: &quot;A String&quot;, # Type of comparison. Possible values are LESS_THAN, GREATER_THAN or EQUAL.
+        &quot;comparisonValue&quot;: &quot;A String&quot;, # Value used for this comparison.
+        &quot;expression&quot;: &quot;A String&quot;, # Expression used for this match.
+        &quot;matchType&quot;: &quot;A String&quot;, # Type of the match to be performed. Possible values are REGEXP, BEGINS_WITH, or EXACT.
+        &quot;type&quot;: &quot;A String&quot;, # Type of this event condition. Possible values are CATEGORY, ACTION, LABEL, or VALUE.
+    &quot;useEventValue&quot;: True or False, # Determines if the event value should be used as the value for this goal.
+  &quot;id&quot;: &quot;A String&quot;, # Goal ID.
+  &quot;internalWebPropertyId&quot;: &quot;A String&quot;, # Internal ID for the web property to which this goal belongs.
+  &quot;kind&quot;: &quot;analytics#goal&quot;, # Resource type for an Analytics goal.
+  &quot;name&quot;: &quot;A String&quot;, # Goal name.
+  &quot;parentLink&quot;: { # Parent link for a goal. Points to the view (profile) to which this goal belongs.
+    &quot;href&quot;: &quot;A String&quot;, # Link to the view (profile) to which this goal belongs.
+    &quot;type&quot;: &quot;analytics#profile&quot;, # Value is &quot;analytics#profile&quot;.
+  &quot;profileId&quot;: &quot;A String&quot;, # View (Profile) ID to which this goal belongs.
+  &quot;selfLink&quot;: &quot;A String&quot;, # Link for this goal.
+  &quot;type&quot;: &quot;A String&quot;, # Goal type. Possible values are URL_DESTINATION, VISIT_TIME_ON_SITE, VISIT_NUM_PAGES, AND EVENT.
+  &quot;updated&quot;: &quot;A String&quot;, # Time this goal was last modified.
+  &quot;urlDestinationDetails&quot;: { # Details for the goal of the type URL_DESTINATION.
+    &quot;caseSensitive&quot;: True or False, # Determines if the goal URL must exactly match the capitalization of visited URLs.
+    &quot;firstStepRequired&quot;: True or False, # Determines if the first step in this goal is required.
+    &quot;matchType&quot;: &quot;A String&quot;, # Match type for the goal URL. Possible values are HEAD, EXACT, or REGEX.
+    &quot;steps&quot;: [ # List of steps configured for this goal funnel.
+        &quot;name&quot;: &quot;A String&quot;, # Step name.
+        &quot;number&quot;: 42, # Step number.
+        &quot;url&quot;: &quot;A String&quot;, # URL for this step.
+    &quot;url&quot;: &quot;A String&quot;, # URL for this goal.
+  &quot;value&quot;: 3.14, # Goal value.
+  &quot;visitNumPagesDetails&quot;: { # Details for the goal of the type VISIT_NUM_PAGES.
+    &quot;comparisonType&quot;: &quot;A String&quot;, # Type of comparison. Possible values are LESS_THAN, GREATER_THAN, or EQUAL.
+  &quot;visitTimeOnSiteDetails&quot;: { # Details for the goal of the type VISIT_TIME_ON_SITE.
+    &quot;comparisonType&quot;: &quot;A String&quot;, # Type of comparison. Possible values are LESS_THAN or GREATER_THAN.
+  &quot;webPropertyId&quot;: &quot;A String&quot;, # Web property ID to which this goal belongs. The web property ID is of the form UA-XXXXX-YY.
+  <pre>Create a new goal.
+  accountId: string, Account ID to create the goal for. (required)
+  webPropertyId: string, Web property ID to create the goal for. (required)
+  profileId: string, View (Profile) ID to create the goal for. (required)
+  <pre>Lists goals to which the user has access.
+  accountId: string, Account ID to retrieve goals for. Can either be a specific account ID or &#x27;~all&#x27;, which refers to all the accounts that user has access to. (required)
+  webPropertyId: string, Web property ID to retrieve goals for. Can either be a specific web property ID or &#x27;~all&#x27;, which refers to all the web properties that user has access to. (required)
+  profileId: string, View (Profile) ID to retrieve goals for. Can either be a specific view (profile) ID or &#x27;~all&#x27;, which refers to all the views (profiles) that user has access to. (required)
+  max_results: integer, The maximum number of goals to include in this response.
+  start_index: integer, An index of the first goal to retrieve. Use this parameter as a pagination mechanism along with the max-results parameter.
+    { # A goal collection lists Analytics goals to which the user has access. Each view (profile) can have a set of goals. Each resource in the Goal collection corresponds to a single Analytics goal.
+  &quot;items&quot;: [ # A list of goals.
+  &quot;kind&quot;: &quot;analytics#goals&quot;, # Collection type.
+  &quot;nextLink&quot;: &quot;A String&quot;, # Link to next page for this goal collection.
+  &quot;previousLink&quot;: &quot;A String&quot;, # Link to previous page for this goal collection.
+    <code class="details" id="patch">patch(accountId, webPropertyId, profileId, goalId, body=None)</code>
+  <pre>Updates an existing goal. This method supports patch semantics.
+  accountId: string, Account ID to update the goal. (required)
+  webPropertyId: string, Web property ID to update the goal. (required)
+  profileId: string, View (Profile) ID to update the goal. (required)
+  goalId: string, Index of the goal to be updated. (required)
+    <code class="details" id="update">update(accountId, webPropertyId, profileId, goalId, body=None)</code>
+  <pre>Updates an existing goal.

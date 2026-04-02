@@ -1,0 +1,16 @@
+<h1><a href="meet_v2.html">Google Meet API</a> . <a href="meet_v2.conferenceRecords.html">conferenceRecords</a> . <a href="meet_v2.conferenceRecords.transcripts.html">transcripts</a></h1>
+  <code><a href="meet_v2.conferenceRecords.transcripts.entries.html">entries()</a></code>
+<p class="firstline">Gets a transcript by transcript ID.</p>
+<p class="firstline">Lists the set of transcripts from the conference record. By default, ordered by start time and in ascending order.</p>
+  <pre>Gets a transcript by transcript ID.
+  name: string, Required. Resource name of the transcript. (required)
+    { # Metadata for a transcript generated from a conference. It refers to the ASR (Automatic Speech Recognition) result of user&#x27;s speech during the conference.
+  &quot;docsDestination&quot;: { # Google Docs location where the transcript file is saved. # Output only. Where the Google Docs transcript is saved.
+  &quot;endTime&quot;: &quot;A String&quot;, # Output only. Timestamp when the transcript stopped.
+  &quot;name&quot;: &quot;A String&quot;, # Output only. Resource name of the transcript. Format: `conferenceRecords/{conference_record}/transcripts/{transcript}`, where `{transcript}` is a 1:1 mapping to each unique transcription session of the conference.
+  &quot;startTime&quot;: &quot;A String&quot;, # Output only. Timestamp when the transcript started.
+  <pre>Lists the set of transcripts from the conference record. By default, ordered by start time and in ascending order.
+  pageSize: integer, Maximum number of transcripts to return. The service might return fewer than this value. If unspecified, at most 10 transcripts are returned. The maximum value is 100; values above 100 are coerced to 100. Maximum might change in the future.
+    { # Response for ListTranscripts method.
+  &quot;nextPageToken&quot;: &quot;A String&quot;, # Token to be circulated back for further List call if current List doesn&#x27;t include all the transcripts. Unset if all transcripts are returned.
+  &quot;transcripts&quot;: [ # List of transcripts in one page.

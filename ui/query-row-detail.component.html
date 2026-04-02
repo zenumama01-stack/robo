@@ -1,0 +1,89 @@
+<!-- Row Detail Slide-in Panel -->
+  <div class="row-detail-panel"
+        <i class="fa-solid fa-table-cells-large header-icon"></i>
+        <h3 class="panel-title">Row Details</h3>
+        <!-- Row navigation -->
+        @if (TotalRows > 1) {
+          <div class="row-nav">
+              [disabled]="RowIndex === 0"
+              (click)="onNavigatePrev()"
+              title="Previous row (↑ or K)">
+            <span class="row-indicator">{{ RowIndex + 1 }} / {{ TotalRows }}</span>
+              [disabled]="RowIndex >= TotalRows - 1"
+              (click)="onNavigateNext()"
+              title="Next row (↓ or J)">
+        <!-- Toggle empty fields -->
+        <button class="action-btn"
+          (click)="toggleHideEmptyFields()"
+          [class.active]="HideEmptyFields"
+          [title]="HideEmptyFields ? 'Show empty fields' : 'Hide empty fields'">
+          <i class="fa-solid" [class.fa-eye]="!HideEmptyFields" [class.fa-eye-slash]="HideEmptyFields"></i>
+        <!-- Copy JSON button -->
+        <button class="action-btn" (click)="copyRowAsJson()" title="Copy row as JSON">
+        <!-- Close button -->
+        <button class="close-btn" (click)="onClose()" title="Close (Esc)">
+      <!-- Primary Keys Section -->
+      @if (getVisibleFields(PrimaryKeyFields).length > 0) {
+        <div class="field-section">
+            <i class="fa-solid fa-key section-icon pk-icon"></i>
+            Primary Key
+            @for (field of getVisibleFields(PrimaryKeyFields); track field) {
+                  <span class="field-name">{{ field.displayName }}</span>
+                  <button class="copy-btn" (click)="copyValue(field)" title="Copy value">
+                <div class="field-value"
+                  [class.clickable]="field.targetEntityName"
+                  (click)="field.targetEntityName && onEntityLinkClick(field)">
+                  @if (field.targetEntityIcon) {
+                      [class]="field.targetEntityIcon"
+                    class="entity-icon"></i>
+                  <span class="value-text monospace">{{ field.formattedValue }}</span>
+                  @if (field.targetEntityName) {
+                    class="fa-solid fa-arrow-up-right-from-square link-icon"></i>
+      <!-- Foreign Keys Section -->
+      @if (getVisibleFields(ForeignKeyFields).length > 0) {
+            <i class="fa-solid fa-link section-icon fk-icon"></i>
+            Related Records
+            @for (field of getVisibleFields(ForeignKeyFields); track field) {
+                    <span class="target-entity">
+                      {{ field.targetEntityName }}
+                @if (field.value != null) {
+                  <div class="field-value clickable"
+                    (click)="onEntityLinkClick(field)">
+                    <i class="fa-solid fa-arrow-up-right-from-square link-icon"></i>
+                @if (field.value == null) {
+                  <div class="field-value empty">
+                    <span class="value-text">(empty)</span>
+      <!-- Regular Fields Section -->
+      @if (getVisibleFields(RegularFields).length > 0) {
+            <i class="fa-solid fa-list section-icon"></i>
+            Fields
+            @if (HideEmptyFields && getEmptyFieldCount(RegularFields) > 0) {
+              <span class="hidden-count">
+                ({{ getEmptyFieldCount(RegularFields) }} empty hidden)
+            @for (field of getVisibleFields(RegularFields); track field) {
+                  <span class="field-type">{{ field.sqlType }}</span>
+                <!-- JSON value -->
+                @if (isJson(field.formattedValue)) {
+                  <div class="field-value json-value"
+                    [class.expanded]="field.isExpanded">
+                    <pre class="json-content">{{ formatJson(field.formattedValue) }}</pre>
+                    <button class="expand-btn" (click)="toggleFieldExpand(field)">
+                      {{ field.isExpanded ? 'Collapse' : 'Expand' }}
+                <!-- Long text value -->
+                @if (!isJson(field.formattedValue) && field.isLongText) {
+                  <div class="field-value long-text"
+                    <span class="value-text">{{ field.formattedValue }}</span>
+                      {{ field.isExpanded ? 'Show less' : 'Show more' }}
+                <!-- Boolean value -->
+                @if (field.sqlType.toLowerCase() === 'bit' && !isJson(field.formattedValue)) {
+                  <div class="field-value boolean-value"
+                    <i [class]="field.value ? 'fa-solid fa-check-circle bool-true' : 'fa-solid fa-times-circle bool-false'"></i>
+                <!-- Empty value -->
+                @if (field.value == null && !isJson(field.formattedValue)) {
+                  <div class="field-value empty"
+                <!-- Regular value -->
+                @if (field.value != null && !isJson(field.formattedValue) && !field.isLongText && field.sqlType.toLowerCase() !== 'bit') {
+                    <span class="value-text"
+                      [class.monospace]="field.sqlType.toLowerCase().includes('uniqueidentifier') || field.name.toLowerCase().includes('id')">
+                      {{ field.formattedValue }}
+  <div class="panel-backdrop"

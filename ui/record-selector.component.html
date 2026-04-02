@@ -1,0 +1,18 @@
+    <kendo-listbox
+        class="list-box"
+        #unselected
+        kendoListBoxDataBinding
+        [data]="UnselectedRecords"
+        [textField]="DisplayField"
+        [connectedWith]="selected"
+        [toolbar]="ToolbarSettings"
+        (dblclick)="onDblClick($event, 'unselected')"
+        <ng-template kendoListBoxItemTemplate let-dataItem>
+            @if (this.DisplayIconField) {
+                <span [ngClass]="dataItem[this.DisplayIconField] + ' item-icon'"></span>
+            <span>{{ dataItem[DisplayField] }}</span>
+    </kendo-listbox>
+        #selected 
+        [data]="SelectedRecords" 
+        [toolbar]="false"
+        (dblclick)="onDblClick($event, 'selected')"

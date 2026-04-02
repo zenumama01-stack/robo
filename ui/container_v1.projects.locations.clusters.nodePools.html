@@ -1,0 +1,105 @@
+<h1><a href="container_v1.html">Kubernetes Engine API</a> . <a href="container_v1.projects.html">projects</a> . <a href="container_v1.projects.locations.html">locations</a> . <a href="container_v1.projects.locations.clusters.html">clusters</a> . <a href="container_v1.projects.locations.clusters.nodePools.html">nodePools</a></h1>
+  <code><a href="#completeUpgrade">completeUpgrade(name, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">CompleteNodePoolUpgrade will signal an on-going node pool upgrade to complete.</p>
+<p class="firstline">Creates a node pool for a cluster.</p>
+  <code><a href="#delete">delete(name, clusterId=None, nodePoolId=None, projectId=None, x__xgafv=None, zone=None)</a></code></p>
+<p class="firstline">Deletes a node pool from a cluster.</p>
+  <code><a href="#fetchNodePoolUpgradeInfo">fetchNodePoolUpgradeInfo(name, version=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Fetch upgrade information of a specific nodepool.</p>
+  <code><a href="#get">get(name, clusterId=None, nodePoolId=None, projectId=None, x__xgafv=None, zone=None)</a></code></p>
+<p class="firstline">Retrieves the requested node pool.</p>
+  <code><a href="#list">list(parent, clusterId=None, projectId=None, x__xgafv=None, zone=None)</a></code></p>
+<p class="firstline">Lists the node pools for a cluster.</p>
+<p class="firstline">Rolls back a previously Aborted or Failed NodePool upgrade. This makes no changes if the last upgrade successfully completed.</p>
+  <code><a href="#setAutoscaling">setAutoscaling(name, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Sets the autoscaling settings for the specified node pool.</p>
+  <code><a href="#setManagement">setManagement(name, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Sets the NodeManagement options for a node pool.</p>
+  <code><a href="#setSize">setSize(name, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Sets the size for a specific node pool. The new size will be used for all replicas, including future replicas created by modifying NodePool.locations.</p>
+<p class="firstline">Updates the version and/or image type for the specified node pool.</p>
+    <code class="details" id="completeUpgrade">completeUpgrade(name, body=None, x__xgafv=None)</code>
+  <pre>CompleteNodePoolUpgrade will signal an on-going node pool upgrade to complete.
+  name: string, The name (project, location, cluster, node pool id) of the node pool to complete upgrade. Specified in the format `projects/*/locations/*/clusters/*/nodePools/*`. (required)
+{ # CompleteNodePoolUpgradeRequest sets the name of target node pool to complete upgrade.
+  <pre>Creates a node pool for a cluster.
+  parent: string, The parent (project, location, cluster name) where the node pool will be created. Specified in the format `projects/*/locations/*/clusters/*`. (required)
+{ # CreateNodePoolRequest creates a node pool for a cluster.
+  &quot;clusterId&quot;: &quot;A String&quot;, # Deprecated. The name of the cluster. This field has been deprecated and replaced by the parent field.
+  &quot;nodePool&quot;: { # NodePool contains the name and configuration for a cluster&#x27;s node pool. Node pools are a set of nodes (i.e. VM&#x27;s), with a common configuration and specification, under the control of the cluster master. They may have a set of Kubernetes labels applied to them, which may be used to reference them during pod scheduling. They may also be resized up or down, to accommodate the workload. # Required. The node pool to create.
+  &quot;parent&quot;: &quot;A String&quot;, # The parent (project, location, cluster name) where the node pool will be created. Specified in the format `projects/*/locations/*/clusters/*`.
+    <code class="details" id="delete">delete(name, clusterId=None, nodePoolId=None, projectId=None, x__xgafv=None, zone=None)</code>
+  <pre>Deletes a node pool from a cluster.
+  name: string, The name (project, location, cluster, node pool id) of the node pool to delete. Specified in the format `projects/*/locations/*/clusters/*/nodePools/*`. (required)
+  clusterId: string, Deprecated. The name of the cluster. This field has been deprecated and replaced by the name field.
+  nodePoolId: string, Deprecated. The name of the node pool to delete. This field has been deprecated and replaced by the name field.
+    <code class="details" id="fetchNodePoolUpgradeInfo">fetchNodePoolUpgradeInfo(name, version=None, x__xgafv=None)</code>
+  <pre>Fetch upgrade information of a specific nodepool.
+  name: string, Required. The name (project, location, cluster, nodepool) of the nodepool to get. Specified in the format `projects/*/locations/*/clusters/*/nodePools/*` or `projects/*/zones/*/clusters/*/nodePools/*`. (required)
+    { # NodePoolUpgradeInfo contains the upgrade information of a nodepool.
+  &quot;endOfExtendedSupportTimestamp&quot;: &quot;A String&quot;, # The nodepool&#x27;s current minor version&#x27;s end of extended support timestamp.
+  &quot;endOfStandardSupportTimestamp&quot;: &quot;A String&quot;, # The nodepool&#x27;s current minor version&#x27;s end of standard support timestamp.
+    <code class="details" id="get">get(name, clusterId=None, nodePoolId=None, projectId=None, x__xgafv=None, zone=None)</code>
+  <pre>Retrieves the requested node pool.
+  name: string, The name (project, location, cluster, node pool id) of the node pool to get. Specified in the format `projects/*/locations/*/clusters/*/nodePools/*`. (required)
+  nodePoolId: string, Deprecated. The name of the node pool. This field has been deprecated and replaced by the name field.
+    <code class="details" id="list">list(parent, clusterId=None, projectId=None, x__xgafv=None, zone=None)</code>
+  <pre>Lists the node pools for a cluster.
+  parent: string, The parent (project, location, cluster name) where the node pools will be listed. Specified in the format `projects/*/locations/*/clusters/*`. (required)
+  clusterId: string, Deprecated. The name of the cluster. This field has been deprecated and replaced by the parent field.
+  zone: string, Deprecated. The name of the Google Compute Engine [zone](https://cloud.google.com/compute/docs/zones#available) in which the cluster resides. This field has been deprecated and replaced by the parent field.
+    { # ListNodePoolsResponse is the result of ListNodePoolsRequest.
+  &quot;nodePools&quot;: [ # A list of node pools for a cluster.
+  <pre>Rolls back a previously Aborted or Failed NodePool upgrade. This makes no changes if the last upgrade successfully completed.
+  name: string, The name (project, location, cluster, node pool id) of the node poll to rollback upgrade. Specified in the format `projects/*/locations/*/clusters/*/nodePools/*`. (required)
+{ # RollbackNodePoolUpgradeRequest rollbacks the previously Aborted or Failed NodePool upgrade. This will be an no-op if the last upgrade successfully completed.
+  &quot;clusterId&quot;: &quot;A String&quot;, # Deprecated. The name of the cluster to rollback. This field has been deprecated and replaced by the name field.
+  &quot;name&quot;: &quot;A String&quot;, # The name (project, location, cluster, node pool id) of the node poll to rollback upgrade. Specified in the format `projects/*/locations/*/clusters/*/nodePools/*`.
+  &quot;nodePoolId&quot;: &quot;A String&quot;, # Deprecated. The name of the node pool to rollback. This field has been deprecated and replaced by the name field.
+  &quot;respectPdb&quot;: True or False, # Option for rollback to ignore the PodDisruptionBudget. Default value is false.
+    <code class="details" id="setAutoscaling">setAutoscaling(name, body=None, x__xgafv=None)</code>
+  <pre>Sets the autoscaling settings for the specified node pool.
+  name: string, The name (project, location, cluster, node pool) of the node pool to set autoscaler settings. Specified in the format `projects/*/locations/*/clusters/*/nodePools/*`. (required)
+{ # SetNodePoolAutoscalingRequest sets the autoscaler settings of a node pool.
+  &quot;autoscaling&quot;: { # NodePoolAutoscaling contains information required by cluster autoscaler to adjust the size of the node pool to the current cluster usage. # Required. Autoscaling configuration for the node pool.
+  &quot;name&quot;: &quot;A String&quot;, # The name (project, location, cluster, node pool) of the node pool to set autoscaler settings. Specified in the format `projects/*/locations/*/clusters/*/nodePools/*`.
+  &quot;nodePoolId&quot;: &quot;A String&quot;, # Deprecated. The name of the node pool to upgrade. This field has been deprecated and replaced by the name field.
+    <code class="details" id="setManagement">setManagement(name, body=None, x__xgafv=None)</code>
+  <pre>Sets the NodeManagement options for a node pool.
+  name: string, The name (project, location, cluster, node pool id) of the node pool to set management properties. Specified in the format `projects/*/locations/*/clusters/*/nodePools/*`. (required)
+{ # SetNodePoolManagementRequest sets the node management properties of a node pool.
+  &quot;management&quot;: { # NodeManagement defines the set of node management services turned on for the node pool. # Required. NodeManagement configuration for the node pool.
+  &quot;name&quot;: &quot;A String&quot;, # The name (project, location, cluster, node pool id) of the node pool to set management properties. Specified in the format `projects/*/locations/*/clusters/*/nodePools/*`.
+  &quot;nodePoolId&quot;: &quot;A String&quot;, # Deprecated. The name of the node pool to update. This field has been deprecated and replaced by the name field.
+    <code class="details" id="setSize">setSize(name, body=None, x__xgafv=None)</code>
+  <pre>Sets the size for a specific node pool. The new size will be used for all replicas, including future replicas created by modifying NodePool.locations.
+  name: string, The name (project, location, cluster, node pool id) of the node pool to set size. Specified in the format `projects/*/locations/*/clusters/*/nodePools/*`. (required)
+{ # SetNodePoolSizeRequest sets the size of a node pool.
+  &quot;name&quot;: &quot;A String&quot;, # The name (project, location, cluster, node pool id) of the node pool to set size. Specified in the format `projects/*/locations/*/clusters/*/nodePools/*`.
+  &quot;nodeCount&quot;: 42, # Required. The desired node count for the pool.
+  <pre>Updates the version and/or image type for the specified node pool.
+  name: string, The name (project, location, cluster, node pool) of the node pool to update. Specified in the format `projects/*/locations/*/clusters/*/nodePools/*`. (required)
+{ # UpdateNodePoolRequests update a node pool&#x27;s image and/or version.
+  &quot;bootDisk&quot;: { # BootDisk specifies the boot disk configuration for nodepools. # The desired boot disk config for nodes in the node pool. Initiates an upgrade operation that migrates the nodes in the node pool to the specified boot disk config.
+  &quot;containerdConfig&quot;: { # ContainerdConfig contains configuration to customize containerd. # The desired containerd config for nodes in the node pool. Initiates an upgrade operation that recreates the nodes with the new config.
+  &quot;diskSizeGb&quot;: &quot;A String&quot;, # Optional. The desired disk size for nodes in the node pool specified in GB. The smallest allowed disk size is 10GB. Initiates an upgrade operation that migrates the nodes in the node pool to the specified disk size.
+  &quot;diskType&quot;: &quot;A String&quot;, # Optional. The desired disk type (e.g. &#x27;pd-standard&#x27;, &#x27;pd-ssd&#x27; or &#x27;pd-balanced&#x27;) for nodes in the node pool. Initiates an upgrade operation that migrates the nodes in the node pool to the specified disk type.
+  &quot;etag&quot;: &quot;A String&quot;, # The current etag of the node pool. If an etag is provided and does not match the current etag of the node pool, update will be blocked and an ABORTED error will be returned.
+  &quot;gcfsConfig&quot;: { # GcfsConfig contains configurations of Google Container File System (image streaming). # GCFS config.
+  &quot;gvnic&quot;: { # Configuration of gVNIC feature. # Enable or disable gvnic on the node pool.
+  &quot;imageType&quot;: &quot;A String&quot;, # Required. The desired image type for the node pool. Please see https://cloud.google.com/kubernetes-engine/docs/concepts/node-images for available image types.
+  &quot;labels&quot;: { # Collection of node-level [Kubernetes labels](https://kubernetes.io/docs/concepts/overview/working-with-objects/labels). # The desired node labels to be applied to all nodes in the node pool. If this field is not present, the labels will not be changed. Otherwise, the existing node labels will be *replaced* with the provided labels.
+    &quot;labels&quot;: { # Map of node label keys and node label values.
+  &quot;locations&quot;: [ # The desired list of Google Compute Engine [zones](https://cloud.google.com/compute/docs/zones#available) in which the node pool&#x27;s nodes should be located. Changing the locations for a node pool will result in nodes being either created or removed from the node pool, depending on whether locations are being added or removed. Warning: It is recommended to update node pool locations in a standalone API call. Do not combine a location update with changes to other fields (such as `tags`, `labels`, `taints`, etc.) in the same request. Otherwise, the API performs a structural modification where changes to other fields will only apply to newly created nodes and will not be applied to existing nodes in the node pool. To ensure all nodes are updated consistently, use a separate API call for location changes.
+  &quot;machineType&quot;: &quot;A String&quot;, # Optional. The desired [Google Compute Engine machine type](https://cloud.google.com/compute/docs/machine-types) for nodes in the node pool. Initiates an upgrade operation that migrates the nodes in the node pool to the specified machine type.
+  &quot;name&quot;: &quot;A String&quot;, # The name (project, location, cluster, node pool) of the node pool to update. Specified in the format `projects/*/locations/*/clusters/*/nodePools/*`.
+  &quot;nodeDrainConfig&quot;: { # NodeDrainConfig contains the node drain related configurations for this nodepool. # The desired node drain configuration for nodes in the node pool.
+  &quot;nodeNetworkConfig&quot;: { # Parameters for node pool-level network config. # Node network config.
+  &quot;nodeVersion&quot;: &quot;A String&quot;, # Required. The Kubernetes version to change the nodes to (typically an upgrade). Users may specify either explicit versions offered by Kubernetes Engine or version aliases, which have the following behavior: - &quot;latest&quot;: picks the highest valid Kubernetes version - &quot;1.X&quot;: picks the highest valid patch+gke.N patch in the 1.X version - &quot;1.X.Y&quot;: picks the highest valid gke.N patch in the 1.X.Y version - &quot;1.X.Y-gke.N&quot;: picks an explicit Kubernetes version - &quot;-&quot;: picks the Kubernetes master version
+  &quot;resourceLabels&quot;: { # Collection of [Resource Manager labels](https://cloud.google.com/resource-manager/docs/creating-managing-labels). # The resource labels for the node pool to use to annotate any related Google Compute Engine resources.
+  &quot;resourceManagerTags&quot;: { # A map of resource manager tag keys and values to be attached to the nodes for managing Compute Engine firewalls using Network Firewall Policies. Tags must be according to specifications in https://cloud.google.com/vpc/docs/tags-firewalls-overview#specifications. A maximum of 5 tag key-value pairs can be specified. Existing tags will be replaced with new values. # Desired resource manager tag keys and values to be attached to the nodes for managing Compute Engine firewalls using Network Firewall Policies. Existing tags will be replaced with new values.
+  &quot;storagePools&quot;: [ # List of Storage Pools where boot disks are provisioned. Existing Storage Pools will be replaced with storage-pools.
+  &quot;tags&quot;: { # Collection of Compute Engine network tags that can be applied to a node&#x27;s underlying VM instance. # The desired network tags to be applied to all nodes in the node pool. If this field is not present, the tags will not be changed. Otherwise, the existing network tags will be *replaced* with the provided tags.
+  &quot;taints&quot;: { # Collection of Kubernetes [node taints](https://kubernetes.io/docs/concepts/configuration/taint-and-toleration). # The desired node taints to be applied to all nodes in the node pool. If this field is not present, the taints will not be changed. Otherwise, the existing node taints will be *replaced* with the provided taints.
+    &quot;taints&quot;: [ # List of node taints.
+  &quot;workloadMetadataConfig&quot;: { # WorkloadMetadataConfig defines the metadata configuration to expose to workloads on the node pool. # The desired workload metadata config for the node pool.

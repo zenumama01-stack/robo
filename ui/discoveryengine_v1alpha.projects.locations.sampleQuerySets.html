@@ -1,0 +1,32 @@
+<h1><a href="discoveryengine_v1alpha.html">Discovery Engine API</a> . <a href="discoveryengine_v1alpha.projects.html">projects</a> . <a href="discoveryengine_v1alpha.projects.locations.html">locations</a> . <a href="discoveryengine_v1alpha.projects.locations.sampleQuerySets.html">sampleQuerySets</a></h1>
+  <code><a href="discoveryengine_v1alpha.projects.locations.sampleQuerySets.operations.html">operations()</a></code>
+  <code><a href="discoveryengine_v1alpha.projects.locations.sampleQuerySets.sampleQueries.html">sampleQueries()</a></code>
+<p class="firstline">Returns the sampleQueries Resource.</p>
+  <code><a href="#create">create(parent, body=None, sampleQuerySetId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Creates a SampleQuerySet</p>
+<p class="firstline">Deletes a SampleQuerySet.</p>
+<p class="firstline">Gets a SampleQuerySet.</p>
+<p class="firstline">Gets a list of SampleQuerySets.</p>
+<p class="firstline">Updates a SampleQuerySet.</p>
+    <code class="details" id="create">create(parent, body=None, sampleQuerySetId=None, x__xgafv=None)</code>
+  <pre>Creates a SampleQuerySet
+{ # A SampleQuerySet is the parent resource of SampleQuery, and contains the configurations shared by all SampleQuery under it.
+  &quot;createTime&quot;: &quot;A String&quot;, # Output only. Timestamp the SampleQuerySet was created at.
+  &quot;description&quot;: &quot;A String&quot;, # The description of the SampleQuerySet.
+  &quot;displayName&quot;: &quot;A String&quot;, # Required. The sample query set display name. This field must be a UTF-8 encoded string with a length limit of 128 characters.
+  &quot;name&quot;: &quot;A String&quot;, # Identifier. The full resource name of the SampleQuerySet, in the format of `projects/{project}/locations/{location}/sampleQuerySets/{sample_query_set}`. This field must be a UTF-8 encoded string with a length limit of 1024 characters.
+  sampleQuerySetId: string, Required. The ID to use for the SampleQuerySet, which will become the final component of the SampleQuerySet.name. If the caller does not have permission to create the SampleQuerySet, regardless of whether or not it exists, a `PERMISSION_DENIED` error is returned. This field must be unique among all SampleQuerySets with the same parent. Otherwise, an `ALREADY_EXISTS` error is returned. This field must conform to [RFC-1034](https://tools.ietf.org/html/rfc1034) standard with a length limit of 63 characters. Otherwise, an `INVALID_ARGUMENT` error is returned.
+  <pre>Deletes a SampleQuerySet.
+  name: string, Required. Full resource name of SampleQuerySet, such as `projects/{project}/locations/{location}/sampleQuerySets/{sample_query_set}`. If the caller does not have permission to delete the SampleQuerySet, regardless of whether or not it exists, a `PERMISSION_DENIED` error is returned. If the SampleQuerySet to delete does not exist, a `NOT_FOUND` error is returned. (required)
+  <pre>Gets a SampleQuerySet.
+  name: string, Required. Full resource name of SampleQuerySet, such as `projects/{project}/locations/{location}/sampleQuerySets/{sample_query_set}`. If the caller does not have permission to access the SampleQuerySet, regardless of whether or not it exists, a PERMISSION_DENIED error is returned. If the requested SampleQuerySet does not exist, a NOT_FOUND error is returned. (required)
+  <pre>Gets a list of SampleQuerySets.
+  parent: string, Required. The parent location resource name, such as `projects/{project}/locations/{location}`. If the caller does not have permission to list SampleQuerySets under this location, regardless of whether or not this location exists, a `PERMISSION_DENIED` error is returned. (required)
+  pageSize: integer, Maximum number of SampleQuerySets to return. If unspecified, defaults to 100. The maximum allowed value is 1000. Values above 1000 will be coerced to 1000. If this field is negative, an `INVALID_ARGUMENT` error is returned.
+  pageToken: string, A page token ListSampleQuerySetsResponse.next_page_token, received from a previous SampleQuerySetService.ListSampleQuerySets call. Provide this to retrieve the subsequent page. When paginating, all other parameters provided to SampleQuerySetService.ListSampleQuerySets must match the call that provided the page token. Otherwise, an `INVALID_ARGUMENT` error is returned.
+    { # Response message for SampleQuerySetService.ListSampleQuerySets method.
+  &quot;nextPageToken&quot;: &quot;A String&quot;, # A token that can be sent as ListSampleQuerySetsRequest.page_token to retrieve the next page. If this field is omitted, there are no subsequent pages.
+  &quot;sampleQuerySets&quot;: [ # The SampleQuerySets.
+  <pre>Updates a SampleQuerySet.
+  name: string, Identifier. The full resource name of the SampleQuerySet, in the format of `projects/{project}/locations/{location}/sampleQuerySets/{sample_query_set}`. This field must be a UTF-8 encoded string with a length limit of 1024 characters. (required)
+  updateMask: string, Indicates which fields in the provided imported &#x27;sample query set&#x27; to update. If not set, will by default update all fields.

@@ -1,0 +1,32 @@
+    <!-- Application Details Section -->
+        SectionKey="applicationDetails"
+        SectionName="Application Details"
+        Icon="fa fa-code"
+    <!-- Operational Status Section -->
+        SectionKey="operationalStatus"
+        SectionName="Operational Status"
+    <!-- MJ: API Application Scopes Section -->
+        SectionKey="mJAPIApplicationScopes"
+        SectionName="MJ: API Application Scopes"
+        Icon="fa fa-lock"
+        [BadgeCount]="GetSectionRowCount('mJAPIApplicationScopes')"
+                [Params]="BuildRelationshipViewParamsByEntityName('MJ: API Application Scopes','ApplicationID')"
+                [NewRecordValues]="NewRecordValues('MJ: API Application Scopes')"
+                [AllowLoad]="IsSectionExpanded('mJAPIApplicationScopes')"
+                (AfterDataLoad)="SetSectionRowCount('mJAPIApplicationScopes', $event.totalRowCount)"
+    <!-- MJ: API Key Usage Logs Section -->
+        SectionKey="mJAPIKeyUsageLogs"
+        SectionName="MJ: API Key Usage Logs"
+        [BadgeCount]="GetSectionRowCount('mJAPIKeyUsageLogs')"
+                [Params]="BuildRelationshipViewParamsByEntityName('MJ: API Key Usage Logs','ApplicationID')"
+                [NewRecordValues]="NewRecordValues('MJ: API Key Usage Logs')"
+                [AllowLoad]="IsSectionExpanded('mJAPIKeyUsageLogs')"
+                (AfterDataLoad)="SetSectionRowCount('mJAPIKeyUsageLogs', $event.totalRowCount)"
+    <!-- MJ: API Key Applications Section -->
+        SectionKey="mJAPIKeyApplications"
+        SectionName="MJ: API Key Applications"
+        [BadgeCount]="GetSectionRowCount('mJAPIKeyApplications')"
+                [Params]="BuildRelationshipViewParamsByEntityName('MJ: API Key Applications','ApplicationID')"
+                [NewRecordValues]="NewRecordValues('MJ: API Key Applications')"
+                [AllowLoad]="IsSectionExpanded('mJAPIKeyApplications')"
+                (AfterDataLoad)="SetSectionRowCount('mJAPIKeyApplications', $event.totalRowCount)"

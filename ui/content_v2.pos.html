@@ -1,0 +1,67 @@
+<h1><a href="content_v2.html">Content API for Shopping</a> . <a href="content_v2.pos.html">pos</a></h1>
+<p class="firstline">Batches multiple POS-related calls in a single request.</p>
+  <code><a href="#delete">delete(merchantId, targetMerchantId, storeCode, dryRun=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Deletes a store for the given merchant.</p>
+  <code><a href="#get">get(merchantId, targetMerchantId, storeCode, x__xgafv=None)</a></code></p>
+<p class="firstline">Retrieves information about the given store.</p>
+  <code><a href="#insert">insert(merchantId, targetMerchantId, body=None, dryRun=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Creates a store for the given merchant.</p>
+  <code><a href="#inventory">inventory(merchantId, targetMerchantId, body=None, dryRun=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Submit inventory for the given merchant.</p>
+  <code><a href="#list">list(merchantId, targetMerchantId, x__xgafv=None)</a></code></p>
+<p class="firstline">Lists the stores of the target merchant.</p>
+  <code><a href="#sale">sale(merchantId, targetMerchantId, body=None, dryRun=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Submit a sale event for the given merchant.</p>
+  <pre>Batches multiple POS-related calls in a single request.
+      &quot;inventory&quot;: { # The absolute quantity of an item available at the given store. # The inventory to submit. This should be set only if the method is `inventory`.
+        &quot;contentLanguage&quot;: &quot;A String&quot;, # Required. The two-letter ISO 639-1 language code for the item.
+        &quot;gtin&quot;: &quot;A String&quot;, # Global Trade Item Number.
+        &quot;itemId&quot;: &quot;A String&quot;, # Required. A unique identifier for the item.
+        &quot;kind&quot;: &quot;A String&quot;, # Identifies what kind of resource this is. Value: the fixed string &quot;`content#posInventory`&quot;
+        &quot;price&quot;: { # Required. The current price of the item.
+        &quot;quantity&quot;: &quot;A String&quot;, # Required. The available quantity of the item.
+        &quot;storeCode&quot;: &quot;A String&quot;, # Required. The identifier of the merchant&#x27;s store. Either a `storeCode` inserted via the API or the code of the store in Google My Business.
+        &quot;targetCountry&quot;: &quot;A String&quot;, # Required. The CLDR territory code for the item.
+        &quot;timestamp&quot;: &quot;A String&quot;, # Required. The inventory timestamp, in ISO 8601 format.
+      &quot;merchantId&quot;: &quot;A String&quot;, # The ID of the POS data provider.
+      &quot;method&quot;: &quot;A String&quot;, # The method of the batch entry. Acceptable values are: - &quot;`delete`&quot; - &quot;`get`&quot; - &quot;`insert`&quot; - &quot;`inventory`&quot; - &quot;`sale`&quot;
+      &quot;sale&quot;: { # The change of the available quantity of an item at the given store. # The sale information to submit. This should be set only if the method is `sale`.
+        &quot;kind&quot;: &quot;A String&quot;, # Identifies what kind of resource this is. Value: the fixed string &quot;`content#posSale`&quot;
+        &quot;price&quot;: { # Required. The price of the item.
+        &quot;quantity&quot;: &quot;A String&quot;, # Required. The relative change of the available quantity. Negative for items returned.
+        &quot;saleId&quot;: &quot;A String&quot;, # A unique ID to group items from the same sale event.
+      &quot;store&quot;: { # Store resource. # The store information to submit. This should be set only if the method is `insert`.
+        &quot;gcidCategory&quot;: [ # The business type of the store.
+        &quot;kind&quot;: &quot;A String&quot;, # Identifies what kind of resource this is. Value: the fixed string &quot;`content#posStore`&quot;
+        &quot;phoneNumber&quot;: &quot;A String&quot;, # The store phone number.
+        &quot;placeId&quot;: &quot;A String&quot;, # The Google Place Id of the store location.
+        &quot;storeAddress&quot;: &quot;A String&quot;, # Required. The street address of the store.
+        &quot;storeCode&quot;: &quot;A String&quot;, # Required. A store identifier that is unique for the given merchant.
+        &quot;storeName&quot;: &quot;A String&quot;, # The merchant or store name.
+        &quot;websiteUrl&quot;: &quot;A String&quot;, # The website url for the store or merchant.
+      &quot;storeCode&quot;: &quot;A String&quot;, # The store code. This should be set only if the method is `delete` or `get`.
+      &quot;targetMerchantId&quot;: &quot;A String&quot;, # The ID of the account for which to get/submit data.
+      &quot;inventory&quot;: { # The absolute quantity of an item available at the given store. # The updated inventory information.
+      &quot;kind&quot;: &quot;A String&quot;, # Identifies what kind of resource this is. Value: the fixed string &quot;`content#posCustomBatchResponseEntry`&quot;
+      &quot;sale&quot;: { # The change of the available quantity of an item at the given store. # The updated sale information.
+      &quot;store&quot;: { # Store resource. # The retrieved or updated store information.
+  &quot;kind&quot;: &quot;A String&quot;, # Identifies what kind of resource this is. Value: the fixed string &quot;content#posCustomBatchResponse&quot;.
+    <code class="details" id="delete">delete(merchantId, targetMerchantId, storeCode, dryRun=None, x__xgafv=None)</code>
+  <pre>Deletes a store for the given merchant.
+  merchantId: string, The ID of the POS or inventory data provider. (required)
+  targetMerchantId: string, The ID of the target merchant. (required)
+  storeCode: string, A store code that is unique per merchant. (required)
+    <code class="details" id="get">get(merchantId, targetMerchantId, storeCode, x__xgafv=None)</code>
+  <pre>Retrieves information about the given store.
+    { # Store resource.
+    <code class="details" id="insert">insert(merchantId, targetMerchantId, body=None, dryRun=None, x__xgafv=None)</code>
+  <pre>Creates a store for the given merchant.
+    <code class="details" id="inventory">inventory(merchantId, targetMerchantId, body=None, dryRun=None, x__xgafv=None)</code>
+  <pre>Submit inventory for the given merchant.
+  &quot;kind&quot;: &quot;A String&quot;, # Identifies what kind of resource this is. Value: the fixed string &quot;content#posInventoryResponse&quot;.
+    <code class="details" id="list">list(merchantId, targetMerchantId, x__xgafv=None)</code>
+  <pre>Lists the stores of the target merchant.
+  &quot;kind&quot;: &quot;A String&quot;, # Identifies what kind of resource this is. Value: the fixed string &quot;content#posListResponse&quot;.
+    <code class="details" id="sale">sale(merchantId, targetMerchantId, body=None, dryRun=None, x__xgafv=None)</code>
+  <pre>Submit a sale event for the given merchant.
+  &quot;kind&quot;: &quot;A String&quot;, # Identifies what kind of resource this is. Value: the fixed string &quot;content#posSaleResponse&quot;.

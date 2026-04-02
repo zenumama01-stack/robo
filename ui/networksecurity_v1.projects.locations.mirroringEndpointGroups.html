@@ -1,0 +1,17 @@
+<h1><a href="networksecurity_v1.html">Network Security API</a> . <a href="networksecurity_v1.projects.html">projects</a> . <a href="networksecurity_v1.projects.locations.html">locations</a> . <a href="networksecurity_v1.projects.locations.mirroringEndpointGroups.html">mirroringEndpointGroups</a></h1>
+  <code><a href="#create">create(parent, body=None, mirroringEndpointGroupId=None, requestId=None, x__xgafv=None)</a></code></p>
+    <code class="details" id="create">create(parent, body=None, mirroringEndpointGroupId=None, requestId=None, x__xgafv=None)</code>
+{ # An endpoint group is a consumer frontend for a deployment group (backend). In order to configure mirroring for a network, consumers must create: - An association between their network and the endpoint group. - A security profile that points to the endpoint group. - A mirroring rule that references the security profile (group).
+      &quot;name&quot;: &quot;A String&quot;, # Output only. The connected association&#x27;s resource name, for example: `projects/123456789/locations/global/mirroringEndpointGroupAssociations/my-ega`. See https://google.aip.dev/124.
+  &quot;connectedDeploymentGroups&quot;: [ # Output only. List of details about the connected deployment groups to this endpoint group.
+    { # The endpoint group&#x27;s view of a connected deployment group.
+      &quot;name&quot;: &quot;A String&quot;, # Output only. The connected deployment group&#x27;s resource name, for example: `projects/123456789/locations/global/mirroringDeploymentGroups/my-dg`. See https://google.aip.dev/124.
+  &quot;mirroringDeploymentGroup&quot;: &quot;A String&quot;, # Immutable. The deployment group that this DIRECT endpoint group is connected to, for example: `projects/123456789/locations/global/mirroringDeploymentGroups/my-dg`. See https://google.aip.dev/124.
+  &quot;name&quot;: &quot;A String&quot;, # Immutable. Identifier. The resource name of this endpoint group, for example: `projects/123456789/locations/global/mirroringEndpointGroups/my-eg`. See https://google.aip.dev/122 for more details.
+  &quot;type&quot;: &quot;A String&quot;, # Immutable. The type of the endpoint group. If left unspecified, defaults to DIRECT.
+  mirroringEndpointGroupId: string, Required. The ID to use for the endpoint group, which will become the final component of the endpoint group&#x27;s resource name.
+  name: string, Required. The name of the endpoint group to retrieve. Format: projects/{project}/locations/{location}/mirroringEndpointGroups/{mirroring_endpoint_group} (required)
+    { # Response message for ListMirroringEndpointGroups.
+  &quot;mirroringEndpointGroups&quot;: [ # The endpoint groups from the specified parent.
+  name: string, Immutable. Identifier. The resource name of this endpoint group, for example: `projects/123456789/locations/global/mirroringEndpointGroups/my-eg`. See https://google.aip.dev/122 for more details. (required)
+  updateMask: string, Optional. The list of fields to update. Fields are specified relative to the endpoint group (e.g. `description`; *not* `mirroring_endpoint_group.description`). See https://google.aip.dev/161 for more details.

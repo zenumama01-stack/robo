@@ -1,0 +1,22 @@
+<h1><a href="merchantapi_issueresolution_v1.html">Merchant API</a> . <a href="merchantapi_issueresolution_v1.accounts.html">accounts</a> . <a href="merchantapi_issueresolution_v1.accounts.aggregateProductStatuses.html">aggregateProductStatuses</a></h1>
+<p class="firstline">Lists the `AggregateProductStatuses` resources for your merchant account. The response might contain fewer items than specified by `pageSize`. If `pageToken` was returned in previous request, it can be used to obtain additional results.</p>
+  <pre>Lists the `AggregateProductStatuses` resources for your merchant account. The response might contain fewer items than specified by `pageSize`. If `pageToken` was returned in previous request, it can be used to obtain additional results.
+  parent: string, Required. The account to list aggregate product statuses for. Format: `accounts/{account}` (required)
+  filter: string, Optional. A filter expression that filters the aggregate product statuses. Filtering is only supported by the `reporting_context` and `country` field. For example: `reporting_context = &quot;SHOPPING_ADS&quot; AND country = &quot;US&quot;`.
+  pageSize: integer, Optional. The maximum number of aggregate product statuses to return. The service may return fewer than this value. If unspecified, at most 25 aggregate product statuses are returned. The maximum value is 250; values above 250 are coerced to 250.
+  pageToken: string, Optional. A page token, received from a previous `ListAggregateProductStatuses` call. Provide this to retrieve the subsequent page. When paginating, all other parameters provided to `ListAggregateProductStatuses` must match the call that provided the page token.
+    { # Response message for the `ListAggregateProductStatuses` method.
+  &quot;aggregateProductStatuses&quot;: [ # The `AggregateProductStatuses` resources for the given account.
+    { # Aggregate product statuses for a given reporting context and country.
+      &quot;country&quot;: &quot;A String&quot;, # The country of the aggregate product statuses. Represented as a [CLDR territory code](https://github.com/unicode-org/cldr/blob/latest/common/main/en.xml).
+      &quot;itemLevelIssues&quot;: [ # The product issues that affect the given reporting context and country.
+          &quot;documentationUri&quot;: &quot;A String&quot;, # The URL of a web page to help with resolving this issue.
+          &quot;productCount&quot;: &quot;A String&quot;, # The number of products affected by this issue.
+          &quot;severity&quot;: &quot;A String&quot;, # How this issue affects serving of the offer.
+      &quot;name&quot;: &quot;A String&quot;, # Identifier. The name of the `AggregateProductStatuses` resource. Format: `accounts/{account}/aggregateProductStatuses/{aggregateProductStatuses}`
+      &quot;reportingContext&quot;: &quot;A String&quot;, # The reporting context of the aggregate product statuses.
+      &quot;stats&quot;: { # Products statistics. # Products statistics for the given reporting context and country.
+        &quot;activeCount&quot;: &quot;A String&quot;, # The number of products that are active.
+        &quot;disapprovedCount&quot;: &quot;A String&quot;, # The number of products that are disapproved.
+        &quot;expiringCount&quot;: &quot;A String&quot;, # The number of products that are expiring.
+        &quot;pendingCount&quot;: &quot;A String&quot;, # The number of products that are pending.

@@ -1,0 +1,41 @@
+<h1><a href="apigee_v1.html">Apigee API</a> . <a href="apigee_v1.organizations.html">organizations</a> . <a href="apigee_v1.organizations.analytics.html">analytics</a> . <a href="apigee_v1.organizations.analytics.datastores.html">datastores</a></h1>
+<p class="firstline">Create a Datastore for an org</p>
+<p class="firstline">Delete a Datastore from an org.</p>
+<p class="firstline">Get a Datastore</p>
+  <code><a href="#list">list(parent, targetType=None, x__xgafv=None)</a></code></p>
+<p class="firstline">List Datastores</p>
+  <code><a href="#test">test(parent, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Test if Datastore configuration is correct. This includes checking if credentials provided by customer have required permissions in target destination storage</p>
+<p class="firstline">Update a Datastore</p>
+  <pre>Create a Datastore for an org
+  parent: string, Required. The parent organization name. Must be of the form `organizations/{org}`. (required)
+{ # The data store defines the connection to export data repository (Cloud Storage, BigQuery), including the credentials used to access the data repository.
+  &quot;createTime&quot;: &quot;A String&quot;, # Output only. Datastore create time, in milliseconds since the epoch of 1970-01-01T00:00:00Z
+  &quot;datastoreConfig&quot;: { # Configuration detail for datastore # Datastore Configurations.
+    &quot;bucketName&quot;: &quot;A String&quot;, # Name of the Cloud Storage bucket. Required for `gcs` target_type.
+    &quot;datasetName&quot;: &quot;A String&quot;, # BigQuery dataset name Required for `bigquery` target_type.
+    &quot;path&quot;: &quot;A String&quot;, # Path of Cloud Storage bucket Required for `gcs` target_type.
+    &quot;projectId&quot;: &quot;A String&quot;, # Required. Google Cloud project in which the datastore exists
+    &quot;tablePrefix&quot;: &quot;A String&quot;, # Prefix of BigQuery table Required for `bigquery` target_type.
+  &quot;displayName&quot;: &quot;A String&quot;, # Required. Display name in UI
+  &quot;lastUpdateTime&quot;: &quot;A String&quot;, # Output only. Datastore last update time, in milliseconds since the epoch of 1970-01-01T00:00:00Z
+  &quot;org&quot;: &quot;A String&quot;, # Output only. Organization that the datastore belongs to
+  &quot;self&quot;: &quot;A String&quot;, # Output only. Resource link of Datastore. Example: `/organizations/{org}/analytics/datastores/{uuid}`
+  &quot;targetType&quot;: &quot;A String&quot;, # Destination storage type. Supported types `gcs` or `bigquery`.
+  <pre>Delete a Datastore from an org.
+  name: string, Required. Resource name of the Datastore to be deleted. Must be of the form `organizations/{org}/analytics/datastores/{datastoreId}` (required)
+  <pre>Get a Datastore
+  name: string, Required. Resource name of the Datastore to be get. Must be of the form `organizations/{org}/analytics/datastores/{datastoreId}` (required)
+    <code class="details" id="list">list(parent, targetType=None, x__xgafv=None)</code>
+  <pre>List Datastores
+  targetType: string, Optional. TargetType is used to fetch all Datastores that match the type
+    { # The response for ListDatastores
+  &quot;datastores&quot;: [ # A list of datastores
+    <code class="details" id="test">test(parent, body=None, x__xgafv=None)</code>
+  <pre>Test if Datastore configuration is correct. This includes checking if credentials provided by customer have required permissions in target destination storage
+  parent: string, Required. The parent organization name Must be of the form `organizations/{org}` (required)
+    { # The response for TestDatastore
+  &quot;error&quot;: &quot;A String&quot;, # Output only. Error message of test connection failure
+  &quot;state&quot;: &quot;A String&quot;, # Output only. It could be `completed` or `failed`
+  <pre>Update a Datastore
+  name: string, Required. The resource name of datastore to be updated. Must be of the form `organizations/{org}/analytics/datastores/{datastoreId}` (required)

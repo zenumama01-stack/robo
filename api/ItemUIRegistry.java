@@ -1,0 +1,108 @@
+ * This interface is used by a service which combines the core item registry
+ * with an aggregation of item ui providers; it can be therefore widely used for
+ * all UI related information requests regarding items.
+ * @author Mark Herwege - new method getFormatPattern
+ * @author Laurent Garnier - new method getConditionalIcon
+public interface ItemUIRegistry extends ItemRegistry, ItemUIProvider {
+    enum WidgetLabelSource {
+        /** Label is taken from widget definition in sitemap */
+        SITEMAP_WIDGET,
+        /** Label is taken from the widget's backing item definition */
+        ITEM_LABEL,
+        /** Label equals the widget's backing item name */
+        ITEM_NAME,
+        /** No suitable label source could be determined */
+        NONE
+     * Retrieves the label for a widget.
+     * This first checks, if there is a label defined in the sitemap. If not, it
+     * checks all item UI providers for a label. If no label can be found, it is
+     * set to an empty string.
+     * If the label contains a "[%format]" section, i.e.
+     * "[%s]" for a string or "[%.3f]" for a decimal, this is replaced by the
+     * current value of the item and padded by a "<span>" element.
+     * @param w the widget to retrieve the label for
+     * @return the label to use for the widget
+    String getLabel(Widget w);
+     * Retrieves the label source for a widget.
+     * @param w the widget to retrieve the label source for
+     * @return the source the widget label is taken from
+    WidgetLabelSource getLabelSource(Widget w);
+     * Retrieves the category for a widget.
+     * This first checks, if there is a category defined in the sitemap. If not, it
+     * checks all item UI providers for a category. If no category can be found, the
+     * default category is the widget type name, e.g. "switch".
+     * @param w the widget to retrieve the category for
+     * @return the category to use for the widget
+    String getCategory(Widget w);
+     * Retrieves the current state of the item of a widget or <code>UnDefType.UNDEF</code>.
+     * @param w the widget to retrieve the item state for
+     * @return the item state of the widget
+    State getState(Widget w);
+     * Retrieves the widget for a given id on a given sitemap.
+     * @param sitemap the sitemap to look for the widget
+     * @param id the id of the widget to look for
+     * @return the widget for the given id
+    Widget getWidget(Sitemap sitemap, String id);
+     * Provides an id for a widget.
+     * This constructs a string out of the position of the sitemap, so if this
+     * widget is the third child of a page linked from the fifth widget on the
+     * home screen, its id would be "0503". If the widget is dynamically created
+     * and not available in the sitemap, the name of its associated item is used
+     * @param w the widget to get the id for
+     * @return an id for this widget
+    String getWidgetId(Widget w);
+     * this should be used instead of Sitemap.getChildren() as the default
+     * widgets have to be resolved to a concrete widget type.
+     * @param sitemap the sitemap to retrieve the children for
+     * @return the children of the sitemap
+    List<Widget> getChildren(Sitemap sitemap);
+     * this should be used instead of LinkableWidget.getChildren() as there
+     * might be no children defined on the widget, but they should be
+     * dynamically determined by looking at the members of the underlying item.
+     * @param w the widget to retrieve the children for
+     * @return the (dynamically or statically defined) children of the widget
+    List<Widget> getChildren(LinkableWidget w);
+     * this should be used instead of Widget.eContainer() as as the concrete
+     * widgets created from default widgets have no parent.
+     * @param w the widget to retrieve the parent for
+     * @return the parent of the widget
+    Parent getParent(Widget w);
+     * Gets the format pattern for the widget value, retrieved from widget label, item label or item state description
+     * @param w Widget
+     * @return String with the format pattern
+    String getFormatPattern(Widget w);
+     * Gets the label color for the widget. Checks conditional statements to
+     * find the color based on the item value
+     * @return String with the color
+    String getLabelColor(Widget w);
+     * Gets the value color for the widget. Checks conditional statements to
+    String getValueColor(Widget w);
+     * Gets the icon color for the widget. Checks conditional statements to
+    String getIconColor(Widget w);
+     * Gets the icon for the widget. Checks conditional statements to
+     * find the icon based on the item value
+     * @return the icon reference or null in case no conditional statement is defined or no conditional statement is
+     *         fulfilled.
+    String getConditionalIcon(Widget w);
+     * Gets the widget visibility based on the item state
+     * @return true if the item is visible
+    boolean getVisiblity(Widget w);
+     * Gets the item state
+     * @return State of the item
+    State getItemState(String itemName);
+     * Provide a widget specific String representation of a {@link Unit}.
+     * @param widget
+     * @return a widget specific String representation of a {@link Unit}.
+    String getUnitForWidget(Widget widget);
+     * Convert the given state to the unit found in label. The label must be in the format "<value> <unit>" with unit
+     * being a valid unit symbol.
+     * @param state the state to be converted.
+     * @param label the label containing the target unit.
+     * @return the converted state.
+    State convertStateToLabelUnit(QuantityType<?> state, String label);
+     * Convert the given state into
+     * @param widget Widget
+     * @param item item
+     * @param state state
+     * @return the state converted to a type accepted by the item or the given state if the conversion was not possible
+    State convertState(Widget widget, Item item, State state);

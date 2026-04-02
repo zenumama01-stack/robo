@@ -1,0 +1,18 @@
+<h1><a href="meet_v2.html">Google Meet API</a> . <a href="meet_v2.conferenceRecords.html">conferenceRecords</a> . <a href="meet_v2.conferenceRecords.recordings.html">recordings</a></h1>
+<p class="firstline">Gets a recording by recording ID.</p>
+<p class="firstline">Lists the recording resources from the conference record. By default, ordered by start time and in ascending order.</p>
+  <pre>Gets a recording by recording ID.
+  name: string, Required. Resource name of the recording. (required)
+    { # Metadata about a recording created during a conference.
+  &quot;driveDestination&quot;: { # Export location where a recording file is saved in Google Drive. # Output only. Recording is saved to Google Drive as an MP4 file. The `drive_destination` includes the Drive `fileId` that can be used to download the file using the `files.get` method of the Drive API.
+    &quot;exportUri&quot;: &quot;A String&quot;, # Output only. Link used to play back the recording file in the browser. For example, `https://drive.google.com/file/d/{$fileId}/view`.
+    &quot;file&quot;: &quot;A String&quot;, # Output only. The `fileId` for the underlying MP4 file. For example, &quot;1kuceFZohVoCh6FulBHxwy6I15Ogpc4hP&quot;. Use `$ GET https://www.googleapis.com/drive/v3/files/{$fileId}?alt=media` to download the blob. For more information, see https://developers.google.com/drive/api/v3/reference/files/get.
+  &quot;endTime&quot;: &quot;A String&quot;, # Output only. Timestamp when the recording ended.
+  &quot;name&quot;: &quot;A String&quot;, # Output only. Resource name of the recording. Format: `conferenceRecords/{conference_record}/recordings/{recording}` where `{recording}` is a 1:1 mapping to each unique recording session during the conference.
+  &quot;startTime&quot;: &quot;A String&quot;, # Output only. Timestamp when the recording started.
+  &quot;state&quot;: &quot;A String&quot;, # Output only. Current state.
+  <pre>Lists the recording resources from the conference record. By default, ordered by start time and in ascending order.
+  pageSize: integer, Maximum number of recordings to return. The service might return fewer than this value. If unspecified, at most 10 recordings are returned. The maximum value is 100; values above 100 are coerced to 100. Maximum might change in the future.
+    { # Response for ListRecordings method.
+  &quot;nextPageToken&quot;: &quot;A String&quot;, # Token to be circulated back for further List call if current List doesn&#x27;t include all the recordings. Unset if all recordings are returned.
+  &quot;recordings&quot;: [ # List of recordings in one page.

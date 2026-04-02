@@ -1,0 +1,57 @@
+<h1><a href="compute_alpha.html">Compute Engine API</a> . <a href="compute_alpha.reservationSlots.html">reservationSlots</a></h1>
+  <code><a href="#get">get(project, zone, parentName, reservationSlot, x__xgafv=None)</a></code></p>
+<p class="firstline">Retrieves information about the specified reservation slot.</p>
+  <code><a href="#getVersion">getVersion(project, zone, parentName, reservationSlot, body=None, requestId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Allows customers to get SBOM versions of a reservation slot.</p>
+  <code><a href="#list">list(project, zone, parentName, filter=None, maxResults=None, orderBy=None, pageToken=None, returnPartialSuccess=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Retrieves a list of reservation slots under a single reservation.</p>
+  <code><a href="#update">update(project, zone, parentName, reservationSlot, body=None, updateMask=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Update a reservation slot in the specified sub-block.</p>
+    <code class="details" id="get">get(project, zone, parentName, reservationSlot, x__xgafv=None)</code>
+  <pre>Retrieves information about the specified reservation slot.
+  zone: string, The name of the zone for this request, formatted as RFC1035. (required)
+  parentName: string, The name of the parent reservation and parent block, formatted as
+reservations/{reservation_name}/reservationBlocks/{reservation_block_name}/reservationSubBlocks/{reservation_sub_block_name} (required)
+  reservationSlot: string, The name of the reservation slot, formatted as RFC1035 or a resource ID
+number. (required)
+  &quot;resource&quot;: { # Represents a reservation slot resource.
+    &quot;creationTimestamp&quot;: &quot;A String&quot;, # Output only. [Output Only] The creation timestamp, formatted asRFC3339 text.
+    &quot;id&quot;: &quot;A String&quot;, # Output only. [Output Only] The unique identifier for this resource. This identifier is
+    &quot;kind&quot;: &quot;compute#reservationSlot&quot;, # Output only. [Output Only] The type of resource. Alwayscompute#reservationSlot for reservation slots.
+    &quot;name&quot;: &quot;A String&quot;, # Output only. [Output Only] The name of the reservation slot.
+    &quot;physicalTopology&quot;: { # Output only. [Output Only] The physical topology of the reservation slot.
+      &quot;block&quot;: &quot;A String&quot;, # The unique identifier of the capacity block within the cluster.
+      &quot;cluster&quot;: &quot;A String&quot;, # The cluster name of the reservation sub-block.
+      &quot;host&quot;: &quot;A String&quot;, # The unique identifier of the capacity host within the capacity sub-block.
+      &quot;subBlock&quot;: &quot;A String&quot;, # The unique identifier of the capacity sub-block within the capacity
+          # block.
+    &quot;selfLink&quot;: &quot;A String&quot;, # Output only. [Output Only] A server-defined fully-qualified URL for this resource.
+    &quot;selfLinkWithId&quot;: &quot;A String&quot;, # Output only. [Output Only] A server-defined URL for this resource with the resource ID.
+    &quot;shareSettings&quot;: { # The share setting for reservations and sole tenancy node groups. # Specify share settings to create a shared slot. Set to empty
+        # to inherit the share settings from a parent resource.
+    &quot;state&quot;: &quot;A String&quot;, # Output only. [Output Only] The state of the reservation slot.
+    &quot;status&quot;: { # Output only. [Output Only] The status of the reservation slot.
+      &quot;physicalTopology&quot;: { # Output only. [Output Only] The physical topology of the reservation sub-block.
+      &quot;rdmaIpAddresses&quot;: [ # Output only. The RDMA IP address of the physical host.
+      &quot;runningInstances&quot;: [ # Output only. The URIs of the instances currently running on this slot.
+    &quot;zone&quot;: &quot;A String&quot;, # Output only. [Output Only] The zone in which the reservation slot resides.
+    <code class="details" id="getVersion">getVersion(project, zone, parentName, reservationSlot, body=None, requestId=None, x__xgafv=None)</code>
+  <pre>Allows customers to get SBOM versions of a reservation slot.
+  parentName: string, The name of the parent reservation and parent block. In the format of
+  reservationSlot: string, The name of the reservation slot.
+  &quot;sbomSelections&quot;: [ # The SBOM selection to return. Duplicate values in the list will be ignored.
+    <code class="details" id="list">list(project, zone, parentName, filter=None, maxResults=None, orderBy=None, pageToken=None, returnPartialSuccess=None, x__xgafv=None)</code>
+  <pre>Retrieves a list of reservation slots under a single reservation.
+    { # A list of reservation slots within a single reservation.
+  &quot;id&quot;: &quot;A String&quot;, # The unique identifier for the resource; defined by the server.
+  &quot;items&quot;: [ # A list of reservation slot resources.
+    { # Represents a reservation slot resource.
+  &quot;kind&quot;: &quot;compute#reservationSlot&quot;, # The type of resource. Alwayscompute#reservationSlot for a list of reservation
+      # slots.
+  &quot;selfLink&quot;: &quot;A String&quot;, # The server-defined URL for this resource.
+  &quot;warning&quot;: { # An informational warning message.
+    <code class="details" id="update">update(project, zone, parentName, reservationSlot, body=None, updateMask=None, x__xgafv=None)</code>
+  <pre>Update a reservation slot in the specified sub-block.
+  parentName: string, The name of the sub-block resource. (required)
+  reservationSlot: string, The name of the slot resource. (required)
+  updateMask: string, The fields to be updated as part of this request.

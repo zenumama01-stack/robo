@@ -1,0 +1,20 @@
+    <!-- Suite Identification Section -->
+        SectionKey="suiteIdentification"
+        SectionName="Suite Identification"
+    <!-- MJ: Test Suites Section -->
+        SectionKey="mJTestSuites"
+        SectionName="MJ: Test Suites"
+        [BadgeCount]="GetSectionRowCount('mJTestSuites')"
+                [Params]="BuildRelationshipViewParamsByEntityName('MJ: Test Suites','ParentID')"
+                [NewRecordValues]="NewRecordValues('MJ: Test Suites')"
+                [AllowLoad]="IsSectionExpanded('mJTestSuites')"
+                (AfterDataLoad)="SetSectionRowCount('mJTestSuites', $event.totalRowCount)"
+    <!-- MJ: Test Suite Runs Section -->
+        SectionKey="mJTestSuiteRuns"
+        SectionName="MJ: Test Suite Runs"
+        [BadgeCount]="GetSectionRowCount('mJTestSuiteRuns')"
+                [Params]="BuildRelationshipViewParamsByEntityName('MJ: Test Suite Runs','SuiteID')"
+                [NewRecordValues]="NewRecordValues('MJ: Test Suite Runs')"
+                [AllowLoad]="IsSectionExpanded('mJTestSuiteRuns')"
+                (AfterDataLoad)="SetSectionRowCount('mJTestSuiteRuns', $event.totalRowCount)"
+                [Params]="BuildRelationshipViewParamsByEntityName('MJ: Test Suite Tests','SuiteID')"

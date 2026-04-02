@@ -1,0 +1,51 @@
+<h1><a href="manufacturers_v1.html">Manufacturer Center API</a> . <a href="manufacturers_v1.accounts.html">accounts</a> . <a href="manufacturers_v1.accounts.languages.html">languages</a> . <a href="manufacturers_v1.accounts.languages.productCertifications.html">productCertifications</a></h1>
+<p class="firstline">Deletes a product certification by its name. This method can only be called by certification bodies.</p>
+<p class="firstline">Gets a product certification by its name. This method can only be called by certification bodies.</p>
+<p class="firstline">Lists product certifications from a specified certification body. This method can only be called by certification bodies.</p>
+<p class="firstline">Updates (or creates if allow_missing = true) a product certification which links certifications with products. This method can only be called by certification bodies.</p>
+  <pre>Deletes a product certification by its name. This method can only be called by certification bodies.
+  name: string, Required. The name of the product certification to delete. Format: accounts/{account}/languages/{language_code}/productCertifications/{id} (required)
+  <pre>Gets a product certification by its name. This method can only be called by certification bodies.
+  name: string, Required. The name of the product certification to get. Format: accounts/{account}/languages/{language_code}/productCertifications/{id} (required)
+    { # Product certification data.
+  &quot;brand&quot;: &quot;A String&quot;, # Required. This is the product&#x27;s brand name. The brand is used to help identify your product.
+  &quot;certification&quot;: [ # Required. A list of certifications to link to the described product.
+    { # Description of a certification.
+      &quot;authority&quot;: &quot;A String&quot;, # Required. Name of the certification body.
+      &quot;code&quot;: &quot;A String&quot;, # Optional. A unique code to identify the certification.
+      &quot;link&quot;: &quot;A String&quot;, # Optional. A URL link to the certification.
+      &quot;logo&quot;: &quot;A String&quot;, # Optional. A URL link to the certification logo.
+      &quot;name&quot;: &quot;A String&quot;, # Required. Name of the certification.
+      &quot;validUntil&quot;: &quot;A String&quot;, # Optional. The expiration date (UTC).
+      &quot;value&quot;: &quot;A String&quot;, # Optional. A custom value of the certification.
+  &quot;countryCode&quot;: [ # Optional. A 2-letter country code (ISO 3166-1 Alpha 2).
+  &quot;destinationStatuses&quot;: [ # Output only. The statuses of the destinations.
+    { # The destination status.
+      &quot;approvedCountries&quot;: [ # Output only. List of country codes (ISO 3166-1 alpha-2) where the offer is approved.
+      &quot;disapprovedCountries&quot;: [ # Output only. List of country codes (ISO 3166-1 alpha-2) where the offer is disapproved.
+      &quot;pendingCountries&quot;: [ # Output only. List of country codes (ISO 3166-1 alpha-2) where the offer is pending approval.
+      &quot;status&quot;: &quot;A String&quot;, # The status of the destination.
+  &quot;issues&quot;: [ # Output only. A server-generated list of issues associated with the product.
+    { # Product issue.
+      &quot;applicableCountries&quot;: [ # Output only. List of country codes (ISO 3166-1 alpha-2) where issue applies to the manufacturer product.
+      &quot;attribute&quot;: &quot;A String&quot;, # If present, the attribute that triggered the issue. For more information about attributes, see https://support.google.com/manufacturers/answer/6124116.
+      &quot;description&quot;: &quot;A String&quot;, # Longer description of the issue focused on how to resolve it.
+      &quot;destination&quot;: &quot;A String&quot;, # The destination this issue applies to.
+      &quot;resolution&quot;: &quot;A String&quot;, # What needs to happen to resolve the issue.
+      &quot;timestamp&quot;: &quot;A String&quot;, # The timestamp when this issue appeared.
+      &quot;title&quot;: &quot;A String&quot;, # Short title describing the nature of the issue.
+      &quot;type&quot;: &quot;A String&quot;, # The server-generated type of the issue, for example, “INCORRECT_TEXT_FORMATTING”, “IMAGE_NOT_SERVEABLE”, etc.
+  &quot;mpn&quot;: [ # Optional. These are the Manufacturer Part Numbers (MPN). MPNs are used to uniquely identify a specific product among all products from the same manufacturer
+  &quot;name&quot;: &quot;A String&quot;, # Required. The unique name identifier of a product certification Format: accounts/{account}/languages/{language_code}/productCertifications/{id} Where `id` is a some unique identifier and `language_code` is a 2-letter ISO 639-1 code of a Shopping supported language according to https://support.google.com/merchants/answer/160637.
+  &quot;productCode&quot;: [ # Optional. Another name for GTIN.
+  &quot;productType&quot;: [ # Optional. These are your own product categorization system in your product data.
+  &quot;title&quot;: &quot;A String&quot;, # Required. This is to clearly identify the product you are certifying.
+  <pre>Lists product certifications from a specified certification body. This method can only be called by certification bodies.
+  parent: string, Required. The parent, which owns this collection of product certifications. Format: accounts/{account}/languages/{language_code} (required)
+  pageSize: integer, Optional. The maximum number of product certifications to return. The service may return fewer than this value. If unspecified, at most 50 product certifications will be returned. The maximum value is 1000; values above 1000 will be coerced to 1000.
+  pageToken: string, Optional. A page token, received from a previous `ListProductCertifications` call. Provide this to retrieve the subsequent page. When paginating, all other parameters provided to `ListProductCertifications` must match the call that provided the page token. Required if requesting the second or higher page.
+    { # Response for ListProductCertifications method.
+  &quot;productCertifications&quot;: [ # The product certifications from the specified certification body.
+  <pre>Updates (or creates if allow_missing = true) a product certification which links certifications with products. This method can only be called by certification bodies.
+  name: string, Required. The unique name identifier of a product certification Format: accounts/{account}/languages/{language_code}/productCertifications/{id} Where `id` is a some unique identifier and `language_code` is a 2-letter ISO 639-1 code of a Shopping supported language according to https://support.google.com/merchants/answer/160637. (required)
+  updateMask: string, Optional. The list of fields to update according to aip.dev/134. However, only full update is supported as of right now. Therefore, it can be either ignored or set to &quot;*&quot;. Setting any other values will returns UNIMPLEMENTED error.

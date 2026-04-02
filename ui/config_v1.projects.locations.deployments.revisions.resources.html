@@ -1,0 +1,23 @@
+<h1><a href="config_v1.html">Infrastructure Manager API</a> . <a href="config_v1.projects.html">projects</a> . <a href="config_v1.projects.locations.html">locations</a> . <a href="config_v1.projects.locations.deployments.html">deployments</a> . <a href="config_v1.projects.locations.deployments.revisions.html">revisions</a> . <a href="config_v1.projects.locations.deployments.revisions.resources.html">resources</a></h1>
+<p class="firstline">Gets details about a Resource deployed by Infra Manager.</p>
+<p class="firstline">Lists Resources in a given revision.</p>
+  <pre>Gets details about a Resource deployed by Infra Manager.
+  name: string, Required. The name of the Resource in the format: &#x27;projects/{project_id}/locations/{location}/deployments/{deployment}/revisions/{revision}/resource/{resource}&#x27;. (required)
+    { # Resource represents a Google Cloud Platform resource actuated by IM. Resources are child resources of Revisions.
+  &quot;caiAssets&quot;: { # Output only. Map of Cloud Asset Inventory (CAI) type to CAI info (e.g. CAI ID). CAI type format follows https://cloud.google.com/asset-inventory/docs/supported-asset-types
+    &quot;a_key&quot;: { # CAI info of a Resource.
+      &quot;fullResourceName&quot;: &quot;A String&quot;, # CAI resource name in the format following https://cloud.google.com/apis/design/resource_names#full_resource_name
+  &quot;intent&quot;: &quot;A String&quot;, # Output only. Intent of the resource.
+  &quot;name&quot;: &quot;A String&quot;, # Output only. Resource name. Format: `projects/{project}/locations/{location}/deployments/{deployment}/revisions/{revision}/resources/{resource}`
+  &quot;state&quot;: &quot;A String&quot;, # Output only. Current state of the resource.
+  &quot;terraformInfo&quot;: { # Terraform info of a Resource. # Output only. Terraform-specific info if this resource was created using Terraform.
+    &quot;address&quot;: &quot;A String&quot;, # TF resource address that uniquely identifies this resource within this deployment.
+    &quot;id&quot;: &quot;A String&quot;, # ID attribute of the TF resource
+    &quot;type&quot;: &quot;A String&quot;, # TF resource type
+  <pre>Lists Resources in a given revision.
+  parent: string, Required. The parent in whose context the Resources are listed. The parent value is in the format: &#x27;projects/{project_id}/locations/{location}/deployments/{deployment}/revisions/{revision}&#x27;. (required)
+  filter: string, Lists the Resources that match the filter expression. A filter expression filters the resources listed in the response. The expression must be of the form &#x27;{field} {operator} {value}&#x27; where operators: &#x27;&lt;&#x27;, &#x27;&gt;&#x27;, &#x27;&lt;=&#x27;, &#x27;&gt;=&#x27;, &#x27;!=&#x27;, &#x27;=&#x27;, &#x27;:&#x27; are supported (colon &#x27;:&#x27; represents a HAS operator which is roughly synonymous with equality). {field} can refer to a proto or JSON field, or a synthetic field. Field names can be camelCase or snake_case. Examples: - Filter by name: name = &quot;projects/foo/locations/us-central1/deployments/dep/revisions/bar/resources/baz
+  pageToken: string, Token returned by previous call to &#x27;ListResources&#x27; which specifies the position in the list from where to continue listing the resources.
+    { # A response to a &#x27;ListResources&#x27; call. Contains a list of Resources.
+  &quot;nextPageToken&quot;: &quot;A String&quot;, # A token to request the next page of resources from the &#x27;ListResources&#x27; method. The value of an empty string means that there are no more resources to return.
+  &quot;resources&quot;: [ # List of Resources.

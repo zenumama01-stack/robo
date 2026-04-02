@@ -1,0 +1,61 @@
+<h1><a href="developerconnect_v1.html">Developer Connect API</a> . <a href="developerconnect_v1.projects.html">projects</a> . <a href="developerconnect_v1.projects.locations.html">locations</a> . <a href="developerconnect_v1.projects.locations.connections.html">connections</a> . <a href="developerconnect_v1.projects.locations.connections.gitRepositoryLinks.html">gitRepositoryLinks</a></h1>
+  <code><a href="#create">create(parent, body=None, gitRepositoryLinkId=None, requestId=None, validateOnly=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Creates a GitRepositoryLink. Upon linking a Git Repository, Developer Connect will configure the Git Repository to send webhook events to Developer Connect. Connections that use Firebase GitHub Application will have events forwarded to the Firebase service. Connections that use Gemini Code Assist will have events forwarded to Gemini Code Assist service. All other Connections will have events forwarded to Cloud Build.</p>
+<p class="firstline">Deletes a single GitRepositoryLink.</p>
+  <code><a href="#fetchGitRefs">fetchGitRefs(gitRepositoryLink, pageSize=None, pageToken=None, refType=None, x__xgafv=None)</a></code></p>
+  <code><a href="#fetchReadToken">fetchReadToken(gitRepositoryLink, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Fetches read token of a given gitRepositoryLink.</p>
+  <code><a href="#fetchReadWriteToken">fetchReadWriteToken(gitRepositoryLink, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Fetches read/write token of a given gitRepositoryLink.</p>
+<p class="firstline">Gets details of a single GitRepositoryLink.</p>
+<p class="firstline">Lists GitRepositoryLinks in a given project, location, and connection.</p>
+  <code><a href="#processBitbucketCloudWebhook">processBitbucketCloudWebhook(name, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">ProcessBitbucketCloudWebhook is called by the external Bitbucket Cloud instances for notifying events.</p>
+  <code><a href="#processBitbucketDataCenterWebhook">processBitbucketDataCenterWebhook(name, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">ProcessBitbucketDataCenterWebhook is called by the external Bitbucket Data Center instances for notifying events.</p>
+  <code><a href="#processGitLabEnterpriseWebhook">processGitLabEnterpriseWebhook(name, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">ProcessGitLabEnterpriseWebhook is called by the external GitLab Enterprise instances for notifying events.</p>
+  <code><a href="#processGitLabWebhook">processGitLabWebhook(name, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">ProcessGitLabWebhook is called by the GitLab.com for notifying events.</p>
+    <code class="details" id="create">create(parent, body=None, gitRepositoryLinkId=None, requestId=None, validateOnly=None, x__xgafv=None)</code>
+  <pre>Creates a GitRepositoryLink. Upon linking a Git Repository, Developer Connect will configure the Git Repository to send webhook events to Developer Connect. Connections that use Firebase GitHub Application will have events forwarded to the Firebase service. Connections that use Gemini Code Assist will have events forwarded to Gemini Code Assist service. All other Connections will have events forwarded to Cloud Build.
+{ # Message describing the GitRepositoryLink object
+  &quot;cloneUri&quot;: &quot;A String&quot;, # Required. Git Clone URI.
+  &quot;createTime&quot;: &quot;A String&quot;, # Output only. [Output only] Create timestamp
+  &quot;deleteTime&quot;: &quot;A String&quot;, # Output only. [Output only] Delete timestamp
+  &quot;gitProxyUri&quot;: &quot;A String&quot;, # Output only. URI to access the linked repository through the Git Proxy. This field is only populated if the git proxy is enabled for the connection.
+  &quot;name&quot;: &quot;A String&quot;, # Identifier. Resource name of the repository, in the format `projects/*/locations/*/connections/*/gitRepositoryLinks/*`.
+  &quot;uid&quot;: &quot;A String&quot;, # Output only. A system-assigned unique identifier for the GitRepositoryLink.
+  &quot;updateTime&quot;: &quot;A String&quot;, # Output only. [Output only] Update timestamp
+  gitRepositoryLinkId: string, Required. The ID to use for the repository, which will become the final component of the repository&#x27;s resource name. This ID should be unique in the connection. Allows alphanumeric characters and any of -._~%!$&amp;&#x27;()*+,;=@.
+  <pre>Deletes a single GitRepositoryLink.
+    <code class="details" id="fetchGitRefs">fetchGitRefs(gitRepositoryLink, pageSize=None, pageToken=None, refType=None, x__xgafv=None)</code>
+  gitRepositoryLink: string, Required. The resource name of GitRepositoryLink in the format `projects/*/locations/*/connections/*/gitRepositoryLinks/*`. (required)
+  refType: string, Required. Type of refs to fetch.
+    { # Response for fetching git refs.
+    <code class="details" id="fetchReadToken">fetchReadToken(gitRepositoryLink, body=None, x__xgafv=None)</code>
+  <pre>Fetches read token of a given gitRepositoryLink.
+  gitRepositoryLink: string, Required. The resource name of the gitRepositoryLink in the format `projects/*/locations/*/connections/*/gitRepositoryLinks/*`. (required)
+  &quot;gitUsername&quot;: &quot;A String&quot;, # The git_username to specify when making a git clone with the token. For example, for GitHub GitRepositoryLinks, this would be &quot;x-access-token&quot;
+    <code class="details" id="fetchReadWriteToken">fetchReadWriteToken(gitRepositoryLink, body=None, x__xgafv=None)</code>
+  <pre>Fetches read/write token of a given gitRepositoryLink.
+  <pre>Gets details of a single GitRepositoryLink.
+  <pre>Lists GitRepositoryLinks in a given project, location, and connection.
+  parent: string, Required. Parent value for ListGitRepositoryLinksRequest (required)
+    { # Message for response to listing GitRepositoryLinks
+  &quot;gitRepositoryLinks&quot;: [ # The list of GitRepositoryLinks
+    <code class="details" id="processBitbucketCloudWebhook">processBitbucketCloudWebhook(name, body=None, x__xgafv=None)</code>
+  <pre>ProcessBitbucketCloudWebhook is called by the external Bitbucket Cloud instances for notifying events.
+  name: string, Required. The GitRepositoryLink where the webhook will be received. Format: `projects/*/locations/*/connections/*/gitRepositoryLinks/*`. (required)
+{ # RPC request object accepted by the ProcessBitbucketCloudWebhook RPC method.
+  &quot;body&quot;: { # Message that represents an arbitrary HTTP body. It should only be used for payload formats that can&#x27;t be represented as JSON, such as raw binary or an HTML page. This message can be used both in streaming and non-streaming API methods in the request as well as the response. It can be used as a top-level request field, which is convenient if one wants to extract parameters from either the URL or HTTP template into the request fields and also want access to the raw HTTP body. Example: message GetResourceRequest { // A unique request id. string request_id = 1; // The raw HTTP body is bound to this field. google.api.HttpBody http_body = 2; } service ResourceService { rpc GetResource(GetResourceRequest) returns (google.api.HttpBody); rpc UpdateResource(google.api.HttpBody) returns (google.protobuf.Empty); } Example with streaming methods: service CaldavService { rpc GetCalendar(stream google.api.HttpBody) returns (stream google.api.HttpBody); rpc UpdateCalendar(stream google.api.HttpBody) returns (stream google.api.HttpBody); } Use of this type only changes how the request and response bodies are handled, all other features will continue to work unchanged. # Required. HTTP request body.
+    <code class="details" id="processBitbucketDataCenterWebhook">processBitbucketDataCenterWebhook(name, body=None, x__xgafv=None)</code>
+  <pre>ProcessBitbucketDataCenterWebhook is called by the external Bitbucket Data Center instances for notifying events.
+{ # RPC request object accepted by the ProcessBitbucketDataCenterWebhook RPC method.
+    <code class="details" id="processGitLabEnterpriseWebhook">processGitLabEnterpriseWebhook(name, body=None, x__xgafv=None)</code>
+  <pre>ProcessGitLabEnterpriseWebhook is called by the external GitLab Enterprise instances for notifying events.
+  name: string, Required. The GitRepositoryLink resource where the webhook will be received. Format: `projects/*/locations/*/connections/*/gitRepositoryLinks/*`. (required)
+{ # RPC request object accepted by the ProcessGitLabEnterpriseWebhook RPC method.
+    <code class="details" id="processGitLabWebhook">processGitLabWebhook(name, body=None, x__xgafv=None)</code>
+  <pre>ProcessGitLabWebhook is called by the GitLab.com for notifying events.
+{ # RPC request object accepted by the ProcessGitLabWebhook RPC method.

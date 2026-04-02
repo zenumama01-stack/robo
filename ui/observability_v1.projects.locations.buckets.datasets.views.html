@@ -1,0 +1,14 @@
+<h1><a href="observability_v1.html">Observability API</a> . <a href="observability_v1.projects.html">projects</a> . <a href="observability_v1.projects.locations.html">locations</a> . <a href="observability_v1.projects.locations.buckets.html">buckets</a> . <a href="observability_v1.projects.locations.buckets.datasets.html">datasets</a> . <a href="observability_v1.projects.locations.buckets.datasets.views.html">views</a></h1>
+<p class="firstline">Get a view.</p>
+<p class="firstline">List views of a dataset.</p>
+  <pre>Get a view.
+  name: string, Required. Name of the view to retrieve. The format is: projects/[PROJECT_ID]/locations/[LOCATION]/buckets/[BUCKET_ID]/datasets/[DATASET_ID]/views/[VIEW_ID] (required)
+    { # A view corresponds to a read-only representation of a subset of the data in a dataset.
+  &quot;description&quot;: &quot;A String&quot;, # Optional. Description of the view.
+  &quot;name&quot;: &quot;A String&quot;, # Identifier. Name of the view. The format is: projects/[PROJECT_ID]/locations/[LOCATION]/buckets/[BUCKET_ID]/datasets/[DATASET_ID]/views/[VIEW_ID]
+  <pre>List views of a dataset.
+  parent: string, Required. Dataset whose views are to be listed. The format is: projects/[PROJECT_ID]/locations/[LOCATION]/buckets/[BUCKET_ID]/datasets/[DATASET_ID] (required)
+  pageSize: integer, Optional. The maximum number of views to return. If unspecified, then at most 100 views are returned. The maximum value is 1000; values above 1000 are coerced to 1000.
+  pageToken: string, Optional. A page token, received from a previous `ListViews` call. Provide this to retrieve the subsequent page.
+    { # Response for listing views.
+  &quot;views&quot;: [ # The list of views.

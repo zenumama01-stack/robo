@@ -1,0 +1,57 @@
+<h1><a href="datalineage_v1.html">Data Lineage API</a> . <a href="datalineage_v1.projects.html">projects</a> . <a href="datalineage_v1.projects.locations.html">locations</a></h1>
+  <code><a href="datalineage_v1.projects.locations.config.html">config()</a></code>
+  <code><a href="datalineage_v1.projects.locations.operations.html">operations()</a></code>
+  <code><a href="datalineage_v1.projects.locations.processes.html">processes()</a></code>
+<p class="firstline">Returns the processes Resource.</p>
+  <code><a href="#batchSearchLinkProcesses">batchSearchLinkProcesses(parent, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Retrieve information about LineageProcesses associated with specific links. LineageProcesses are transformation pipelines that result in data flowing from **source** to **target** assets. Links between assets represent this operation. If you have specific link names, you can use this method to verify which LineageProcesses contribute to creating those links. See the SearchLinks method for more information on how to retrieve link name. You can retrieve the LineageProcess information in every project where you have the `datalineage.events.get` permission. The project provided in the URL is used for Billing and Quota.</p>
+  <code><a href="#batchSearchLinkProcesses_next">batchSearchLinkProcesses_next()</a></code></p>
+  <code><a href="#processOpenLineageRunEvent">processOpenLineageRunEvent(parent, body=None, requestId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Creates new lineage events together with their parents: process and run. Updates the process and run if they already exist. Mapped from Open Lineage specification: https://github.com/OpenLineage/OpenLineage/blob/main/spec/OpenLineage.json.</p>
+  <code><a href="#searchLinks">searchLinks(parent, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Retrieve a list of links connected to a specific asset. Links represent the data flow between **source** (upstream) and **target** (downstream) assets in transformation pipelines. Links are stored in the same project as the Lineage Events that create them. You can retrieve links in every project where you have the `datalineage.events.get` permission. The project provided in the URL is used for Billing and Quota.</p>
+  <code><a href="#searchLinks_next">searchLinks_next()</a></code></p>
+    <code class="details" id="batchSearchLinkProcesses">batchSearchLinkProcesses(parent, body=None, x__xgafv=None)</code>
+  <pre>Retrieve information about LineageProcesses associated with specific links. LineageProcesses are transformation pipelines that result in data flowing from **source** to **target** assets. Links between assets represent this operation. If you have specific link names, you can use this method to verify which LineageProcesses contribute to creating those links. See the SearchLinks method for more information on how to retrieve link name. You can retrieve the LineageProcess information in every project where you have the `datalineage.events.get` permission. The project provided in the URL is used for Billing and Quota.
+  parent: string, Required. The project and location where you want to search. (required)
+{ # Request message for BatchSearchLinkProcesses.
+  &quot;links&quot;: [ # Required. An array of links to check for their associated LineageProcesses. The maximum number of items in this array is 100. If the request contains more than 100 links, it returns the `INVALID_ARGUMENT` error. Format: `projects/{project}/locations/{location}/links/{link}`.
+  &quot;pageSize&quot;: 42, # The maximum number of processes to return in a single page of the response. A page may contain fewer results than this value.
+  &quot;pageToken&quot;: &quot;A String&quot;, # The page token received from a previous `BatchSearchLinkProcesses` call. Use it to get the next page. When requesting subsequent pages of a response, remember that all parameters must match the values you provided in the original request.
+    { # Response message for BatchSearchLinkProcesses.
+  &quot;nextPageToken&quot;: &quot;A String&quot;, # The token to specify as `page_token` in the subsequent call to get the next page. Omitted if there are no more pages in the response.
+  &quot;processLinks&quot;: [ # An array of processes associated with the specified links.
+    { # Links associated with a specific process.
+      &quot;links&quot;: [ # An array containing link details objects of the links provided in the original request. A single process can result in creating multiple links. If any of the links you provide in the request are created by the same process, they all are included in this array.
+        { # Link details.
+          &quot;endTime&quot;: &quot;A String&quot;, # The end of the last event establishing this link-process tuple.
+          &quot;link&quot;: &quot;A String&quot;, # The name of the link in the format of `projects/{project}/locations/{location}/links/{link}`.
+          &quot;startTime&quot;: &quot;A String&quot;, # The start of the first event establishing this link-process tuple.
+      &quot;process&quot;: &quot;A String&quot;, # The process name in the format of `projects/{project}/locations/{location}/processes/{process}`.
+    <code class="details" id="batchSearchLinkProcesses_next">batchSearchLinkProcesses_next()</code>
+    <code class="details" id="processOpenLineageRunEvent">processOpenLineageRunEvent(parent, body=None, requestId=None, x__xgafv=None)</code>
+  <pre>Creates new lineage events together with their parents: process and run. Updates the process and run if they already exist. Mapped from Open Lineage specification: https://github.com/OpenLineage/OpenLineage/blob/main/spec/OpenLineage.json.
+  parent: string, Required. The name of the project and its location that should own the process, run, and lineage event. (required)
+  requestId: string, Optional. A unique identifier for this request. Restricted to 36 ASCII characters. A random UUID is recommended. This request is idempotent only if a `request_id` is provided.
+    { # Response message for ProcessOpenLineageRunEvent.
+  &quot;lineageEvents&quot;: [ # Created lineage event names. Format: `projects/{project}/locations/{location}/processes/{process}/runs/{run}/lineageEvents/{lineage_event}`.
+  &quot;process&quot;: &quot;A String&quot;, # Created process name. Format: `projects/{project}/locations/{location}/processes/{process}`.
+  &quot;run&quot;: &quot;A String&quot;, # Created run name. Format: `projects/{project}/locations/{location}/processes/{process}/runs/{run}`.
+    <code class="details" id="searchLinks">searchLinks(parent, body=None, x__xgafv=None)</code>
+  <pre>Retrieve a list of links connected to a specific asset. Links represent the data flow between **source** (upstream) and **target** (downstream) assets in transformation pipelines. Links are stored in the same project as the Lineage Events that create them. You can retrieve links in every project where you have the `datalineage.events.get` permission. The project provided in the URL is used for Billing and Quota.
+  parent: string, Required. The project and location you want search in. (required)
+{ # Request message for SearchLinks.
+  &quot;pageSize&quot;: 42, # Optional. The maximum number of links to return in a single page of the response. A page may contain fewer links than this value. If unspecified, at most 10 links are returned. Maximum value is 100; values greater than 100 are reduced to 100.
+  &quot;pageToken&quot;: &quot;A String&quot;, # Optional. The page token received from a previous `SearchLinksRequest` call. Use it to get the next page. When requesting subsequent pages of a response, remember that all parameters must match the values you provided in the original request.
+  &quot;source&quot;: { # The soft reference to everything you can attach a lineage event to. # Optional. Send asset information in the **source** field to retrieve all links that lead from the specified asset to downstream assets.
+    &quot;fullyQualifiedName&quot;: &quot;A String&quot;, # Required. [Fully Qualified Name (FQN)](https://cloud.google.com/dataplex/docs/fully-qualified-names) of the entity.
+  &quot;target&quot;: { # The soft reference to everything you can attach a lineage event to. # Optional. Send asset information in the **target** field to retrieve all links that lead from upstream assets to the specified asset.
+    { # Response message for SearchLinks.
+  &quot;links&quot;: [ # The list of links for a given asset. Can be empty if the asset has no relations of requested type (source or target).
+    { # Links represent the data flow between **source** (upstream) and **target** (downstream) assets in transformation pipelines. Links are created when LineageEvents record data transformation between related assets.
+      &quot;endTime&quot;: &quot;A String&quot;, # The end of the last event establishing this link.
+      &quot;name&quot;: &quot;A String&quot;, # Output only. Immutable. The name of the link. Format: `projects/{project}/locations/{location}/links/{link}`.
+      &quot;source&quot;: { # The soft reference to everything you can attach a lineage event to. # The pointer to the entity that is the **source** of this link.
+      &quot;startTime&quot;: &quot;A String&quot;, # The start of the first event establishing this link.
+      &quot;target&quot;: { # The soft reference to everything you can attach a lineage event to. # The pointer to the entity that is the **target** of this link.
+    <code class="details" id="searchLinks_next">searchLinks_next()</code>

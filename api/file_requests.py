@@ -1,0 +1,588 @@
+This namespace contains endpoints and data types for file request operations.
+class GeneralFileRequestsError(bb.Union):
+    There is an error accessing the file requests functionality.
+    :ivar file_requests.GeneralFileRequestsError.disabled_for_team: This user's
+        Dropbox Business team doesn't allow file requests.
+    disabled_for_team = None
+    def is_disabled_for_team(self):
+        Check if the union tag is ``disabled_for_team``.
+        return self._tag == 'disabled_for_team'
+        super(GeneralFileRequestsError, self)._process_custom_annotations(annotation_type, field_path, processor)
+GeneralFileRequestsError_validator = bv.Union(GeneralFileRequestsError)
+class CountFileRequestsError(GeneralFileRequestsError):
+    There was an error counting the file requests.
+        super(CountFileRequestsError, self)._process_custom_annotations(annotation_type, field_path, processor)
+CountFileRequestsError_validator = bv.Union(CountFileRequestsError)
+class CountFileRequestsResult(bb.Struct):
+    Result for :meth:`dropbox.dropbox_client.Dropbox.file_requests_count`.
+    :ivar file_requests.CountFileRequestsResult.file_request_count: The number
+        file requests owner by this user.
+        '_file_request_count_value',
+                 file_request_count=None):
+        self._file_request_count_value = bb.NOT_SET
+        if file_request_count is not None:
+            self.file_request_count = file_request_count
+    file_request_count = bb.Attribute("file_request_count")
+        super(CountFileRequestsResult, self)._process_custom_annotations(annotation_type, field_path, processor)
+CountFileRequestsResult_validator = bv.Struct(CountFileRequestsResult)
+class CreateFileRequestArgs(bb.Struct):
+    Arguments for :meth:`dropbox.dropbox_client.Dropbox.file_requests_create`.
+    :ivar file_requests.CreateFileRequestArgs.title: The title of the file
+        request. Must not be empty.
+    :ivar file_requests.CreateFileRequestArgs.destination: The path of the
+        folder in the Dropbox where uploaded files will be sent. For apps with
+        the app folder permission, this will be relative to the app folder.
+    :ivar file_requests.CreateFileRequestArgs.deadline: The deadline for the
+        file request. Deadlines can only be set by Professional and Business
+        accounts.
+    :ivar file_requests.CreateFileRequestArgs.open: Whether or not the file
+        request should be open. If the file request is closed, it will not
+        accept any file submissions, but it can be opened later.
+    :ivar file_requests.CreateFileRequestArgs.description: A description of the
+        file request.
+        '_title_value',
+        '_destination_value',
+        '_deadline_value',
+        '_open_value',
+        self._title_value = bb.NOT_SET
+        self._destination_value = bb.NOT_SET
+        self._deadline_value = bb.NOT_SET
+        self._open_value = bb.NOT_SET
+        if title is not None:
+            self.title = title
+        if destination is not None:
+            self.destination = destination
+        if deadline is not None:
+            self.deadline = deadline
+        if open is not None:
+            self.open = open
+    title = bb.Attribute("title")
+    destination = bb.Attribute("destination")
+    # Instance attribute type: FileRequestDeadline (validator is set below)
+    deadline = bb.Attribute("deadline", nullable=True, user_defined=True)
+    open = bb.Attribute("open")
+        super(CreateFileRequestArgs, self)._process_custom_annotations(annotation_type, field_path, processor)
+CreateFileRequestArgs_validator = bv.Struct(CreateFileRequestArgs)
+class FileRequestError(GeneralFileRequestsError):
+    There is an error with the file request.
+    :ivar file_requests.FileRequestError.not_found: This file request ID was not
+        found.
+    :ivar file_requests.FileRequestError.not_a_folder: The specified path is not
+        a folder.
+    :ivar file_requests.FileRequestError.app_lacks_access: This file request is
+        not accessible to this app. Apps with the app folder permission can only
+        access file requests in their app folder.
+    :ivar file_requests.FileRequestError.no_permission: This user doesn't have
+        permission to access or modify this file request.
+    :ivar file_requests.FileRequestError.email_unverified: This user's email
+        address is not verified. File requests are only available on accounts
+        with a verified email address. Users can verify their email address
+        `here <https://www.dropbox.com/help/317>`_.
+    :ivar file_requests.FileRequestError.validation_error: There was an error
+        validating the request. For example, the title was invalid, or there
+        were disallowed characters in the destination path.
+    not_a_folder = None
+    app_lacks_access = None
+    email_unverified = None
+    validation_error = None
+    def is_not_a_folder(self):
+        Check if the union tag is ``not_a_folder``.
+        return self._tag == 'not_a_folder'
+    def is_app_lacks_access(self):
+        Check if the union tag is ``app_lacks_access``.
+        return self._tag == 'app_lacks_access'
+    def is_email_unverified(self):
+        Check if the union tag is ``email_unverified``.
+        return self._tag == 'email_unverified'
+    def is_validation_error(self):
+        Check if the union tag is ``validation_error``.
+        return self._tag == 'validation_error'
+        super(FileRequestError, self)._process_custom_annotations(annotation_type, field_path, processor)
+FileRequestError_validator = bv.Union(FileRequestError)
+class CreateFileRequestError(FileRequestError):
+    There was an error creating the file request.
+    :ivar file_requests.CreateFileRequestError.invalid_location: File requests
+        are not available on the specified folder.
+    :ivar file_requests.CreateFileRequestError.rate_limit: The user has reached
+        the rate limit for creating file requests. The limit is currently 4000
+        file requests total.
+    invalid_location = None
+    rate_limit = None
+    def is_invalid_location(self):
+        Check if the union tag is ``invalid_location``.
+        return self._tag == 'invalid_location'
+    def is_rate_limit(self):
+        Check if the union tag is ``rate_limit``.
+        return self._tag == 'rate_limit'
+        super(CreateFileRequestError, self)._process_custom_annotations(annotation_type, field_path, processor)
+CreateFileRequestError_validator = bv.Union(CreateFileRequestError)
+class DeleteAllClosedFileRequestsError(FileRequestError):
+    There was an error deleting all closed file requests.
+        super(DeleteAllClosedFileRequestsError, self)._process_custom_annotations(annotation_type, field_path, processor)
+DeleteAllClosedFileRequestsError_validator = bv.Union(DeleteAllClosedFileRequestsError)
+class DeleteAllClosedFileRequestsResult(bb.Struct):
+    Result for
+    :meth:`dropbox.dropbox_client.Dropbox.file_requests_delete_all_closed`.
+    :ivar file_requests.DeleteAllClosedFileRequestsResult.file_requests: The
+        file requests deleted for this user.
+        '_file_requests_value',
+                 file_requests=None):
+        self._file_requests_value = bb.NOT_SET
+        if file_requests is not None:
+            self.file_requests = file_requests
+    # Instance attribute type: list of [FileRequest] (validator is set below)
+    file_requests = bb.Attribute("file_requests")
+        super(DeleteAllClosedFileRequestsResult, self)._process_custom_annotations(annotation_type, field_path, processor)
+DeleteAllClosedFileRequestsResult_validator = bv.Struct(DeleteAllClosedFileRequestsResult)
+class DeleteFileRequestArgs(bb.Struct):
+    Arguments for :meth:`dropbox.dropbox_client.Dropbox.file_requests_delete`.
+    :ivar file_requests.DeleteFileRequestArgs.ids: List IDs of the file requests
+        to delete.
+        '_ids_value',
+                 ids=None):
+        self._ids_value = bb.NOT_SET
+            self.ids = ids
+    ids = bb.Attribute("ids")
+        super(DeleteFileRequestArgs, self)._process_custom_annotations(annotation_type, field_path, processor)
+DeleteFileRequestArgs_validator = bv.Struct(DeleteFileRequestArgs)
+class DeleteFileRequestError(FileRequestError):
+    There was an error deleting these file requests.
+    :ivar file_requests.DeleteFileRequestError.file_request_open: One or more
+        file requests currently open.
+    file_request_open = None
+    def is_file_request_open(self):
+        Check if the union tag is ``file_request_open``.
+        return self._tag == 'file_request_open'
+        super(DeleteFileRequestError, self)._process_custom_annotations(annotation_type, field_path, processor)
+DeleteFileRequestError_validator = bv.Union(DeleteFileRequestError)
+class DeleteFileRequestsResult(bb.Struct):
+    Result for :meth:`dropbox.dropbox_client.Dropbox.file_requests_delete`.
+    :ivar file_requests.DeleteFileRequestsResult.file_requests: The file
+        requests deleted by the request.
+        super(DeleteFileRequestsResult, self)._process_custom_annotations(annotation_type, field_path, processor)
+DeleteFileRequestsResult_validator = bv.Struct(DeleteFileRequestsResult)
+class FileRequest(bb.Struct):
+    A `file request <https://www.dropbox.com/help/9090>`_ for receiving files
+    into the user's Dropbox account.
+    :ivar file_requests.FileRequest.id: The ID of the file request.
+    :ivar file_requests.FileRequest.url: The URL of the file request.
+    :ivar file_requests.FileRequest.title: The title of the file request.
+    :ivar file_requests.FileRequest.destination: The path of the folder in the
+        Dropbox where uploaded files will be sent. This can be None if the
+        destination was removed. For apps with the app folder permission, this
+        will be relative to the app folder.
+    :ivar file_requests.FileRequest.created: When this file request was created.
+    :ivar file_requests.FileRequest.deadline: The deadline for this file
+        request. Only set if the request has a deadline.
+    :ivar file_requests.FileRequest.is_open: Whether or not the file request is
+        open. If the file request is closed, it will not accept any more file
+        submissions.
+    :ivar file_requests.FileRequest.file_count: The number of files this file
+        request has received.
+    :ivar file_requests.FileRequest.description: A description of the file
+        '_url_value',
+        '_created_value',
+        '_is_open_value',
+        '_file_count_value',
+                 url=None,
+                 created=None,
+                 is_open=None,
+                 file_count=None,
+        self._url_value = bb.NOT_SET
+        self._created_value = bb.NOT_SET
+        self._is_open_value = bb.NOT_SET
+        self._file_count_value = bb.NOT_SET
+        if url is not None:
+        if created is not None:
+            self.created = created
+        if is_open is not None:
+            self.is_open = is_open
+        if file_count is not None:
+            self.file_count = file_count
+    url = bb.Attribute("url")
+    destination = bb.Attribute("destination", nullable=True)
+    # Instance attribute type: datetime.datetime (validator is set below)
+    created = bb.Attribute("created")
+    is_open = bb.Attribute("is_open")
+    file_count = bb.Attribute("file_count")
+        super(FileRequest, self)._process_custom_annotations(annotation_type, field_path, processor)
+FileRequest_validator = bv.Struct(FileRequest)
+class FileRequestDeadline(bb.Struct):
+    :ivar file_requests.FileRequestDeadline.deadline: The deadline for this file
+    :ivar file_requests.FileRequestDeadline.allow_late_uploads: If set, allow
+        uploads after the deadline has passed. These     uploads will be marked
+        overdue.
+        '_allow_late_uploads_value',
+                 allow_late_uploads=None):
+        self._allow_late_uploads_value = bb.NOT_SET
+        if allow_late_uploads is not None:
+            self.allow_late_uploads = allow_late_uploads
+    deadline = bb.Attribute("deadline")
+    # Instance attribute type: GracePeriod (validator is set below)
+    allow_late_uploads = bb.Attribute("allow_late_uploads", nullable=True, user_defined=True)
+        super(FileRequestDeadline, self)._process_custom_annotations(annotation_type, field_path, processor)
+FileRequestDeadline_validator = bv.Struct(FileRequestDeadline)
+class GetFileRequestArgs(bb.Struct):
+    Arguments for :meth:`dropbox.dropbox_client.Dropbox.file_requests_get`.
+    :ivar file_requests.GetFileRequestArgs.id: The ID of the file request to
+        retrieve.
+                 id=None):
+        super(GetFileRequestArgs, self)._process_custom_annotations(annotation_type, field_path, processor)
+GetFileRequestArgs_validator = bv.Struct(GetFileRequestArgs)
+class GetFileRequestError(FileRequestError):
+    There was an error retrieving the specified file request.
+        super(GetFileRequestError, self)._process_custom_annotations(annotation_type, field_path, processor)
+GetFileRequestError_validator = bv.Union(GetFileRequestError)
+class GracePeriod(bb.Union):
+    one_day = None
+    two_days = None
+    seven_days = None
+    thirty_days = None
+    always = None
+    def is_one_day(self):
+        Check if the union tag is ``one_day``.
+        return self._tag == 'one_day'
+    def is_two_days(self):
+        Check if the union tag is ``two_days``.
+        return self._tag == 'two_days'
+    def is_seven_days(self):
+        Check if the union tag is ``seven_days``.
+        return self._tag == 'seven_days'
+    def is_thirty_days(self):
+        Check if the union tag is ``thirty_days``.
+        return self._tag == 'thirty_days'
+    def is_always(self):
+        Check if the union tag is ``always``.
+        return self._tag == 'always'
+        super(GracePeriod, self)._process_custom_annotations(annotation_type, field_path, processor)
+GracePeriod_validator = bv.Union(GracePeriod)
+class ListFileRequestsArg(bb.Struct):
+    Arguments for :meth:`dropbox.dropbox_client.Dropbox.file_requests_list`.
+    :ivar file_requests.ListFileRequestsArg.limit: The maximum number of file
+        requests that should be returned per request.
+        '_limit_value',
+                 limit=None):
+        self._limit_value = bb.NOT_SET
+        if limit is not None:
+    limit = bb.Attribute("limit")
+        super(ListFileRequestsArg, self)._process_custom_annotations(annotation_type, field_path, processor)
+ListFileRequestsArg_validator = bv.Struct(ListFileRequestsArg)
+class ListFileRequestsContinueArg(bb.Struct):
+    :ivar file_requests.ListFileRequestsContinueArg.cursor: The cursor returned
+        by the previous API call specified in the endpoint description.
+        super(ListFileRequestsContinueArg, self)._process_custom_annotations(annotation_type, field_path, processor)
+ListFileRequestsContinueArg_validator = bv.Struct(ListFileRequestsContinueArg)
+class ListFileRequestsContinueError(GeneralFileRequestsError):
+    There was an error retrieving the file requests.
+    :ivar file_requests.ListFileRequestsContinueError.invalid_cursor: The cursor
+        is invalid.
+    invalid_cursor = None
+    def is_invalid_cursor(self):
+        Check if the union tag is ``invalid_cursor``.
+        return self._tag == 'invalid_cursor'
+        super(ListFileRequestsContinueError, self)._process_custom_annotations(annotation_type, field_path, processor)
+ListFileRequestsContinueError_validator = bv.Union(ListFileRequestsContinueError)
+class ListFileRequestsError(GeneralFileRequestsError):
+        super(ListFileRequestsError, self)._process_custom_annotations(annotation_type, field_path, processor)
+ListFileRequestsError_validator = bv.Union(ListFileRequestsError)
+class ListFileRequestsResult(bb.Struct):
+    Result for :meth:`dropbox.dropbox_client.Dropbox.file_requests_list`.
+    :ivar file_requests.ListFileRequestsResult.file_requests: The file requests
+        owned by this user. Apps with the app folder permission will only see
+        file requests in their app folder.
+        super(ListFileRequestsResult, self)._process_custom_annotations(annotation_type, field_path, processor)
+ListFileRequestsResult_validator = bv.Struct(ListFileRequestsResult)
+class ListFileRequestsV2Result(bb.Struct):
+    Result for :meth:`dropbox.dropbox_client.Dropbox.file_requests_list` and
+    :meth:`dropbox.dropbox_client.Dropbox.file_requests_list_continue`.
+    :ivar file_requests.ListFileRequestsV2Result.file_requests: The file
+        requests owned by this user. Apps with the app folder permission will
+        only see file requests in their app folder.
+    :ivar file_requests.ListFileRequestsV2Result.cursor: Pass the cursor into
+        :meth:`dropbox.dropbox_client.Dropbox.file_requests_list_continue` to
+        obtain additional file requests.
+    :ivar file_requests.ListFileRequestsV2Result.has_more: Is true if there are
+        additional file requests that have not been returned yet. An additional
+        call to :route:list/continue` can retrieve them.
+        '_has_more_value',
+                 file_requests=None,
+                 has_more=None):
+        self._has_more_value = bb.NOT_SET
+        if has_more is not None:
+            self.has_more = has_more
+    has_more = bb.Attribute("has_more")
+        super(ListFileRequestsV2Result, self)._process_custom_annotations(annotation_type, field_path, processor)
+ListFileRequestsV2Result_validator = bv.Struct(ListFileRequestsV2Result)
+class UpdateFileRequestArgs(bb.Struct):
+    Arguments for :meth:`dropbox.dropbox_client.Dropbox.file_requests_update`.
+    :ivar file_requests.UpdateFileRequestArgs.id: The ID of the file request to
+        update.
+    :ivar file_requests.UpdateFileRequestArgs.title: The new title of the file
+    :ivar file_requests.UpdateFileRequestArgs.destination: The new path of the
+    :ivar file_requests.UpdateFileRequestArgs.deadline: The new deadline for the
+    :ivar file_requests.UpdateFileRequestArgs.open: Whether to set this file
+        request as open or closed.
+    :ivar file_requests.UpdateFileRequestArgs.description: The description of
+        the file request.
+    title = bb.Attribute("title", nullable=True)
+    # Instance attribute type: UpdateFileRequestDeadline (validator is set below)
+    deadline = bb.Attribute("deadline", user_defined=True)
+    open = bb.Attribute("open", nullable=True)
+        super(UpdateFileRequestArgs, self)._process_custom_annotations(annotation_type, field_path, processor)
+UpdateFileRequestArgs_validator = bv.Struct(UpdateFileRequestArgs)
+class UpdateFileRequestDeadline(bb.Union):
+    :ivar file_requests.UpdateFileRequestDeadline.no_update: Do not change the
+        file request's deadline.
+    :ivar Optional[FileRequestDeadline]
+        file_requests.UpdateFileRequestDeadline.update: If :val:`null`, the file
+        request's deadline is cleared.
+    no_update = None
+    def update(cls, val):
+        Create an instance of this class set to the ``update`` tag with value
+        :param FileRequestDeadline val:
+        :rtype: UpdateFileRequestDeadline
+        return cls('update', val)
+    def is_no_update(self):
+        Check if the union tag is ``no_update``.
+        return self._tag == 'no_update'
+    def is_update(self):
+        Check if the union tag is ``update``.
+        return self._tag == 'update'
+    def get_update(self):
+        If None, the file request's deadline is cleared.
+        Only call this if :meth:`is_update` is true.
+        :rtype: FileRequestDeadline
+        if not self.is_update():
+            raise AttributeError("tag 'update' not set")
+        super(UpdateFileRequestDeadline, self)._process_custom_annotations(annotation_type, field_path, processor)
+UpdateFileRequestDeadline_validator = bv.Union(UpdateFileRequestDeadline)
+class UpdateFileRequestError(FileRequestError):
+    There is an error updating the file request.
+        super(UpdateFileRequestError, self)._process_custom_annotations(annotation_type, field_path, processor)
+UpdateFileRequestError_validator = bv.Union(UpdateFileRequestError)
+FileRequestId_validator = bv.String(min_length=1, pattern='[-_0-9a-zA-Z]+')
+FileRequestValidationError_validator = bv.Nullable(bv.String())
+GeneralFileRequestsError._disabled_for_team_validator = bv.Void()
+GeneralFileRequestsError._other_validator = bv.Void()
+GeneralFileRequestsError._tagmap = {
+    'disabled_for_team': GeneralFileRequestsError._disabled_for_team_validator,
+    'other': GeneralFileRequestsError._other_validator,
+GeneralFileRequestsError.disabled_for_team = GeneralFileRequestsError('disabled_for_team')
+GeneralFileRequestsError.other = GeneralFileRequestsError('other')
+CountFileRequestsError._tagmap = {
+CountFileRequestsError._tagmap.update(GeneralFileRequestsError._tagmap)
+CountFileRequestsResult.file_request_count.validator = bv.UInt64()
+CountFileRequestsResult._all_field_names_ = set(['file_request_count'])
+CountFileRequestsResult._all_fields_ = [('file_request_count', CountFileRequestsResult.file_request_count.validator)]
+CreateFileRequestArgs.title.validator = bv.String(min_length=1)
+CreateFileRequestArgs.destination.validator = files.Path_validator
+CreateFileRequestArgs.deadline.validator = bv.Nullable(FileRequestDeadline_validator)
+CreateFileRequestArgs.open.validator = bv.Boolean()
+CreateFileRequestArgs.description.validator = bv.Nullable(bv.String())
+CreateFileRequestArgs._all_field_names_ = set([
+    'destination',
+    'deadline',
+    'open',
+CreateFileRequestArgs._all_fields_ = [
+    ('title', CreateFileRequestArgs.title.validator),
+    ('destination', CreateFileRequestArgs.destination.validator),
+    ('deadline', CreateFileRequestArgs.deadline.validator),
+    ('open', CreateFileRequestArgs.open.validator),
+    ('description', CreateFileRequestArgs.description.validator),
+FileRequestError._not_found_validator = bv.Void()
+FileRequestError._not_a_folder_validator = bv.Void()
+FileRequestError._app_lacks_access_validator = bv.Void()
+FileRequestError._no_permission_validator = bv.Void()
+FileRequestError._email_unverified_validator = bv.Void()
+FileRequestError._validation_error_validator = bv.Void()
+FileRequestError._tagmap = {
+    'not_found': FileRequestError._not_found_validator,
+    'not_a_folder': FileRequestError._not_a_folder_validator,
+    'app_lacks_access': FileRequestError._app_lacks_access_validator,
+    'no_permission': FileRequestError._no_permission_validator,
+    'email_unverified': FileRequestError._email_unverified_validator,
+    'validation_error': FileRequestError._validation_error_validator,
+FileRequestError._tagmap.update(GeneralFileRequestsError._tagmap)
+FileRequestError.not_found = FileRequestError('not_found')
+FileRequestError.not_a_folder = FileRequestError('not_a_folder')
+FileRequestError.app_lacks_access = FileRequestError('app_lacks_access')
+FileRequestError.no_permission = FileRequestError('no_permission')
+FileRequestError.email_unverified = FileRequestError('email_unverified')
+FileRequestError.validation_error = FileRequestError('validation_error')
+CreateFileRequestError._invalid_location_validator = bv.Void()
+CreateFileRequestError._rate_limit_validator = bv.Void()
+CreateFileRequestError._tagmap = {
+    'invalid_location': CreateFileRequestError._invalid_location_validator,
+    'rate_limit': CreateFileRequestError._rate_limit_validator,
+CreateFileRequestError._tagmap.update(FileRequestError._tagmap)
+CreateFileRequestError.invalid_location = CreateFileRequestError('invalid_location')
+CreateFileRequestError.rate_limit = CreateFileRequestError('rate_limit')
+DeleteAllClosedFileRequestsError._tagmap = {
+DeleteAllClosedFileRequestsError._tagmap.update(FileRequestError._tagmap)
+DeleteAllClosedFileRequestsResult.file_requests.validator = bv.List(FileRequest_validator)
+DeleteAllClosedFileRequestsResult._all_field_names_ = set(['file_requests'])
+DeleteAllClosedFileRequestsResult._all_fields_ = [('file_requests', DeleteAllClosedFileRequestsResult.file_requests.validator)]
+DeleteFileRequestArgs.ids.validator = bv.List(FileRequestId_validator)
+DeleteFileRequestArgs._all_field_names_ = set(['ids'])
+DeleteFileRequestArgs._all_fields_ = [('ids', DeleteFileRequestArgs.ids.validator)]
+DeleteFileRequestError._file_request_open_validator = bv.Void()
+DeleteFileRequestError._tagmap = {
+    'file_request_open': DeleteFileRequestError._file_request_open_validator,
+DeleteFileRequestError._tagmap.update(FileRequestError._tagmap)
+DeleteFileRequestError.file_request_open = DeleteFileRequestError('file_request_open')
+DeleteFileRequestsResult.file_requests.validator = bv.List(FileRequest_validator)
+DeleteFileRequestsResult._all_field_names_ = set(['file_requests'])
+DeleteFileRequestsResult._all_fields_ = [('file_requests', DeleteFileRequestsResult.file_requests.validator)]
+FileRequest.id.validator = FileRequestId_validator
+FileRequest.url.validator = bv.String(min_length=1)
+FileRequest.title.validator = bv.String(min_length=1)
+FileRequest.destination.validator = bv.Nullable(files.Path_validator)
+FileRequest.created.validator = common.DropboxTimestamp_validator
+FileRequest.deadline.validator = bv.Nullable(FileRequestDeadline_validator)
+FileRequest.is_open.validator = bv.Boolean()
+FileRequest.file_count.validator = bv.Int64()
+FileRequest.description.validator = bv.Nullable(bv.String())
+FileRequest._all_field_names_ = set([
+    'url',
+    'created',
+    'is_open',
+    'file_count',
+FileRequest._all_fields_ = [
+    ('id', FileRequest.id.validator),
+    ('url', FileRequest.url.validator),
+    ('title', FileRequest.title.validator),
+    ('destination', FileRequest.destination.validator),
+    ('created', FileRequest.created.validator),
+    ('deadline', FileRequest.deadline.validator),
+    ('is_open', FileRequest.is_open.validator),
+    ('file_count', FileRequest.file_count.validator),
+    ('description', FileRequest.description.validator),
+FileRequestDeadline.deadline.validator = common.DropboxTimestamp_validator
+FileRequestDeadline.allow_late_uploads.validator = bv.Nullable(GracePeriod_validator)
+FileRequestDeadline._all_field_names_ = set([
+    'allow_late_uploads',
+FileRequestDeadline._all_fields_ = [
+    ('deadline', FileRequestDeadline.deadline.validator),
+    ('allow_late_uploads', FileRequestDeadline.allow_late_uploads.validator),
+GetFileRequestArgs.id.validator = FileRequestId_validator
+GetFileRequestArgs._all_field_names_ = set(['id'])
+GetFileRequestArgs._all_fields_ = [('id', GetFileRequestArgs.id.validator)]
+GetFileRequestError._tagmap = {
+GetFileRequestError._tagmap.update(FileRequestError._tagmap)
+GracePeriod._one_day_validator = bv.Void()
+GracePeriod._two_days_validator = bv.Void()
+GracePeriod._seven_days_validator = bv.Void()
+GracePeriod._thirty_days_validator = bv.Void()
+GracePeriod._always_validator = bv.Void()
+GracePeriod._other_validator = bv.Void()
+GracePeriod._tagmap = {
+    'one_day': GracePeriod._one_day_validator,
+    'two_days': GracePeriod._two_days_validator,
+    'seven_days': GracePeriod._seven_days_validator,
+    'thirty_days': GracePeriod._thirty_days_validator,
+    'always': GracePeriod._always_validator,
+    'other': GracePeriod._other_validator,
+GracePeriod.one_day = GracePeriod('one_day')
+GracePeriod.two_days = GracePeriod('two_days')
+GracePeriod.seven_days = GracePeriod('seven_days')
+GracePeriod.thirty_days = GracePeriod('thirty_days')
+GracePeriod.always = GracePeriod('always')
+GracePeriod.other = GracePeriod('other')
+ListFileRequestsArg.limit.validator = bv.UInt64()
+ListFileRequestsArg._all_field_names_ = set(['limit'])
+ListFileRequestsArg._all_fields_ = [('limit', ListFileRequestsArg.limit.validator)]
+ListFileRequestsContinueArg.cursor.validator = bv.String()
+ListFileRequestsContinueArg._all_field_names_ = set(['cursor'])
+ListFileRequestsContinueArg._all_fields_ = [('cursor', ListFileRequestsContinueArg.cursor.validator)]
+ListFileRequestsContinueError._invalid_cursor_validator = bv.Void()
+ListFileRequestsContinueError._tagmap = {
+    'invalid_cursor': ListFileRequestsContinueError._invalid_cursor_validator,
+ListFileRequestsContinueError._tagmap.update(GeneralFileRequestsError._tagmap)
+ListFileRequestsContinueError.invalid_cursor = ListFileRequestsContinueError('invalid_cursor')
+ListFileRequestsError._tagmap = {
+ListFileRequestsError._tagmap.update(GeneralFileRequestsError._tagmap)
+ListFileRequestsResult.file_requests.validator = bv.List(FileRequest_validator)
+ListFileRequestsResult._all_field_names_ = set(['file_requests'])
+ListFileRequestsResult._all_fields_ = [('file_requests', ListFileRequestsResult.file_requests.validator)]
+ListFileRequestsV2Result.file_requests.validator = bv.List(FileRequest_validator)
+ListFileRequestsV2Result.cursor.validator = bv.String()
+ListFileRequestsV2Result.has_more.validator = bv.Boolean()
+ListFileRequestsV2Result._all_field_names_ = set([
+    'has_more',
+ListFileRequestsV2Result._all_fields_ = [
+    ('file_requests', ListFileRequestsV2Result.file_requests.validator),
+    ('cursor', ListFileRequestsV2Result.cursor.validator),
+    ('has_more', ListFileRequestsV2Result.has_more.validator),
+UpdateFileRequestArgs.id.validator = FileRequestId_validator
+UpdateFileRequestArgs.title.validator = bv.Nullable(bv.String(min_length=1))
+UpdateFileRequestArgs.destination.validator = bv.Nullable(files.Path_validator)
+UpdateFileRequestArgs.deadline.validator = UpdateFileRequestDeadline_validator
+UpdateFileRequestArgs.open.validator = bv.Nullable(bv.Boolean())
+UpdateFileRequestArgs.description.validator = bv.Nullable(bv.String())
+UpdateFileRequestArgs._all_field_names_ = set([
+UpdateFileRequestArgs._all_fields_ = [
+    ('id', UpdateFileRequestArgs.id.validator),
+    ('title', UpdateFileRequestArgs.title.validator),
+    ('destination', UpdateFileRequestArgs.destination.validator),
+    ('deadline', UpdateFileRequestArgs.deadline.validator),
+    ('open', UpdateFileRequestArgs.open.validator),
+    ('description', UpdateFileRequestArgs.description.validator),
+UpdateFileRequestDeadline._no_update_validator = bv.Void()
+UpdateFileRequestDeadline._update_validator = bv.Nullable(FileRequestDeadline_validator)
+UpdateFileRequestDeadline._other_validator = bv.Void()
+UpdateFileRequestDeadline._tagmap = {
+    'no_update': UpdateFileRequestDeadline._no_update_validator,
+    'update': UpdateFileRequestDeadline._update_validator,
+    'other': UpdateFileRequestDeadline._other_validator,
+UpdateFileRequestDeadline.no_update = UpdateFileRequestDeadline('no_update')
+UpdateFileRequestDeadline.other = UpdateFileRequestDeadline('other')
+UpdateFileRequestError._tagmap = {
+UpdateFileRequestError._tagmap.update(FileRequestError._tagmap)
+CreateFileRequestArgs.open.default = True
+ListFileRequestsArg.limit.default = 1000
+UpdateFileRequestArgs.deadline.default = UpdateFileRequestDeadline.no_update
+count = bb.Route(
+    'count',
+    CountFileRequestsResult_validator,
+    CountFileRequestsError_validator,
+create = bb.Route(
+    'create',
+    CreateFileRequestArgs_validator,
+    FileRequest_validator,
+    CreateFileRequestError_validator,
+delete = bb.Route(
+    DeleteFileRequestArgs_validator,
+    DeleteFileRequestsResult_validator,
+    DeleteFileRequestError_validator,
+delete_all_closed = bb.Route(
+    'delete_all_closed',
+    DeleteAllClosedFileRequestsResult_validator,
+    DeleteAllClosedFileRequestsError_validator,
+get = bb.Route(
+    'get',
+    GetFileRequestArgs_validator,
+    GetFileRequestError_validator,
+list_v2 = bb.Route(
+    'list',
+    ListFileRequestsArg_validator,
+    ListFileRequestsV2Result_validator,
+    ListFileRequestsError_validator,
+list = bb.Route(
+    ListFileRequestsResult_validator,
+list_continue = bb.Route(
+    'list/continue',
+    ListFileRequestsContinueArg_validator,
+    ListFileRequestsContinueError_validator,
+update = bb.Route(
+    'update',
+    UpdateFileRequestArgs_validator,
+    UpdateFileRequestError_validator,
+    'count': count,
+    'create': create,
+    'delete': delete,
+    'delete_all_closed': delete_all_closed,
+    'get': get,
+    'list:2': list_v2,
+    'list': list,
+    'list/continue': list_continue,
+    'update': update,

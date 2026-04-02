@@ -1,0 +1,18 @@
+    <!-- Dashboard Categories Section -->
+        SectionKey="dashboardCategories"
+        SectionName="Dashboard Categories"
+        [BadgeCount]="GetSectionRowCount('dashboardCategories')"
+                [Params]="BuildRelationshipViewParamsByEntityName('MJ: Dashboard Categories','ParentID')"
+                [NewRecordValues]="NewRecordValues('MJ: Dashboard Categories')"
+                [AllowLoad]="IsSectionExpanded('dashboardCategories')"
+                (AfterDataLoad)="SetSectionRowCount('dashboardCategories', $event.totalRowCount)"
+                [Params]="BuildRelationshipViewParamsByEntityName('MJ: Dashboards','CategoryID')"
+                [Params]="BuildRelationshipViewParamsByEntityName('MJ: Dashboard Category Links','DashboardCategoryID')"
+    <!-- MJ: Dashboard Category Permissions Section -->
+        SectionKey="mJDashboardCategoryPermissions"
+        SectionName="MJ: Dashboard Category Permissions"
+        [BadgeCount]="GetSectionRowCount('mJDashboardCategoryPermissions')"
+                [Params]="BuildRelationshipViewParamsByEntityName('MJ: Dashboard Category Permissions','DashboardCategoryID')"
+                [NewRecordValues]="NewRecordValues('MJ: Dashboard Category Permissions')"
+                [AllowLoad]="IsSectionExpanded('mJDashboardCategoryPermissions')"
+                (AfterDataLoad)="SetSectionRowCount('mJDashboardCategoryPermissions', $event.totalRowCount)"

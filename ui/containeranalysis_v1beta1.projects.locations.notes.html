@@ -1,0 +1,44 @@
+<h1><a href="containeranalysis_v1beta1.html">Container Analysis API</a> . <a href="containeranalysis_v1beta1.projects.html">projects</a> . <a href="containeranalysis_v1beta1.projects.locations.html">locations</a> . <a href="containeranalysis_v1beta1.projects.locations.notes.html">notes</a></h1>
+  <code><a href="containeranalysis_v1beta1.projects.locations.notes.occurrences.html">occurrences()</a></code>
+  &quot;notes&quot;: { # Required. The notes to create, the key is expected to be the note ID. Max allowed length is 1000.
+      &quot;attestationAuthority&quot;: { # Note kind that represents a logical attestation &quot;role&quot; or &quot;authority&quot;. For example, an organization might have one `Authority` for &quot;QA&quot; and one for &quot;build&quot;. This note is intended to act strictly as a grouping mechanism for the attached occurrences (Attestations). This grouping mechanism also provides a security boundary, since IAM ACLs gate the ability for a principle to attach an occurrence to a given note. It also provides a single point of lookup to find all attached attestation occurrences, even if they don&#x27;t all live in the same project. # A note describing an attestation role.
+        &quot;signature&quot;: { # Message encapsulating the signature of the verified build. # Signature of the build in occurrences pointing to this build note containing build details.
+          &quot;keyId&quot;: &quot;A String&quot;, # An ID for the key used to sign. This could be either an ID for the key stored in `public_key` (such as the ID or fingerprint for a PGP key, or the CN for a cert), or a reference to an external key (such as a reference to a key in Cloud Key Management Service).
+          &quot;keyType&quot;: &quot;A String&quot;, # The type of the key, either stored in `public_key` or referenced in `key_id`.
+          &quot;signature&quot;: &quot;A String&quot;, # Required. Signature of the related `BuildProvenance`. In JSON, this is base-64 encoded.
+      &quot;intoto&quot;: { # This contains the fields corresponding to the definition of a software supply chain step in an in-toto layout. This information goes into a Grafeas note. # A note describing an in-toto link.
+        &quot;expectedCommand&quot;: [ # This field contains the expected command used to perform the step.
+        &quot;expectedMaterials&quot;: [ # The following fields contain in-toto artifact rules identifying the artifacts that enter this supply chain step, and exit the supply chain step, i.e. materials and products of the step.
+          { # Defines an object to declare an in-toto artifact rule
+            &quot;artifactRule&quot;: [
+        &quot;expectedProducts&quot;: [
+        &quot;signingKeys&quot;: [ # This field contains the public keys that can be used to verify the signatures on the step metadata.
+          { # This defines the format used to record keys used in the software supply chain. An in-toto link is attested using one or more keys defined in the in-toto layout. An example of this is: { &quot;key_id&quot;: &quot;776a00e29f3559e0141b3b096f696abc6cfb0c657ab40f441132b345b0...&quot;, &quot;key_type&quot;: &quot;rsa&quot;, &quot;public_key_value&quot;: &quot;-----BEGIN PUBLIC KEY-----\nMIIBojANBgkqhkiG9w0B...&quot;, &quot;key_scheme&quot;: &quot;rsassa-pss-sha256&quot; } The format for in-toto&#x27;s key definition can be found in section 4.2 of the in-toto specification.
+            &quot;keyId&quot;: &quot;A String&quot;, # key_id is an identifier for the signing key.
+            &quot;keyScheme&quot;: &quot;A String&quot;, # This field contains the corresponding signature scheme. Eg: &quot;rsassa-pss-sha256&quot;.
+            &quot;keyType&quot;: &quot;A String&quot;, # This field identifies the specific signing method. Eg: &quot;rsa&quot;, &quot;ed25519&quot;, and &quot;ecdsa&quot;.
+            &quot;publicKeyValue&quot;: &quot;A String&quot;, # This field contains the actual public key.
+        &quot;stepName&quot;: &quot;A String&quot;, # This field identifies the name of the step in the supply chain.
+        &quot;threshold&quot;: &quot;A String&quot;, # This field contains a value that indicates the minimum number of keys that need to be used to sign the step&#x27;s in-toto link.
+      &quot;package&quot;: { # Package represents a particular package version. # A note describing a package hosted by various package managers.
+      &quot;sbom&quot;: { # DocumentNote represents an SPDX Document Creation Information section: https://spdx.github.io/spdx-spec/2-document-creation-information/ # A note describing a software bill of materials.
+      &quot;spdxRelationship&quot;: { # RelationshipNote represents an SPDX Relationship section: https://spdx.github.io/spdx-spec/7-relationships-between-SPDX-elements/ # A note describing an SPDX File.
+      &quot;vulnerability&quot;: { # Vulnerability provides metadata about a security vulnerability in a Note. # A note describing a package vulnerability.
+        &quot;cvssScore&quot;: 3.14, # The CVSS score for this vulnerability.
+        &quot;cvssV3&quot;: { # Deprecated. Common Vulnerability Scoring System version 3. For details, see https://www.first.org/cvss/specification-document # The full description of the CVSS for version 3.
+          { # Identifies all appearances of this vulnerability in the package for a specific distro/location. For example: glibc in cpe:/o:debian:debian_linux:8 for versions 2.1 - 2.2
+            &quot;cpeUri&quot;: &quot;A String&quot;, # Required. The CPE URI in [cpe format](https://cpe.mitre.org/specification/) in which the vulnerability manifests. Examples include distro or storage location for vulnerable jar.
+            &quot;fixedLocation&quot;: { # The location of the vulnerability. # The fix for this specific package version.
+              &quot;cpeUri&quot;: &quot;A String&quot;, # Required. The CPE URI in [cpe format](https://cpe.mitre.org/specification/) format. Examples include distro or storage location for vulnerable jar.
+              &quot;package&quot;: &quot;A String&quot;, # Required. The package being described.
+              &quot;version&quot;: { # Version contains structured information about the version of a package. # Required. The version of the package being described.
+            &quot;maxAffectedVersion&quot;: { # Version contains structured information about the version of a package. # The max version of the package in which the vulnerability exists.
+            &quot;minAffectedVersion&quot;: { # Version contains structured information about the version of a package. # The min version of the package in which the vulnerability exists.
+            &quot;package&quot;: &quot;A String&quot;, # Required. The name of the package where the vulnerability was found.
+            &quot;packageType&quot;: &quot;A String&quot;, # The type of package; whether native or non native(ruby gems, node.js packages etc).
+        &quot;severity&quot;: &quot;A String&quot;, # Note provider assigned impact of the vulnerability.
+            &quot;description&quot;: &quot;A String&quot;, # The description of the vulnerability.
+            &quot;fixingKbs&quot;: [ # Required. The names of the KBs which have hotfixes to mitigate this vulnerability. Note that there may be multiple hotfixes (and thus multiple KBs) that mitigate a given vulnerability. Currently any listed kb&#x27;s presence is considered a fix.
+                &quot;name&quot;: &quot;A String&quot;, # The KB name (generally of the form KB[0-9]+ i.e. KB123456).
+                &quot;url&quot;: &quot;A String&quot;, # A link to the KB in the Windows update catalog - https://www.catalog.update.microsoft.com/
+            &quot;name&quot;: &quot;A String&quot;, # Required. The name of the vulnerability.

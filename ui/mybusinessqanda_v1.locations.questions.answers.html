@@ -1,0 +1,31 @@
+<h1><a href="mybusinessqanda_v1.html">My Business Q&A API</a> . <a href="mybusinessqanda_v1.locations.html">locations</a> . <a href="mybusinessqanda_v1.locations.questions.html">questions</a> . <a href="mybusinessqanda_v1.locations.questions.answers.html">answers</a></h1>
+<p class="firstline">Deletes the answer written by the current user to a question.</p>
+<p class="firstline">Returns the paginated list of answers for a specified question.</p>
+  <code><a href="#upsert">upsert(parent, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Creates an answer or updates the existing answer written by the user for the specified question. A user can only create one answer per question.</p>
+  <pre>Deletes the answer written by the current user to a question.
+  name: string, Required. The name of the question to delete an answer for. (required)
+  <pre>Returns the paginated list of answers for a specified question.
+  parent: string, Required. The name of the question to fetch answers for. (required)
+  orderBy: string, Optional. The order to return the answers. Valid options include &#x27;update_time desc&#x27; and &#x27;upvote_count desc&#x27;, which will return the answers sorted descendingly by the requested field. The default sort order is &#x27;update_time desc&#x27;.
+  pageSize: integer, Optional. How many answers to fetch per page. The default and maximum `page_size` values are 10.
+  pageToken: string, Optional. If specified, the next page of answers is retrieved.
+    { # Response message for QuestionsAndAnswers.ListAnswers
+  &quot;answers&quot;: [ # The requested answers.
+    { # Represents an answer to a question
+      &quot;author&quot;: { # Represents the author of a question or answer # Output only. The author of the answer. Will only be set during list operations.
+        &quot;displayName&quot;: &quot;A String&quot;, # The display name of the user
+        &quot;profilePhotoUri&quot;: &quot;A String&quot;, # The profile photo URI of the user.
+        &quot;type&quot;: &quot;A String&quot;, # The type of user the author is.
+      &quot;createTime&quot;: &quot;A String&quot;, # Output only. The timestamp for when the answer was written. Only retrieved during ListResponse fetching.
+      &quot;name&quot;: &quot;A String&quot;, # Output only. The unique name for the answer locations/*/questions/*/answers/*
+      &quot;text&quot;: &quot;A String&quot;, # Required. The text of the answer. It should contain at least one non-whitespace character. The maximum length is 4096 characters.
+      &quot;updateTime&quot;: &quot;A String&quot;, # Output only. The timestamp for when the answer was last modified.
+      &quot;upvoteCount&quot;: 42, # Output only. The number of upvotes for the answer.
+  &quot;nextPageToken&quot;: &quot;A String&quot;, # If the number of answers exceeds the requested max page size, this field is populated with a token to fetch the next page of answers on a subsequent call. If there are no more answers, this field is not present in the response.
+  &quot;totalSize&quot;: 42, # The total number of answers posted for this question across all pages.
+    <code class="details" id="upsert">upsert(parent, body=None, x__xgafv=None)</code>
+  <pre>Creates an answer or updates the existing answer written by the user for the specified question. A user can only create one answer per question.
+  parent: string, Required. The name of the question to write an answer for. (required)
+{ # Request message for QuestionsAndAnswers.UpsertAnswer
+  &quot;answer&quot;: { # Represents an answer to a question # Required. The new answer.

@@ -1,0 +1,22 @@
+<h1><a href="baremetalsolution_v2.html">Bare Metal Solution API</a> . <a href="baremetalsolution_v2.projects.html">projects</a> . <a href="baremetalsolution_v2.projects.locations.html">locations</a> . <a href="baremetalsolution_v2.projects.locations.instanceProvisioningSettings.html">instanceProvisioningSettings</a></h1>
+  <code><a href="#fetch">fetch(location, x__xgafv=None)</a></code></p>
+<p class="firstline">Get instance provisioning settings for a given project. This is hidden method used by UI only.</p>
+    <code class="details" id="fetch">fetch(location, x__xgafv=None)</code>
+  <pre>Get instance provisioning settings for a given project. This is hidden method used by UI only.
+  location: string, Required. The parent project and location containing the ProvisioningSettings. (required)
+    { # Response with all provisioning settings.
+  &quot;images&quot;: [ # The OS images available.
+    { # Operation System image.
+      &quot;applicableInstanceTypes&quot;: [ # Instance types this image is applicable to. [Available types](https://cloud.google.com/bare-metal/docs/bms-planning#server_configurations)
+      &quot;code&quot;: &quot;A String&quot;, # OS Image code.
+      &quot;description&quot;: &quot;A String&quot;, # OS Image description.
+      &quot;name&quot;: &quot;A String&quot;, # Output only. OS Image&#x27;s unique name.
+      &quot;supportedNetworkTemplates&quot;: [ # Network templates that can be used with this OS Image.
+        { # Network template.
+          &quot;applicableInstanceTypes&quot;: [ # Instance types this template is applicable to.
+          &quot;logicalInterfaces&quot;: [ # Logical interfaces.
+            { # Logical interface.
+              &quot;name&quot;: &quot;A String&quot;, # Interface name. This is not a globally unique identifier. Name is unique only inside the ServerNetworkTemplate. This is of syntax or and forms part of the network template name.
+              &quot;required&quot;: True or False, # If true, interface must have network connected.
+              &quot;type&quot;: &quot;A String&quot;, # Interface type.
+          &quot;name&quot;: &quot;A String&quot;, # Output only. Template&#x27;s unique name. The full resource name follows the pattern: `projects/{project}/locations/{location}/serverNetworkTemplate/{server_network_template}` Generally, the {server_network_template} follows the syntax of &quot;bond&quot; or &quot;nic&quot;.

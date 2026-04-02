@@ -1,0 +1,37 @@
+<mj-record-form-container [record]="record" [formComponent]="this">
+    <mj-collapsible-panel slot="field-panels"
+        sectionKey="personalInformation"
+        sectionName="Personal Information"
+        icon="fa fa-user"
+        [form]="this"
+        [formContext]="formContext">
+            [formContext]="formContext"
+    <!-- Account Details Section -->
+        sectionKey="accountDetails"
+        sectionName="Account Details"
+        icon="fa fa-briefcase"
+            FieldName="CustomerSince"
+            FieldName="Tier"
+    <!-- Location Section -->
+        sectionKey="location"
+        sectionName="Location"
+        icon="fa fa-map-marker-alt"
+            FieldName="City"
+            FieldName="State"
+            FieldName="Country"
+        sectionKey="systemMetadata"
+        sectionName="System Metadata"
+        icon="fa fa-cog"
+         RELATED ENTITY PANELS - AFTER
+    <!-- Orders Section -->
+    <mj-collapsible-panel slot="after-panels"
+        sectionKey="orders"
+        sectionName="Orders"
+        icon="fa fa-shopping-cart"
+        variant="related-entity"
+        [badgeCount]="GetSectionRowCount('orders')"
+        [defaultExpanded]="false">
+                [Params]="BuildRelationshipViewParamsByEntityName('Orders','CustomerID')"
+                [NewRecordValues]="NewRecordValues('Orders')"
+                [AllowLoad]="IsSectionExpanded('orders')"
+                (AfterDataLoad)="SetSectionRowCount('orders', $event.totalRowCount)"

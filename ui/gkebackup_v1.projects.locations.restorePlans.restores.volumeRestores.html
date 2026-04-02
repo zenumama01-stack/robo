@@ -1,0 +1,23 @@
+<h1><a href="gkebackup_v1.html">Backup for GKE API</a> . <a href="gkebackup_v1.projects.html">projects</a> . <a href="gkebackup_v1.projects.locations.html">locations</a> . <a href="gkebackup_v1.projects.locations.restorePlans.html">restorePlans</a> . <a href="gkebackup_v1.projects.locations.restorePlans.restores.html">restores</a> . <a href="gkebackup_v1.projects.locations.restorePlans.restores.volumeRestores.html">volumeRestores</a></h1>
+<p class="firstline">Retrieve the details of a single VolumeRestore.</p>
+<p class="firstline">Lists the VolumeRestores for a given Restore.</p>
+  <pre>Retrieve the details of a single VolumeRestore.
+  name: string, Required. Full name of the VolumeRestore resource. Format: `projects/*/locations/*/restorePlans/*/restores/*/volumeRestores/*` (required)
+    { # Represents the operation of restoring a volume from a VolumeBackup.
+  &quot;completeTime&quot;: &quot;A String&quot;, # Output only. The timestamp when the associated underlying volume restoration completed.
+  &quot;createTime&quot;: &quot;A String&quot;, # Output only. The timestamp when this VolumeRestore resource was created.
+  &quot;etag&quot;: &quot;A String&quot;, # Output only. `etag` is used for optimistic concurrency control as a way to help prevent simultaneous updates of a volume restore from overwriting each other. It is strongly suggested that systems make use of the `etag` in the read-modify-write cycle to perform volume restore updates in order to avoid race conditions.
+  &quot;name&quot;: &quot;A String&quot;, # Output only. Full name of the VolumeRestore resource. Format: `projects/*/locations/*/restorePlans/*/restores/*/volumeRestores/*`
+  &quot;state&quot;: &quot;A String&quot;, # Output only. The current state of this VolumeRestore.
+  &quot;stateMessage&quot;: &quot;A String&quot;, # Output only. A human readable message explaining why the VolumeRestore is in its current state.
+  &quot;targetPvc&quot;: { # A reference to a namespaced resource in Kubernetes. # Output only. The reference to the target Kubernetes PVC to be restored.
+  &quot;updateTime&quot;: &quot;A String&quot;, # Output only. The timestamp when this VolumeRestore resource was last updated.
+  &quot;volumeBackup&quot;: &quot;A String&quot;, # Output only. The full name of the VolumeBackup from which the volume will be restored. Format: `projects/*/locations/*/backupPlans/*/backups/*/volumeBackups/*`.
+  &quot;volumeHandle&quot;: &quot;A String&quot;, # Output only. A storage system-specific opaque handler to the underlying volume created for the target PVC from the volume backup.
+  &quot;volumeType&quot;: &quot;A String&quot;, # Output only. The type of volume provisioned
+  <pre>Lists the VolumeRestores for a given Restore.
+  parent: string, Required. The Restore that contains the VolumeRestores to list. Format: `projects/*/locations/*/restorePlans/*/restores/*` (required)
+  pageToken: string, Optional. The value of next_page_token received from a previous `ListVolumeRestores` call. Provide this to retrieve the subsequent page in a multi-page list of results. When paginating, all other parameters provided to `ListVolumeRestores` must match the call that provided the page token.
+    { # Response message for ListVolumeRestores.
+  &quot;nextPageToken&quot;: &quot;A String&quot;, # A token which may be sent as page_token in a subsequent `ListVolumeRestores` call to retrieve the next page of results. If this field is omitted or empty, then there are no more results to return.
+  &quot;volumeRestores&quot;: [ # The list of VolumeRestores matching the given criteria.

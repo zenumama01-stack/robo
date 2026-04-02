@@ -1,0 +1,18 @@
+<h1><a href="networkservices_v1.html">Network Services API</a> . <a href="networkservices_v1.projects.html">projects</a> . <a href="networkservices_v1.projects.locations.html">locations</a> . <a href="networkservices_v1.projects.locations.gateways.html">gateways</a> . <a href="networkservices_v1.projects.locations.gateways.routeViews.html">routeViews</a></h1>
+<p class="firstline">Get a single RouteView of a Gateway.</p>
+<p class="firstline">Lists RouteViews</p>
+  <pre>Get a single RouteView of a Gateway.
+  name: string, Required. Name of the GatewayRouteView resource. Formats: projects/{project_number}/locations/{location}/gateways/{gateway}/routeViews/{route_view} (required)
+    { # GatewayRouteView defines view-only resource for Routes to a Gateway
+  &quot;name&quot;: &quot;A String&quot;, # Output only. Identifier. Full path name of the GatewayRouteView resource. Format: projects/{project_number}/locations/{location}/gateways/{gateway}/routeViews/{route_view}
+  &quot;routeId&quot;: &quot;A String&quot;, # Output only. The resource id for the route.
+  &quot;routeLocation&quot;: &quot;A String&quot;, # Output only. Location where the route exists.
+  &quot;routeProjectNumber&quot;: &quot;A String&quot;, # Output only. Project number where the route exists.
+  &quot;routeType&quot;: &quot;A String&quot;, # Output only. Type of the route: HttpRoute,GrpcRoute,TcpRoute, or TlsRoute
+  <pre>Lists RouteViews
+  parent: string, Required. The Gateway to which a Route is associated. Formats: projects/{project_number}/locations/{location}/gateways/{gateway} (required)
+  pageSize: integer, Maximum number of GatewayRouteViews to return per call.
+  pageToken: string, The value returned by the last `ListGatewayRouteViewsResponse` Indicates that this is a continuation of a prior `ListGatewayRouteViews` call, and that the system should return the next page of data.
+    { # Response returned by the ListGatewayRouteViews method.
+  &quot;gatewayRouteViews&quot;: [ # List of GatewayRouteView resources.
+  &quot;unreachable&quot;: [ # Unreachable resources. Populated when the request attempts to list all resources across all supported locations, while some locations are temporarily unavailable.

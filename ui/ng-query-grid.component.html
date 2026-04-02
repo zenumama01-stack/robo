@@ -1,0 +1,22 @@
+<div class="query-grid-wrap" >
+  <kendo-grid #kendoGrid
+    [data]="gridView"
+    [skip]="skip"
+    [pageSize]="pageSize"
+    scrollable="virtual"
+    [rowHeight]="36"
+    (pageChange)="pageChange($event)"
+    [height]="gridHeight"
+    [selectable]="true"
+    kendoGridSelectBy
+    [(selectedKeys)]="selectedKeys"
+    (cellClick)="cellClickHandler($event)"
+    <ng-template kendoGridToolbarTemplate>
+      <button fillMode="outline" themeColor="info" kendoButton (click)="doExcelExport()" >
+        <span class="fa-regular fa-file-excel"></span>Export to Excel
+      @if (showRefreshButton) {
+          (click)="RefreshFromSavedParams()" >
+          <span class="fa-solid fa-arrow-rotate-left"></span>
+    <kendo-excelexport #excelExport [data]="exportData" [fileName]="Params?.QueryID + '_Query.xlsx'">
+      @for (exportCol of queryColumns(); track exportCol) {
+        <kendo-excelexport-column [field]="exportCol" [title]="exportCol">

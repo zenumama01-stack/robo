@@ -1,0 +1,425 @@
+            <!-- Header Section -->
+            <div class="prompt-run-header">
+                    <div class="run-overview">
+                        <div class="run-icon-wrapper" [style.background-color]="getStatusColor() + '20'">
+                            <i [class]="'fa-solid ' + getStatusIcon()" [style.color]="getStatusColor()"></i>
+                        <div class="run-info">
+                            <h1 class="run-title">
+                                Prompt Run
+                                    <span class="run-id">#{{ record.ID.substring(0, 8) }}</span>
+                            <div class="run-meta">
+                                <span class="status-badge" [style.background-color]="getStatusColor()">
+                                    <i [class]="'fa-solid ' + getStatusIcon()"></i>
+                                    {{ getStatusText() }}
+                                @if (record.RunType) {
+                                    <span class="run-type-badge" [style.color]="getRunTypeColor(record.RunType)">
+                                        <i [class]="'fa-solid ' + getRunTypeIcon(record.RunType)"></i>
+                                        {{ record.RunType }}
+                                @if (prompt) {
+                                    <span class="prompt-name" (click)="navigateToEntity('MJ: AI Prompts', prompt.ID)" title="View Prompt">
+                                        {{ prompt.Name }}
+                                @if (model) {
+                                    <span class="model-name" (click)="navigateToEntity('MJ: AI Models', model.ID)" title="View Model">
+                                        {{ model.Name }}
+                                @if (record.Vendor) {
+                                    <span class="vendor-name" (click)="navigateToEntity('MJ: AI Vendors', record.VendorID)" title="View Vendor">
+                                        <i class="fa-solid fa-building"></i>
+                                        {{ record.Vendor }}
+                                @if (record.RerunFromPromptRunID) {
+                                    <span class="original-run" title="View Original Run">
+                                        <i class="fa-solid fa-level-up-alt"></i>
+                                        <a (click)="navigateToOriginalRun()" class="original-link">Original Run</a>
+                    <!-- Action Buttons -->
+                    <div class="run-actions">
+                        <button kendoButton fillMode="outline" size="small" (click)="reRunPrompt()" title="Re-run this prompt">
+                            <i class="fa-solid fa-play-circle"></i>
+                            Re-Run
+                        <button kendoButton fillMode="outline" size="small" (click)="refreshData()" title="Refresh data">
+                <!-- Key Metrics Bar -->
+                @if (record.ConfigurationID) {
+                    <!-- Configuration Bar -->
+                    <div class="metrics-bar">
+                                <div class="metric-label">Configuration</div>
+                                <div class="metric-value">
+                                    <a href="javascript:void(0)" class="config-link" (click)="navigateToEntity('MJ: AI Configurations', record.ConfigurationID)">
+                                        {{ record.Configuration || 'Unknown' }}
+                        @if (record.Temperature !== null && record.Temperature !== undefined) {
+                                <i class="fa-solid fa-temperature-high"></i>
+                                    <div class="metric-label">Temperature</div>
+                                    <div class="metric-value">{{ record.Temperature }}</div>
+                        @if (record.TopP !== null && record.TopP !== undefined) {
+                                <i class="fa-solid fa-percentage"></i>
+                                    <div class="metric-label">Top P</div>
+                                    <div class="metric-value">{{ record.TopP }}</div>
+                        @if (record.TopK !== null && record.TopK !== undefined) {
+                                    <div class="metric-label">Top K</div>
+                                    <div class="metric-value">{{ record.TopK }}</div>
+                        @if (record.EffortLevel !== null && record.EffortLevel !== undefined) {
+                                    <div class="metric-label">Effort Level</div>
+                                    <div class="metric-value">{{ record.EffortLevel }}</div>
+                        @if (record.ResponseFormat) {
+                                    <div class="metric-label">Response Format</div>
+                                    <div class="metric-value">{{ record.ResponseFormat }}</div>
+                    <!-- Execution Metrics Bar (always show when configuration exists) -->
+                                <div class="metric-label">Duration</div>
+                                <div class="metric-value">{{ formatDuration(record.ExecutionTimeMS) }}</div>
+                            <i class="fa-solid fa-coins"></i>
+                                <div class="metric-label">Total Tokens</div>
+                                <div class="metric-value">{{ formatTokens(record.TokensUsed) }}</div>
+                                <div class="metric-label">Cost</div>
+                                <div class="metric-value">{{ formatCost(record.TotalCost || record.Cost) }}</div>
+                        @if (record.RunAt) {
+                                    <div class="metric-label">Started</div>
+                                    <div class="metric-value">{{ record.RunAt | date:'short' }}</div>
+                    <!-- Execution Metrics Bar (original behavior when no configuration) -->
+            <!-- Main Content with Expansion Panels -->
+                <kendo-panelbar [keepItemContent]="true">
+                    <!-- Input Panel with nested sub-panels -->
+                    <kendo-panelbar-item [expanded]="inputExpanded" (stateChange)="onInputPanelToggle($event)">
+                            <span class="panel-title">
+                                Input
+                                @if (record.Messages && record.Messages.trim() !== '') {
+                                    <span class="panel-badge">JSON</span>
+                                    <!-- Nested expansion panels for sub-sections -->
+                                    <div class="nested-panels">
+                                        <!-- Messages Sub-Panel -->
+                                        <kendo-expansionpanel 
+                                            [expanded]="messagesExpanded" 
+                                            class="sub-expansion-panel"
+                                            [animation]="false">
+                                            <ng-template kendoExpansionPanelTitleDirective>
+                                                <span class="sub-panel-title">
+                                                    Messages
+                                                    @if (chatMessages.length > 0) {
+                                                        <span class="panel-count">({{ chatMessages.length }})</span>
+                                            <div class="sub-panel-content">
+                                                @if (isParsingMessages || isLoadingRelatedData) {
+                                                        <p>Loading messages...</p>
+                                                } @else if (chatMessages.length > 0) {
+                                                    <mj-chat-message-viewer 
+                                                        [messages]="chatMessages">
+                                                    </mj-chat-message-viewer>
+                                                        <i class="fa-solid fa-comment-slash"></i>
+                                                        <p>No chat messages found</p>
+                                        </kendo-expansionpanel>
+                                        <!-- Data Sub-Panel -->
+                                            [expanded]="dataExpanded" 
+                                                    Data
+                                                    @if (inputData) {
+                                                        <span class="panel-badge">Object</span>
+                                                @if (inputData && formattedData) {
+                                                        <div class="json-toolbar">
+                                                                (click)="copyToClipboard(formattedData, 'Data')"
+                                                                title="Copy JSON">
+                                                                <i class="fa-solid fa-copy"></i> Copy
+                                                            [(ngModel)]="formattedData"
+                                                            name="formattedData"
+                                                            [language]="'json'"
+                                                            style="height: 300px; width: 100%;">
+                                                        <p>No data object found</p>
+                                        <!-- Raw Sub-Panel -->
+                                            [expanded]="rawExpanded" 
+                                                    Raw
+                                                            (click)="copyToClipboard(formattedMessages, 'Messages')"
+                                                        [(ngModel)]="formattedMessages"
+                                                        name="formattedMessages"
+                                                        style="height: 400px; width: 100%;">
+                                        <p>No input messages recorded</p>
+                    <!-- Result Panel -->
+                    <kendo-panelbar-item [expanded]="resultExpanded" (stateChange)="onResultPanelToggle($event)">
+                                <i class="fa-solid fa-square-check"></i>
+                                Result
+                                @if (record.Result && record.Result.trim() !== '') {
+                                @if (record.ErrorMessage) {
+                                    <span class="panel-badge error">Error</span>
+                                        <div class="error-content">
+                                            <h4>Error Message</h4>
+                                            <p>{{ record.ErrorMessage }}</p>
+                                                (click)="copyToClipboard(formattedResult, 'Result')"
+                                            [(ngModel)]="formattedResult"
+                                            name="formattedResult"
+                                } @else if (!record.ErrorMessage) {
+                                        <i class="fa-solid fa-inbox"></i>
+                                        <p>No result data recorded</p>
+                                        @if (record.Status === 'Failed' || record.Success === false) {
+                                            <div class="error-info">
+                                                    <p class="finish-reason">
+                                                        <strong>Status:</strong> {{ record.Status }}
+                                                @if (formattedErrorDetails) {
+                                                    <div class="error-details">
+                                                        <h4>Error Details</h4>
+                                                            [ngModel]="formattedErrorDetails"
+                                                            [disabled]="true"
+                                                            style="height: 200px; width: 100%;">
+                                                @if (!formattedErrorDetails) {
+                                                    <p class="error-hint">
+                                                        The prompt execution failed but no additional error information is available.
+                    <!-- Token Usage & Metrics Panel -->
+                    <kendo-panelbar-item [expanded]="metricsExpanded" (stateChange)="onMetricsPanelToggle($event)">
+                                <i class="fa-solid fa-chart-line"></i>
+                                Token Usage & Metrics
+                                    <div class="metric-card">
+                                            <i class="fa-solid fa-message"></i>
+                                            <h4>Prompt Tokens</h4>
+                                        <div class="metric-value large">{{ formatTokens(record.TokensPrompt) }}</div>
+                                        @if (record.TokensPromptRollup && record.TokensPromptRollup !== record.TokensPrompt) {
+                                            <div class="metric-rollup">
+                                                <span>Rollup: {{ formatTokens(record.TokensPromptRollup) }}</span>
+                                            <i class="fa-solid fa-reply"></i>
+                                            <h4>Completion Tokens</h4>
+                                        <div class="metric-value large">{{ formatTokens(record.TokensCompletion) }}</div>
+                                        @if (record.TokensCompletionRollup && record.TokensCompletionRollup !== record.TokensCompletion) {
+                                                <span>Rollup: {{ formatTokens(record.TokensCompletionRollup) }}</span>
+                                            <h4>Total Tokens</h4>
+                                        <div class="metric-value large">{{ formatTokens(record.TokensUsed) }}</div>
+                                        @if (record.TokensUsedRollup && record.TokensUsedRollup !== record.TokensUsed) {
+                                                <span>Rollup: {{ formatTokens(record.TokensUsedRollup) }}</span>
+                                            <h4>Cost</h4>
+                                        <div class="metric-value large">{{ formatCost(record.Cost) }}</div>
+                                        @if (record.TotalCost && record.TotalCost !== record.Cost) {
+                                                <span>Total: {{ formatCost(record.TotalCost) }}</span>
+                                        @if (record.CostCurrency) {
+                                            <div class="metric-currency">{{ record.CostCurrency }}</div>
+                                    <!-- Timing Metrics -->
+                                    @if (record.QueueTime != null) {
+                                                <i class="fa-solid fa-hourglass-start"></i>
+                                                <h4>Queue Time</h4>
+                                            <div class="metric-value large">{{ formatDuration(record.QueueTime) }}</div>
+                                    @if (record.PromptTime != null) {
+                                                <h4>Prompt Time</h4>
+                                            <div class="metric-value large">{{ formatDuration(record.PromptTime) }}</div>
+                                    @if (record.CompletionTime != null) {
+                                                <i class="fa-solid fa-flag-checkered"></i>
+                                                <h4>Completion Time</h4>
+                                            <div class="metric-value large">{{ formatDuration(record.CompletionTime) }}</div>
+                                <!-- Additional Metrics -->
+                                <div class="additional-metrics">
+                                    @if (record.ExecutionOrder !== null) {
+                                        <div class="metric-row">
+                                            <span class="metric-label">Execution Order:</span>
+                                            <span class="metric-value">{{ record.ExecutionOrder }}</span>
+                                    @if (record.AgentID) {
+                                            <span class="metric-label">Agent:</span>
+                                            <span class="metric-value link" (click)="navigateToEntity('MJ: AI Agents', record.AgentID)">
+                                                {{ record.Agent }}
+                    <!-- Validation & Retry Panel -->
+                    @if (record && ((record.ValidationAttemptCount && record.ValidationAttemptCount > 0) || record.ValidationBehavior)) {
+                        <kendo-panelbar-item [expanded]="validationExpanded" (stateChange)="onValidationPanelToggle($event)">
+                                    Validation & Retries
+                                    @if (record && record.ValidationAttemptCount && record.ValidationAttemptCount > 1) {
+                                        <span class="panel-count">({{ record.ValidationAttemptCount }} attempts)</span>
+                                    @if (record.FinalValidationPassed) {
+                                        <span class="panel-badge success">Passed</span>
+                                    } @else if (record.FinalValidationPassed === false) {
+                                        <span class="panel-badge error">Failed</span>
+                                    <!-- Validation Summary -->
+                                    <div class="validation-summary">
+                                        <div class="summary-header">
+                                            <h4>Validation Summary</h4>
+                                            <div class="validation-status" [class.success]="record.FinalValidationPassed" [class.failed]="!record.FinalValidationPassed">
+                                                <i [class]="record.FinalValidationPassed ? 'fa-solid fa-check-circle' : 'fa-solid fa-times-circle'"></i>
+                                                {{ record.FinalValidationPassed ? 'Validation Passed' : 'Validation Failed' }}
+                                        <div class="validation-metrics">
+                                            <div class="metric-card small">
+                                                <div class="metric-label">Total Attempts</div>
+                                                <div class="metric-value">{{ record.ValidationAttemptCount || 0 }}</div>
+                                                <div class="metric-label">Successful</div>
+                                                <div class="metric-value">{{ record.SuccessfulValidationCount || 0 }}</div>
+                                                <div class="metric-label">Behavior</div>
+                                                <div class="metric-value">{{ record.ValidationBehavior || 'Not set' }}</div>
+                                                <div class="metric-label">Retry Strategy</div>
+                                                <div class="metric-value">{{ record.RetryStrategy || 'Not set' }}</div>
+                                        @if (record.FinalValidationError) {
+                                            <div class="validation-error">
+                                                <h5><i class="fa-solid fa-exclamation-triangle"></i> Final Validation Error</h5>
+                                                <p>{{ record.FinalValidationError }}</p>
+                                                @if (record && record.ValidationErrorCount && record.ValidationErrorCount > 0) {
+                                                    <span class="error-count">{{ record.ValidationErrorCount }} validation errors</span>
+                                        @if (record.CommonValidationError && record.CommonValidationError !== record.FinalValidationError) {
+                                            <div class="common-error">
+                                                <h5><i class="fa-solid fa-repeat"></i> Most Common Error</h5>
+                                                <p>{{ record.CommonValidationError }}</p>
+                                    <!-- Retry Timeline -->
+                                        <div class="retry-timeline">
+                                            <h4>Retry Timeline</h4>
+                                            <div class="timeline-info">
+                                                <div class="timeline-stat">
+                                                    <span>First Attempt: {{ record.FirstAttemptAt | date:'short' }}</span>
+                                                    <span>Last Attempt: {{ record.LastAttemptAt | date:'short' }}</span>
+                                                    <span>Total Retry Duration: {{ formatDuration(record.TotalRetryDurationMS) }}</span>
+                                    <!-- Validation Attempts Details -->
+                                    @if (validationAttempts && validationAttempts.length > 0) {
+                                        <div class="validation-attempts">
+                                            <h4>Validation Attempts</h4>
+                                            <div class="attempts-list">
+                                                @for (attempt of validationAttempts; track attempt.attemptNumber) {
+                                                    <div class="attempt-item" [class.success]="attempt.success" [class.failed]="!attempt.success">
+                                                        <div class="attempt-number">
+                                                            <i [class]="attempt.success ? 'fa-solid fa-check' : 'fa-solid fa-times'"></i>
+                                                            Attempt #{{ attempt.attemptNumber }}
+                                                        <div class="attempt-details">
+                                                            <span class="attempt-time">{{ attempt.timestamp }}</span>
+                                                            @if (!attempt.success) {
+                                                                <span class="attempt-error">{{ attempt.errorMessage || 'Unknown error' }}</span>
+                                                                @if (attempt.validationErrorCount > 0) {
+                                                                    <span class="error-count">({{ attempt.validationErrorCount }} errors)</span>
+                                                            @if (attempt.outputLength) {
+                                                                <span class="output-length">Output: {{ attempt.outputLength }} chars</span>
+                                    <!-- Validation Summary JSON -->
+                                    @if (validationSummary) {
+                                        <div class="validation-json">
+                                            <h4>Validation Summary Details</h4>
+                                            <div class="json-viewer-container">
+                                                    [(ngModel)]="formattedValidationSummary"
+                                                    name="formattedValidationSummary"
+                                    <!-- Validation Attempts JSON -->
+                                    @if (record.ValidationAttempts) {
+                                            <h4>Validation Attempts (Raw JSON)</h4>
+                                                    [(ngModel)]="formattedValidationAttempts"
+                                                    name="formattedValidationAttempts"
+                    <!-- Hierarchy Panel (for parent/child relationships) -->
+                    @if (record.ParentID || childRuns.length > 0) {
+                        <kendo-panelbar-item [expanded]="hierarchyExpanded">
+                                    Run Hierarchy
+                                    @if (childRuns.length > 0) {
+                                        <span class="panel-count">({{ childRuns.length }} children)</span>
+                                    @if (parentRun) {
+                                        <div class="parent-run-section">
+                                            <h4><i class="fa-solid fa-level-up-alt"></i> Parent Run</h4>
+                                            <div class="run-item parent" (click)="navigateToEntity('MJ: AI Prompt Runs', parentRun.ID)">
+                                                <div class="run-item-icon" [style.background-color]="getStatusColor() + '20'">
+                                                    <i [class]="'fa-solid ' + getRunTypeIcon(parentRun.RunType)"></i>
+                                                <div class="run-item-content">
+                                                    <div class="run-item-title">
+                                                        Parent Run #{{ parentRun.ID.substring(0, 8) }}
+                                                        <span class="run-item-type">{{ parentRun.RunType }}</span>
+                                                    <div class="run-item-meta">
+                                                        <span><i class="fa-solid fa-clock"></i> {{ formatDuration(parentRun.ExecutionTimeMS) }}</span>
+                                                        <span><i class="fa-solid fa-coins"></i> {{ formatTokens(parentRun.TokensUsed) }}</span>
+                                                        <span><i class="fa-solid fa-calendar"></i> {{ parentRun.RunAt | date:'short' }}</span>
+                                        <div class="child-runs-section">
+                                            <h4><i class="fa-solid fa-level-down-alt"></i> Child Runs</h4>
+                                            <div class="runs-list">
+                                                @for (childRun of childRuns; track childRun.ID) {
+                                                    <div class="run-item child" (click)="navigateToEntity('MJ: AI Prompt Runs', childRun.ID)">
+                                                            <i [class]="'fa-solid ' + getRunTypeIcon(childRun.RunType)"></i>
+                                                                Child Run #{{ childRun.ID.substring(0, 8) }}
+                                                                @if (childRun.ExecutionOrder !== null) {
+                                                                    <span class="execution-order">#{{ childRun.ExecutionOrder }}</span>
+                                                                <span class="run-item-type">{{ childRun.RunType }}</span>
+                                                                <span class="status-indicator" [style.color]="getStatusColor()">
+                                                                    {{ childRun.Success ? 'Success' : childRun.ErrorMessage ? 'Failed' : 'Running' }}
+                                                                <span><i class="fa-solid fa-clock"></i> {{ formatDuration(childRun.ExecutionTimeMS) }}</span>
+                                                                <span><i class="fa-solid fa-coins"></i> {{ formatTokens(childRun.TokensUsed) }}</span>
+                    <!-- Additional Details Panel -->
+                    <kendo-panelbar-item [expanded]="false">
+                                Additional Details
+                                <div class="detail-fields-grid">
+                                        <div class="detail-field">
+                                            <label>Agent</label>
+                                            <div class="detail-value clickable" (click)="navigateToEntity('MJ: AI Agents', record.AgentID)" title="View Agent">
+                                                {{ record.Agent || 'Unknown' }}
+                                            <label>Run Type</label>
+                                            <div class="detail-value">
+                                            <label>Response Format</label>
+                                                {{ record.ResponseFormat }}
+                                        <div class="detail-value" [class.null-value]="record.Temperature === null || record.Temperature === undefined">
+                                            {{ record.Temperature !== null && record.Temperature !== undefined ? record.Temperature : '—' }}
+                                        <label>Top P</label>
+                                        <div class="detail-value" [class.null-value]="record.TopP === null || record.TopP === undefined">
+                                            {{ record.TopP !== null && record.TopP !== undefined ? record.TopP : '—' }}
+                                        <label>Top K</label>
+                                        <div class="detail-value" [class.null-value]="record.TopK === null || record.TopK === undefined">
+                                            {{ record.TopK !== null && record.TopK !== undefined ? record.TopK : '—' }}
+                                        <label>Min P</label>
+                                        <div class="detail-value" [class.null-value]="record.MinP === null || record.MinP === undefined">
+                                            <i class="fa-solid fa-filter"></i>
+                                            {{ record.MinP !== null && record.MinP !== undefined ? record.MinP : '—' }}
+                                        <label>Frequency Penalty</label>
+                                        <div class="detail-value" [class.null-value]="record.FrequencyPenalty === null || record.FrequencyPenalty === undefined">
+                                            <i class="fa-solid fa-repeat"></i>
+                                            {{ record.FrequencyPenalty !== null && record.FrequencyPenalty !== undefined ? record.FrequencyPenalty : '—' }}
+                                        <label>Presence Penalty</label>
+                                        <div class="detail-value" [class.null-value]="record.PresencePenalty === null || record.PresencePenalty === undefined">
+                                            {{ record.PresencePenalty !== null && record.PresencePenalty !== undefined ? record.PresencePenalty : '—' }}
+                                        <label>Seed</label>
+                                        <div class="detail-value" [class.null-value]="record.Seed === null || record.Seed === undefined">
+                                            <i class="fa-solid fa-seedling"></i>
+                                            {{ record.Seed !== null && record.Seed !== undefined ? record.Seed : '—' }}
+                                            <label>Started At</label>
+                                                {{ record.RunAt | date:'medium' }}
+                                    @if (record.CompletedAt) {
+                                            <label>Completed At</label>
+                                                {{ record.CompletedAt | date:'medium' }}
+                    <!-- Model Specific Response Details Panel -->
+                    @if (record.ModelSpecificResponseDetails) {
+                        <kendo-panelbar-item [expanded]="modelSpecificExpanded" (stateChange)="onModelSpecificPanelToggle($event)">
+                                    Model Specific Response Details
+                                                (click)="copyToClipboard(formattedModelSpecificResponseDetails, 'Model Specific Response Details')"
+                                            [(ngModel)]="formattedModelSpecificResponseDetails"
+                                            name="formattedModelSpecificResponseDetails"
+                    <!-- Model Selection & Performance Panel (v2.78 fields) -->
+                    <kendo-panelbar-item [expanded]="false" (stateChange)="onModelSelectionPanelToggle($event)">
+                                Model Selection & Performance
+                                @if (record.CacheHit) {
+                                    <span class="panel-badge success">Cached</span>
+                                @if (record.WasSelectedResult) {
+                                    <span class="panel-badge success">Selected</span>
+                                    <!-- Model Selection Details -->
+                                        <label>Status</label>
+                                            {{ record.Status || 'Unknown' }}
+                                        <label>Selection Strategy</label>
+                                            <i class="fa-solid fa-strategy"></i>
+                                            {{ record.SelectionStrategy || '—' }}
+                                        <label>Model Power Rank</label>
+                                        <div class="detail-value" [class.null-value]="record.ModelPowerRank === null">
+                                            <i class="fa-solid fa-ranking-star"></i>
+                                            {{ record.ModelPowerRank !== null ? record.ModelPowerRank : '—' }}
+                                    <!-- Cache Information -->
+                                        <label>Cache Hit</label>
+                                            <i [class]="record.CacheHit ? 'fa-solid fa-check-circle' : 'fa-solid fa-times-circle'"></i>
+                                            {{ record.CacheHit ? 'Yes' : 'No' }}
+                                    @if (record.CacheKey) {
+                                        <div class="detail-field full-width">
+                                            <label>Cache Key</label>
+                                                <i class="fa-solid fa-key"></i>
+                                                <code>{{ record.CacheKey }}</code>
+                                    <!-- Judge Information -->
+                                    @if (record.JudgeID) {
+                                            <label>Judge Prompt</label>
+                                            <div class="detail-value clickable" (click)="navigateToEntity('MJ: AI Prompts', record.JudgeID)" title="View Judge Prompt">
+                                                <i class="fa-solid fa-gavel"></i>
+                                                {{ record.Judge || 'Unknown' }}
+                                    @if (record.JudgeScore !== null) {
+                                            <label>Judge Score</label>
+                                                <i class="fa-solid fa-star"></i>
+                                                {{ record.JudgeScore }}
+                                        <label>Was Selected Result</label>
+                                            <i [class]="record.WasSelectedResult ? 'fa-solid fa-trophy' : 'fa-solid fa-times'"></i>
+                                            {{ record.WasSelectedResult ? 'Yes' : 'No' }}
+                                    <!-- Performance Metrics -->
+                                        <label>Streaming Enabled</label>
+                                            <i [class]="record.StreamingEnabled ? 'fa-solid fa-stream' : 'fa-solid fa-ban'"></i>
+                                            {{ record.StreamingEnabled ? 'Yes' : 'No' }}
+                                    @if (record.FirstTokenTime !== null) {
+                                            <label>First Token Time</label>
+                                                {{ record.FirstTokenTime }} ms
+                                    @if (record.Cancelled) {
+                                            <label>Cancelled</label>
+                                            <div class="detail-value error">
+                                                <i class="fa-solid fa-ban"></i>
+                                                Yes
+                                        @if (record.CancellationReason) {
+                                                <label>Cancellation Reason</label>
+                                                    {{ record.CancellationReason }}
+                                <!-- Model Selection JSON -->
+                                @if (record.ModelSelection) {
+                                    <div class="model-selection-json">
+                                        <h4>Model Selection Details</h4>
+                                                [(ngModel)]="formattedModelSelection"
+                                                name="formattedModelSelection"
+                                <!-- Error Details JSON -->
+                                @if (record.ErrorDetails) {
+                                    <div class="error-details-json">
+                                                [(ngModel)]="formattedErrorDetails"
+                                                name="formattedErrorDetails"

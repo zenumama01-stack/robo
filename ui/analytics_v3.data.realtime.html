@@ -1,0 +1,18 @@
+<h1><a href="analytics_v3.html">Google Analytics API</a> . <a href="analytics_v3.data.html">data</a> . <a href="analytics_v3.data.realtime.html">realtime</a></h1>
+  <code><a href="#get">get(ids, metrics, dimensions=None, filters=None, max_results=None, sort=None)</a></code></p>
+<p class="firstline">Returns real time data for a view (profile).</p>
+    <code class="details" id="get">get(ids, metrics, dimensions=None, filters=None, max_results=None, sort=None)</code>
+  <pre>Returns real time data for a view (profile).
+  ids: string, Unique table ID for retrieving real time data. Table ID is of the form ga:XXXX, where XXXX is the Analytics view (profile) ID. (required)
+  metrics: string, A comma-separated list of real time metrics. E.g., &#x27;rt:activeUsers&#x27;. At least one metric must be specified. (required)
+  dimensions: string, A comma-separated list of real time dimensions. E.g., &#x27;rt:medium,rt:city&#x27;.
+  filters: string, A comma-separated list of dimension or metric filters to be applied to real time data.
+  sort: string, A comma-separated list of dimensions or metrics that determine the sort order for real time data.
+    { # Real time data for a given view (profile).
+  &quot;kind&quot;: &quot;analytics#realtimeData&quot;, # Resource type.
+  &quot;profileInfo&quot;: { # Information for the view (profile), for which the real time data was requested.
+  &quot;query&quot;: { # Real time data request query parameters.
+    &quot;dimensions&quot;: &quot;A String&quot;, # List of real time dimensions.
+    &quot;metrics&quot;: [ # List of real time metrics.
+    &quot;sort&quot;: [ # List of dimensions or metrics based on which real time data is sorted.
+  &quot;rows&quot;: [ # Real time data rows, where each row contains a list of dimension values followed by the metric values. The order of dimensions and metrics is same as specified in the request.

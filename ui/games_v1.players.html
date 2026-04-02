@@ -1,0 +1,42 @@
+<h1><a href="games_v1.html">Google Play Games Services API</a> . <a href="games_v1.players.html">players</a></h1>
+  <code><a href="#get">get(playerId, language=None, playerIdConsistencyToken=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Retrieves the Player resource with the given ID. To retrieve the player for the currently authenticated user, set `playerId` to `me`.</p>
+  <code><a href="#getMultipleApplicationPlayerIds">getMultipleApplicationPlayerIds(applicationIds=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Get the application player ids for the currently authenticated player across all requested games by the same developer as the calling application. This will only return ids for players that actually have an id (scoped or otherwise) with that game.</p>
+  <code><a href="#getScopedPlayerIds">getScopedPlayerIds(x__xgafv=None)</a></code></p>
+<p class="firstline">Retrieves scoped player identifiers for currently authenticated user.</p>
+  <code><a href="#list">list(collection, language=None, maxResults=None, pageToken=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Get the collection of players for the currently authenticated user.</p>
+    <code class="details" id="get">get(playerId, language=None, playerIdConsistencyToken=None, x__xgafv=None)</code>
+  <pre>Retrieves the Player resource with the given ID. To retrieve the player for the currently authenticated user, set `playerId` to `me`.
+  playerIdConsistencyToken: string, Consistency token of the player id. The call returns a &#x27;not found&#x27; result when the token is present and invalid. Empty value is ignored. See also GlobalPlayerIdConsistencyTokenProto
+    { # A Player resource.
+    &quot;kind&quot;: &quot;A String&quot;, # Uniquely identifies the type of this resource. Value is always the fixed string `games#playerExperienceInfo`.
+  &quot;friendStatus&quot;: &quot;A String&quot;, # The friend status of the given player, relative to the requester. This is unset if the player is not sharing their friends list with the game.
+  &quot;gamePlayerId&quot;: &quot;A String&quot;, # Per-application unique player identifier.
+  &quot;kind&quot;: &quot;A String&quot;, # Uniquely identifies the type of this resource. Value is always the fixed string `games#player`
+  &quot;name&quot;: { # A representation of the individual components of the name.
+    &quot;friendsListVisibility&quot;: &quot;A String&quot;,
+    &quot;kind&quot;: &quot;A String&quot;, # Uniquely identifies the type of this resource. Value is always the fixed string `games#profileSettings`.
+    &quot;profileVisible&quot;: True or False, # Whether the player&#x27;s profile is visible to the currently signed in player.
+    <code class="details" id="getMultipleApplicationPlayerIds">getMultipleApplicationPlayerIds(applicationIds=None, x__xgafv=None)</code>
+  <pre>Get the application player ids for the currently authenticated player across all requested games by the same developer as the calling application. This will only return ids for players that actually have an id (scoped or otherwise) with that game.
+  applicationIds: string, Required. The application IDs from the Google Play developer console for the games to return scoped ids for. (repeated)
+    { # Response message for GetMultipleApplicationPlayerIds rpc.
+  &quot;playerIds&quot;: [ # Output only. The requested applications along with the scoped ids for tha player, if that player has an id for the application. If not, the application is not included in the response.
+    { # Primary scoped player identifier for an application.
+      &quot;applicationId&quot;: &quot;A String&quot;, # The application that this player identifier is for.
+      &quot;playerId&quot;: &quot;A String&quot;, # The player identifier for the application.
+    <code class="details" id="getScopedPlayerIds">getScopedPlayerIds(x__xgafv=None)</code>
+  <pre>Retrieves scoped player identifiers for currently authenticated user.
+    { # Scoped player identifiers.
+  &quot;developerPlayerKey&quot;: &quot;A String&quot;, # Identifier of the player across all games of the given developer. Every player has the same developer_player_key in all games of one developer. Developer player key changes for the game if the game is transferred to another developer. Note that game_player_id will stay unchanged.
+  &quot;gamePlayerId&quot;: &quot;A String&quot;, # Game-scoped player identifier. This is the same id that is returned in GetPlayer game_player_id field.
+    <code class="details" id="list">list(collection, language=None, maxResults=None, pageToken=None, x__xgafv=None)</code>
+  <pre>Get the collection of players for the currently authenticated user.
+  collection: string, Collection of players being retrieved (required)
+      CONNECTED - Retrieve a list of players that are also playing this game in reverse chronological order.
+      VISIBLE - Retrieve a list of players in the user&#x27;s social graph that are visible to this game.
+      FRIENDS_ALL - Retrieve a list of players who are friends of the user in alphabetical order.
+    { # A third party player list response.
+  &quot;kind&quot;: &quot;A String&quot;, # Uniquely identifies the type of this resource. Value is always the fixed string `games#playerListResponse`.

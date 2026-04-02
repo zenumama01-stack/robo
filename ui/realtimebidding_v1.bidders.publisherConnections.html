@@ -1,0 +1,38 @@
+<h1><a href="realtimebidding_v1.html">Real-time Bidding API</a> . <a href="realtimebidding_v1.bidders.html">bidders</a> . <a href="realtimebidding_v1.bidders.publisherConnections.html">publisherConnections</a></h1>
+  <code><a href="#batchApprove">batchApprove(parent, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Batch approves multiple publisher connections.</p>
+  <code><a href="#batchReject">batchReject(parent, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Batch rejects multiple publisher connections.</p>
+<p class="firstline">Gets a publisher connection.</p>
+<p class="firstline">Lists publisher connections for a given bidder.</p>
+    <code class="details" id="batchApprove">batchApprove(parent, body=None, x__xgafv=None)</code>
+  <pre>Batch approves multiple publisher connections.
+  parent: string, Required. The bidder for whom publisher connections will be approved. Format: `bidders/{bidder}` where `{bidder}` is the account ID of the bidder. (required)
+{ # A request to approve a batch of publisher connections.
+  &quot;names&quot;: [ # Required. The names of the publishers with which connections will be approved. In the pattern `bidders/{bidder}/publisherConnections/{publisher}` where `{bidder}` is the account ID of the bidder, and `{publisher}` is the ads.txt/app-ads.txt publisher ID.
+    { # A response for the request to approve a batch of publisher connections.
+  &quot;publisherConnections&quot;: [ # The publisher connections that have been approved.
+    { # An Open Bidding exchange&#x27;s connection to a publisher. This is initiated by the publisher for the bidder to review. If approved by the bidder, this means that the bidder agrees to receive bid requests from the publisher.
+      &quot;biddingState&quot;: &quot;A String&quot;, # Whether the publisher has been approved by the bidder.
+      &quot;createTime&quot;: &quot;A String&quot;, # Output only. The time at which the publisher initiated a connection with the bidder (irrespective of if or when the bidder approves it). This is subsequently updated if the publisher revokes and re-initiates the connection.
+      &quot;displayName&quot;: &quot;A String&quot;, # Output only. Publisher display name.
+      &quot;name&quot;: &quot;A String&quot;, # Output only. Name of the publisher connection. This follows the pattern `bidders/{bidder}/publisherConnections/{publisher}`, where `{bidder}` represents the account ID of the bidder, and `{publisher}` is the ads.txt/app-ads.txt publisher ID.
+      &quot;publisherPlatform&quot;: &quot;A String&quot;, # Output only. Whether the publisher is an Ad Manager or AdMob publisher.
+    <code class="details" id="batchReject">batchReject(parent, body=None, x__xgafv=None)</code>
+  <pre>Batch rejects multiple publisher connections.
+  parent: string, Required. The bidder for whom publisher connections will be rejected. Format: `bidders/{bidder}` where `{bidder}` is the account ID of the bidder. (required)
+{ # A request to reject a batch of publisher connections.
+  &quot;names&quot;: [ # Required. The names of the publishers with whom connection will be rejected. In the pattern `bidders/{bidder}/publisherConnections/{publisher}` where `{bidder}` is the account ID of the bidder, and `{publisher}` is the ads.txt/app-ads.txt publisher ID.
+    { # A response for the request to reject a batch of publisher connections.
+  &quot;publisherConnections&quot;: [ # The publisher connections that have been rejected.
+  <pre>Gets a publisher connection.
+  name: string, Required. Name of the publisher whose connection information is to be retrieved. In the pattern `bidders/{bidder}/publisherConnections/{publisher}` where `{bidder}` is the account ID of the bidder, and `{publisher}` is the ads.txt/app-ads.txt publisher ID. See publisherConnection.name. (required)
+  <pre>Lists publisher connections for a given bidder.
+  parent: string, Required. Name of the bidder for which publishers have initiated connections. The pattern for this resource is `bidders/{bidder}` where `{bidder}` represents the account ID of the bidder. (required)
+  filter: string, Query string to filter publisher connections. Connections can be filtered by `displayName`, `publisherPlatform`, and `biddingState`. If no filter is specified, all publisher connections will be returned. Example: &#x27;displayName=&quot;Great Publisher*&quot; AND publisherPlatform=ADMOB AND biddingState != PENDING&#x27; See https://google.aip.dev/160 for more information about filtering syntax.
+  orderBy: string, Order specification by which results should be sorted. If no sort order is specified, the results will be returned in alphabetic order based on the publisher&#x27;s publisher code. Results can be sorted by `createTime`. Example: &#x27;createTime DESC&#x27;.
+  pageSize: integer, Requested page size. The server may return fewer results than requested (due to timeout constraint) even if more are available through another call. If unspecified, the server will pick an appropriate default. Acceptable values are 1 to 5000, inclusive.
+  pageToken: string, A token identifying a page of results the server should return. Typically, this is the value of ListPublisherConnectionsResponse.nextPageToken returned from the previous call to the &#x27;ListPublisherConnections&#x27; method.
+    { # A response to a request for listing publisher connections.
+  &quot;nextPageToken&quot;: &quot;A String&quot;, # A token to retrieve the next page of results. Pass this value in the ListPublisherConnectionsRequest.pageToken field in the subsequent call to the `ListPublisherConnections` method to retrieve the next page of results.
+  &quot;publisherConnections&quot;: [ # The list of publisher connections.

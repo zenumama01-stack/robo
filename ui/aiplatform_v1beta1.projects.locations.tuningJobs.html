@@ -1,0 +1,49 @@
+<h1><a href="aiplatform_v1beta1.html">Vertex AI API</a> . <a href="aiplatform_v1beta1.projects.html">projects</a> . <a href="aiplatform_v1beta1.projects.locations.html">locations</a> . <a href="aiplatform_v1beta1.projects.locations.tuningJobs.html">tuningJobs</a></h1>
+  <code><a href="aiplatform_v1beta1.projects.locations.tuningJobs.operations.html">operations()</a></code>
+  <code><a href="#optimizePrompt">optimizePrompt(parent, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Optimizes a prompt. Given a prompt, this method returns a stream of optimized prompts expanded from the original prompt.</p>
+  &quot;customBaseModel&quot;: &quot;A String&quot;, # Optional. The user-provided path to custom model weights. Set this field to tune a custom model. The path must be a Cloud Storage directory that contains the model weights in .safetensors format along with associated model metadata files. If this field is set, the base_model field must still be set to indicate which base model the custom model is derived from. This feature is only available for open source models.
+  &quot;distillationSamplingSpec&quot;: { # Spec for creating a distilled dataset in Vertex Dataset. # Optional. Spec for creating a distillation dataset.
+    &quot;baseTeacherModel&quot;: &quot;A String&quot;, # Optional. The base teacher model that is being distilled. See [Supported models](https://cloud.google.com/vertex-ai/generative-ai/docs/model-reference/tuning#supported_models).
+    &quot;tunedTeacherModelSource&quot;: &quot;A String&quot;, # Optional. The resource name of the Tuned teacher model. Format: `projects/{project}/locations/{location}/models/{model}`.
+    &quot;validationDatasetUri&quot;: &quot;A String&quot;, # Optional. Cloud Storage path to file containing validation dataset for distillation. The dataset must be formatted as a JSONL file.
+  &quot;distillationSpec&quot;: { # Tuning Spec for Distillation. # Tuning Spec for Distillation.
+    &quot;baseTeacherModel&quot;: &quot;A String&quot;, # The base teacher model that is being distilled. See [Supported models](https://cloud.google.com/vertex-ai/generative-ai/docs/model-reference/tuning#supported_models).
+    &quot;hyperParameters&quot;: { # Hyperparameters for Distillation. # Optional. Hyperparameters for Distillation.
+      &quot;adapterSize&quot;: &quot;A String&quot;, # Optional. Adapter size for distillation.
+      &quot;batchSize&quot;: &quot;A String&quot;, # Optional. Batch size for tuning. This feature is only available for open source models.
+      &quot;learningRate&quot;: 3.14, # Optional. Specifies the learning rate for tuning. Mutually exclusive with `learning_rate_multiplier`. This feature is only available for open source models.
+    &quot;pipelineRootDirectory&quot;: &quot;A String&quot;, # Deprecated. A path in a Cloud Storage bucket, which will be treated as the root output directory of the distillation pipeline. It is used by the system to generate the paths of output artifacts.
+    &quot;studentModel&quot;: &quot;A String&quot;, # The student model that is being tuned, e.g., &quot;google/gemma-2b-1.1-it&quot;. Deprecated. Use base_model instead.
+    &quot;trainingDatasetUri&quot;: &quot;A String&quot;, # Deprecated. Cloud Storage path to file containing training dataset for tuning. The dataset must be formatted as a JSONL file.
+    &quot;tunedTeacherModelSource&quot;: &quot;A String&quot;, # The resource name of the Tuned teacher model. Format: `projects/{project}/locations/{location}/models/{model}`.
+    &quot;tuningMode&quot;: &quot;A String&quot;, # Optional. Specifies the tuning mode for distillation (sft part). This feature is only available for open source models.
+    &quot;validationDatasetUri&quot;: &quot;A String&quot;, # Optional. Cloud Storage path to file containing validation dataset for tuning. The dataset must be formatted as a JSONL file.
+  &quot;fullFineTuningSpec&quot;: { # Tuning Spec for Full Fine Tuning. # Tuning Spec for Full Fine Tuning.
+    &quot;hyperParameters&quot;: { # Hyperparameters for SFT. # Optional. Hyperparameters for Full Fine Tuning.
+      &quot;learningRate&quot;: 3.14, # Optional. Learning rate for tuning. Mutually exclusive with `learning_rate_multiplier`. This feature is only available for open source models.
+  &quot;outputUri&quot;: &quot;A String&quot;, # Optional. Cloud Storage path to the directory where tuning job outputs are written to. This field is only available and required for open source models.
+  &quot;partnerModelTuningSpec&quot;: { # Tuning spec for Partner models. # Tuning Spec for open sourced and third party Partner models.
+    &quot;hyperParameters&quot;: { # Hyperparameters for tuning. The accepted hyper_parameters and their valid range of values will differ depending on the base model.
+    &quot;trainingDatasetUri&quot;: &quot;A String&quot;, # Required. Cloud Storage path to file containing training dataset for tuning. The dataset must be formatted as a JSONL file.
+  &quot;pipelineJob&quot;: &quot;A String&quot;, # Output only. The resource name of the PipelineJob associated with the TuningJob. Format: `projects/{project}/locations/{location}/pipelineJobs/{pipeline_job}`.
+    &quot;tuningMode&quot;: &quot;A String&quot;, # Tuning mode.
+    &quot;distillationDataStats&quot;: { # Statistics for distillation prompt dataset. These statistics do not include the responses sampled from the teacher model. # Output only. Statistics for distillation prompt dataset. These statistics do not include the responses sampled from the teacher model.
+      &quot;trainingDatasetStats&quot;: { # Statistics computed over a tuning dataset. # Output only. Statistics computed for the training dataset.
+        &quot;userMessagePerExampleDistribution&quot;: { # Distribution computed over a tuning dataset. # Output only. Dataset distributions for the messages per example.
+  &quot;tuningJobMetadata&quot;: { # Tuning job metadata. # Output only. Tuning Job metadata.
+    &quot;completedEpochCount&quot;: &quot;A String&quot;, # Output only. The number of epochs that have been completed.
+    &quot;completedStepCount&quot;: &quot;A String&quot;, # Output only. The number of steps that have been completed. Set for Multi-Step RL.
+  &quot;tuningJobState&quot;: &quot;A String&quot;, # Output only. The detail state of the tuning job (while the overall `JobState` is running).
+  &quot;veoTuningSpec&quot;: { # Tuning Spec for Veo Model Tuning. # Tuning Spec for Veo Tuning.
+    &quot;hyperParameters&quot;: { # Hyperparameters for Veo. # Optional. Hyperparameters for Veo.
+      &quot;tuningTask&quot;: &quot;A String&quot;, # Optional. The tuning task. Either I2V or T2V.
+      &quot;veoDataMixtureRatio&quot;: 3.14, # Optional. The ratio of Google internal dataset to use in the training mixture, in range of `[0, 1)`. If `0.2`, it means 20% of Google internal dataset and 80% of user dataset will be used for training. If not set, the default value is 0.1.
+    <code class="details" id="optimizePrompt">optimizePrompt(parent, body=None, x__xgafv=None)</code>
+  <pre>Optimizes a prompt. Given a prompt, this method returns a stream of optimized prompts expanded from the original prompt.
+  parent: string, Required. The resource name of the location to optimize the prompt in. Format: `projects/{project}/locations/{location}` (required)
+{ # Request message for GenAiTuningService.OptimizePrompt.
+  &quot;content&quot;: { # The structured data content of a message. A Content message contains a `role` field, which indicates the producer of the content, and a `parts` field, which contains the multi-part data of the message. # Required. The content of the prompt to optimize.
+  &quot;optimizationTarget&quot;: &quot;A String&quot;, # Optional. The optimization strategy to use.
+    { # Response message for GenAiTuningService.OptimizePrompt
+  &quot;content&quot;: { # The structured data content of a message. A Content message contains a `role` field, which indicates the producer of the content, and a `parts` field, which contains the multi-part data of the message. # Output only. The optimized prompt.

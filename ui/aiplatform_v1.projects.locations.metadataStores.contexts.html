@@ -1,0 +1,74 @@
+<h1><a href="aiplatform_v1.html">Vertex AI API</a> . <a href="aiplatform_v1.projects.html">projects</a> . <a href="aiplatform_v1.projects.locations.html">locations</a> . <a href="aiplatform_v1.projects.locations.metadataStores.html">metadataStores</a> . <a href="aiplatform_v1.projects.locations.metadataStores.contexts.html">contexts</a></h1>
+  <code><a href="aiplatform_v1.projects.locations.metadataStores.contexts.operations.html">operations()</a></code>
+  <code><a href="#addContextArtifactsAndExecutions">addContextArtifactsAndExecutions(context, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Adds a set of Artifacts and Executions to a Context. If any of the Artifacts or Executions have already been added to a Context, they are simply skipped.</p>
+  <code><a href="#addContextChildren">addContextChildren(context, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Adds a set of Contexts as children to a parent Context. If any of the child Contexts have already been added to the parent Context, they are simply skipped. If this call would create a cycle or cause any Context to have more than 10 parents, the request will fail with an INVALID_ARGUMENT error.</p>
+  <code><a href="#create">create(parent, body=None, contextId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Creates a Context associated with a MetadataStore.</p>
+  <code><a href="#delete">delete(name, etag=None, force=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Deletes a stored Context.</p>
+<p class="firstline">Retrieves a specific Context.</p>
+<p class="firstline">Lists Contexts on the MetadataStore.</p>
+<p class="firstline">Updates a stored Context.</p>
+<p class="firstline">Purges Contexts.</p>
+  <code><a href="#queryContextLineageSubgraph">queryContextLineageSubgraph(context, x__xgafv=None)</a></code></p>
+<p class="firstline">Retrieves Artifacts and Executions within the specified Context, connected by Event edges and returned as a LineageSubgraph.</p>
+  <code><a href="#removeContextChildren">removeContextChildren(context, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Remove a set of children contexts from a parent Context. If any of the child Contexts were NOT added to the parent Context, they are simply skipped.</p>
+    <code class="details" id="addContextArtifactsAndExecutions">addContextArtifactsAndExecutions(context, body=None, x__xgafv=None)</code>
+  <pre>Adds a set of Artifacts and Executions to a Context. If any of the Artifacts or Executions have already been added to a Context, they are simply skipped.
+  context: string, Required. The resource name of the Context that the Artifacts and Executions belong to. Format: `projects/{project}/locations/{location}/metadataStores/{metadatastore}/contexts/{context}` (required)
+{ # Request message for MetadataService.AddContextArtifactsAndExecutions.
+  &quot;artifacts&quot;: [ # The resource names of the Artifacts to attribute to the Context. Format: `projects/{project}/locations/{location}/metadataStores/{metadatastore}/artifacts/{artifact}`
+  &quot;executions&quot;: [ # The resource names of the Executions to associate with the Context. Format: `projects/{project}/locations/{location}/metadataStores/{metadatastore}/executions/{execution}`
+    { # Response message for MetadataService.AddContextArtifactsAndExecutions.
+    <code class="details" id="addContextChildren">addContextChildren(context, body=None, x__xgafv=None)</code>
+  <pre>Adds a set of Contexts as children to a parent Context. If any of the child Contexts have already been added to the parent Context, they are simply skipped. If this call would create a cycle or cause any Context to have more than 10 parents, the request will fail with an INVALID_ARGUMENT error.
+  context: string, Required. The resource name of the parent Context. Format: `projects/{project}/locations/{location}/metadataStores/{metadatastore}/contexts/{context}` (required)
+{ # Request message for MetadataService.AddContextChildren.
+  &quot;childContexts&quot;: [ # The resource names of the child Contexts.
+    { # Response message for MetadataService.AddContextChildren.
+    <code class="details" id="create">create(parent, body=None, contextId=None, x__xgafv=None)</code>
+  <pre>Creates a Context associated with a MetadataStore.
+  parent: string, Required. The resource name of the MetadataStore where the Context should be created. Format: `projects/{project}/locations/{location}/metadataStores/{metadatastore}` (required)
+{ # Instance of a general context.
+  &quot;createTime&quot;: &quot;A String&quot;, # Output only. Timestamp when this Context was created.
+  &quot;description&quot;: &quot;A String&quot;, # Description of the Context
+  &quot;displayName&quot;: &quot;A String&quot;, # User provided display name of the Context. May be up to 128 Unicode characters.
+  &quot;labels&quot;: { # The labels with user-defined metadata to organize your Contexts. Label keys and values can be no longer than 64 characters (Unicode codepoints), can only contain lowercase letters, numeric characters, underscores and dashes. International characters are allowed. No more than 64 user labels can be associated with one Context (System labels are excluded).
+  &quot;metadata&quot;: { # Properties of the Context. Top level metadata keys&#x27; heading and trailing spaces will be trimmed. The size of this field should not exceed 200KB.
+  &quot;name&quot;: &quot;A String&quot;, # Immutable. The resource name of the Context.
+  &quot;parentContexts&quot;: [ # Output only. A list of resource names of Contexts that are parents of this Context. A Context may have at most 10 parent_contexts.
+  &quot;updateTime&quot;: &quot;A String&quot;, # Output only. Timestamp when this Context was last updated.
+  contextId: string, The {context} portion of the resource name with the format: `projects/{project}/locations/{location}/metadataStores/{metadatastore}/contexts/{context}`. If not provided, the Context&#x27;s ID will be a UUID generated by the service. Must be 4-128 characters in length. Valid characters are `/a-z-/`. Must be unique across all Contexts in the parent MetadataStore. (Otherwise the request will fail with ALREADY_EXISTS, or PERMISSION_DENIED if the caller can&#x27;t view the preexisting Context.)
+    <code class="details" id="delete">delete(name, etag=None, force=None, x__xgafv=None)</code>
+  <pre>Deletes a stored Context.
+  name: string, Required. The resource name of the Context to delete. Format: `projects/{project}/locations/{location}/metadataStores/{metadatastore}/contexts/{context}` (required)
+  etag: string, Optional. The etag of the Context to delete. If this is provided, it must match the server&#x27;s etag. Otherwise, the request will fail with a FAILED_PRECONDITION.
+  force: boolean, The force deletion semantics is still undefined. Users should not use this field.
+  <pre>Retrieves a specific Context.
+  name: string, Required. The resource name of the Context to retrieve. Format: `projects/{project}/locations/{location}/metadataStores/{metadatastore}/contexts/{context}` (required)
+  <pre>Lists Contexts on the MetadataStore.
+  parent: string, Required. The MetadataStore whose Contexts should be listed. Format: `projects/{project}/locations/{location}/metadataStores/{metadatastore}` (required)
+  filter: string, Filter specifying the boolean condition for the Contexts to satisfy in order to be part of the result set. The syntax to define filter query is based on https://google.aip.dev/160. Following are the supported set of filters: * **Attribute filtering**: For example: `display_name = &quot;test&quot;`. Supported fields include: `name`, `display_name`, `schema_title`, `create_time`, and `update_time`. Time fields, such as `create_time` and `update_time`, require values specified in RFC-3339 format. For example: `create_time = &quot;2020-11-19T11:30:00-04:00&quot;`. * **Metadata field**: To filter on metadata fields use traversal operation as follows: `metadata..`. For example: `metadata.field_1.number_value = 10.0`. In case the field name contains special characters (such as colon), one can embed it inside double quote. For example: `metadata.&quot;field:1&quot;.number_value = 10.0` * **Parent Child filtering**: To filter Contexts based on parent-child relationship use the HAS operator as follows: ``` parent_contexts: &quot;projects//locations//metadataStores//contexts/&quot; child_contexts: &quot;projects//locations//metadataStores//contexts/&quot; ``` Each of the above supported filters can be combined together using logical operators (`AND` &amp; `OR`). Maximum nested expression depth allowed is 5. For example: `display_name = &quot;test&quot; AND metadata.field1.bool_value = true`.
+  pageSize: integer, The maximum number of Contexts to return. The service may return fewer. Must be in range 1-100, inclusive. Defaults to 100.
+  pageToken: string, A page token, received from a previous MetadataService.ListContexts call. Provide this to retrieve the subsequent page. When paginating, all other provided parameters must match the call that provided the page token. (Otherwise the request will fail with INVALID_ARGUMENT error.)
+    { # Response message for MetadataService.ListContexts.
+  &quot;contexts&quot;: [ # The Contexts retrieved from the MetadataStore.
+  &quot;nextPageToken&quot;: &quot;A String&quot;, # A token, which can be sent as ListContextsRequest.page_token to retrieve the next page. If this field is not populated, there are no subsequent pages.
+  <pre>Updates a stored Context.
+  name: string, Immutable. The resource name of the Context. (required)
+  allowMissing: boolean, If set to true, and the Context is not found, a new Context is created.
+  <pre>Purges Contexts.
+  parent: string, Required. The metadata store to purge Contexts from. Format: `projects/{project}/locations/{location}/metadataStores/{metadatastore}` (required)
+{ # Request message for MetadataService.PurgeContexts.
+  &quot;filter&quot;: &quot;A String&quot;, # Required. A required filter matching the Contexts to be purged. E.g., `update_time &lt;= 2020-11-19T11:30:00-04:00`.
+  &quot;force&quot;: True or False, # Optional. Flag to indicate to actually perform the purge. If `force` is set to false, the method will return a sample of Context names that would be deleted.
+    <code class="details" id="queryContextLineageSubgraph">queryContextLineageSubgraph(context, x__xgafv=None)</code>
+  <pre>Retrieves Artifacts and Executions within the specified Context, connected by Event edges and returned as a LineageSubgraph.
+  context: string, Required. The resource name of the Context whose Artifacts and Executions should be retrieved as a LineageSubgraph. Format: `projects/{project}/locations/{location}/metadataStores/{metadatastore}/contexts/{context}` The request may error with FAILED_PRECONDITION if the number of Artifacts, the number of Executions, or the number of Events that would be returned for the Context exceeds 1000. (required)
+    <code class="details" id="removeContextChildren">removeContextChildren(context, body=None, x__xgafv=None)</code>
+  <pre>Remove a set of children contexts from a parent Context. If any of the child Contexts were NOT added to the parent Context, they are simply skipped.
+{ # Request message for MetadataService.DeleteContextChildrenRequest.
+    { # Response message for MetadataService.RemoveContextChildren.

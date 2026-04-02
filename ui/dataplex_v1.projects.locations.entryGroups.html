@@ -1,0 +1,34 @@
+<h1><a href="dataplex_v1.html">Cloud Dataplex API</a> . <a href="dataplex_v1.projects.html">projects</a> . <a href="dataplex_v1.projects.locations.html">locations</a> . <a href="dataplex_v1.projects.locations.entryGroups.html">entryGroups</a></h1>
+  <code><a href="dataplex_v1.projects.locations.entryGroups.entries.html">entries()</a></code>
+  <code><a href="dataplex_v1.projects.locations.entryGroups.entryLinks.html">entryLinks()</a></code>
+<p class="firstline">Returns the entryLinks Resource.</p>
+  <code><a href="#create">create(parent, body=None, entryGroupId=None, validateOnly=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Creates an EntryGroup.</p>
+<p class="firstline">Deletes an EntryGroup.</p>
+<p class="firstline">Lists EntryGroup resources in a project and location.</p>
+<p class="firstline">Updates an EntryGroup.</p>
+    <code class="details" id="create">create(parent, body=None, entryGroupId=None, validateOnly=None, x__xgafv=None)</code>
+  <pre>Creates an EntryGroup.
+  parent: string, Required. The resource name of the entryGroup, of the form: projects/{project_number}/locations/{location_id} where location_id refers to a Google Cloud region. (required)
+{ # An Entry Group represents a logical grouping of one or more Entries.
+  &quot;createTime&quot;: &quot;A String&quot;, # Output only. The time when the EntryGroup was created.
+  &quot;description&quot;: &quot;A String&quot;, # Optional. Description of the EntryGroup.
+  &quot;etag&quot;: &quot;A String&quot;, # This checksum is computed by the service, and might be sent on update and delete requests to ensure the client has an up-to-date value before proceeding.
+  &quot;labels&quot;: { # Optional. User-defined labels for the EntryGroup.
+  &quot;name&quot;: &quot;A String&quot;, # Output only. The relative resource name of the EntryGroup, in the format projects/{project_id_or_number}/locations/{location_id}/entryGroups/{entry_group_id}.
+  &quot;transferStatus&quot;: &quot;A String&quot;, # Output only. Denotes the transfer status of the Entry Group. It is unspecified for Entry Group created from Dataplex API.
+  &quot;uid&quot;: &quot;A String&quot;, # Output only. System generated globally unique ID for the EntryGroup. If you delete and recreate the EntryGroup with the same name, this ID will be different.
+  &quot;updateTime&quot;: &quot;A String&quot;, # Output only. The time when the EntryGroup was last updated.
+  entryGroupId: string, Required. EntryGroup identifier.
+  <pre>Deletes an EntryGroup.
+  name: string, Required. The resource name of the EntryGroup: projects/{project_number}/locations/{location_id}/entryGroups/{entry_group_id}. (required)
+  etag: string, Optional. If the client provided etag value does not match the current etag value, the DeleteEntryGroupRequest method returns an ABORTED error response.
+  <pre>Lists EntryGroup resources in a project and location.
+  parent: string, Required. The resource name of the entryGroup location, of the form: projects/{project_number}/locations/{location_id} where location_id refers to a Google Cloud region. (required)
+  pageSize: integer, Optional. Maximum number of EntryGroups to return. The service may return fewer than this value. If unspecified, the service returns at most 10 EntryGroups. The maximum value is 1000; values above 1000 will be coerced to 1000.
+  pageToken: string, Optional. Page token received from a previous ListEntryGroups call. Provide this to retrieve the subsequent page. When paginating, all other parameters you provide to ListEntryGroups must match the call that provided the page token.
+    { # List entry groups response.
+  &quot;entryGroups&quot;: [ # Entry groups under the given parent location.
+  <pre>Updates an EntryGroup.
+  name: string, Output only. The relative resource name of the EntryGroup, in the format projects/{project_id_or_number}/locations/{location_id}/entryGroups/{entry_group_id}. (required)
+  validateOnly: boolean, Optional. The service validates the request, without performing any mutations. The default is false.

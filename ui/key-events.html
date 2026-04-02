@@ -1,0 +1,7 @@
+<input type="text" id="input" autofocus/>
+document.onkeydown = function (e) {
+  ipcRenderer.send('keydown', e.key, e.code, e.keyCode, e.shiftKey, e.ctrlKey, e.altKey)
+document.onkeypress = function (e) {
+  ipcRenderer.send('keypress', e.key, e.code, e.keyCode, e.shiftKey, e.ctrlKey, e.altKey)
+document.onkeyup = function (e) {
+  ipcRenderer.send('keyup', e.key, e.code, e.keyCode, e.shiftKey, e.ctrlKey, e.altKey)

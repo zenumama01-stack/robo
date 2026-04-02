@@ -1,0 +1,40 @@
+<h1><a href="testing_v1.html">Cloud Testing API</a> . <a href="testing_v1.projects.html">projects</a> . <a href="testing_v1.projects.deviceSessions.html">deviceSessions</a></h1>
+<p class="firstline">POST /v1/projects/{project_id}/deviceSessions/{device_session_id}:cancel Changes the DeviceSession to state FINISHED and terminates all connections. Canceled sessions are not deleted and can be retrieved or listed by the user until they expire based on the 28 day deletion policy.</p>
+<p class="firstline">POST /v1/projects/{project_id}/deviceSessions</p>
+<p class="firstline">GET /v1/projects/{project_id}/deviceSessions/{device_session_id} Return a DeviceSession, which documents the allocation status and whether the device is allocated. Clients making requests from this API must poll GetDeviceSession.</p>
+<p class="firstline">GET /v1/projects/{project_id}/deviceSessions Lists device Sessions owned by the project user.</p>
+<p class="firstline">PATCH /v1/projects/{projectId}/deviceSessions/deviceSessionId}:updateDeviceSession Updates the current device session to the fields described by the update_mask.</p>
+  <pre>POST /v1/projects/{project_id}/deviceSessions/{device_session_id}:cancel Changes the DeviceSession to state FINISHED and terminates all connections. Canceled sessions are not deleted and can be retrieved or listed by the user until they expire based on the 28 day deletion policy.
+  name: string, Required. Name of the DeviceSession, e.g. &quot;projects/{project_id}/deviceSessions/{session_id}&quot; (required)
+{ # The request object for cancelling a Device Session.
+  <pre>POST /v1/projects/{project_id}/deviceSessions
+  parent: string, Required. The Compute Engine project under which this device will be allocated. &quot;projects/{project_id}&quot; (required)
+{ # Protobuf message describing the device message, used from several RPCs.
+  &quot;activeStartTime&quot;: &quot;A String&quot;, # Output only. The timestamp that the session first became ACTIVE.
+  &quot;androidDevice&quot;: { # A single Android device. # Required. The requested device
+    &quot;androidModelId&quot;: &quot;A String&quot;, # Required. The id of the Android device to be used. Use the TestEnvironmentDiscoveryService to get supported options.
+    &quot;androidVersionId&quot;: &quot;A String&quot;, # Required. The id of the Android OS version to be used. Use the TestEnvironmentDiscoveryService to get supported options.
+    &quot;locale&quot;: &quot;A String&quot;, # Required. The locale the test device used for testing. Use the TestEnvironmentDiscoveryService to get supported options.
+    &quot;orientation&quot;: &quot;A String&quot;, # Required. How the device is oriented during the test. Use the TestEnvironmentDiscoveryService to get supported options.
+  &quot;createTime&quot;: &quot;A String&quot;, # Output only. The time that the Session was created.
+  &quot;displayName&quot;: &quot;A String&quot;, # Output only. The title of the DeviceSession to be presented in the UI.
+  &quot;expireTime&quot;: &quot;A String&quot;, # Optional. If the device is still in use at this time, any connections will be ended and the SessionState will transition from ACTIVE to FINISHED.
+  &quot;inactivityTimeout&quot;: &quot;A String&quot;, # Output only. The interval of time that this device must be interacted with before it transitions from ACTIVE to TIMEOUT_INACTIVITY.
+  &quot;name&quot;: &quot;A String&quot;, # Optional. Name of the DeviceSession, e.g. &quot;projects/{project_id}/deviceSessions/{session_id}&quot;
+  &quot;state&quot;: &quot;A String&quot;, # Output only. Current state of the DeviceSession.
+  &quot;stateHistories&quot;: [ # Output only. The historical state transitions of the session_state message including the current session state.
+    { # A message encapsulating a series of Session states and the time that the DeviceSession first entered those states.
+      &quot;eventTime&quot;: &quot;A String&quot;, # Output only. The time that the session_state first encountered that state.
+      &quot;sessionState&quot;: &quot;A String&quot;, # Output only. The session_state tracked by this event
+      &quot;stateMessage&quot;: &quot;A String&quot;, # Output only. A human-readable message to explain the state.
+  &quot;ttl&quot;: &quot;A String&quot;, # Optional. The amount of time that a device will be initially allocated for. This can eventually be extended with the UpdateDeviceSession RPC. Default: 15 minutes.
+  <pre>GET /v1/projects/{project_id}/deviceSessions/{device_session_id} Return a DeviceSession, which documents the allocation status and whether the device is allocated. Clients making requests from this API must poll GetDeviceSession.
+  <pre>GET /v1/projects/{project_id}/deviceSessions Lists device Sessions owned by the project user.
+  parent: string, Required. The name of the parent to request, e.g. &quot;projects/{project_id}&quot; (required)
+  filter: string, Optional. If specified, responses will be filtered by the given filter. Allowed fields are: session_state.
+  pageSize: integer, Optional. The maximum number of DeviceSessions to return.
+  pageToken: string, Optional. A continuation token for paging.
+    { # A list of device sessions.
+  &quot;deviceSessions&quot;: [ # The sessions matching the specified filter in the given cloud project.
+  <pre>PATCH /v1/projects/{projectId}/deviceSessions/deviceSessionId}:updateDeviceSession Updates the current device session to the fields described by the update_mask.
+  name: string, Optional. Name of the DeviceSession, e.g. &quot;projects/{project_id}/deviceSessions/{session_id}&quot; (required)

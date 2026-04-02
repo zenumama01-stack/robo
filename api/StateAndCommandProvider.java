@@ -1,0 +1,41 @@
+ * This is a class which provides all available states and commands (obviously only the enum-based ones with a fixed
+ * name).
+ * A future version might gather the sets through an extension mechanism, for the moment it is simply statically coded.
+public class StateAndCommandProvider {
+    protected static final Set<Command> COMMANDS = new HashSet<>();
+    protected static final Set<State> STATES = new HashSet<>();
+    protected static final Set<Type> TYPES = new HashSet<>();
+        COMMANDS.add(OnOffType.ON);
+        COMMANDS.add(OnOffType.OFF);
+        COMMANDS.add(UpDownType.UP);
+        COMMANDS.add(UpDownType.DOWN);
+        COMMANDS.add(IncreaseDecreaseType.INCREASE);
+        COMMANDS.add(IncreaseDecreaseType.DECREASE);
+        COMMANDS.add(StopMoveType.STOP);
+        COMMANDS.add(StopMoveType.MOVE);
+        COMMANDS.add(PlayPauseType.PLAY);
+        COMMANDS.add(PlayPauseType.PAUSE);
+        COMMANDS.add(NextPreviousType.NEXT);
+        COMMANDS.add(NextPreviousType.PREVIOUS);
+        COMMANDS.add(RewindFastforwardType.REWIND);
+        COMMANDS.add(RewindFastforwardType.FASTFORWARD);
+        COMMANDS.add(RefreshType.REFRESH);
+        STATES.add(UnDefType.UNDEF);
+        STATES.add(UnDefType.NULL);
+        STATES.add(OnOffType.ON);
+        STATES.add(OnOffType.OFF);
+        STATES.add(UpDownType.UP);
+        STATES.add(UpDownType.DOWN);
+        STATES.add(OpenClosedType.OPEN);
+        STATES.add(OpenClosedType.CLOSED);
+        STATES.add(PlayPauseType.PLAY);
+        STATES.add(PlayPauseType.PAUSE);
+        STATES.add(RewindFastforwardType.REWIND);
+        STATES.add(RewindFastforwardType.FASTFORWARD);
+        TYPES.addAll(COMMANDS);
+        TYPES.addAll(STATES);
+    static public Iterable<Type> getAllTypes() {
+    static public Iterable<Command> getAllCommands() {
+        return COMMANDS;
+    static public Iterable<State> getAllStates() {
+        return STATES;

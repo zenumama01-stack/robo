@@ -1,0 +1,54 @@
+<h1><a href="dataflow_v1b3.html">Dataflow API</a> . <a href="dataflow_v1b3.projects.html">projects</a> . <a href="dataflow_v1b3.projects.locations.html">locations</a> . <a href="dataflow_v1b3.projects.locations.templates.html">templates</a></h1>
+  <code><a href="#create">create(projectId, location, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Creates a Cloud Dataflow job from a template. Do not enter confidential information when you supply string values using the API. To create a job, we recommend using `projects.locations.templates.create` with a [regional endpoint] (https://cloud.google.com/dataflow/docs/concepts/regional-endpoints). Using `projects.templates.create` is not recommended, because your job will always start in `us-central1`.</p>
+  <code><a href="#get">get(projectId, location, gcsPath=None, view=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Get the template associated with a template. To get the template, we recommend using `projects.locations.templates.get` with a [regional endpoint] (https://cloud.google.com/dataflow/docs/concepts/regional-endpoints). Using `projects.templates.get` is not recommended, because only templates that are running in `us-central1` are retrieved.</p>
+  <code><a href="#launch">launch(projectId, location, body=None, dynamicTemplate_gcsPath=None, dynamicTemplate_stagingLocation=None, gcsPath=None, validateOnly=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Launches a template. To launch a template, we recommend using `projects.locations.templates.launch` with a [regional endpoint] (https://cloud.google.com/dataflow/docs/concepts/regional-endpoints). Using `projects.templates.launch` is not recommended, because jobs launched from the template will always start in `us-central1`.</p>
+    <code class="details" id="create">create(projectId, location, body=None, x__xgafv=None)</code>
+  <pre>Creates a Cloud Dataflow job from a template. Do not enter confidential information when you supply string values using the API. To create a job, we recommend using `projects.locations.templates.create` with a [regional endpoint] (https://cloud.google.com/dataflow/docs/concepts/regional-endpoints). Using `projects.templates.create` is not recommended, because your job will always start in `us-central1`.
+{ # A request to create a Cloud Dataflow job from a template.
+  &quot;environment&quot;: { # The environment values to set at runtime. # The runtime environment for the job.
+    &quot;additionalExperiments&quot;: [ # Optional. Additional experiment flags for the job, specified with the `--experiments` option.
+    &quot;additionalUserLabels&quot;: { # Optional. Additional user labels to be specified for the job. Keys and values should follow the restrictions specified in the [labeling restrictions](https://cloud.google.com/compute/docs/labeling-resources#restrictions) page. An object containing a list of &quot;key&quot;: value pairs. Example: { &quot;name&quot;: &quot;wrench&quot;, &quot;mass&quot;: &quot;1kg&quot;, &quot;count&quot;: &quot;3&quot; }.
+    &quot;bypassTempDirValidation&quot;: True or False, # Optional. Whether to bypass the safety checks for the job&#x27;s temporary directory. Use with caution.
+    &quot;diskSizeGb&quot;: 42, # Optional. The disk size, in gigabytes, to use on each remote Compute Engine worker instance.
+    &quot;enableStreamingEngine&quot;: True or False, # Optional. Whether to enable Streaming Engine for the job.
+    &quot;ipConfiguration&quot;: &quot;A String&quot;, # Optional. Configuration for VM IPs.
+    &quot;kmsKeyName&quot;: &quot;A String&quot;, # Optional. Name for the Cloud KMS key for the job. Key format is: projects//locations//keyRings//cryptoKeys/
+    &quot;machineType&quot;: &quot;A String&quot;, # Optional. The machine type to use for the job. Defaults to the value from the template if not specified.
+    &quot;maxWorkers&quot;: 42, # Optional. The maximum number of Google Compute Engine instances to be made available to your pipeline during execution, from 1 to 1000. The default value is 1.
+    &quot;network&quot;: &quot;A String&quot;, # Optional. Network to which VMs will be assigned. If empty or unspecified, the service will use the network &quot;default&quot;.
+    &quot;numWorkers&quot;: 42, # Optional. The initial number of Google Compute Engine instances for the job. The default value is 11.
+    &quot;serviceAccountEmail&quot;: &quot;A String&quot;, # Optional. The email address of the service account to run the job as.
+    &quot;subnetwork&quot;: &quot;A String&quot;, # Optional. Subnetwork to which VMs will be assigned, if desired. You can specify a subnetwork using either a complete URL or an abbreviated path. Expected to be of the form &quot;https://www.googleapis.com/compute/v1/projects/HOST_PROJECT_ID/regions/REGION/subnetworks/SUBNETWORK&quot; or &quot;regions/REGION/subnetworks/SUBNETWORK&quot;. If the subnetwork is located in a Shared VPC network, you must use the complete URL.
+    &quot;tempLocation&quot;: &quot;A String&quot;, # Required. The Cloud Storage path to use for temporary files. Must be a valid Cloud Storage URL, beginning with `gs://`.
+    &quot;workerRegion&quot;: &quot;A String&quot;, # Required. The Compute Engine region (https://cloud.google.com/compute/docs/regions-zones/regions-zones) in which worker processing should occur, e.g. &quot;us-west1&quot;. Mutually exclusive with worker_zone. If neither worker_region nor worker_zone is specified, default to the control plane&#x27;s region.
+    &quot;workerZone&quot;: &quot;A String&quot;, # Optional. The Compute Engine zone (https://cloud.google.com/compute/docs/regions-zones/regions-zones) in which worker processing should occur, e.g. &quot;us-west1-a&quot;. Mutually exclusive with worker_region. If neither worker_region nor worker_zone is specified, a zone in the control plane&#x27;s region is chosen based on available capacity. If both `worker_zone` and `zone` are set, `worker_zone` takes precedence.
+    &quot;zone&quot;: &quot;A String&quot;, # Optional. The Compute Engine [availability zone](https://cloud.google.com/compute/docs/regions-zones/regions-zones) for launching worker instances to run your pipeline. In the future, worker_zone will take precedence.
+  &quot;gcsPath&quot;: &quot;A String&quot;, # Required. A Cloud Storage path to the template from which to create the job. Must be a valid Cloud Storage URL, beginning with `gs://`.
+  &quot;jobName&quot;: &quot;A String&quot;, # Required. The job name to use for the created job.
+  &quot;location&quot;: &quot;A String&quot;, # The [regional endpoint] (https://cloud.google.com/dataflow/docs/concepts/regional-endpoints) to which to direct the request.
+  &quot;parameters&quot;: { # The runtime parameters to pass to the job.
+    <code class="details" id="get">get(projectId, location, gcsPath=None, view=None, x__xgafv=None)</code>
+  <pre>Get the template associated with a template. To get the template, we recommend using `projects.locations.templates.get` with a [regional endpoint] (https://cloud.google.com/dataflow/docs/concepts/regional-endpoints). Using `projects.templates.get` is not recommended, because only templates that are running in `us-central1` are retrieved.
+  gcsPath: string, Required. A Cloud Storage path to the template from which to create the job. Must be valid Cloud Storage URL, beginning with &#x27;gs://&#x27;.
+  view: string, The view to retrieve. Defaults to METADATA_ONLY.
+      METADATA_ONLY - Template view that retrieves only the metadata associated with the template.
+    { # The response to a GetTemplate request.
+  &quot;metadata&quot;: { # Metadata describing a template. # The template metadata describing the template name, available parameters, etc.
+  &quot;runtimeMetadata&quot;: { # RuntimeMetadata describing a runtime environment. # Describes the runtime metadata with SDKInfo and available parameters.
+    &quot;sdkInfo&quot;: { # SDK Information. # SDK Info for the template.
+  &quot;status&quot;: { # The `Status` type defines a logical error model that is suitable for different programming environments, including REST APIs and RPC APIs. It is used by [gRPC](https://github.com/grpc). Each `Status` message contains three pieces of data: error code, error message, and error details. You can find out more about this error model and how to work with it in the [API Design Guide](https://cloud.google.com/apis/design/errors). # The status of the get template request. Any problems with the request will be indicated in the error_details.
+  &quot;templateType&quot;: &quot;A String&quot;, # Template Type.
+    <code class="details" id="launch">launch(projectId, location, body=None, dynamicTemplate_gcsPath=None, dynamicTemplate_stagingLocation=None, gcsPath=None, validateOnly=None, x__xgafv=None)</code>
+  <pre>Launches a template. To launch a template, we recommend using `projects.locations.templates.launch` with a [regional endpoint] (https://cloud.google.com/dataflow/docs/concepts/regional-endpoints). Using `projects.templates.launch` is not recommended, because jobs launched from the template will always start in `us-central1`.
+{ # Parameters to provide to the template being launched. Note that the [metadata in the pipeline code] (https://cloud.google.com/dataflow/docs/guides/templates/creating-templates#metadata) determines which runtime parameters are valid.
+  &quot;jobName&quot;: &quot;A String&quot;, # Required. The job name to use for the created job. The name must match the regular expression `[a-z]([-a-z0-9]{0,1022}[a-z0-9])?`
+  &quot;transformNameMapping&quot;: { # Only applicable when updating a pipeline. Map of transform name prefixes of the job to be replaced to the corresponding name prefixes of the new job.
+  &quot;update&quot;: True or False, # If set, replace the existing pipeline with the name specified by jobName with this pipeline, preserving state.
+  dynamicTemplate_gcsPath: string, Path to the dynamic template specification file on Cloud Storage. The file must be a JSON serialized `DynamicTemplateFileSpec` object.
+  dynamicTemplate_stagingLocation: string, Cloud Storage path for staging dependencies. Must be a valid Cloud Storage URL, beginning with `gs://`.
+  gcsPath: string, A Cloud Storage path to the template to use to create the job. Must be valid Cloud Storage URL, beginning with `gs://`.
+  validateOnly: boolean, If true, the request is validated but not actually executed. Defaults to false.
+    { # Response to the request to launch a template.

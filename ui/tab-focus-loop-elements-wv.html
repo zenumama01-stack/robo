@@ -1,0 +1,8 @@
+      <button id="wv-element-1">Button 1</button>
+      <button id="wv-element-2">Button 2</button>
+      function handleFocusChange(event) {
+        if (event.target.tagName) {
+          const elementId = event.target.id ? `-${event.target.id}` : ''
+          const elementIdentifier = `${event.target.tagName}${elementId}`
+          ipcRenderer.send('focus-changed', elementIdentifier)
+      addEventListener('focus', handleFocusChange, true)

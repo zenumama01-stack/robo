@@ -1,0 +1,47 @@
+@if (IsOpen) {
+  <div class="panel-backdrop" (click)="onBackdropClick($event)">
+    <div class="slide-panel" @slideIn>
+        <h2>
+          (click)="onClose()">
+        @if (Errors['general']) {
+          <div class="error-banner">
+            {{ Errors['general'] }}
+        <!-- Action Type Selection -->
+          <label class="form-label required">Action Type</label>
+          <div class="type-selector">
+            @for (option of TypeOptions; track option.value) {
+              <button class="type-option"
+                [class.selected]="Type === option.value"
+                (click)="selectType(option.value)">
+                <div class="type-icon">
+                <div class="type-info">
+                  <span class="type-label">{{ option.label }}</span>
+                  <span class="type-description">{{ option.description }}</span>
+                @if (Type === option.value) {
+                  <i class="fa-solid fa-check check-icon"></i>
+          <label for="actionName" class="form-label required">
+            Action Name
+            id="actionName"
+            [(ngModel)]="Name"
+            [placeholder]="'Enter action name'"
+            [maxlength]="425"
+            [class.invalid]="Errors['name']">
+          @if (Errors['name']) {
+            <span class="error-text">{{ Errors['name'] }}</span>
+          <label for="actionDescription" class="form-label">
+            id="actionDescription"
+            [(ngModel)]="Description"
+            [placeholder]="'Describe what this action does'"
+            [rows]="3">
+          <label for="actionCategory" class="form-label required">
+            id="actionCategory"
+            [(ngModel)]="CategoryID"
+            [data]="getCategoryOptions()"
+            [class.invalid]="Errors['category']">
+          @if (Errors['category']) {
+            <span class="error-text">{{ Errors['category'] }}</span>
+        <div class="info-box">
+            After creating the action, you'll be taken to the full action editor
+            where you can configure parameters, code, and other settings.
+      <div class="panel-footer">
+          (click)="onSave()">

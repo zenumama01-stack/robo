@@ -1,0 +1,20 @@
+    <!-- Run Identification Section -->
+        SectionKey="runIdentification"
+        SectionName="Run Identification"
+            FieldName="DuplicateRunID"
+    <!-- Processing Outcomes Section -->
+        SectionKey="processingOutcomes"
+        SectionName="Processing Outcomes"
+            FieldName="MatchStatus"
+            FieldName="SkippedReason"
+            FieldName="MatchErrorMessage"
+            FieldName="MergeStatus"
+            FieldName="MergeErrorMessage"
+    <!-- Duplicate Run Detail Matches Section -->
+        SectionKey="duplicateRunDetailMatches"
+        SectionName="Duplicate Run Detail Matches"
+        [BadgeCount]="GetSectionRowCount('duplicateRunDetailMatches')"
+                [Params]="BuildRelationshipViewParamsByEntityName('MJ: Duplicate Run Detail Matches','DuplicateRunDetailID')"
+                [NewRecordValues]="NewRecordValues('MJ: Duplicate Run Detail Matches')"
+                [AllowLoad]="IsSectionExpanded('duplicateRunDetailMatches')"
+                (AfterDataLoad)="SetSectionRowCount('duplicateRunDetailMatches', $event.totalRowCount)"

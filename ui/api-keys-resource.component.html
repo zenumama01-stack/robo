@@ -1,0 +1,217 @@
+<div class="api-keys-dashboard" [class.panel-open]="ShowCreateDialog || ShowEditPanel" [class.nav-open]="NavOpen">
+    <mj-loading text="Loading API Keys..."></mj-loading>
+    <!-- Left Navigation Sidebar -->
+    <div class="dashboard-nav">
+      <div class="nav-header">
+        <div class="nav-title">
+          <span>API Keys</span>
+      <div class="nav-items">
+        <button class="nav-item" [class.active]="MainTab === 'keys'" (click)="switchTab('keys'); closeNav()">
+          <span class="nav-label">API Keys</span>
+          <span class="nav-badge">{{TotalKeys}}</span>
+        <button class="nav-item" [class.active]="MainTab === 'applications'" (click)="switchTab('applications'); closeNav()">
+          <span class="nav-label">Applications</span>
+          <span class="nav-badge">{{ApplicationCount}}</span>
+        <button class="nav-item" [class.active]="MainTab === 'scopes'" (click)="switchTab('scopes'); closeNav()">
+          <span class="nav-label">Scopes</span>
+          <span class="nav-badge">{{ScopeCount}}</span>
+        <button class="nav-item" [class.active]="MainTab === 'usage'" (click)="switchTab('usage'); closeNav()">
+          <span class="nav-label">Usage Analytics</span>
+    <div class="dashboard-content">
+      <div class="content-wrapper">
+        <!-- Keys Tab Content -->
+        @if (MainTab === 'keys') {
+          <!-- Overview View -->
+          @if (CurrentView === 'overview') {
+            <!-- Header with Actions -->
+            <div class="overview-header">
+                <h2 class="overview-title">API Keys Management</h2>
+                <p class="overview-subtitle">Manage API keys for external integrations and services</p>
+                <button class="btn-refresh" (click)="refresh()" title="Refresh">
+                @if (UserCanCreateKeys) {
+                  <button class="btn-primary" (click)="openCreateDialog()">
+                    <span>Generate New Key</span>
+            <!-- Health Score Banner -->
+            <div class="health-banner" [ngClass]="getHealthClass()">
+              <div class="health-score-container">
+                <div class="health-score-ring">
+                  <svg viewBox="0 0 36 36" class="circular-chart">
+                    <path class="circle-bg"
+                                    d="M18 2.0845
+                                       a 15.9155 15.9155 0 0 1 0 31.831
+                                       a 15.9155 15.9155 0 0 1 0 -31.831"
+                    <path class="circle"
+                      [attr.stroke-dasharray]="getHealthScore() + ', 100'"
+                  <div class="health-score-value">{{getHealthScore()}}</div>
+              <div class="health-info">
+                <div class="health-label">{{getHealthLabel()}}</div>
+                <div class="health-details">
+                  @if (ExpiredKeys > 0) {
+                    <span class="health-alert" (click)="showListView('expired')">
+                      {{ExpiredKeys}} expired
+                  @if (ExpiringSoonCount > 0) {
+                    <span class="health-warning-text" (click)="showListView('expiring')">
+                      {{ExpiringSoonCount}} expiring soon
+                  @if (NeverUsedKeys > 0) {
+                    <span class="health-info-text" (click)="showListView('never-used')">
+                      {{NeverUsedKeys}} never used
+                  @if (ExpiredKeys === 0 && ExpiringSoonCount === 0 && NeverUsedKeys === 0) {
+                    <span class="health-ok">
+                      All keys healthy
+              <div class="kpi-card clickable" (click)="showListView('all')">
+                  <div class="kpi-value">{{TotalKeys}}</div>
+                  <div class="kpi-label">Total Keys</div>
+                <div class="kpi-trend">
+              <div class="kpi-card active clickable" (click)="showListView('active')">
+                  <div class="kpi-value">{{ActiveKeys}}</div>
+                  <div class="kpi-label">Active</div>
+                <div class="kpi-trend success">
+                  <span class="percentage">{{TotalKeys > 0 ? (ActiveKeys / TotalKeys * 100).toFixed(0) : 100}}%</span>
+              <div class="kpi-card clickable" [class.warning]="ExpiringSoonCount > 0" (click)="showListView('expiring')">
+                  <div class="kpi-value">{{ExpiringSoonCount}}</div>
+                  <div class="kpi-label">Expiring Soon</div>
+                  <div class="kpi-trend warning">
+              <div class="kpi-card clickable" [class.danger]="RevokedKeys > 0" (click)="showListView('revoked')">
+                  <div class="kpi-value">{{RevokedKeys}}</div>
+                  <div class="kpi-label">Revoked</div>
+              <div class="kpi-card clickable" (click)="switchTab('scopes')">
+                  <div class="kpi-value">{{ScopeStats.length}}</div>
+                  <div class="kpi-label">Scope Categories</div>
+            <!-- Content Grid -->
+            <div class="content-grid">
+              <!-- Recently Used Keys -->
+              <div class="panel keys-panel">
+                  <div class="panel-title">
+                    <span>Recently Used Keys</span>
+                  <button class="panel-action" (click)="showListView('all')">
+                    View All <i class="fa-solid fa-arrow-right"></i>
+                  @if (TopUsedKeys.length > 0) {
+                    <div class="key-list">
+                      @for (key of TopUsedKeys; track key) {
+                        <div class="key-item" (click)="openEditPanel(key)">
+                          <div class="key-info">
+                            <div class="key-label">{{key.Label}}</div>
+                            <div class="key-meta">
+                              <span class="key-user">{{key.User}}</span>
+                              <span class="key-hash">...{{key.Hash.slice(-8)}}</span>
+                          <div class="key-status">
+                            <div class="last-used">{{formatDate(key.LastUsedAt)}}</div>
+                            <div class="expiration" [ngClass]="getExpirationClass(key)">
+                  @if (TopUsedKeys.length === 0) {
+                      <span>No active keys with recent usage</span>
+              <!-- Scope Categories -->
+              <div class="panel scope-panel">
+                    <span>Permission Scopes</span>
+                  <span class="panel-subtitle">Available scope categories</span>
+                  @if (ScopeStats.length > 0) {
+                    <div class="scope-chart">
+                      <!-- Visual Donut Chart -->
+                      <div class="donut-chart-container">
+                        <svg viewBox="0 0 100 100" class="donut-chart">
+                          <circle cx="50" cy="50" r="40" fill="none" stroke="#e5e7eb" stroke-width="12"/>
+                          @for (stat of ScopeStats; track stat; let i = $index) {
+                            <ng-container>
+                                cx="50" cy="50" r="40"
+                                [attr.stroke]="stat.color"
+                                stroke-width="12"
+                                [attr.stroke-dasharray]="stat.percentage * 2.51 + ' ' + (251 - stat.percentage * 2.51)"
+                                [attr.stroke-dashoffset]="getDonutOffset(i)"
+                                class="donut-segment"
+                                (click)="onScopeClick(stat)"
+                            </ng-container>
+                        <div class="donut-center">
+                          <div class="donut-total">{{ScopeStats.length}}</div>
+                          <div class="donut-label">Categories</div>
+                      <!-- Legend -->
+                      <div class="scope-legend">
+                        @for (stat of ScopeStats; track stat) {
+                          <div class="legend-item" (click)="onScopeClick(stat)">
+                            <div class="legend-color" [style.backgroundColor]="stat.color"></div>
+                            <div class="legend-info">
+                              <div class="legend-name">
+                                <i [class]="stat.iconClass"></i>
+                                {{stat.category}}
+                              <div class="legend-value">{{stat.count}} scopes</div>
+                            <i class="fa-solid fa-chevron-right legend-arrow"></i>
+                  @if (ScopeStats.length === 0) {
+                      <span>No scopes configured</span>
+              <!-- Recent Activity -->
+              <div class="panel activity-panel">
+                    <span>Recent Activity</span>
+                  @if (RecentActivity.length > 0) {
+                    <div class="activity-list">
+                      @for (activity of RecentActivity; track activity) {
+                        <div class="activity-item" (click)="onActivityClick(activity)">
+                          <div class="activity-icon" [ngClass]="getActionClass(activity.action)">
+                            <i [class]="getActionIcon(activity.action)"></i>
+                            <div class="activity-name">{{activity.keyLabel}}</div>
+                            <div class="activity-meta">
+                              <span class="activity-action">{{activity.action}}</span>
+                              @if (activity.user) {
+                                <span class="activity-user">by {{activity.user}}</span>
+                          <div class="activity-time">
+                            {{formatDate(activity.date)}}
+                  @if (RecentActivity.length === 0) {
+                      <span>No recent activity</span>
+            <!-- Quick Actions -->
+              <div class="quick-actions">
+                <div class="quick-actions-title">Quick Actions</div>
+                <div class="quick-actions-grid">
+                  <button class="quick-action" (click)="openCreateDialog()">
+                    <span>Generate Key</span>
+                  <button class="quick-action" (click)="showListView('all')">
+                    <span>View All Keys</span>
+                  <button class="quick-action" (click)="showListView('expiring')">
+                    <span>Expiring Keys</span>
+                  <button class="quick-action" (click)="showListView('never-used')">
+                    <span>Never Used</span>
+            <!-- Security Notice -->
+            <div class="security-notice">
+              <div class="notice-content">
+                <strong>Security Best Practices:</strong>
+                API keys should be rotated regularly and revoked when no longer needed.
+                Keys are hashed and stored securely - the raw key is only shown once at creation time.
+                All API key usage is logged for audit purposes.
+          @if (CurrentView === 'list') {
+            <div class="list-view-header">
+              <button class="back-btn" (click)="showOverview()">
+                Back to Overview
+            <mj-api-key-list #keyList
+              [Filter]="ListFilter"
+              (KeySelected)="onKeySelected($event)"
+              (CreateRequested)="openCreateDialog()">
+            </mj-api-key-list>
+        <!-- Applications Tab Content -->
+        @if (MainTab === 'applications') {
+          <mj-api-applications-panel
+            (ApplicationUpdated)="onDataUpdated()">
+          </mj-api-applications-panel>
+        <!-- Scopes Tab Content -->
+        @if (MainTab === 'scopes') {
+          <mj-api-scopes-panel
+            (ScopeUpdated)="onDataUpdated()">
+          </mj-api-scopes-panel>
+        <!-- Usage Tab Content -->
+        @if (MainTab === 'usage') {
+          <mj-api-usage-panel></mj-api-usage-panel>
+      </div><!-- /.content-wrapper -->
+    </div><!-- /.dashboard-content -->
+    <!-- Mobile Navigation Toggle -->
+    <button class="mobile-nav-toggle" (click)="toggleNav()">
+      <i class="fa-solid" [class.fa-bars]="!NavOpen" [class.fa-times]="NavOpen"></i>
+    <!-- Mobile Navigation Overlay -->
+    <div class="mobile-nav-overlay" (click)="closeNav()"></div>
+  <!-- Create Dialog -->
+  <mj-api-key-create-dialog
+    [Visible]="ShowCreateDialog"
+    (Created)="onKeyCreated($event)"
+    (Closed)="onCreateDialogClosed()">
+  </mj-api-key-create-dialog>
+  <!-- Edit Panel -->
+  <mj-api-key-edit-panel
+    [Visible]="ShowEditPanel"
+    [KeyId]="SelectedKeyId"
+    (Updated)="onKeyUpdated()"
+    (Revoked)="onKeyRevoked()"
+    (Closed)="onEditPanelClosed()">
+  </mj-api-key-edit-panel>

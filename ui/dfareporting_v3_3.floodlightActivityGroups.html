@@ -1,0 +1,34 @@
+<h1><a href="dfareporting_v3_3.html">Campaign Manager 360 API</a> . <a href="dfareporting_v3_3.floodlightActivityGroups.html">floodlightActivityGroups</a></h1>
+<p class="firstline">Gets one floodlight activity group by ID.</p>
+<p class="firstline">Inserts a new floodlight activity group.</p>
+  <code><a href="#list">list(profileId, advertiserId=None, floodlightConfigurationId=None, ids=None, maxResults=None, pageToken=None, searchString=None, sortField=None, sortOrder=None, type=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Retrieves a list of floodlight activity groups, possibly filtered. This method supports paging.</p>
+<p class="firstline">Updates an existing floodlight activity group. This method supports patch semantics.</p>
+<p class="firstline">Updates an existing floodlight activity group.</p>
+  <pre>Gets one floodlight activity group by ID.
+  id: string, Floodlight activity Group ID. (required)
+    { # Contains properties of a Floodlight activity group.
+  &quot;accountId&quot;: &quot;A String&quot;, # Account ID of this floodlight activity group. This is a read-only field that can be left blank.
+  &quot;advertiserId&quot;: &quot;A String&quot;, # Advertiser ID of this floodlight activity group. If this field is left blank, the value will be copied over either from the floodlight configuration&#x27;s advertiser or from the existing activity group&#x27;s advertiser.
+  &quot;floodlightConfigurationId&quot;: &quot;A String&quot;, # Floodlight configuration ID of this floodlight activity group. This is a required field.
+  &quot;id&quot;: &quot;A String&quot;, # ID of this floodlight activity group. This is a read-only, auto-generated field.
+  &quot;idDimensionValue&quot;: { # Represents a DimensionValue resource. # Dimension value for the ID of this floodlight activity group. This is a read-only, auto-generated field.
+  &quot;kind&quot;: &quot;A String&quot;, # Identifies what kind of resource this is. Value: the fixed string &quot;dfareporting#floodlightActivityGroup&quot;.
+  &quot;name&quot;: &quot;A String&quot;, # Name of this floodlight activity group. This is a required field. Must be less than 65 characters long and cannot contain quotes.
+  &quot;subaccountId&quot;: &quot;A String&quot;, # Subaccount ID of this floodlight activity group. This is a read-only field that can be left blank.
+  &quot;tagString&quot;: &quot;A String&quot;, # Value of the type= parameter in the floodlight tag, which the ad servers use to identify the activity group that the activity belongs to. This is optional: if empty, a new tag string will be generated for you. This string must be 1 to 8 characters long, with valid characters being a-z0-9[ _ ]. This tag string must also be unique among activity groups of the same floodlight configuration. This field is read-only after insertion.
+  &quot;type&quot;: &quot;A String&quot;, # Type of the floodlight activity group. This is a required field that is read-only after insertion.
+  <pre>Inserts a new floodlight activity group.
+    <code class="details" id="list">list(profileId, advertiserId=None, floodlightConfigurationId=None, ids=None, maxResults=None, pageToken=None, searchString=None, sortField=None, sortOrder=None, type=None, x__xgafv=None)</code>
+  <pre>Retrieves a list of floodlight activity groups, possibly filtered. This method supports paging.
+  advertiserId: string, Select only floodlight activity groups with the specified advertiser ID. Must specify either advertiserId or floodlightConfigurationId for a non-empty result.
+  floodlightConfigurationId: string, Select only floodlight activity groups with the specified floodlight configuration ID. Must specify either advertiserId, or floodlightConfigurationId for a non-empty result.
+  ids: string, Select only floodlight activity groups with the specified IDs. Must specify either advertiserId or floodlightConfigurationId for a non-empty result. (repeated)
+  searchString: string, Allows searching for objects by name or ID. Wildcards (*) are allowed. For example, &quot;floodlightactivitygroup*2015&quot; will return objects with names like &quot;floodlightactivitygroup June 2015&quot;, &quot;floodlightactivitygroup April 2015&quot;, or simply &quot;floodlightactivitygroup 2015&quot;. Most of the searches also add wildcards implicitly at the start and the end of the search string. For example, a search string of &quot;floodlightactivitygroup&quot; will match objects with name &quot;my floodlightactivitygroup activity&quot;, &quot;floodlightactivitygroup 2015&quot;, or simply &quot;floodlightactivitygroup&quot;.
+  type: string, Select only floodlight activity groups with the specified floodlight activity group type.
+    { # Floodlight Activity Group List Response
+  &quot;floodlightActivityGroups&quot;: [ # Floodlight activity group collection.
+  &quot;kind&quot;: &quot;A String&quot;, # Identifies what kind of resource this is. Value: the fixed string &quot;dfareporting#floodlightActivityGroupsListResponse&quot;.
+  <pre>Updates an existing floodlight activity group. This method supports patch semantics.
+  id: string, FloodlightActivityGroup ID. (required)
+  <pre>Updates an existing floodlight activity group.

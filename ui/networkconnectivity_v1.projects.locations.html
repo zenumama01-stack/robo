@@ -1,0 +1,35 @@
+<h1><a href="networkconnectivity_v1.html">Network Connectivity API</a> . <a href="networkconnectivity_v1.projects.html">projects</a> . <a href="networkconnectivity_v1.projects.locations.html">locations</a></h1>
+  <code><a href="networkconnectivity_v1.projects.locations.automatedDnsRecords.html">automatedDnsRecords()</a></code>
+<p class="firstline">Returns the automatedDnsRecords Resource.</p>
+  <code><a href="networkconnectivity_v1.projects.locations.global_.html">global_()</a></code>
+  <code><a href="networkconnectivity_v1.projects.locations.internalRanges.html">internalRanges()</a></code>
+<p class="firstline">Returns the internalRanges Resource.</p>
+  <code><a href="networkconnectivity_v1.projects.locations.multicloudDataTransferConfigs.html">multicloudDataTransferConfigs()</a></code>
+<p class="firstline">Returns the multicloudDataTransferConfigs Resource.</p>
+  <code><a href="networkconnectivity_v1.projects.locations.multicloudDataTransferSupportedServices.html">multicloudDataTransferSupportedServices()</a></code>
+<p class="firstline">Returns the multicloudDataTransferSupportedServices Resource.</p>
+  <code><a href="networkconnectivity_v1.projects.locations.operations.html">operations()</a></code>
+  <code><a href="networkconnectivity_v1.projects.locations.regionalEndpoints.html">regionalEndpoints()</a></code>
+<p class="firstline">Returns the regionalEndpoints Resource.</p>
+  <code><a href="networkconnectivity_v1.projects.locations.serviceClasses.html">serviceClasses()</a></code>
+<p class="firstline">Returns the serviceClasses Resource.</p>
+  <code><a href="networkconnectivity_v1.projects.locations.serviceConnectionMaps.html">serviceConnectionMaps()</a></code>
+<p class="firstline">Returns the serviceConnectionMaps Resource.</p>
+  <code><a href="networkconnectivity_v1.projects.locations.serviceConnectionPolicies.html">serviceConnectionPolicies()</a></code>
+<p class="firstline">Returns the serviceConnectionPolicies Resource.</p>
+  <code><a href="networkconnectivity_v1.projects.locations.serviceConnectionTokens.html">serviceConnectionTokens()</a></code>
+<p class="firstline">Returns the serviceConnectionTokens Resource.</p>
+  <code><a href="networkconnectivity_v1.projects.locations.spokes.html">spokes()</a></code>
+<p class="firstline">Returns the spokes Resource.</p>
+  <code><a href="#checkConsumerConfig">checkConsumerConfig(location, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">CheckConsumerConfig validates the consumer network and project for potential PSC connection creation. This method performs several checks, including: - Validating the existence and permissions of the service class. - Ensuring the consumer network exists and is accessible. - Verifying XPN relationships if applicable. - Checking for compatible IP versions between the consumer network and the requested version. This method performs a dynamic IAM check for the `networkconnectivity.serviceClasses.use` permission on the service class resource in the Prepare phase.</p>
+    <code class="details" id="checkConsumerConfig">checkConsumerConfig(location, body=None, x__xgafv=None)</code>
+  <pre>CheckConsumerConfig validates the consumer network and project for potential PSC connection creation. This method performs several checks, including: - Validating the existence and permissions of the service class. - Ensuring the consumer network exists and is accessible. - Verifying XPN relationships if applicable. - Checking for compatible IP versions between the consumer network and the requested version. This method performs a dynamic IAM check for the `networkconnectivity.serviceClasses.use` permission on the service class resource in the Prepare phase.
+  location: string, Required. The location resource path. Example: - projects/{project}/locations/{location} (required)
+{ # Request for CheckConsumerConfig.
+  &quot;consumerNetwork&quot;: &quot;A String&quot;, # Required. Full resource name of the consumer network. Example: - projects/{project}/global/networks/{network}.
+  &quot;endpointProject&quot;: &quot;A String&quot;, # The project number or ID where the PSC endpoint is to be created.
+  &quot;requestedIpVersion&quot;: &quot;A String&quot;, # The requested IP Version
+  &quot;serviceClass&quot;: &quot;A String&quot;, # Required. The service class identifier of the producer.
+    { # Response for CheckConsumerConfig.
+  &quot;errors&quot;: [ # List of validation errors. If the list is empty, the consumer config is valid.

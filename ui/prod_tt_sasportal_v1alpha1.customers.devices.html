@@ -1,0 +1,22 @@
+<h1><a href="prod_tt_sasportal_v1alpha1.html">SAS Portal API (Testing)</a> . <a href="prod_tt_sasportal_v1alpha1.customers.html">customers</a> . <a href="prod_tt_sasportal_v1alpha1.customers.devices.html">devices</a></h1>
+<p class="firstline">Moves a device under another node or customer.</p>
+  <code><a href="#signDevice">signDevice(name, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Signs a device.</p>
+  <code><a href="#updateSigned">updateSigned(name, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Updates a signed device.</p>
+  name: string, Required. The name of the device. (required)
+  <pre>Moves a device under another node or customer.
+  name: string, Required. The name of the device to move. (required)
+{ # Request for MoveDevice.
+  &quot;destination&quot;: &quot;A String&quot;, # Required. The name of the new parent resource node or customer to reparent the device under.
+  name: string, Output only. The resource path name. (required)
+    <code class="details" id="signDevice">signDevice(name, body=None, x__xgafv=None)</code>
+  <pre>Signs a device.
+{ # Request for SignDevice.
+  &quot;device&quot;: { # Required. The device to sign. The device fields name, fcc_id and serial_number must be set. The user_id field must be set.
+    <code class="details" id="updateSigned">updateSigned(name, body=None, x__xgafv=None)</code>
+  <pre>Updates a signed device.
+  name: string, Required. The name of the device to update. (required)
+{ # Request for UpdateSignedDevice.
+  &quot;encodedDevice&quot;: &quot;A String&quot;, # Required. The JSON Web Token signed using a CPI private key. Payload must be the JSON encoding of the device. The user_id field must be set.
+  &quot;installerId&quot;: &quot;A String&quot;, # Required. Unique installer ID (CPI ID) from the Certified Professional Installers database.

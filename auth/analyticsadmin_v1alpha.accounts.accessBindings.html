@@ -1,0 +1,57 @@
+<h1><a href="analyticsadmin_v1alpha.html">Google Analytics Admin API</a> . <a href="analyticsadmin_v1alpha.accounts.html">accounts</a> . <a href="analyticsadmin_v1alpha.accounts.accessBindings.html">accessBindings</a></h1>
+<p class="firstline">Creates information about multiple access bindings to an account or property. This method is transactional. If any AccessBinding cannot be created, none of the AccessBindings will be created.</p>
+<p class="firstline">Deletes information about multiple users' links to an account or property.</p>
+  <code><a href="#batchGet">batchGet(parent, names=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Gets information about multiple access bindings to an account or property.</p>
+<p class="firstline">Updates information about multiple access bindings to an account or property.</p>
+<p class="firstline">Creates an access binding on an account or property.</p>
+<p class="firstline">Deletes an access binding on an account or property.</p>
+<p class="firstline">Gets information about an access binding.</p>
+<p class="firstline">Lists all access bindings on an account or property.</p>
+<p class="firstline">Updates an access binding on an account or property.</p>
+  <pre>Creates information about multiple access bindings to an account or property. This method is transactional. If any AccessBinding cannot be created, none of the AccessBindings will be created.
+  parent: string, Required. The account or property that owns the access bindings. The parent field in the CreateAccessBindingRequest messages must either be empty or match this field. Formats: - accounts/{account} - properties/{property} (required)
+{ # Request message for BatchCreateAccessBindings RPC.
+  &quot;requests&quot;: [ # Required. The requests specifying the access bindings to create. A maximum of 1000 access bindings can be created in a batch.
+    { # Request message for CreateAccessBinding RPC.
+      &quot;accessBinding&quot;: { # A binding of a user to a set of roles. # Required. The access binding to create.
+        &quot;name&quot;: &quot;A String&quot;, # Output only. Resource name of this binding. Format: accounts/{account}/accessBindings/{access_binding} or properties/{property}/accessBindings/{access_binding} Example: &quot;accounts/100/accessBindings/200&quot;
+        &quot;roles&quot;: [ # A list of roles for to grant to the parent resource. Valid values: predefinedRoles/viewer predefinedRoles/analyst predefinedRoles/editor predefinedRoles/admin predefinedRoles/no-cost-data predefinedRoles/no-revenue-data For users, if an empty list of roles is set, this AccessBinding will be deleted.
+        &quot;user&quot;: &quot;A String&quot;, # If set, the email address of the user to set roles for. Format: &quot;someuser@gmail.com&quot;
+      &quot;parent&quot;: &quot;A String&quot;, # Required. Formats: - accounts/{account} - properties/{property}
+    { # Response message for BatchCreateAccessBindings RPC.
+  &quot;accessBindings&quot;: [ # The access bindings created.
+    { # A binding of a user to a set of roles.
+  <pre>Deletes information about multiple users&#x27; links to an account or property.
+  parent: string, Required. The account or property that owns the access bindings. The parent of all provided values for the &#x27;names&#x27; field in DeleteAccessBindingRequest messages must match this field. Formats: - accounts/{account} - properties/{property} (required)
+{ # Request message for BatchDeleteAccessBindings RPC.
+  &quot;requests&quot;: [ # Required. The requests specifying the access bindings to delete. A maximum of 1000 access bindings can be deleted in a batch.
+    { # Request message for DeleteAccessBinding RPC.
+      &quot;name&quot;: &quot;A String&quot;, # Required. Formats: - accounts/{account}/accessBindings/{accessBinding} - properties/{property}/accessBindings/{accessBinding}
+    <code class="details" id="batchGet">batchGet(parent, names=None, x__xgafv=None)</code>
+  <pre>Gets information about multiple access bindings to an account or property.
+  parent: string, Required. The account or property that owns the access bindings. The parent of all provided values for the &#x27;names&#x27; field must match this field. Formats: - accounts/{account} - properties/{property} (required)
+  names: string, Required. The names of the access bindings to retrieve. A maximum of 1000 access bindings can be retrieved in a batch. Formats: - accounts/{account}/accessBindings/{accessBinding} - properties/{property}/accessBindings/{accessBinding} (repeated)
+    { # Response message for BatchGetAccessBindings RPC.
+  &quot;accessBindings&quot;: [ # The requested access bindings.
+  <pre>Updates information about multiple access bindings to an account or property.
+  parent: string, Required. The account or property that owns the access bindings. The parent of all provided AccessBinding in UpdateAccessBindingRequest messages must match this field. Formats: - accounts/{account} - properties/{property} (required)
+{ # Request message for BatchUpdateAccessBindings RPC.
+  &quot;requests&quot;: [ # Required. The requests specifying the access bindings to update. A maximum of 1000 access bindings can be updated in a batch.
+    { # Request message for UpdateAccessBinding RPC.
+      &quot;accessBinding&quot;: { # A binding of a user to a set of roles. # Required. The access binding to update.
+    { # Response message for BatchUpdateAccessBindings RPC.
+  &quot;accessBindings&quot;: [ # The access bindings updated.
+  <pre>Creates an access binding on an account or property.
+  parent: string, Required. Formats: - accounts/{account} - properties/{property} (required)
+  <pre>Deletes an access binding on an account or property.
+  name: string, Required. Formats: - accounts/{account}/accessBindings/{accessBinding} - properties/{property}/accessBindings/{accessBinding} (required)
+  <pre>Gets information about an access binding.
+  name: string, Required. The name of the access binding to retrieve. Formats: - accounts/{account}/accessBindings/{accessBinding} - properties/{property}/accessBindings/{accessBinding} (required)
+  <pre>Lists all access bindings on an account or property.
+  pageSize: integer, The maximum number of access bindings to return. The service may return fewer than this value. If unspecified, at most 200 access bindings will be returned. The maximum value is 500; values above 500 will be coerced to 500.
+  pageToken: string, A page token, received from a previous `ListAccessBindings` call. Provide this to retrieve the subsequent page. When paginating, all other parameters provided to `ListAccessBindings` must match the call that provided the page token.
+    { # Response message for ListAccessBindings RPC.
+  &quot;accessBindings&quot;: [ # List of AccessBindings. These will be ordered stably, but in an arbitrary order.
+  <pre>Updates an access binding on an account or property.
+  name: string, Output only. Resource name of this binding. Format: accounts/{account}/accessBindings/{access_binding} or properties/{property}/accessBindings/{access_binding} Example: &quot;accounts/100/accessBindings/200&quot; (required)

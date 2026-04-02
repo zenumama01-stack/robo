@@ -1,0 +1,78 @@
+<div class="list-detail-container">
+  <!-- Header with title and Add button -->
+    <h1>{{ listRecord ? listRecord.Name : "List" }}</h1>
+    <kendo-dropdownbutton
+      class="add-btn"
+      (itemClick)="onDropdownItemClick($event)"
+      [data]="addOptions"
+      textField="Text"
+      themeColor="info">
+  <!-- Custom Toolbar -->
+  @if (!showLoader && listRecord) {
+    <div class="custom-toolbar">
+        <span class="row-count">{{ rowCount }} row{{ rowCount !== 1 ? 's' : '' }}</span>
+        @if (selectedKeys.length > 0) {
+          <span class="selection-count">({{ selectedKeys.length }} selected)</span>
+            (click)="openRemoveDialog()"
+            class="toolbar-button remove-btn">
+          (click)="onRefreshClick()"
+          class="toolbar-button">
+          <span class="fa-solid fa-rotate"></span>
+          (click)="onExportClick()"
+          <span class="fa-solid fa-file-export"></span>
+  @if (showLoader) {
+      <mj-loading text="Loading list..." size="medium"></mj-loading>
+    <div class="grid-container">
+      <mj-list-detail-grid
+        #listDetailGrid
+        [listId]="ListID"
+        [listEntity]="listRecord"
+        [autoNavigate]="true"
+        [height]="'auto'"
+        [toolbarConfig]="gridToolbarConfig"
+        [selectionMode]="'checkbox'"
+        (rowClicked)="onRowClicked($event)"
+        (rowDoubleClicked)="onRowDoubleClicked($event)"
+        (selectionChange)="onSelectionChange($event)"
+        (dataLoaded)="onDataLoaded($event)">
+      </mj-list-detail-grid>
+<!-- Remove from List Confirmation Dialog -->
+@if (showRemoveDialog) {
+    title="Remove from List"
+    (close)="closeRemoveDialog()"
+    [minWidth]="350"
+    [width]="450">
+      @if (isRemoving) {
+          <mj-loading text="Removing records..." size="small"></mj-loading>
+          @if (removeTotal > 0) {
+            <kendo-progressbar
+              [max]="removeTotal"
+              [value]="removeProgress"
+              [label]="false"
+              class="progress-bar">
+            </kendo-progressbar>
+        <div class="dialog-message">
+          <span class="fa-solid fa-triangle-exclamation warning-icon"></span>
+          <p>Are you sure you want to remove <strong>{{ selectedKeys.length }}</strong> record{{ selectedKeys.length !== 1 ? 's' : '' }} from this list?</p>
+          <p class="dialog-note">This will not delete the records, only remove them from this list.</p>
+        (click)="confirmRemoveFromList()"
+        [disabled]="isRemoving"
+        themeColor="error">
+        (click)="closeRemoveDialog()"
+    [title]="'Add ' + (listRecord?.Entity || 'Records') + ' to List'"
+    [minWidth]="500"
+    [width]="700"
+    [height]="650">
+          <mj-loading text="Adding records to list..." size="small"></mj-loading>
+          @if (addTotal > 0) {
+              [max]="addTotal"
+              [value]="addProgress"
+            [placeholder]="'Search ' + (listRecord?.Entity || 'records') + '...'"
+          } @else if (addableRecords.length === 0 && addRecordsSearchFilter.length >= 2) {
+          } @else if (addableRecords.length === 0) {
+              @for (record of addableRecords; track record.ID) {
+      } @else if (showAddFromViewLoader && addFromViewTotal > 0) {
+            [max]="addFromViewTotal"
+            [value]="addFromViewProgress"
+      } @else if (showAddFromViewLoader) {
+            @for (view of userViews; track view.ID) {

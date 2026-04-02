@@ -1,0 +1,29 @@
+<h1><a href="retail_v2alpha.html">Vertex AI Search for commerce API</a> . <a href="retail_v2alpha.projects.html">projects</a> . <a href="retail_v2alpha.projects.locations.html">locations</a> . <a href="retail_v2alpha.projects.locations.catalogs.html">catalogs</a></h1>
+  <code><a href="retail_v2alpha.projects.locations.catalogs.attributesConfig.html">attributesConfig()</a></code>
+  <code><a href="retail_v2alpha.projects.locations.catalogs.branches.html">branches()</a></code>
+  <code><a href="retail_v2alpha.projects.locations.catalogs.completionData.html">completionData()</a></code>
+  <code><a href="retail_v2alpha.projects.locations.catalogs.controls.html">controls()</a></code>
+  <code><a href="retail_v2alpha.projects.locations.catalogs.generativeQuestion.html">generativeQuestion()</a></code>
+  <code><a href="retail_v2alpha.projects.locations.catalogs.generativeQuestions.html">generativeQuestions()</a></code>
+  <code><a href="retail_v2alpha.projects.locations.catalogs.merchantCenterAccountLinks.html">merchantCenterAccountLinks()</a></code>
+<p class="firstline">Returns the merchantCenterAccountLinks Resource.</p>
+  <code><a href="retail_v2alpha.projects.locations.catalogs.models.html">models()</a></code>
+  <code><a href="retail_v2alpha.projects.locations.catalogs.operations.html">operations()</a></code>
+  <code><a href="retail_v2alpha.projects.locations.catalogs.placements.html">placements()</a></code>
+  <code><a href="retail_v2alpha.projects.locations.catalogs.servingConfigs.html">servingConfigs()</a></code>
+  <code><a href="retail_v2alpha.projects.locations.catalogs.userEvents.html">userEvents()</a></code>
+      &quot;facets&quot;: [ # Facet information for the suggestion term. Gives the number of items resulting from a search with this suggestion term for each facet. This is an experimental feature for limited customers. If you want to receive this facet information, reach out to the Retail support team.
+      &quot;totalProductCount&quot;: 42, # Total number of products associated with a search with this suggestion. This is an experimental feature for limited customers. If you want to receive this product count information, reach out to the Retail support team.
+      &quot;merchantCenterLinkingConfig&quot;: { # Configures Merchant Center linking. Links contained in the config will be used to sync data from a Merchant Center account to a Cloud Retail branch. # The Merchant Center linking configuration. After a link is added, the data stream from Merchant Center to Cloud Retail will be enabled automatically. The requester must have access to the Merchant Center account in order to make changes to this field.
+        &quot;links&quot;: [ # Links between Merchant Center accounts and branches.
+          { # Represents a link between a Merchant Center account and a branch. After a link is established, products from the linked Merchant Center account are streamed to the linked branch.
+            &quot;branchId&quot;: &quot;A String&quot;, # The branch ID (e.g. 0/1/2) within this catalog that products from merchant_center_account_id are streamed to. When updating this field, an empty value will use the currently configured default branch. However, changing the default branch later on won&#x27;t change the linked branch here. A single branch ID can only have one linked Merchant Center account ID.
+            &quot;destinations&quot;: [ # String representing the destination to import for, all if left empty. List of possible values is given in [Included destination](https://support.google.com/merchants/answer/7501026). List of allowed string values: &quot;Shopping_ads&quot;, &quot;Buy_on_google_listings&quot;, &quot;Display_ads&quot;, &quot;Local_inventory _ads&quot;, &quot;Free_listings&quot;, &quot;Free_local_listings&quot; NOTE: The string values are case sensitive.
+            &quot;feeds&quot;: [ # Criteria for the Merchant Center feeds to be ingested via the link. All offers will be ingested if the list is empty. Otherwise the offers will be ingested from selected feeds.
+              { # Merchant Center Feed filter criterion.
+                &quot;dataSourceId&quot;: &quot;A String&quot;, # AFM data source ID.
+                &quot;primaryFeedId&quot;: &quot;A String&quot;, # Merchant Center primary feed ID. Deprecated: use data_source_id instead.
+                &quot;primaryFeedName&quot;: &quot;A String&quot;, # Merchant Center primary feed name. The name is used for the display purposes only.
+            &quot;languageCode&quot;: &quot;A String&quot;, # Language of the title/description and other string attributes. Use language tags defined by [BCP 47](https://www.rfc-editor.org/rfc/bcp/bcp47.txt). ISO 639-1. This specifies the language of offers in Merchant Center that will be accepted. If empty no language filtering will be performed. Example value: `en`.
+            &quot;merchantCenterAccountId&quot;: &quot;A String&quot;, # Required. The linked [Merchant Center account ID](https://developers.google.com/shopping-content/guides/accountstatuses). The account must be a standalone account or a sub-account of a MCA.
+            &quot;regionCode&quot;: &quot;A String&quot;, # Region code of offers to accept. 2-letter Uppercase ISO 3166-1 alpha-2 code. List of values can be found [here](https://www.iana.org/assignments/language-subtag-registry/language-subtag-registry) under the `region` tag. If left blank no region filtering will be performed. Example value: `US`.

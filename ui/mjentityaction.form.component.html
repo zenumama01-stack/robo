@@ -1,0 +1,16 @@
+    <!-- Relationship Keys Section -->
+        SectionKey="relationshipKeys"
+        SectionName="Relationship Keys"
+    <!-- Action Configuration Section -->
+        SectionKey="actionConfiguration"
+        SectionName="Action Configuration"
+                [Params]="BuildRelationshipViewParamsByEntityName('MJ: Entity Action Filters','EntityActionID')"
+    <!-- Entity Action Invocations Section -->
+        SectionKey="entityActionInvocations"
+        SectionName="Entity Action Invocations"
+        [BadgeCount]="GetSectionRowCount('entityActionInvocations')"
+                [Params]="BuildRelationshipViewParamsByEntityName('MJ: Entity Action Invocations','EntityActionID')"
+                [NewRecordValues]="NewRecordValues('MJ: Entity Action Invocations')"
+                [AllowLoad]="IsSectionExpanded('entityActionInvocations')"
+                (AfterDataLoad)="SetSectionRowCount('entityActionInvocations', $event.totalRowCount)"
+                [Params]="BuildRelationshipViewParamsByEntityName('MJ: Entity Action Params','EntityActionID')"

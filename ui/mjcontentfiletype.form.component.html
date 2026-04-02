@@ -1,0 +1,17 @@
+            FieldName="FileExtension"
+    <!-- Content Sources Section -->
+        SectionKey="contentSources"
+        SectionName="Content Sources"
+        [BadgeCount]="GetSectionRowCount('contentSources')"
+                [Params]="BuildRelationshipViewParamsByEntityName('MJ: Content Sources','ContentFileTypeID')"
+                [NewRecordValues]="NewRecordValues('MJ: Content Sources')"
+                [AllowLoad]="IsSectionExpanded('contentSources')"
+                (AfterDataLoad)="SetSectionRowCount('contentSources', $event.totalRowCount)"
+    <!-- Content Items Section -->
+        SectionKey="contentItems"
+        SectionName="Content Items"
+        [BadgeCount]="GetSectionRowCount('contentItems')"
+                [Params]="BuildRelationshipViewParamsByEntityName('MJ: Content Items','ContentFileTypeID')"
+                [NewRecordValues]="NewRecordValues('MJ: Content Items')"
+                [AllowLoad]="IsSectionExpanded('contentItems')"
+                (AfterDataLoad)="SetSectionRowCount('contentItems', $event.totalRowCount)"

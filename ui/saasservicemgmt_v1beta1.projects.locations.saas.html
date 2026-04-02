@@ -1,0 +1,27 @@
+<h1><a href="saasservicemgmt_v1beta1.html">SaaS Runtime API</a> . <a href="saasservicemgmt_v1beta1.projects.html">projects</a> . <a href="saasservicemgmt_v1beta1.projects.locations.html">locations</a> . <a href="saasservicemgmt_v1beta1.projects.locations.saas.html">saas</a></h1>
+  <code><a href="#create">create(parent, body=None, requestId=None, saasId=None, validateOnly=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Create a new saas.</p>
+<p class="firstline">Delete a single saas.</p>
+<p class="firstline">Retrieve a single saas.</p>
+<p class="firstline">Retrieve a collection of saas.</p>
+<p class="firstline">Update a single saas.</p>
+    <code class="details" id="create">create(parent, body=None, requestId=None, saasId=None, validateOnly=None, x__xgafv=None)</code>
+  <pre>Create a new saas.
+  parent: string, Required. The parent of the saas. (required)
+{ # Saas is a representation of a SaaS service managed by the Producer.
+  &quot;locations&quot;: [ # Optional. List of locations that the service is available in. Rollout refers to the list to generate a rollout plan.
+    { # Location information that the service is available in.
+      &quot;name&quot;: &quot;A String&quot;, # Optional. Name of location.
+  &quot;name&quot;: &quot;A String&quot;, # Identifier. The resource name (full URI of the resource) following the standard naming scheme: &quot;projects/{project}/locations/{location}/saas/{saas}&quot;
+  saasId: string, Required. The ID value for the new saas.
+  <pre>Delete a single saas.
+  etag: string, The etag known to the client for the expected state of the saas. This is used with state-changing methods to prevent accidental overwrites when multiple user agents might be acting in parallel on the same resource. An etag wildcard provide optimistic concurrency based on the expected existence of the saas. The Any wildcard (`*`) requires that the resource must already exists, and the Not Any wildcard (`!*`) requires that it must not.
+  <pre>Retrieve a single saas.
+  <pre>Retrieve a collection of saas.
+  pageSize: integer, The maximum number of saas to send per page.
+    { # The response structure for the ListSaas method.
+  &quot;nextPageToken&quot;: &quot;A String&quot;, # If present, the next page token can be provided to a subsequent ListSaas call to list the next page. If empty, there are no more pages.
+  &quot;saas&quot;: [ # The resulting saas.
+  <pre>Update a single saas.
+  name: string, Identifier. The resource name (full URI of the resource) following the standard naming scheme: &quot;projects/{project}/locations/{location}/saas/{saas}&quot; (required)
+  updateMask: string, Field mask is used to specify the fields to be overwritten in the Saas resource by the update. The fields specified in the update_mask are relative to the resource, not the full request. A field will be overwritten if it is in the mask. If the user does not provide a mask then all fields in the Saas will be overwritten.

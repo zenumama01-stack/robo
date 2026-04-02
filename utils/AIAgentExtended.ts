@@ -1,0 +1,13 @@
+import { BaseEntity } from "@memberjunction/core";
+import { MJAIAgentActionEntity, MJAIAgentEntity, MJAIAgentModelEntity, MJAIAgentNoteEntity } from "@memberjunction/core-entities";
+@RegisterClass(BaseEntity, "MJ: AI Agents")
+export class AIAgentEntityExtended extends MJAIAgentEntity {
+    private _actions: MJAIAgentActionEntity[] = [];
+    public get Actions(): MJAIAgentActionEntity[] {
+        return this._actions;
+    private _models: MJAIAgentModelEntity[] = [];
+     * @deprecated - models are associated with prompts now
+    public get Models(): MJAIAgentModelEntity[] {
+    private _notes: MJAIAgentNoteEntity[] = [];
+    public get Notes(): MJAIAgentNoteEntity[] {
+        return this._notes;

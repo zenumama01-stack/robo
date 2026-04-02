@@ -1,0 +1,27 @@
+<h1><a href="merchantapi_accounts_v1.html">Merchant API</a> . <a href="merchantapi_accounts_v1.accounts.html">accounts</a> . <a href="merchantapi_accounts_v1.accounts.users.html">users</a></h1>
+  <code><a href="merchantapi_accounts_v1.accounts.users.me.html">me()</a></code>
+<p class="firstline">Returns the me Resource.</p>
+  <code><a href="#create">create(parent, body=None, userId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Creates a Merchant Center account user. Executing this method requires admin access.</p>
+<p class="firstline">Deletes a Merchant Center account user. Executing this method requires admin access. The user to be deleted can't be the last admin user of that account.</p>
+<p class="firstline">Retrieves a Merchant Center account user.</p>
+<p class="firstline">Lists all users of a Merchant Center account.</p>
+<p class="firstline">Updates a Merchant Center account user. Executing this method requires admin access.</p>
+    <code class="details" id="create">create(parent, body=None, userId=None, x__xgafv=None)</code>
+  <pre>Creates a Merchant Center account user. Executing this method requires admin access.
+  parent: string, Required. The resource name of the account for which a user will be created. Format: `accounts/{account}` (required)
+{ # The `User` resource represents a user associated with a Merchant Center account. It is used to manage user permissions and access rights within the account. For more information, see [Frequently asked questions about people and access levels](//support.google.com/merchants/answer/12160472).
+  userId: string, Required. The email address of the user (for example, `john.doe@gmail.com`).
+  <pre>Deletes a Merchant Center account user. Executing this method requires admin access. The user to be deleted can&#x27;t be the last admin user of that account.
+  name: string, Required. The name of the user to delete. Format: `accounts/{account}/users/{email}` It is also possible to delete the user corresponding to the caller by using `me` rather than an email address as in `accounts/{account}/users/me`. (required)
+  <pre>Retrieves a Merchant Center account user.
+  name: string, Required. The name of the user to retrieve. Format: `accounts/{account}/users/{email}` It is also possible to retrieve the user corresponding to the caller by using `me` rather than an email address as in `accounts/{account}/users/me`. (required)
+  <pre>Lists all users of a Merchant Center account.
+  parent: string, Required. The parent, which owns this collection of users. Format: `accounts/{account}` (required)
+  pageSize: integer, Optional. The maximum number of users to return. The service may return fewer than this value. If unspecified, at most 50 users will be returned. The maximum value is 100; values above 100 will be coerced to 100
+  pageToken: string, Optional. A page token, received from a previous `ListUsers` call. Provide this to retrieve the subsequent page. When paginating, all other parameters provided to `ListUsers` must match the call that provided the page token.
+    { # Response message for the `ListUsers` method.
+  &quot;users&quot;: [ # The users from the specified account.
+  <pre>Updates a Merchant Center account user. Executing this method requires admin access.
+  name: string, Identifier. The resource name of the user. Format: `accounts/{account}/user/{email}` Use `me` to refer to your own email address, for example `accounts/{account}/users/me`. (required)
+  updateMask: string, Optional. List of fields being updated. The following fields are supported (in both `snake_case` and `lowerCamelCase`): - `access_rights`

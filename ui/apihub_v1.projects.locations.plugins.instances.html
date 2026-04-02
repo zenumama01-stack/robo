@@ -1,0 +1,120 @@
+<h1><a href="apihub_v1.html">API hub API</a> . <a href="apihub_v1.projects.html">projects</a> . <a href="apihub_v1.projects.locations.html">locations</a> . <a href="apihub_v1.projects.locations.plugins.html">plugins</a> . <a href="apihub_v1.projects.locations.plugins.instances.html">instances</a></h1>
+  <code><a href="#create">create(parent, body=None, pluginInstanceId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Creates a Plugin instance in the API hub.</p>
+<p class="firstline">Deletes a plugin instance in the API hub.</p>
+  <code><a href="#disableAction">disableAction(name, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Disables a plugin instance in the API hub.</p>
+  <code><a href="#enableAction">enableAction(name, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Enables a plugin instance in the API hub.</p>
+  <code><a href="#executeAction">executeAction(name, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Executes a plugin instance in the API hub.</p>
+<p class="firstline">Get an API Hub plugin instance.</p>
+<p class="firstline">List all the plugins in a given project and location. `-` can be used as wildcard value for {plugin_id}</p>
+  <code><a href="#manageSourceData">manageSourceData(name, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Manages data for a given plugin instance.</p>
+<p class="firstline">Updates a plugin instance in the API hub. The following fields in the plugin_instance can be updated currently: * display_name * schedule_cron_expression The update_mask should be used to specify the fields being updated. To update the auth_config and additional_config of the plugin instance, use the ApplyPluginInstanceConfig method.</p>
+    <code class="details" id="create">create(parent, body=None, pluginInstanceId=None, x__xgafv=None)</code>
+  <pre>Creates a Plugin instance in the API hub.
+  parent: string, Required. The parent of the plugin instance resource. Format: `projects/{project}/locations/{location}/plugins/{plugin}` (required)
+{ # Represents a plugin instance resource in the API Hub. A PluginInstance is a specific instance of a hub plugin with its own configuration, state, and execution details.
+  &quot;actions&quot;: [ # Required. The action status for the plugin instance.
+    { # PluginInstanceAction represents an action which can be executed in the plugin instance.
+      &quot;actionId&quot;: &quot;A String&quot;, # Required. This should map to one of the action id specified in actions_config in the plugin.
+      &quot;curationConfig&quot;: { # The curation information for this plugin instance. # Optional. This configuration should be provided if the plugin action is publishing data to API hub curate layer.
+        &quot;curationType&quot;: &quot;A String&quot;, # Required. The curation type for this plugin instance.
+        &quot;customCuration&quot;: { # Custom curation information for this plugin instance. # Optional. Custom curation information for this plugin instance.
+          &quot;curation&quot;: &quot;A String&quot;, # Required. The unique name of the curation resource. This will be the name of the curation resource in the format: `projects/{project}/locations/{location}/curations/{curation}`
+      &quot;hubInstanceAction&quot;: { # The execution status for the plugin instance. # Optional. The execution information for the plugin instance action done corresponding to an API hub instance.
+        &quot;currentExecutionState&quot;: &quot;A String&quot;, # Output only. The current state of the execution.
+        &quot;lastExecution&quot;: { # The result of the last execution of the plugin instance. # Output only. The last execution of the plugin instance.
+          &quot;endTime&quot;: &quot;A String&quot;, # Output only. The last execution end time of the plugin instance.
+          &quot;errorMessage&quot;: &quot;A String&quot;, # Output only. Error message describing the failure, if any, during the last execution.
+          &quot;result&quot;: &quot;A String&quot;, # Output only. The result of the last execution of the plugin instance.
+          &quot;resultMetadata&quot;: &quot;A String&quot;, # Output only. The result metadata of the last execution of the plugin instance. This will be a string representation of a JSON object and will be available on successful execution.
+          &quot;startTime&quot;: &quot;A String&quot;, # Output only. The last execution start time of the plugin instance.
+      &quot;resourceConfig&quot;: { # The configuration of resources created for a given plugin instance action. # Output only. The configuration of resources created for a given plugin instance action. Note these will be returned only in case of non-Google Cloud plugins like OPDK.
+        &quot;actionType&quot;: &quot;A String&quot;, # Output only. The type of the action.
+        &quot;pubsubTopic&quot;: &quot;A String&quot;, # Output only. The pubsub topic to publish the data to. Format is projects/{project}/topics/{topic}
+      &quot;scheduleCronExpression&quot;: &quot;A String&quot;, # Optional. The schedule for this plugin instance action. This can only be set if the plugin supports API_HUB_SCHEDULE_TRIGGER mode for this action.
+      &quot;scheduleTimeZone&quot;: &quot;A String&quot;, # Optional. The time zone for the schedule cron expression. If not provided, UTC will be used.
+      &quot;serviceAccount&quot;: &quot;A String&quot;, # Optional. The service account used to publish data. Note, the service account will only be accepted for non-Google Cloud plugins like OPDK.
+      &quot;state&quot;: &quot;A String&quot;, # Output only. The current state of the plugin action in the plugin instance.
+  &quot;additionalConfig&quot;: { # Optional. The additional information for this plugin instance corresponding to the additional config template of the plugin. This information will be sent to plugin hosting service on each call to plugin hosted service. The key will be the config_variable_template.display_name to uniquely identify the config variable.
+    &quot;a_key&quot;: { # ConfigVariable represents a additional configuration variable present in a PluginInstance Config or AuthConfig, based on a ConfigVariableTemplate.
+      &quot;boolValue&quot;: True or False, # Optional. The config variable value in case of config variable of type boolean.
+      &quot;enumValue&quot;: { # ConfigValueOption represents an option for a config variable of type enum or multi select. # Optional. The config variable value in case of config variable of type enum.
+      &quot;intValue&quot;: &quot;A String&quot;, # Optional. The config variable value in case of config variable of type integer.
+      &quot;key&quot;: &quot;A String&quot;, # Output only. Key will be the id to uniquely identify the config variable.
+      &quot;multiIntValues&quot;: { # The config variable value of data type multi int. # Optional. The config variable value in case of config variable of type multi integer.
+        &quot;values&quot;: [ # Optional. The config variable value of data type multi int.
+      &quot;multiSelectValues&quot;: { # The config variable value of data type multi select. # Optional. The config variable value in case of config variable of type multi select.
+        &quot;values&quot;: [ # Optional. The config variable value of data type multi select.
+      &quot;multiStringValues&quot;: { # The config variable value of data type multi string. # Optional. The config variable value in case of config variable of type multi string.
+        &quot;values&quot;: [ # Optional. The config variable value of data type multi string.
+      &quot;secretValue&quot;: { # Secret provides a reference to entries in Secret Manager. # Optional. The config variable value in case of config variable of type secret.
+        &quot;secretVersion&quot;: &quot;A String&quot;, # Required. The resource name of the secret version in the format, format as: `projects/*/secrets/*/versions/*`.
+      &quot;stringValue&quot;: &quot;A String&quot;, # Optional. The config variable value in case of config variable of type string.
+  &quot;authConfig&quot;: { # AuthConfig represents the authentication information. # Optional. The authentication information for this plugin instance.
+    &quot;apiKeyConfig&quot;: { # Config for authentication with API key. # Api Key Config.
+      &quot;apiKey&quot;: { # Secret provides a reference to entries in Secret Manager. # Required. The name of the SecretManager secret version resource storing the API key. Format: `projects/{project}/secrets/{secrete}/versions/{version}`. The `secretmanager.versions.access` permission should be granted to the service account accessing the secret.
+      &quot;httpElementLocation&quot;: &quot;A String&quot;, # Required. The location of the API key. The default value is QUERY.
+      &quot;name&quot;: &quot;A String&quot;, # Required. The parameter name of the API key. E.g. If the API request is &quot;https://example.com/act?api_key=&quot;, &quot;api_key&quot; would be the parameter name.
+    &quot;authType&quot;: &quot;A String&quot;, # Required. The authentication type.
+    &quot;googleServiceAccountConfig&quot;: { # Config for Google service account authentication. # Google Service Account.
+    &quot;oauth2ClientCredentialsConfig&quot;: { # Parameters to support Oauth 2.0 client credentials grant authentication. See https://tools.ietf.org/html/rfc6749#section-1.3.4 for more details. # Oauth2.0 Client Credentials.
+      &quot;clientId&quot;: &quot;A String&quot;, # Required. The client identifier.
+      &quot;clientSecret&quot;: { # Secret provides a reference to entries in Secret Manager. # Required. Secret version reference containing the client secret. The `secretmanager.versions.access` permission should be granted to the service account accessing the secret.
+    &quot;userPasswordConfig&quot;: { # Parameters to support Username and Password Authentication. # User Password.
+      &quot;password&quot;: { # Secret provides a reference to entries in Secret Manager. # Required. Secret version reference containing the password. The `secretmanager.versions.access` permission should be granted to the service account accessing the secret.
+      &quot;username&quot;: &quot;A String&quot;, # Required. Username.
+  &quot;createTime&quot;: &quot;A String&quot;, # Output only. Timestamp indicating when the plugin instance was created.
+  &quot;displayName&quot;: &quot;A String&quot;, # Required. The display name for this plugin instance. Max length is 255 characters.
+  &quot;errorMessage&quot;: &quot;A String&quot;, # Output only. Error message describing the failure, if any, during Create, Delete or ApplyConfig operation corresponding to the plugin instance.This field will only be populated if the plugin instance is in the ERROR or FAILED state.
+  &quot;name&quot;: &quot;A String&quot;, # Identifier. The unique name of the plugin instance resource. Format: `projects/{project}/locations/{location}/plugins/{plugin}/instances/{instance}`
+  &quot;sourceEnvironmentsConfig&quot;: { # Optional. The source environment&#x27;s config present in the gateway instance linked to the plugin instance. The key is the `source_environment` name from the SourceEnvironment message.
+    &quot;a_key&quot;: { # Message representing the source environment details.
+      &quot;createTime&quot;: &quot;A String&quot;, # Optional. The time at which the environment was created at the source.
+      &quot;sourceEnvironment&quot;: &quot;A String&quot;, # Required. The name of the environment at the source. This should map to Deployment.
+      &quot;sourceEnvironmentUri&quot;: &quot;A String&quot;, # The location where additional information about source environments can be found. The location should be relative path of the environment manifest with respect to a plugin instance.
+      &quot;updateTime&quot;: &quot;A String&quot;, # Optional. The time at which the environment was last updated at the source.
+  &quot;sourceProjectId&quot;: &quot;A String&quot;, # Optional. The source project id of the plugin instance. This will be the id of runtime project in case of Google Cloud based plugins and org id in case of non-Google Cloud based plugins. This field will be a required field for Google provided on-ramp plugins.
+  &quot;state&quot;: &quot;A String&quot;, # Output only. The current state of the plugin instance (e.g., enabled, disabled, provisioning).
+  &quot;updateTime&quot;: &quot;A String&quot;, # Output only. Timestamp indicating when the plugin instance was last updated.
+  pluginInstanceId: string, Optional. The ID to use for the plugin instance, which will become the final component of the plugin instance&#x27;s resource name. This field is optional. * If provided, the same will be used. The service will throw an error if the specified id is already used by another plugin instance in the plugin resource. * If not provided, a system generated id will be used. This value should be 4-63 characters, and valid characters are /a-z[0-9]-_/.
+  <pre>Deletes a plugin instance in the API hub.
+  name: string, Required. The name of the plugin instance to delete. Format: `projects/{project}/locations/{location}/plugins/{plugin}/instances/{instance}`. (required)
+    <code class="details" id="disableAction">disableAction(name, body=None, x__xgafv=None)</code>
+  <pre>Disables a plugin instance in the API hub.
+  name: string, Required. The name of the plugin instance to disable. Format: `projects/{project}/locations/{location}/plugins/{plugin}/instances/{instance}` (required)
+{ # The DisablePluginInstanceAction method&#x27;s request.
+  &quot;actionId&quot;: &quot;A String&quot;, # Required. The action id to disable.
+    <code class="details" id="enableAction">enableAction(name, body=None, x__xgafv=None)</code>
+  <pre>Enables a plugin instance in the API hub.
+  name: string, Required. The name of the plugin instance to enable. Format: `projects/{project}/locations/{location}/plugins/{plugin}/instances/{instance}` (required)
+{ # The EnablePluginInstanceAction method&#x27;s request.
+  &quot;actionId&quot;: &quot;A String&quot;, # Required. The action id to enable.
+    <code class="details" id="executeAction">executeAction(name, body=None, x__xgafv=None)</code>
+  <pre>Executes a plugin instance in the API hub.
+  name: string, Required. The name of the plugin instance to execute. Format: `projects/{project}/locations/{location}/plugins/{plugin}/instances/{instance}` (required)
+{ # The ExecutePluginInstanceAction method&#x27;s request.
+  &quot;actionExecutionDetail&quot;: { # The details for the action to execute. # Required. The execution details for the action to execute.
+    &quot;actionId&quot;: &quot;A String&quot;, # Required. The action id of the plugin to execute.
+  <pre>Get an API Hub plugin instance.
+  name: string, Required. The name of the plugin instance to retrieve. Format: `projects/{project}/locations/{location}/plugins/{plugin}/instances/{instance}` (required)
+  <pre>List all the plugins in a given project and location. `-` can be used as wildcard value for {plugin_id}
+  parent: string, Required. The parent resource where this plugin will be created. Format: `projects/{project}/locations/{location}/plugins/{plugin}`. To list plugin instances for multiple plugins, use the - character instead of the plugin ID. (required)
+  filter: string, Optional. An expression that filters the list of plugin instances. A filter expression consists of a field name, a comparison operator, and a value for filtering. The value must be a string. The comparison operator must be one of: `&lt;`, `&gt;` or `=`. Filters are not case sensitive. The following fields in the `PluginInstances` are eligible for filtering: * `state` - The state of the Plugin Instance. Allowed comparison operators: `=`. * `source_project_id` - The source project id of the Plugin Instance. Allowed comparison operators: `=`. A filter function is also supported in the filter string. The filter function is `id(name)`. The `id(name)` function returns the id of the resource name. For example, `id(name) = \&quot;plugin-instance-1\&quot;` is equivalent to `name = \&quot;projects/test-project-id/locations/test-location-id/plugins/plugin-1/instances/plugin-instance-1\&quot;` provided the parent is `projects/test-project-id/locations/test-location-id/plugins/plugin-1`. Expressions are combined with either `AND` logic operator or `OR` logical operator but not both of them together i.e. only one of the `AND` or `OR` operator can be used throughout the filter string and both the operators cannot be used together. No other logical operators are supported. At most three filter fields are allowed in the filter string and if provided more than that then `INVALID_ARGUMENT` error is returned by the API. Here are a few examples: * `state = ENABLED` - The plugin instance is in enabled state.
+  pageToken: string, Optional. A page token, received from a previous `ListPluginInstances` call. Provide this to retrieve the subsequent page. When paginating, all other parameters provided to `ListPluginInstances` must match the call that provided the page token.
+    { # The ListPluginInstances method&#x27;s response.
+  &quot;pluginInstances&quot;: [ # The plugin instances from the specified parent resource.
+    <code class="details" id="manageSourceData">manageSourceData(name, body=None, x__xgafv=None)</code>
+  <pre>Manages data for a given plugin instance.
+  name: string, Required. The name of the plugin instance for which data needs to be managed. Format: `projects/{project}/locations/{location}/plugins/{plugin}/instances/{instance}` (required)
+{ # The ManagePluginInstanceSourceData method&#x27;s request.
+  &quot;action&quot;: &quot;A String&quot;, # Required. Action to be performed.
+  &quot;data&quot;: &quot;A String&quot;, # Required. Data to be managed.
+  &quot;dataType&quot;: &quot;A String&quot;, # Required. Type of data to be managed.
+  &quot;relativePath&quot;: &quot;A String&quot;, # Required. Relative path of data being managed for a given plugin instance.
+    { # The ManagePluginInstanceSourceData method&#x27;s response.
+  <pre>Updates a plugin instance in the API hub. The following fields in the plugin_instance can be updated currently: * display_name * schedule_cron_expression The update_mask should be used to specify the fields being updated. To update the auth_config and additional_config of the plugin instance, use the ApplyPluginInstanceConfig method.
+  name: string, Identifier. The unique name of the plugin instance resource. Format: `projects/{project}/locations/{location}/plugins/{plugin}/instances/{instance}` (required)

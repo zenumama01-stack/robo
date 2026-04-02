@@ -1,0 +1,46 @@
+  <title>googleapiclient.model</title>
+        Module&nbsp;model
+            >]&nbsp;|&nbsp;<a href="googleapiclient.model-module.html"
+<h1 class="epydoc">Module model</h1><p class="nomargin-top"><span class="codelink"><a href="googleapiclient.model-pysrc.html">source&nbsp;code</a></span></p>
+<p>Model objects for requests and responses.</p>
+  <p>Each API may support one or more serializations, such as JSON, Atom, 
+  etc. The model classes are responsible for converting between the wire 
+  format and the Python object representation.</p>
+        <a href="googleapiclient.model.Model-class.html" class="summary-name">Model</a><br />
+      Model base class.
+        <a href="googleapiclient.model.BaseModel-class.html" class="summary-name">BaseModel</a><br />
+      Base model class.
+        <a href="googleapiclient.model.JsonModel-class.html" class="summary-name">JsonModel</a><br />
+      Model class for JSON.
+        <a href="googleapiclient.model.RawModel-class.html" class="summary-name">RawModel</a><br />
+      Model class for requests that don't return JSON.
+        <a href="googleapiclient.model.MediaModel-class.html" class="summary-name">MediaModel</a><br />
+      Model class for requests that return Media.
+        <a href="googleapiclient.model.ProtocolBufferModel-class.html" class="summary-name">ProtocolBufferModel</a><br />
+      Model class for protocol buffers.
+          <td><span class="summary-sig"><a name="_abstract"></a><span class="summary-sig-name">_abstract</span>()</span></td>
+            <span class="codelink"><a href="googleapiclient.model-pysrc.html#_abstract">source&nbsp;code</a></span>
+          <td><span class="summary-sig"><a href="googleapiclient.model-module.html#makepatch" class="summary-sig-name">makepatch</a>(<span class="summary-sig-arg">original</span>,
+        <span class="summary-sig-arg">modified</span>)</span><br />
+      Create a patch object.</td>
+            <span class="codelink"><a href="googleapiclient.model-pysrc.html#makepatch">source&nbsp;code</a></span>
+        <a name="_LIBRARY_VERSION"></a><span class="summary-name">_LIBRARY_VERSION</span> = <code title="'1.10.0'"><code class="variable-quote">'</code><code class="variable-string">1.10.0</code><code class="variable-quote">'</code></code>
+        <a name="_PY_VERSION"></a><span class="summary-name">_PY_VERSION</span> = <code title="'2.7.18'"><code class="variable-quote">'</code><code class="variable-string">2.7.18</code><code class="variable-quote">'</code></code>
+        <a name="dump_request_response"></a><span class="summary-name">dump_request_response</span> = <code title="False">False</code>
+<a name="makepatch"></a>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">makepatch</span>(<span class="sig-arg">original</span>,
+        <span class="sig-arg">modified</span>)</span>
+    ><span class="codelink"><a href="googleapiclient.model-pysrc.html#makepatch">source&nbsp;code</a></span>&nbsp;
+Create a patch object.
+Some methods support PATCH, an efficient way to send updates to a resource.
+This method allows the easy construction of patch bodies by looking at the
+differences between a resource before and after it was modified.
+  original: object, the original deserialized resource
+  modified: object, the modified deserialized resource
+  An object that contains only the changes from original to modified, in a
+  form suitable to pass to a PATCH method.
+  item = service.activities().get(postid=postid, userid=userid).execute()
+  original = copy.deepcopy(item)
+  item['object']['content'] = 'This is updated.'
+  service.activities.patch(postid=postid, userid=userid,
+    body=makepatch(original, item)).execute()

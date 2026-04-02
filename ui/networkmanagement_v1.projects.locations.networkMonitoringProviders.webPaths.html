@@ -1,0 +1,26 @@
+<h1><a href="networkmanagement_v1.html">Network Management API</a> . <a href="networkmanagement_v1.projects.html">projects</a> . <a href="networkmanagement_v1.projects.locations.html">locations</a> . <a href="networkmanagement_v1.projects.locations.networkMonitoringProviders.html">networkMonitoringProviders</a> . <a href="networkmanagement_v1.projects.locations.networkMonitoringProviders.webPaths.html">webPaths</a></h1>
+<p class="firstline">Gets the WebPath resource.</p>
+<p class="firstline">Lists WebPaths for a given network monitoring provider.</p>
+  <pre>Gets the WebPath resource.
+  name: string, Required. Name of the resource.. Format: projects/{project}/locations/{location}/networkMonitoringProviders/{network_monitoring_provider}/webPaths/{web_path} (required)
+    { # Message describing WebPath resource.
+  &quot;createTime&quot;: &quot;A String&quot;, # Output only. The time the WebPath was created.
+  &quot;destination&quot;: &quot;A String&quot;, # Output only. Web monitoring target.
+  &quot;displayName&quot;: &quot;A String&quot;, # Output only. Display name of the WebPath.
+  &quot;interval&quot;: &quot;A String&quot;, # Output only. Monitoring interval.
+  &quot;monitoringEnabled&quot;: True or False, # Output only. Is monitoring enabled for the WebPath.
+  &quot;monitoringPolicyId&quot;: &quot;A String&quot;, # Output only. ID of the monitoring policy.
+  &quot;monitoringStatus&quot;: &quot;A String&quot;, # Output only. The monitoring status of the WebPath.
+  &quot;name&quot;: &quot;A String&quot;, # Identifier. Name of the resource. Format: `projects/{project}/locations/{location}/networkMonitoringProviders/{network_monitoring_provider}/webPaths/{web_path}`
+  &quot;providerTags&quot;: [ # Output only. The provider tags of the web path.
+  &quot;providerUiUri&quot;: &quot;A String&quot;, # Output only. Link to provider&#x27;s UI; link shows the WebPath.
+  &quot;relatedNetworkPathId&quot;: &quot;A String&quot;, # Output only. Provider&#x27;s UUID of the related NetworkPath.
+  &quot;sourceMonitoringPointId&quot;: &quot;A String&quot;, # Output only. ID of the source MonitoringPoint.
+  &quot;updateTime&quot;: &quot;A String&quot;, # Output only. The time the WebPath was updated.
+  &quot;workflowType&quot;: &quot;A String&quot;, # Output only. The workflow type of the WebPath.
+  <pre>Lists WebPaths for a given network monitoring provider.
+  parent: string, Required. Parent value for ListWebPathsRequest. Format: projects/{project}/locations/{location}/networkMonitoringProviders/{network_monitoring_provider} (required)
+  pageSize: integer, Optional. The maximum number of web paths to return. The service may return fewer than this value. If unspecified, at most 20 web paths will be returned. The maximum value is 1000; values above 1000 will be coerced to 1000.
+  pageToken: string, Optional. A page token, received from a previous `ListWebPaths` call. Provide this to retrieve the subsequent page. When paginating, all other parameters provided to `ListWebPaths` must match the call that provided the page token.
+    { # Message for response to listing WebPaths
+  &quot;webPaths&quot;: [ # The list of WebPath.

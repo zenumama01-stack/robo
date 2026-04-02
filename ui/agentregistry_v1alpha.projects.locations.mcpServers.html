@@ -1,0 +1,25 @@
+<h1><a href="agentregistry_v1alpha.html">Agent Registry API</a> . <a href="agentregistry_v1alpha.projects.html">projects</a> . <a href="agentregistry_v1alpha.projects.locations.html">locations</a> . <a href="agentregistry_v1alpha.projects.locations.mcpServers.html">mcpServers</a></h1>
+<p class="firstline">Gets details of a single McpServer.</p>
+<p class="firstline">Lists McpServers in a given project and location.</p>
+  <pre>Gets details of a single McpServer.
+    { # Represents an MCP (Model Context Protocol) Server.
+  &quot;attributes&quot;: { # Output only. Attributes of the MCP Server. Valid values: * `agentregistry.googleapis.com/system/RuntimeIdentity`: {&quot;principal&quot;: &quot;principal://...&quot;} - the runtime identity associated with the MCP Server. * `agentregistry.googleapis.com/system/RuntimeReference`: {&quot;uri&quot;: &quot;//...&quot;} - the URI of the underlying resource hosting the MCP Server, for example, the GKE Deployment.
+  &quot;description&quot;: &quot;A String&quot;, # Output only. The description of the MCP Server.
+  &quot;displayName&quot;: &quot;A String&quot;, # Output only. The display name of the MCP Server.
+  &quot;interfaces&quot;: [ # Output only. The connection details for the MCP Server.
+  &quot;mcpServerId&quot;: &quot;A String&quot;, # Output only. A stable, globally unique identifier for MCP Servers.
+  &quot;name&quot;: &quot;A String&quot;, # Identifier. The resource name of the MCP Server. Format: `projects/{project}/locations/{location}/mcpServers/{mcp_server}`.
+  &quot;tools&quot;: [ # Output only. Tools provided by the MCP Server.
+    { # Represents a single tool provided by an MCP Server.
+      &quot;annotations&quot;: { # Annotations describing the characteristics and behavior of a tool or operation. # Output only. Annotations associated with the tool.
+        &quot;destructiveHint&quot;: True or False, # Output only. If true, the tool may perform destructive updates to its environment. If false, the tool performs only additive updates. NOTE: This property is meaningful only when `read_only_hint == false` Default: true
+        &quot;idempotentHint&quot;: True or False, # Output only. If true, calling the tool repeatedly with the same arguments will have no additional effect on its environment. NOTE: This property is meaningful only when `read_only_hint == false. Default: false
+        &quot;openWorldHint&quot;: True or False, # Output only. If true, this tool may interact with an &quot;open world&quot; of external entities. If false, the tool&#x27;s domain of interaction is closed. For example, the world of a web search tool is open, whereas that of a memory tool is not. Default: true
+        &quot;readOnlyHint&quot;: True or False, # Output only. If true, the tool does not modify its environment. Default: false
+        &quot;title&quot;: &quot;A String&quot;, # Output only. A human-readable title for the tool.
+      &quot;description&quot;: &quot;A String&quot;, # Output only. Description of what the tool does.
+      &quot;name&quot;: &quot;A String&quot;, # Output only. Human-readable name of the tool.
+  <pre>Lists McpServers in a given project and location.
+  parent: string, Required. Parent value for ListMcpServersRequest. Format: `projects/{project}/locations/{location}`. (required)
+    { # Message for response to listing McpServers
+  &quot;mcpServers&quot;: [ # The list of McpServers.

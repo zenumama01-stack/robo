@@ -1,0 +1,28 @@
+<h1><a href="apim_v1alpha.html">API Management API</a> . <a href="apim_v1alpha.projects.html">projects</a> . <a href="apim_v1alpha.projects.locations.html">locations</a></h1>
+  <code><a href="apim_v1alpha.projects.locations.observationJobs.html">observationJobs()</a></code>
+<p class="firstline">Returns the observationJobs Resource.</p>
+  <code><a href="apim_v1alpha.projects.locations.observationSources.html">observationSources()</a></code>
+<p class="firstline">Returns the observationSources Resource.</p>
+  <code><a href="apim_v1alpha.projects.locations.operations.html">operations()</a></code>
+  <code><a href="#getEntitlement">getEntitlement(name, x__xgafv=None)</a></code></p>
+<p class="firstline">GetEntitlement returns the entitlement for the provided project.</p>
+  <code><a href="#listApiObservationTags">listApiObservationTags(parent, pageSize=None, pageToken=None, x__xgafv=None)</a></code></p>
+<p class="firstline">ListApiObservationTags lists all extant tags on any observation in the given project.</p>
+  <code><a href="#listApiObservationTags_next">listApiObservationTags_next()</a></code></p>
+    <code class="details" id="getEntitlement">getEntitlement(name, x__xgafv=None)</code>
+  <pre>GetEntitlement returns the entitlement for the provided project.
+  name: string, Required. The entitlement resource name Format: projects/{project}/locations/{location}/entitlement (required)
+    { # Entitlement stores data related to API Observation entitlement for a given project
+  &quot;apiObservationEntitled&quot;: True or False, # Whether API Observation is entitled.
+  &quot;billingProjectNumber&quot;: &quot;A String&quot;, # Project number of associated billing project that has Apigee and Advanced API Security entitled.
+  &quot;createTime&quot;: &quot;A String&quot;, # Output only. The time of the entitlement creation.
+  &quot;name&quot;: &quot;A String&quot;, # Identifier. The entitlement resource name `projects/{project}/locations/{location}/entitlement`
+  &quot;updateTime&quot;: &quot;A String&quot;, # Output only. The time of the entitlement update.
+    <code class="details" id="listApiObservationTags">listApiObservationTags(parent, pageSize=None, pageToken=None, x__xgafv=None)</code>
+  <pre>ListApiObservationTags lists all extant tags on any observation in the given project.
+  parent: string, Required. The parent, which owns this collection of tags. Format: projects/{project}/locations/{location} (required)
+  pageSize: integer, Optional. The maximum number of tags to return. The service may return fewer than this value. If unspecified, at most 10 tags will be returned. The maximum value is 1000; values above 1000 will be coerced to 1000.
+  pageToken: string, Optional. A page token, received from a previous `ListApiObservationTags` call. Provide this to retrieve the subsequent page. When paginating, all other parameters provided to `ListApiObservationTags` must match the call that provided the page token.
+    { # Message for response to listing tags
+  &quot;apiObservationTags&quot;: [ # The tags from the specified project
+    <code class="details" id="listApiObservationTags_next">listApiObservationTags_next()</code>

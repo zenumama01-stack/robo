@@ -1,0 +1,49 @@
+<div class="notification-preferences-container">
+        <mj-loading text="Loading notification preferences..."></mj-loading>
+            @if (viewModels.length === 0) {
+                    <p>No notification types configured yet.</p>
+                <!-- Notification type cards -->
+                <div class="notification-types-grid">
+                    @for (vm of viewModels; track vm.type.ID) {
+                        <article class="notification-type-card"
+                                 [class.changed]="vm.changed"
+                                 role="region"
+                                 [attr.aria-label]="'Notification settings for ' + vm.type.Name">
+                            <div class="card-header" [style.border-left-color]="getTypeColor(vm.type)">
+                                <div class="icon-wrapper" [style.background-color]="getTypeColor(vm.type) + '20'">
+                                    <i [class]="'fa-solid ' + getTypeIcon(vm.type)" [style.color]="getTypeColor(vm.type)" [attr.aria-hidden]="true"></i>
+                                <div class="header-text">
+                                    <h4>{{ vm.type.Name }}</h4>
+                                    <p class="type-description">{{ vm.type.Description }}</p>
+                                <!-- Delivery channel checkboxes -->
+                                <div class="preference-row">
+                                    <label class="delivery-label" [attr.id]="'delivery-label-' + vm.type.ID">Delivery Channels</label>
+                                    <div class="delivery-checkboxes" role="group" [attr.aria-labelledby]="'delivery-label-' + vm.type.ID">
+                                        <label class="channel-checkbox">
+                                                   [(ngModel)]="vm.inAppEnabled"
+                                                   (change)="onChannelChange(vm)"
+                                                   [disabled]="!getAllowUserPreference(vm.type)"
+                                                   [attr.aria-label]="'Enable in-app notifications for ' + vm.type.Name">
+                                            <i class="fa-solid fa-bell" aria-hidden="true"></i>
+                                            <span>In-App</span>
+                                                   [(ngModel)]="vm.emailEnabled"
+                                                   [attr.aria-label]="'Enable email notifications for ' + vm.type.Name">
+                                                   [(ngModel)]="vm.smsEnabled"
+                                                   [attr.aria-label]="'Enable SMS notifications for ' + vm.type.Name">
+                                            <i class="fa-solid fa-mobile" aria-hidden="true"></i>
+                                            <span>SMS</span>
+                                    @if (!getAllowUserPreference(vm.type)) {
+                                        <div class="info-message" role="alert" aria-live="polite">
+                                            <span>This notification type's delivery channels cannot be customized.</span>
+                                <!-- Auto-expire info -->
+                                @if (getTypeAutoExpireDays(vm.type)) {
+                                    <div class="metadata-row">
+                                        <span class="metadata-text">
+                                            Auto-marks as read after {{ getTypeAutoExpireDays(vm.type) }} day(s)
+            <!-- Action buttons -->
+                <div class="actions" role="group" aria-label="Save or cancel changes">
+                    <button class="btn btn-secondary"
+                            [disabled]="saving"
+                            [attr.aria-busy]="saving">
+                    <button class="btn btn-primary"
+                        <span>{{ saving ? 'Saving...' : 'Save Preferences' }}</span>

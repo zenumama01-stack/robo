@@ -1,0 +1,18 @@
+<h1><a href="agentregistry_v1alpha.html">Agent Registry API</a> . <a href="agentregistry_v1alpha.projects.html">projects</a> . <a href="agentregistry_v1alpha.projects.locations.html">locations</a> . <a href="agentregistry_v1alpha.projects.locations.endpoints.html">endpoints</a></h1>
+<p class="firstline">Gets details of a single Endpoint.</p>
+<p class="firstline">Lists Endpoints in a given project and location.</p>
+  <pre>Gets details of a single Endpoint.
+  name: string, Required. The name of the endpoint to retrieve. Format: `projects/{project}/locations/{location}/endpoints/{endpoint}` (required)
+    { # Represents an Endpoint.
+  &quot;attributes&quot;: { # Output only. Attributes of the Endpoint. Valid values: * `agentregistry.googleapis.com/system/RuntimeReference`: {&quot;uri&quot;: &quot;//...&quot;} - the URI of the underlying resource hosting the Endpoint, for example, the GKE Deployment.
+  &quot;description&quot;: &quot;A String&quot;, # Output only. Description of an Endpoint.
+  &quot;displayName&quot;: &quot;A String&quot;, # Output only. Display name for the Endpoint.
+  &quot;endpointId&quot;: &quot;A String&quot;, # Output only. A stable, globally unique identifier for Endpoint.
+  &quot;interfaces&quot;: [ # Required. The connection details for the Endpoint.
+  &quot;name&quot;: &quot;A String&quot;, # Identifier. The resource name of the Endpoint. Format: `projects/{project}/locations/{location}/endpoints/{endpoint}`.
+  <pre>Lists Endpoints in a given project and location.
+  parent: string, Required. The project and location to list endpoints in. Expected format: `projects/{project}/locations/{location}`. (required)
+  filter: string, Optional. A query string used to filter the list of endpoints returned. The filter expression must follow AIP-160 syntax. Filtering is supported on the `name`, `display_name`, `description`, `version`, and `interfaces` fields. Some examples: * `name = &quot;projects/p1/locations/l1/endpoints/e1&quot;` * `display_name = &quot;my-endpoint&quot;` * `description = &quot;my-endpoint-description&quot;` * `version = &quot;v1&quot;` * `interfaces.transport = &quot;HTTP_JSON&quot;`
+    { # Message for response to listing Endpoints
+  &quot;endpoints&quot;: [ # The list of Endpoint resources matching the parent and filter criteria in the request. Each Endpoint resource follows the format: `projects/{project}/locations/{location}/endpoints/{endpoint}`.
+  &quot;nextPageToken&quot;: &quot;A String&quot;, # A token identifying a page of results the server should return. Used in page_token.

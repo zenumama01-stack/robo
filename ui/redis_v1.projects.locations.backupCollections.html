@@ -1,0 +1,20 @@
+<h1><a href="redis_v1.html">Google Cloud Memorystore for Redis API</a> . <a href="redis_v1.projects.html">projects</a> . <a href="redis_v1.projects.locations.html">locations</a> . <a href="redis_v1.projects.locations.backupCollections.html">backupCollections</a></h1>
+  <code><a href="redis_v1.projects.locations.backupCollections.backups.html">backups()</a></code>
+<p class="firstline">Get a backup collection.</p>
+<p class="firstline">Lists all backup collections owned by a consumer project in either the specified location (region) or all locations. If `location_id` is specified as `-` (wildcard), then all regions available to the project are queried, and the results are aggregated.</p>
+  <pre>Get a backup collection.
+  name: string, Required. Redis backupCollection resource name using the form: `projects/{project_id}/locations/{location_id}/backupCollections/{backup_collection_id}` where `location_id` refers to a Google Cloud region. (required)
+    { # BackupCollection of a cluster.
+  &quot;cluster&quot;: &quot;A String&quot;, # Output only. The full resource path of the cluster the backup collection belongs to. Example: projects/{project}/locations/{location}/clusters/{cluster}
+  &quot;clusterUid&quot;: &quot;A String&quot;, # Output only. The cluster uid of the backup collection.
+  &quot;createTime&quot;: &quot;A String&quot;, # Output only. The time when the backup collection was created.
+  &quot;kmsKey&quot;: &quot;A String&quot;, # Output only. The KMS key used to encrypt the backups under this backup collection.
+  &quot;lastBackupTime&quot;: &quot;A String&quot;, # Output only. The last time a backup was created in the backup collection.
+  &quot;name&quot;: &quot;A String&quot;, # Identifier. Full resource path of the backup collection.
+  &quot;totalBackupCount&quot;: &quot;A String&quot;, # Output only. Total number of backups in the backup collection.
+  &quot;totalBackupSizeBytes&quot;: &quot;A String&quot;, # Output only. Total size of all backups in the backup collection.
+  &quot;uid&quot;: &quot;A String&quot;, # Output only. System assigned unique identifier of the backup collection.
+  <pre>Lists all backup collections owned by a consumer project in either the specified location (region) or all locations. If `location_id` is specified as `-` (wildcard), then all regions available to the project are queried, and the results are aggregated.
+  parent: string, Required. The resource name of the backupCollection location using the form: `projects/{project_id}/locations/{location_id}` where `location_id` refers to a Google Cloud region. (required)
+    { # Response for [ListBackupCollections].
+  &quot;backupCollections&quot;: [ # A list of backupCollections in the project. If the `location_id` in the parent field of the request is &quot;-&quot;, all regions available to the project are queried, and the results aggregated. If in such an aggregated query a location is unavailable, a placeholder backupCollection entry is included in the response with the `name` field set to a value of the form `projects/{project_id}/locations/{location_id}/backupCollections/`- and the `status` field set to ERROR and `status_message` field set to &quot;location not available for ListBackupCollections&quot;.

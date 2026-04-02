@@ -1,0 +1,5 @@
+    globals: true,
+    testTimeout: 30000,
+    restoreMocks: true,
+    include: ['src/**/__tests__/**/*.test.ts', 'src/**/*.test.ts'],
+    exclude: ['**/node_modules/**', '**/dist/**', '**/generated/**'],

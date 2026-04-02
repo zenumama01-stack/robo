@@ -1,0 +1,27 @@
+<h1><a href="discoveryengine_v1.html">Discovery Engine API</a> . <a href="discoveryengine_v1.projects.html">projects</a> . <a href="discoveryengine_v1.projects.locations.html">locations</a> . <a href="discoveryengine_v1.projects.locations.collections.html">collections</a> . <a href="discoveryengine_v1.projects.locations.collections.engines.html">engines</a> . <a href="discoveryengine_v1.projects.locations.collections.engines.assistants.html">assistants</a> . <a href="discoveryengine_v1.projects.locations.collections.engines.assistants.agents.html">agents</a> . <a href="discoveryengine_v1.projects.locations.collections.engines.assistants.agents.tasks.html">tasks</a> . <a href="discoveryengine_v1.projects.locations.collections.engines.assistants.agents.tasks.pushNotificationConfigs.html">pushNotificationConfigs</a></h1>
+  <code><a href="#create">create(tenant, parent, body=None, configId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Set a push notification config for a task.</p>
+  <code><a href="#delete">delete(tenant, name, x__xgafv=None)</a></code></p>
+<p class="firstline">Delete a push notification config for a task.</p>
+  <code><a href="#get">get(tenant, name, x__xgafv=None)</a></code></p>
+<p class="firstline">Get a push notification config for a task.</p>
+  <code><a href="#list">list(tenant, parent, pageSize=None, pageToken=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Get a list of push notifications configured for a task.</p>
+    <code class="details" id="create">create(tenant, parent, body=None, configId=None, x__xgafv=None)</code>
+  <pre>Set a push notification config for a task.
+  parent: string, Required. The parent task resource for this config. Format: tasks/{task_id} (required)
+  &quot;name&quot;: &quot;A String&quot;, # The resource name of the config. Format: tasks/{task_id}/pushNotificationConfigs/{config_id}
+  &quot;pushNotificationConfig&quot;: { # Configuration for setting up push notifications for task updates. # The push notification configuration details.
+  configId: string, Required. The ID for the new config.
+    <code class="details" id="delete">delete(tenant, name, x__xgafv=None)</code>
+  <pre>Delete a push notification config for a task.
+  name: string, The resource name of the config to delete. Format: tasks/{task_id}/pushNotificationConfigs/{config_id} (required)
+    <code class="details" id="get">get(tenant, name, x__xgafv=None)</code>
+  <pre>Get a push notification config for a task.
+  name: string, The resource name of the config to retrieve. Format: tasks/{task_id}/pushNotificationConfigs/{config_id} (required)
+    <code class="details" id="list">list(tenant, parent, pageSize=None, pageToken=None, x__xgafv=None)</code>
+  <pre>Get a list of push notifications configured for a task.
+  parent: string, The parent task resource. Format: tasks/{task_id} (required)
+  pageSize: integer, For AIP-158 these fields are present. Usually not used/needed. The maximum number of configurations to return. If unspecified, all configs will be returned.
+  pageToken: string, A page token received from a previous ListTaskPushNotificationConfigRequest call. Provide this to retrieve the subsequent page. When paginating, all other parameters provided to `ListTaskPushNotificationConfigRequest` must match the call that provided the page token.
+  &quot;configs&quot;: [ # The list of push notification configurations.

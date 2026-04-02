@@ -1,0 +1,76 @@
+<h1><a href="vmmigration_v1.html">VM Migration API</a> . <a href="vmmigration_v1.projects.html">projects</a> . <a href="vmmigration_v1.projects.locations.html">locations</a> . <a href="vmmigration_v1.projects.locations.sources.html">sources</a> . <a href="vmmigration_v1.projects.locations.sources.migratingVms.html">migratingVms</a> . <a href="vmmigration_v1.projects.locations.sources.migratingVms.cloneJobs.html">cloneJobs</a></h1>
+<p class="firstline">Initiates the cancellation of a running clone job.</p>
+  <code><a href="#create">create(parent, body=None, cloneJobId=None, requestId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Initiates a Clone of a specific migrating VM.</p>
+<p class="firstline">Gets details of a single CloneJob.</p>
+<p class="firstline">Lists the CloneJobs of a migrating VM. Only 25 most recent CloneJobs are listed.</p>
+  <pre>Initiates the cancellation of a running clone job.
+  name: string, Required. The clone job id (required)
+{ # Request message for &#x27;CancelCloneJob&#x27; request.
+    <code class="details" id="create">create(parent, body=None, cloneJobId=None, requestId=None, x__xgafv=None)</code>
+  <pre>Initiates a Clone of a specific migrating VM.
+  parent: string, Required. The Clone&#x27;s parent. (required)
+{ # CloneJob describes the process of creating a clone of a MigratingVM to the requested target based on the latest successful uploaded snapshots. While the migration cycles of a MigratingVm take place, it is possible to verify the uploaded VM can be started in the cloud, by creating a clone. The clone can be created without any downtime, and it is created using the latest snapshots which are already in the cloud. The cloneJob is only responsible for its work, not its products, which means once it is finished, it will never touch the instance it created. It will only delete it in case of the CloneJob being cancelled or upon failure to clone.
+  &quot;computeEngineDisksTargetDetails&quot;: { # ComputeEngineDisksTargetDetails is a collection of created Persistent Disks details. # Output only. Details of the target Persistent Disks in Compute Engine.
+    &quot;disks&quot;: [ # The details of each created Persistent Disk.
+      { # Details of a created Persistent Disk.
+        &quot;diskUri&quot;: &quot;A String&quot;, # The URI of the Persistent Disk.
+        &quot;sourceDiskNumber&quot;: 42, # The ordinal number of the source VM disk.
+    &quot;disksTargetDetails&quot;: { # Details for a disks-only migration. # Details of the disks-only migration target.
+    &quot;vmTargetDetails&quot;: { # Details for the VM created VM as part of disks migration. # Details for the VM the migrated data disks are attached to.
+      &quot;vmUri&quot;: &quot;A String&quot;, # Output only. The URI of the Compute Engine VM.
+  &quot;computeEngineTargetDetails&quot;: { # ComputeEngineTargetDetails is a collection of details for creating a VM in a target Compute Engine project. # Output only. Details of the target VM in Compute Engine.
+    &quot;additionalLicenses&quot;: [ # Additional licenses to assign to the VM.
+    &quot;appliedLicense&quot;: { # AppliedLicense holds the license data returned by adaptation module report. # The OS license returned from the adaptation module report.
+      &quot;osLicense&quot;: &quot;A String&quot;, # The OS license returned from the adaptation module&#x27;s report.
+      &quot;type&quot;: &quot;A String&quot;, # The license type that was used in OS adaptation.
+    &quot;bootConversion&quot;: &quot;A String&quot;, # Optional. By default the virtual machine will keep its existing boot option. Setting this property will trigger an internal process which will convert the virtual machine from using the existing boot option to another.
+    &quot;bootOption&quot;: &quot;A String&quot;, # The VM Boot Option, as set in the source VM.
+    &quot;computeScheduling&quot;: { # Scheduling information for VM on maintenance/restart behaviour and node allocation in sole tenant nodes. Options for instance behavior when the host machine undergoes maintenance that may temporarily impact instance performance. # Compute instance scheduling information (if empty default is used).
+      &quot;minNodeCpus&quot;: 42, # The minimum number of virtual CPUs this instance will consume when running on a sole-tenant node. Ignored if no node_affinites are configured.
+      &quot;nodeAffinities&quot;: [ # A set of node affinity and anti-affinity configurations for sole tenant nodes.
+        { # Node Affinity: the configuration of desired nodes onto which this Instance could be scheduled. Based on https://cloud.google.com/compute/docs/reference/rest/v1/instances/setScheduling
+          &quot;key&quot;: &quot;A String&quot;, # The label key of Node resource to reference.
+          &quot;operator&quot;: &quot;A String&quot;, # The operator to use for the node resources specified in the `values` parameter.
+      &quot;onHostMaintenance&quot;: &quot;A String&quot;, # How the instance should behave when the host machine undergoes maintenance that may temporarily impact instance performance.
+      &quot;restartType&quot;: &quot;A String&quot;, # Whether the Instance should be automatically restarted whenever it is terminated by Compute Engine (not terminated by user). This configuration is identical to `automaticRestart` field in Compute Engine create instance under scheduling. It was changed to an enum (instead of a boolean) to match the default value in Compute Engine which is automatic restart.
+    &quot;diskReplicaZones&quot;: [ # Optional. Additional replica zones of the target regional disks. If this list is not empty a regional disk will be created. The first supported zone would be the one stated in the zone field. The rest are taken from this list. Please refer to the [regional disk creation API](https://cloud.google.com/compute/docs/regions-zones/global-regional-zonal-resources) for further details about regional vs zonal disks. If not specified, a zonal disk will be created in the same zone the VM is created.
+    &quot;diskType&quot;: &quot;A String&quot;, # The disk type to use in the VM.
+    &quot;enableIntegrityMonitoring&quot;: True or False, # Optional. Defines whether the instance has integrity monitoring enabled.
+    &quot;enableVtpm&quot;: True or False, # Optional. Defines whether the instance has vTPM enabled.
+    &quot;encryption&quot;: { # Encryption message describes the details of the applied encryption. # Optional. The encryption to apply to the VM disks.
+    &quot;hostname&quot;: &quot;A String&quot;, # The hostname to assign to the VM.
+    &quot;labels&quot;: { # A map of labels to associate with the VM.
+    &quot;licenseType&quot;: &quot;A String&quot;, # The license type to use in OS adaptation.
+    &quot;machineType&quot;: &quot;A String&quot;, # The machine type to create the VM with.
+    &quot;machineTypeSeries&quot;: &quot;A String&quot;, # The machine type series to create the VM with.
+    &quot;metadata&quot;: { # The metadata key/value pairs to assign to the VM.
+    &quot;networkInterfaces&quot;: [ # List of NICs connected to this VM.
+    &quot;networkTags&quot;: [ # A list of network tags to associate with the VM.
+    &quot;project&quot;: &quot;A String&quot;, # The Google Cloud target project ID or project name.
+    &quot;secureBoot&quot;: True or False, # Defines whether the instance has Secure Boot enabled. This can be set to true only if the VM boot option is EFI.
+    &quot;serviceAccount&quot;: &quot;A String&quot;, # The service account to associate the VM with.
+    &quot;storagePool&quot;: &quot;A String&quot;, # Optional. The storage pool used for the VM disks. If specified this will be the storage pool in which the disk is created. This is the full path of the storage pool resource, for example: &quot;projects/my-project/zones/us-central1-a/storagePools/my-storage-pool&quot;. The storage pool must be in the same project and zone as the target disks. The storage pool&#x27;s type must match the disk type.
+    &quot;vmName&quot;: &quot;A String&quot;, # The name of the VM to create.
+    &quot;zone&quot;: &quot;A String&quot;, # The zone in which to create the VM.
+  &quot;createTime&quot;: &quot;A String&quot;, # Output only. The time the clone job was created (as an API call, not when it was actually created in the target).
+  &quot;endTime&quot;: &quot;A String&quot;, # Output only. The time the clone job was ended.
+  &quot;error&quot;: { # The `Status` type defines a logical error model that is suitable for different programming environments, including REST APIs and RPC APIs. It is used by [gRPC](https://github.com/grpc). Each `Status` message contains three pieces of data: error code, error message, and error details. You can find out more about this error model and how to work with it in the [API Design Guide](https://cloud.google.com/apis/design/errors). # Output only. Provides details for the errors that led to the Clone Job&#x27;s state.
+  &quot;name&quot;: &quot;A String&quot;, # Output only. The name of the clone.
+  &quot;state&quot;: &quot;A String&quot;, # Output only. State of the clone job.
+  &quot;stateTime&quot;: &quot;A String&quot;, # Output only. The time the state was last updated.
+  &quot;steps&quot;: [ # Output only. The clone steps list representing its progress.
+    { # CloneStep holds information about the clone step progress.
+      &quot;endTime&quot;: &quot;A String&quot;, # The time the step has ended.
+      &quot;instantiatingMigratedVm&quot;: { # InstantiatingMigratedVMStep contains specific step details. # Instantiating migrated VM step.
+      &quot;preparingVmDisks&quot;: { # PreparingVMDisksStep contains specific step details. # Preparing VM disks step.
+      &quot;startTime&quot;: &quot;A String&quot;, # The time the step has started.
+  cloneJobId: string, Required. The clone job identifier.
+  <pre>Gets details of a single CloneJob.
+  name: string, Required. The name of the CloneJob. (required)
+  <pre>Lists the CloneJobs of a migrating VM. Only 25 most recent CloneJobs are listed.
+  parent: string, Required. The parent, which owns this collection of source VMs. (required)
+  pageSize: integer, Optional. The maximum number of clone jobs to return. The service may return fewer than this value. If unspecified, at most 500 clone jobs will be returned. The maximum value is 1000; values above 1000 will be coerced to 1000.
+  pageToken: string, Required. A page token, received from a previous `ListCloneJobs` call. Provide this to retrieve the subsequent page. When paginating, all other parameters provided to `ListCloneJobs` must match the call that provided the page token.
+    { # Response message for &#x27;ListCloneJobs&#x27; request.
+  &quot;cloneJobs&quot;: [ # Output only. The list of clone jobs response.

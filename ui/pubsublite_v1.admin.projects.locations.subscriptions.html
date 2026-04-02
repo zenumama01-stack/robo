@@ -1,0 +1,45 @@
+<h1><a href="pubsublite_v1.html">Pub/Sub Lite API</a> . <a href="pubsublite_v1.admin.html">admin</a> . <a href="pubsublite_v1.admin.projects.html">projects</a> . <a href="pubsublite_v1.admin.projects.locations.html">locations</a> . <a href="pubsublite_v1.admin.projects.locations.subscriptions.html">subscriptions</a></h1>
+  <code><a href="#create">create(parent, body=None, skipBacklog=None, subscriptionId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Creates a new subscription.</p>
+<p class="firstline">Deletes the specified subscription.</p>
+<p class="firstline">Returns the subscription configuration.</p>
+<p class="firstline">Returns the list of subscriptions for the given project.</p>
+<p class="firstline">Updates properties of the specified subscription.</p>
+  <code><a href="#seek">seek(name, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Performs an out-of-band seek for a subscription to a specified target, which may be timestamps or named positions within the message backlog. Seek translates these targets to cursors for each partition and orchestrates subscribers to start consuming messages from these seek cursors. If an operation is returned, the seek has been registered and subscribers will eventually receive messages from the seek cursors (i.e. eventual consistency), as long as they are using a minimum supported client library version and not a system that tracks cursors independently of Pub/Sub Lite (e.g. Apache Beam, Dataflow, Spark). The seek operation will fail for unsupported clients. If clients would like to know when subscribers react to the seek (or not), they can poll the operation. The seek operation will succeed and complete once subscribers are ready to receive messages from the seek cursors for all partitions of the topic. This means that the seek operation will not complete until all subscribers come online. If the previous seek operation has not yet completed, it will be aborted and the new invocation of seek will supersede it.</p>
+    <code class="details" id="create">create(parent, body=None, skipBacklog=None, subscriptionId=None, x__xgafv=None)</code>
+  <pre>Creates a new subscription.
+  parent: string, Required. The parent location in which to create the subscription. Structured like `projects/{project_number}/locations/{location}`. (required)
+{ # Metadata about a subscription resource.
+  &quot;deliveryConfig&quot;: { # The settings for a subscription&#x27;s message delivery. # The settings for this subscription&#x27;s message delivery.
+    &quot;deliveryRequirement&quot;: &quot;A String&quot;, # The DeliveryRequirement for this subscription.
+  &quot;exportConfig&quot;: { # Configuration for a Pub/Sub Lite subscription that writes messages to a destination. User subscriber clients must not connect to this subscription. # If present, messages are automatically written from the Pub/Sub Lite topic associated with this subscription to a destination.
+    &quot;currentState&quot;: &quot;A String&quot;, # Output only. The current state of the export, which may be different to the desired state due to errors. This field is output only.
+    &quot;deadLetterTopic&quot;: &quot;A String&quot;, # Optional. The name of an optional Pub/Sub Lite topic to publish messages that can not be exported to the destination. For example, the message can not be published to the Pub/Sub service because it does not satisfy the constraints documented at https://cloud.google.com/pubsub/docs/publisher. Structured like: projects/{project_number}/locations/{location}/topics/{topic_id}. Must be within the same project and location as the subscription. The topic may be changed or removed.
+    &quot;desiredState&quot;: &quot;A String&quot;, # The desired state of this export. Setting this to values other than `ACTIVE` and `PAUSED` will result in an error.
+    &quot;pubsubConfig&quot;: { # Configuration for exporting to a Pub/Sub topic. # Messages are automatically written from the Pub/Sub Lite topic associated with this subscription to a Pub/Sub topic.
+      &quot;topic&quot;: &quot;A String&quot;, # The name of the Pub/Sub topic. Structured like: projects/{project_number}/topics/{topic_id}. The topic may be changed.
+  &quot;name&quot;: &quot;A String&quot;, # The name of the subscription. Structured like: projects/{project_number}/locations/{location}/subscriptions/{subscription_id}
+  &quot;topic&quot;: &quot;A String&quot;, # The name of the topic this subscription is attached to. Structured like: projects/{project_number}/locations/{location}/topics/{topic_id}
+  skipBacklog: boolean, If true, the newly created subscription will only receive messages published after the subscription was created. Otherwise, the entire message backlog will be received on the subscription. Defaults to false.
+  subscriptionId: string, Required. The ID to use for the subscription, which will become the final component of the subscription&#x27;s name. This value is structured like: `my-sub-name`.
+  <pre>Deletes the specified subscription.
+  name: string, Required. The name of the subscription to delete. (required)
+  <pre>Returns the subscription configuration.
+  name: string, Required. The name of the subscription whose configuration to return. (required)
+  <pre>Returns the list of subscriptions for the given project.
+  parent: string, Required. The parent whose subscriptions are to be listed. Structured like `projects/{project_number}/locations/{location}`. (required)
+  pageSize: integer, The maximum number of subscriptions to return. The service may return fewer than this value. If unset or zero, all subscriptions for the parent will be returned.
+    { # Response for ListSubscriptions.
+  &quot;subscriptions&quot;: [ # The list of subscriptions in the requested parent. The order of the subscriptions is unspecified.
+  <pre>Updates properties of the specified subscription.
+  name: string, The name of the subscription. Structured like: projects/{project_number}/locations/{location}/subscriptions/{subscription_id} (required)
+  updateMask: string, Required. A mask specifying the subscription fields to change.
+    <code class="details" id="seek">seek(name, body=None, x__xgafv=None)</code>
+  <pre>Performs an out-of-band seek for a subscription to a specified target, which may be timestamps or named positions within the message backlog. Seek translates these targets to cursors for each partition and orchestrates subscribers to start consuming messages from these seek cursors. If an operation is returned, the seek has been registered and subscribers will eventually receive messages from the seek cursors (i.e. eventual consistency), as long as they are using a minimum supported client library version and not a system that tracks cursors independently of Pub/Sub Lite (e.g. Apache Beam, Dataflow, Spark). The seek operation will fail for unsupported clients. If clients would like to know when subscribers react to the seek (or not), they can poll the operation. The seek operation will succeed and complete once subscribers are ready to receive messages from the seek cursors for all partitions of the topic. This means that the seek operation will not complete until all subscribers come online. If the previous seek operation has not yet completed, it will be aborted and the new invocation of seek will supersede it.
+  name: string, Required. The name of the subscription to seek. (required)
+{ # Request for SeekSubscription.
+  &quot;namedTarget&quot;: &quot;A String&quot;, # Seek to a named position with respect to the message backlog.
+  &quot;timeTarget&quot;: { # A target publish or event time. Can be used for seeking to or retrieving the corresponding cursor. # Seek to the first message whose publish or event time is greater than or equal to the specified query time. If no such message can be located, will seek to the end of the message backlog.
+    &quot;eventTime&quot;: &quot;A String&quot;, # Request the cursor of the first message with event time greater than or equal to `event_time`. If messages are missing an event time, the publish time is used as a fallback. As event times are user supplied, subsequent messages may have event times less than `event_time` and should be filtered by the client, if necessary.
+    &quot;publishTime&quot;: &quot;A String&quot;, # Request the cursor of the first message with publish time greater than or equal to `publish_time`. All messages thereafter are guaranteed to have publish times &gt;= `publish_time`.

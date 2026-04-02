@@ -1,0 +1,45 @@
+<h1><a href="datastream_v1.html">Datastream API</a> . <a href="datastream_v1.projects.html">projects</a> . <a href="datastream_v1.projects.locations.html">locations</a> . <a href="datastream_v1.projects.locations.streams.html">streams</a> . <a href="datastream_v1.projects.locations.streams.objects.html">objects</a></h1>
+<p class="firstline">Use this method to get details about a stream object.</p>
+<p class="firstline">Use this method to list the objects of a specific stream.</p>
+<p class="firstline">Use this method to look up a stream object by its source object identifier.</p>
+  <code><a href="#startBackfillJob">startBackfillJob(object, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Use this method to start a backfill job for the specified stream object.</p>
+  <code><a href="#stopBackfillJob">stopBackfillJob(object, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Use this method to stop a backfill job for the specified stream object.</p>
+  <pre>Use this method to get details about a stream object.
+  name: string, Required. The name of the stream object resource to get. (required)
+    { # A specific stream object (e.g a specific DB table).
+  &quot;backfillJob&quot;: { # Represents a backfill job on a specific stream object. # The latest backfill job that was initiated for the stream object.
+    &quot;errors&quot;: [ # Output only. Errors which caused the backfill job to fail.
+    &quot;lastEndTime&quot;: &quot;A String&quot;, # Output only. Backfill job&#x27;s end time.
+    &quot;lastStartTime&quot;: &quot;A String&quot;, # Output only. Backfill job&#x27;s start time.
+    &quot;state&quot;: &quot;A String&quot;, # Output only. Backfill job state.
+    &quot;trigger&quot;: &quot;A String&quot;, # Backfill job&#x27;s triggering reason.
+  &quot;createTime&quot;: &quot;A String&quot;, # Output only. The creation time of the object.
+  &quot;customizationRules&quot;: [ # Output only. The customization rules for the object. These rules are derived from the parent Stream&#x27;s `rule_sets` and represent the intended configuration for the object.
+  &quot;errors&quot;: [ # Output only. Active errors on the object.
+  &quot;name&quot;: &quot;A String&quot;, # Output only. Identifier. The object resource&#x27;s name.
+  &quot;sourceObject&quot;: { # Represents an identifier of an object in the data source. # The object identifier in the data source.
+  &quot;updateTime&quot;: &quot;A String&quot;, # Output only. The last update time of the object.
+  <pre>Use this method to list the objects of a specific stream.
+  parent: string, Required. The parent stream that owns the collection of objects. (required)
+  pageToken: string, Optional. Page token received from a previous `ListStreamObjectsRequest` call. Provide this to retrieve the subsequent page. When paginating, all other parameters provided to `ListStreamObjectsRequest` must match the call that provided the page token.
+    { # Response containing the objects for a stream.
+  &quot;streamObjects&quot;: [ # List of stream objects.
+  <pre>Use this method to look up a stream object by its source object identifier.
+{ # Request for looking up a specific stream object by its source object identifier.
+  &quot;sourceObjectIdentifier&quot;: { # Represents an identifier of an object in the data source. # Required. The source object identifier which maps to the stream object.
+    <code class="details" id="startBackfillJob">startBackfillJob(object, body=None, x__xgafv=None)</code>
+  <pre>Use this method to start a backfill job for the specified stream object.
+  object: string, Required. The name of the stream object resource to start a backfill job for. (required)
+{ # Request for manually initiating a backfill job for a specific stream object.
+  &quot;eventFilter&quot;: { # Represents a filter for included data on a stream object. # Optional. Optional event filter. If not set, or empty, the backfill will be performed on the entire object. This is currently used for partial backfill and only supported for SQL Server sources.
+    &quot;sqlWhereClause&quot;: &quot;A String&quot;, # An SQL-query Where clause selecting which data should be included, not including the &quot;WHERE&quot; keyword. e.g., `t.key1 = &#x27;value1&#x27; AND t.key2 = &#x27;value2&#x27;`
+    { # Response for manually initiating a backfill job for a specific stream object.
+  &quot;object&quot;: { # A specific stream object (e.g a specific DB table). # The stream object resource a backfill job was started for.
+    <code class="details" id="stopBackfillJob">stopBackfillJob(object, body=None, x__xgafv=None)</code>
+  <pre>Use this method to stop a backfill job for the specified stream object.
+  object: string, Required. The name of the stream object resource to stop the backfill job for. (required)
+{ # Request for manually stopping a running backfill job for a specific stream object.
+    { # Response for manually stop a backfill job for a specific stream object.
+  &quot;object&quot;: { # A specific stream object (e.g a specific DB table). # The stream object resource the backfill job was stopped for.

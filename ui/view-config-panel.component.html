@@ -1,0 +1,525 @@
+<!-- View Config Panel - Compact layout with tree dropdown and collapsible sections -->
+  <!-- View Selection (Primary) -->
+      Select View
+      <span class="optional-tag">(or enter entity below)</span>
+      #viewDropdown
+      [BranchConfig]="ViewCategoryConfig"
+      [LeafConfig]="ViewLeafConfig"
+      [Value]="ViewIdAsKey"
+      [Placeholder]="'Search or browse saved views...'"
+      (SelectionChange)="onViewSelection($event)"
+      [class.error]="viewError">
+    @if (viewError) {
+      <span class="form-error">{{ viewError }}</span>
+    @if (!viewError && !viewId && !entityName) {
+        Select a saved view or enter an entity name below
+    @if (!viewError && viewId) {
+        Selected: {{ viewName }}
+  <!-- Entity Name (Alternative) -->
+    <label for="entityName">
+      Entity Name
+      <span class="optional-tag">(alternative to view)</span>
+      id="entityName"
+      [(ngModel)]="entityName"
+      (input)="onEntityChange()"
+      placeholder="e.g., Accounts, Contacts, Users"
+      Use this to display all records from an entity without a saved view
+      [placeholder]="viewName || entityName ? 'Default: ' + (viewName || entityName) : 'Enter a custom title'"
+    <span class="form-hint">Leave empty to use view/entity name as title</span>
+      (click)="toggleDisplayOptions()"
+      [attr.aria-expanded]="showDisplayOptions">
+        [class.fa-chevron-down]="!showDisplayOptions"
+      [class.fa-chevron-up]="showDisplayOptions"></i>
+    @if (showDisplayOptions) {
+        <!-- Display Mode -->
+          <label>Display Mode</label>
+            <label class="radio-option radio-option--compact" [class.selected]="displayMode === 'grid'">
+                name="displayMode"
+                value="grid"
+                [(ngModel)]="displayMode"
+                (change)="onDisplayModeChange()">
+            <label class="radio-option radio-option--compact" [class.selected]="displayMode === 'cards'">
+                value="cards"
+            <label class="radio-option radio-option--compact" [class.selected]="displayMode === 'timeline'">
+                value="timeline"
+          <span class="form-hint">{{ getDisplayModeDescription() }}</span>
+        <!-- Selection Options -->
+                [(ngModel)]="allowModeSwitch"
+              <span class="checkbox-label">Allow Mode Switch</span>
+                [(ngModel)]="enableSelection"
+              <span class="checkbox-label">Enable Selection</span>
+        <!-- Selection Mode -->
+        @if (enableSelection) {
+            <label for="selectionMode">Selection Mode</label>
+              id="selectionMode"
+              [(ngModel)]="selectionMode"
+              (change)="onSelectionModeChange()">
+              <option value="single">Single Selection</option>
+              <option value="multiple">Multiple Selection</option>
+        Advanced Filtering
+        <!-- Extra Filter -->
+          <label for="extraFilter">
+            Extra Filter
+            id="extraFilter"
+            [(ngModel)]="extraFilter"
+            placeholder="e.g., Status = 'Active'"
+            SQL WHERE clause to filter records (applied in addition to view filters)
+  <div class="panel-backdrop" (click)="onClose()"></div>
+<!-- Sliding Panel -->
+<div class="config-panel"
+     [class.open]="isOpen"
+     [class.resizing]="isResizing"
+     [style.width.px]="panelWidth">
+      <span>{{ viewEntity ? 'Edit View' : 'Configure View' }}</span>
+  <div class="tab-nav" [class.icon-only]="isIconOnlyMode">
+      [class.active]="activeTab === 'columns'"
+      (click)="setActiveTab('columns')"
+      [title]="isIconOnlyMode ? 'Columns' : ''">
+      @if (!isIconOnlyMode) {
+        <span>Columns</span>
+      [class.active]="activeTab === 'sorting'"
+      (click)="setActiveTab('sorting')"
+      [title]="isIconOnlyMode ? 'Sorting' + (sortItems.length > 0 ? ' (' + sortItems.length + ')' : '') : ''">
+        <span>Sorting</span>
+      @if (sortItems.length > 0) {
+        <span class="tab-badge">{{ sortItems.length }}</span>
+      [class.active]="activeTab === 'filters'"
+      (click)="setActiveTab('filters')"
+      [title]="isIconOnlyMode ? 'Filters' : ''">
+      [class.active]="activeTab === 'aggregates'"
+      (click)="setActiveTab('aggregates')"
+      [title]="isIconOnlyMode ? 'Aggregates' + (enabledAggregatesCount > 0 ? ' (' + enabledAggregatesCount + ')' : '') : ''">
+        <span>Aggregates</span>
+      @if (enabledAggregatesCount > 0) {
+        <span class="tab-badge">{{ enabledAggregatesCount }}</span>
+    @if (viewEntity) {
+        [class.active]="activeTab === 'settings'"
+        (click)="setActiveTab('settings')"
+        [title]="isIconOnlyMode ? 'Settings' : ''">
+    <!-- Columns Tab -->
+    @if (activeTab === 'columns' && !formatEditingColumn) {
+        <!-- Visible Columns -->
+            <span>Visible Columns</span>
+            <span class="column-count">{{ visibleColumns.length }}</span>
+          <div class="column-list visible-columns">
+            @for (column of visibleColumns; track column.fieldId; let i = $index) {
+              <!-- Drop indicator before -->
+              @if (isDropBefore(column)) {
+                <div class="drop-indicator"></div>
+                class="column-item"
+                [class.dragging]="draggedColumn === column"
+                [class.drop-target]="dropTargetColumn === column"
+                (dragstart)="onDragStart($event, column)"
+                (dragover)="onDragOver($event, column)"
+                (drop)="onDrop($event, column)"
+                (dragend)="onDragEnd($event)">
+                <span class="column-name">
+                  {{ column.userDisplayName || column.displayName }}
+                  @if (column.userDisplayName) {
+                    <i class="fa-solid fa-pen-nib alias-indicator" title="Custom name: {{ column.userDisplayName }}"></i>
+                  @if (hasCustomFormat(column)) {
+                    <i class="fa-solid fa-paintbrush format-indicator" title="Custom formatting applied"></i>
+                <div class="column-actions">
+                    class="action-btn format-btn"
+                    (click)="openFormatEditor(column)"
+                    title="Format column">
+                    <i class="fa-solid fa-paintbrush"></i>
+                    (click)="moveColumnUp(column)"
+                    [disabled]="i === visibleColumns.length - 1"
+                    (click)="moveColumnDown(column)"
+                    class="action-btn hide-btn"
+                    (click)="toggleColumnVisibility(column)"
+                    title="Hide column">
+                    <i class="fa-solid fa-eye-slash"></i>
+              <!-- Drop indicator after (only for last item) -->
+              @if (isDropAfter(column) && i === visibleColumns.length - 1) {
+            @if (visibleColumns.length === 0) {
+                <span>No columns visible. Add columns from below.</span>
+        <!-- Hidden Columns -->
+            <span>Hidden Columns</span>
+            <span class="column-count">{{ hiddenColumns.length }}</span>
+          @if (hiddenColumns.length > 5) {
+            <div class="column-search">
+                placeholder="Search columns..."
+                [(ngModel)]="columnSearchText"
+          <div class="column-list hidden-columns">
+            @for (column of filteredHiddenColumns; track column.fieldId) {
+              <div class="column-item hidden">
+                <span class="column-name">{{ column.displayName }}</span>
+                  class="action-btn show-btn"
+                  title="Show column">
+            @if (hiddenColumns.length === 0) {
+                <span>All columns are visible</span>
+    <!-- Column Format Editor Sub-Panel -->
+    @if (activeTab === 'columns' && formatEditingColumn) {
+      <div class="format-editor">
+        <!-- Format Editor Header -->
+        <div class="format-editor-header">
+          <button class="back-btn" (click)="closeFormatEditor()">
+          <div class="format-editor-title">
+            <span>Format: {{ formatEditingColumn.userDisplayName || formatEditingColumn.displayName }}</span>
+        <!-- Column Alias Section -->
+        <div class="format-section">
+          <div class="format-section-header">
+            <i class="fa-solid fa-pen-nib"></i>
+            <span>Column Name</span>
+          <div class="format-row">
+            <label>Display As</label>
+            <input type="text" class="format-input"
+                   [value]="formatEditingColumn.userDisplayName || ''"
+                   (input)="updateUserDisplayName($any($event.target).value)"
+                   [placeholder]="formatEditingColumn.displayName" />
+          @if (formatEditingColumn.userDisplayName) {
+            <div class="format-row alias-info">
+              <small class="muted-text">Original: {{ formatEditingColumn.displayName }}</small>
+              <button class="clear-alias-btn" (click)="formatEditingColumn.userDisplayName = undefined" title="Clear alias">
+        <div class="format-preview-section">
+          <div class="preview-table">
+            <div class="preview-header-cell"
+                 [style.font-weight]="formatEditingColumn.format?.headerStyle?.bold ? 'bold' : 'normal'"
+                 [style.font-style]="formatEditingColumn.format?.headerStyle?.italic ? 'italic' : 'normal'"
+                 [style.text-decoration]="formatEditingColumn.format?.headerStyle?.underline ? 'underline' : 'none'"
+                 [style.color]="formatEditingColumn.format?.headerStyle?.color"
+                 [style.background-color]="formatEditingColumn.format?.headerStyle?.backgroundColor">
+              {{ formatEditingColumn.userDisplayName || formatEditingColumn.displayName }}
+            @for (value of getSampleValues(formatEditingColumn); track $index) {
+              <div class="preview-cell"
+                   [style.text-align]="formatEditingColumn.format?.align || 'left'"
+                   [style.font-weight]="formatEditingColumn.format?.cellStyle?.bold ? 'bold' : 'normal'"
+                   [style.font-style]="formatEditingColumn.format?.cellStyle?.italic ? 'italic' : 'normal'"
+                   [style.text-decoration]="formatEditingColumn.format?.cellStyle?.underline ? 'underline' : 'none'"
+                   [style.color]="formatEditingColumn.format?.cellStyle?.color"
+                   [style.background-color]="formatEditingColumn.format?.cellStyle?.backgroundColor">
+                {{ formatPreviewValue(value, formatEditingColumn.format) }}
+        <!-- Format Type -->
+            <span>Format Type</span>
+          <select class="format-select" [(ngModel)]="formatEditingColumn.format!.type">
+            <option value="auto">Auto (Smart Default)</option>
+            <option value="text">Text</option>
+            <option value="currency">Currency</option>
+            <option value="percent">Percent</option>
+            <option value="datetime">Date & Time</option>
+        <!-- Type-Specific Options -->
+        @if (formatEditingColumn.format?.type === 'number' || formatEditingColumn.format?.type === 'currency' || formatEditingColumn.format?.type === 'percent') {
+              <span>Number Options</span>
+              <label>Decimal Places</label>
+              <input type="number" class="format-input small" min="0" max="10"
+                     [(ngModel)]="formatEditingColumn.format!.decimals" />
+            @if (formatEditingColumn.format?.type === 'currency') {
+                <label>Currency</label>
+                <select class="format-select" [(ngModel)]="formatEditingColumn.format!.currencyCode">
+                  <option value="USD">USD ($)</option>
+                  <option value="EUR">EUR (€)</option>
+                  <option value="GBP">GBP (£)</option>
+                  <option value="JPY">JPY (¥)</option>
+                  <option value="CAD">CAD ($)</option>
+                  <option value="AUD">AUD ($)</option>
+              <label>Thousands Separator</label>
+              <input type="checkbox" [(ngModel)]="formatEditingColumn.format!.thousandsSeparator" />
+        @if (formatEditingColumn.format?.type === 'date' || formatEditingColumn.format?.type === 'datetime') {
+              <span>Date Options</span>
+              <label>Format</label>
+              <select class="format-select" [(ngModel)]="formatEditingColumn.format!.dateFormat">
+                <option value="short">Short (1/15/25)</option>
+                <option value="short-weekday">Short + Day (Wed, 1/15/25)</option>
+                <option value="medium">Medium (Jan 15, 2025)</option>
+                <option value="medium-weekday">Medium + Day (Wed, Jan 15, 2025)</option>
+                <option value="long">Long (January 15, 2025)</option>
+                <option value="long-weekday">Long + Day (Wednesday, January 15, 2025)</option>
+        @if (formatEditingColumn.format?.type === 'boolean') {
+              <span>Boolean Options</span>
+              <label>True Label</label>
+              <input type="text" class="format-input" [(ngModel)]="formatEditingColumn.format!.trueLabel" placeholder="Yes" />
+              <label>False Label</label>
+              <input type="text" class="format-input" [(ngModel)]="formatEditingColumn.format!.falseLabel" placeholder="No" />
+              <select class="format-select" [(ngModel)]="formatEditingColumn.format!.booleanDisplay">
+                <option value="checkbox">Checkbox</option>
+                <option value="icon">Icon</option>
+        <!-- Alignment -->
+            <span>Alignment</span>
+          <div class="alignment-toggle">
+            <button class="align-btn" [class.active]="formatEditingColumn.format?.align === 'left' || !formatEditingColumn.format?.align"
+                    (click)="formatEditingColumn.format!.align = 'left'" title="Left">
+            <button class="align-btn" [class.active]="formatEditingColumn.format?.align === 'center'"
+                    (click)="formatEditingColumn.format!.align = 'center'" title="Center">
+              <i class="fa-solid fa-align-center"></i>
+            <button class="align-btn" [class.active]="formatEditingColumn.format?.align === 'right'"
+                    (click)="formatEditingColumn.format!.align = 'right'" title="Right">
+              <i class="fa-solid fa-align-right"></i>
+        <!-- Header Style -->
+            <span>Header Style</span>
+          <div class="style-buttons">
+            <button class="style-btn" [class.active]="formatEditingColumn.format?.headerStyle?.bold"
+                    (click)="toggleHeaderStyle('bold')"
+                    title="Bold">
+              <i class="fa-solid fa-bold"></i>
+            <button class="style-btn" [class.active]="formatEditingColumn.format?.headerStyle?.italic"
+                    (click)="toggleHeaderStyle('italic')"
+                    title="Italic">
+              <i class="fa-solid fa-italic"></i>
+            <button class="style-btn" [class.active]="formatEditingColumn.format?.headerStyle?.underline"
+                    (click)="toggleHeaderStyle('underline')"
+                    title="Underline">
+              <i class="fa-solid fa-underline"></i>
+            <label>Text Color</label>
+            <input type="color" class="color-input"
+                   [value]="formatEditingColumn.format?.headerStyle?.color || '#000000'"
+                   (input)="updateHeaderColor('color', $any($event.target).value)" />
+            <label>Background</label>
+                   [value]="formatEditingColumn.format?.headerStyle?.backgroundColor || '#ffffff'"
+                   (input)="updateHeaderColor('backgroundColor', $any($event.target).value)" />
+        <!-- Cell Style -->
+            <span>Cell Style</span>
+            <button class="style-btn" [class.active]="formatEditingColumn.format?.cellStyle?.bold"
+                    (click)="toggleCellStyle('bold')"
+            <button class="style-btn" [class.active]="formatEditingColumn.format?.cellStyle?.italic"
+                    (click)="toggleCellStyle('italic')"
+            <button class="style-btn" [class.active]="formatEditingColumn.format?.cellStyle?.underline"
+                    (click)="toggleCellStyle('underline')"
+                   [value]="formatEditingColumn.format?.cellStyle?.color || '#000000'"
+                   (input)="updateCellColor('color', $any($event.target).value)" />
+                   [value]="formatEditingColumn.format?.cellStyle?.backgroundColor || '#ffffff'"
+                   (input)="updateCellColor('backgroundColor', $any($event.target).value)" />
+        <!-- Clear Format Button -->
+        <div class="format-actions">
+          <button class="clear-format-btn" (click)="clearColumnFormat(formatEditingColumn); closeFormatEditor()">
+            Clear Formatting
+    <!-- Sorting Tab -->
+    @if (activeTab === 'sorting') {
+        <div class="config-section sorting-section">
+          <div class="sorting-header">
+            <p class="sorting-description">
+              Define how records should be ordered. Add multiple levels to sort by secondary fields when values are equal.
+          <!-- Add Sort Button -->
+            class="add-sort-btn"
+            (click)="addSortLevel()"
+            [disabled]="!canEdit || sortItems.length >= sortableFields.length"
+            title="Add another sort level">
+            <span>Add Sort Level</span>
+          <!-- Sort Items List -->
+            <div class="sort-items-list">
+              @for (sortItem of sortItems; track $index; let i = $index) {
+                @if (isSortDropBefore(sortItem)) {
+                  <div class="sort-drop-indicator"></div>
+                  class="sort-item"
+                  [class.dragging]="draggedSortItem === sortItem"
+                  [class.drop-target]="dropTargetSortItem === sortItem"
+                  (dragstart)="onSortDragStart($event, sortItem)"
+                  (dragover)="onSortDragOver($event, sortItem)"
+                  (dragleave)="onSortDragLeave($event)"
+                  (drop)="onSortDrop($event, sortItem)"
+                  (dragend)="onSortDragEnd($event)">
+                  <!-- Priority Badge -->
+                  <div class="sort-priority-badge">{{ i + 1 }}</div>
+                  <!-- Drag Handle -->
+                  <div class="sort-drag-handle" title="Drag to reorder">
+                  <!-- Field Dropdown -->
+                    class="sort-field-dropdown"
+                    [(ngModel)]="sortItem.field"
+                    (ngModelChange)="onSortFieldChange(sortItem, $event)"
+                    [disabled]="!canEdit">
+                    @for (field of sortableFields; track field.ID) {
+                  <!-- Direction Toggle -->
+                  <div class="sort-direction-toggle">
+                      class="direction-btn"
+                      [class.active]="sortItem.direction === 'asc'"
+                      (click)="onSortDirectionChange(sortItem, 'asc')"
+                      [disabled]="!canEdit"
+                      title="Ascending (A-Z, 1-9)">
+                      [class.active]="sortItem.direction === 'desc'"
+                      (click)="onSortDirectionChange(sortItem, 'desc')"
+                      title="Descending (Z-A, 9-1)">
+                  <!-- Remove Button -->
+                    class="sort-remove-btn"
+                    (click)="removeSortLevel(sortItem)"
+                    title="Remove sort level">
+                @if (isSortDropAfter(sortItem) && i === sortItems.length - 1) {
+            <!-- Multi-sort hint -->
+            @if (sortItems.length > 1) {
+              <div class="sort-hint">
+                <span>Drag items to change priority. Records sort by first level, then second, etc.</span>
+            <div class="sort-empty-state">
+              <span>No sorting configured</span>
+              <p class="sort-empty-hint">Click "Add Sort Level" to define how records should be ordered</p>
+    <!-- Filters Tab -->
+    @if (activeTab === 'filters') {
+        <!-- Filter Mode Selection -->
+        <div class="filter-mode-selector">
+            class="filter-mode-btn"
+            [class.active]="filterMode === 'smart'"
+            (click)="setFilterMode('smart')"
+            <div class="mode-icon">
+            <div class="mode-content">
+              <span class="mode-title">Smart Filter</span>
+              <span class="mode-subtitle">Use AI to filter with natural language</span>
+            @if (filterMode === 'smart') {
+              <i class="fa-solid fa-check mode-check"></i>
+            [class.active]="filterMode === 'traditional'"
+            (click)="setFilterMode('traditional')"
+              <span class="mode-title">Traditional Filter</span>
+              <span class="mode-subtitle">Build filters with field/operator/value</span>
+            @if (filterMode === 'traditional') {
+        <!-- Smart Filter Section -->
+          <div class="config-section smart-filter-section">
+            <div class="smart-filter-input-container">
+              <div class="smart-filter-icon">
+                id="smartFilterPrompt"
+                class="smart-filter-textarea"
+                placeholder="Describe what you're looking for..."
+                [(ngModel)]="smartFilterPrompt"
+            @if (smartFilterExplanation) {
+              <div class="smart-filter-explanation">
+                <span>{{ smartFilterExplanation }}</span>
+            <!-- Example Prompts -->
+            <div class="smart-filter-examples">
+              <div class="examples-header">
+                <span>Try these examples:</span>
+                  class="example-chip"
+                  (click)="applySmartFilterExample('Show records created in the last 30 days')"
+                  <i class="fa-regular fa-calendar"></i>
+                  Last 30 days
+                  (click)="applySmartFilterExample('Active records only')"
+                  Active only
+                  (click)="applySmartFilterExample('Records with high priority')"
+                  High priority
+                  (click)="applySmartFilterExample('Records modified this week')"
+                  Modified this week
+            <div class="smart-filter-tip">
+              <span>The AI will interpret your description and create the appropriate filter when you save the view.</span>
+        <!-- Traditional Filter Section -->
+          <div class="config-section traditional-filter-section">
+            <div class="filter-summary-container">
+                <div class="summary-info">
+                    <span class="summary-text">{{ getFilterSummary() }}</span>
+                    <span class="summary-text no-filters">No filters configured</span>
+                <div class="summary-actions">
+                  @if (getFilterCount() > 0 && canEdit) {
+                      class="summary-btn clear-btn"
+                      (click)="clearFilters()"
+                      title="Clear all filters">
+                    class="summary-btn edit-btn primary"
+                    (click)="openFilterDialog()"
+                    [disabled]="!canEdit && getFilterCount() === 0"
+                    title="Edit filters">
+                    {{ getFilterCount() > 0 ? 'Edit Filters' : 'Add Filters' }}
+            <div class="traditional-filter-tip">
+              <span>Build precise filters by selecting fields, operators, and values. Use groups for complex AND/OR logic.</span>
+    <!-- Aggregates Tab -->
+    @if (activeTab === 'aggregates') {
+        <div class="config-section aggregates-section">
+          <div class="aggregates-header">
+            <p class="aggregates-description">
+              Add summary calculations like totals, averages, and counts. Display them in cards or as column footers.
+          <!-- Add Aggregate Button -->
+            class="add-aggregate-btn"
+            (click)="openAddAggregateDialog()"
+            title="Add a new aggregate">
+            <span>Add Aggregate</span>
+          <!-- Aggregates List -->
+          @if (aggregates.length > 0) {
+            <div class="aggregates-list">
+              @for (agg of aggregates; track agg.id; let i = $index) {
+                <div class="aggregate-item" [class.disabled]="agg.enabled === false">
+                  <div class="agg-icon">
+                    <i [class]="agg.icon || 'fa-solid fa-chart-simple'"></i>
+                  <div class="agg-content">
+                    <div class="agg-label">{{ agg.label }}</div>
+                    <div class="agg-details">
+                      <span class="agg-type">
+                        <i [class]="agg.displayType === 'card' ? 'fa-solid fa-id-card' : 'fa-solid fa-table-columns'"></i>
+                        {{ agg.displayType === 'card' ? 'Card' : 'Column Footer' }}
+                      @if (agg.smartPrompt) {
+                        <span class="agg-smart-badge" title="AI-generated">
+                  <div class="agg-actions">
+                      class="agg-action-btn"
+                      [disabled]="i === 0 || !canEdit"
+                      (click)="moveAggregateUp(agg)"
+                      [disabled]="i === aggregates.length - 1 || !canEdit"
+                      (click)="moveAggregateDown(agg)"
+                      class="agg-action-btn toggle-btn"
+                      [class.enabled]="agg.enabled !== false"
+                      (click)="toggleAggregateEnabled(agg, $event)"
+                      [title]="agg.enabled !== false ? 'Disable' : 'Enable'">
+                      <i [class]="agg.enabled !== false ? 'fa-solid fa-eye' : 'fa-solid fa-eye-slash'"></i>
+                      class="agg-action-btn edit-btn"
+                      (click)="editAggregate(agg)"
+                      title="Edit">
+                      class="agg-action-btn remove-btn"
+                      (click)="removeAggregate(agg)"
+                      title="Remove">
+            <div class="aggregates-summary">
+                <span>{{ cardAggregates.length }} card{{ cardAggregates.length !== 1 ? 's' : '' }}</span>
+                <span>{{ columnAggregates.length }} column footer{{ columnAggregates.length !== 1 ? 's' : '' }}</span>
+            <div class="aggregates-empty-state">
+              <span>No aggregates configured</span>
+              <p class="empty-hint">Click "Add Aggregate" to create summary calculations</p>
+          <!-- Info Tip -->
+          <div class="aggregates-tip">
+            <span>Aggregates are calculated server-side for accuracy with filtered/paginated data.</span>
+    <!-- Settings Tab -->
+    @if (activeTab === 'settings') {
+        <!-- View Name & Description -->
+            <span>View Details</span>
+            <label for="viewName">Name</label>
+              id="viewName"
+              [class.invalid]="!viewName || !viewName.trim()"
+              placeholder="Enter view name..."
+              [(ngModel)]="viewName"
+            @if (!viewName || !viewName.trim()) {
+              <span class="validation-error">View name is required</span>
+            <label for="viewDescription">Description</label>
+              id="viewDescription"
+              placeholder="Describe this view..."
+              [(ngModel)]="viewDescription"
+        <!-- Sharing -->
+            <i class="fa-solid fa-share-alt"></i>
+            <span>Sharing</span>
+              [(ngModel)]="isShared"
+        <!-- Danger Zone -->
+        @if (viewEntity && canDelete) {
+          <div class="config-section danger-zone">
+              <span>Danger Zone</span>
+            <button class="delete-btn" (click)="onDelete()">
+              <span>Delete View</span>
+  <!-- Validation Errors Banner -->
+  @if (ValidationErrors.length > 0 && visibleColumns.length === 0) {
+    <div class="validation-banner">
+      <span>At least one column must be visible</span>
+    <!-- Action buttons on LEFT -->
+      @if (viewEntity && canEdit) {
+        <!-- Editing an existing saved view -->
+          [disabled]="isSaving || !IsValid">
+      @if (!viewEntity) {
+        <!-- Default/Dynamic view - Save to user settings -->
+          (click)="onSaveDefaults()"
+          [disabled]="isSaving">
+    <!-- Cancel button on RIGHT -->
+<!-- Aggregate Setup Dialog -->
+<mj-aggregate-setup-dialog
+  [Entity]="entity"
+  [Aggregate]="editingAggregate"
+  [IsOpen]="showAggregateDialog"
+  (Close)="closeAggregateDialog()"
+  (Save)="onAggregateSave($event)">
+</mj-aggregate-setup-dialog>
+<mj-ev-confirm-dialog
+  [IsOpen]="showDeleteConfirm"
+  Title="Delete View"
+  [Message]="'Are you sure you want to delete \'' + viewName + '\'?'"
+  DetailMessage="This action cannot be undone. All users who have access to this view will lose it."
+  ConfirmText="Delete"
+  ConfirmStyle="danger"
+  Icon="fa-solid fa-trash"
+  (Confirmed)="OnDeleteConfirmed()"
+  (Cancelled)="OnDeleteCancelled()">
+</mj-ev-confirm-dialog>
+<!-- Filter Mode Switch Confirmation Dialog (BUG-006) -->
+  [IsOpen]="showFilterModeSwitchConfirm"
+  Title="Switch Filter Mode"
+  [Message]="filterMode === 'smart' ? 'Switching to Traditional mode will clear your smart filter prompt.' : 'Switching to Smart mode will clear your traditional filter rules.'"
+  DetailMessage="You can switch back later, but the current filter data will be lost."
+  ConfirmText="Switch"
+  ConfirmStyle="primary"
+  Icon="fa-solid fa-exchange-alt"
+  (Confirmed)="OnFilterModeSwitchConfirmed()"
+  (Cancelled)="OnFilterModeSwitchCancelled()">

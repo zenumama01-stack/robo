@@ -1,0 +1,38 @@
+<h1><a href="dlp_v2.html">Sensitive Data Protection (DLP)</a> . <a href="dlp_v2.organizations.html">organizations</a> . <a href="dlp_v2.organizations.locations.html">locations</a> . <a href="dlp_v2.organizations.locations.jobTriggers.html">jobTriggers</a></h1>
+<p class="firstline">Creates a job trigger to run DLP actions such as scanning storage for sensitive information on a set schedule. See https://cloud.google.com/sensitive-data-protection/docs/creating-job-triggers to learn more.</p>
+<p class="firstline">Deletes a job trigger. See https://cloud.google.com/sensitive-data-protection/docs/creating-job-triggers to learn more.</p>
+<p class="firstline">Gets a job trigger. See https://cloud.google.com/sensitive-data-protection/docs/creating-job-triggers to learn more.</p>
+<p class="firstline">Lists job triggers. See https://cloud.google.com/sensitive-data-protection/docs/creating-job-triggers to learn more.</p>
+<p class="firstline">Updates a job trigger. See https://cloud.google.com/sensitive-data-protection/docs/creating-job-triggers to learn more.</p>
+  <pre>Creates a job trigger to run DLP actions such as scanning storage for sensitive information on a set schedule. See https://cloud.google.com/sensitive-data-protection/docs/creating-job-triggers to learn more.
+{ # Request message for CreateJobTrigger.
+  &quot;jobTrigger&quot;: { # Contains a configuration to make API calls on a repeating basis. See https://cloud.google.com/sensitive-data-protection/docs/concepts-job-triggers to learn more. # Required. The JobTrigger to create.
+    &quot;createTime&quot;: &quot;A String&quot;, # Output only. The creation timestamp of a triggeredJob.
+    &quot;description&quot;: &quot;A String&quot;, # User provided description (max 256 chars)
+    &quot;errors&quot;: [ # Output only. A stream of errors encountered when the trigger was activated. Repeated errors may result in the JobTrigger automatically being paused. Will return the last 100 errors. Whenever the JobTrigger is modified this list will be cleared.
+    &quot;inspectJob&quot;: { # Controls what and how to inspect for findings. # For inspect jobs, a snapshot of the configuration.
+    &quot;lastRunTime&quot;: &quot;A String&quot;, # Output only. The timestamp of the last time this trigger executed.
+    &quot;name&quot;: &quot;A String&quot;, # Unique resource name for the triggeredJob, assigned by the service when the triggeredJob is created, for example `projects/dlp-test-project/jobTriggers/53234423`.
+    &quot;status&quot;: &quot;A String&quot;, # Required. A status for this trigger.
+    &quot;triggers&quot;: [ # A list of triggers which will be OR&#x27;ed together. Only one in the list needs to trigger for a job to be started. The list may contain only a single Schedule trigger and must have at least one object.
+      { # What event needs to occur for a new job to be started.
+        &quot;manual&quot;: { # Job trigger option for hybrid jobs. Jobs must be manually created and finished. # For use with hybrid jobs. Jobs must be manually created and finished.
+        &quot;schedule&quot;: { # Schedule for inspect job triggers. # Create a job on a repeating basis based on the elapse of time.
+          &quot;recurrencePeriodDuration&quot;: &quot;A String&quot;, # With this option a job is started on a regular periodic basis. For example: every day (86400 seconds). A scheduled start time will be skipped if the previous execution has not ended when its scheduled time occurs. This value must be set to a time duration greater than or equal to 1 day and can be no longer than 60 days.
+    &quot;updateTime&quot;: &quot;A String&quot;, # Output only. The last update timestamp of a triggeredJob.
+  &quot;triggerId&quot;: &quot;A String&quot;, # The trigger id can contain uppercase and lowercase letters, numbers, and hyphens; that is, it must match the regular expression: `[a-zA-Z\d-_]+`. The maximum length is 100 characters. Can be empty to allow the system to generate one.
+    { # Contains a configuration to make API calls on a repeating basis. See https://cloud.google.com/sensitive-data-protection/docs/concepts-job-triggers to learn more.
+  <pre>Deletes a job trigger. See https://cloud.google.com/sensitive-data-protection/docs/creating-job-triggers to learn more.
+  name: string, Required. Resource name of the project and the triggeredJob, for example `projects/dlp-test-project/jobTriggers/53234423`. (required)
+  <pre>Gets a job trigger. See https://cloud.google.com/sensitive-data-protection/docs/creating-job-triggers to learn more.
+  <pre>Lists job triggers. See https://cloud.google.com/sensitive-data-protection/docs/creating-job-triggers to learn more.
+  filter: string, Allows filtering. Supported syntax: * Filter expressions are made up of one or more restrictions. * Restrictions can be combined by `AND` or `OR` logical operators. A sequence of restrictions implicitly uses `AND`. * A restriction has the form of `{field} {operator} {value}`. * Supported fields/values for inspect triggers: - `status` - HEALTHY|PAUSED|CANCELLED - `inspected_storage` - DATASTORE|CLOUD_STORAGE|BIGQUERY - &#x27;last_run_time` - RFC 3339 formatted timestamp, surrounded by quotation marks. Nanoseconds are ignored. - &#x27;error_count&#x27; - Number of errors that have occurred while running. * The operator must be `=` or `!=` for status and inspected_storage. The syntax is based on https://google.aip.dev/160. Examples: * inspected_storage = cloud_storage AND status = HEALTHY * inspected_storage = cloud_storage OR inspected_storage = bigquery * inspected_storage = cloud_storage AND (state = PAUSED OR state = HEALTHY) * last_run_time &gt; \&quot;2017-12-12T00:00:00+00:00\&quot; The length of this field should be no more than 500 characters.
+  orderBy: string, Comma-separated list of triggeredJob fields to order by, followed by `asc` or `desc` postfix. This list is case insensitive. The default sorting order is ascending. Redundant space characters are insignificant. Example: `name asc,update_time, create_time desc` Supported fields are: - `create_time`: corresponds to the time the JobTrigger was created. - `update_time`: corresponds to the time the JobTrigger was last updated. - `last_run_time`: corresponds to the last time the JobTrigger ran. - `name`: corresponds to the JobTrigger&#x27;s name. - `display_name`: corresponds to the JobTrigger&#x27;s display name. - `status`: corresponds to JobTrigger&#x27;s status.
+  pageToken: string, Page token to continue retrieval. Comes from the previous call to ListJobTriggers. `order_by` field must not change for subsequent calls.
+  type: string, The type of jobs. Will use `DlpJobType.INSPECT` if not set.
+    { # Response message for ListJobTriggers.
+  &quot;jobTriggers&quot;: [ # List of triggeredJobs, up to page_size in ListJobTriggersRequest.
+  &quot;nextPageToken&quot;: &quot;A String&quot;, # If the next page is available then this value is the next page token to be used in the following ListJobTriggers request.
+  <pre>Updates a job trigger. See https://cloud.google.com/sensitive-data-protection/docs/creating-job-triggers to learn more.
+{ # Request message for UpdateJobTrigger.
+  &quot;jobTrigger&quot;: { # Contains a configuration to make API calls on a repeating basis. See https://cloud.google.com/sensitive-data-protection/docs/concepts-job-triggers to learn more. # New JobTrigger value.

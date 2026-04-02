@@ -1,0 +1,20 @@
+<h1><a href="indexing_v3.html">Web Search Indexing API</a> . <a href="indexing_v3.urlNotifications.html">urlNotifications</a></h1>
+  <code><a href="#getMetadata">getMetadata(url=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Gets metadata about a Web Document. This method can _only_ be used to query URLs that were previously seen in successful Indexing API notifications. Includes the latest `UrlNotification` received via this API.</p>
+  <code><a href="#publish">publish(body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Notifies that a URL has been updated or deleted.</p>
+    <code class="details" id="getMetadata">getMetadata(url=None, x__xgafv=None)</code>
+  <pre>Gets metadata about a Web Document. This method can _only_ be used to query URLs that were previously seen in successful Indexing API notifications. Includes the latest `UrlNotification` received via this API.
+  url: string, URL that is being queried.
+    { # Summary of the most recent Indexing API notifications successfully received, for a given URL.
+  &quot;latestRemove&quot;: { # `UrlNotification` is the resource used in all Indexing API calls. It describes one event in the life cycle of a Web Document. # Latest notification received with type `URL_REMOVED`.
+    &quot;notifyTime&quot;: &quot;A String&quot;, # Creation timestamp for this notification. Users should _not_ specify it, the field is ignored at the request time.
+    &quot;type&quot;: &quot;A String&quot;, # The URL life cycle event that Google is being notified about.
+    &quot;url&quot;: &quot;A String&quot;, # The object of this notification. The URL must be owned by the publisher of this notification and, in case of `URL_UPDATED` notifications, it _must_ be crawlable by Google.
+  &quot;latestUpdate&quot;: { # `UrlNotification` is the resource used in all Indexing API calls. It describes one event in the life cycle of a Web Document. # Latest notification received with type `URL_UPDATED`.
+  &quot;url&quot;: &quot;A String&quot;, # URL to which this metadata refers.
+    <code class="details" id="publish">publish(body=None, x__xgafv=None)</code>
+  <pre>Notifies that a URL has been updated or deleted.
+{ # `UrlNotification` is the resource used in all Indexing API calls. It describes one event in the life cycle of a Web Document.
+    { # Output for PublishUrlNotification
+  &quot;urlNotificationMetadata&quot;: { # Summary of the most recent Indexing API notifications successfully received, for a given URL. # Description of the notification events received for this URL.

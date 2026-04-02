@@ -1,0 +1,22 @@
+<h1><a href="alertcenter_v1beta1.html">Google Workspace Alert Center API</a> . <a href="alertcenter_v1beta1.alerts.html">alerts</a> . <a href="alertcenter_v1beta1.alerts.feedback.html">feedback</a></h1>
+  <code><a href="#create">create(alertId, body=None, customerId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Creates new feedback for an alert. Attempting to create a feedback for a non-existent alert returns `NOT_FOUND` error. Attempting to create a feedback for an alert that is marked for deletion returns `FAILED_PRECONDITION' error.</p>
+  <code><a href="#list">list(alertId, customerId=None, filter=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Lists all the feedback for an alert. Attempting to list feedbacks for a non-existent alert returns `NOT_FOUND` error.</p>
+    <code class="details" id="create">create(alertId, body=None, customerId=None, x__xgafv=None)</code>
+  <pre>Creates new feedback for an alert. Attempting to create a feedback for a non-existent alert returns `NOT_FOUND` error. Attempting to create a feedback for an alert that is marked for deletion returns `FAILED_PRECONDITION&#x27; error.
+  alertId: string, Required. The identifier of the alert this feedback belongs to. (required)
+{ # A customer feedback about an alert.
+  &quot;alertId&quot;: &quot;A String&quot;, # Output only. The alert identifier.
+  &quot;createTime&quot;: &quot;A String&quot;, # Output only. The time this feedback was created.
+  &quot;customerId&quot;: &quot;A String&quot;, # Output only. The unique identifier of the Google Workspace account of the customer.
+  &quot;email&quot;: &quot;A String&quot;, # Output only. The email of the user that provided the feedback.
+  &quot;feedbackId&quot;: &quot;A String&quot;, # Output only. The unique identifier for the feedback.
+  &quot;type&quot;: &quot;A String&quot;, # Required. The type of the feedback.
+  customerId: string, Optional. The unique identifier of the Google Workspace account of the customer the alert is associated with. The `customer_id` must have the initial &quot;C&quot; stripped (for example, `046psxkn`). Inferred from the caller identity if not provided. [Find your customer ID](https://support.google.com/cloudidentity/answer/10070793).
+    <code class="details" id="list">list(alertId, customerId=None, filter=None, x__xgafv=None)</code>
+  <pre>Lists all the feedback for an alert. Attempting to list feedbacks for a non-existent alert returns `NOT_FOUND` error.
+  alertId: string, Required. The alert identifier. The &quot;-&quot; wildcard could be used to represent all alerts. (required)
+  filter: string, Optional. A query string for filtering alert feedback results. For more details, see [Query filters](https://developers.google.com/workspace/admin/alertcenter/guides/query-filters) and [Supported query filter fields](https://developers.google.com/workspace/admin/alertcenter/reference/filter-fields#alerts.feedback.list).
+    { # Response message for an alert feedback listing request.
+  &quot;feedback&quot;: [ # The list of alert feedback. Feedback entries for each alert are ordered by creation time descending.

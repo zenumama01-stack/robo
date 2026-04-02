@@ -1,0 +1,27 @@
+<h1><a href="baremetalsolution_v2.html">Bare Metal Solution API</a> . <a href="baremetalsolution_v2.projects.html">projects</a> . <a href="baremetalsolution_v2.projects.locations.html">locations</a> . <a href="baremetalsolution_v2.projects.locations.networks.html">networks</a></h1>
+<p class="firstline">Get details of a single network.</p>
+<p class="firstline">List network in a given project and location.</p>
+  <code><a href="#listNetworkUsage">listNetworkUsage(location, x__xgafv=None)</a></code></p>
+<p class="firstline">List all Networks (and used IPs for each Network) in the vendor account associated with the specified project.</p>
+<p class="firstline">Update details of a single network.</p>
+<p class="firstline">RenameNetwork sets a new name for a network. Use with caution, previous names become immediately invalidated.</p>
+  <pre>Get details of a single network.
+  <pre>List network in a given project and location.
+  parent: string, Required. Parent value for ListNetworksRequest. (required)
+  pageSize: integer, Requested page size. The server might return fewer items than requested. If unspecified, server will pick an appropriate default.
+    { # Response message containing the list of networks.
+  &quot;networks&quot;: [ # The list of networks.
+    <code class="details" id="listNetworkUsage">listNetworkUsage(location, x__xgafv=None)</code>
+  <pre>List all Networks (and used IPs for each Network) in the vendor account associated with the specified project.
+  location: string, Required. Parent value (project and location). (required)
+    { # Response with Networks with IPs
+  &quot;networks&quot;: [ # Networks with IPs.
+    { # Network with all used IP addresses.
+      &quot;network&quot;: { # A Network. # Network.
+      &quot;usedIps&quot;: [ # All used IP addresses in this network.
+  <pre>Update details of a single network.
+  name: string, Output only. The resource name of this `Network`. Resource names are schemeless URIs that follow the conventions in https://cloud.google.com/apis/design/resource_names. Format: `projects/{project}/locations/{location}/networks/{network}` (required)
+  updateMask: string, The list of fields to update. The only currently supported fields are: `labels`, `reservations`, `vrf.vlan_attachments`
+  <pre>RenameNetwork sets a new name for a network. Use with caution, previous names become immediately invalidated.
+  name: string, Required. The `name` field is used to identify the network. Format: projects/{project}/locations/{location}/networks/{network} (required)
+  &quot;newNetworkId&quot;: &quot;A String&quot;, # Required. The new `id` of the network.

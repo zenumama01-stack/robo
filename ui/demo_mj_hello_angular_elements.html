@@ -1,0 +1,22 @@
+  MemberJunction Angular Elements Demo - Hello World Example
+  2. Use the custom elements in an HTML page
+  3. Listen for events from the components
+  This HTML file demonstrates using the <mj-hello-world> and <mj-listener-demo>
+  custom elements in a standard HTML page without any Angular dependencies.
+    This element demonstrates listening to MemberJunction global events.
+    It does not display anything on the page but logs events to the console.
+  <mj-listener-demo></mj-listener-demo>
+    This element shows a button that, when clicked, loads MemberJunction
+    entity metadata and emits an event with the list of entities.
+  <mj-hello-world></mj-hello-world>
+  <!-- This div will display the output from the mj-hello-world component -->
+  <div id="output-div">Output will appear here</div>
+      // Set up event listener for the Hello World component
+      // This shows how to listen for events from a custom element
+      const helloWorldElement = document.querySelector('mj-hello-world');
+      if(helloWorldElement) {
+        // Listen for the 'display' event and update the output div with the event data
+        helloWorldElement.addEventListener('display', event => {
+          document.querySelector('#output-div').innerText = event.detail;
+        // At this point, the MemberJunction components are ready to use
+        // They will raise a LoggedIn event that the components listen for

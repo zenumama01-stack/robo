@@ -1,0 +1,37 @@
+<h1><a href="connectors_v2.html">Connectors API</a> . <a href="connectors_v2.projects.html">projects</a> . <a href="connectors_v2.projects.locations.html">locations</a> . <a href="connectors_v2.projects.locations.connections.html">connections</a> . <a href="connectors_v2.projects.locations.connections.entityTypes.html">entityTypes</a></h1>
+  <code><a href="connectors_v2.projects.locations.connections.entityTypes.entities.html">entities()</a></code>
+<p class="firstline">Returns the entities Resource.</p>
+  <code><a href="#get">get(name, contextMetadata=None, executionConfig_headers=None, view=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Gets metadata of given entity type</p>
+<p class="firstline">Lists metadata related to all entity types present in the external system.</p>
+    <code class="details" id="get">get(name, contextMetadata=None, executionConfig_headers=None, view=None, x__xgafv=None)</code>
+  <pre>Gets metadata of given entity type
+  name: string, Required. Resource name of the Entity Type. Format: projects/{project}/locations/{location}/connections/{connection}/entityTypes/{entityType} (required)
+  contextMetadata: string, Context metadata for request could be used to fetch customization of entity type schema.
+  view: string, Specifies view for entity type schema.
+      ENTITY_TYPE_SCHEMA_VIEW_UNSPECIFIED - VIEW_UNSPECIFIED. The unset value. Defaults to BASIC View.
+      ENTITY_TYPE_SCHEMA_VIEW_BASIC - Return basic entity type schema.
+      ENTITY_TYPE_SCHEMA_VIEW_ENRICHED - Return enriched entity types schema.
+    { # EntityType message contains metadata information about a single entity type present in the external system.
+  &quot;defaultSortBy&quot;: &quot;A String&quot;,
+  &quot;fields&quot;: [ # List containing metadata information about each field of the entity type.
+    { # Message contains EntityType&#x27;s Field metadata.
+      &quot;jsonSchema&quot;: { # JsonSchema representation of schema metadata # JsonSchema of the field, applicable only if field is of type `STRUCT`
+      &quot;name&quot;: &quot;A String&quot;, # Name of the Field.
+      &quot;reference&quot;: { # Reference captures the association between two different entity types. Value links to the reference of another entity type.
+        &quot;name&quot;: &quot;A String&quot;, # Name of the reference field.
+        &quot;type&quot;: &quot;A String&quot;, # Name of reference entity type.
+  &quot;name&quot;: &quot;A String&quot;, # The name of the entity type.
+  &quot;operations&quot;: [
+  <pre>Lists metadata related to all entity types present in the external system.
+  parent: string, Required. Resource name of the Entity Type. Format: projects/{project}/locations/{location}/connections/{connection} (required)
+  pageSize: integer, Number of entity types to return. Defaults to 25.
+  pageToken: string, Page token, return from a previous ListEntityTypes call, that can be used retrieve the next page of content. If unspecified, the request returns the first page of entity types.
+  view: string, Specifies which fields of the Entity Type are returned in the response.
+      ENTITY_TYPE_VIEW_UNSPECIFIED - VIEW_UNSPECIFIED. The unset value. Defaults to FULL View.
+      ENTITY_TYPE_VIEW_BASIC - Return only entity type names.
+      ENTITY_TYPE_VIEW_FULL - Return entity types with schema
+    { # Response message for EntityService.ListEntityTypes
+  &quot;nextPageToken&quot;: &quot;A String&quot;, # Next page token if more entity types available.
+  &quot;types&quot;: [ # List of metadata related to all entity types.
+  &quot;unsupportedTypeNames&quot;: [ # List of entity type names which contain unsupported Datatypes. Check datatype.proto for more information.

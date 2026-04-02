@@ -1,0 +1,20 @@
+<h1><a href="recommender_v1.html">Recommender API</a> . <a href="recommender_v1.billingAccounts.html">billingAccounts</a> . <a href="recommender_v1.billingAccounts.locations.html">locations</a> . <a href="recommender_v1.billingAccounts.locations.insightTypes.html">insightTypes</a></h1>
+  <code><a href="recommender_v1.billingAccounts.locations.insightTypes.insights.html">insights()</a></code>
+<p class="firstline">Gets the requested InsightTypeConfig. There is only one instance of the config for each InsightType.</p>
+  <code><a href="#updateConfig">updateConfig(name, body, updateMask=None, validateOnly=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Updates an InsightTypeConfig change. This will create a new revision of the config.</p>
+  <pre>Gets the requested InsightTypeConfig. There is only one instance of the config for each InsightType.
+  name: string, Required. Name of the InsightTypeConfig to get. Acceptable formats: * `projects/[PROJECT_NUMBER]/locations/[LOCATION]/insightTypes/[INSIGHT_TYPE_ID]/config` * `projects/[PROJECT_ID]/locations/[LOCATION]/insightTypes/[INSIGHT_TYPE_ID]/config` * `organizations/[ORGANIZATION_ID]/locations/[LOCATION]/insightTypes/[INSIGHT_TYPE_ID]/config` * `billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION]/insightTypes/[INSIGHT_TYPE_ID]/config` (required)
+    { # Configuration for an InsightType.
+  &quot;annotations&quot;: { # Allows clients to store small amounts of arbitrary data. Annotations must follow the Kubernetes syntax. The total size of all keys and values combined is limited to 256k. Key can have 2 segments: prefix (optional) and name (required), separated by a slash (/). Prefix must be a DNS subdomain. Name must be 63 characters or less, begin and end with alphanumerics, with dashes (-), underscores (_), dots (.), and alphanumerics between.
+  &quot;displayName&quot;: &quot;A String&quot;, # A user-settable field to provide a human-readable name to be used in user interfaces.
+  &quot;etag&quot;: &quot;A String&quot;, # Fingerprint of the InsightTypeConfig. Provides optimistic locking when updating.
+  &quot;insightTypeGenerationConfig&quot;: { # A configuration to customize the generation of insights. Eg, customizing the lookback period considered when generating a insight. # InsightTypeGenerationConfig which configures the generation of insights for this insight type.
+    &quot;params&quot;: { # Parameters for this InsightTypeGenerationConfig. These configs can be used by or are applied to all subtypes.
+  &quot;name&quot;: &quot;A String&quot;, # Identifier. Name of insight type config. Eg, projects/[PROJECT_NUMBER]/locations/[LOCATION]/insightTypes/[INSIGHT_TYPE_ID]/config
+  &quot;revisionId&quot;: &quot;A String&quot;, # Output only. Immutable. The revision ID of the config. A new revision is committed whenever the config is changed in any way. The format is an 8-character hexadecimal string.
+  &quot;updateTime&quot;: &quot;A String&quot;, # Last time when the config was updated.
+    <code class="details" id="updateConfig">updateConfig(name, body, updateMask=None, validateOnly=None, x__xgafv=None)</code>
+  <pre>Updates an InsightTypeConfig change. This will create a new revision of the config.
+  name: string, Identifier. Name of insight type config. Eg, projects/[PROJECT_NUMBER]/locations/[LOCATION]/insightTypes/[INSIGHT_TYPE_ID]/config (required)
+  validateOnly: boolean, If true, validate the request and preview the change, but do not actually update it.

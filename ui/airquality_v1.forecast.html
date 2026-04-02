@@ -1,0 +1,20 @@
+<h1><a href="airquality_v1.html">Air Quality API</a> . <a href="airquality_v1.forecast.html">forecast</a></h1>
+<p class="firstline">Returns air quality forecast for a specific location for a given time range.</p>
+  <code><a href="#lookup_next">lookup_next()</a></code></p>
+  <pre>Returns air quality forecast for a specific location for a given time range.
+{ # The request object of the air quality forecast API.
+  &quot;dateTime&quot;: &quot;A String&quot;, # A timestamp for which to return the data for a specific point in time. The timestamp is rounded to the previous exact hour. Note: this will return hourly data for the requested timestamp only (i.e. a single hourly info element). For example, a request sent where the date_time parameter is set to 2023-01-03T11:05:49Z will be rounded down to 2023-01-03T11:00:00Z.
+  &quot;languageCode&quot;: &quot;A String&quot;, # Optional. Allows the client to choose the language for the response. If data cannot be provided for that language the API uses the closest match. Allowed values rely on the IETF standard (default = &#x27;en&#x27;).
+  &quot;location&quot;: { # An object that represents a latitude/longitude pair. This is expressed as a pair of doubles to represent degrees latitude and degrees longitude. Unless specified otherwise, this object must conform to the WGS84 standard. Values must be within normalized ranges. # Required. The latitude and longitude for which the API looks for air quality data.
+  &quot;pageSize&quot;: 42, # Optional. The maximum number of hourly info records to return per page (default = 24).
+  &quot;pageToken&quot;: &quot;A String&quot;, # Optional. A page token received from a previous forecast call. It is used to retrieve the subsequent page.
+  &quot;period&quot;: { # Represents a time interval, encoded as a Timestamp start (inclusive) and a Timestamp end (exclusive). The start must be less than or equal to the end. When the start equals the end, the interval is empty (matches no time). When both start and end are unspecified, the interval matches any time. # Indicates the start and end period for which to get the forecast data. The timestamp is rounded to the previous exact hour.
+  &quot;universalAqi&quot;: True or False, # Optional. If set to true, the Universal AQI will be included in the &#x27;indexes&#x27; field of the response (default = true).
+    { # The response object of the air quality forecast API.
+  &quot;hourlyForecasts&quot;: [ # Optional. Contains the air quality information for each hour in the requested range. For example, if the request is for 48 hours of forecast there will be 48 elements of hourly forecasts.
+    { # Contains the air quality information for each hour in the requested range. For example, if the request is for 48 hours of forecast there will be 48 elements of hourly forecasts.
+      &quot;dateTime&quot;: &quot;A String&quot;, # A rounded down timestamp indicating the time (hour) the data refers to in RFC3339 UTC &quot;Zulu&quot; format. For example: &quot;2014-10-02T15:00:00Z&quot;.
+      &quot;indexes&quot;: [ # Based on the request parameters, this list will include (up to) two air quality indexes: - Universal AQI. Will be returned if the `universal_aqi` boolean is set to true. - Local AQI. Will be returned if the LOCAL_AQI extra computation is specified.
+  &quot;nextPageToken&quot;: &quot;A String&quot;, # Optional. The token to retrieve the next page.
+  &quot;regionCode&quot;: &quot;A String&quot;, # Optional. The ISO_3166-1 alpha-2 code of the country/region corresponding to the location provided in the request. This field might be omitted from the response if the location provided in the request resides in a disputed territory.
+    <code class="details" id="lookup_next">lookup_next()</code>

@@ -1,0 +1,26 @@
+<h1><a href="datamigration_v1.html">Database Migration API</a> . <a href="datamigration_v1.projects.html">projects</a> . <a href="datamigration_v1.projects.locations.html">locations</a> . <a href="datamigration_v1.projects.locations.migrationJobs.html">migrationJobs</a> . <a href="datamigration_v1.projects.locations.migrationJobs.objects.html">objects</a></h1>
+<p class="firstline">Use this method to get details about a migration job object.</p>
+<p class="firstline">Use this method to list the objects of a specific migration job.</p>
+<p class="firstline">Use this method to look up a migration job object by its source object identifier.</p>
+  <pre>Use this method to get details about a migration job object.
+  name: string, Required. The name of the migration job object resource to get. (required)
+    { # A specific Migration Job Object (e.g. a specifc DB Table)
+  &quot;createTime&quot;: &quot;A String&quot;, # Output only. The creation time of the migration job object.
+  &quot;error&quot;: { # The `Status` type defines a logical error model that is suitable for different programming environments, including REST APIs and RPC APIs. It is used by [gRPC](https://github.com/grpc). Each `Status` message contains three pieces of data: error code, error message, and error details. You can find out more about this error model and how to work with it in the [API Design Guide](https://cloud.google.com/apis/design/errors). # Output only. The error details in case of failure.
+  &quot;heterogeneousMetadata&quot;: { # Metadata for heterogeneous migration jobs objects. # Output only. Metadata for heterogeneous migration jobs objects.
+    &quot;unsupportedEventsCount&quot;: &quot;A String&quot;, # The number of unsupported events.
+  &quot;name&quot;: &quot;A String&quot;, # The object&#x27;s name.
+  &quot;phase&quot;: &quot;A String&quot;, # Output only. The phase of the migration job object.
+  &quot;sourceObject&quot;: { # An identifier for the Migration Job Object. # The object identifier in the data source.
+  &quot;state&quot;: &quot;A String&quot;, # The state of the migration job object.
+  &quot;updateTime&quot;: &quot;A String&quot;, # Output only. The last update time of the migration job object.
+  <pre>Use this method to list the objects of a specific migration job.
+  parent: string, Required. The parent migration job that owns the collection of objects. (required)
+  pageSize: integer, Optional. Maximum number of objects to return. Default is 50. The maximum value is 1000; values above 1000 will be coerced to 1000.
+  pageToken: string, Optional. Page token received from a previous `ListMigrationJObObjectsRequest` call. Provide this to retrieve the subsequent page. When paginating, all other parameters provided to `ListMigrationJobObjectsRequest` must match the call that provided the page token.
+    { # Response containing the objects for a migration job.
+  &quot;migrationJobObjects&quot;: [ # List of migration job objects.
+  &quot;nextPageToken&quot;: &quot;A String&quot;, # A token, which can be sent as `page_token` to retrieve the next page.
+  <pre>Use this method to look up a migration job object by its source object identifier.
+{ # Request for looking up a specific migration job object by its source object identifier.
+  &quot;sourceObjectIdentifier&quot;: { # An identifier for the Migration Job Object. # Required. The source object identifier which maps to the migration job object.

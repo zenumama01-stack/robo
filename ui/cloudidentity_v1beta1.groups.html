@@ -1,0 +1,28 @@
+<h1><a href="cloudidentity_v1beta1.html">Cloud Identity API</a> . <a href="cloudidentity_v1beta1.groups.html">groups</a></h1>
+  <code><a href="cloudidentity_v1beta1.groups.memberships.html">memberships()</a></code>
+<p class="firstline">Creates a `Group`.</p>
+  <code><a href="#search">search(orderBy=None, pageSize=None, pageToken=None, query=None, view=None, x__xgafv=None)</a></code></p>
+  <pre>Creates a `Group`.
+      &quot;id&quot;: &quot;A String&quot;, # The ID of the entity. For Google-managed entities, the `id` must be the email address of an existing group or user. For external-identity-mapped entities, the `id` must be a string conforming to the Identity Source&#x27;s requirements. Must be unique within a `namespace`.
+      &quot;namespace&quot;: &quot;A String&quot;, # The namespace in which the entity exists. If not specified, the `EntityKey` represents a Google-managed entity such as a Google user or a Google Group. If specified, the `EntityKey` represents an external-identity-mapped group. The namespace must correspond to an identity source created in Admin Console and must be in the form of `identitysources/{identity_source_id}`.
+        &quot;resourceType&quot;: &quot;A String&quot;,
+  &quot;name&quot;: &quot;A String&quot;, # Output only. The [resource name](https://cloud.google.com/apis/design/resource_names) of the `Group`. Shall be of the form `groups/{group_id}`.
+  &quot;posixGroups&quot;: [ # Optional. The POSIX groups associated with the `Group`.
+    { # POSIX Group definition to represent a group in a POSIX compliant system. Caution: POSIX groups are deprecated. As of September 26, 2024, you can no longer create new POSIX groups. For more information, see https://cloud.google.com/identity/docs/deprecations/posix-groups
+      &quot;gid&quot;: &quot;A String&quot;, # GID of the POSIX group.
+      &quot;name&quot;: &quot;A String&quot;, # Name of the POSIX group.
+      &quot;systemId&quot;: &quot;A String&quot;, # System identifier for which group name and gid apply to. If not specified it will default to empty value.
+  initialGroupConfig: string, Required. The initial configuration option for the `Group`.
+  name: string, Required. The [resource name](https://cloud.google.com/apis/design/resource_names) of the `Group` to retrieve. Must be of the form `groups/{group_id}`. (required)
+    { # The definiion of security settings.
+  parent: string, Required. The parent resource under which to list all `Group` resources. Must be of the form `identitysources/{identity_source_id}` for external- identity-mapped groups or `customers/{customer_id}` for Google Groups. The `customer_id` must begin with &quot;C&quot; (for example, &#x27;C046psxkn&#x27;). [Find your customer ID.] (https://support.google.com/cloudidentity/answer/10070793)
+    { # The response message for GroupsService.ListGroups.
+  &quot;groups&quot;: [ # The `Group` resources under the specified `parent`.
+  groupKey_id: string, The ID of the entity. For Google-managed entities, the `id` must be the email address of an existing group or user. For external-identity-mapped entities, the `id` must be a string conforming to the Identity Source&#x27;s requirements. Must be unique within a `namespace`.
+  groupKey_namespace: string, The namespace in which the entity exists. If not specified, the `EntityKey` represents a Google-managed entity such as a Google user or a Google Group. If specified, the `EntityKey` represents an external-identity-mapped group. The namespace must correspond to an identity source created in Admin Console and must be in the form of `identitysources/{identity_source_id}`.
+  &quot;name&quot;: &quot;A String&quot;, # Output only. The [resource name](https://cloud.google.com/apis/design/resource_names) of the looked-up `Group`.
+  name: string, Output only. The [resource name](https://cloud.google.com/apis/design/resource_names) of the `Group`. Shall be of the form `groups/{group_id}`. (required)
+  updateMask: string, Required. The names of fields to update. May only contain the following field names: `display_name`, `description`, `labels`, `dynamic_group_metadata`, `posix_groups`.
+    <code class="details" id="search">search(orderBy=None, pageSize=None, pageToken=None, query=None, view=None, x__xgafv=None)</code>
+  orderBy: string, The ordering of groups for the display name or email in the search groups response. The syntax for this field can be found at https://cloud.google.com/apis/design/design_patterns#sorting_order. Example: Sort by the ascending name: order_by=&quot;display_name&quot; Sort by the descending group key email: order_by=&quot;group_key desc&quot;
+      BASIC - Default. Only basic resource information is returned.

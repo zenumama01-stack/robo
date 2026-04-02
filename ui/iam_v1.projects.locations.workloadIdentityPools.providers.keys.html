@@ -1,0 +1,27 @@
+<h1><a href="iam_v1.html">Identity and Access Management (IAM) API</a> . <a href="iam_v1.projects.html">projects</a> . <a href="iam_v1.projects.locations.html">locations</a> . <a href="iam_v1.projects.locations.workloadIdentityPools.html">workloadIdentityPools</a> . <a href="iam_v1.projects.locations.workloadIdentityPools.providers.html">providers</a> . <a href="iam_v1.projects.locations.workloadIdentityPools.providers.keys.html">keys</a></h1>
+  <code><a href="iam_v1.projects.locations.workloadIdentityPools.providers.keys.operations.html">operations()</a></code>
+  <code><a href="#create">create(parent, body=None, workloadIdentityPoolProviderKeyId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Create a new WorkloadIdentityPoolProviderKey in a WorkloadIdentityPoolProvider.</p>
+<p class="firstline">Deletes an WorkloadIdentityPoolProviderKey. You can undelete a key for 30 days. After 30 days, deletion is permanent.</p>
+<p class="firstline">Gets an individual WorkloadIdentityPoolProviderKey.</p>
+<p class="firstline">Lists all non-deleted WorkloadIdentityPoolProviderKeys in a project. If show_deleted is set to `true`, then deleted pools are also listed.</p>
+<p class="firstline">Undeletes an WorkloadIdentityPoolProviderKey, as long as it was deleted fewer than 30 days ago.</p>
+    <code class="details" id="create">create(parent, body=None, workloadIdentityPoolProviderKeyId=None, x__xgafv=None)</code>
+  <pre>Create a new WorkloadIdentityPoolProviderKey in a WorkloadIdentityPoolProvider.
+  parent: string, Required. The parent provider resource to create the key in. (required)
+{ # Represents a public key configuration for your workload identity pool provider. The key can be configured in your identity provider to encrypt the SAML assertions. Google holds the corresponding private key which it uses to decrypt encrypted tokens.
+  &quot;expireTime&quot;: &quot;A String&quot;, # Output only. Time after which the key will be permanently purged and cannot be recovered. Note that the key may get purged before this timestamp if the total limit of keys per provider is crossed.
+  &quot;name&quot;: &quot;A String&quot;, # Identifier. The resource name of the key.
+  workloadIdentityPoolProviderKeyId: string, Required. The ID to use for the key, which becomes the final component of the resource name. This value should be 4-32 characters, and may contain the characters [a-z0-9-].
+  <pre>Deletes an WorkloadIdentityPoolProviderKey. You can undelete a key for 30 days. After 30 days, deletion is permanent.
+  name: string, Required. The name of the encryption key to delete. (required)
+  <pre>Gets an individual WorkloadIdentityPoolProviderKey.
+  <pre>Lists all non-deleted WorkloadIdentityPoolProviderKeys in a project. If show_deleted is set to `true`, then deleted pools are also listed.
+  parent: string, Required. The parent provider resource to list encryption keys for. (required)
+  pageToken: string, A page token, received from a previous `ListWorkloadIdentityPoolProviderKeys` call. Provide this to retrieve the subsequent page.
+  showDeleted: boolean, Whether to return soft deleted resources as well.
+    { # Response message for ListWorkloadIdentityPoolProviderKeys.
+  &quot;workloadIdentityPoolProviderKeys&quot;: [ # A list of WorkloadIdentityPoolProviderKey
+  <pre>Undeletes an WorkloadIdentityPoolProviderKey, as long as it was deleted fewer than 30 days ago.
+  name: string, Required. The name of the encryption key to undelete. (required)
+{ # Request message for UndeleteWorkloadIdentityPoolProviderKey.

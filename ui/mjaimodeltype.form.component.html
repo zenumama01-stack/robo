@@ -1,0 +1,15 @@
+    <!-- Model Information Section -->
+        SectionKey="modelInformation"
+        SectionName="Model Information"
+    <!-- Default Modality Section -->
+        SectionKey="defaultModality"
+        SectionName="Default Modality"
+            FieldName="DefaultInputModalityID"
+            FieldName="DefaultOutputModalityID"
+                [Params]="BuildRelationshipViewParamsByEntityName('MJ: AI Models','AIModelTypeID')"
+        SectionKey="aIPrompts"
+        SectionName="AI Prompts"
+        [BadgeCount]="GetSectionRowCount('aIPrompts')"
+                [Params]="BuildRelationshipViewParamsByEntityName('MJ: AI Prompts','AIModelTypeID')"
+                [AllowLoad]="IsSectionExpanded('aIPrompts')"
+                (AfterDataLoad)="SetSectionRowCount('aIPrompts', $event.totalRowCount)"

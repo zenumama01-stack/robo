@@ -1,0 +1,27 @@
+    <!-- Collection Basics Section -->
+        SectionKey="collectionBasics"
+        SectionName="Collection Basics"
+    <!-- Structural Hierarchy Section -->
+        SectionKey="structuralHierarchy"
+        SectionName="Structural Hierarchy"
+    <!-- Ownership & Access Section -->
+        SectionKey="ownershipAccess"
+        SectionName="Ownership & Access"
+            FieldName="OwnerID"
+                [Params]="BuildRelationshipViewParamsByEntityName('MJ: Collection Artifacts','CollectionID')"
+    <!-- MJ: Collection Permissions Section -->
+        SectionKey="mJCollectionPermissions"
+        SectionName="MJ: Collection Permissions"
+        [BadgeCount]="GetSectionRowCount('mJCollectionPermissions')"
+                [Params]="BuildRelationshipViewParamsByEntityName('MJ: Collection Permissions','CollectionID')"
+                [NewRecordValues]="NewRecordValues('MJ: Collection Permissions')"
+                [AllowLoad]="IsSectionExpanded('mJCollectionPermissions')"
+                (AfterDataLoad)="SetSectionRowCount('mJCollectionPermissions', $event.totalRowCount)"
+    <!-- MJ: Collections Section -->
+        SectionKey="mJCollections"
+        SectionName="MJ: Collections"
+        [BadgeCount]="GetSectionRowCount('mJCollections')"
+                [Params]="BuildRelationshipViewParamsByEntityName('MJ: Collections','ParentID')"
+                [NewRecordValues]="NewRecordValues('MJ: Collections')"
+                [AllowLoad]="IsSectionExpanded('mJCollections')"
+                (AfterDataLoad)="SetSectionRowCount('mJCollections', $event.totalRowCount)"

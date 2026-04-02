@@ -1,0 +1,64 @@
+<h1><a href="backupdr_v1.html">Backup and DR Service API</a> . <a href="backupdr_v1.projects.html">projects</a> . <a href="backupdr_v1.projects.locations.html">locations</a> . <a href="backupdr_v1.projects.locations.backupVaults.html">backupVaults</a></h1>
+  <code><a href="backupdr_v1.projects.locations.backupVaults.dataSources.html">dataSources()</a></code>
+<p class="firstline">Returns the dataSources Resource.</p>
+  <code><a href="#create">create(parent, backupVaultId=None, body=None, requestId=None, validateOnly=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Creates a new BackupVault in a given project and location.</p>
+  <code><a href="#delete">delete(name, allowMissing=None, etag=None, force=None, ignoreBackupPlanReferences=None, requestId=None, validateOnly=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Deletes a BackupVault.</p>
+  <code><a href="#fetchUsable">fetchUsable(parent, filter=None, orderBy=None, pageSize=None, pageToken=None, x__xgafv=None)</a></code></p>
+<p class="firstline">FetchUsableBackupVaults lists usable BackupVaults in a given project and location. Usable BackupVault are the ones that user has backupdr.backupVaults.get permission.</p>
+  <code><a href="#fetchUsable_next">fetchUsable_next()</a></code></p>
+<p class="firstline">Gets details of a BackupVault.</p>
+<p class="firstline">Lists BackupVaults in a given project and location.</p>
+  <code><a href="#patch">patch(name, body=None, force=None, forceUpdateAccessRestriction=None, requestId=None, updateMask=None, validateOnly=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Updates the settings of a BackupVault.</p>
+<p class="firstline">Returns the caller's permissions on a BackupVault resource. A caller is not required to have Google IAM permission to make this request.</p>
+    <code class="details" id="create">create(parent, backupVaultId=None, body=None, requestId=None, validateOnly=None, x__xgafv=None)</code>
+  <pre>Creates a new BackupVault in a given project and location.
+{ # Message describing a BackupVault object.
+  &quot;accessRestriction&quot;: &quot;A String&quot;, # Optional. Note: This field is added for future use case and will not be supported in the current release. Access restriction for the backup vault. Default value is WITHIN_ORGANIZATION if not provided during creation.
+  &quot;annotations&quot;: { # Optional. User annotations. See https://google.aip.dev/128#annotations Stores small amounts of arbitrary data.
+  &quot;backupCount&quot;: &quot;A String&quot;, # Output only. The number of backups in this backup vault.
+  &quot;backupMinimumEnforcedRetentionDuration&quot;: &quot;A String&quot;, # Required. The default and minimum enforced retention for each backup within the backup vault. The enforced retention for each backup can be extended. Note: Longer minimum enforced retention period impacts potential storage costs post introductory trial. We recommend starting with a short duration of 3 days or less.
+  &quot;backupRetentionInheritance&quot;: &quot;A String&quot;, # Optional. Setting for how a backup&#x27;s enforced retention end time is inherited.
+  &quot;deletable&quot;: True or False, # Output only. Set to true when there are no backups nested under this resource.
+  &quot;description&quot;: &quot;A String&quot;, # Optional. The description of the BackupVault instance (2048 characters or less).
+  &quot;effectiveTime&quot;: &quot;A String&quot;, # Optional. Time after which the BackupVault resource is locked.
+  &quot;encryptionConfig&quot;: { # Message describing the EncryptionConfig of backup vault. This determines how data within the vault is encrypted at rest. # Optional. The encryption config of the backup vault.
+    &quot;kmsKeyName&quot;: &quot;A String&quot;, # Optional. The Cloud KMS key name to encrypt backups in this backup vault. Must be in the same region as the vault. Some workload backups like compute disk backups may use their inherited source key instead. Format: projects/{project}/locations/{location}/keyRings/{ring}/cryptoKeys/{key}
+  &quot;etag&quot;: &quot;A String&quot;, # Optional. Server specified ETag for the backup vault resource to prevent simultaneous updates from overwiting each other.
+  &quot;name&quot;: &quot;A String&quot;, # Output only. Identifier. Name of the backup vault to create. It must have the format`&quot;projects/{project}/locations/{location}/backupVaults/{backupvault}&quot;`. `{backupvault}` cannot be changed after creation. It must be between 3-63 characters long and must be unique within the project and location.
+  &quot;serviceAccount&quot;: &quot;A String&quot;, # Output only. Service account used by the BackupVault Service for this BackupVault. The user should grant this account permissions in their workload project to enable the service to run backups and restores there.
+  &quot;state&quot;: &quot;A String&quot;, # Output only. The BackupVault resource instance state.
+  &quot;totalStoredBytes&quot;: &quot;A String&quot;, # Output only. Total size of the storage used by all backup resources.
+  &quot;uid&quot;: &quot;A String&quot;, # Output only. Immutable after resource creation until resource deletion.
+  backupVaultId: string, Required. ID of the requesting object If auto-generating ID server-side, remove this field and backup_vault_id from the method_signature of Create RPC
+  validateOnly: boolean, Optional. Only validate the request, but do not perform mutations. The default is &#x27;false&#x27;.
+    <code class="details" id="delete">delete(name, allowMissing=None, etag=None, force=None, ignoreBackupPlanReferences=None, requestId=None, validateOnly=None, x__xgafv=None)</code>
+  <pre>Deletes a BackupVault.
+  allowMissing: boolean, Optional. If true and the BackupVault is not found, the request will succeed but no action will be taken.
+  etag: string, The current etag of the backup vault. If an etag is provided and does not match the current etag of the connection, deletion will be blocked.
+  force: boolean, Optional. If set to true, any data source from this backup vault will also be deleted.
+  ignoreBackupPlanReferences: boolean, Optional. If set to true, backupvault deletion will proceed even if there are backup plans referencing the backupvault. The default is &#x27;false&#x27;.
+    <code class="details" id="fetchUsable">fetchUsable(parent, filter=None, orderBy=None, pageSize=None, pageToken=None, x__xgafv=None)</code>
+  <pre>FetchUsableBackupVaults lists usable BackupVaults in a given project and location. Usable BackupVault are the ones that user has backupdr.backupVaults.get permission.
+  parent: string, Required. The project and location for which to retrieve backupvault stores information, in the format &#x27;projects/{project_id}/locations/{location}&#x27;. In Cloud Backup and DR, locations map to Google Cloud regions, for example **us-central1**. To retrieve backupvault stores for all locations, use &quot;-&quot; for the &#x27;{location}&#x27; value. (required)
+    { # Response message for fetching usable BackupVaults.
+  &quot;backupVaults&quot;: [ # The list of BackupVault instances in the project for the specified location. If the &#x27;{location}&#x27; value in the request is &quot;-&quot;, the response contains a list of instances from all locations. In case any location is unreachable, the response will only return backup vaults in reachable locations and the &#x27;unreachable&#x27; field will be populated with a list of unreachable locations.
+    <code class="details" id="fetchUsable_next">fetchUsable_next()</code>
+  <pre>Gets details of a BackupVault.
+  name: string, Required. Name of the backupvault store resource name, in the format &#x27;projects/{project_id}/locations/{location}/backupVaults/{resource_name}&#x27; (required)
+  view: string, Optional. Reserved for future use to provide a BASIC &amp; FULL view of Backup Vault
+      BACKUP_VAULT_VIEW_UNSPECIFIED - If the value is not set, the default &#x27;FULL&#x27; view is used.
+      BACKUP_VAULT_VIEW_BASIC - Includes basic data about the Backup Vault, but not the full contents.
+      BACKUP_VAULT_VIEW_FULL - Includes all data about the Backup Vault. This is the default value (for both ListBackupVaults and GetBackupVault).
+  <pre>Lists BackupVaults in a given project and location.
+  view: string, Optional. Reserved for future use to provide a BASIC &amp; FULL view of Backup Vault.
+    { # Response message for listing BackupVaults.
+    <code class="details" id="patch">patch(name, body=None, force=None, forceUpdateAccessRestriction=None, requestId=None, updateMask=None, validateOnly=None, x__xgafv=None)</code>
+  <pre>Updates the settings of a BackupVault.
+  name: string, Output only. Identifier. Name of the backup vault to create. It must have the format`&quot;projects/{project}/locations/{location}/backupVaults/{backupvault}&quot;`. `{backupvault}` cannot be changed after creation. It must be between 3-63 characters long and must be unique within the project and location. (required)
+  force: boolean, Optional. If set to true, will not check plan duration against backup vault enforcement duration.
+  forceUpdateAccessRestriction: boolean, Optional. If set to true, we will force update access restriction even if some non compliant data sources are present. The default is &#x27;false&#x27;.
+  updateMask: string, Required. Field mask is used to specify the fields to be overwritten in the BackupVault resource by the update. The fields specified in the update_mask are relative to the resource, not the full request. A field will be overwritten if it is in the mask. If the user does not provide a mask then the request will fail.
+  <pre>Returns the caller&#x27;s permissions on a BackupVault resource. A caller is not required to have Google IAM permission to make this request.

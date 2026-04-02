@@ -1,0 +1,26 @@
+<h1><a href="discoveryengine_v1.html">Discovery Engine API</a> . <a href="discoveryengine_v1.projects.html">projects</a> . <a href="discoveryengine_v1.projects.locations.html">locations</a> . <a href="discoveryengine_v1.projects.locations.collections.html">collections</a> . <a href="discoveryengine_v1.projects.locations.collections.dataStores.html">dataStores</a> . <a href="discoveryengine_v1.projects.locations.collections.dataStores.sessions.html">sessions</a></h1>
+  <code><a href="discoveryengine_v1.projects.locations.collections.dataStores.sessions.answers.html">answers()</a></code>
+<p class="firstline">Returns the answers Resource.</p>
+<p class="firstline">Creates a Session. If the Session to create already exists, an ALREADY_EXISTS error is returned.</p>
+<p class="firstline">Deletes a Session. If the Session to delete does not exist, a NOT_FOUND error is returned.</p>
+  <code><a href="#get">get(name, includeAnswerDetails=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Gets a Session.</p>
+<p class="firstline">Lists all Sessions by their parent DataStore.</p>
+<p class="firstline">Updates a Session. Session action type cannot be changed. If the Session to update does not exist, a NOT_FOUND error is returned.</p>
+  <pre>Creates a Session. If the Session to create already exists, an ALREADY_EXISTS error is returned.
+{ # External session proto definition.
+  <pre>Deletes a Session. If the Session to delete does not exist, a NOT_FOUND error is returned.
+  name: string, Required. The resource name of the Session to delete. Format: `projects/{project}/locations/{location}/collections/{collection}/dataStores/{data_store_id}/sessions/{session_id}` (required)
+    <code class="details" id="get">get(name, includeAnswerDetails=None, x__xgafv=None)</code>
+  <pre>Gets a Session.
+  name: string, Required. The resource name of the Session to get. Format: `projects/{project}/locations/{location}/collections/{collection}/dataStores/{data_store_id}/sessions/{session_id}` (required)
+  includeAnswerDetails: boolean, Optional. If set to true, the full session including all answer details will be returned.
+  <pre>Lists all Sessions by their parent DataStore.
+  filter: string, A comma-separated list of fields to filter by, in EBNF grammar. The supported fields are: * `user_pseudo_id` * `state` * `display_name` * `starred` * `is_pinned` * `labels` * `create_time` * `update_time` * `collaborative_project` Examples: * `user_pseudo_id = some_id` * `display_name = &quot;some_name&quot;` * `starred = true` * `is_pinned=true AND (NOT labels:hidden)` * `create_time &gt; &quot;1970-01-01T12:00:00Z&quot;` * `collaborative_project = &quot;projects/123/locations/global/collections/default_collection/engines/&quot; &quot;default_engine/collaborative_projects/cp1&quot;`
+  orderBy: string, A comma-separated list of fields to order by, sorted in ascending order. Use &quot;desc&quot; after a field name for descending. Supported fields: * `update_time` * `create_time` * `session_name` * `is_pinned` Example: * `update_time desc` * `create_time` * `is_pinned desc,update_time desc`: list sessions by is_pinned first, then by update_time.
+  pageToken: string, A page token, received from a previous `ListSessions` call. Provide this to retrieve the subsequent page.
+    { # Response for ListSessions method.
+  &quot;sessions&quot;: [ # All the Sessions for a given data store.
+  <pre>Updates a Session. Session action type cannot be changed. If the Session to update does not exist, a NOT_FOUND error is returned.
+  name: string, Immutable. Fully qualified name `projects/{project}/locations/global/collections/{collection}/engines/{engine}/sessions/*` (required)
+  updateMask: string, Indicates which fields in the provided Session to update. The following are NOT supported: * Session.name If not set or empty, all supported fields are updated.

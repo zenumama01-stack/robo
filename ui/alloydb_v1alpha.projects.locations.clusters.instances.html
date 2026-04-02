@@ -1,0 +1,26 @@
+<h1><a href="alloydb_v1alpha.html">AlloyDB API</a> . <a href="alloydb_v1alpha.projects.html">projects</a> . <a href="alloydb_v1alpha.projects.locations.html">locations</a> . <a href="alloydb_v1alpha.projects.locations.clusters.html">clusters</a> . <a href="alloydb_v1alpha.projects.locations.clusters.instances.html">instances</a></h1>
+  &quot;gcaConfig&quot;: { # Instance level configuration parameters related to the Gemini Cloud Assist product. # Output only. Configuration parameters related to Gemini Cloud Assist.
+    &quot;gcaEntitlement&quot;: &quot;A String&quot;, # Output only. Represents the GCA entitlement state of the instance.
+    &quot;assistiveExperiencesEnabled&quot;: True or False, # Whether assistive experiences are enabled for this AlloyDB instance.
+    &quot;trackActiveQueryPlan&quot;: True or False, # Indicates whether to track active query plans for an instance. If not set, the default value is &quot;off&quot;. Can only be enabled if track_active_queries is enabled.
+    &quot;trackClientAddress&quot;: True or False, # Track client address for an instance. If not set, default value is &quot;off&quot;.
+    &quot;autoScalingConfig&quot;: { # Configuration for autoscaling. # Autoscaling configuration for the read pool instance. If not set, the read pool instance will not be autoscaled.
+      &quot;policy&quot;: { # Policy for the autoscaler. # Policy for the MIG autoscaler.
+        &quot;coolDownPeriodSec&quot;: &quot;A String&quot;, # The period of time in seconds after a new node is created before the autoscaler will incorporate its resource usage (e.g. CPU utilization) into the autoscaling recommendation algorithm.
+        &quot;cpuUtilization&quot;: { # CPU utilization policy for the autoscaler. # CPU utilization policy for the autoscaler.
+          &quot;utilizationTarget&quot;: 3.14, # Target CPU utilization as a float between 0 and 1.
+        &quot;enabled&quot;: True or False, # If true, autoscaling is enabled for the instance. If not set, the default value is false.
+        &quot;maxNodeCount&quot;: &quot;A String&quot;, # Maximum number of nodes for the autoscaler.
+      &quot;schedules&quot;: [ # Optional list of schedules for the MIG autoscaler. If not set, no schedules are created.
+        { # A schedule for the autoscaler.
+          &quot;cronExpression&quot;: &quot;A String&quot;, # Cron expression for the triggering the schedule. See https://cloud.google.com/compute/docs/autoscaler/scaling-schedules#cron_expressions for the syntax.
+          &quot;description&quot;: &quot;A String&quot;, # Description of the schedule.
+          &quot;disabled&quot;: True or False, # If true, the schedule is disabled.
+          &quot;durationSec&quot;: &quot;A String&quot;, # Duration of the schedule.
+          &quot;minNodeCount&quot;: &quot;A String&quot;, # Minimum number of nodes in while the schedule is active.
+          &quot;name&quot;: &quot;A String&quot;, # Name of the schedule.
+          &quot;timeZone&quot;: &quot;A String&quot;, # The location-based IANA time zone for interpreting the schedule&#x27;s start time. If no time zone is provided, UTC is used by default.
+  &quot;updatePolicy&quot;: { # Policy to be used while updating the instance. # Update policy that will be applied during instance update. This field is not persisted when you update the instance. To use a non-default update policy, you must specify explicitly specify the value in each update request.
+    &quot;mode&quot;: &quot;A String&quot;, # Mode for updating the instance.
+  &quot;pemCertificateChain&quot;: [ # Output only. The pem-encoded chain that may be used to verify the X.509 certificate. Expected to be in issuer-to-root order according to RFC 5246.
+  &quot;pscDnsName&quot;: &quot;A String&quot;, # Output only. The DNS name to use with PSC for the Instance.

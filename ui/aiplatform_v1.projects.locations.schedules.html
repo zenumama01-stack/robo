@@ -1,0 +1,61 @@
+<h1><a href="aiplatform_v1.html">Vertex AI API</a> . <a href="aiplatform_v1.projects.html">projects</a> . <a href="aiplatform_v1.projects.locations.html">locations</a> . <a href="aiplatform_v1.projects.locations.schedules.html">schedules</a></h1>
+  <code><a href="aiplatform_v1.projects.locations.schedules.operations.html">operations()</a></code>
+<p class="firstline">Creates a Schedule.</p>
+<p class="firstline">Deletes a Schedule.</p>
+<p class="firstline">Gets a Schedule.</p>
+<p class="firstline">Lists Schedules in a Location.</p>
+<p class="firstline">Updates an active or paused Schedule. When the Schedule is updated, new runs will be scheduled starting from the updated next execution time after the update time based on the time_specification in the updated Schedule. All unstarted runs before the update time will be skipped while already created runs will NOT be paused or canceled.</p>
+<p class="firstline">Pauses a Schedule. Will mark Schedule.state to 'PAUSED'. If the schedule is paused, no new runs will be created. Already created runs will NOT be paused or canceled.</p>
+<p class="firstline">Resumes a paused Schedule to start scheduling new runs. Will mark Schedule.state to 'ACTIVE'. Only paused Schedule can be resumed. When the Schedule is resumed, new runs will be scheduled starting from the next execution time after the current time based on the time_specification in the Schedule. If Schedule.catch_up is set up true, all missed runs will be scheduled for backfill first.</p>
+  <pre>Creates a Schedule.
+  parent: string, Required. The resource name of the Location to create the Schedule in. Format: `projects/{project}/locations/{location}` (required)
+{ # An instance of a Schedule periodically schedules runs to make API calls based on user specified time specification and API request type.
+  &quot;allowQueueing&quot;: True or False, # Optional. Whether new scheduled runs can be queued when max_concurrent_runs limit is reached. If set to true, new runs will be queued instead of skipped. Default to false.
+  &quot;catchUp&quot;: True or False, # Output only. Whether to backfill missed runs when the schedule is resumed from PAUSED state. If set to true, all missed runs will be scheduled. New runs will be scheduled after the backfill is complete. Default to false.
+  &quot;createNotebookExecutionJobRequest&quot;: { # Request message for [NotebookService.CreateNotebookExecutionJob] # Request for NotebookService.CreateNotebookExecutionJob.
+    &quot;notebookExecutionJob&quot;: { # NotebookExecutionJob represents an instance of a notebook execution. # Required. The NotebookExecutionJob to create.
+    &quot;notebookExecutionJobId&quot;: &quot;A String&quot;, # Optional. User specified ID for the NotebookExecutionJob.
+    &quot;parent&quot;: &quot;A String&quot;, # Required. The resource name of the Location to create the NotebookExecutionJob. Format: `projects/{project}/locations/{location}`
+  &quot;createPipelineJobRequest&quot;: { # Request message for PipelineService.CreatePipelineJob. # Request for PipelineService.CreatePipelineJob. CreatePipelineJobRequest.parent field is required (format: projects/{project}/locations/{location}).
+    &quot;parent&quot;: &quot;A String&quot;, # Required. The resource name of the Location to create the PipelineJob in. Format: `projects/{project}/locations/{location}`
+    &quot;pipelineJob&quot;: { # An instance of a machine learning PipelineJob. # Required. The PipelineJob to create.
+    &quot;pipelineJobId&quot;: &quot;A String&quot;, # The ID to use for the PipelineJob, which will become the final component of the PipelineJob name. If not provided, an ID will be automatically generated. This value should be less than 128 characters, and valid characters are `/a-z-/`.
+  &quot;createTime&quot;: &quot;A String&quot;, # Output only. Timestamp when this Schedule was created.
+  &quot;displayName&quot;: &quot;A String&quot;, # Required. User provided name of the Schedule. The name can be up to 128 characters long and can consist of any UTF-8 characters.
+  &quot;endTime&quot;: &quot;A String&quot;, # Optional. Timestamp after which no new runs can be scheduled. If specified, The schedule will be completed when either end_time is reached or when scheduled_run_count &gt;= max_run_count. If not specified, new runs will keep getting scheduled until this Schedule is paused or deleted. Already scheduled runs will be allowed to complete. Unset if not specified.
+  &quot;lastPauseTime&quot;: &quot;A String&quot;, # Output only. Timestamp when this Schedule was last paused. Unset if never paused.
+  &quot;lastResumeTime&quot;: &quot;A String&quot;, # Output only. Timestamp when this Schedule was last resumed. Unset if never resumed from pause.
+  &quot;lastScheduledRunResponse&quot;: { # Status of a scheduled run. # Output only. Response of the last scheduled run. This is the response for starting the scheduled requests and not the execution of the operations/jobs created by the requests (if applicable). Unset if no run has been scheduled yet.
+    &quot;runResponse&quot;: &quot;A String&quot;, # The response of the scheduled run.
+    &quot;scheduledRunTime&quot;: &quot;A String&quot;, # The scheduled run time based on the user-specified schedule.
+  &quot;maxConcurrentActiveRunCount&quot;: &quot;A String&quot;, # Optional. Specifies the maximum number of active runs that can be executed concurrently for this Schedule. This limits the number of runs that can be in a non-terminal state at the same time. Currently, this field is only supported for requests of type CreatePipelineJobRequest.
+  &quot;maxConcurrentRunCount&quot;: &quot;A String&quot;, # Required. Maximum number of runs that can be started concurrently for this Schedule. This is the limit for starting the scheduled requests and not the execution of the operations/jobs created by the requests (if applicable).
+  &quot;maxRunCount&quot;: &quot;A String&quot;, # Optional. Maximum run count of the schedule. If specified, The schedule will be completed when either started_run_count &gt;= max_run_count or when end_time is reached. If not specified, new runs will keep getting scheduled until this Schedule is paused or deleted. Already scheduled runs will be allowed to complete. Unset if not specified.
+  &quot;name&quot;: &quot;A String&quot;, # Immutable. The resource name of the Schedule.
+  &quot;nextRunTime&quot;: &quot;A String&quot;, # Output only. Timestamp when this Schedule should schedule the next run. Having a next_run_time in the past means the runs are being started behind schedule.
+  &quot;startTime&quot;: &quot;A String&quot;, # Optional. Timestamp after which the first run can be scheduled. Default to Schedule create time if not specified.
+  &quot;startedRunCount&quot;: &quot;A String&quot;, # Output only. The number of runs started by this schedule.
+  &quot;state&quot;: &quot;A String&quot;, # Output only. The state of this Schedule.
+  &quot;updateTime&quot;: &quot;A String&quot;, # Output only. Timestamp when this Schedule was updated.
+  <pre>Deletes a Schedule.
+  name: string, Required. The name of the Schedule resource to be deleted. Format: `projects/{project}/locations/{location}/schedules/{schedule}` (required)
+  <pre>Gets a Schedule.
+  name: string, Required. The name of the Schedule resource. Format: `projects/{project}/locations/{location}/schedules/{schedule}` (required)
+  <pre>Lists Schedules in a Location.
+  parent: string, Required. The resource name of the Location to list the Schedules from. Format: `projects/{project}/locations/{location}` (required)
+  filter: string, Lists the Schedules that match the filter expression. The following fields are supported: * `display_name`: Supports `=`, `!=` comparisons, and `:` wildcard. * `state`: Supports `=` and `!=` comparisons. * `request`: Supports existence of the check. (e.g. `create_pipeline_job_request:*` --&gt; Schedule has create_pipeline_job_request). * `create_time`: Supports `=`, `!=`, `&lt;`, `&gt;`, `&lt;=`, and `&gt;=` comparisons. Values must be in RFC 3339 format. * `start_time`: Supports `=`, `!=`, `&lt;`, `&gt;`, `&lt;=`, and `&gt;=` comparisons. Values must be in RFC 3339 format. * `end_time`: Supports `=`, `!=`, `&lt;`, `&gt;`, `&lt;=`, `&gt;=` comparisons and `:*` existence check. Values must be in RFC 3339 format. * `next_run_time`: Supports `=`, `!=`, `&lt;`, `&gt;`, `&lt;=`, and `&gt;=` comparisons. Values must be in RFC 3339 format. Filter expressions can be combined together using logical operators (`NOT`, `AND` &amp; `OR`). The syntax to define filter expression is based on https://google.aip.dev/160. Examples: * `state=&quot;ACTIVE&quot; AND display_name:&quot;my_schedule_*&quot;` * `NOT display_name=&quot;my_schedule&quot;` * `create_time&gt;&quot;2021-05-18T00:00:00Z&quot;` * `end_time&gt;&quot;2021-05-18T00:00:00Z&quot; OR NOT end_time:*` * `create_pipeline_job_request:*`
+  orderBy: string, A comma-separated list of fields to order by. The default sort order is in ascending order. Use &quot;desc&quot; after a field name for descending. You can have multiple order_by fields provided. For example, using &quot;create_time desc, end_time&quot; will order results by create time in descending order, and if there are multiple schedules having the same create time, order them by the end time in ascending order. If order_by is not specified, it will order by default with create_time in descending order. Supported fields: * `create_time` * `start_time` * `end_time` * `next_run_time`
+  pageSize: integer, The standard list page size. Default to 100 if not specified.
+  pageToken: string, The standard list page token. Typically obtained via ListSchedulesResponse.next_page_token of the previous ScheduleService.ListSchedules call.
+    { # Response message for ScheduleService.ListSchedules
+  &quot;nextPageToken&quot;: &quot;A String&quot;, # A token to retrieve the next page of results. Pass to ListSchedulesRequest.page_token to obtain that page.
+  &quot;schedules&quot;: [ # List of Schedules in the requested page.
+  <pre>Updates an active or paused Schedule. When the Schedule is updated, new runs will be scheduled starting from the updated next execution time after the update time based on the time_specification in the updated Schedule. All unstarted runs before the update time will be skipped while already created runs will NOT be paused or canceled.
+  name: string, Immutable. The resource name of the Schedule. (required)
+  <pre>Pauses a Schedule. Will mark Schedule.state to &#x27;PAUSED&#x27;. If the schedule is paused, no new runs will be created. Already created runs will NOT be paused or canceled.
+  name: string, Required. The name of the Schedule resource to be paused. Format: `projects/{project}/locations/{location}/schedules/{schedule}` (required)
+{ # Request message for ScheduleService.PauseSchedule.
+  <pre>Resumes a paused Schedule to start scheduling new runs. Will mark Schedule.state to &#x27;ACTIVE&#x27;. Only paused Schedule can be resumed. When the Schedule is resumed, new runs will be scheduled starting from the next execution time after the current time based on the time_specification in the Schedule. If Schedule.catch_up is set up true, all missed runs will be scheduled for backfill first.
+  name: string, Required. The name of the Schedule resource to be resumed. Format: `projects/{project}/locations/{location}/schedules/{schedule}` (required)
+{ # Request message for ScheduleService.ResumeSchedule.
+  &quot;catchUp&quot;: True or False, # Optional. Whether to backfill missed runs when the schedule is resumed from PAUSED state. If set to true, all missed runs will be scheduled. New runs will be scheduled after the backfill is complete. This will also update Schedule.catch_up field. Default to false.

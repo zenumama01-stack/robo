@@ -1,0 +1,17 @@
+<h1><a href="apphub_v1.html">App Hub API</a> . <a href="apphub_v1.projects.html">projects</a> . <a href="apphub_v1.projects.locations.html">locations</a> . <a href="apphub_v1.projects.locations.discoveredWorkloads.html">discoveredWorkloads</a></h1>
+<p class="firstline">Gets a Discovered Workload in a host project and location.</p>
+<p class="firstline">Lists Discovered Workloads that can be added to an Application in a host project and location.</p>
+<p class="firstline">Lists a Discovered Workload in a host project and location, with a given resource URI.</p>
+  <pre>Gets a Discovered Workload in a host project and location.
+  name: string, Required. Fully qualified name of the Discovered Workload to fetch. Expected format: `projects/{project}/locations/{location}/discoveredWorkloads/{discoveredWorkload}`. (required)
+    { # DiscoveredWorkload is a binary deployment (such as managed instance groups (MIGs) and GKE deployments) that performs the smallest logical subset of business functionality. A discovered workload can be registered to an App Hub Workload.
+  &quot;name&quot;: &quot;A String&quot;, # Identifier. The resource name of the discovered workload. Format: `&quot;projects/{host-project-id}/locations/{location}/discoveredWorkloads/{uuid}&quot;`
+  <pre>Lists Discovered Workloads that can be added to an Application in a host project and location.
+  parent: string, Required. Project and location to list Discovered Workloads on. Expected format: `projects/{project}/locations/{location}`. (required)
+    { # Response for ListDiscoveredWorkloads.
+  &quot;discoveredWorkloads&quot;: [ # List of Discovered Workloads.
+  <pre>Lists a Discovered Workload in a host project and location, with a given resource URI.
+  parent: string, Required. Host project ID and location to lookup Discovered Workload in. Expected format: `projects/{project}/locations/{location}`. (required)
+  uri: string, Required. Resource URI to find Discovered Workload for. Accepts both project number and project ID and does translation when needed.
+    { # Response for LookupDiscoveredWorkload.
+  &quot;discoveredWorkload&quot;: { # DiscoveredWorkload is a binary deployment (such as managed instance groups (MIGs) and GKE deployments) that performs the smallest logical subset of business functionality. A discovered workload can be registered to an App Hub Workload. # Discovered Workload if exists, empty otherwise.

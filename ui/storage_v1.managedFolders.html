@@ -1,0 +1,46 @@
+<h1><a href="storage_v1.html">Cloud Storage JSON API</a> . <a href="storage_v1.managedFolders.html">managedFolders</a></h1>
+  <code><a href="#delete">delete(bucket, managedFolder, allowNonEmpty=None, ifMetagenerationMatch=None, ifMetagenerationNotMatch=None)</a></code></p>
+<p class="firstline">Permanently deletes a managed folder.</p>
+  <code><a href="#get">get(bucket, managedFolder, ifMetagenerationMatch=None, ifMetagenerationNotMatch=None)</a></code></p>
+<p class="firstline">Returns metadata of the specified managed folder.</p>
+  <code><a href="#getIamPolicy">getIamPolicy(bucket, managedFolder, optionsRequestedPolicyVersion=None, userProject=None)</a></code></p>
+<p class="firstline">Returns an IAM policy for the specified managed folder.</p>
+<p class="firstline">Creates a new managed folder.</p>
+  <code><a href="#list">list(bucket, pageSize=None, pageToken=None, prefix=None)</a></code></p>
+<p class="firstline">Lists managed folders in the given bucket.</p>
+  <code><a href="#setIamPolicy">setIamPolicy(bucket, managedFolder, body=None, userProject=None)</a></code></p>
+<p class="firstline">Updates an IAM policy for the specified managed folder.</p>
+  <code><a href="#testIamPermissions">testIamPermissions(bucket, managedFolder, permissions, userProject=None)</a></code></p>
+<p class="firstline">Tests a set of permissions on the given managed folder to see which, if any, are held by the caller.</p>
+    <code class="details" id="delete">delete(bucket, managedFolder, allowNonEmpty=None, ifMetagenerationMatch=None, ifMetagenerationNotMatch=None)</code>
+  <pre>Permanently deletes a managed folder.
+  bucket: string, Name of the bucket containing the managed folder. (required)
+  managedFolder: string, The managed folder name/path. (required)
+  allowNonEmpty: boolean, Allows the deletion of a managed folder even if it is not empty. A managed folder is empty if there are no objects or managed folders that it applies to. Callers must have storage.managedFolders.setIamPolicy permission.
+  ifMetagenerationMatch: string, If set, only deletes the managed folder if its metageneration matches this value.
+  ifMetagenerationNotMatch: string, If set, only deletes the managed folder if its metageneration does not match this value.
+    <code class="details" id="get">get(bucket, managedFolder, ifMetagenerationMatch=None, ifMetagenerationNotMatch=None)</code>
+  <pre>Returns metadata of the specified managed folder.
+  ifMetagenerationMatch: string, Makes the return of the managed folder metadata conditional on whether the managed folder&#x27;s current metageneration matches the given value.
+  ifMetagenerationNotMatch: string, Makes the return of the managed folder metadata conditional on whether the managed folder&#x27;s current metageneration does not match the given value.
+    { # A managed folder.
+  &quot;bucket&quot;: &quot;A String&quot;, # The name of the bucket containing this managed folder.
+  &quot;createTime&quot;: &quot;A String&quot;, # The creation time of the managed folder in RFC 3339 format.
+  &quot;id&quot;: &quot;A String&quot;, # The ID of the managed folder, including the bucket name and managed folder name.
+  &quot;kind&quot;: &quot;storage#managedFolder&quot;, # The kind of item this is. For managed folders, this is always storage#managedFolder.
+  &quot;metageneration&quot;: &quot;A String&quot;, # The version of the metadata for this managed folder. Used for preconditions and for detecting changes in metadata.
+  &quot;name&quot;: &quot;A String&quot;, # The name of the managed folder. Required if not specified by URL parameter.
+  &quot;selfLink&quot;: &quot;A String&quot;, # The link to this managed folder.
+  &quot;updateTime&quot;: &quot;A String&quot;, # The last update time of the managed folder metadata in RFC 3339 format.
+    <code class="details" id="getIamPolicy">getIamPolicy(bucket, managedFolder, optionsRequestedPolicyVersion=None, userProject=None)</code>
+  <pre>Returns an IAM policy for the specified managed folder.
+  <pre>Creates a new managed folder.
+    <code class="details" id="list">list(bucket, pageSize=None, pageToken=None, prefix=None)</code>
+  <pre>Lists managed folders in the given bucket.
+  prefix: string, The managed folder name/path prefix to filter the output list of results.
+    { # A list of managed folders.
+  &quot;kind&quot;: &quot;storage#managedFolders&quot;, # The kind of item this is. For lists of managed folders, this is always storage#managedFolders.
+    <code class="details" id="setIamPolicy">setIamPolicy(bucket, managedFolder, body=None, userProject=None)</code>
+  <pre>Updates an IAM policy for the specified managed folder.
+    <code class="details" id="testIamPermissions">testIamPermissions(bucket, managedFolder, permissions, userProject=None)</code>
+  <pre>Tests a set of permissions on the given managed folder to see which, if any, are held by the caller.

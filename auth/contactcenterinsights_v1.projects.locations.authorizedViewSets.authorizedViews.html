@@ -1,0 +1,86 @@
+<h1><a href="contactcenterinsights_v1.html">Contact Center AI Insights API</a> . <a href="contactcenterinsights_v1.projects.html">projects</a> . <a href="contactcenterinsights_v1.projects.locations.html">locations</a> . <a href="contactcenterinsights_v1.projects.locations.authorizedViewSets.html">authorizedViewSets</a> . <a href="contactcenterinsights_v1.projects.locations.authorizedViewSets.authorizedViews.html">authorizedViews</a></h1>
+  <code><a href="contactcenterinsights_v1.projects.locations.authorizedViewSets.authorizedViews.conversations.html">conversations()</a></code>
+  <code><a href="contactcenterinsights_v1.projects.locations.authorizedViewSets.authorizedViews.operations.html">operations()</a></code>
+<p class="firstline">Create AuthorizedView</p>
+<p class="firstline">Deletes an AuthorizedView.</p>
+  <code><a href="#generativeInsights">generativeInsights(location, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Natural language based Insights which powers the next generation of dashboards in Insights. Next generation of QueryMetrics.</p>
+<p class="firstline">Get AuthorizedView</p>
+<p class="firstline">List AuthorizedViewSets</p>
+<p class="firstline">Updates an AuthorizedView.</p>
+  <code><a href="#queryPerformanceOverview">queryPerformanceOverview(parent, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Generates a summary of predefined performance metrics for a set of conversations. Conversations can be specified by specifying a time window and an agent id, for now. The summary includes a comparison of metrics computed for conversations in the previous time period, and also a comparison with peers in the same time period.</p>
+  <code><a href="#search">search(parent, orderBy=None, pageSize=None, pageToken=None, query=None, x__xgafv=None)</a></code></p>
+<p class="firstline">SearchAuthorizedViewSets</p>
+  <pre>Create AuthorizedView
+  parent: string, Required. The parent resource of the AuthorizedView. (required)
+{ # An AuthorizedView represents a view of accessible Insights resources (for example, Conversation and Scorecard). Who have read access to the AuthorizedView resource will have access to these Insight resources as well.
+  &quot;conversationFilter&quot;: &quot;A String&quot;, # A filter to reduce conversation results to a specific subset. The AuthorizedView&#x27;s assigned permission (read/write) could be applied to the subset of conversations. If conversation_filter is empty, there is no restriction on the conversations that the AuthorizedView can access. Having *authorizedViews.get* access to the AuthorizedView means having the same read/write access to the Conversations (as well as metadata/annotations linked to the conversation) that this AuthorizedView has.
+  &quot;createTime&quot;: &quot;A String&quot;, # Output only. The time at which the authorized view was created.
+  &quot;displayName&quot;: &quot;A String&quot;, # Display Name. Limit 64 characters.
+  &quot;name&quot;: &quot;A String&quot;, # Identifier. The resource name of the AuthorizedView. Format: projects/{project}/locations/{location}/authorizedViewSets/{authorized_view_set}/authorizedViews/{authorized_view}
+  &quot;updateTime&quot;: &quot;A String&quot;, # Output only. The most recent time at which the authorized view was updated.
+  authorizedViewId: string, Optional. A unique ID for the new AuthorizedView. This ID will become the final component of the AuthorizedView&#x27;s resource name. If no ID is specified, a server-generated ID will be used. This value should be 4-64 characters and must match the regular expression `^[a-z]([a-z0-9-]{0,61}[a-z0-9])?$`. See https://google.aip.dev/122#resource-id-segments
+  <pre>Deletes an AuthorizedView.
+  name: string, Required. The name of the AuthorizedView to delete. (required)
+    <code class="details" id="generativeInsights">generativeInsights(location, body=None, x__xgafv=None)</code>
+  <pre>Natural language based Insights which powers the next generation of dashboards in Insights. Next generation of QueryMetrics.
+{ # The request for generative insights.
+  &quot;chart&quot;: &quot;A String&quot;, # The full name of the chart resource this request corresponds to. Format: projects/{project}/locations/{location}/dashboards/{dashboard}/charts/{chart}
+  &quot;comparisonFilter&quot;: &quot;A String&quot;, # Optional. Filter for the data that can be specified in addition to the natural language query. This `filter` is specifically used for charts where comparisons are possible. For example, &quot;compare to last month&quot; or &quot;compare to previous quarter&quot;.
+  &quot;filter&quot;: &quot;A String&quot;, # Filter for the data that can be specified in addition to the natural language query. Users are encouraged to use this field to populate time-windows.
+  &quot;naturalLanguageQuery&quot;: &quot;A String&quot;, # The natural language query specified by the user. If this field is specified, `sql_query` will be ignored.
+  &quot;revisionId&quot;: &quot;A String&quot;, # Optional. The revision id that maps to the state of the chart state revision. When specified, the backend will reload the chart with the sql and visual spec from that revision.
+  &quot;sessionId&quot;: &quot;A String&quot;, # Optional. The session id of the conversation. If the session id is not specified, backend will generate a random session id. If the session id is specified, will associate user-provided user_query with the provided session id.
+  &quot;sqlComparisonKey&quot;: &quot;A String&quot;, # Optional. For charts with comparison, this key will determine the metric that will be compared between the current and another dataset.
+  &quot;sqlQuery&quot;: &quot;A String&quot;, # Optional. The SQL query specified by the user. This query must be in BigQuery SQL dialect. The `filter` field will also be ignored, as it is assumed that any filtering is already included in the SQL query.
+  &quot;userProvidedChartSpec&quot;: { # Optional. The user provided chart spec for the chart. This will be used to override the visual spec generated by the LLM.
+  <pre>Get AuthorizedView
+  name: string, Required. The name of the AuthorizedView to get. (required)
+  <pre>List AuthorizedViewSets
+  parent: string, Required. The parent resource of the AuthorizedViews. If the parent is set to `-`, all AuthorizedViews under the location will be returned. (required)
+  filter: string, Optional. The filter expression to filter authorized views listed in the response.
+  orderBy: string, Optional. The order by expression to order authorized views listed in the response.
+  pageSize: integer, Optional. The maximum number of view to return in the response. If the value is zero, the service will select a default size. A call might return fewer objects than requested. A non-empty `next_page_token` in the response indicates that more data is available.
+  pageToken: string, Optional. The value returned by the last `ListAuthorizedViewsResponse`. This value indicates that this is a continuation of a prior `ListAuthorizedViews` call and that the system should return the next page of data.
+    { # The response from a ListAuthorizedViews request.
+  &quot;authorizedViews&quot;: [ # The AuthorizedViews under the parent.
+  <pre>Updates an AuthorizedView.
+  name: string, Identifier. The resource name of the AuthorizedView. Format: projects/{project}/locations/{location}/authorizedViewSets/{authorized_view_set}/authorizedViews/{authorized_view} (required)
+  updateMask: string, Optional. The list of fields to be updated. All possible fields can be updated by passing `*`, or a subset of the following updateable fields can be provided: * `conversation_filter` * `display_name`
+        &quot;agentDeploymentDisplayName&quot;: &quot;A String&quot;, # Optional. The agent&#x27;s deployment display name. Only applicable to automated agents. This will be populated for AGENT_DEPLOYMENT_ID dimensions.
+        &quot;agentDeploymentId&quot;: &quot;A String&quot;, # Optional. The agent&#x27;s deployment ID. Only applicable to automated agents. This will be populated for AGENT and AGENT_DEPLOYMENT_ID dimensions.
+        &quot;agentDisplayName&quot;: &quot;A String&quot;, # Optional. The agent&#x27;s name This will be populated for AGENT, AGENT_TEAM, AGENT_VERSION_ID, and AGENT_DEPLOYMENT_ID dimensions.
+        &quot;agentId&quot;: &quot;A String&quot;, # Optional. A user-specified string representing the agent. This will be populated for AGENT, AGENT_TEAM, AGENT_VERSION_ID, and AGENT_DEPLOYMENT_ID dimensions.
+        &quot;agentVersionDisplayName&quot;: &quot;A String&quot;, # Optional. The agent&#x27;s version display name. Only applicable to automated agents. This will be populated for AGENT_VERSION_ID, and AGENT_DEPLOYMENT_ID dimensions.
+        &quot;agentVersionId&quot;: &quot;A String&quot;, # Optional. The agent&#x27;s version ID. Only applicable to automated agents. This will be populated for AGENT_VERSION_ID, and AGENT_DEPLOYMENT_ID dimensions.
+      &quot;clientSentimentCategoryDimensionMetadata&quot;: { # Metadata about the client sentiment category dimension. # Output only. Metadata about the client sentiment category dimension.
+        &quot;sentimentCategory&quot;: &quot;A String&quot;, # Optional. The client sentiment category.
+      &quot;conversationProfileDimensionMetadata&quot;: { # Metadata about the conversation profile dimension. # Output only. Metadata about the conversation profile dimension.
+        &quot;conversationProfileId&quot;: &quot;A String&quot;, # Optional. The conversation profile ID.
+      &quot;conversationalAgentsPlaybookDimensionMetadata&quot;: { # Metadata about the Conversational Agents playbook dimension. # Output only. Metadata about the Conversational Agents playbook dimension.
+        &quot;playbookDisplayName&quot;: &quot;A String&quot;, # Optional. The dialogflow playbook display name.
+        &quot;playbookId&quot;: &quot;A String&quot;, # Optional. The dialogflow playbook ID.
+      &quot;conversationalAgentsToolDimensionMetadata&quot;: { # Metadata about the Conversational Agents tool dimension. # Output only. Metadata about the Conversational Agents tool dimension.
+        &quot;toolDisplayName&quot;: &quot;A String&quot;, # Optional. The dialogflow tool display name.
+        &quot;toolId&quot;: &quot;A String&quot;, # Optional. The dialogflow tool ID.
+      &quot;labelDimensionMetadata&quot;: { # Metadata about conversation labels. # Output only. Metadata about conversation labels.
+        &quot;labelKey&quot;: &quot;A String&quot;, # Optional. The label key.
+        &quot;labelValue&quot;: &quot;A String&quot;, # Optional. The label value.
+      &quot;mediumDimensionMetadata&quot;: { # Metadata about the conversation medium dimension. # Output only. Metadata about the conversation medium dimension.
+        &quot;medium&quot;: &quot;A String&quot;, # Optional. The conversation medium. Currently supports : PHONE_CALL, CHAT.
+      &quot;qaScorecardDimensionMetadata&quot;: { # Metadata about the QA scorecard dimension. # Output only. Metadata about the QA scorecard dimension.
+    <code class="details" id="queryPerformanceOverview">queryPerformanceOverview(parent, body=None, x__xgafv=None)</code>
+  <pre>Generates a summary of predefined performance metrics for a set of conversations. Conversations can be specified by specifying a time window and an agent id, for now. The summary includes a comparison of metrics computed for conversations in the previous time period, and also a comparison with peers in the same time period.
+  parent: string, Required. The parent resource of the conversations to derive performance stats from. &quot;projects/{project}/locations/{location}&quot; (required)
+{ # The request for summarizing performance according to different metrics for conversations over a specified time window.
+  &quot;agentPerformanceSource&quot;: { # The entity whose performance is being queried is a single agent. # Conversations are from a single agent.
+    &quot;agentId&quot;: &quot;A String&quot;, # Required. Agent id to query performance overview for.
+  &quot;comparisonQueryInterval&quot;: { # A time window for querying conversations. # The time window of the conversations to compare the performance to.
+    &quot;endTime&quot;: &quot;A String&quot;, # Required. The end time of the time window.
+    &quot;startTime&quot;: &quot;A String&quot;, # Required. The start time of the time window.
+  &quot;filter&quot;: &quot;A String&quot;, # Optional. Filter to select a subset of conversations to compute the performance overview. Supports the same filters as the filter field in QueryMetricsRequest. The source and query interval/comparison query interval should not be included here.
+  &quot;queryInterval&quot;: { # A time window for querying conversations. # Required. The time window of the conversations to derive performance stats from.
+    <code class="details" id="search">search(parent, orderBy=None, pageSize=None, pageToken=None, query=None, x__xgafv=None)</code>
+  <pre>SearchAuthorizedViewSets
+  query: string, Optional. The query expression to search authorized views.

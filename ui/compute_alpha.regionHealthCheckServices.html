@@ -1,0 +1,73 @@
+<h1><a href="compute_alpha.html">Compute Engine API</a> . <a href="compute_alpha.regionHealthCheckServices.html">regionHealthCheckServices</a></h1>
+<p class="firstline">Retrieves the list of all HealthCheckService resources,</p>
+  <code><a href="#delete">delete(project, region, healthCheckService, requestId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Deletes the specified regional HealthCheckService.</p>
+  <code><a href="#get">get(project, region, healthCheckService, x__xgafv=None)</a></code></p>
+<p class="firstline">Returns the specified regional HealthCheckService resource.</p>
+<p class="firstline">Creates a regional HealthCheckService resource in the</p>
+<p class="firstline">Lists all the HealthCheckService resources that have been</p>
+  <code><a href="#patch">patch(project, region, healthCheckService, body=None, requestId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Updates the specified regional HealthCheckService resource</p>
+  <pre>Retrieves the list of all HealthCheckService resources,
+    { # Contains a list of HealthCheckServicesScopedList.
+  &quot;items&quot;: { # A list of HealthCheckServicesScopedList resources.
+    &quot;a_key&quot;: { # Name of the scope containing this set of HealthCheckServices.
+      &quot;resources&quot;: [ # A list of HealthCheckServices contained in this scope.
+        { # Represents a Health-Check as a Service resource.
+              # inserting a HealthCheckService. An up-to-date fingerprint must
+              # be provided in order to patch/update the HealthCheckService; Otherwise, the
+              # request will fail with error 412 conditionNotMet. To see the
+              # latest fingerprint, make a get() request to retrieve the
+              # HealthCheckService.
+          &quot;healthChecks&quot;: [ # A list of URLs to the HealthCheck resources. Must have
+              # at least one HealthCheck, and not more than 10 for regionalHealthCheckService, and not more than 1 for globalHealthCheckService.HealthCheck resources must haveportSpecification=USE_SERVING_PORT orportSpecification=USE_FIXED_PORT. For
+              # regional HealthCheckService, theHealthCheck must be regional and in the same
+              # region. For global HealthCheckService,HealthCheck must be global. Mix of regional and globalHealthChecks is not supported. Multiple regionalHealthChecks must belong to the same region. RegionalHealthChecks must belong to the same region as zones ofNetworkEndpointGroups. For globalHealthCheckService using globalINTERNET_IP_PORT NetworkEndpointGroups, the
+              # global HealthChecks must specify sourceRegions,
+              # and HealthChecks that specify sourceRegions can
+              # only be used with global INTERNET_IP_PORTNetworkEndpointGroups.
+          &quot;healthStatusAggregationPolicy&quot;: &quot;A String&quot;, # Optional. Policy for how the results from multiple health checks
+              # for the same endpoint are aggregated. Defaults to NO_AGGREGATION
+              # if unspecified.
+              #    - NO_AGGREGATION. An EndpointHealth message is
+              #    returned for each  pair in the health check
+              #    service.
+              #    - AND. If any health check of an endpoint reportsUNHEALTHY, then UNHEALTHY is theHealthState of the endpoint. If all health checks reportHEALTHY, the HealthState of the endpoint isHEALTHY.
+              # This is only allowed with regional HealthCheckService.
+          &quot;healthStatusAggregationStrategy&quot;: &quot;A String&quot;, # This field is deprecated. Use health_status_aggregation_policy
+              # Policy for how the results from multiple health checks for the
+              # same endpoint are aggregated.
+              #    - NO_AGGREGATION. An EndpointHealth
+              #    message is returned for each backend in the health check
+              #    - AND.  If any backend&#x27;s health check reportsUNHEALTHY, then UNHEALTHY is theHealthState of the entire health check service. If
+              #    all backend&#x27;s are healthy, the HealthState of the
+              #    health check service is HEALTHY.
+          &quot;kind&quot;: &quot;compute#healthCheckService&quot;, # Output only. [Output only] Type of the resource. Alwayscompute#healthCheckServicefor health check services.
+          &quot;name&quot;: &quot;A String&quot;, # Name of the resource. The name must be 1-63 characters long, and comply
+              # `[a-z]([-a-z0-9]*[a-z0-9])?` which means the first character
+          &quot;networkEndpointGroups&quot;: [ # A list of URLs to the NetworkEndpointGroup
+              # resources. Must not have more than 100.  For regionalHealthCheckService, NEGs must be in
+              # zones in the region of the HealthCheckService. For globalHealthCheckServices, the NetworkEndpointGroups
+              # must be global INTERNET_IP_PORT.
+          &quot;notificationEndpoints&quot;: [ # A list of URLs to the NotificationEndpoint
+              # resources. Must not have more than 10.  A list of endpoints for
+              # receiving notifications of change in health status. For regionalHealthCheckService,NotificationEndpoint must be regional and in the
+              # same region. For global HealthCheckService,NotificationEndpoint must be global.
+          &quot;region&quot;: &quot;A String&quot;, # Output only. [Output Only] URL of the region where the health check service
+              # resides. This field is not applicable to global health check services.
+  &quot;kind&quot;: &quot;compute#healthCheckServiceAggregatedList&quot;, # Output only. Type of resource.
+    <code class="details" id="delete">delete(project, region, healthCheckService, requestId=None, x__xgafv=None)</code>
+  <pre>Deletes the specified regional HealthCheckService.
+  healthCheckService: string, Name of the HealthCheckService to delete. The name
+    <code class="details" id="get">get(project, region, healthCheckService, x__xgafv=None)</code>
+  <pre>Returns the specified regional HealthCheckService resource.
+  healthCheckService: string, Name of the HealthCheckService to update. The name
+  <pre>Creates a regional HealthCheckService resource in the
+specified project and region using the data included in the request.
+  <pre>Lists all the HealthCheckService resources that have been
+configured for the specified project in the given region.
+  &quot;items&quot;: [ # Output only. A list of HealthCheckService resources.
+  &quot;kind&quot;: &quot;compute#healthCheckServicesList&quot;, # Output only. [Output Only] Type of the resource. Alwayscompute#healthCheckServicesList for lists of
+      # HealthCheckServices.
+    <code class="details" id="patch">patch(project, region, healthCheckService, body=None, requestId=None, x__xgafv=None)</code>
+  <pre>Updates the specified regional HealthCheckService resource

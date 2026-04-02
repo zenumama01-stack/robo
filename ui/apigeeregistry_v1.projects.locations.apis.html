@@ -1,0 +1,29 @@
+<h1><a href="apigeeregistry_v1.html">Apigee Registry API</a> . <a href="apigeeregistry_v1.projects.html">projects</a> . <a href="apigeeregistry_v1.projects.locations.html">locations</a> . <a href="apigeeregistry_v1.projects.locations.apis.html">apis</a></h1>
+  <code><a href="apigeeregistry_v1.projects.locations.apis.artifacts.html">artifacts()</a></code>
+  <code><a href="apigeeregistry_v1.projects.locations.apis.deployments.html">deployments()</a></code>
+  <code><a href="apigeeregistry_v1.projects.locations.apis.versions.html">versions()</a></code>
+<p class="firstline">Returns the versions Resource.</p>
+<p class="firstline">Creates a specified API.</p>
+<p class="firstline">Removes a specified API and all of the resources that it owns.</p>
+<p class="firstline">Returns a specified API.</p>
+<p class="firstline">Returns matching APIs.</p>
+<p class="firstline">Used to modify a specified API.</p>
+  <pre>Creates a specified API.
+  parent: string, Required. The parent, which owns this collection of APIs. Format: `projects/*/locations/*` (required)
+{ # A top-level description of an API. Produced by producers and are commitments to provide services.
+  &quot;availability&quot;: &quot;A String&quot;, # A user-definable description of the availability of this service. Format: free-form, but we expect single words that describe availability, e.g., &quot;NONE&quot;, &quot;TESTING&quot;, &quot;PREVIEW&quot;, &quot;GENERAL&quot;, &quot;DEPRECATED&quot;, &quot;SHUTDOWN&quot;.
+  &quot;labels&quot;: { # Labels attach identifying metadata to resources. Identifying metadata can be used to filter list operations. Label keys and values can be no longer than 64 characters (Unicode codepoints), can only contain lowercase letters, numeric characters, underscores, and dashes. International characters are allowed. No more than 64 user labels can be associated with one resource (System labels are excluded). See https://goo.gl/xmQnxf for more information and examples of labels. System reserved label keys are prefixed with `apigeeregistry.googleapis.com/` and cannot be changed.
+  &quot;recommendedDeployment&quot;: &quot;A String&quot;, # The recommended deployment of the API. Format: `projects/{project}/locations/{location}/apis/{api}/deployments/{deployment}`
+  &quot;recommendedVersion&quot;: &quot;A String&quot;, # The recommended version of the API. Format: `projects/{project}/locations/{location}/apis/{api}/versions/{version}`
+  apiId: string, Required. The ID to use for the API, which will become the final component of the API&#x27;s resource name. This value should be 4-63 characters, and valid characters are /a-z-/. Following AIP-162, IDs must not have the form of a UUID.
+  <pre>Removes a specified API and all of the resources that it owns.
+  name: string, Required. The name of the API to delete. Format: `projects/*/locations/*/apis/*` (required)
+  <pre>Returns a specified API.
+  name: string, Required. The name of the API to retrieve. Format: `projects/*/locations/*/apis/*` (required)
+  <pre>Returns matching APIs.
+  pageSize: integer, The maximum number of APIs to return. The service may return fewer than this value. If unspecified, at most 50 values will be returned. The maximum is 1000; values above 1000 will be coerced to 1000.
+  pageToken: string, A page token, received from a previous `ListApis` call. Provide this to retrieve the subsequent page. When paginating, all other parameters provided to `ListApis` must match the call that provided the page token.
+    { # Response message for ListApis.
+  &quot;apis&quot;: [ # The APIs from the specified publisher.
+  <pre>Used to modify a specified API.
+  allowMissing: boolean, If set to true, and the API is not found, a new API will be created. In this situation, `update_mask` is ignored.

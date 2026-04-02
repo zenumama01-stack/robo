@@ -1,0 +1,24 @@
+<h1><a href="aiplatform_v1.html">Vertex AI API</a> . <a href="aiplatform_v1.projects.html">projects</a> . <a href="aiplatform_v1.projects.locations.html">locations</a> . <a href="aiplatform_v1.projects.locations.publishers.html">publishers</a> . <a href="aiplatform_v1.projects.locations.publishers.models.html">models</a></h1>
+  <code><a href="aiplatform_v1.projects.locations.publishers.models.invoke.html">invoke()</a></code>
+  <code><a href="#embedContent">embedContent(model, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Embed content with multimodal inputs.</p>
+    <code class="details" id="embedContent">embedContent(model, body=None, x__xgafv=None)</code>
+  <pre>Embed content with multimodal inputs.
+  model: string, Required. The name of the publisher model requested to serve the prediction. Format: `projects/{project}/locations/{location}/publishers/*/models/*` (required)
+{ # Request message for PredictionService.EmbedContent.
+  &quot;autoTruncate&quot;: True or False, # Optional. Deprecated: Please use EmbedContentConfig.auto_truncate instead. Whether to silently truncate the input content if it&#x27;s longer than the maximum sequence length.
+  &quot;content&quot;: { # The structured data content of a message. A Content message contains a `role` field, which indicates the producer of the content, and a `parts` field, which contains the multi-part data of the message. # Required. The content to be embedded.
+  &quot;embedContentConfig&quot;: { # Configurations for the EmbedContent API. # Optional. Configuration for the EmbedContent request.
+    &quot;audioTrackExtraction&quot;: True or False, # Optional. Whether to extract audio from video content.
+    &quot;autoTruncate&quot;: True or False, # Optional. Whether to silently truncate the input content if it&#x27;s longer than the maximum sequence length. Only applicable to text-only embedding models.
+    &quot;documentOcr&quot;: True or False, # Optional. Whether to enable OCR for document content.
+    &quot;outputDimensionality&quot;: 42, # Optional. Reduced dimension for the output embedding. If set, excessive values in the output embedding are truncated from the end.
+    &quot;taskType&quot;: &quot;A String&quot;, # Optional. The task type of the embedding. Only applicable to text-only embedding models.
+    &quot;title&quot;: &quot;A String&quot;, # Optional. The title for the text. Only applicable to text-only embedding models.
+  &quot;outputDimensionality&quot;: 42, # Optional. Deprecated: Please use EmbedContentConfig.output_dimensionality instead. Reduced dimension for the output embedding. If set, excessive values in the output embedding are truncated from the end.
+  &quot;taskType&quot;: &quot;A String&quot;, # Optional. Deprecated: Please use EmbedContentConfig.task_type instead. The task type of the embedding.
+  &quot;title&quot;: &quot;A String&quot;, # Optional. Deprecated: Please use EmbedContentConfig.title instead. The title for the text.
+    { # Response message for PredictionService.EmbedContent.
+  &quot;embedding&quot;: { # A list of floats representing an embedding. # The embedding generated from the input content.
+    &quot;values&quot;: [ # Embedding vector values.
+  &quot;truncated&quot;: True or False, # Whether the input content was truncated before generating the embedding.

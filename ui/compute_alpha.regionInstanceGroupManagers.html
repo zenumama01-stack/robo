@@ -1,0 +1,143 @@
+<h1><a href="compute_alpha.html">Compute Engine API</a> . <a href="compute_alpha.regionInstanceGroupManagers.html">regionInstanceGroupManagers</a></h1>
+  <code><a href="#abandonInstances">abandonInstances(project, region, instanceGroupManager, body=None, requestId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Flags the specified instances to be immediately removed from the managed</p>
+  <code><a href="#adoptInstances">adoptInstances(project, region, instanceGroupManager, body=None, requestId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Flags the specified instances to be adopted to the managed instance</p>
+  <code><a href="#applyUpdatesToInstances">applyUpdatesToInstances(project, region, instanceGroupManager, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Apply updates to selected instances the managed instance group.</p>
+  <code><a href="#createInstances">createInstances(project, region, instanceGroupManager, body=None, requestId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Creates instances with per-instance configurations in this regional managed</p>
+  <code><a href="#delete">delete(project, region, instanceGroupManager, requestId=None, x__xgafv=None)</a></code></p>
+  <code><a href="#deleteInstances">deleteInstances(project, region, instanceGroupManager, body=None, requestId=None, x__xgafv=None)</a></code></p>
+  <code><a href="#deletePerInstanceConfigs">deletePerInstanceConfigs(project, region, instanceGroupManager, body=None, x__xgafv=None)</a></code></p>
+  <code><a href="#get">get(project, region, instanceGroupManager, x__xgafv=None)</a></code></p>
+<p class="firstline">Retrieves the list of managed instance groups that are contained</p>
+  <code><a href="#listErrors">listErrors(project, region, instanceGroupManager, filter=None, maxResults=None, orderBy=None, pageToken=None, returnPartialSuccess=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Lists all errors thrown by actions on instances for a given regional</p>
+  <code><a href="#listManagedInstances">listManagedInstances(project, region, instanceGroupManager, filter=None, maxResults=None, orderBy=None, pageToken=None, returnPartialSuccess=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Lists the instances in the managed instance group and instances that are</p>
+  <code><a href="#listPerInstanceConfigs">listPerInstanceConfigs(project, region, instanceGroupManager, filter=None, maxResults=None, orderBy=None, pageToken=None, returnPartialSuccess=None, x__xgafv=None)</a></code></p>
+  <code><a href="#patch">patch(project, region, instanceGroupManager, body=None, requestId=None, x__xgafv=None)</a></code></p>
+  <code><a href="#patchPerInstanceConfigs">patchPerInstanceConfigs(project, region, instanceGroupManager, body=None, requestId=None, x__xgafv=None)</a></code></p>
+  <code><a href="#recreateInstances">recreateInstances(project, region, instanceGroupManager, body=None, requestId=None, x__xgafv=None)</a></code></p>
+  <code><a href="#resize">resize(project, region, instanceGroupManager, size, requestId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Changes the intended size of the managed instance group. If you increase</p>
+  <code><a href="#resizeAdvanced">resizeAdvanced(project, region, instanceGroupManager, body=None, requestId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Resizes the regional managed instance group with advanced configuration</p>
+  <code><a href="#resumeInstances">resumeInstances(project, region, instanceGroupManager, body=None, requestId=None, x__xgafv=None)</a></code></p>
+  <code><a href="#setAutoHealingPolicies">setAutoHealingPolicies(project, region, instanceGroupManager, body=None, requestId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Modifies the autohealing policy for the instances in this managed</p>
+  <code><a href="#setInstanceTemplate">setInstanceTemplate(project, region, instanceGroupManager, body=None, requestId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Sets the instance template to use when creating new instances or recreating</p>
+  <code><a href="#setTargetPools">setTargetPools(project, region, instanceGroupManager, body=None, requestId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Modifies the target pools to which all new instances in this group are</p>
+  <code><a href="#startInstances">startInstances(project, region, instanceGroupManager, body=None, requestId=None, x__xgafv=None)</a></code></p>
+  <code><a href="#stopInstances">stopInstances(project, region, instanceGroupManager, body=None, requestId=None, x__xgafv=None)</a></code></p>
+  <code><a href="#suspendInstances">suspendInstances(project, region, instanceGroupManager, body=None, requestId=None, x__xgafv=None)</a></code></p>
+  <code><a href="#update">update(project, region, instanceGroupManager, body=None, requestId=None, x__xgafv=None)</a></code></p>
+  <code><a href="#updatePerInstanceConfigs">updatePerInstanceConfigs(project, region, instanceGroupManager, body=None, requestId=None, x__xgafv=None)</a></code></p>
+    <code class="details" id="abandonInstances">abandonInstances(project, region, instanceGroupManager, body=None, requestId=None, x__xgafv=None)</code>
+  <pre>Flags the specified instances to be immediately removed from the managed
+instance group. Abandoning an instance does not delete the
+  instanceGroupManager: string, Name of the managed instance group. (required)
+    <code class="details" id="adoptInstances">adoptInstances(project, region, instanceGroupManager, body=None, requestId=None, x__xgafv=None)</code>
+  <pre>Flags the specified instances to be adopted to the managed instance
+group. Adopting an instance does not change the instance status, but it
+adds the instance to any target pools that are applied by the managed
+instance group. This method increases the targetSize of the managed
+instance group by the number of instances that you adopt. This operation
+is marked as DONE when the action is scheduled even if the instances have
+not been adopted to the group yet. You must separately verify the status
+of the adopting action with the listManagedInstances method.
+  region: string, Name of the region scoping this request. It should conform to RFC1035. (required)
+  instanceGroupManager: string, Name of the managed instance group. It should conform to RFC1035 or be a
+resource ID. (required)
+  &quot;instances&quot;: [ # The list of per-instance configs specifying instances to adopt.
+    <code class="details" id="applyUpdatesToInstances">applyUpdatesToInstances(project, region, instanceGroupManager, body=None, x__xgafv=None)</code>
+  <pre>Apply updates to selected instances the managed instance group.
+  region: string, Name of the region scoping this request, should conform to RFC1035. (required)
+{ # RegionInstanceGroupManagers.applyUpdatesToInstances
+    <code class="details" id="createInstances">createInstances(project, region, instanceGroupManager, body=None, requestId=None, x__xgafv=None)</code>
+  <pre>Creates instances with per-instance configurations in this regional managed
+instance group. Instances are created using the current instance template.
+The create instances operation is marked DONE if
+the createInstances request is successful. The underlying
+actions take additional time. You must separately verify the status of thecreating or actions with the listmanagedinstances
+  region: string, The name of theregion
+{ # RegionInstanceGroupManagers.createInstances
+    <code class="details" id="delete">delete(project, region, instanceGroupManager, requestId=None, x__xgafv=None)</code>
+in that group.
+  instanceGroupManager: string, Name of the managed instance group to delete. (required)
+    <code class="details" id="deleteInstances">deleteInstances(project, region, instanceGroupManager, body=None, requestId=None, x__xgafv=None)</code>
+immediately deleted. The instances are also removed from any target
+instances that you delete.
+The deleteInstances operation is marked DONE if
+the deleteInstances request is successful. The underlying
+actions take additional time. You must separately verify the status of thedeleting action with thelistmanagedinstances
+    <code class="details" id="deletePerInstanceConfigs">deletePerInstanceConfigs(project, region, instanceGroupManager, body=None, x__xgafv=None)</code>
+{ # RegionInstanceGroupManagers.deletePerInstanceConfigs
+    <code class="details" id="get">get(project, region, instanceGroupManager, x__xgafv=None)</code>
+  instanceGroupManager: string, Name of the managed instance group to return. (required)
+even if the instances in the group have not yet been created. You must
+separately verify the status of the individual instances with thelistmanagedinstances
+A regional managed instance group can contain up to 2000 instances.
+  <pre>Retrieves the list of managed instance groups that are contained
+within the specified region.
+    { # Contains a list of managed instance groups.
+  &quot;kind&quot;: &quot;compute#regionInstanceGroupManagerList&quot;, # Output only. [Output Only] The resource type, which is always
+      # compute#instanceGroupManagerList for a list of managed instance groups that
+      # exist in th regional scope.
+    <code class="details" id="listErrors">listErrors(project, region, instanceGroupManager, filter=None, maxResults=None, orderBy=None, pageToken=None, returnPartialSuccess=None, x__xgafv=None)</code>
+  <pre>Lists all errors thrown by actions on instances for a given regional
+managed instance group. The filter andorderBy query parameters are not supported.
+This should conform to RFC1035. (required)
+  &quot;items&quot;: [ # [Output Only] The list of errors of the managed instance group.
+    <code class="details" id="listManagedInstances">listManagedInstances(project, region, instanceGroupManager, filter=None, maxResults=None, orderBy=None, pageToken=None, returnPartialSuccess=None, x__xgafv=None)</code>
+  <pre>Lists the instances in the managed instance group and instances that are
+scheduled to be created. The list includes any current actions
+that the group has scheduled for its instances. The orderBy
+query parameter is not supported.   The `pageToken` query parameter is
+  &quot;managedInstances&quot;: [ # A list of managed instances.
+    <code class="details" id="listPerInstanceConfigs">listPerInstanceConfigs(project, region, instanceGroupManager, filter=None, maxResults=None, orderBy=None, pageToken=None, returnPartialSuccess=None, x__xgafv=None)</code>
+    <code class="details" id="patch">patch(project, region, instanceGroupManager, body=None, requestId=None, x__xgafv=None)</code>
+with the listmanagedinstances
+    <code class="details" id="patchPerInstanceConfigs">patchPerInstanceConfigs(project, region, instanceGroupManager, body=None, requestId=None, x__xgafv=None)</code>
+{ # RegionInstanceGroupManagers.patchPerInstanceConfigs
+    <code class="details" id="recreateInstances">recreateInstances(project, region, instanceGroupManager, body=None, requestId=None, x__xgafv=None)</code>
+    <code class="details" id="resize">resize(project, region, instanceGroupManager, size, requestId=None, x__xgafv=None)</code>
+  <pre>Changes the intended size of the managed instance group. If you increase
+the size, the group creates new instances using the current instance
+template. If you decrease the size, the group deletes one or more
+instances.
+The resize operation is marked DONE if theresize request is successful. The underlying actions take
+additional time. You must separately verify the status of thecreating or deleting actions with thelistmanagedinstances
+  size: integer, Number of instances that should exist in this instance group
+manager. (required)
+    <code class="details" id="resizeAdvanced">resizeAdvanced(project, region, instanceGroupManager, body=None, requestId=None, x__xgafv=None)</code>
+  <pre>Resizes the regional managed instance group with advanced configuration
+options like disabling creation retries. This is an extended version of theresize method.
+If you increase the size, the group creates new instances using the current
+instance template. If you decrease the size, the group deletes one or more
+additional time. You must separately verify the status of thecreating or deleting actions with the get
+      # You can see which instances ar being created in which mode by calling
+    <code class="details" id="resumeInstances">resumeInstances(project, region, instanceGroupManager, body=None, requestId=None, x__xgafv=None)</code>
+    <code class="details" id="setAutoHealingPolicies">setAutoHealingPolicies(project, region, instanceGroupManager, body=None, requestId=None, x__xgafv=None)</code>
+  <pre>Modifies the autohealing policy for the instances in this managed
+[Deprecated] This method is deprecated. UseregionInstanceGroupManagers.patch instead.
+    <code class="details" id="setInstanceTemplate">setInstanceTemplate(project, region, instanceGroupManager, body=None, requestId=None, x__xgafv=None)</code>
+  <pre>Sets the instance template to use when creating new instances or recreating
+instances in this group. Existing instances are not affected.
+  &quot;instanceTemplate&quot;: &quot;A String&quot;, # URL of the InstanceTemplate resource from which all new instances will be
+    <code class="details" id="setTargetPools">setTargetPools(project, region, instanceGroupManager, body=None, requestId=None, x__xgafv=None)</code>
+  <pre>Modifies the target pools to which all new instances in this group are
+assigned. Existing instances in the group are not affected.
+  &quot;fingerprint&quot;: &quot;A String&quot;, # Fingerprint of the target pools information, which is a hash of the
+      # contents. This field is used for optimistic locking when you update the
+      # target pool entries. This field is optional.
+  &quot;targetPools&quot;: [ # The URL of all TargetPool resources to which instances in theinstanceGroup field are added. The target pools automatically
+    <code class="details" id="startInstances">startInstances(project, region, instanceGroupManager, body=None, requestId=None, x__xgafv=None)</code>
+    <code class="details" id="stopInstances">stopInstances(project, region, instanceGroupManager, body=None, requestId=None, x__xgafv=None)</code>
+    <code class="details" id="suspendInstances">suspendInstances(project, region, instanceGroupManager, body=None, requestId=None, x__xgafv=None)</code>
+    <code class="details" id="update">update(project, region, instanceGroupManager, body=None, requestId=None, x__xgafv=None)</code>
+    <code class="details" id="updatePerInstanceConfigs">updatePerInstanceConfigs(project, region, instanceGroupManager, body=None, requestId=None, x__xgafv=None)</code>
+{ # RegionInstanceGroupManagers.updatePerInstanceConfigs

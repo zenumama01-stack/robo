@@ -1,0 +1,58 @@
+<h1><a href="config_v1.html">Infrastructure Manager API</a> . <a href="config_v1.projects.html">projects</a> . <a href="config_v1.projects.locations.html">locations</a> . <a href="config_v1.projects.locations.previews.html">previews</a></h1>
+  <code><a href="config_v1.projects.locations.previews.resourceChanges.html">resourceChanges()</a></code>
+<p class="firstline">Returns the resourceChanges Resource.</p>
+  <code><a href="config_v1.projects.locations.previews.resourceDrifts.html">resourceDrifts()</a></code>
+<p class="firstline">Returns the resourceDrifts Resource.</p>
+  <code><a href="#create">create(parent, body=None, previewId=None, requestId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Creates a Preview.</p>
+<p class="firstline">Deletes a Preview.</p>
+  <code><a href="#export">export(parent, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Export Preview results.</p>
+<p class="firstline">Gets details about a Preview.</p>
+<p class="firstline">Lists Previews in a given project and location.</p>
+    <code class="details" id="create">create(parent, body=None, previewId=None, requestId=None, x__xgafv=None)</code>
+  <pre>Creates a Preview.
+  parent: string, Required. The parent in whose context the Preview is created. The parent value is in the format: &#x27;projects/{project_id}/locations/{location}&#x27;. (required)
+{ # A preview represents a set of actions Infra Manager would perform to move the resources towards the desired state as specified in the configuration.
+  &quot;annotations&quot;: { # Optional. Arbitrary key-value metadata storage e.g. to help client tools identify preview during automation. See https://google.aip.dev/148#annotations for details on format and size limitations.
+  &quot;artifactsGcsBucket&quot;: &quot;A String&quot;, # Optional. User-defined location of Cloud Build logs, artifacts, and in Google Cloud Storage. Format: `gs://{bucket}/{folder}` A default bucket will be bootstrapped if the field is not set or empty Default Bucket Format: `gs://--blueprint-config` Constraints: - The bucket needs to be in the same project as the deployment - The path cannot be within the path of `gcs_source` If omitted and deployment resource ref provided has artifacts_gcs_bucket defined, that artifact bucket is used.
+  &quot;build&quot;: &quot;A String&quot;, # Output only. Cloud Build instance UUID associated with this preview.
+  &quot;createTime&quot;: &quot;A String&quot;, # Output only. Time the preview was created.
+  &quot;deployment&quot;: &quot;A String&quot;, # Optional. Optional deployment reference. If specified, the preview will be performed using the provided deployment&#x27;s current state and use any relevant fields from the deployment unless explicitly specified in the preview create request.
+  &quot;errorLogs&quot;: &quot;A String&quot;, # Output only. Link to tf-error.ndjson file, which contains the full list of the errors encountered during a Terraform preview. Format: `gs://{bucket}/{object}`.
+  &quot;errorStatus&quot;: { # The `Status` type defines a logical error model that is suitable for different programming environments, including REST APIs and RPC APIs. It is used by [gRPC](https://github.com/grpc). Each `Status` message contains three pieces of data: error code, error message, and error details. You can find out more about this error model and how to work with it in the [API Design Guide](https://cloud.google.com/apis/design/errors). # Output only. Additional information regarding the current state.
+  &quot;labels&quot;: { # Optional. User-defined labels for the preview.
+  &quot;logs&quot;: &quot;A String&quot;, # Output only. Location of preview logs in `gs://{bucket}/{object}` format.
+  &quot;name&quot;: &quot;A String&quot;, # Identifier. Resource name of the preview. Resource name can be user provided or server generated ID if unspecified. Format: `projects/{project}/locations/{location}/previews/{preview}`
+  &quot;previewArtifacts&quot;: { # Artifacts created by preview. # Output only. Artifacts from preview.
+    &quot;artifacts&quot;: &quot;A String&quot;, # Output only. Location of artifacts in Google Cloud Storage. Format: `gs://{bucket}/{object}`
+    &quot;content&quot;: &quot;A String&quot;, # Output only. Location of a blueprint copy and other content in Google Cloud Storage. Format: `gs://{bucket}/{object}`
+  &quot;previewMode&quot;: &quot;A String&quot;, # Optional. Current mode of preview.
+  &quot;serviceAccount&quot;: &quot;A String&quot;, # Required. User-specified Service Account (SA) credentials to be used when previewing resources. Format: `projects/{projectID}/serviceAccounts/{serviceAccount}`
+  &quot;state&quot;: &quot;A String&quot;, # Output only. Current state of the preview.
+  &quot;terraformBlueprint&quot;: { # TerraformBlueprint describes the source of a Terraform root module which describes the resources and configs to be deployed. # The terraform blueprint to preview.
+  &quot;tfErrors&quot;: [ # Output only. Summary of errors encountered during Terraform preview. It has a size limit of 10, i.e. only top 10 errors will be summarized here.
+  &quot;tfVersion&quot;: &quot;A String&quot;, # Output only. The current Terraform version set on the preview. It is in the format of &quot;Major.Minor.Patch&quot;, for example, &quot;1.3.10&quot;.
+  &quot;workerPool&quot;: &quot;A String&quot;, # Optional. The user-specified Worker Pool resource in which the Cloud Build job will execute. Format projects/{project}/locations/{location}/workerPools/{workerPoolId} If this field is unspecified, the default Cloud Build worker pool will be used. If omitted and deployment resource ref provided has worker_pool defined, that worker pool is used.
+  previewId: string, Optional. The preview ID.
+  <pre>Deletes a Preview.
+  name: string, Required. The name of the Preview in the format: &#x27;projects/{project_id}/locations/{location}/previews/{preview}&#x27;. (required)
+    <code class="details" id="export">export(parent, body=None, x__xgafv=None)</code>
+  <pre>Export Preview results.
+  parent: string, Required. The preview whose results should be exported. The preview value is in the format: &#x27;projects/{project_id}/locations/{location}/previews/{preview}&#x27;. (required)
+{ # A request to export preview results.
+    { # A response to `ExportPreviewResult` call. Contains preview results.
+  &quot;result&quot;: { # Contains a signed Cloud Storage URLs. # Output only. Signed URLs for accessing the plan files.
+    &quot;binarySignedUri&quot;: &quot;A String&quot;, # Output only. Plan binary signed URL
+    &quot;jsonSignedUri&quot;: &quot;A String&quot;, # Output only. Plan JSON signed URL
+  <pre>Gets details about a Preview.
+  name: string, Required. The name of the preview. Format: &#x27;projects/{project_id}/locations/{location}/previews/{preview}&#x27;. (required)
+  <pre>Lists Previews in a given project and location.
+  parent: string, Required. The parent in whose context the Previews are listed. The parent value is in the format: &#x27;projects/{project_id}/locations/{location}&#x27;. (required)
+  filter: string, Optional. Lists the Deployments that match the filter expression. A filter expression filters the resources listed in the response. The expression must be of the form &#x27;{field} {operator} {value}&#x27; where operators: &#x27;&lt;&#x27;, &#x27;&gt;&#x27;, &#x27;&lt;=&#x27;, &#x27;&gt;=&#x27;, &#x27;!=&#x27;, &#x27;=&#x27;, &#x27;:&#x27; are supported (colon &#x27;:&#x27; represents a HAS operator which is roughly synonymous with equality). {field} can refer to a proto or JSON field, or a synthetic field. Field names can be camelCase or snake_case. Examples: - Filter by name: name = &quot;projects/foo/locations/us-central1/deployments/bar - Filter by labels: - Resources that have a key called &#x27;foo&#x27; labels.foo:* - Resources that have a key called &#x27;foo&#x27; whose value is &#x27;bar&#x27; labels.foo = bar - Filter by state: - Deployments in CREATING state. state=CREATING
+  orderBy: string, Optional. Field to use to sort the list.
+  pageSize: integer, Optional. When requesting a page of resources, &#x27;page_size&#x27; specifies number of resources to return. If unspecified, at most 500 will be returned. The maximum value is 1000.
+  pageToken: string, Optional. Token returned by previous call to &#x27;ListDeployments&#x27; which specifies the position in the list from where to continue listing the resources.
+    { # A response to a `ListPreviews` call. Contains a list of Previews.
+  &quot;nextPageToken&quot;: &quot;A String&quot;, # Token to be supplied to the next ListPreviews request via `page_token` to obtain the next set of results.
+  &quot;previews&quot;: [ # List of Previews.

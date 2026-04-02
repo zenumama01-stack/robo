@@ -1,0 +1,78 @@
+    internal sealed class CimCmdletDefinitionContext
+        internal CimCmdletDefinitionContext(
+            string cmdletizationClassName,
+            string cmdletizationClassVersion,
+            Version cmdletizationModuleVersion,
+            bool supportsShouldProcess,
+            IDictionary<string, string> privateData)
+            this.CmdletizationClassName = cmdletizationClassName;
+            this.CmdletizationClassVersion = cmdletizationClassVersion;
+            this.CmdletizationModuleVersion = cmdletizationModuleVersion;
+            this.SupportsShouldProcess = supportsShouldProcess;
+            _privateData = privateData;
+        public string CmdletizationClassName { get; }
+        public string CmdletizationClassVersion { get; }
+        public Version CmdletizationModuleVersion { get; }
+        public bool SupportsShouldProcess { get; }
+        private readonly IDictionary<string, string> _privateData;
+        private const string QueryLanguageKey = "QueryDialect";
+        private bool? _useEnumerateInstancesInsteadOfWql;
+        public bool UseEnumerateInstancesInsteadOfWql
+                if (!_useEnumerateInstancesInsteadOfWql.HasValue)
+                    bool newValue = false;
+                    string queryLanguage;
+                    if (_privateData != null &&
+                        _privateData.TryGetValue(QueryLanguageKey, out queryLanguage) &&
+                        queryLanguage.Equals("None", StringComparison.OrdinalIgnoreCase))
+                        newValue = true;
+                    _useEnumerateInstancesInsteadOfWql = newValue;
+                return _useEnumerateInstancesInsteadOfWql.Value;
+        private const int FallbackDefaultThrottleLimit = 15;
+        /* PS> dir 'WSMan:\localhost\Plugin\WMI Provider\Quotas' | ft -auto
+               WSManConfig: Microsoft.WSMan.Management\WSMan::localhost\Plugin\WMI Provider\Quotas
+            Name                           Value   Type
+            ----                           -----   ----
+            MaxConcurrentUsers             100     System.String
+            MaxConcurrentOperationsPerUser 15      System.String
+            MaxConcurrentOperations        1500    System.String
+        public int DefaultThrottleLimit
+                string defaultThrottleLimitString;
+                if (!_privateData.TryGetValue("DefaultThrottleLimit", out defaultThrottleLimitString))
+                    return FallbackDefaultThrottleLimit;
+                int defaultThrottleLimitInteger;
+                if (!LanguagePrimitives.TryConvertTo(defaultThrottleLimitString, CultureInfo.InvariantCulture, out defaultThrottleLimitInteger))
+                return defaultThrottleLimitInteger;
+        public bool ExposeCimNamespaceParameter
+            get { return _privateData.ContainsKey("CimNamespaceParameter"); }
+        public bool ClientSideWriteVerbose
+            get { return _privateData.ContainsKey("ClientSideWriteVerbose"); }
+        public bool ClientSideShouldProcess
+                return _privateData.ContainsKey("ClientSideShouldProcess");
+        private Uri _resourceUri;
+        private bool _resourceUriHasBeenCalculated;
+                if (!_resourceUriHasBeenCalculated)
+                    string newResourceUriString;
+                    Uri newResourceUri;
+                        _privateData.TryGetValue("ResourceUri", out newResourceUriString) &&
+                        Uri.TryCreate(newResourceUriString, UriKind.RelativeOrAbsolute, out newResourceUri))
+                        _resourceUri = newResourceUri;
+                    _resourceUriHasBeenCalculated = true;
+                return _resourceUri;
+        public bool SkipTestConnection
+            get { return _privateData.ContainsKey("SkipTestConnection"); }
+        private CimOperationFlags? _schemaConformanceLevel;
+        public CimOperationFlags SchemaConformanceLevel
+                if (!_schemaConformanceLevel.HasValue)
+                    CimOperationFlags newSchemaConformanceLevel = 0;
+                    string schemaConformanceFromCdxml;
+                        _privateData.TryGetValue("TypeInformation", out schemaConformanceFromCdxml))
+                        if (schemaConformanceFromCdxml.Equals("Basic", StringComparison.OrdinalIgnoreCase))
+                            newSchemaConformanceLevel = CimOperationFlags.BasicTypeInformation;
+                        else if (schemaConformanceFromCdxml.Equals("Full", StringComparison.OrdinalIgnoreCase))
+                            newSchemaConformanceLevel = CimOperationFlags.FullTypeInformation;
+                        else if (schemaConformanceFromCdxml.Equals("None", StringComparison.OrdinalIgnoreCase))
+                            newSchemaConformanceLevel = (CimOperationFlags)0x0400; // this magic number should be changed to a named constant, once MI Client .NET API changes for schema support are completed
+                        else if (schemaConformanceFromCdxml.Equals("Standard", StringComparison.OrdinalIgnoreCase))
+                            newSchemaConformanceLevel = (CimOperationFlags)0x0800; // this magic number should be changed to a named constant, once MI Client .NET API changes for schema support are completed
+                    _schemaConformanceLevel = newSchemaConformanceLevel;
+                return _schemaConformanceLevel.Value;

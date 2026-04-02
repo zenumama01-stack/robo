@@ -1,0 +1,815 @@
+<h1><a href="compute_alpha.html">Compute Engine API</a> . <a href="compute_alpha.instances.html">instances</a></h1>
+  <code><a href="#addAccessConfig">addAccessConfig(project, zone, instance, networkInterface, body=None, requestId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Adds an access config to an instance's network interface.</p>
+  <code><a href="#addNetworkInterface">addNetworkInterface(project, zone, instance, body=None, requestId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Adds one dynamic network interface to an active instance.</p>
+  <code><a href="#addResourcePolicies">addResourcePolicies(project, zone, instance, body=None, requestId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Adds existing resource policies to an instance. You can only add one</p>
+<p class="firstline">Retrieves an aggregated list of all of the instances in your project</p>
+  <code><a href="#attachDisk">attachDisk(project, zone, instance, body=None, forceAttach=None, requestId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Attaches an existing Disk resource to an instance. You must first</p>
+<p class="firstline">Creates multiple instances. Count specifies the number of instances to</p>
+  <code><a href="#delete">delete(project, zone, instance, noGracefulShutdown=None, requestId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Deletes the specified Instance resource. For more information, seeDeleting</p>
+  <code><a href="#deleteAccessConfig">deleteAccessConfig(project, zone, instance, accessConfig, networkInterface, requestId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Deletes an access config from an instance's network interface.</p>
+  <code><a href="#deleteNetworkInterface">deleteNetworkInterface(project, zone, instance, networkInterfaceName, requestId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Deletes one dynamic network interface from an active instance.</p>
+  <code><a href="#detachDisk">detachDisk(project, zone, instance, deviceName, requestId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Detaches a disk from an instance.</p>
+  <code><a href="#get">get(project, zone, instance, view=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Returns the specified Instance resource.</p>
+  <code><a href="#getEffectiveFirewalls">getEffectiveFirewalls(project, zone, instance, networkInterface, x__xgafv=None)</a></code></p>
+<p class="firstline">Returns effective firewalls applied to an interface of the instance.</p>
+  <code><a href="#getGuestAttributes">getGuestAttributes(project, zone, instance, queryPath=None, variableKey=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Returns the specified guest attributes entry.</p>
+  <code><a href="#getPartnerMetadata">getPartnerMetadata(project, zone, instance, namespaces=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Gets partner metadata of the specified instance and namespaces.</p>
+  <code><a href="#getScreenshot">getScreenshot(project, zone, instance, x__xgafv=None)</a></code></p>
+<p class="firstline">Returns the screenshot from the specified instance.</p>
+  <code><a href="#getSerialPortOutput">getSerialPortOutput(project, zone, instance, port=None, start=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Returns the last 1 MB of serial port output from the specified instance.</p>
+  <code><a href="#getShieldedInstanceIdentity">getShieldedInstanceIdentity(project, zone, instance, x__xgafv=None)</a></code></p>
+<p class="firstline">Returns the Shielded Instance Identity of an instance</p>
+  <code><a href="#getShieldedVmIdentity">getShieldedVmIdentity(project, zone, instance, x__xgafv=None)</a></code></p>
+<p class="firstline">Returns the Shielded VM Identity of an instance</p>
+  <code><a href="#getVmExtensionState">getVmExtensionState(project, zone, instance, extensionName, x__xgafv=None)</a></code></p>
+<p class="firstline">Retrieves details of a specific VM extension state.</p>
+  <code><a href="#insert">insert(project, zone, body=None, requestId=None, sourceInstanceTemplate=None, sourceMachineImage=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Creates an instance resource in the specified project using the data</p>
+  <code><a href="#list">list(project, zone, filter=None, maxResults=None, orderBy=None, pageToken=None, returnPartialSuccess=None, view=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Retrieves the list of instances contained within</p>
+  <code><a href="#listReferrers">listReferrers(project, zone, instance, filter=None, maxResults=None, orderBy=None, pageToken=None, returnPartialSuccess=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Retrieves a list of resources that refer to the VM instance specified in</p>
+  <code><a href="#listReferrers_next">listReferrers_next()</a></code></p>
+  <code><a href="#listVmExtensionStates">listVmExtensionStates(project, zone, instance, filter=None, maxResults=None, orderBy=None, pageToken=None, returnPartialSuccess=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Lists all VM extensions states for a specific instance.</p>
+  <code><a href="#listVmExtensionStates_next">listVmExtensionStates_next()</a></code></p>
+  <code><a href="#patchPartnerMetadata">patchPartnerMetadata(project, zone, instance, body=None, requestId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Patches partner metadata of the specified instance.</p>
+  <code><a href="#performMaintenance">performMaintenance(project, zone, instance, requestId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Perform a manual maintenance on the instance.</p>
+  <code><a href="#removeResourcePolicies">removeResourcePolicies(project, zone, instance, body=None, requestId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Removes resource policies from an instance.</p>
+  <code><a href="#reportHostAsFaulty">reportHostAsFaulty(project, zone, instance, body=None, requestId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Mark the host as faulty and try to restart the instance on a new host.</p>
+  <code><a href="#reset">reset(project, zone, instance, requestId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Performs a reset on the instance. This is a hard reset. The VM</p>
+  <code><a href="#resume">resume(project, zone, instance, body=None, requestId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Resumes an instance that was suspended using theinstances().suspend</p>
+  <code><a href="#sendDiagnosticInterrupt">sendDiagnosticInterrupt(project, zone, instance, x__xgafv=None)</a></code></p>
+<p class="firstline">Sends diagnostic interrupt to the instance.</p>
+  <code><a href="#setDeletionProtection">setDeletionProtection(project, zone, resource, deletionProtection=None, requestId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Sets deletion protection on the instance.</p>
+  <code><a href="#setDiskAutoDelete">setDiskAutoDelete(project, zone, instance, autoDelete, deviceName, requestId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Sets the auto-delete flag for a disk attached to an instance.</p>
+  <code><a href="#setLabels">setLabels(project, zone, instance, body=None, requestId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Sets labels on an instance.  To learn more about labels, read theLabeling</p>
+  <code><a href="#setMachineResources">setMachineResources(project, zone, instance, body=None, requestId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Changes the number and/or type of accelerator for a stopped instance to the</p>
+  <code><a href="#setMachineType">setMachineType(project, zone, instance, body=None, requestId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Changes the machine type for a stopped instance to the machine</p>
+  <code><a href="#setMetadata">setMetadata(project, zone, instance, body=None, requestId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Sets metadata for the specified instance to the data included</p>
+  <code><a href="#setMinCpuPlatform">setMinCpuPlatform(project, zone, instance, body=None, requestId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Changes the minimum CPU platform that this instance should use.</p>
+  <code><a href="#setName">setName(project, zone, instance, body=None, requestId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Sets name of an instance.</p>
+  <code><a href="#setScheduling">setScheduling(project, zone, instance, body=None, requestId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Sets an instance's scheduling options. You can only call this method on astopped instance,</p>
+  <code><a href="#setSecurityPolicy">setSecurityPolicy(project, zone, instance, body=None, requestId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Sets the Google Cloud Armor security policy for the specified instance.</p>
+  <code><a href="#setServiceAccount">setServiceAccount(project, zone, instance, body=None, requestId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Sets the service account on the instance. For more information,</p>
+  <code><a href="#setShieldedInstanceIntegrityPolicy">setShieldedInstanceIntegrityPolicy(project, zone, instance, body=None, requestId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Sets the Shielded Instance integrity policy for an instance. You can</p>
+  <code><a href="#setShieldedVmIntegrityPolicy">setShieldedVmIntegrityPolicy(project, zone, instance, body=None, requestId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Sets the Shielded VM integrity policy for a VM instance. You can</p>
+  <code><a href="#setTags">setTags(project, zone, instance, body=None, requestId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Sets network tags</p>
+  <code><a href="#simulateMaintenanceEvent">simulateMaintenanceEvent(project, zone, instance, requestId=None, withExtendedNotifications=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Simulates a host maintenance event on a VM. For more information, see</p>
+  <code><a href="#start">start(project, zone, instance, requestId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Starts an instance that was stopped using theinstances().stop</p>
+  <code><a href="#startWithEncryptionKey">startWithEncryptionKey(project, zone, instance, body=None, requestId=None, x__xgafv=None)</a></code></p>
+  <code><a href="#stop">stop(project, zone, instance, discardLocalSsd=None, noGracefulShutdown=None, requestId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Stops a running instance, shutting it down cleanly, and allows</p>
+  <code><a href="#suspend">suspend(project, zone, instance, discardLocalSsd=None, requestId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">This method suspends a running instance, saving its state to persistent</p>
+  <code><a href="#update">update(project, zone, instance, body=None, clearSecureTag=None, discardLocalSsd=None, minimalAction=None, mostDisruptiveAllowedAction=None, requestId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Updates an instance only if the necessary resources are available. This</p>
+  <code><a href="#updateAccessConfig">updateAccessConfig(project, zone, instance, networkInterface, body=None, requestId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Updates the specified access config from an instance's network interface</p>
+  <code><a href="#updateDisplayDevice">updateDisplayDevice(project, zone, instance, body=None, requestId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Updates the Display config for a VM instance. You can</p>
+  <code><a href="#updateNetworkInterface">updateNetworkInterface(project, zone, instance, networkInterface, body=None, requestId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Updates an instance's network interface. This method can only update an</p>
+  <code><a href="#updateShieldedInstanceConfig">updateShieldedInstanceConfig(project, zone, instance, body=None, requestId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Updates the Shielded Instance config for an instance. You can</p>
+  <code><a href="#updateShieldedVmConfig">updateShieldedVmConfig(project, zone, instance, body=None, requestId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Updates the Shielded VM config for a VM instance. You can</p>
+    <code class="details" id="addAccessConfig">addAccessConfig(project, zone, instance, networkInterface, body=None, requestId=None, x__xgafv=None)</code>
+  <pre>Adds an access config to an instance&#x27;s network interface.
+  instance: string, The instance name for this request. (required)
+  networkInterface: string, The name of the network interface to add to this instance. (required)
+    <code class="details" id="addNetworkInterface">addNetworkInterface(project, zone, instance, body=None, requestId=None, x__xgafv=None)</code>
+  <pre>Adds one dynamic network interface to an active instance.
+  instance: string, The instance name for this request stored as resource_id.
+    <code class="details" id="addResourcePolicies">addResourcePolicies(project, zone, instance, body=None, requestId=None, x__xgafv=None)</code>
+  <pre>Adds existing resource policies to an instance. You can only add one
+policy right now which will be applied to this instance for scheduling live
+migrations.
+  &quot;resourcePolicies&quot;: [ # Resource policies to be added to this instance.
+  <pre>Retrieves an aggregated list of all of the instances in your project
+across all regions and zones.
+The performance of this method degrades when a filter is specified on a
+project that has a very large number of instances.
+  &quot;items&quot;: { # An object that contains a list of instances scoped by zone.
+    &quot;a_key&quot;: { # [Output Only] Name of the scope containing this set of instances.
+      &quot;instances&quot;: [ # [Output Only] A list of instances contained in this scope.
+        { # Represents an Instance resource.
+            # An instance is a virtual machine that is hosted on Google Cloud Platform.
+            # For more information, readVirtual Machine Instances.
+          &quot;canIpForward&quot;: True or False, # Allows this instance to send and receive packets with non-matching
+              # destination or source IPs. This is required if you plan to use this
+              # instance to forward routes. For more information, seeEnabling IP Forwarding.
+          &quot;confidentialInstanceConfig&quot;: { # A set of Confidential Instance options.
+          &quot;cpuPlatform&quot;: &quot;A String&quot;, # Output only. [Output Only] The CPU platform used by this instance.
+          &quot;creationTimestamp&quot;: &quot;A String&quot;, # Output only. [Output Only] Creation timestamp inRFC3339 text format.
+          &quot;deletionProtection&quot;: True or False, # Whether the resource should be protected against deletion.
+          &quot;disks&quot;: [ # Array of disks associated with this instance. Persistent disks must be
+              # created before you can assign them.
+          &quot;displayDevice&quot;: { # A set of Display Device options # Enables display device for the instance.
+          &quot;eraseWindowsVssSignature&quot;: True or False, # Specifies whether the disks restored from source snapshots or source
+              # machine image should erase Windows specific VSS signature.
+              # the instance&#x27;s contents and used for optimistic locking. The
+              # every request to modify or update the instance. You must always provide an
+              # up-to-date fingerprint hash in order to update the instance.
+          &quot;guestAccelerators&quot;: [ # A list of the type and count of accelerator cards attached to the instance.
+          &quot;hostname&quot;: &quot;A String&quot;, # Specifies the hostname of the instance. The specified hostname must be
+              # RFC1035 compliant. If hostname is not specified, the default hostname is
+              # [INSTANCE_NAME].c.[PROJECT_ID].internal when using the global DNS, and
+              # [INSTANCE_NAME].[ZONE].c.[PROJECT_ID].internal when using zonal DNS.
+          &quot;instanceEncryptionKey&quot;: { # Encrypts suspended data for an instance with acustomer-managed
+              # If you are creating a new instance, this field will encrypt the local SSD
+              # and in-memory contents of the instance during the suspend operation.
+              # If you do not provide an encryption key when creating the instance, then
+              # the local SSD and in-memory contents will be encrypted using
+              # an automatically generated key during the suspend operation.
+          &quot;kind&quot;: &quot;compute#instance&quot;, # Output only. [Output Only] Type of the resource. Always compute#instance
+              # for instances.
+          &quot;labelFingerprint&quot;: &quot;A String&quot;, # A fingerprint for this request, which is essentially a hash of
+              # the label&#x27;s contents and used for optimistic locking. The
+          &quot;labels&quot;: { # Labels to apply to this instance. These can be later modified by
+          &quot;lastStartTimestamp&quot;: &quot;A String&quot;, # Output only. [Output Only] Last start timestamp inRFC3339 text format.
+          &quot;lastStopTimestamp&quot;: &quot;A String&quot;, # Output only. [Output Only] Last stop timestamp inRFC3339 text format.
+          &quot;lastSuspendedTimestamp&quot;: &quot;A String&quot;, # Output only. [Output Only] Last suspended timestamp inRFC3339 text format.
+          &quot;machineType&quot;: &quot;A String&quot;, # Full or partial URL of the machine type resource to use for this instance,
+              # in the format:zones/zone/machineTypes/machine-type. This is provided by the client
+              # when the instance is created. For example, the following is a valid partial
+              # url to a predefined
+              # machine type:
+              # zones/us-central1-f/machineTypes/n1-standard-1
+              # To create acustom
+              # machine type, provide a URL to a machine type in the following format,
+              # where CPUS is 1 or an even number up to 32 (2,
+              # 4, 6, ... 24, etc), and MEMORY is the total
+              # memory for this instance. Memory must be a multiple of 256 MB and must
+              # be supplied in MB (e.g. 5 GB of memory is 5120 MB):
+              # zones/zone/machineTypes/custom-CPUS-MEMORY
+              # For example: zones/us-central1-f/machineTypes/custom-4-5120
+              # For a full list of restrictions, read theSpecifications
+              # for custom machine types.
+          &quot;metadata&quot;: { # A metadata key/value entry. # The metadata key/value pairs assigned
+              # to this instance. This includes metadata keys that were explicitly defined
+              # for the instance.
+          &quot;minCpuPlatform&quot;: &quot;A String&quot;, # Specifies aminimum CPU
+              # platform for the VM instance. Applicable values are the friendly names
+              # of CPU platforms, such as minCpuPlatform: &quot;Intel
+              # Haswell&quot; or minCpuPlatform: &quot;Intel Sandy
+              # Bridge&quot;.
+          &quot;networkInterfaces&quot;: [ # An array of network configurations for this instance. These specify how
+              # interfaces are configured to interact with other network services, such as
+              # connecting to the internet. Multiple interfaces are supported
+              # per instance.
+          &quot;networkPerformanceConfig&quot;: {
+          &quot;params&quot;: { # Additional instance params. # Input only. [Input Only] Additional params passed with the request, but not persisted
+            &quot;requestValidForDuration&quot;: { # A Duration represents a fixed-length span of time represented # Relative deadline for waiting for capacity. Relevant only for
+                # Instances.Insert API.
+          &quot;partnerMetadata&quot;: { # Partner Metadata assigned to the instance. A map from a subdomain
+              # (namespace) to entries map.
+          &quot;preservedStateSizeGb&quot;: &quot;A String&quot;, # Output only. Total amount of preserved state for SUSPENDED instances.
+          &quot;privateIpv6GoogleAccess&quot;: &quot;A String&quot;, # The private IPv6 google access type for the VM.
+          &quot;reservationAffinity&quot;: { # Specifies the reservations that this instance can consume from. # Specifies the reservations that this instance can consume from.
+          &quot;resourcePolicies&quot;: [ # Resource policies applied to this instance.
+          &quot;resourceStatus&quot;: { # Contains output only fields. # Output only. [Output Only] Specifies values set for instance attributes as
+              # compared to the values requested by user in the corresponding input only
+              # field.
+              # Use this sub-message for actual values set on Instance attributes as compared
+              # to the value requested by the user (intent) in their instance CRUD calls.
+            &quot;acceleratorStatus&quot;: [ # Output only. [Output Only] Accelerators status show results of GPU scans. These scans
+                # are specialized diagnostic tests designed to uncover latent manufacturing
+                # defects or other issues that could potentially lead to data corruption or
+                # impede the customer&#x27;s ability to efficiently execute GPU workloads.
+              { # The status of an individual accelerator resource.
+                &quot;passedScans&quot;: [ # The details of scans that passed for an accelerator.
+                    &quot;endTime&quot;: &quot;A String&quot;, # The end time of the passed scan inRFC3339 text format.
+                    &quot;startTime&quot;: &quot;A String&quot;, # The start time of the passed scan inRFC3339 text format.
+                &quot;recommendedScans&quot;: [ # The details of recommended scans for an accelerator.
+                    &quot;estimatedDuration&quot;: { # A Duration represents a fixed-length span of time represented
+                &quot;serialNumber&quot;: &quot;A String&quot;, # The serial number of the accelerator.
+                &quot;uuid&quot;: &quot;A String&quot;, # The UUID of the accelerator.
+            &quot;consumedReservation&quot;: &quot;A String&quot;, # Output only. [Output Only] The full resource name of the reservation that this instance
+                # is consuming from.
+            &quot;consumedReservationBlock&quot;: &quot;A String&quot;, # Output only. [Output Only] The full resource name of the reservation block that this
+                # instance is consuming from.
+            &quot;effectiveInstanceMetadata&quot;: { # Effective values of predefined metadata keys for an instance. # Output only. [Output Only] Effective metadata is a field that consolidates project,
+                # zonal instance settings, and instance-level predefined metadata keys to
+                # provide the overridden value for those metadata keys at the instance level.
+              &quot;blockProjectSshKeysMetadataValue&quot;: True or False, # Effective block-project-ssh-keys value at Instance level.
+              &quot;enableGuestAttributesMetadataValue&quot;: True or False, # Effective enable-guest-attributes value at Instance level.
+              &quot;enableOsInventoryMetadataValue&quot;: True or False, # Effective enable-os-inventory value at Instance level.
+              &quot;enableOsconfigMetadataValue&quot;: True or False, # Effective enable-osconfig value at Instance level.
+              &quot;enableOsloginMetadataValue&quot;: True or False, # Effective enable-oslogin value at Instance level.
+              &quot;gceContainerDeclarationMetadataValue&quot;: True or False, # Effective gce-container-declaration value at Instance level.
+              &quot;serialPortEnableMetadataValue&quot;: True or False, # Effective serial-port-enable value at Instance level.
+              &quot;serialPortLoggingEnableMetadataValue&quot;: True or False, # Effective serial-port-logging-enable value at Instance level.
+              &quot;vmDnsSettingMetadataValue&quot;: &quot;A String&quot;, # Effective VM DNS setting at Instance level.
+            &quot;lastInstanceTerminationDetails&quot;: { # Output only. [Output Only] Contains last termination details why the instance was
+                # terminated.
+              &quot;terminationReason&quot;: &quot;A String&quot;, # Reason for termination
+            &quot;physicalHost&quot;: &quot;A String&quot;, # Output only. [Output Only] The precise location of your instance within the zone&#x27;s data
+                # center, including the block, sub-block, and host. The field is formatted as
+                # follows: blockId/subBlockId/hostId.
+            &quot;physicalHostTopology&quot;: { # Represents the physical host topology of the host on which the VM is # Output only. [Output Only] A series of fields containing the global name of the Compute
+                # Engine cluster, as well as the ID of the block, sub-block, and host on
+                # which the running instance is located.
+                # running.
+              &quot;block&quot;: &quot;A String&quot;, # [Output Only] The ID of the block in which the running instance is
+                  # located. Instances within the same block experience low network latency.
+              &quot;cluster&quot;: &quot;A String&quot;, # [Output Only] The global name of the Compute Engine cluster where the
+                  # running instance is located.
+              &quot;host&quot;: &quot;A String&quot;, # [Output Only] The ID of the host on which the running instance is located.
+                  # Instances on the same host experience the lowest possible network
+                  # latency.
+              &quot;subblock&quot;: &quot;A String&quot;, # [Output Only] The ID of the sub-block in which the running instance is
+                  # located. Instances in the same sub-block experience lower network latency
+                  # than instances in the same block.
+            &quot;reservationConsumptionInfo&quot;: { # Reservation consumption information that the instance is consuming from. # Output only. [Output Only] Reservation information that the instance is consuming from.
+              &quot;consumedReservation&quot;: &quot;A String&quot;, # Output only. [Output Only] The full resource name of the reservation that this
+              &quot;consumedReservationSubBlock&quot;: &quot;A String&quot;, # Output only. [Output Only] The full resource name of the reservation sub-block that
+                  # this instance is consuming from.
+            &quot;scheduling&quot;: {
+              &quot;terminationTimestamp&quot;: &quot;A String&quot;, # Time in future when the instance will be terminated inRFC3339 text format.
+            &quot;serviceIntegrationStatuses&quot;: { # [Output Only] Represents the status of the service integration specs
+                # defined by the user in instance.serviceIntegrationSpecs.
+              &quot;a_key&quot;: { # Represents the status of integration between instance and another service.
+                  # See go/gce-backupdr-design for more details.
+                &quot;backupDr&quot;: { # Message defining compute perspective of the result of integration with
+                    # Backup and DR. FAILED status indicates that the operation specified did
+                    # not complete correctly and should be retried with the same value.
+                  &quot;integrationDetails&quot;: &quot;A String&quot;, # The PlanReference object created by Backup and DR to maintain the
+                      # actual status of backups. May still be present if removing the backup
+                      # plan fails.
+                  &quot;state&quot;: &quot;A String&quot;, # Enum representing the registration state of a Backup and DR backup plan
+            &quot;shutdownDetails&quot;: { # Specifies if the instance is in `PENDING_STOP` state or there is a # Output only. [Output Only] Details about the instance stopping state.
+                # programmed stop scheduled.
+              &quot;maxDuration&quot;: { # A Duration represents a fixed-length span of time represented # The duration for graceful shutdown. Only applicable when
+                  # `stop_state=PENDING_STOP`.
+              &quot;requestTimestamp&quot;: &quot;A String&quot;, # Past timestamp indicating the beginning of current `stopState` in RFC3339 text format.
+              &quot;stopState&quot;: &quot;A String&quot;, # Current stopping state of the instance.
+              &quot;targetState&quot;: &quot;A String&quot;, # Target instance state.
+            &quot;upcomingMaintenance&quot;: { # Upcoming Maintenance notification information.
+              &quot;canReschedule&quot;: True or False, # Indicates if the maintenance can be customer triggered.
+              &quot;date&quot;: &quot;A String&quot;, # [Output Only] The date when the maintenance will take place.
+                  # DEPRECATED: Use window_start_time instead.
+              &quot;latestWindowStartTime&quot;: &quot;A String&quot;, # The latest time for the planned maintenance window to start.
+                  # This timestamp value is in RFC3339 text format.
+              &quot;maintenanceMethod&quot;: &quot;A String&quot;, # Output only. Maintenance method for the upcoming maintenance.
+              &quot;maintenanceOnShutdown&quot;: True or False, # Indicates whether the UpcomingMaintenance will be triggered on VM shutdown.
+              &quot;maintenanceReasons&quot;: [ # The reasons for the maintenance. Only valid for vms.
+              &quot;maintenanceStatus&quot;: &quot;A String&quot;,
+              &quot;startTimeWindow&quot;: { # Represents a window of time using two timestamps: `earliest` and `latest`. # [Output Only] The start time window of the maintenance disruption.
+                  # TimeWindow is a container for two strings that represent timestamps in
+                  # &quot;yyyy-MM-dd&#x27;T&#x27;HH:mm:ssZ&quot; text format.
+                &quot;earliest&quot;: &quot;A String&quot;,
+                &quot;latest&quot;: &quot;A String&quot;,
+              &quot;time&quot;: &quot;A String&quot;, # [Output Only] The time when the maintenance will take place.
+              &quot;type&quot;: &quot;A String&quot;, # Defines the type of maintenance.
+              &quot;windowEndTime&quot;: &quot;A String&quot;, # The time by which the maintenance disruption will be completed.
+              &quot;windowStartTime&quot;: &quot;A String&quot;, # The current start time of the maintenance window.
+          &quot;scheduling&quot;: { # Sets the scheduling options for an Instance. # Sets the scheduling options for this instance.
+          &quot;secureTags&quot;: [ # [Input Only] Secure tags to apply to this instance. These can be later
+              # modified by the update method.
+          &quot;serviceAccounts&quot;: [ # A list of service accounts, with their specified scopes, authorized for
+              # this instance. Only one service account per VM instance is supported.
+              # Service accounts generate access tokens that can be accessed
+              # through the metadata server and used to authenticate applications on the
+              # instance. SeeService Accounts
+          &quot;serviceIntegrationSpecs&quot;: { # Mapping of user-defined keys to specifications for service integrations.
+              # Currently only a single key-value pair is supported.
+          &quot;shieldedInstanceConfig&quot;: { # A set of Shielded Instance options.
+          &quot;shieldedInstanceIntegrityPolicy&quot;: { # The policy describes the baseline against which
+              # Instance boot integrity is measured.
+            &quot;updateAutoLearnPolicy&quot;: True or False, # Updates the integrity policy baseline using the
+                # measurements from the VM instance&#x27;s most recent boot.
+          &quot;shieldedVmConfig&quot;: { # A set of Shielded VM options. # Output only. Deprecating, please use shielded_instance_config.
+          &quot;shieldedVmIntegrityPolicy&quot;: { # The policy describes the baseline against which # Output only. Deprecating, please use shielded_instance_integrity_policy.
+              # VM instance boot integrity is measured.
+          &quot;sourceMachineImage&quot;: &quot;A String&quot;, # Source machine image
+          &quot;sourceMachineImageEncryptionKey&quot;: { # Source machine image encryption key when creating an instance from a
+              # machine image.
+          &quot;startRestricted&quot;: True or False, # Output only. [Output Only] Whether a VM has been restricted for start because Compute
+              # Engine has detected suspicious activity.
+          &quot;status&quot;: &quot;A String&quot;, # Output only. [Output Only] The status of the instance. One of the
+              # following values: PROVISIONING, STAGING,RUNNING, STOPPING, SUSPENDING,SUSPENDED, REPAIRING, andTERMINATED. For more information about the status of the
+              # instance, see
+              # Instance life cycle.
+          &quot;statusMessage&quot;: &quot;A String&quot;, # Output only. [Output Only] An optional, human-readable explanation of the status.
+          &quot;tags&quot;: { # A set of instance tags. # Tags to apply to this instance. Tags are used to identify valid
+              # sources or targets for network firewalls and are specified by the client
+              # during instance creation. The tags can be later modified by the setTags
+              # method. Each tag within the list must comply withRFC1035.
+              # Multiple tags can be specified via the &#x27;tags.items&#x27; field.
+          &quot;upcomingMaintenance&quot;: { # Upcoming Maintenance notification information. # Output only. [Output Only] DEPRECATED: Please useresource_status.upcoming_maintenance instead. Specifies
+              # upcoming maintenance for the instance.
+          &quot;zone&quot;: &quot;A String&quot;, # Output only. [Output Only] URL of the zone where the instance resides.
+      &quot;warning&quot;: { # [Output Only] Informational warning which replaces the list of instances
+  &quot;kind&quot;: &quot;compute#instanceAggregatedList&quot;, # Output only. [Output Only] Type of resource. Alwayscompute#instanceAggregatedList for aggregated lists of
+      # Instance resources.
+    <code class="details" id="attachDisk">attachDisk(project, zone, instance, body=None, forceAttach=None, requestId=None, x__xgafv=None)</code>
+  <pre>Attaches an existing Disk resource to an instance. You must first
+create the disk before you can attach it. It is not possible to create
+and attach a disk at the same time. For more information, readAdding a
+persistent disk to your instance.
+  forceAttach: boolean, Whether to force attach the regional disk even if it&#x27;s currently attached
+to another instance. If you try to force attach a zonal disk to an
+instance, you will receive an error.
+  <pre>Creates multiple instances. Count specifies the number of instances to
+create. For more information, seeAbout bulk
+creation of VMs.
+{ # A transient resource used in compute.instances.bulkInsert and
+    # compute.regionInstances.bulkInsert . This resource is not persisted
+    # anywhere, it is used only for processing the requests.
+  &quot;count&quot;: &quot;A String&quot;, # The maximum number of instances to create.
+  &quot;instanceFlexibilityPolicy&quot;: { # A flexible specification of machine types for instances to create. # A flexible specification of machine type of instances to create.
+    &quot;instanceSelections&quot;: { # Specification of alternative, flexible instance subsets.
+        # One of them will be selected to create the instances
+        # based on various criteria, like:
+        # - ranks,
+        # - location policy,
+        # - current capacity,
+        # - available reservations (you can specify affinity in
+        # InstanceProperties),
+        # - SWAN/GOOSE limitations.
+        # Key is an arbitrary, unique RFC1035 string that identifies the instance
+      &quot;a_key&quot;: { # Specification of machine type to use. Every position inside this message
+          # is an alternative.
+          # The count specified in the shape flexibility must not exceed the number
+          # of entries in per_instance_properties or the capacity of the
+          # name_pattern, if used.
+        &quot;disks&quot;: [ # Disks to be attached to the instances created from in this selection.
+            # They override the disks specified in the instance properties.
+        &quot;machineTypes&quot;: [ # Alternative machine types to use for instances that are created from
+            # these properties. This field only accepts a machine type names, for
+            # example `n2-standard-4` and not URLs or partial URLs.
+        &quot;rank&quot;: &quot;A String&quot;, # Rank when prioritizing the shape flexibilities.
+            # The instance selections with rank are considered
+            # first, in the ascending order of the rank.
+            # If not set, defaults to 0.
+  &quot;instanceProperties&quot;: { # The instance properties defining the VM instances to be created. Required
+      # if sourceInstanceTemplate is not provided.
+  &quot;locationPolicy&quot;: { # Configuration for location policy among multiple possible locations # Policy for choosing target zone. For more information, seeCreate VMs in
+      # bulk.
+      # (e.g. preferences for zone selection among zones in a single region).
+    &quot;locations&quot;: { # Location configurations mapped by location name.
+        # Currently only zone names are supported and must be represented as valid
+        # internal URLs, such as zones/us-central1-a.
+        # The bulkInsert operation doesn&#x27;t create instances in an AI zone, even if
+        # an AI zone is available in the specified region. For example, if you set a
+        # DENY preference for us-central1-a, Compute Engine will consider
+        # us-central1-b and us-central1-c for instance creation, but not
+        # us-central1-ai1a. Also, you can&#x27;t use the locations[] configuration to
+        # allow instance creation in an AI zone. To include an AI zone in bulkInsert
+        # operations, use the locationPolicy.zones[] field.
+        &quot;constraints&quot;: { # Per-zone constraints on location policy for this zone. # Constraints that the caller requires on the result distribution
+            # in this zone.
+          &quot;maxCount&quot;: 42, # Maximum number of items that are allowed to be placed in this zone.
+              # The value must be non-negative.
+        &quot;names&quot;: [ # Names of resources to be put in the location.
+            # Must contain unique, correct resource names.
+            # If used, targetShape must be left unset.
+        &quot;preference&quot;: &quot;A String&quot;, # Preference for a given location. Set to either ALLOW orDENY.
+    &quot;targetShape&quot;: &quot;A String&quot;, # Strategy for distributing VMs across zones in a region.
+    &quot;zones&quot;: [ # The bulkInsert operation applies any preferences set in the locations
+        # field to the specific zones listed in the zones field if the same zones
+        # are specified in both fields.
+        &quot;zone&quot;: &quot;A String&quot;, # The URL of the zone.
+            # The zone must exist in the region where the request is called.
+            # Zones must be represented as valid partial URLs,
+            # such as zones/us-central1-a.
+  &quot;minCount&quot;: &quot;A String&quot;, # The minimum number of instances to create. If no min_count is
+      # specified then count is used as the default value. Ifmin_count instances cannot be created, then no instances will
+      # be created and instances already created will be deleted.
+  &quot;namePattern&quot;: &quot;A String&quot;, # The string pattern used for the names of the VMs.
+      # Either name_pattern or per_instance_properties
+      # must be set. The pattern must contain one continuous sequence of
+      # placeholder hash characters (#) with each character corresponding to one
+      # digit of the generated instance name. Example: a name_pattern
+      # of inst-#### generates instance names such asinst-0001 and inst-0002. If existing instances
+      # in the same project and zone have names that match the name pattern
+      # then the generated instance numbers start after the biggest
+      # existing number. For example, if there exists an instance with nameinst-0050, then instance names generated using the patterninst-#### begin with inst-0051. The name pattern
+      # placeholder #...# can contain up to 18 characters.
+  &quot;perInstanceProperties&quot;: { # Per-instance properties to be set on individual instances.
+      # Keys of this map specify requested instance names.
+      # Can be empty if name_pattern is used.
+    &quot;a_key&quot;: { # Per-instance properties to be set on individual instances.
+        # To be extended in the future.
+      &quot;hostname&quot;: &quot;A String&quot;, # Specifies the hostname of the instance. More details in:
+          # https://cloud.google.com/compute/docs/instances/custom-hostname-vm#naming_convention
+      &quot;name&quot;: &quot;A String&quot;, # Output only. This field is only temporary. It will be removed. Do not use it.
+  &quot;sourceInstanceTemplate&quot;: &quot;A String&quot;, # Specifies the instance template from which to create instances. You may
+      # combine sourceInstanceTemplate withinstanceProperties to override specific values from an
+      # existing instance template. Bulk API follows the semantics of JSON Merge
+      # Patch described by RFC
+      # 7396.
+      # all valid URLs to an instance template:
+      #       - https://www.googleapis.com/compute/v1/projects/project/global/instanceTemplates/instanceTemplate
+      #       - projects/project/global/instanceTemplates/instanceTemplate
+      #       - global/instanceTemplates/instanceTemplate
+    <code class="details" id="delete">delete(project, zone, instance, noGracefulShutdown=None, requestId=None, x__xgafv=None)</code>
+  <pre>Deletes the specified Instance resource. For more information, seeDeleting
+an instance.
+  instance: string, Name of the instance resource to delete. (required)
+  noGracefulShutdown: boolean, If set to true, Graceful Shutdown is skipped.
+    <code class="details" id="deleteAccessConfig">deleteAccessConfig(project, zone, instance, accessConfig, networkInterface, requestId=None, x__xgafv=None)</code>
+  <pre>Deletes an access config from an instance&#x27;s network interface.
+  accessConfig: string, The name of the access config to delete. (required)
+  networkInterface: string, The name of the network interface. (required)
+    <code class="details" id="deleteNetworkInterface">deleteNetworkInterface(project, zone, instance, networkInterfaceName, requestId=None, x__xgafv=None)</code>
+  <pre>Deletes one dynamic network interface from an active instance.
+InstancesDeleteNetworkInterfaceRequest indicates:
+- instance from which to delete, using project+zone+resource_id fields;
+- dynamic network interface to be deleted, using network_interface_name
+field;
+  networkInterfaceName: string, The name of the dynamic network interface to be deleted from the instance. (required)
+    <code class="details" id="detachDisk">detachDisk(project, zone, instance, deviceName, requestId=None, x__xgafv=None)</code>
+  <pre>Detaches a disk from an instance.
+  instance: string, Instance name for this request. (required)
+  deviceName: string, The device name of the disk to detach. Make a get() request on
+the instance to view currently attached disks and device names. (required)
+    <code class="details" id="get">get(project, zone, instance, view=None, x__xgafv=None)</code>
+  <pre>Returns the specified Instance resource.
+  instance: string, Name of the instance resource to return. (required)
+  view: string, View of the instance.
+    <code class="details" id="getEffectiveFirewalls">getEffectiveFirewalls(project, zone, instance, networkInterface, x__xgafv=None)</code>
+  <pre>Returns effective firewalls applied to an interface of the instance.
+  instance: string, Name of the instance scoping this request. (required)
+  networkInterface: string, The name of the network interface to get the effective firewalls. (required)
+  &quot;firewallPolicys&quot;: [ # [Output Only] Effective firewalls from firewall policies.
+      &quot;displayName&quot;: &quot;A String&quot;, # Output only. [Output Only] Deprecated, please use short name instead. The display name
+          # of the firewall policy.
+      &quot;name&quot;: &quot;A String&quot;, # Output only. [Output Only] The name of the firewall policy.
+      &quot;packetMirroringRules&quot;: [ # Output only. [Output Only] The packet mirroring rules that apply to the instance.
+      &quot;priority&quot;: 42, # Output only. [Output only] Priority of firewall policy association. Not applicable for
+          # type=HIERARCHY.
+      &quot;rules&quot;: [ # [Output Only] The rules that apply to the instance. Only rules that
+          # target the specific VM instance are returned if target service accounts
+          # or target secure tags are specified in the rules.
+      &quot;shortName&quot;: &quot;A String&quot;, # Output only. [Output Only] The short name of the firewall policy.
+      &quot;type&quot;: &quot;A String&quot;, # Output only. [Output Only] The type of the firewall policy. Can be one of HIERARCHY,
+          # NETWORK, NETWORK_REGIONAL, SYSTEM_GLOBAL, SYSTEM_REGIONAL.
+  &quot;firewalls&quot;: [ # Effective firewalls on the instance.
+  &quot;organizationFirewalls&quot;: [ # Effective firewalls from organization policies.
+    { # A pruned SecurityPolicy containing ID and any applicable firewall rules.
+      &quot;id&quot;: &quot;A String&quot;, # Output only. The unique identifier for the security policy. This
+          # identifier is defined by the server.
+      &quot;rules&quot;: [ # The rules that apply to the network.
+    <code class="details" id="getGuestAttributes">getGuestAttributes(project, zone, instance, queryPath=None, variableKey=None, x__xgafv=None)</code>
+  <pre>Returns the specified guest attributes entry.
+  queryPath: string, Specifies the guest attributes path to be queried.
+  variableKey: string, Specifies the key for the guest attributes entry.
+    { # A guest attributes entry.
+  &quot;kind&quot;: &quot;compute#guestAttributes&quot;, # Output only. [Output Only] Type of the resource. Alwayscompute#guestAttributes for guest attributes entry.
+  &quot;queryPath&quot;: &quot;A String&quot;, # The path to be queried. This can be the default namespace (&#x27;&#x27;) or a
+      # nested namespace (&#x27;\/&#x27;) or a specified key
+      # (&#x27;\/\&#x27;).
+  &quot;queryValue&quot;: { # Array of guest attribute namespace/key/value tuples. # Output only. [Output Only] The value of the requested queried path.
+      { # A guest attributes namespace/key/value entry.
+        &quot;key&quot;: &quot;A String&quot;, # Key for the guest attribute entry.
+        &quot;namespace&quot;: &quot;A String&quot;, # Namespace for the guest attribute entry.
+        &quot;value&quot;: &quot;A String&quot;, # Value for the guest attribute entry.
+  &quot;variableKey&quot;: &quot;A String&quot;, # The key to search for.
+  &quot;variableValue&quot;: &quot;A String&quot;, # Output only. [Output Only] The value found for the requested key.
+    <code class="details" id="getPartnerMetadata">getPartnerMetadata(project, zone, instance, namespaces=None, x__xgafv=None)</code>
+  <pre>Gets partner metadata of the specified instance and namespaces.
+  namespaces: string, Comma separated partner metadata namespaces.
+    { # Model definition of partner_metadata field.
+    # To be used in dedicated Partner Metadata methods and to be inlined in
+    # the Instance and InstanceTemplate resources.
+  &quot;fingerprint&quot;: &quot;A String&quot;, # Instance-level hash to be used for optimistic
+      # locking.
+  &quot;partnerMetadata&quot;: { # Partner Metadata assigned to the instance. A map from a subdomain to
+      # entries map. Subdomain name must be compliant withRFC1035
+      # definition. The total size of all keys and values must be less than 2MB.
+      # Subdomain &#x27;metadata.compute.googleapis.com&#x27; is reserverd for instance&#x27;s
+      # metadata.
+    <code class="details" id="getScreenshot">getScreenshot(project, zone, instance, x__xgafv=None)</code>
+  <pre>Returns the screenshot from the specified instance.
+    { # An instance&#x27;s screenshot.
+  &quot;contents&quot;: &quot;A String&quot;, # [Output Only] The Base64-encoded screenshot data.
+  &quot;kind&quot;: &quot;compute#screenshot&quot;, # Output only. [Output Only] Type of the resource. Always compute#screenshot
+      # for the screenshots.
+    <code class="details" id="getSerialPortOutput">getSerialPortOutput(project, zone, instance, port=None, start=None, x__xgafv=None)</code>
+  <pre>Returns the last 1 MB of serial port output from the specified instance.
+  instance: string, Name of the instance for this request. (required)
+  port: integer, Specifies which COM or serial port to retrieve data from.
+  start: string, Specifies the starting byte position of the output to return. To start with
+the first byte of output to the specified port, omit this field or set it
+to `0`.
+If the output for that byte position is available, this field matches the
+`start` parameter sent with the request. If the amount of serial console
+output exceeds the size of the buffer (1 MB), the oldest output is
+discarded and is no longer available. If the requested start position
+refers to discarded output, the start position is adjusted to the oldest
+output still available, and the adjusted start position is returned as the
+`start` property value.
+You can also provide a negative start position, which translates to the
+most recent number of bytes written to the serial port. For example, -3 is
+interpreted as the most recent 3 bytes written to the serial console. Note
+that the negative start is bounded by the retained buffer size, and the
+returned serial console output will not exceed the max buffer size.
+    { # An instance serial console output.
+  &quot;contents&quot;: &quot;A String&quot;, # [Output Only] The contents of the console output.
+  &quot;kind&quot;: &quot;compute#serialPortOutput&quot;, # Output only. [Output Only] Type of the resource. Alwayscompute#serialPortOutput for serial port output.
+  &quot;next&quot;: &quot;A String&quot;, # [Output Only] The position of the next byte of content, regardless of
+      # whether the content exists, following the output returned in the `contents`
+      # property. Use this value in the next request as the start
+      # parameter.
+  &quot;start&quot;: &quot;A String&quot;, # The starting byte position of the output that was returned.
+      # This should match the start parameter sent with the request.
+      # If the serial console output exceeds the size of the buffer (1 MB), older
+      # output is overwritten by newer content. The output start value will
+      # indicate the byte position of the output that was returned, which might be
+      # different than the `start` value that was specified in the request.
+    <code class="details" id="getShieldedInstanceIdentity">getShieldedInstanceIdentity(project, zone, instance, x__xgafv=None)</code>
+  <pre>Returns the Shielded Instance Identity of an instance
+  instance: string, Name or id of the instance scoping this request. (required)
+    { # A Shielded Instance Identity.
+  &quot;eccP256EncryptionKey&quot;: { # A Shielded Instance Identity Entry. # An Endorsement Key (EK) made by the ECC P256 algorithm
+      # issued to the Shielded Instance&#x27;s vTPM.
+    &quot;ekCert&quot;: &quot;A String&quot;, # A PEM-encoded X.509 certificate. This field can be empty.
+    &quot;ekPub&quot;: &quot;A String&quot;, # A PEM-encoded public key.
+  &quot;eccP256SigningKey&quot;: { # A Shielded Instance Identity Entry. # An Attestation Key (AK) made by the ECC P256 algorithm
+  &quot;encryptionKey&quot;: { # A Shielded Instance Identity Entry. # An Endorsement Key (EK) made by the RSA 2048 algorithm
+  &quot;kind&quot;: &quot;compute#shieldedInstanceIdentity&quot;, # Output only. [Output Only] Type of the resource. Alwayscompute#shieldedInstanceIdentity for shielded Instance
+      # identity entry.
+  &quot;signingKey&quot;: { # A Shielded Instance Identity Entry. # An Attestation Key (AK) made by the RSA 2048 algorithm
+    <code class="details" id="getShieldedVmIdentity">getShieldedVmIdentity(project, zone, instance, x__xgafv=None)</code>
+  <pre>Returns the Shielded VM Identity of an instance
+    { # A Shielded VM Identity.
+  &quot;encryptionKey&quot;: { # A Shielded Instance Identity Entry. # An Endorsement Key (EK) issued to the Shielded VM&#x27;s vTPM.
+  &quot;kind&quot;: &quot;compute#shieldedVmIdentity&quot;, # Output only. [Output Only] Type of the resource. Alwayscompute#shieldedVmIdentity for shielded VM identity entry.
+  &quot;signingKey&quot;: { # A Shielded Instance Identity Entry. # An Attestation Key (AK) issued to the Shielded VM&#x27;s vTPM.
+    <code class="details" id="getVmExtensionState">getVmExtensionState(project, zone, instance, extensionName, x__xgafv=None)</code>
+  <pre>Retrieves details of a specific VM extension state.
+  instance: string, Name or id of the instance resource. (required)
+  extensionName: string, The name of the extension to get the state for. (required)
+    { # State of an extension on an instance.
+  &quot;enforcementMsg&quot;: &quot;A String&quot;, # The status message of the extension if the extension fails to enforce.
+  &quot;enforcementState&quot;: &quot;A String&quot;, # The enforcement state of the extension.
+      # If the extension is not enforced yet, then the health status will not be
+  &quot;healthMsg&quot;: &quot;A String&quot;, # The health status message of the extension.
+  &quot;healthStatus&quot;: &quot;A String&quot;, # The health status of the extension.
+  &quot;name&quot;: &quot;A String&quot;, # The name of the extension.
+  &quot;policyId&quot;: &quot;A String&quot;, # The id of the policy that is enforced on the extension.
+  &quot;version&quot;: &quot;A String&quot;, # The version of the extension.
+    <code class="details" id="insert">insert(project, zone, body=None, requestId=None, sourceInstanceTemplate=None, sourceMachineImage=None, x__xgafv=None)</code>
+  <pre>Creates an instance resource in the specified project using the data
+  sourceInstanceTemplate: string, Specifies instance template to create the instance.
+This field is optional. It can be a full or partial URL. For example, the
+following are all valid URLs to an instance template:
+      - https://www.googleapis.com/compute/v1/projects/project/global/instanceTemplates/instanceTemplate
+      - projects/project/global/instanceTemplates/instanceTemplate
+      - global/instanceTemplates/instanceTemplate
+  sourceMachineImage: string, Specifies the machine image to use to create the instance.
+following are all valid URLs to a machine image:
+      - https://www.googleapis.com/compute/v1/projects/project/global/global/machineImages/machineImage
+      - projects/project/global/global/machineImages/machineImage
+      - global/machineImages/machineImage
+    <code class="details" id="list">list(project, zone, filter=None, maxResults=None, orderBy=None, pageToken=None, returnPartialSuccess=None, view=None, x__xgafv=None)</code>
+  <pre>Retrieves the list of instances contained within
+    { # Contains a list of instances.
+  &quot;items&quot;: [ # A list of Instance resources.
+  &quot;kind&quot;: &quot;compute#instanceList&quot;, # Output only. [Output Only] Type of resource. Always compute#instanceList
+      # for lists of Instance resources.
+    <code class="details" id="listReferrers">listReferrers(project, zone, instance, filter=None, maxResults=None, orderBy=None, pageToken=None, returnPartialSuccess=None, x__xgafv=None)</code>
+  <pre>Retrieves a list of resources that refer to the VM instance specified in
+the request. For example, if the VM instance is part of a managed or
+unmanaged instance group, the referrers list includes the instance group.
+For more information, readViewing
+referrers to VM instances.
+  instance: string, Name of the target instance scoping this request, or &#x27;-&#x27; if the
+request should span over all instances in the container. (required)
+    { # Contains a list of instance referrers.
+  &quot;items&quot;: [ # A list of Reference resources.
+    { # Represents a reference to a resource.
+      &quot;kind&quot;: &quot;compute#reference&quot;, # Output only. [Output Only] Type of the resource. Always compute#reference
+          # for references.
+      &quot;referenceType&quot;: &quot;A String&quot;, # A description of the reference type with no implied semantics. Possible
+          # values include:
+          #     1. MEMBER_OF
+      &quot;referrer&quot;: &quot;A String&quot;, # URL of the resource which refers to the target.
+      &quot;target&quot;: &quot;A String&quot;, # URL of the resource to which this reference points.
+  &quot;kind&quot;: &quot;compute#instanceListReferrers&quot;, # Output only. [Output Only] Type of resource. Alwayscompute#instanceListReferrers for lists of Instance referrers.
+    <code class="details" id="listReferrers_next">listReferrers_next()</code>
+    <code class="details" id="listVmExtensionStates">listVmExtensionStates(project, zone, instance, filter=None, maxResults=None, orderBy=None, pageToken=None, returnPartialSuccess=None, x__xgafv=None)</code>
+  <pre>Lists all VM extensions states for a specific instance.
+  zone: string, Required. Name of the zone for this request. (required)
+  instance: string, Name of the target instance scoping this request. (required)
+  &quot;items&quot;: [ # Output only. A list of VM extension policy resources.
+  &quot;kind&quot;: &quot;compute#vmExtensionStatesList&quot;, # Output only. Type of resource.
+    <code class="details" id="listVmExtensionStates_next">listVmExtensionStates_next()</code>
+    <code class="details" id="patchPartnerMetadata">patchPartnerMetadata(project, zone, instance, body=None, requestId=None, x__xgafv=None)</code>
+  <pre>Patches partner metadata of the specified instance.
+    <code class="details" id="performMaintenance">performMaintenance(project, zone, instance, requestId=None, x__xgafv=None)</code>
+  <pre>Perform a manual maintenance on the instance.
+    <code class="details" id="removeResourcePolicies">removeResourcePolicies(project, zone, instance, body=None, requestId=None, x__xgafv=None)</code>
+  <pre>Removes resource policies from an instance.
+  &quot;resourcePolicies&quot;: [ # Resource policies to be removed from this instance.
+    <code class="details" id="reportHostAsFaulty">reportHostAsFaulty(project, zone, instance, body=None, requestId=None, x__xgafv=None)</code>
+  <pre>Mark the host as faulty and try to restart the instance on a new host.
+  &quot;actionHint&quot;: &quot;A String&quot;, # The action hint to report the host as faulty.
+  &quot;disruptionSchedule&quot;: &quot;A String&quot;, # The disruption schedule for the VM. Required field, only allows IMMEDIATE.
+  &quot;faultReasons&quot;: [
+      &quot;behavior&quot;: &quot;A String&quot;,
+    <code class="details" id="reset">reset(project, zone, instance, requestId=None, x__xgafv=None)</code>
+  <pre>Performs a reset on the instance. This is a hard reset. The VM
+does not do a graceful shutdown. For more information, seeResetting
+    <code class="details" id="resume">resume(project, zone, instance, body=None, requestId=None, x__xgafv=None)</code>
+  <pre>Resumes an instance that was suspended using theinstances().suspend
+  instance: string, Name of the instance resource to resume. (required)
+  &quot;disks&quot;: [ # Array of disks associated with this instance that are protected with acustomer-supplied
+      # In order to resume the instance, the disk url and its corresponding key
+      # must be provided.
+      # If the disk is not protected with a customer-supplied encryption key it
+      # should not be specified.
+      &quot;diskEncryptionKey&quot;: { # Decrypts data associated with the disk with acustomer-supplied
+          # resource. This field is only applicable for persistent disks.
+          # &quot;source&quot;: &quot;/compute/v1/projects/project_id/zones/zone/disks/
+          # disk_name
+  &quot;instanceEncryptionKey&quot;: { # Decrypts data associated with an instance that is protected with acustomer-supplied
+      # If the instance you are starting is protected with a customer-supplied
+      # encryption key, the correct key must be provided otherwise the
+      # instance resume will not succeed.
+    <code class="details" id="sendDiagnosticInterrupt">sendDiagnosticInterrupt(project, zone, instance, x__xgafv=None)</code>
+  <pre>Sends diagnostic interrupt to the instance.
+    <code class="details" id="setDeletionProtection">setDeletionProtection(project, zone, resource, deletionProtection=None, requestId=None, x__xgafv=None)</code>
+  <pre>Sets deletion protection on the instance.
+  deletionProtection: boolean, Whether the resource should be protected against deletion.
+    <code class="details" id="setDiskAutoDelete">setDiskAutoDelete(project, zone, instance, autoDelete, deviceName, requestId=None, x__xgafv=None)</code>
+  <pre>Sets the auto-delete flag for a disk attached to an instance.
+  autoDelete: boolean, Whether to auto-delete the disk when the instance is deleted. (required)
+  deviceName: string, The device name of the disk to modify. Make a get() request
+on the instance to view currently attached disks and device names. (required)
+    <code class="details" id="setLabels">setLabels(project, zone, instance, body=None, requestId=None, x__xgafv=None)</code>
+  <pre>Sets labels on an instance.  To learn more about labels, read theLabeling
+  &quot;labelFingerprint&quot;: &quot;A String&quot;, # Fingerprint of the previous set of labels for this resource,
+      # used to prevent conflicts. Provide the latest fingerprint value when making
+      # a request to add or change labels.
+  &quot;labels&quot;: {
+    <code class="details" id="setMachineResources">setMachineResources(project, zone, instance, body=None, requestId=None, x__xgafv=None)</code>
+  <pre>Changes the number and/or type of accelerator for a stopped instance to the
+values specified in the request.
+    <code class="details" id="setMachineType">setMachineType(project, zone, instance, body=None, requestId=None, x__xgafv=None)</code>
+  <pre>Changes the machine type for a stopped instance to the machine
+type specified in the request.
+  &quot;machineType&quot;: &quot;A String&quot;, # Full or partial URL of the machine type resource. See Machine Types for a full list of
+      # machine types. For example:zones/us-central1-f/machineTypes/n1-standard-1
+    <code class="details" id="setMetadata">setMetadata(project, zone, instance, body=None, requestId=None, x__xgafv=None)</code>
+  <pre>Sets metadata for the specified instance to the data included
+{ # A metadata key/value entry.
+    <code class="details" id="setMinCpuPlatform">setMinCpuPlatform(project, zone, instance, body=None, requestId=None, x__xgafv=None)</code>
+  <pre>Changes the minimum CPU platform that this instance should use.
+This method can only
+be called on a stopped instance. For more information, readSpecifying a
+Minimum CPU Platform.
+  &quot;minCpuPlatform&quot;: &quot;A String&quot;, # Minimum cpu/platform this instance should be started at.
+    <code class="details" id="setName">setName(project, zone, instance, body=None, requestId=None, x__xgafv=None)</code>
+  <pre>Sets name of an instance.
+  &quot;currentName&quot;: &quot;A String&quot;, # The current name of this resource, used to prevent conflicts. Provide the
+      # latest name when making a request to change name.
+  &quot;name&quot;: &quot;A String&quot;, # The name to be applied to the instance. Needs to be RFC 1035 compliant.
+    <code class="details" id="setScheduling">setScheduling(project, zone, instance, body=None, requestId=None, x__xgafv=None)</code>
+  <pre>Sets an instance&#x27;s scheduling options. You can only call this method on astopped instance,
+that is, a VM instance that is in a `TERMINATED` state. SeeInstance Life
+Cycle for more information on the possible instance states.
+For more information about setting scheduling options for a VM, seeSet
+VM host maintenance policy.
+{ # Sets the scheduling options for an Instance.
+    <code class="details" id="setSecurityPolicy">setSecurityPolicy(project, zone, instance, body=None, requestId=None, x__xgafv=None)</code>
+  <pre>Sets the Google Cloud Armor security policy for the specified instance.
+For more information, seeGoogle
+  zone: string, Name of the zone scoping this request. (required)
+  instance: string, Name of the Instance resource to which the security policy should be
+  &quot;networkInterfaces&quot;: [ # The network interfaces that the security policy will be applied to. Network
+      # interfaces use the nicN naming format. You can only set a
+      # security policy for network interfaces with an access config.
+  &quot;securityPolicy&quot;: &quot;A String&quot;, # A full or partial URL to a security policy to add to this instance.
+      # If this field is set to an empty string it will remove the associated
+    <code class="details" id="setServiceAccount">setServiceAccount(project, zone, instance, body=None, requestId=None, x__xgafv=None)</code>
+  <pre>Sets the service account on the instance. For more information,
+readChanging
+the service account and access scopes for an instance.
+  instance: string, Name of the instance resource to start. (required)
+    <code class="details" id="setShieldedInstanceIntegrityPolicy">setShieldedInstanceIntegrityPolicy(project, zone, instance, body=None, requestId=None, x__xgafv=None)</code>
+  <pre>Sets the Shielded Instance integrity policy for an instance. You can
+only use this method on a running instance. This method
+{ # The policy describes the baseline against which
+    <code class="details" id="setShieldedVmIntegrityPolicy">setShieldedVmIntegrityPolicy(project, zone, instance, body=None, requestId=None, x__xgafv=None)</code>
+  <pre>Sets the Shielded VM integrity policy for a VM instance. You can
+only use this method on a running VM instance. This method
+    <code class="details" id="setTags">setTags(project, zone, instance, body=None, requestId=None, x__xgafv=None)</code>
+  <pre>Sets network tags
+for the specified instance to the data included in the request.
+{ # A set of instance tags.
+    <code class="details" id="simulateMaintenanceEvent">simulateMaintenanceEvent(project, zone, instance, requestId=None, withExtendedNotifications=None, x__xgafv=None)</code>
+  <pre>Simulates a host maintenance event on a VM. For more information, see
+Simulate a host maintenance event.
+  withExtendedNotifications: boolean, Determines whether the customers receive notifications before migration.
+Only applicable to SF vms.
+    <code class="details" id="start">start(project, zone, instance, requestId=None, x__xgafv=None)</code>
+  <pre>Starts an instance that was stopped using theinstances().stop
+method. For more information, seeRestart an
+instance.
+    <code class="details" id="startWithEncryptionKey">startWithEncryptionKey(project, zone, instance, body=None, requestId=None, x__xgafv=None)</code>
+      # In order to start the instance, the disk url and its corresponding key must
+      # be provided.
+      # instance start will not succeed.
+    <code class="details" id="stop">stop(project, zone, instance, discardLocalSsd=None, noGracefulShutdown=None, requestId=None, x__xgafv=None)</code>
+  <pre>Stops a running instance, shutting it down cleanly, and allows
+you to restart the instance at a later time. Stopped instances do not incur
+VM usage charges while they are stopped. However, resources that the VM is
+using, such as persistent disks and static IP addresses, will continue to
+be charged until they are deleted. For more information, seeStopping
+  instance: string, Name of the instance resource to stop. (required)
+  discardLocalSsd: boolean, This property is required if the instance has any attached Local SSD disks.
+If false, Local SSD data will be preserved when the instance is suspended.
+If true, the contents of any attached Local SSD disks will be discarded.
+    <code class="details" id="suspend">suspend(project, zone, instance, discardLocalSsd=None, requestId=None, x__xgafv=None)</code>
+  <pre>This method suspends a running instance, saving its state to persistent
+storage, and allows you to resume the instance at a later time. Suspended
+instances have no compute costs (cores or RAM), and incur only storage
+charges for the saved VM memory and localSSD data. Any charged resources
+the virtual machine was using, such as persistent disks and static IP
+addresses, will continue to be charged while the instance is suspended.
+For more information, see
+Suspending and resuming an instance.
+  instance: string, Name of the instance resource to suspend. (required)
+    <code class="details" id="update">update(project, zone, instance, body=None, clearSecureTag=None, discardLocalSsd=None, minimalAction=None, mostDisruptiveAllowedAction=None, requestId=None, x__xgafv=None)</code>
+  <pre>Updates an instance only if the necessary resources are available. This
+method can update only a specific set of instance properties. See
+Updating a running instance for a list of updatable instance
+properties.
+  instance: string, Name of the instance resource to update. (required)
+  clearSecureTag: boolean, Whether to clear secure tags from the instance.
+This property if set to true will clear secure tags regardless of theresource.secure_tags.
+  discardLocalSsd: boolean, Whether to discard local SSDs from the instance during restart
+default value is false.
+  minimalAction: string, Specifies the action to take when updating an instance even if the
+updated properties do not require it. If not specified, then
+Compute Engine acts based on the minimum action that the updated
+properties require.
+      INVALID - 
+      NO_EFFECT - No changes can be made to the instance.
+      REFRESH - The instance will not restart.
+      RESTART - The instance will restart, potentially on a different host.
+  mostDisruptiveAllowedAction: string, Specifies the most disruptive action that can be taken on the instance
+as part of the update. Compute Engine returns an error if the
+instance properties require a more disruptive action as part of the
+instance update. Valid options from lowest to highest are
+NO_EFFECT, REFRESH, and RESTART.
+    <code class="details" id="updateAccessConfig">updateAccessConfig(project, zone, instance, networkInterface, body=None, requestId=None, x__xgafv=None)</code>
+  <pre>Updates the specified access config from an instance&#x27;s network interface
+with the data included in the request. This method supportsPATCH
+  networkInterface: string, The name of the network interface where the access config is attached. (required)
+    <code class="details" id="updateDisplayDevice">updateDisplayDevice(project, zone, instance, body=None, requestId=None, x__xgafv=None)</code>
+  <pre>Updates the Display config for a VM instance. You can
+only use this method on a stopped VM instance. This method supportsPATCH
+{ # A set of Display Device options
+    <code class="details" id="updateNetworkInterface">updateNetworkInterface(project, zone, instance, networkInterface, body=None, requestId=None, x__xgafv=None)</code>
+  <pre>Updates an instance&#x27;s network interface. This method can only update an
+interface&#x27;s alias IP range and attached network. See Modifying
+alias IP ranges for an existing instance for instructions on
+changing alias IP ranges. See Migrating
+a VM between networks for instructions on migrating an interface.
+This method follows PATCH semantics.
+  networkInterface: string, The name of the network interface to update. (required)
+    <code class="details" id="updateShieldedInstanceConfig">updateShieldedInstanceConfig(project, zone, instance, body=None, requestId=None, x__xgafv=None)</code>
+  <pre>Updates the Shielded Instance config for an instance. You can
+only use this method on a stopped instance. This method supportsPATCH
+{ # A set of Shielded Instance options.
+    <code class="details" id="updateShieldedVmConfig">updateShieldedVmConfig(project, zone, instance, body=None, requestId=None, x__xgafv=None)</code>
+  <pre>Updates the Shielded VM config for a VM instance. You can
+{ # A set of Shielded VM options.

@@ -1,0 +1,2 @@
+from ..responses.response_output_text_param import ResponseOutputTextParam
+OutputTextContentParam = ResponseOutputTextParam

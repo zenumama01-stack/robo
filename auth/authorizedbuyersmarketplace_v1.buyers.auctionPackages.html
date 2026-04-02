@@ -1,0 +1,25 @@
+<h1><a href="authorizedbuyersmarketplace_v1.html">Authorized Buyers Marketplace API</a> . <a href="authorizedbuyersmarketplace_v1.buyers.html">buyers</a> . <a href="authorizedbuyersmarketplace_v1.buyers.auctionPackages.html">auctionPackages</a></h1>
+<p class="firstline">Gets an auction package given its name.</p>
+<p class="firstline">Subscribe to the auction package for the specified buyer. Once subscribed, the bidder will receive a call out for inventory matching the auction package targeting criteria with the auction package deal ID and the specified buyer.</p>
+  <code><a href="#subscribeClients">subscribeClients(auctionPackage, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Subscribe the specified clients of the buyer to the auction package. If a client in the list does not belong to the buyer, an error response will be returned, and all of the following clients in the list will not be subscribed. Subscribing an already subscribed client will have no effect.</p>
+  <code><a href="#unsubscribe">unsubscribe(name, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Unsubscribe from the auction package for the specified buyer. Once unsubscribed, the bidder will no longer receive a call out for the auction package deal ID and the specified buyer.</p>
+  <code><a href="#unsubscribeClients">unsubscribeClients(auctionPackage, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Unsubscribe from the auction package for the specified clients of the buyer. Unsubscribing a client that is not subscribed will have no effect.</p>
+  <pre>Gets an auction package given its name.
+  name: string, Required. Name of auction package to get. Format: `buyers/{accountId}/auctionPackages/{auctionPackageId}` (required)
+  <pre>Subscribe to the auction package for the specified buyer. Once subscribed, the bidder will receive a call out for inventory matching the auction package targeting criteria with the auction package deal ID and the specified buyer.
+  name: string, Required. Name of the auction package. Format: `buyers/{accountId}/auctionPackages/{auctionPackageId}` (required)
+{ # Request message for SubscribeAuctionPackage.
+    <code class="details" id="subscribeClients">subscribeClients(auctionPackage, body=None, x__xgafv=None)</code>
+  <pre>Subscribe the specified clients of the buyer to the auction package. If a client in the list does not belong to the buyer, an error response will be returned, and all of the following clients in the list will not be subscribed. Subscribing an already subscribed client will have no effect.
+  auctionPackage: string, Required. Name of the auction package. Format: `buyers/{accountId}/auctionPackages/{auctionPackageId}` (required)
+{ # Request message for SubscribeAuctionPackageClients.
+  &quot;clients&quot;: [ # Optional. A list of client buyers to subscribe to the auction package, with client buyer in the format `buyers/{accountId}/clients/{clientAccountId}`. The current buyer will be subscribed to the auction package regardless of the list contents if not already.
+    <code class="details" id="unsubscribe">unsubscribe(name, body=None, x__xgafv=None)</code>
+  <pre>Unsubscribe from the auction package for the specified buyer. Once unsubscribed, the bidder will no longer receive a call out for the auction package deal ID and the specified buyer.
+{ # Request message for UnsubscribeAuctionPackage.
+    <code class="details" id="unsubscribeClients">unsubscribeClients(auctionPackage, body=None, x__xgafv=None)</code>
+  <pre>Unsubscribe from the auction package for the specified clients of the buyer. Unsubscribing a client that is not subscribed will have no effect.
+  &quot;clients&quot;: [ # Optional. A list of client buyers to unsubscribe from the auction package, with client buyer in the format `buyers/{accountId}/clients/{clientAccountId}`.

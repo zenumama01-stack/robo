@@ -1,0 +1,177 @@
+<div class="agent-configuration-container">
+      <h2 class="dashboard-title">
+        class="filter-toggle-btn"
+        (click)="toggleFilterPanel()"
+        title="Toggle Filters">
+        @if (filterPanelVisible) {
+          Hide Filters
+          Show Filters
+      <span class="item-count">{{ filteredAgents.length }} agents</span>
+          class="view-btn"
+          [class.active]="viewMode === 'grid'"
+          (click)="setViewMode('grid')"
+          title="Grid View">
+          <i class="fa-solid fa-grip"></i>
+          (click)="setViewMode('list')"
+          title="List View">
+        class="control-btn primary"
+        (click)="createNewAgent()"
+        title="Create New Agent">
+        New Agent
+  <!-- Main Content with Splitter -->
+  <div class="main-content" >
+    <kendo-splitter 
+      class="main-splitter"
+      orientation="horizontal"
+      (layoutChange)="onMainSplitterChange($event)"
+      <!-- Filter Panel (Left) -->
+      <kendo-splitter-pane 
+        [size]="filterPanelVisible ? '320px' : '0px'"
+        [collapsible]="false"
+        [resizable]="filterPanelVisible"
+        [scrollable]="false"
+        [hidden]="!filterPanelVisible">
+        <mj-agent-filter-panel
+          [agents]="agents"
+          [filteredAgents]="filteredAgents"
+          [filters]="currentFilters"
+          (filtersChange)="onFiltersChange($event)"
+          (filterChange)="onFilterChange()"
+          (resetFilters)="onResetFilters()"
+          (closePanel)="toggleFilterPanel()">
+        </mj-agent-filter-panel>
+      <!-- Agents List Panel -->
+        [scrollable]="true">
+        <div class="agents-content">
+              <mj-loading text="Loading agents..." size="large"></mj-loading>
+          <!-- Agents Display -->
+            @if (filteredAgents.length === 0) {
+                <h3>No agents found</h3>
+                <p>No agents match your current filters. Try adjusting your search criteria or create a new agent.</p>
+                  class="empty-state-btn"
+                  (click)="createNewAgent()">
+                  Create New Agent
+              @if (viewMode === 'grid') {
+                  @for (agent of filteredAgents; track agent.ID) {
+                    <div class="agent-card" [class.expanded]="expandedAgentId === agent.ID">
+                      <!-- Card Header -->
+                      <div class="card-header" (click)="toggleAgentExpansion(agent.ID)">
+                          <div class="agent-icon" [style.background-color]="getAgentIconColor(agent)">
+                            @if (hasLogoURL(agent)) {
+                          <div class="agent-details">
+                            <h4 class="agent-name" [innerHTML]="agent.Name | highlightSearch:currentFilters.searchTerm"></h4>
+                              <span class="meta-item type-badge">
+                                {{ getAgentTypeName(agent) }}
+                                <span class="meta-item" [class]="'status-' + agent.Status.toLowerCase()">
+                                  <i class="fa-solid fa-circle" style="font-size: 8px;"></i>
+                        <i class="fa-solid fa-chevron-down expand-icon" 
+                           [class.rotated]="expandedAgentId === agent.ID"></i>
+                      <!-- Card Body -->
+                          <p class="agent-description" [innerHTML]="agent.Description | highlightSearch:currentFilters.searchTerm"></p>
+                          <p class="agent-description text-muted">No description provided</p>
+                        <!-- Expandable Content -->
+                        @if (expandedAgentId === agent.ID) {
+                          <div class="expanded-content">
+                            <div class="agent-stats">
+                              @if (agent.Parent) {
+                                  <span class="stat-label">Parent</span>
+                                  <span class="stat-value">{{ agent.Parent }}</span>
+                                <span class="stat-label">Context Compression</span>
+                                <span class="stat-value">
+                                  @if (agent.EnableContextCompression) {
+                                    <i class="fa-solid fa-check" style="color: #28a745;"></i> Enabled
+                                    <i class="fa-solid fa-times" style="color: #dc3545;"></i> Disabled
+                      <!-- Card Actions -->
+                      <div class="card-actions">
+                        @if (UserCanReadAgents) {
+                            class="action-btn"
+                            (click)="showAgentDetails(agent, $event)"
+                            title="View Details">
+                        @if (agent.Status === 'Active' && UserCanReadAgents) {
+                            class="action-btn action-btn-primary"
+                            (click)="runAgent(agent); $event.stopPropagation()"
+                            title="Run Agent">
+              @if (viewMode === 'list') {
+                <div class="agents-list">
+                  <table class="agents-table">
+                        <th (click)="sortBy('Name')"
+                            [class.sorted]="sortColumn === 'Name'"
+                            [class.desc]="sortColumn === 'Name' && sortDirection === 'desc'">
+                          <span class="sort-header">
+                            <i class="fa-solid fa-chevron-up sort-icon"></i>
+                        <th (click)="sortBy('Status')"
+                            [class.sorted]="sortColumn === 'Status'"
+                            [class.desc]="sortColumn === 'Status' && sortDirection === 'desc'">
+                            <div class="agent-name-cell">
+                              <div class="agent-icon-small" [style.background-color]="getAgentIconColor(agent)">
+                                  <img [src]="agent.LogoURL" [alt]="agent.Name + ' logo'" class="agent-logo-small">
+                                <div class="agent-name" [innerHTML]="agent.Name | highlightSearch:currentFilters.searchTerm"></div>
+                                  <div class="agent-description-small" [innerHTML]="agent.Description | highlightSearch:currentFilters.searchTerm"></div>
+                            <span class="type-badge">
+                            <span class="status-badge" [class]="'status-' + (agent.Status || 'unknown').toLowerCase()">
+                              {{ agent.Status || 'Unknown' }}
+                            <div class="table-actions">
+                                  class="action-btn-small"
+                                  (click)="showAgentDetails(agent)"
+                                  class="action-btn-small primary"
+                                  (click)="runAgent(agent)"
+  <!-- Detail Panel Overlay -->
+  @if (detailPanelVisible) {
+    <div class="detail-panel-overlay" (click)="closeDetailPanel()"></div>
+  <!-- Detail Panel -->
+  <div class="detail-panel" [class.visible]="detailPanelVisible">
+    @if (selectedAgent) {
+      <!-- Panel Header -->
+      <div class="detail-panel-header">
+        <div class="detail-panel-title">
+          <div class="detail-icon" [style.background-color]="getAgentIconColor(selectedAgent)">
+            @if (hasLogoURL(selectedAgent)) {
+              <img [src]="selectedAgent.LogoURL" [alt]="selectedAgent.Name + ' logo'" class="detail-logo">
+              <i [class]="getAgentIcon(selectedAgent)"></i>
+          <div class="detail-title-info">
+            <h3>{{ selectedAgent.Name }}</h3>
+            <span class="detail-subtitle">{{ getAgentTypeName(selectedAgent) }}</span>
+        <button class="detail-panel-close" (click)="closeDetailPanel()">
+      <!-- Panel Content -->
+      <div class="detail-panel-content">
+        <!-- Status and Type Section -->
+          <div class="detail-badges">
+            <span class="status-badge" [class]="'status-' + (selectedAgent.Status || 'unknown').toLowerCase()">
+              {{ selectedAgent.Status || 'Unknown' }}
+            @if (selectedAgent.ExposeAsAction) {
+              <span class="feature-badge">
+                Exposed as Action
+        @if (selectedAgent.Description) {
+            <h4 class="detail-section-title">
+            <p class="detail-description">{{ selectedAgent.Description }}</p>
+        <!-- Configuration Details -->
+              <span class="detail-label">Execution Mode</span>
+                <i [class]="getExecutionModeIcon(selectedAgent.ExecutionMode)"></i>
+                {{ selectedAgent.ExecutionMode }}
+            @if (getParentAgentName(selectedAgent)) {
+                <span class="detail-label">Parent Agent</span>
+                <span class="detail-value">{{ getParentAgentName(selectedAgent) }}</span>
+              <span class="detail-label">Context Compression</span>
+                @if (selectedAgent.EnableContextCompression) {
+                  <i class="fa-solid fa-check" style="color: #10b981;"></i> Enabled
+                  <i class="fa-solid fa-times" style="color: #ef4444;"></i> Disabled
+              <span class="detail-label">Exposed as Action</span>
+                  <i class="fa-solid fa-check" style="color: #10b981;"></i> Yes
+                  <i class="fa-solid fa-times" style="color: #ef4444;"></i> No
+              <span class="detail-label">Model Selection</span>
+              <span class="detail-value">{{ selectedAgent.ModelSelectionMode }}</span>
+        <!-- Timestamps -->
+            Timestamps
+              <span class="detail-value">{{ selectedAgent.__mj_CreatedAt | date:'medium' }}</span>
+              <span class="detail-label">Updated</span>
+              <span class="detail-value">{{ selectedAgent.__mj_UpdatedAt | date:'medium' }}</span>
+      <!-- Panel Actions -->
+      <div class="detail-panel-actions">
+        @if (selectedAgent.Status === 'Active') {
+            class="detail-action-btn secondary"
+            (click)="runAgent(selectedAgent)">
+            Run Agent
+          class="detail-action-btn primary"
+          (click)="openAgentFromPanel()">
+          Open Full Record
+<!-- AI Agent Test Harness - Now handled by service with minimize support -->

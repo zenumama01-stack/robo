@@ -1,0 +1,56 @@
+<h1><a href="ces_v1.html">Gemini Enterprise for Customer Experience API</a> . <a href="ces_v1.projects.html">projects</a> . <a href="ces_v1.projects.locations.html">locations</a> . <a href="ces_v1.projects.locations.apps.html">apps</a> . <a href="ces_v1.projects.locations.apps.toolsets.html">toolsets</a></h1>
+  <code><a href="#create">create(parent, body=None, toolsetId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Creates a new toolset in the given app.</p>
+<p class="firstline">Deletes the specified toolset.</p>
+<p class="firstline">Gets details of the specified toolset.</p>
+<p class="firstline">Lists toolsets in the given app.</p>
+<p class="firstline">Updates the specified toolset.</p>
+  <code><a href="#retrieveTools">retrieveTools(toolset, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Retrieve the list of tools included in the specified toolset.</p>
+    <code class="details" id="create">create(parent, body=None, toolsetId=None, x__xgafv=None)</code>
+  <pre>Creates a new toolset in the given app.
+  parent: string, Required. The resource name of the app to create a toolset in. (required)
+{ # A toolset represents a group of dynamically managed tools that can be used by the agent.
+  &quot;connectorToolset&quot;: { # A toolset that generates tools from an Integration Connectors Connection. # Optional. A toolset that generates tools from an Integration Connectors Connection.
+    &quot;authConfig&quot;: { # End-user authentication configuration used for Connection calls. The field values must be the names of context variables in the format `$context.variables.`. # Optional. Configures how authentication is handled in Integration Connectors. By default, an admin authentication is passed in the Integration Connectors API requests. You can override it with a different end-user authentication config. **Note**: The Connection must have authentication override enabled in order to specify an EUC configuration here - otherwise, the Toolset creation will fail. See: https://cloud.google.com/application-integration/docs/configure-connectors-task#configure-authentication-override
+    &quot;connectorActions&quot;: [ # Required. The list of connector actions/entity operations to generate tools for.
+      { # Configuration of an Action for the tool to use. Note: This can be either an Action or an Operation. See https://cloud.google.com/integration-connectors/docs/entities-operation-action for details.
+  &quot;createTime&quot;: &quot;A String&quot;, # Output only. Timestamp when the toolset was created.
+  &quot;description&quot;: &quot;A String&quot;, # Optional. The description of the toolset.
+  &quot;displayName&quot;: &quot;A String&quot;, # Optional. The display name of the toolset. Must be unique within the same app.
+  &quot;etag&quot;: &quot;A String&quot;, # ETag used to ensure the object hasn&#x27;t changed during a read-modify-write operation. If the etag is empty, the update will overwrite any concurrent changes.
+  &quot;executionType&quot;: &quot;A String&quot;, # Optional. The execution type of the tools in the toolset.
+  &quot;mcpToolset&quot;: { # A toolset that contains a list of tools that are offered by the MCP server. # Optional. A toolset that contains a list of tools that are offered by the MCP server.
+    &quot;apiAuthentication&quot;: { # Authentication information required for API calls. # Optional. Authentication information required to access tools and execute a tool against the MCP server. For bearer token authentication, the token applies only to tool execution, not to listing tools. This requires that tools can be listed without authentication.
+    &quot;serverAddress&quot;: &quot;A String&quot;, # Required. The address of the MCP server, for example, &quot;https://example.com/mcp/&quot;. If the server is built with the MCP SDK, the url should be suffixed with &quot;/mcp/&quot;. Only Streamable HTTP transport based servers are supported. See https://modelcontextprotocol.io/specification/2025-03-26/basic/transports#streamable-http for more details.
+  &quot;name&quot;: &quot;A String&quot;, # Identifier. The unique identifier of the toolset. Format: `projects/{project}/locations/{location}/apps/{app}/toolsets/{toolset}`
+  &quot;openApiToolset&quot;: { # A toolset that contains a list of tools that are defined by an OpenAPI schema. # Optional. A toolset that contains a list of tools that are defined by an OpenAPI schema.
+    &quot;ignoreUnknownFields&quot;: True or False, # Optional. If true, the agent will ignore unknown fields in the API response for all operations defined in the OpenAPI schema.
+    &quot;openApiSchema&quot;: &quot;A String&quot;, # Required. The OpenAPI schema of the toolset.
+    &quot;tlsConfig&quot;: { # The TLS configuration. # Optional. The TLS configuration. Includes the custom server certificates
+    &quot;url&quot;: &quot;A String&quot;, # Optional. The server URL of the Open API schema. This field is only set in toolsets in the environment dependencies during the export process if the schema contains a server url. During the import process, if this url is present in the environment dependencies and the schema has the $env_var placeholder, it will replace the placeholder in the schema.
+  &quot;toolFakeConfig&quot;: { # Configuration for tool behavior in fake mode. # Optional. Configuration for tools behavior in fake mode.
+  &quot;updateTime&quot;: &quot;A String&quot;, # Output only. Timestamp when the toolset was last updated.
+  toolsetId: string, Optional. The ID to use for the toolset, which will become the final component of the toolset&#x27;s resource name. If not provided, a unique ID will be automatically assigned for the toolset.
+  <pre>Deletes the specified toolset.
+  name: string, Required. The resource name of the toolset to delete. (required)
+  etag: string, Optional. The current etag of the toolset. If an etag is not provided, the deletion will overwrite any concurrent changes. If an etag is provided and does not match the current etag of the toolset, deletion will be blocked and an ABORTED error will be returned.
+  force: boolean, Optional. Indicates whether to forcefully delete the toolset, even if it is still referenced by app/agents. * If `force = false`, the deletion fails if any agents still reference the toolset. * If `force = true`, all existing references from agents will be removed and the toolset will be deleted.
+  <pre>Gets details of the specified toolset.
+  name: string, Required. The resource name of the toolset to retrieve. (required)
+  <pre>Lists toolsets in the given app.
+  parent: string, Required. The resource name of the app to list toolsets from. (required)
+  filter: string, Optional. Filter to be applied when listing the toolsets. See https://google.aip.dev/160 for more details.
+  pageToken: string, Optional. The next_page_token value returned from a previous list AgentService.ListToolsets call.
+    { # Response message for AgentService.ListToolsets.
+  &quot;nextPageToken&quot;: &quot;A String&quot;, # A token that can be sent as ListToolsetsRequest.page_token to retrieve the next page. Absence of this field indicates there are no subsequent pages.
+  &quot;toolsets&quot;: [ # The list of toolsets.
+  <pre>Updates the specified toolset.
+  name: string, Identifier. The unique identifier of the toolset. Format: `projects/{project}/locations/{location}/apps/{app}/toolsets/{toolset}` (required)
+    <code class="details" id="retrieveTools">retrieveTools(toolset, body=None, x__xgafv=None)</code>
+  <pre>Retrieve the list of tools included in the specified toolset.
+  toolset: string, Required. The name of the toolset to retrieve the tools for. Format: `projects/{project}/locations/{location}/apps/{app}/toolsets/{toolset}` (required)
+{ # Request message for ToolService.RetrieveTools.
+  &quot;toolIds&quot;: [ # Optional. The identifiers of the tools to retrieve from the toolset. If empty, all tools in the toolset will be returned.
+    { # Response message for ToolService.RetrieveTools.
+  &quot;tools&quot;: [ # The list of tools that are included in the specified toolset.

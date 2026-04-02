@@ -1,0 +1,13 @@
+    <!-- Content & Availability Section -->
+        SectionKey="contentAvailability"
+        SectionName="Content & Availability"
+            FieldName="TypeDefinitions"
+            FieldName="SampleCode"
+                [Params]="BuildRelationshipViewParamsByEntityName('MJ: Action Libraries','LibraryID')"
+        SectionKey="items"
+        SectionName="Items"
+        [BadgeCount]="GetSectionRowCount('items')"
+                [Params]="BuildRelationshipViewParamsByEntityName('MJ: Library Items','LibraryID')"
+                [NewRecordValues]="NewRecordValues('MJ: Library Items')"
+                [AllowLoad]="IsSectionExpanded('items')"
+                (AfterDataLoad)="SetSectionRowCount('items', $event.totalRowCount)"

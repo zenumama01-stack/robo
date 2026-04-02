@@ -1,0 +1,26 @@
+<!-- Overlay backdrop -->
+  <div class="mj-sm-overlay" (click)="OnOverlayClick($event)">
+    <!-- Drawer panel -->
+    <div class="mj-sm-drawer" (click)="$event.stopPropagation()">
+      <div class="mj-sm-header">
+        <h3 class="mj-sm-title">
+          <i class="fa-solid fa-bars-staggered"></i>
+          Manage Sections
+        <button class="mj-sm-close" (click)="OnClose()" title="Close">
+      <!-- Section list -->
+      <div class="mj-sm-list">
+        @for (section of OrderedSections; track section.SectionKey; let i = $index) {
+          <div class="mj-sm-row">
+            <div class="mj-sm-row-info">
+              <i [class]="section.Icon" class="mj-sm-row-icon"></i>
+              <span class="mj-sm-row-name">{{ section.SectionName }}</span>
+              <span class="mj-sm-row-badge mj-sm-row-badge--{{ section.Variant }}">
+                {{ GetVariantLabel(section.Variant) }}
+            <div class="mj-sm-row-actions">
+              <button class="mj-sm-arrow"
+                      (click)="OnMoveUp(i)"
+                      [disabled]="i === OrderedSections.length - 1"
+                      (click)="OnMoveDown(i)"
+      <div class="mj-sm-footer">
+        <button class="mj-sm-reset" (click)="OnReset()">
+          Reset to Default Order

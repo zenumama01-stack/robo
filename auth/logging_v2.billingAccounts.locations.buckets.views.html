@@ -1,0 +1,26 @@
+<h1><a href="logging_v2.html">Cloud Logging API</a> . <a href="logging_v2.billingAccounts.html">billingAccounts</a> . <a href="logging_v2.billingAccounts.locations.html">locations</a> . <a href="logging_v2.billingAccounts.locations.buckets.html">buckets</a> . <a href="logging_v2.billingAccounts.locations.buckets.views.html">views</a></h1>
+  <code><a href="logging_v2.billingAccounts.locations.buckets.views.logs.html">logs()</a></code>
+  <code><a href="#create">create(parent, body=None, viewId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Creates a view over log entries in a log bucket. A bucket may contain a maximum of 30 views.</p>
+<p class="firstline">Deletes a view on a log bucket. If an UNAVAILABLE error is returned, this indicates that system is not in a state where it can delete the view. If this occurs, please try again in a few minutes.</p>
+<p class="firstline">Gets a view on a log bucket.</p>
+<p class="firstline">Lists views on a log bucket.</p>
+<p class="firstline">Updates a view on a log bucket. This method replaces the value of the filter field from the existing view with the corresponding value from the new view. If an UNAVAILABLE error is returned, this indicates that system is not in a state where it can update the view. If this occurs, please try again in a few minutes.</p>
+    <code class="details" id="create">create(parent, body=None, viewId=None, x__xgafv=None)</code>
+  <pre>Creates a view over log entries in a log bucket. A bucket may contain a maximum of 30 views.
+  parent: string, Required. The bucket in which to create the view `&quot;projects/[PROJECT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]&quot;` For example:&quot;projects/my-project/locations/global/buckets/my-bucket&quot; (required)
+  &quot;description&quot;: &quot;A String&quot;, # Optional. Describes this view.
+  &quot;filter&quot;: &quot;A String&quot;, # Optional. Filter that restricts which log entries in a bucket are visible in this view.Filters must be logical conjunctions that use the AND operator, and they can use any of the following qualifiers: SOURCE(), which specifies a project, folder, organization, or billing account of origin. resource.type, which specifies the resource type. LOG_ID(), which identifies the log.They can also use the negations of these qualifiers with the NOT operator.For example:SOURCE(&quot;projects/myproject&quot;) AND resource.type = &quot;gce_instance&quot; AND NOT LOG_ID(&quot;stdout&quot;)
+  &quot;name&quot;: &quot;A String&quot;, # Output only. The resource name of the view.For example:projects/my-project/locations/global/buckets/my-bucket/views/my-view
+  viewId: string, Required. A client-assigned identifier such as &quot;my-view&quot;. Identifiers are limited to 100 characters and can include only letters, digits, underscores, and hyphens.
+  <pre>Deletes a view on a log bucket. If an UNAVAILABLE error is returned, this indicates that system is not in a state where it can delete the view. If this occurs, please try again in a few minutes.
+  name: string, Required. The full resource name of the view to delete: &quot;projects/[PROJECT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]/views/[VIEW_ID]&quot; For example:&quot;projects/my-project/locations/global/buckets/my-bucket/views/my-view&quot; (required)
+  <pre>Gets a view on a log bucket.
+  <pre>Lists views on a log bucket.
+  parent: string, Required. The bucket whose views are to be listed: &quot;projects/[PROJECT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]&quot;  (required)
+  pageSize: integer, Optional. The maximum number of results to return from this request.Non-positive values are ignored. The presence of nextPageToken in the response indicates that more results might be available.
+    { # The response from ListViews.
+  &quot;views&quot;: [ # A list of views.
+  <pre>Updates a view on a log bucket. This method replaces the value of the filter field from the existing view with the corresponding value from the new view. If an UNAVAILABLE error is returned, this indicates that system is not in a state where it can update the view. If this occurs, please try again in a few minutes.
+  name: string, Required. The full resource name of the view to update &quot;projects/[PROJECT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]/views/[VIEW_ID]&quot; For example:&quot;projects/my-project/locations/global/buckets/my-bucket/views/my-view&quot; (required)
+  updateMask: string, Optional. Field mask that specifies the fields in view that need an update. A field will be overwritten if, and only if, it is in the update mask. name and output only fields cannot be updated.For a detailed FieldMask definition, see https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#google.protobuf.FieldMaskFor example: updateMask=filter

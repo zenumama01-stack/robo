@@ -1,0 +1,44 @@
+<h1><a href="compute_alpha.html">Compute Engine API</a> . <a href="compute_alpha.targetVpnGateways.html">targetVpnGateways</a></h1>
+<p class="firstline">Retrieves an aggregated list of target VPN gateways.</p>
+  <code><a href="#delete">delete(project, region, targetVpnGateway, requestId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Deletes the specified target VPN gateway.</p>
+  <code><a href="#get">get(project, region, targetVpnGateway, x__xgafv=None)</a></code></p>
+<p class="firstline">Returns the specified target VPN gateway.</p>
+<p class="firstline">Creates a target VPN gateway in the specified project and region using</p>
+<p class="firstline">Retrieves a list of target VPN gateways available to the specified</p>
+<p class="firstline">Sets the labels on a TargetVpnGateway. To learn more about labels, read theLabeling</p>
+  <pre>Retrieves an aggregated list of target VPN gateways.
+  &quot;items&quot;: { # A list of TargetVpnGateway resources.
+    &quot;a_key&quot;: { # [Output Only] Name of the scope containing this set of target VPN gateways.
+      &quot;targetVpnGateways&quot;: [ # [Output Only] A list of target VPN gateways contained in this scope.
+        { # Represents a Target VPN Gateway resource.
+            # The target VPN gateway resource represents a Classic Cloud VPN gateway.
+            # For more information, read thethe
+            # Cloud VPN Overview.
+          &quot;forwardingRules&quot;: [ # [Output Only] A list of URLs to the ForwardingRule resources.
+              # ForwardingRules are created usingcompute.forwardingRules.insert and associated with a VPN
+              # gateway.
+          &quot;kind&quot;: &quot;compute#targetVpnGateway&quot;, # Output only. [Output Only] Type of resource. Alwayscompute#targetVpnGateway for target VPN gateways.
+          &quot;labelFingerprint&quot;: &quot;A String&quot;, # A fingerprint for the labels being applied to this TargetVpnGateway, which
+              # retrieve a TargetVpnGateway.
+          &quot;network&quot;: &quot;A String&quot;, # URL of the network to which this VPN gateway is attached. Provided by the
+              # client when the VPN gateway is created.
+          &quot;region&quot;: &quot;A String&quot;, # [Output Only] URL of the region where the target VPN gateway resides.
+          &quot;status&quot;: &quot;A String&quot;, # [Output Only] The status of the VPN gateway,
+              # which can be one of the following: CREATING, READY, FAILED, or DELETING.
+          &quot;tunnels&quot;: [ # [Output Only] A list of URLs to VpnTunnel resources. VpnTunnels are
+              # created using the compute.vpntunnels.insert method and
+              # associated with a VPN gateway.
+  &quot;kind&quot;: &quot;compute#targetVpnGatewayAggregatedList&quot;, # Output only. [Output Only] Type of resource. Alwayscompute#targetVpnGateway for target VPN gateways.
+    <code class="details" id="delete">delete(project, region, targetVpnGateway, requestId=None, x__xgafv=None)</code>
+  <pre>Deletes the specified target VPN gateway.
+  targetVpnGateway: string, Name of the target VPN gateway to delete. (required)
+    <code class="details" id="get">get(project, region, targetVpnGateway, x__xgafv=None)</code>
+  <pre>Returns the specified target VPN gateway.
+  targetVpnGateway: string, Name of the target VPN gateway to return. (required)
+  <pre>Creates a target VPN gateway in the specified project and region using
+  <pre>Retrieves a list of target VPN gateways available to the specified
+    { # Contains a list of TargetVpnGateway resources.
+  &quot;items&quot;: [ # A list of TargetVpnGateway resources.
+  &quot;kind&quot;: &quot;compute#targetVpnGatewayList&quot;, # Output only. [Output Only] Type of resource. Alwayscompute#targetVpnGateway for target VPN gateways.
+  <pre>Sets the labels on a TargetVpnGateway. To learn more about labels, read theLabeling

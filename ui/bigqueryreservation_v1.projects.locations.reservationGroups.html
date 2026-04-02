@@ -1,0 +1,19 @@
+<h1><a href="bigqueryreservation_v1.html">BigQuery Reservation API</a> . <a href="bigqueryreservation_v1.projects.html">projects</a> . <a href="bigqueryreservation_v1.projects.locations.html">locations</a> . <a href="bigqueryreservation_v1.projects.locations.reservationGroups.html">reservationGroups</a></h1>
+  <code><a href="#create">create(parent, body=None, reservationGroupId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Creates a new reservation group.</p>
+<p class="firstline">Deletes a reservation. Returns `google.rpc.Code.FAILED_PRECONDITION` when reservation has assignments.</p>
+<p class="firstline">Returns information about the reservation group.</p>
+<p class="firstline">Lists all the reservation groups for the project in the specified location.</p>
+    <code class="details" id="create">create(parent, body=None, reservationGroupId=None, x__xgafv=None)</code>
+  <pre>Creates a new reservation group.
+  parent: string, Required. Project, location. E.g., `projects/myproject/locations/US` (required)
+{ # A reservation group is a container for reservations.
+  &quot;name&quot;: &quot;A String&quot;, # Identifier. The resource name of the reservation group, e.g., `projects/*/locations/*/reservationGroups/team1-prod`. The reservation_group_id must only contain lower case alphanumeric characters or dashes. It must start with a letter and must not end with a dash. Its maximum length is 64 characters.
+  reservationGroupId: string, Required. The reservation group ID. It must only contain lower case alphanumeric characters or dashes. It must start with a letter and must not end with a dash. Its maximum length is 64 characters.
+  <pre>Deletes a reservation. Returns `google.rpc.Code.FAILED_PRECONDITION` when reservation has assignments.
+  name: string, Required. Resource name of the reservation group to retrieve. E.g., `projects/myproject/locations/US/reservationGroups/team1-prod` (required)
+  <pre>Returns information about the reservation group.
+  <pre>Lists all the reservation groups for the project in the specified location.
+  parent: string, Required. The parent resource name containing project and location, e.g.: `projects/myproject/locations/US` (required)
+    { # The response for ReservationService.ListReservationGroups.
+  &quot;reservationGroups&quot;: [ # List of reservations visible to the user.

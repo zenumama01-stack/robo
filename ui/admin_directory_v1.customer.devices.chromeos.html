@@ -1,0 +1,36 @@
+<h1><a href="admin_directory_v1.html">Admin SDK API</a> . <a href="admin_directory_v1.customer.html">customer</a> . <a href="admin_directory_v1.customer.devices.html">devices</a> . <a href="admin_directory_v1.customer.devices.chromeos.html">chromeos</a></h1>
+  <code><a href="admin_directory_v1.customer.devices.chromeos.commands.html">commands()</a></code>
+<p class="firstline">Returns the commands Resource.</p>
+  <code><a href="#batchChangeStatus">batchChangeStatus(customerId, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Changes the status of a batch of ChromeOS devices. For more information about changing a ChromeOS device state [Repair, repurpose, or retire ChromeOS devices](https://support.google.com/chrome/a/answer/3523633).</p>
+  <code><a href="#countChromeOsDevices">countChromeOsDevices(customerId, filter=None, includeChildOrgunits=None, orgUnitPath=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Counts ChromeOS devices matching the request.</p>
+  <code><a href="#issueCommand">issueCommand(customerId, deviceId, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Issues a command for the device to execute.</p>
+    <code class="details" id="batchChangeStatus">batchChangeStatus(customerId, body=None, x__xgafv=None)</code>
+  <pre>Changes the status of a batch of ChromeOS devices. For more information about changing a ChromeOS device state [Repair, repurpose, or retire ChromeOS devices](https://support.google.com/chrome/a/answer/3523633).
+  customerId: string, Required. Immutable ID of the Google Workspace account. (required)
+{ # A request for changing the status of a batch of ChromeOS devices.
+  &quot;changeChromeOsDeviceStatusAction&quot;: &quot;A String&quot;, # Required. The action to take on the ChromeOS device in order to change its status.
+  &quot;deprovisionReason&quot;: &quot;A String&quot;, # Optional. The reason behind a device deprovision. Must be provided if &#x27;changeChromeOsDeviceStatusAction&#x27; is set to &#x27;CHANGE_CHROME_OS_DEVICE_STATUS_ACTION_DEPROVISION&#x27;. Otherwise, omit this field.
+  &quot;deviceIds&quot;: [ # Required. List of the IDs of the ChromeOS devices to change. Maximum 50.
+    { # The response of changing the status of a batch of ChromeOS devices.
+  &quot;changeChromeOsDeviceStatusResults&quot;: [ # The results for each of the ChromeOS devices provided in the request.
+    { # The result of a single ChromeOS device for a Change state operation.
+      &quot;deviceId&quot;: &quot;A String&quot;, # The unique ID of the ChromeOS device.
+      &quot;error&quot;: { # The `Status` type defines a logical error model that is suitable for different programming environments, including REST APIs and RPC APIs. It is used by [gRPC](https://github.com/grpc). Each `Status` message contains three pieces of data: error code, error message, and error details. You can find out more about this error model and how to work with it in the [API Design Guide](https://cloud.google.com/apis/design/errors). # The error result of the operation in case of failure.
+      &quot;response&quot;: { # Response for a successful ChromeOS device status change. # The device could change its status successfully.
+    <code class="details" id="countChromeOsDevices">countChromeOsDevices(customerId, filter=None, includeChildOrgunits=None, orgUnitPath=None, x__xgafv=None)</code>
+  <pre>Counts ChromeOS devices matching the request.
+  filter: string, Optional. Search string in the format given at [List query operators](https://developers.google.com/workspace/admin/directory/v1/list-query-operators).
+  includeChildOrgunits: boolean, Optional. Return devices from all child orgunits, as well as the specified org unit. If this is set to true, &#x27;orgUnitPath&#x27; must be provided.
+  orgUnitPath: string, Optional. The full path of the organizational unit (minus the leading `/`) or its unique ID.
+    { # A response for counting ChromeOS devices.
+  &quot;count&quot;: &quot;A String&quot;, # The total number of devices matching the request.
+    <code class="details" id="issueCommand">issueCommand(customerId, deviceId, body=None, x__xgafv=None)</code>
+  <pre>Issues a command for the device to execute.
+{ # A request for issuing a command.
+  &quot;commandType&quot;: &quot;A String&quot;, # The type of command.
+  &quot;payload&quot;: &quot;A String&quot;, # The payload for the command, provide it only if command supports it. The following commands support adding payload: * `SET_VOLUME`: Payload is a stringified JSON object in the form: { &quot;volume&quot;: 50 }. The volume has to be an integer in the range [0,100]. * `DEVICE_START_CRD_SESSION`: Payload is optionally a stringified JSON object in the form: { &quot;ackedUserPresence&quot;: true, &quot;crdSessionType&quot;: string }. `ackedUserPresence` is a boolean. By default, `ackedUserPresence` is set to `false`. To start a Chrome Remote Desktop session for an active device, set `ackedUserPresence` to `true`. `crdSessionType` can only select from values `private` (which grants the remote admin exclusive control of the ChromeOS device) or `shared` (which allows the admin and the local user to share control of the ChromeOS device). If not set, `crdSessionType` defaults to `shared`. The `FETCH_CRD_AVAILABILITY_INFO` command can be used to determine available session types on the device. * `REBOOT`: Payload is a stringified JSON object in the form: { &quot;user_session_delay_seconds&quot;: 300 }. The `user_session_delay_seconds` is the amount of seconds to wait before rebooting the device if a user is logged in. It has to be an integer in the range [0,300]. When payload is not present for reboot, 0 delay is the default. Note: This only applies if an actual user is logged in, including a Guest. If the device is in the login screen or in Kiosk mode the value is not respected and the device immediately reboots. * `FETCH_SUPPORT_PACKET`: Payload is optionally a stringified JSON object in the form: {&quot;supportPacketDetails&quot;:{ &quot;issueCaseId&quot;: optional_support_case_id_string, &quot;issueDescription&quot;: optional_issue_description_string, &quot;requestedDataCollectors&quot;: []}} The list of available `data_collector_enums` are as following: Chrome System Information (1), Crash IDs (2), Memory Details (3), UI Hierarchy (4), Additional ChromeOS Platform Logs (5), Device Event (6), Intel WiFi NICs Debug Dump (7), Touch Events (8), Lacros (9), Lacros System Information (10), ChromeOS Flex Logs (11), DBus Details (12), ChromeOS Network Routes (13), ChromeOS Shill (Connection Manager) Logs (14), Policies (15), ChromeOS System State and Logs (16), ChromeOS System Logs (17), ChromeOS Chrome User Logs (18), ChromeOS Bluetooth (19), ChromeOS Connected Input Devices (20), ChromeOS Traffic Counters (21), ChromeOS Virtual Keyboard (22), ChromeOS Network Health (23). See more details in [help article](https://support.google.com/chrome/a?p=remote-log).
+    { # A response for issuing a command.
+  &quot;commandId&quot;: &quot;A String&quot;, # The unique ID of the issued command, used to retrieve the command status.

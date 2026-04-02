@@ -1,0 +1,20 @@
+<div class="action-list-item" [class.compact]="IsCompact" (click)="onRowClick()">
+  <div class="item-icon" [class.ai-generated]="Action.Type === 'Generated'">
+  <!-- Name & Description -->
+  <div class="item-main">
+    <span class="item-name" [title]="Action.Name">{{ Action.Name }}</span>
+    @if (!IsCompact && Action.Description) {
+      <span class="item-description" [title]="Action.Description">{{ Action.Description }}</span>
+  <button class="item-category" (click)="onCategoryClick($event)" [title]="'View category: ' + getCategoryName()">
+  <!-- Type -->
+  <div class="item-type">
+      <span class="type-badge ai">
+        @if (!IsCompact) {
+          AI
+      <span class="type-badge custom">
+  <!-- Params Count -->
+    <div class="item-params" [title]="(Action.Params.length || 0) + ' parameters'">
+      <span>{{ Action.Params.length || 0 }}</span>
+  <!-- Updated -->
+  <div class="item-updated" [title]="Action.__mj_UpdatedAt | date:'full'">
+    {{ formatDate(Action.__mj_UpdatedAt) }}

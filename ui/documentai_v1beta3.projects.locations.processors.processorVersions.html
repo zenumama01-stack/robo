@@ -1,0 +1,12 @@
+<h1><a href="documentai_v1beta3.html">Cloud Document AI API</a> . <a href="documentai_v1beta3.projects.html">projects</a> . <a href="documentai_v1beta3.projects.locations.html">locations</a> . <a href="documentai_v1beta3.projects.locations.processors.html">processors</a> . <a href="documentai_v1beta3.projects.locations.processors.processorVersions.html">processorVersions</a></h1>
+  <code><a href="documentai_v1beta3.projects.locations.processors.processorVersions.evaluations.html">evaluations()</a></code>
+  <code><a href="#importProcessorVersion">importProcessorVersion(parent, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Imports a processor version from source processor version.</p>
+    <code class="details" id="importProcessorVersion">importProcessorVersion(parent, body=None, x__xgafv=None)</code>
+  <pre>Imports a processor version from source processor version.
+  parent: string, Required. The destination processor name to create the processor version in. Format: `projects/{project}/locations/{location}/processors/{processor}` (required)
+{ # The request message for the ImportProcessorVersion method. The Document AI [Service Agent](https://cloud.google.com/iam/docs/service-agents) of the destination project must have [Document AI Editor role](https://cloud.google.com/document-ai/docs/access-control/iam-roles) on the source project. The destination project is specified as part of the parent field. The source project is specified as part of the source or external_processor_version_source field.
+  &quot;externalProcessorVersionSource&quot;: { # The external source processor version. # The source processor version to import from. It can be from a different environment and region than the destination processor.
+    &quot;processorVersion&quot;: &quot;A String&quot;, # Required. The processor version name. Format: `projects/{project}/locations/{location}/processors/{processor}/processorVersions/{processorVersion}`
+    &quot;serviceEndpoint&quot;: &quot;A String&quot;, # Optional. The Document AI service endpoint. For example, &#x27;https://us-documentai.googleapis.com&#x27;
+  &quot;processorVersionSource&quot;: &quot;A String&quot;, # The source processor version to import from. The source processor version and destination processor need to be in the same environment and region.

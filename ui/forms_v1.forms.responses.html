@@ -1,0 +1,40 @@
+<h1><a href="forms_v1.html">Google Forms API</a> . <a href="forms_v1.forms.html">forms</a> . <a href="forms_v1.forms.responses.html">responses</a></h1>
+  <code><a href="#get">get(formId, responseId, x__xgafv=None)</a></code></p>
+<p class="firstline">Get one response from the form.</p>
+  <code><a href="#list">list(formId, filter=None, pageSize=None, pageToken=None, x__xgafv=None)</a></code></p>
+<p class="firstline">List a form's responses.</p>
+    <code class="details" id="get">get(formId, responseId, x__xgafv=None)</code>
+  <pre>Get one response from the form.
+  responseId: string, Required. The response ID within the form. (required)
+    { # A form response.
+  &quot;answers&quot;: { # Output only. The actual answers to the questions, keyed by question_id.
+    &quot;a_key&quot;: { # The submitted answer for a question.
+      &quot;fileUploadAnswers&quot;: { # All submitted files for a FileUpload question. # Output only. The answers to a file upload question.
+        &quot;answers&quot;: [ # Output only. All submitted files for a FileUpload question.
+          { # Info for a single file submitted to a file upload question.
+            &quot;fileId&quot;: &quot;A String&quot;, # Output only. The ID of the Google Drive file.
+            &quot;fileName&quot;: &quot;A String&quot;, # Output only. The file name, as stored in Google Drive on upload.
+            &quot;mimeType&quot;: &quot;A String&quot;, # Output only. The MIME type of the file, as stored in Google Drive on upload.
+      &quot;grade&quot;: { # Grade information associated with a respondent&#x27;s answer to a question. # Output only. The grade for the answer if the form was a quiz.
+        &quot;correct&quot;: True or False, # Output only. Whether the question was answered correctly or not. A zero-point score is not enough to infer incorrectness, since a correctly answered question could be worth zero points.
+        &quot;feedback&quot;: { # Feedback for a respondent about their response to a question. # Output only. Additional feedback given for an answer.
+        &quot;score&quot;: 3.14, # Output only. The numeric score awarded for the answer.
+      &quot;questionId&quot;: &quot;A String&quot;, # Output only. The question&#x27;s ID. See also Question.question_id.
+      &quot;textAnswers&quot;: { # A question&#x27;s answers as text. # Output only. The specific answers as text.
+        &quot;answers&quot;: [ # Output only. Answers to a question. For multiple-value ChoiceQuestions, each answer is a separate value.
+          { # An answer to a question represented as text.
+            &quot;value&quot;: &quot;A String&quot;, # Output only. The answer value. Formatting used for different kinds of question: * ChoiceQuestion * `RADIO` or `DROP_DOWN`: A single string corresponding to the option that was selected. * `CHECKBOX`: Multiple strings corresponding to each option that was selected. * TextQuestion: The text that the user entered. * ScaleQuestion: A string containing the number that was selected. * DateQuestion * Without time or year: MM-DD e.g. &quot;05-19&quot; * With year: YYYY-MM-DD e.g. &quot;1986-05-19&quot; * With time: MM-DD HH:MM e.g. &quot;05-19 14:51&quot; * With year and time: YYYY-MM-DD HH:MM e.g. &quot;1986-05-19 14:51&quot; * TimeQuestion: String with time or duration in HH:MM format e.g. &quot;14:51&quot; * RowQuestion within QuestionGroupItem: The answer for each row of a QuestionGroupItem is represented as a separate Answer. Each will contain one string for `RADIO`-type choices or multiple strings for `CHECKBOX` choices.
+  &quot;createTime&quot;: &quot;A String&quot;, # Output only. Timestamp for the first time the response was submitted.
+  &quot;lastSubmittedTime&quot;: &quot;A String&quot;, # Output only. Timestamp for the most recent time the response was submitted. Does not track changes to grades.
+  &quot;respondentEmail&quot;: &quot;A String&quot;, # Output only. The email address (if collected) for the respondent.
+  &quot;responseId&quot;: &quot;A String&quot;, # Output only. The response ID.
+  &quot;totalScore&quot;: 3.14, # Output only. The total number of points the respondent received for their submission Only set if the form was a quiz and the response was graded. This includes points automatically awarded via autograding adjusted by any manual corrections entered by the form owner.
+    <code class="details" id="list">list(formId, filter=None, pageSize=None, pageToken=None, x__xgafv=None)</code>
+  <pre>List a form&#x27;s responses.
+  formId: string, Required. ID of the Form whose responses to list. (required)
+  filter: string, Which form responses to return. Currently, the only supported filters are: * timestamp &gt; *N* which means to get all form responses submitted after (but not at) timestamp *N*. * timestamp &gt;= *N* which means to get all form responses submitted at and after timestamp *N*. For both supported filters, timestamp must be formatted in RFC3339 UTC &quot;Zulu&quot; format. Examples: &quot;2014-10-02T15:01:23Z&quot; and &quot;2014-10-02T15:01:23.045123456Z&quot;.
+  pageSize: integer, The maximum number of responses to return. The service may return fewer than this value. If unspecified or zero, at most 5000 responses are returned.
+  pageToken: string, A page token returned by a previous list response. If this field is set, the form and the values of the filter must be the same as for the original request.
+    { # Response to a ListFormResponsesRequest.
+  &quot;nextPageToken&quot;: &quot;A String&quot;, # If set, there are more responses. To get the next page of responses, provide this as `page_token` in a future request.
+  &quot;responses&quot;: [ # The returned form responses. Note: The `formId` field is not returned in the `FormResponse` object for list requests.

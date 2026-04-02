@@ -1,0 +1,686 @@
+@if (!isExplorerLoading && entity) {
+  <div class="entity-explorer">
+    <!-- ============================================================ -->
+    <!-- HEADER BAR -->
+    <header class="explorer-header">
+      <div class="entity-identity">
+        <div class="entity-icon" [style.background-color]="'#3b82f6'">
+          <i [class]="entityIcon"></i>
+        <div class="entity-info">
+          <div class="entity-title-row">
+            <h1 class="entity-name">{{ entityDisplayName }}</h1>
+            <span class="status-badge" [ngClass]="statusClass">
+              {{ entity.Status }}
+            @if (IsVirtualEntity) {
+              <span class="status-badge isa-badge virtual">
+                <i class="fa-solid fa-eye"></i> Virtual
+            @if (IsChildType) {
+              <span class="status-badge isa-badge child-type" (click)="NavigateToEntity(ParentChain[0])" title="Click to navigate to parent entity">
+                <i class="fa-solid fa-arrow-up"></i> IS-A {{ ParentChain[0]?.Name }}
+            @if (IsParentType) {
+              <span class="status-badge isa-badge parent-type">
+                <i class="fa-solid fa-sitemap"></i> {{ ChildEntities.length }} child type{{ ChildEntities.length !== 1 ? 's' : '' }}
+              @if (HasOverlappingSubtypes) {
+                <span class="status-badge isa-badge overlapping" title="Multiple child types can coexist for a single parent record">
+                  <i class="fa-solid fa-clone"></i> Overlapping Subtypes
+            <div class="isa-breadcrumb">
+              {{ IsaBreadcrumb }}
+          <div class="entity-subtitle">
+            <span class="schema-table">{{ entity.SchemaName }}.{{ entity.BaseTable }}</span>
+            <span class="separator">|</span>
+            @if (entity.Description) {
+              <span class="entity-description" [title]="entity.Description">
+                {{ entity.Description | slice:0:80 }}{{ entity.Description.length > 80 ? '...' : '' }}
+        <div class="stat-item" (click)="setActiveSection('fields')">
+          <i class="fa-solid fa-table-columns"></i>
+          <span class="stat-value">{{ stats.fieldCount }}</span>
+          <span class="stat-label">Fields</span>
+        <div class="stat-item" (click)="setActiveSection('relationships')">
+          <span class="stat-value">{{ stats.relationshipCount }}</span>
+          <span class="stat-label">Relations</span>
+        <div class="stat-item" (click)="setActiveSection('permissions')">
+          <i class="fa-solid fa-shield-halved"></i>
+          <span class="stat-value">{{ stats.permissionCount }}</span>
+          <span class="stat-label">Roles</span>
+          @if (!isRowCountLoading) {
+            <span class="stat-value">{{ formattedRowCount }}</span>
+          @if (isRowCountLoading) {
+            <span class="stat-value loading">
+          <span class="stat-label">Rows</span>
+    <!-- MAIN CONTENT AREA -->
+    <div class="explorer-body">
+      <!-- Navigation Rail -->
+      <nav class="nav-rail">
+        @for (item of navItems; track item) {
+            class="nav-item"
+            [class.active]="activeSection === item.id"
+            (click)="setActiveSection(item.id)"
+            [title]="item.label">
+            <i [class]="item.icon"></i>
+            <span class="nav-label">{{ item.label }}</span>
+            @if (item.badge) {
+              <span class="nav-badge">{{ item.badge }}</span>
+      </nav>
+      <!-- Main Canvas -->
+      <main class="main-canvas" [class.panel-open]="detailPanelOpen">
+        <!-- OVERVIEW SECTION -->
+        @if (activeSection === 'overview') {
+          <section class="section overview-section">
+            <div class="section-content">
+              <!-- Stats Cards Row - Clickable to navigate to sections -->
+              <div class="stats-cards">
+                <div class="stat-card clickable" (click)="setActiveSection('fields')" title="View all fields">
+                  <div class="stat-card-header">
+                    <i class="fa-solid fa-table-cells"></i>
+                    <span>Fields</span>
+                  <div class="stat-card-body">
+                    <div class="stat-main">{{ stats.fieldCount }}</div>
+                    <div class="stat-details">
+                      <span>{{ stats.primaryKeyCount }} PKs</span>
+                      <span>{{ stats.foreignKeyCount }} FKs</span>
+                      @if (stats.encryptedFieldCount) {
+                        <span>{{ stats.encryptedFieldCount }} Encrypted</span>
+                  <div class="stat-card-action">
+                    <i class="fa-solid fa-arrow-right"></i>
+                <div class="stat-card clickable" (click)="setActiveSection('relationships')" title="View relationships">
+                    <i class="fa-solid fa-diagram-project"></i>
+                    <span>Relationships</span>
+                    <div class="stat-main">{{ stats.relationshipCount }}</div>
+                      <span>{{ groupedOutgoingRelationships.length }} Out</span>
+                      <span>{{ groupedIncomingRelationships.length }} In</span>
+                <div class="stat-card clickable" (click)="setActiveSection('permissions')" title="View security settings">
+                    <i class="fa-solid fa-lock"></i>
+                    <span>Security</span>
+                    <div class="stat-main">{{ stats.permissionCount }}</div>
+                      <span>Roles configured</span>
+                    <span>Data</span>
+                    <div class="stat-main">{{ formattedRowCount }}</div>
+                      @if (entity.RowCountRunAt) {
+                        <span>Updated {{ entity.RowCountRunAt | date:'short' }}</span>
+                      @if (!entity.RowCountRunAt) {
+                        <span>Row count</span>
+              <!-- Capabilities -->
+              <div class="info-panel capabilities-panel">
+                <h3 class="panel-title">
+                  Capabilities
+                <div class="capability-tags">
+                  @for (cap of capabilitySummary; track cap) {
+                    <span class="capability-tag">
+                      {{ cap }}
+                  @if (!entity.IncludeInAPI) {
+                    <span class="capability-tag disabled">
+                      <i class="fa-solid fa-xmark"></i>
+                      No API
+              <!-- IS-A Type Hierarchy -->
+              @if (HasISARelationship || IsVirtualEntity) {
+                <div class="info-panel isa-panel">
+                    Type Hierarchy
+                    <div class="isa-info-row virtual-info">
+                      <span>Virtual Entity — read-only view backed by <span class="code">{{ entity.BaseView }}</span></span>
+                    <div class="isa-chain">
+                      <div class="isa-chain-label">Inheritance Chain</div>
+                      <div class="isa-chain-nodes">
+                        <span class="isa-node current">{{ entity.Name }}</span>
+                        @for (parent of ParentChain; track parent.ID) {
+                          <i class="fa-solid fa-arrow-right isa-arrow"></i>
+                          <span class="isa-node parent clickable" (click)="NavigateToEntity(parent)" [title]="'Navigate to ' + parent.Name">
+                            {{ parent.Name }}
+                      <div class="isa-inherited-fields">
+                        <span>{{ InheritedFieldCount }} field{{ InheritedFieldCount !== 1 ? 's' : '' }} inherited from parent{{ ParentChain.length > 1 ? 's' : '' }}</span>
+                    <!-- IS-A Field Inspector: shows fields grouped by source entity -->
+                    @if (isaFieldGroups.length > 1) {
+                      <div class="isa-field-inspector">
+                        <div class="isa-chain-label clickable" (click)="isaFieldInspectorExpanded = !isaFieldInspectorExpanded">
+                          <i class="fa-solid" [ngClass]="isaFieldInspectorExpanded ? 'fa-chevron-down' : 'fa-chevron-right'"></i>
+                          Field Source Inspector
+                        @if (isaFieldInspectorExpanded) {
+                          <div class="isa-inspector-groups">
+                            @for (group of isaFieldGroups; track group.EntityName) {
+                              <div class="isa-inspector-group" [class.own]="group.Level === 0" [class.inherited]="group.Level > 0">
+                                <div class="isa-inspector-header">
+                                  <span class="isa-inspector-entity">
+                                    @if (group.Level === 0) {
+                                      <i class="fa-solid fa-circle" style="color: #3b82f6; font-size: 8px;"></i>
+                                      <i class="fa-solid fa-arrow-up" style="color: #6366f1; font-size: 10px;"></i>
+                                    {{ group.Label }}
+                                  <span class="isa-inspector-count">{{ group.Fields.length }} field{{ group.Fields.length !== 1 ? 's' : '' }}</span>
+                                <div class="isa-inspector-fields">
+                                  @for (field of group.Fields; track field.ID) {
+                                    <span class="isa-inspector-field" [title]="field.Description || field.Name">
+                                      {{ field.DisplayName || field.Name }}
+                                      <span class="isa-inspector-type">{{ field.Type }}</span>
+                    <!-- Sibling Types -->
+                    @if (SiblingEntities.length > 0) {
+                      <div class="isa-siblings">
+                        <div class="isa-chain-label">Sibling Types ({{ ParentChain[0]?.AllowMultipleSubtypes ? 'overlapping' : 'disjoint' }} under {{ ParentChain[0]?.Name }})</div>
+                        <div class="isa-child-list">
+                          @for (sibling of SiblingEntities; track sibling.ID) {
+                            <span class="isa-sibling-chip clickable" (click)="NavigateToEntity(sibling)" [title]="'Navigate to ' + sibling.Name">
+                              <i class="fa-solid fa-arrows-left-right"></i>
+                              {{ sibling.Name }}
+                    <div class="isa-children">
+                      <div class="isa-chain-label">Child Types</div>
+                        @for (childCount of childEntityCounts; track childCount.EntityName) {
+                          <span class="isa-child-chip clickable" (click)="NavigateToEntity(childCount.EntityInfo)" [title]="'Navigate to ' + childCount.EntityName">
+                            {{ childCount.EntityName }}
+                            <span class="isa-child-count">
+                              @if (childCount.IsLoading) {
+                                {{ childCount.RecordCount | number }}
+              <!-- Database Info -->
+              <div class="info-panel database-panel">
+                  <i class="fa-solid fa-server"></i>
+                  Database
+                <div class="info-grid">
+                  <div class="info-item">
+                    <span class="info-label">Schema</span>
+                    <span class="info-value">{{ entity.SchemaName }}</span>
+                    <span class="info-label">Table</span>
+                    <span class="info-value">{{ entity.BaseTable }}</span>
+                    <span class="info-label">View</span>
+                    <span class="info-value">{{ entity.BaseView }}</span>
+                    <span class="info-label">Delete Type</span>
+                    <span class="info-value">{{ entity.DeleteType }}</span>
+                  @if (entity.spCreate) {
+                      <span class="info-label">SP Create</span>
+                      <span class="info-value code">{{ entity.spCreate }}</span>
+                  @if (entity.spUpdate) {
+                      <span class="info-label">SP Update</span>
+                      <span class="info-value code">{{ entity.spUpdate }}</span>
+                  @if (entity.spDelete) {
+                      <span class="info-label">SP Delete</span>
+                      <span class="info-value code">{{ entity.spDelete }}</span>
+              <!-- Code Gen Info -->
+              <div class="info-panel codegen-panel">
+                  Code Generation
+                    <span class="info-label">Class Name</span>
+                    <span class="info-value code">{{ entity.ClassName }}</span>
+                    <span class="info-label">Code Name</span>
+                    <span class="info-value code">{{ entity.CodeName }}</span>
+                  @if (entity.EntityObjectSubclassName) {
+                      <span class="info-label">Subclass</span>
+                      <span class="info-value code">{{ entity.EntityObjectSubclassName }}</span>
+          </section>
+        <!-- FIELDS SECTION -->
+        @if (activeSection === 'fields') {
+          <section class="section fields-section">
+                  placeholder="Search fields..."
+                  [ngModel]="fieldSearchTerm"
+                  (ngModelChange)="onFieldSearch($event)">
+              <div class="header-controls">
+                <!-- View mode toggle -->
+                <div class="view-mode-toggle">
+                    class="toggle-btn"
+                    [class.active]="fieldViewMode === 'grouped'"
+                    (click)="fieldViewMode = 'grouped'"
+                    title="Group by category">
+                    [class.active]="fieldViewMode === 'list'"
+                    (click)="fieldViewMode = 'list'"
+                    title="List view">
+                    <i class="fa-solid fa-list"></i>
+                <!-- Expand/Collapse controls (only in grouped mode) -->
+                @if (fieldViewMode === 'grouped') {
+                  <div class="expand-collapse-controls">
+                      class="control-btn"
+                      (click)="expandAllFieldGroups()"
+                      [disabled]="allFieldGroupsExpanded"
+                      title="Expand all">
+                      <i class="fa-solid fa-angles-down"></i>
+                      (click)="collapseAllFieldGroups()"
+                      [disabled]="allFieldGroupsCollapsed"
+                      title="Collapse all">
+                      <i class="fa-solid fa-angles-up"></i>
+            <div class="section-content fields-content">
+              <!-- Grouped View -->
+                <div class="field-groups">
+                  @for (group of getFilteredFieldGroups(); track group) {
+                      class="field-group"
+                      [class.expanded]="isFieldGroupExpanded(group.id)">
+                      <div class="group-header" (click)="toggleFieldGroup(group.id)">
+                        <i class="expand-icon fa-solid" [ngClass]="isFieldGroupExpanded(group.id) ? 'fa-chevron-down' : 'fa-chevron-right'"></i>
+                        <i [class]="group.icon" class="group-icon"></i>
+                        <span class="group-label">{{ group.label }}</span>
+                        <span class="group-count">{{ group.fields.length }}</span>
+                      @if (isFieldGroupExpanded(group.id)) {
+                        <div class="group-content">
+                          @for (field of group.fields; track field) {
+                              class="field-item"
+                              (click)="selectField(field)"
+                              [class.selected]="selectedField?.ID === field.ID">
+                              <div class="field-icon">
+                                <i [class]="getFieldTypeIcon(field)"></i>
+                              <div class="field-info">
+                                <div class="field-name">{{ field.DisplayName || field.Name }}</div>
+                                <div class="field-meta">
+                                  <span class="field-type">{{ formatFieldType(field) }}</span>
+                                  @if (!field.AllowsNull) {
+                                    <span class="field-nullable">Required</span>
+                                  @if (field.RelatedEntityID) {
+                                    <span class="field-related" (click)="navigateToRelatedEntity(field); $event.stopPropagation()">
+                                      {{ getRelatedEntityName(field) }}
+                              <div class="field-badges">
+                                @if (field.IsPrimaryKey) {
+                                  <span class="badge pk" title="Primary Key">PK</span>
+                                @if (field.RelatedEntityID && !field.IsPrimaryKey) {
+                                  <span class="badge fk" title="Foreign Key">FK</span>
+                                @if (field.Encrypt) {
+                                  <span class="badge encrypted" title="Encrypted">
+                                @if (IsInheritedField(field)) {
+                                  <span class="badge inherited" [title]="'Inherited from ' + GetISAFieldSource(field)">
+                                    <i class="fa-solid fa-arrow-up"></i> {{ GetISAFieldSource(field) }}
+              <!-- List View - Modern Card-style Table -->
+              @if (fieldViewMode === 'list') {
+                <div class="fields-list-view">
+                  <!-- Table Header -->
+                    <div class="list-col col-seq sortable" (click)="sortFieldList('Sequence')" [class.sorted]="fieldListSortColumn === 'Sequence'">
+                      <i class="sort-icon fa-solid" [ngClass]="fieldListSortColumn === 'Sequence' ? (fieldListSortDirection === 'asc' ? 'fa-caret-up' : 'fa-caret-down') : 'fa-sort'"></i>
+                    <div class="list-col col-name sortable" (click)="sortFieldList('Name')" [class.sorted]="fieldListSortColumn === 'Name'">
+                      Field Name
+                      <i class="sort-icon fa-solid" [ngClass]="fieldListSortColumn === 'Name' ? (fieldListSortDirection === 'asc' ? 'fa-caret-up' : 'fa-caret-down') : 'fa-sort'"></i>
+                    <div class="list-col col-type sortable" (click)="sortFieldList('Type')" [class.sorted]="fieldListSortColumn === 'Type'">
+                      <i class="sort-icon fa-solid" [ngClass]="fieldListSortColumn === 'Type' ? (fieldListSortDirection === 'asc' ? 'fa-caret-up' : 'fa-caret-down') : 'fa-sort'"></i>
+                    <div class="list-col col-length sortable" (click)="sortFieldList('Length')" [class.sorted]="fieldListSortColumn === 'Length'">
+                      Length
+                      <i class="sort-icon fa-solid" [ngClass]="fieldListSortColumn === 'Length' ? (fieldListSortDirection === 'asc' ? 'fa-caret-up' : 'fa-caret-down') : 'fa-sort'"></i>
+                    <div class="list-col col-nullable sortable" (click)="sortFieldList('AllowsNull')" [class.sorted]="fieldListSortColumn === 'AllowsNull'">
+                      Required
+                      <i class="sort-icon fa-solid" [ngClass]="fieldListSortColumn === 'AllowsNull' ? (fieldListSortDirection === 'asc' ? 'fa-caret-up' : 'fa-caret-down') : 'fa-sort'"></i>
+                    <div class="list-col col-flags">Flags</div>
+                    <div class="list-col col-desc sortable" (click)="sortFieldList('Description')" [class.sorted]="fieldListSortColumn === 'Description'">
+                      <i class="sort-icon fa-solid" [ngClass]="fieldListSortColumn === 'Description' ? (fieldListSortDirection === 'asc' ? 'fa-caret-up' : 'fa-caret-down') : 'fa-sort'"></i>
+                  <!-- Table Body -->
+                  <div class="list-body">
+                    @for (field of getFilteredFieldsList(); track field; let i = $index) {
+                        class="list-row"
+                        [class.selected]="selectedField?.ID === field.ID"
+                        (click)="selectField(field)">
+                        <div class="list-col col-seq">
+                          <span class="seq-num">{{ field.Sequence }}</span>
+                        <div class="list-col col-name">
+                          <i [class]="getFieldTypeIcon(field)" class="field-type-icon"></i>
+                          <span class="field-name-text">{{ field.DisplayName || field.Name }}</span>
+                        <div class="list-col col-type">
+                          <span class="type-tag">{{ field.Type }}</span>
+                        <div class="list-col col-length">
+                          @if (field.Length > 0) {
+                            <span class="length-value">{{ field.Length }}</span>
+                          @if (field.Length <= 0) {
+                            <span class="length-value muted">—</span>
+                        <div class="list-col col-nullable">
+                          <span class="required-indicator" [class.required]="!field.AllowsNull" [class.optional]="field.AllowsNull">
+                            <i [class]="field.AllowsNull ? 'fa-solid fa-circle-minus' : 'fa-solid fa-circle-check'"></i>
+                            {{ field.AllowsNull ? 'Optional' : 'Required' }}
+                        <div class="list-col col-flags">
+                          <div class="flag-badges">
+                              <span class="flag-badge pk" title="Primary Key">
+                                <i class="fa-solid fa-key"></i> PK
+                              <span class="flag-badge fk" title="Foreign Key">
+                                <i class="fa-solid fa-link"></i> FK
+                              <span class="flag-badge encrypted" title="Encrypted">
+                              <span class="flag-badge inherited" [title]="'Inherited from ' + GetISAFieldSource(field)">
+                        <div class="list-col col-desc">
+                          <span class="desc-text" [title]="field.Description || ''">{{ field.Description || '—' }}</span>
+                  <!-- Empty state -->
+                  @if (getFilteredFieldsList().length === 0) {
+                    <div class="list-empty">
+                      <span>No fields match your search</span>
+        <!-- RELATIONSHIPS SECTION -->
+        @if (activeSection === 'relationships') {
+          <section class="section relationships-section">
+              <div class="view-toggle">
+                  [class.active]="relationshipViewMode === 'diagram'"
+                  (click)="relationshipViewMode = 'diagram'">
+                  Diagram
+                  [class.active]="relationshipViewMode === 'list'"
+                  (click)="relationshipViewMode = 'list'">
+              <!-- Depth selector (only in diagram mode) -->
+              @if (relationshipViewMode === 'diagram') {
+                <div class="depth-selector">
+                  <span class="depth-label">Depth:</span>
+                  <div class="depth-buttons">
+                    @for (d of [1, 2, 3, 4, 5]; track d) {
+                        class="depth-btn"
+                        [class.active]="erdDepth === d"
+                        (click)="setErdDepth(d)"
+                        [title]="'Show ' + d + ' level(s) of relationships'">
+                        {{ d }}
+              <!-- Diagram View using the ERD composite component -->
+                <div class="relationships-graph">
+                  <mj-erd-composite
+                    [focusEntities]="entity ? [entity] : []"
+                    [showFilterPanel]="false"
+                    [showHeader]="false"
+                    [depth]="erdDepth"
+                    (stateChange)="onERDStateChange($event)"
+                    (openRecord)="onERDOpenRecord($event)">
+                  </mj-erd-composite>
+              @if (relationshipViewMode === 'list') {
+                <div class="relationships-list">
+                  <!-- Outgoing Relationships (FK fields on this entity) - Grouped by target entity -->
+                  <div class="relationship-group">
+                    <h3 class="relationship-group-title">
+                      <i class="fa-solid fa-arrow-right-from-bracket"></i>
+                      Outgoing (References to other entities)
+                      <span class="group-count">{{ groupedOutgoingRelationships.length }}</span>
+                    <div class="relationship-items grouped">
+                      @for (group of groupedOutgoingRelationships; track group) {
+                          class="relationship-item-grouped"
+                          <div class="rel-header">
+                            <div class="rel-icon outgoing">
+                            <div class="rel-entity-name">{{ group.entityName }}</div>
+                          <div class="rel-fields-chips">
+                                class="field-chip outgoing"
+                                [title]="field.Description || field.Name"
+                                {{ field.Name }}
+                      @if (groupedOutgoingRelationships.length === 0) {
+                          <p>No outgoing relationships</p>
+                  <!-- Incoming Relationships - Grouped by source entity -->
+                      <i class="fa-solid fa-arrow-right-to-bracket"></i>
+                      Incoming (Entities that reference this one)
+                      <span class="group-count">{{ groupedIncomingRelationships.length }}</span>
+                      @for (group of groupedIncomingRelationships; track group) {
+                            <div class="rel-icon incoming">
+                              <i class="fa-solid fa-arrow-left"></i>
+                                class="field-chip incoming"
+                                [title]="'Type: ' + field.type">
+                                {{ field.fieldName }}
+                                @if (field.bundleInAPI) {
+                                  <i class="fa-solid fa-box bundle-icon" title="Bundled in API"></i>
+                      @if (groupedIncomingRelationships.length === 0) {
+                          <p>No incoming relationships</p>
+        <!-- PERMISSIONS SECTION -->
+        @if (activeSection === 'permissions') {
+          <section class="section permissions-section">
+              <div class="permissions-matrix">
+                <table class="matrix-table">
+                      <th>Role</th>
+                      <th class="center">Create</th>
+                      <th class="center">Read</th>
+                      <th class="center">Update</th>
+                      <th class="center">Delete</th>
+                      <th>RLS</th>
+                    @for (perm of entity.Permissions; track perm) {
+                        <td class="role-name">{{ getRoleName(perm) }}</td>
+                        <td class="center">
+                          <i class="permission-icon" [ngClass]="perm.CanCreate ? 'fa-solid fa-check granted' : 'fa-solid fa-xmark denied'"></i>
+                          <i class="permission-icon" [ngClass]="perm.CanRead ? 'fa-solid fa-check granted' : 'fa-solid fa-xmark denied'"></i>
+                          <i class="permission-icon" [ngClass]="perm.CanUpdate ? 'fa-solid fa-check granted' : 'fa-solid fa-xmark denied'"></i>
+                          <i class="permission-icon" [ngClass]="perm.CanDelete ? 'fa-solid fa-check granted' : 'fa-solid fa-xmark denied'"></i>
+                        <td class="rls-info">
+                          @if (perm.ReadRLSFilterID) {
+                            <span class="rls-badge" title="Read RLS">R</span>
+                          @if (perm.CreateRLSFilterID) {
+                            <span class="rls-badge" title="Create RLS">C</span>
+                          @if (perm.UpdateRLSFilterID) {
+                            <span class="rls-badge" title="Update RLS">U</span>
+                          @if (perm.DeleteRLSFilterID) {
+                            <span class="rls-badge" title="Delete RLS">D</span>
+                          @if (!perm.ReadRLSFilterID && !perm.CreateRLSFilterID && !perm.UpdateRLSFilterID && !perm.DeleteRLSFilterID) {
+                            <span class="no-rls">None</span>
+                @if (entity.Permissions.length === 0) {
+                    <p>No permissions configured</p>
+              <div class="api-capabilities">
+                  <i class="fa-solid fa-plug"></i>
+                  API Capabilities
+                <div class="capability-grid">
+                  <div class="capability-item" [class.enabled]="entity.IncludeInAPI">
+                    <i class="fa-solid" [ngClass]="entity.IncludeInAPI ? 'fa-check' : 'fa-xmark'"></i>
+                    <span>Include in API</span>
+                  <div class="capability-item" [class.enabled]="entity.AllowAllRowsAPI">
+                    <i class="fa-solid" [ngClass]="entity.AllowAllRowsAPI ? 'fa-check' : 'fa-xmark'"></i>
+                    <span>Allow All Rows</span>
+                  <div class="capability-item" [class.enabled]="entity.AllowCreateAPI">
+                    <i class="fa-solid" [ngClass]="entity.AllowCreateAPI ? 'fa-check' : 'fa-xmark'"></i>
+                    <span>Allow Create</span>
+                  <div class="capability-item" [class.enabled]="entity.AllowUpdateAPI">
+                    <i class="fa-solid" [ngClass]="entity.AllowUpdateAPI ? 'fa-check' : 'fa-xmark'"></i>
+                    <span>Allow Update</span>
+                  <div class="capability-item" [class.enabled]="entity.AllowDeleteAPI">
+                    <i class="fa-solid" [ngClass]="entity.AllowDeleteAPI ? 'fa-check' : 'fa-xmark'"></i>
+                    <span>Allow Delete</span>
+                  <div class="capability-item" [class.enabled]="entity.AllowUserSearchAPI">
+                    <i class="fa-solid" [ngClass]="entity.AllowUserSearchAPI ? 'fa-check' : 'fa-xmark'"></i>
+                    <span>User Search</span>
+                  <div class="capability-item" [class.enabled]="entity.CustomResolverAPI">
+                    <i class="fa-solid" [ngClass]="entity.CustomResolverAPI ? 'fa-check' : 'fa-xmark'"></i>
+                    <span>Custom Resolver</span>
+        <!-- LINEAGE SECTION -->
+        @if (activeSection === 'lineage') {
+          <section class="section lineage-section">
+              <div class="lineage-diagram">
+                <div class="lineage-stage sources">
+                  <h4>Data Sources</h4>
+                  <div class="lineage-items">
+                    <div class="lineage-item">
+                      <i class="fa-solid fa-keyboard"></i>
+                      <span>Manual Entry</span>
+                    @if (entity.IncludeInAPI) {
+                        <span>API Create</span>
+                <div class="lineage-arrow">
+                <div class="lineage-stage entity-node">
+                  <div class="entity-box">
+                    <span>{{ entity.Name }}</span>
+                <div class="lineage-stage sinks">
+                  <h4>Data Sinks</h4>
+                    @if (entity.TrackRecordChanges) {
+                        <i class="fa-solid fa-clock-rotate-left"></i>
+                        <span>Record Changes</span>
+                    @if (entity.AuditRecordAccess) {
+                        <span>Access Audit</span>
+                      <span>Related Entities ({{ stats.relationshipCount }})</span>
+              <div class="tracking-config">
+                  Tracking Configuration
+                  <div class="config-item" [class.enabled]="entity.TrackRecordChanges">
+                    <i class="fa-solid" [ngClass]="entity.TrackRecordChanges ? 'fa-check' : 'fa-xmark'"></i>
+                    <span>Track Record Changes</span>
+                  <div class="config-item" [class.enabled]="entity.AuditRecordAccess">
+                    <i class="fa-solid" [ngClass]="entity.AuditRecordAccess ? 'fa-check' : 'fa-xmark'"></i>
+                    <span>Audit Record Access</span>
+                  <div class="config-item" [class.enabled]="entity.AuditViewRuns">
+                    <i class="fa-solid" [ngClass]="entity.AuditViewRuns ? 'fa-check' : 'fa-xmark'"></i>
+                    <span>Audit View Runs</span>
+                  <div class="config-item">
+                    <span class="config-label">Delete Type:</span>
+                    <span class="config-value">{{ entity.DeleteType }}</span>
+                  <div class="config-item" [class.enabled]="entity.CascadeDeletes">
+                    <i class="fa-solid" [ngClass]="entity.CascadeDeletes ? 'fa-check' : 'fa-xmark'"></i>
+                    <span>Cascade Deletes</span>
+        <!-- HISTORY SECTION -->
+        @if (activeSection === 'history') {
+          <section class="section history-section">
+              <div class="history-config">
+                <div class="config-status" [class.enabled]="entity.TrackRecordChanges">
+                  <i class="fa-solid" [ngClass]="entity.TrackRecordChanges ? 'fa-circle-check' : 'fa-circle-xmark'"></i>
+                  <div class="config-text">
+                    <strong>Record Change Tracking</strong>
+                    <span>{{ entity.TrackRecordChanges ? 'Enabled - All changes are recorded' : 'Disabled - Changes are not tracked' }}</span>
+              <div class="history-info">
+                  <h4>
+                    About Change Tracking
+                      This entity has change tracking enabled. All modifications to records are stored in the
+                      <code>RecordChange</code> table, including the user who made the change, timestamp, and
+                      the before/after values.
+                  @if (!entity.TrackRecordChanges) {
+                      This entity does not have change tracking enabled. To enable it, set
+                      <code>TrackRecordChanges</code> to <code>true</code> in the entity metadata.
+                      Audit Fields
+                    <ul class="audit-fields-list">
+                      <li>
+                        <code>__mj_CreatedAt</code> - Record creation timestamp
+                      </li>
+                        <code>__mj_UpdatedAt</code> - Last modification timestamp
+                      @if (entity.DeleteType === 'Soft') {
+                          <code>__mj_DeletedAt</code> - Soft delete timestamp (when applicable)
+        <!-- SETTINGS SECTION -->
+        @if (activeSection === 'settings') {
+          <section class="section settings-section">
+              <!-- IS-A Type Relationship Configuration -->
+                <div class="settings-panel isa-settings-panel">
+                    Type Relationship (IS-A)
+                    <div class="config-row">
+                      <span class="config-label">Virtual Entity</span>
+                      <span class="config-value">
+                          <i class="fa-solid fa-circle-check" style="color: #7c3aed;"></i> Yes — read-only view
+                          <i class="fa-solid fa-circle-minus" style="color: #94a3b8;"></i> No
+                      <span class="config-label">Parent Entity</span>
+                          <span class="link" (click)="NavigateToEntity(ParentChain[0])" title="Navigate to parent entity">
+                            {{ ParentChain[0]?.Name }}
+                          <span class="muted">None</span>
+                        <span class="config-label">Full Inheritance Chain</span>
+                        <span class="config-value">{{ IsaBreadcrumb }}</span>
+                        <span class="config-label">Inherited Fields</span>
+                        <span class="config-value">{{ InheritedFieldCount }} field{{ InheritedFieldCount !== 1 ? 's' : '' }}</span>
+                        <span class="config-label">Child Types</span>
+                          @for (child of ChildEntities; track child.ID; let last = $last) {
+                            <span class="link" (click)="NavigateToEntity(child)">{{ child.Name }}</span>{{ last ? '' : ', ' }}
+                        <span class="config-label">Sibling Types</span>
+                          @for (sibling of SiblingEntities; track sibling.ID; let last = $last) {
+                            <span class="link" (click)="NavigateToEntity(sibling)">{{ sibling.Name }}</span>{{ last ? '' : ', ' }}
+                      <span class="config-label">Disjoint Subtypes</span>
+                        @if (IsParentType || IsChildType) {
+                          <i class="fa-solid fa-circle-check" style="color: #059669;"></i> Enforced — a parent record can only be one child type
+                          <span class="muted">N/A</span>
+              <!-- Entity Settings -->
+              <div class="settings-panel">
+                  Entity Settings
+                @if (entity.Settings.length > 0) {
+                  <div class="settings-list">
+                    @for (setting of entity.Settings; track setting) {
+                      <div class="setting-item">
+                        <div class="setting-name">{{ setting.Name }}</div>
+                        @if (isJsonValue(setting.Value)) {
+                          <div class="setting-value-json">
+                              [value]="formatJsonValue(setting.Value)"
+                              setup="minimal">
+                          <div class="setting-value">{{ setting.Value }}</div>
+                        @if (setting.Comments) {
+                          <div class="setting-comment">{{ setting.Comments }}</div>
+                @if (entity.Settings.length === 0) {
+                    <p>No custom settings configured</p>
+              <!-- Full Text Search -->
+                  <i class="fa-solid fa-magnifying-glass"></i>
+                  Full-Text Search
+                @if (entity.FullTextSearchEnabled) {
+                  <div class="fts-config">
+                      <span class="config-label">Status</span>
+                      <span class="config-value enabled">
+                        <i class="fa-solid fa-circle-check"></i>
+                        Enabled
+                    @if (entity.FullTextCatalog) {
+                        <span class="config-label">Catalog</span>
+                        <span class="config-value code">{{ entity.FullTextCatalog }}</span>
+                    @if (entity.FullTextIndex) {
+                        <span class="config-label">Index</span>
+                        <span class="config-value code">{{ entity.FullTextIndex }}</span>
+                    @if (entity.FullTextSearchFunction) {
+                        <span class="config-label">Function</span>
+                        <span class="config-value code">{{ entity.FullTextSearchFunction }}</span>
+                @if (!entity.FullTextSearchEnabled) {
+                    <p>Full-text search is not enabled for this entity</p>
+              <!-- Row Packaging -->
+                  <i class="fa-solid fa-box"></i>
+                  Schema Packaging
+                    <span class="config-label">Rows to Pack</span>
+                    <span class="config-value">{{ entity.RowsToPackWithSchema || 'None' }}</span>
+                  @if (entity.RowsToPackSampleCount) {
+                      <span class="config-label">Sample Count</span>
+                      <span class="config-value">{{ entity.RowsToPackSampleCount }}</span>
+                  @if (entity.RowsToPackSampleMethod) {
+                      <span class="config-label">Sample Method</span>
+                      <span class="config-value">{{ entity.RowsToPackSampleMethod }}</span>
+      <!-- DETAIL PANEL (Slides in from right) -->
+      <aside class="detail-panel" [class.open]="detailPanelOpen">
+          @if (selectedField) {
+            <h3>Field Details</h3>
+          @if (selectedRelationship) {
+            <h3>Relationship Details</h3>
+          <button class="close-btn" (click)="closeDetailPanel()">
+        <!-- Field Details -->
+            <div class="detail-section">
+              <h4>{{ selectedField.DisplayName || selectedField.Name }}</h4>
+              @if (selectedField.Description) {
+                <p class="field-description">{{ selectedField.Description }}</p>
+              <h5>Type Information</h5>
+              <div class="detail-grid">
+                  <span class="label">SQL Type</span>
+                  <span class="value code">{{ formatFieldType(selectedField) }}</span>
+                  <span class="label">TypeScript Type</span>
+                  <span class="value code">{{ selectedField.TSType }}</span>
+                  <span class="label">Nullable</span>
+                  <span class="value">{{ selectedField.AllowsNull ? 'Yes' : 'No' }}</span>
+                @if (selectedField.DefaultValue) {
+                    <span class="label">Default</span>
+                    <span class="value code">{{ selectedField.DefaultValue }}</span>
+            @if (IsInheritedField(selectedField)) {
+              <div class="detail-section isa-source-section">
+                <h5>
+                  IS-A Inherited Field
+                    <span class="label">Source Entity</span>
+                    <span class="value link" (click)="NavigateToEntity(ParentChain[0])" title="Navigate to source entity">
+                      {{ GetISAFieldSource(selectedField) }}
+                    <span class="label">Routing</span>
+                    <span class="value">ORM routes Set/Get to parent</span>
+            @if (selectedField.RelatedEntityID) {
+                <h5>Relationship</h5>
+                    <span class="label">Related Entity</span>
+                    <span class="value link" (click)="navigateToRelatedEntity(selectedField)">
+                      {{ getRelatedEntityName(selectedField) }}
+                    <span class="label">Display Type</span>
+                    <span class="value">{{ selectedField.RelatedEntityDisplayType }}</span>
+            @if (selectedField.Encrypt) {
+                <h5>Encryption</h5>
+                    <span class="label">Encrypted</span>
+                    <span class="value">Yes</span>
+                    <span class="label">Decrypt in API</span>
+                    <span class="value">{{ selectedField.AllowDecryptInAPI ? 'Yes' : 'No' }}</span>
+              <h5>API Settings</h5>
+                  <span class="label">Allow Update</span>
+                  <span class="value">{{ selectedField.AllowUpdateAPI ? 'Yes' : 'No' }}</span>
+                  <span class="label">Include in Search</span>
+                  <span class="value">{{ selectedField.IncludeInUserSearchAPI ? 'Yes' : 'No' }}</span>
+                  <span class="label">Full-Text Search</span>
+                  <span class="value">{{ selectedField.FullTextSearchEnabled ? 'Yes' : 'No' }}</span>
+              <h5>Form Settings</h5>
+                  <span class="label">Include in Form</span>
+                  <span class="value">{{ selectedField.IncludeInGeneratedForm ? 'Yes' : 'No' }}</span>
+                  <span class="label">Section</span>
+                  <span class="value">{{ selectedField.GeneratedFormSection }}</span>
+                @if (selectedField.Category) {
+                    <span class="label">Category</span>
+                    <span class="value">{{ selectedField.Category }}</span>
+                  <span class="label">Sequence</span>
+                  <span class="value">{{ selectedField.Sequence }}</span>
+            @if (selectedField.EntityFieldValues.length > 0) {
+                <h5>Allowed Values</h5>
+                <div class="value-list">
+                  @for (val of selectedField.EntityFieldValues; track val) {
+                    <div class="value-item">
+                      @if (val.Code !== val.Value) {
+                        <span class="value-code">{{ val.Code }}</span>
+                      <span class="value-display">{{ val.Value }}</span>
+        <!-- Relationship Details -->
+              <h4>{{ selectedRelationship.DisplayName || selectedRelationship.Entity }}</h4>
+              <h5>Connection</h5>
+                  <span class="label">From Entity</span>
+                  <span class="value">{{ selectedRelationship.Entity }}</span>
+                  <span class="label">Join Field</span>
+                  <span class="value code">{{ selectedRelationship.RelatedEntityJoinField }}</span>
+                  <span class="label">Type</span>
+                  <span class="value">{{ selectedRelationship.Type }}</span>
+              <h5>Display Settings</h5>
+                  <span class="label">Display in Form</span>
+                  <span class="value">{{ selectedRelationship.DisplayInForm ? 'Yes' : 'No' }}</span>
+                  <span class="label">Location</span>
+                  <span class="value">{{ selectedRelationship.DisplayLocation }}</span>
+                  <span class="label">Bundle in API</span>
+                  <span class="value">{{ selectedRelationship.BundleInAPI ? 'Yes' : 'No' }}</span>
+      </aside>
+  @if (isExplorerLoading) {
+    <div class="explorer-loading">
+      <mj-loading text="Loading entity..."></mj-loading>
+  @if (!isExplorerLoading && explorerError) {
+    <div class="explorer-error">
+      <p>{{ explorerError }}</p>
+  @if (!isExplorerLoading && !explorerError && !entity) {
+    <div class="explorer-empty">
+      <p>Entity metadata not available</p>
+<!-- Loading / Error State -->

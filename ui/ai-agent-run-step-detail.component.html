@@ -1,0 +1,49 @@
+@if (selectedTimelineItem) {
+  <div class="json-detail-pane">
+    <div class="json-pane-header">
+        <i class="fas" [ngClass]="selectedTimelineItem.icon"></i>
+        {{ selectedTimelineItem.title }}
+      <button class="btn-icon" (click)="onClosePanel()" title="Close">
+    <div class="json-pane-content">
+      <div class="json-meta">
+        <div class="meta-item">
+          <label>Type</label>
+          <span>{{ selectedTimelineItem.type }}</span>
+          <span class="status-badge small" [attr.data-status]="selectedTimelineItem.status">
+            {{ selectedTimelineItem.status }}
+          <span>{{ selectedTimelineItem.duration || 'N/A' }}</span>
+      <!-- Action-specific link -->
+      @if (selectedTimelineItem.type === 'action' && selectedTimelineItem.data?.ID) {
+        <div class="action-link">
+          <button class="btn-link" (click)="onNavigateToActionLog(selectedTimelineItem.data.ID)">
+            <i class="fas fa-external-link-alt"></i> View Action Execution Log
+      <!-- Tab Navigation - Only show when we have both options -->
+      @if (showStepPayloadDiff) {
+        <div class="detail-pane-tabs">
+            class="detail-tab"
+            [class.active]="detailPaneTab === 'diff'"
+            (click)="detailPaneTab = 'diff'">
+            <i class="fa-solid fa-code-branch"></i>
+            Payload Changes
+            [class.active]="detailPaneTab === 'json'"
+            (click)="detailPaneTab = 'json'">
+            Full JSON
+      <div class="detail-pane-content" [class.with-tabs]="showStepPayloadDiff">
+        <!-- Payload Diff Tab -->
+        @if (detailPaneTab === 'diff' && showStepPayloadDiff) {
+          <div class="step-payload-diff">
+            <mj-deep-diff
+              [oldValue]="stepPayloadAtStartObject"
+              [newValue]="stepPayloadAtEndObject"
+              [title]="''"
+              [showSummary]="true"
+              [showUnchanged]="false"
+              [expandAll]="false"
+              [maxDepth]="8"
+              [maxStringLength]="150"
+              [treatNullAsUndefined]="true">
+            </mj-deep-diff>
+        <!-- Full JSON Tab -->
+        @if (detailPaneTab === 'json' || !showStepPayloadDiff) {
+              <button class="btn-icon" title="Copy JSON" (click)="onCopyToClipboard()">
+              [(ngModel)]="selectedItemJsonString"

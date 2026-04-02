@@ -1,0 +1,35 @@
+<h1><a href="eventarc_v1.html">Eventarc API</a> . <a href="eventarc_v1.projects.html">projects</a> . <a href="eventarc_v1.projects.locations.html">locations</a> . <a href="eventarc_v1.projects.locations.messageBuses.html">messageBuses</a></h1>
+  <code><a href="#create">create(parent, body=None, messageBusId=None, validateOnly=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Create a new MessageBus in a particular project and location.</p>
+<p class="firstline">Delete a single message bus.</p>
+<p class="firstline">Get a single MessageBus.</p>
+<p class="firstline">List message buses.</p>
+  <code><a href="#listEnrollments">listEnrollments(parent, pageSize=None, pageToken=None, x__xgafv=None)</a></code></p>
+<p class="firstline">List message bus enrollments.</p>
+  <code><a href="#listEnrollments_next">listEnrollments_next()</a></code></p>
+<p class="firstline">Update a single message bus.</p>
+    <code class="details" id="create">create(parent, body=None, messageBusId=None, validateOnly=None, x__xgafv=None)</code>
+  <pre>Create a new MessageBus in a particular project and location.
+  parent: string, Required. The parent collection in which to add this message bus. (required)
+{ # MessageBus for the messages flowing through the system. The admin has visibility and control over the messages being published and consumed and can restrict publishers and subscribers to only a subset of data available in the system by defining authorization policies.
+  &quot;loggingConfig&quot;: { # The configuration for Platform Telemetry logging for Eventarc Advanced resources. # Optional. Config to control Platform logging for the Message Bus. This log configuration is applied to the Message Bus itself, and all the Enrollments attached to it.
+  &quot;name&quot;: &quot;A String&quot;, # Identifier. Resource name of the form projects/{project}/locations/{location}/messageBuses/{message_bus}
+  messageBusId: string, Required. The user-provided ID to be assigned to the MessageBus. It should match the format `^[a-z]([a-z0-9-]{0,61}[a-z0-9])?$`.
+  <pre>Delete a single message bus.
+  name: string, Required. The name of the MessageBus to be deleted. (required)
+  <pre>Get a single MessageBus.
+  name: string, Required. The name of the message bus to get. (required)
+  <pre>List message buses.
+  parent: string, Required. The parent collection to list message buses on. (required)
+    { # The response message for the `ListMessageBuses` method.
+  &quot;messageBuses&quot;: [ # The requested message buses, up to the number specified in `page_size`.
+  &quot;nextPageToken&quot;: &quot;A String&quot;, # A page token that can be sent to `ListMessageBuses` to request the next page. If this is empty, then there are no more pages.
+    <code class="details" id="listEnrollments">listEnrollments(parent, pageSize=None, pageToken=None, x__xgafv=None)</code>
+  <pre>List message bus enrollments.
+  parent: string, Required. The parent message bus to list enrollments on. (required)
+    { # The response message for the `ListMessageBusEnrollments` method.`
+  &quot;enrollments&quot;: [ # The requested enrollments, up to the number specified in `page_size`.
+    <code class="details" id="listEnrollments_next">listEnrollments_next()</code>
+  <pre>Update a single message bus.
+  name: string, Identifier. Resource name of the form projects/{project}/locations/{location}/messageBuses/{message_bus} (required)
+  allowMissing: boolean, Optional. If set to true, and the MessageBus is not found, a new MessageBus will be created. In this situation, `update_mask` is ignored.

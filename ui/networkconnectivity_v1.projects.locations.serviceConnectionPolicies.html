@@ -1,0 +1,60 @@
+<h1><a href="networkconnectivity_v1.html">Network Connectivity API</a> . <a href="networkconnectivity_v1.projects.html">projects</a> . <a href="networkconnectivity_v1.projects.locations.html">locations</a> . <a href="networkconnectivity_v1.projects.locations.serviceConnectionPolicies.html">serviceConnectionPolicies</a></h1>
+  <code><a href="#create">create(parent, autoSubnetworkConfig_allocRangeSpace=None, autoSubnetworkConfig_ipStack=None, autoSubnetworkConfig_prefixLength=None, body=None, requestId=None, serviceConnectionPolicyId=None, subnetworkMode=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Creates a new ServiceConnectionPolicy in a given project and location.</p>
+<p class="firstline">Deletes a single ServiceConnectionPolicy.</p>
+<p class="firstline">Gets details of a single ServiceConnectionPolicy.</p>
+<p class="firstline">Lists ServiceConnectionPolicies in a given project and location.</p>
+<p class="firstline">Updates the parameters of a single ServiceConnectionPolicy.</p>
+    <code class="details" id="create">create(parent, autoSubnetworkConfig_allocRangeSpace=None, autoSubnetworkConfig_ipStack=None, autoSubnetworkConfig_prefixLength=None, body=None, requestId=None, serviceConnectionPolicyId=None, subnetworkMode=None, x__xgafv=None)</code>
+  <pre>Creates a new ServiceConnectionPolicy in a given project and location.
+  parent: string, Required. The parent resource&#x27;s name of the ServiceConnectionPolicy. ex. projects/123/locations/us-east1 (required)
+{ # The ServiceConnectionPolicy resource.
+  &quot;autoCreatedSubnetInfo&quot;: { # Information for the automatically created subnetwork and its associated IR. # Output only. Information for the automatically created subnetwork and its associated IR.
+    &quot;delinked&quot;: True or False, # Output only. Indicates whether the subnetwork is delinked from the Service Connection Policy. Only set if the subnetwork mode is AUTO_CREATED during creation.
+    &quot;internalRange&quot;: &quot;A String&quot;, # Output only. URI of the automatically created Internal Range. Only set if the subnetwork mode is AUTO_CREATED during creation.
+    &quot;internalRangeRef&quot;: &quot;A String&quot;, # Output only. URI of the automatically created Internal Range reference. Only set if the subnetwork mode is AUTO_CREATED during creation.
+    &quot;subnetwork&quot;: &quot;A String&quot;, # Output only. URI of the automatically created subnetwork. Only set if the subnetwork mode is AUTO_CREATED during creation.
+    &quot;subnetworkRef&quot;: &quot;A String&quot;, # Output only. URI of the automatically created subnetwork reference. Only set if the subnetwork mode is AUTO_CREATED during creation.
+  &quot;createTime&quot;: &quot;A String&quot;, # Output only. Time when the ServiceConnectionPolicy was created.
+  &quot;infrastructure&quot;: &quot;A String&quot;, # Output only. The type of underlying resources used to create the connection.
+  &quot;name&quot;: &quot;A String&quot;, # Immutable. The name of a ServiceConnectionPolicy. Format: projects/{project}/locations/{location}/serviceConnectionPolicies/{service_connection_policy} See: https://google.aip.dev/122#fields-representing-resource-names
+  &quot;network&quot;: &quot;A String&quot;, # The resource path of the consumer network. Example: - projects/{projectNumOrId}/global/networks/{resourceId}.
+  &quot;pscConfig&quot;: { # Configuration used for Private Service Connect connections. Used when Infrastructure is PSC. # Configuration used for Private Service Connect connections. Used when Infrastructure is PSC.
+    &quot;allowedGoogleProducersResourceHierarchyLevel&quot;: [ # Optional. List of Projects, Folders, or Organizations from where the Producer instance can be within. For example, a network administrator can provide both &#x27;organizations/foo&#x27; and &#x27;projects/bar&#x27; as allowed_google_producers_resource_hierarchy_levels. This allowlists this network to connect with any Producer instance within the &#x27;foo&#x27; organization or the &#x27;bar&#x27; project. By default, allowed_google_producers_resource_hierarchy_level is empty. The format for each allowed_google_producers_resource_hierarchy_level is / where is one of &#x27;projects&#x27;, &#x27;folders&#x27;, or &#x27;organizations&#x27; and is either the ID or the number of the resource type. Format for each allowed_google_producers_resource_hierarchy_level value: &#x27;projects/&#x27; or &#x27;folders/&#x27; or &#x27;organizations/&#x27; Eg. [projects/my-project-id, projects/567, folders/891, organizations/123]
+    &quot;limit&quot;: &quot;A String&quot;, # Optional. Max number of PSC connections for this policy.
+    &quot;producerInstanceLocation&quot;: &quot;A String&quot;, # Optional. ProducerInstanceLocation is used to specify which authorization mechanism to use to determine which projects the Producer instance can be within.
+    &quot;subnetworks&quot;: [ # The resource paths of subnetworks to use for IP address management. Example: projects/{projectNumOrId}/regions/{region}/subnetworks/{resourceId}.
+  &quot;pscConnections&quot;: [ # Output only. [Output only] Information about each Private Service Connect connection.
+    { # Information about a specific Private Service Connect connection.
+      &quot;consumerAddress&quot;: &quot;A String&quot;, # The resource reference of the consumer address.
+      &quot;consumerForwardingRule&quot;: &quot;A String&quot;, # The resource reference of the PSC Forwarding Rule within the consumer VPC.
+      &quot;consumerTargetProject&quot;: &quot;A String&quot;, # The project where the PSC connection is created.
+      &quot;error&quot;: { # The `Status` type defines a logical error model that is suitable for different programming environments, including REST APIs and RPC APIs. It is used by [gRPC](https://github.com/grpc). Each `Status` message contains three pieces of data: error code, error message, and error details. You can find out more about this error model and how to work with it in the [API Design Guide](https://cloud.google.com/apis/design/errors). # The most recent error during operating this connection. Deprecated, please use error_info instead.
+      &quot;pscConnectionId&quot;: &quot;A String&quot;, # The PSC connection id of the PSC forwarding rule.
+      &quot;selectedSubnetwork&quot;: &quot;A String&quot;, # Output only. The URI of the subnetwork selected to allocate IP address for this connection.
+      &quot;serviceClass&quot;: &quot;A String&quot;, # Output only. [Output only] The service class associated with this PSC Connection. The value is derived from the SCPolicy and matches the service class name provided by the customer.
+      &quot;state&quot;: &quot;A String&quot;, # State of the PSC Connection
+  &quot;serviceClass&quot;: &quot;A String&quot;, # The service class identifier for which this ServiceConnectionPolicy is for. The service class identifier is a unique, symbolic representation of a ServiceClass. It is provided by the Service Producer. Google services have a prefix of gcp or google-cloud. For example, gcp-memorystore-redis or google-cloud-sql. 3rd party services do not. For example, test-service-a3dfcx.
+  &quot;updateTime&quot;: &quot;A String&quot;, # Output only. Time when the ServiceConnectionPolicy was updated.
+  autoSubnetworkConfig_allocRangeSpace: string, Optional. The space where we search for a free range to create a subnetwork. It can be narrow down or pick a different space. This is in standard CIDR format. If not specified, “10.0.0.0/8” is used. Only eligible for IPV4_ONLY and IPV4_IPV6 subnetwork. (repeated)
+  autoSubnetworkConfig_ipStack: string, Optional. The requested IP stack for the subnetwork. If not specified, IPv4 is used.
+      SUBNET_IP_STACK_UNSPECIFIED - Default value. Will create an IPV4_ONLY subnetwork by default.
+      IPV4_ONLY - Will create an IPV4_ONLY subnetwork.
+      IPV6_ONLY - Will create an IPV6_ONLY subnetwork.
+      IPV4_IPV6 - Will use IPv4 and IPv6 (dual stack).
+  autoSubnetworkConfig_prefixLength: integer, Optional. The desired prefix length for the subnet&#x27;s IP address range. E.g., 24 for a /24. The actual range is allocated from available space. If not specified, 24 is used. Only eligible for IPV4_ONLY and IPV4_IPV6 subnetwork.
+  serviceConnectionPolicyId: string, Optional. Resource ID (i.e. &#x27;foo&#x27; in &#x27;[...]/projects/p/locations/l/serviceConnectionPolicies/foo&#x27;) See https://google.aip.dev/122#resource-id-segments Unique per location.
+  subnetworkMode: string, Optional. If this field is not set, USER_PROVIDED is the inferred value to use.
+      SUBNETWORK_MODE_UNSPECIFIED - The default value if the enum is unset. Note user is not allowed to set the subnetwork mode to this value.
+      USER_PROVIDED - Subnetworks are provided from the user input.
+      AUTO_CREATED - Subnetwork list is empty from the user input. A subnetwork will be created automatically.
+  <pre>Deletes a single ServiceConnectionPolicy.
+  name: string, Required. The name of the ServiceConnectionPolicy to delete. (required)
+  <pre>Gets details of a single ServiceConnectionPolicy.
+  name: string, Required. Name of the ServiceConnectionPolicy to get. (required)
+  <pre>Lists ServiceConnectionPolicies in a given project and location.
+    { # Response for ListServiceConnectionPolicies.
+  &quot;serviceConnectionPolicies&quot;: [ # ServiceConnectionPolicies to be returned.
+  <pre>Updates the parameters of a single ServiceConnectionPolicy.
+  name: string, Immutable. The name of a ServiceConnectionPolicy. Format: projects/{project}/locations/{location}/serviceConnectionPolicies/{service_connection_policy} See: https://google.aip.dev/122#fields-representing-resource-names (required)
+  updateMask: string, Optional. Field mask is used to specify the fields to be overwritten in the ServiceConnectionPolicy resource by the update. The fields specified in the update_mask are relative to the resource, not the full request. A field will be overwritten if it is in the mask. If the user does not provide a mask then all fields will be overwritten.

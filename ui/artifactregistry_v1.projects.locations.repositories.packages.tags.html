@@ -1,0 +1,27 @@
+<h1><a href="artifactregistry_v1.html">Artifact Registry API</a> . <a href="artifactregistry_v1.projects.html">projects</a> . <a href="artifactregistry_v1.projects.locations.html">locations</a> . <a href="artifactregistry_v1.projects.locations.repositories.html">repositories</a> . <a href="artifactregistry_v1.projects.locations.repositories.packages.html">packages</a> . <a href="artifactregistry_v1.projects.locations.repositories.packages.tags.html">tags</a></h1>
+  <code><a href="#create">create(parent, body=None, tagId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Creates a tag.</p>
+<p class="firstline">Deletes a tag.</p>
+<p class="firstline">Gets a tag.</p>
+<p class="firstline">Lists tags.</p>
+<p class="firstline">Updates a tag.</p>
+    <code class="details" id="create">create(parent, body=None, tagId=None, x__xgafv=None)</code>
+  <pre>Creates a tag.
+  parent: string, The name of the parent resource where the tag will be created. (required)
+{ # Tags point to a version and represent an alternative name that can be used to access the version.
+  &quot;name&quot;: &quot;A String&quot;, # The name of the tag, for example: &quot;projects/p1/locations/us-central1/repositories/repo1/packages/pkg1/tags/tag1&quot;. If the package part contains slashes, the slashes are escaped. The tag part can only have characters in [a-zA-Z0-9\-._~:@], anything else must be URL encoded.
+  &quot;version&quot;: &quot;A String&quot;, # The name of the version the tag refers to, for example: `projects/p1/locations/us-central1/repositories/repo1/packages/pkg1/versions/sha256:5243811` If the package or version ID parts contain slashes, the slashes are escaped.
+  tagId: string, The tag id to use for this repository.
+  <pre>Deletes a tag.
+  name: string, The name of the tag to delete. (required)
+  <pre>Gets a tag.
+  name: string, The name of the tag to retrieve. (required)
+  <pre>Lists tags.
+  parent: string, The name of the parent package whose tags will be listed. For example: `projects/p1/locations/us-central1/repositories/repo1/packages/pkg1`. (required)
+  filter: string, An expression for filtering the results of the request. Filter rules are case insensitive. The fields eligible for filtering are: * `name` * `version` Examples of using a filter: To filter the results of your request to tags with the name `my-tag` in package `my-package` in repository `my-repo` in project &quot;`y-project` in the us-central region, append the following filter expression to your request: * `name=&quot;projects/my-project/locations/us-central1/repositories/my-repo/packages/my-package/tags/my-tag&quot;` You can also use wildcards to match any number of characters before or after the value: * `name=&quot;projects/my-project/locations/us-central1/repositories/my-repo/packages/my-package/tags/my*&quot;` * `name=&quot;projects/my-project/locations/us-central1/repositories/my-repo/packages/my-package/tags/*tag&quot;` * `name=&quot;projects/my-project/locations/us-central1/repositories/my-repo/packages/my-package/tags/*tag*&quot;` To filter the results of your request to tags applied to the version `1.0` in package `my-package`, append the following filter expression to your request: * `version=&quot;projects/my-project/locations/us-central1/repositories/my-repo/packages/my-package/versions/1.0&quot;`
+  pageSize: integer, The maximum number of tags to return. Maximum page size is 1,000.
+    { # The response from listing tags.
+  &quot;nextPageToken&quot;: &quot;A String&quot;, # The token to retrieve the next page of tags, or empty if there are no more tags to return.
+  &quot;tags&quot;: [ # The tags returned.
+  <pre>Updates a tag.
+  name: string, The name of the tag, for example: &quot;projects/p1/locations/us-central1/repositories/repo1/packages/pkg1/tags/tag1&quot;. If the package part contains slashes, the slashes are escaped. The tag part can only have characters in [a-zA-Z0-9\-._~:@], anything else must be URL encoded. (required)

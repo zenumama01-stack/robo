@@ -1,0 +1,22 @@
+<div class="component-artifact-viewer" [ngClass]="cssClass">
+  <!-- Component Preview (full screen) -->
+    @if (hasError) {
+        <h3>{{ errorMessage }}</h3>
+        <p>This component could not be loaded. This usually happens when:</p>
+        <ul style="text-align: left; max-width: 500px; color: #6c757d; line-height: 1.6;">
+          <li>The component registry is unavailable or unreachable</li>
+          <li>The component version does not exist in the registry</li>
+          <li>There was a network error during component retrieval</li>
+          <details style="margin-top: 20px;">
+      <!-- Only render React component if there's code to execute -->
+      @if (component && (component.code || component.namespace)) {
+          [component]="component"
+          (componentEvent)="onComponentEvent($event)"
+      } @else if (component) {
+        <!-- Component spec exists but no code - show informational message -->
+        <div class="no-code-state">
+          <h3>Component Specification</h3>
+          <p>This component has specifications but no executable code yet.</p>
+          <p>View the Functional, Data, or Spec tabs for details.</p>
+          <h3>No Component Loaded</h3>
+          <p>The component data is missing or invalid.</p>

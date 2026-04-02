@@ -1,0 +1,56 @@
+<h1><a href="script_v1.html">Apps Script API</a> . <a href="script_v1.projects.html">projects</a> . <a href="script_v1.projects.deployments.html">deployments</a></h1>
+  <code><a href="#create">create(scriptId, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Creates a deployment of an Apps Script project.</p>
+  <code><a href="#delete">delete(scriptId, deploymentId, x__xgafv=None)</a></code></p>
+<p class="firstline">Deletes a deployment of an Apps Script project.</p>
+  <code><a href="#get">get(scriptId, deploymentId, x__xgafv=None)</a></code></p>
+<p class="firstline">Gets a deployment of an Apps Script project.</p>
+  <code><a href="#list">list(scriptId, pageSize=None, pageToken=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Lists the deployments of an Apps Script project.</p>
+  <code><a href="#update">update(scriptId, deploymentId, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Updates a deployment of an Apps Script project.</p>
+    <code class="details" id="create">create(scriptId, body=None, x__xgafv=None)</code>
+  <pre>Creates a deployment of an Apps Script project.
+  scriptId: string, The script project&#x27;s Drive ID. (required)
+{ # Metadata the defines how a deployment is configured.
+  &quot;description&quot;: &quot;A String&quot;, # The description for this deployment.
+  &quot;manifestFileName&quot;: &quot;A String&quot;, # The manifest file name for this deployment.
+  &quot;scriptId&quot;: &quot;A String&quot;, # The script project&#x27;s Drive ID.
+  &quot;versionNumber&quot;: 42, # The version number on which this deployment is based.
+    { # Representation of a single script deployment.
+  &quot;deploymentConfig&quot;: { # Metadata the defines how a deployment is configured. # The deployment configuration.
+  &quot;deploymentId&quot;: &quot;A String&quot;, # The deployment ID for this deployment.
+  &quot;entryPoints&quot;: [ # The deployment&#x27;s entry points.
+    { # A configuration that defines how a deployment is accessed externally.
+      &quot;addOn&quot;: { # An add-on entry point. # Add-on properties.
+        &quot;addOnType&quot;: &quot;A String&quot;, # The add-on&#x27;s required list of supported container types.
+        &quot;description&quot;: &quot;A String&quot;, # The add-on&#x27;s optional description.
+        &quot;helpUrl&quot;: &quot;A String&quot;, # The add-on&#x27;s optional help URL.
+        &quot;postInstallTipUrl&quot;: &quot;A String&quot;, # The add-on&#x27;s required post install tip URL.
+        &quot;reportIssueUrl&quot;: &quot;A String&quot;, # The add-on&#x27;s optional report issue URL.
+        &quot;title&quot;: &quot;A String&quot;, # The add-on&#x27;s required title.
+      &quot;entryPointType&quot;: &quot;A String&quot;, # The type of the entry point.
+      &quot;executionApi&quot;: { # An API executable entry point. # An entry point specification for Apps Script API execution calls.
+        &quot;entryPointConfig&quot;: { # API executable entry point configuration. # The entry point&#x27;s configuration.
+          &quot;access&quot;: &quot;A String&quot;, # Who has permission to run the API executable.
+      &quot;webApp&quot;: { # A web application entry point. # An entry point specification for web apps.
+        &quot;entryPointConfig&quot;: { # Web app entry point configuration. # The entry point&#x27;s configuration.
+          &quot;access&quot;: &quot;A String&quot;, # Who has permission to run the web app.
+          &quot;executeAs&quot;: &quot;A String&quot;, # Who to execute the web app as.
+        &quot;url&quot;: &quot;A String&quot;, # The URL for the web application.
+  &quot;updateTime&quot;: &quot;A String&quot;, # Last modified date time stamp.
+    <code class="details" id="delete">delete(scriptId, deploymentId, x__xgafv=None)</code>
+  <pre>Deletes a deployment of an Apps Script project.
+  deploymentId: string, The deployment ID to be undeployed. (required)
+    <code class="details" id="get">get(scriptId, deploymentId, x__xgafv=None)</code>
+  <pre>Gets a deployment of an Apps Script project.
+  deploymentId: string, The deployment ID. (required)
+    <code class="details" id="list">list(scriptId, pageSize=None, pageToken=None, x__xgafv=None)</code>
+  <pre>Lists the deployments of an Apps Script project.
+  pageSize: integer, The maximum number of deployments on each returned page. Defaults to 50.
+    { # Response with the list of deployments for the specified Apps Script project.
+  &quot;nextPageToken&quot;: &quot;A String&quot;, # The token that can be used in the next call to get the next page of results.
+    <code class="details" id="update">update(scriptId, deploymentId, body=None, x__xgafv=None)</code>
+  <pre>Updates a deployment of an Apps Script project.
+  deploymentId: string, The deployment ID for this deployment. (required)
+{ # Request with deployment information to update an existing deployment.

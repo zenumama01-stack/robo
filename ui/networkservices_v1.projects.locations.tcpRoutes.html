@@ -1,0 +1,40 @@
+<h1><a href="networkservices_v1.html">Network Services API</a> . <a href="networkservices_v1.projects.html">projects</a> . <a href="networkservices_v1.projects.locations.html">locations</a> . <a href="networkservices_v1.projects.locations.tcpRoutes.html">tcpRoutes</a></h1>
+  <code><a href="#create">create(parent, body=None, tcpRouteId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Creates a new TcpRoute in a given project and location.</p>
+<p class="firstline">Deletes a single TcpRoute.</p>
+<p class="firstline">Gets details of a single TcpRoute.</p>
+<p class="firstline">Lists TcpRoute in a given project and location.</p>
+<p class="firstline">Updates the parameters of a single TcpRoute.</p>
+    <code class="details" id="create">create(parent, body=None, tcpRouteId=None, x__xgafv=None)</code>
+  <pre>Creates a new TcpRoute in a given project and location.
+  parent: string, Required. The parent resource of the TcpRoute. Must be in the format `projects/*/locations/*`. (required)
+{ # TcpRoute is the resource defining how TCP traffic should be routed by a Mesh/Gateway resource.
+  &quot;gateways&quot;: [ # Optional. Gateways defines a list of gateways this TcpRoute is attached to, as one of the routing rules to route the requests served by the gateway. Each gateway reference should match the pattern: `projects/*/locations/*/gateways/`
+  &quot;labels&quot;: { # Optional. Set of label tags associated with the TcpRoute resource.
+  &quot;meshes&quot;: [ # Optional. Meshes defines a list of meshes this TcpRoute is attached to, as one of the routing rules to route the requests served by the mesh. Each mesh reference should match the pattern: `projects/*/locations/*/meshes/` The attached Mesh should be of a type SIDECAR
+  &quot;name&quot;: &quot;A String&quot;, # Identifier. Name of the TcpRoute resource. It matches pattern `projects/*/locations/*/tcpRoutes/tcp_route_name&gt;`.
+  &quot;rules&quot;: [ # Required. Rules that define how traffic is routed and handled. At least one RouteRule must be supplied. If there are multiple rules then the action taken will be the first rule to match.
+      &quot;action&quot;: { # The specifications for routing traffic and applying associated policies. # Required. The detailed rule defining how to route matched traffic.
+        &quot;destinations&quot;: [ # Optional. The destination services to which traffic should be forwarded. At least one destination service is required. Only one of route destination or original destination can be set.
+          { # Describe the destination for traffic to be routed to.
+            &quot;serviceName&quot;: &quot;A String&quot;, # Required. The URL of a BackendService to route traffic to.
+        &quot;idleTimeout&quot;: &quot;A String&quot;, # Optional. Specifies the idle timeout for the selected route. The idle timeout is defined as the period in which there are no bytes sent or received on either the upstream or downstream connection. If not set, the default idle timeout is 30 seconds. If set to 0s, the timeout will be disabled.
+        &quot;originalDestination&quot;: True or False, # Optional. If true, Router will use the destination IP and port of the original connection as the destination of the request. Default is false. Only one of route destinations or original destination can be set.
+      &quot;matches&quot;: [ # Optional. RouteMatch defines the predicate used to match requests to a given action. Multiple match types are &quot;OR&quot;ed for evaluation. If no routeMatch field is specified, this rule will unconditionally match traffic.
+        { # RouteMatch defines the predicate used to match requests to a given action. Multiple match types are &quot;OR&quot;ed for evaluation. If no routeMatch field is specified, this rule will unconditionally match traffic.
+          &quot;address&quot;: &quot;A String&quot;, # Required. Must be specified in the CIDR range format. A CIDR range consists of an IP Address and a prefix length to construct the subnet mask. By default, the prefix length is 32 (i.e. matches a single IP address). Only IPV4 addresses are supported. Examples: &quot;10.0.0.1&quot; - matches against this exact IP address. &quot;10.0.0.0/8&quot; - matches against any IP address within the 10.0.0.0 subnet and 255.255.255.0 mask. &quot;0.0.0.0/0&quot; - matches against any IP address&#x27;.
+          &quot;port&quot;: &quot;A String&quot;, # Required. Specifies the destination port to match against.
+  tcpRouteId: string, Required. Short name of the TcpRoute resource to be created.
+  <pre>Deletes a single TcpRoute.
+  name: string, Required. A name of the TcpRoute to delete. Must be in the format `projects/*/locations/*/tcpRoutes/*`. (required)
+  <pre>Gets details of a single TcpRoute.
+  name: string, Required. A name of the TcpRoute to get. Must be in the format `projects/*/locations/*/tcpRoutes/*`. (required)
+  <pre>Lists TcpRoute in a given project and location.
+  parent: string, Required. The project and location from which the TcpRoutes should be listed, specified in the format `projects/*/locations/*`. (required)
+  pageSize: integer, Maximum number of TcpRoutes to return per call.
+  pageToken: string, The value returned by the last `ListTcpRoutesResponse` Indicates that this is a continuation of a prior `ListTcpRoutes` call, and that the system should return the next page of data.
+    { # Response returned by the ListTcpRoutes method.
+  &quot;tcpRoutes&quot;: [ # List of TcpRoute resources.
+  <pre>Updates the parameters of a single TcpRoute.
+  name: string, Identifier. Name of the TcpRoute resource. It matches pattern `projects/*/locations/*/tcpRoutes/tcp_route_name&gt;`. (required)
+  updateMask: string, Optional. Field mask is used to specify the fields to be overwritten in the TcpRoute resource by the update. The fields specified in the update_mask are relative to the resource, not the full request. A field will be overwritten if it is in the mask. If the user does not provide a mask then all fields will be overwritten.

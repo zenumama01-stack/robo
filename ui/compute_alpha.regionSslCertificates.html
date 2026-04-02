@@ -1,0 +1,71 @@
+<h1><a href="compute_alpha.html">Compute Engine API</a> . <a href="compute_alpha.regionSslCertificates.html">regionSslCertificates</a></h1>
+  <code><a href="#delete">delete(project, region, sslCertificate, requestId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Deletes the specified SslCertificate resource in the region.</p>
+  <code><a href="#get">get(project, region, sslCertificate, x__xgafv=None)</a></code></p>
+<p class="firstline">Returns the specified SslCertificate resource in the specified region. Get</p>
+<p class="firstline">Creates a SslCertificate resource in the specified project and region using</p>
+<p class="firstline">Retrieves the list of SslCertificate resources available to the specified</p>
+<p class="firstline">Returns permissions that a caller has on the specified resource and region.</p>
+    <code class="details" id="delete">delete(project, region, sslCertificate, requestId=None, x__xgafv=None)</code>
+  <pre>Deletes the specified SslCertificate resource in the region.
+  sslCertificate: string, Name of the SslCertificate resource to delete. (required)
+    <code class="details" id="get">get(project, region, sslCertificate, x__xgafv=None)</code>
+  <pre>Returns the specified SslCertificate resource in the specified region. Get
+a list of available SSL certificates by making a list()
+  sslCertificate: string, Name of the SslCertificate resource to return. (required)
+    { # Represents an SSL certificate resource.
+    # Google Compute Engine has two SSL certificate resources:
+    # * [Global](/compute/docs/reference/rest/alpha/sslCertificates)
+    # * [Regional](/compute/docs/reference/rest/alpha/regionSslCertificates)
+    # The global SSL certificates (sslCertificates) are used by:
+    #    - Global external Application Load Balancers
+    #    - Classic Application Load Balancers
+    #    - Proxy Network Load Balancers (with target SSL proxies)
+    # The regional SSL certificates (regionSslCertificates) are used
+    # by:
+    #    - Regional external Application Load Balancers
+    #    - Regional internal Application Load Balancers
+    # Optionally, certificate file contents that you upload can contain a set of up
+    # to five PEM-encoded certificates.
+    # The API call creates an object (sslCertificate) that holds this data.
+    # You can use SSL keys and certificates to secure connections to a load
+    # balancer.
+    # Creating and using SSL certificates,SSL certificates
+    # quotas and limits, and
+    # Troubleshooting SSL certificates.
+  &quot;certificate&quot;: &quot;A String&quot;, # A value read into memory from a certificate file. The certificate file must
+      # be in PEM format. The certificate chain must be no greater than 5 certs
+      # long. The chain must include at least one intermediate cert.
+  &quot;expireTime&quot;: &quot;A String&quot;, # Output only. [Output Only] Expire time of the certificate. RFC3339
+  &quot;kind&quot;: &quot;compute#sslCertificate&quot;, # Output only. [Output Only] Type of the resource. Alwayscompute#sslCertificate for SSL certificates.
+  &quot;managed&quot;: { # Configuration and status of a managed SSL certificate. # Configuration and status of a managed SSL certificate.
+    &quot;domainStatus&quot;: { # Output only. [Output only] Detailed statuses of the domains specified for managed
+        # certificate resource.
+    &quot;domains&quot;: [ # The domains for which a managed SSL certificate will be generated. Each
+        # Google-managed SSL certificate supports up to the [maximum number of
+        # domains per Google-managed SSL
+        # certificate](/load-balancing/docs/quotas#ssl_certificates).
+    &quot;status&quot;: &quot;A String&quot;, # Output only. [Output only] Status of the managed certificate resource.
+  &quot;privateKey&quot;: &quot;A String&quot;, # A value read into memory from a write-only private key file. The private
+      # key file must be in PEM format. For security, only insert
+      # requests include this field.
+  &quot;region&quot;: &quot;A String&quot;, # Output only. [Output Only] URL of the region where the regional SSL Certificate
+      # resides. This field is not applicable to global SSL Certificate.
+  &quot;selfLink&quot;: &quot;A String&quot;, # [Output only] Server-defined URL for the resource.
+  &quot;selfManaged&quot;: { # Configuration and status of a self-managed SSL certificate. # Configuration and status of a self-managed SSL certificate.
+    &quot;certificate&quot;: &quot;A String&quot;, # A local certificate file. The certificate must be in
+        # PEM format. The certificate chain must be no greater than 5 certs
+    &quot;privateKey&quot;: &quot;A String&quot;, # A write-only private key in PEM format. Only insert
+        # requests will include this field.
+  &quot;subjectAlternativeNames&quot;: [ # Output only. [Output Only] Domains associated with the certificate via Subject
+      # Alternative Name.
+  &quot;type&quot;: &quot;A String&quot;, # (Optional) Specifies the type of SSL certificate, either &quot;SELF_MANAGED&quot; or
+      # &quot;MANAGED&quot;. If not specified, the certificate is self-managed and the fieldscertificate and private_key are used.
+  <pre>Creates a SslCertificate resource in the specified project and region using
+the data included in the request
+  <pre>Retrieves the list of SslCertificate resources available to the specified
+project in the specified region.
+    { # Contains a list of SslCertificate resources.
+  &quot;items&quot;: [ # A list of SslCertificate resources.
+  &quot;kind&quot;: &quot;compute#sslCertificateList&quot;, # Output only. Type of resource.
+  <pre>Returns permissions that a caller has on the specified resource and region.

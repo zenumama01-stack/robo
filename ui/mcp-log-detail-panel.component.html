@@ -1,0 +1,71 @@
+  <div class="panel-backdrop" (click)="closePanel()"></div>
+@if (Visible && Log) {
+  <div class="slide-out-panel"
+    @slideIn
+    [style.width.px]="IsMobileMode ? null : PanelWidth"
+    [class.mobile]="IsMobileMode"
+    [class.resizing]="IsResizing">
+    @if (!IsMobileMode) {
+        [class.active]="IsResizing"
+        <div class="resize-grip"></div>
+        Execution Details
+      <button class="close-btn" (click)="closePanel()" title="Close">
+      <!-- Status Banner -->
+      <div class="status-banner" [ngClass]="getStatusClass(Log.Status)">
+        <i [class]="getStatusIcon(Log.Status)"></i>
+        <span class="status-text">{{ Log.Status }}</span>
+        @if (Log.DurationMs) {
+          <span class="duration">{{ formatDuration(Log.DurationMs) }}</span>
+      <!-- Tool Info -->
+            <span class="info-label">Name</span>
+            <span class="info-value tool-name">{{ Log.ToolName }}</span>
+          @if (Log.ServerName) {
+              <span class="info-label">Server</span>
+              <span class="info-value">{{ Log.ServerName }}</span>
+            <span class="info-label">Connection</span>
+            <span class="info-value">{{ Log.ConnectionName }}</span>
+      <!-- Timing Info -->
+          Timing
+            <span class="info-label">Started</span>
+            <span class="info-value">{{ formatDate(Log.StartedAt) }}</span>
+            <span class="info-label">Completed</span>
+            <span class="info-value">{{ formatDate(Log.CompletedAt) }}</span>
+            <span class="info-label">Duration</span>
+            <span class="info-value">{{ formatDuration(Log.DurationMs) }}</span>
+      <!-- Error Message (if any) -->
+      @if (Log.ErrorMessage) {
+        <div class="info-section error-section expandable-section">
+          <div class="section-header clickable" (click)="toggleSection(ErrorSection)">
+            <div class="section-title-row">
+              <i class="fa-solid fa-chevron-right expand-icon" [class.expanded]="ErrorSection.expanded"></i>
+              <h3 class="section-title error">
+            <button kendoButton fillMode="flat" size="small" (click)="copyError(); $event.stopPropagation()" title="Copy error">
+          @if (ErrorSection.expanded) {
+            <div class="error-card">
+              <pre class="error-message">{{ Log.ErrorMessage }}</pre>
+      <!-- Input Arguments -->
+      @if (Log.InputArgs) {
+        <div class="info-section expandable-section">
+          <div class="section-header clickable" (click)="toggleSection(InputArgsSection)">
+              <i class="fa-solid fa-chevron-right expand-icon" [class.expanded]="InputArgsSection.expanded"></i>
+                Input Arguments
+            <button kendoButton fillMode="flat" size="small" (click)="copyInputArgs(); $event.stopPropagation()" title="Copy input arguments">
+          @if (InputArgsSection.expanded) {
+            <div class="code-card">
+                [ngModel]="FormattedInputArgs"
+      <!-- Result -->
+      @if (Log.Result) {
+          <div class="section-header clickable" (click)="toggleSection(ResultSection)">
+              <i class="fa-solid fa-chevron-right expand-icon" [class.expanded]="ResultSection.expanded"></i>
+            <button kendoButton fillMode="flat" size="small" (click)="copyResult(); $event.stopPropagation()" title="Copy result">
+          @if (ResultSection.expanded) {
+                [ngModel]="FormattedResult"
+      <!-- User Info -->
+      @if (Log.UserName) {
+            Executed By
+              <span class="info-label">User</span>
+              <span class="info-value">{{ Log.UserName }}</span>
+      @if (Log.ToolID) {
+        <button kendoButton themeColor="primary" (click)="onRunAgain()">
+          Run Again
+      <button kendoButton fillMode="flat" (click)="closePanel()">Close</button>

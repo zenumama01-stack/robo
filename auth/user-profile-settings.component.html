@@ -1,0 +1,120 @@
+<div class="user-profile-settings">
+    <h3>Avatar Settings</h3>
+    <p class="description">Customize your profile picture with an image, URL, or icon</p>
+      <button class="close-btn" (click)="errorMessage = ''" aria-label="Dismiss error">
+  <!-- Success Message -->
+  @if (showSuccessMessage) {
+    <div class="alert alert-success" role="status" aria-live="polite">
+      <span>Avatar updated successfully!</span>
+  <!-- Avatar Preview Section -->
+  <div class="avatar-preview-section">
+    <div class="preview-label">Preview</div>
+      @if (previewUrl) {
+        <img [src]="previewUrl" alt="Avatar preview" class="preview-image" />
+      } @else if (previewIconClass) {
+        <div class="preview-icon-wrapper">
+          <i [class]="previewIconClass + ' preview-icon'" aria-hidden="true"></i>
+        <div class="preview-placeholder">
+          <span>No avatar selected</span>
+  <div class="tab-navigation" role="tablist" aria-label="Avatar customization options">
+      [class.active]="selectedTab === 'upload'"
+      (click)="selectTab('upload')"
+      [attr.aria-selected]="selectedTab === 'upload'"
+      aria-controls="panel-upload"
+      <i class="fa-solid fa-upload" aria-hidden="true"></i>
+      <span>Upload</span>
+      [class.active]="selectedTab === 'url'"
+      (click)="selectTab('url')"
+      [attr.aria-selected]="selectedTab === 'url'"
+      aria-controls="panel-url"
+      <i class="fa-solid fa-link" aria-hidden="true"></i>
+      <span>URL</span>
+      [class.active]="selectedTab === 'icon'"
+      (click)="selectTab('icon')"
+      [attr.aria-selected]="selectedTab === 'icon'"
+      aria-controls="panel-icon"
+      <i class="fa-solid fa-icons" aria-hidden="true"></i>
+      <span>Icon</span>
+      [class.active]="selectedTab === 'provider'"
+      (click)="selectTab('provider')"
+      [attr.aria-selected]="selectedTab === 'provider'"
+      aria-controls="panel-provider"
+      <i class="fa-brands fa-microsoft" aria-hidden="true"></i>
+      <span>Sync</span>
+    <!-- Upload Tab -->
+    @if (selectedTab === 'upload') {
+      <div class="upload-section" id="panel-upload" role="tabpanel">
+          type="file"
+          #fileInput
+          accept="image/png,image/jpeg,image/jpg,image/gif,image/webp"
+          (change)="onFileSelected($event)"
+          style="display: none"
+        <button class="upload-btn" (click)="fileInput.click()">
+          Choose Image
+        <div class="upload-info">
+          Max 200KB - PNG, JPG, GIF, WEBP
+        @if (uploadedFileName) {
+          <div class="selected-file">
+            <i class="fa-solid fa-file-image" aria-hidden="true"></i>
+            <span>{{ uploadedFileName }}</span>
+            <button class="remove-btn" (click)="clearUpload()" aria-label="Remove selected file">
+    <!-- URL Tab -->
+    @if (selectedTab === 'url') {
+      <div class="url-section" id="panel-url" role="tabpanel">
+        <label for="imageUrl">Image URL</label>
+          id="imageUrl"
+          class="url-input"
+          placeholder="https://example.com/avatar.jpg"
+          [(ngModel)]="imageUrlInput"
+          (input)="onUrlChange()"
+        <div class="url-info">
+          Enter a URL to an image hosted online
+    <!-- Icon Tab -->
+    @if (selectedTab === 'icon') {
+      <div class="icon-section" id="panel-icon" role="tabpanel">
+        <!-- Icon Search -->
+        <div class="icon-search-container">
+              placeholder="Search icons by name..."
+              [value]="iconSearchTerm"
+              (input)="onIconSearchChange($event)"
+              aria-label="Search icons"
+            @if (iconSearchTerm) {
+                class="mj-search-clear"
+                (click)="clearIconSearch()"
+          <div class="icon-filter-info">
+            {{ totalFilteredIcons }} icon{{ totalFilteredIcons !== 1 ? 's' : '' }} found
+        <!-- Icon Categories -->
+        <div class="icon-categories-container">
+          @if (filteredIconCategories.length > 0) {
+            @for (category of filteredIconCategories; track category.name) {
+              <div class="icon-category">
+                <h4 class="category-title">{{ category.name }}</h4>
+                <div class="icon-grid" role="radiogroup" [attr.aria-label]="category.name + ' icons'">
+                  @for (icon of category.icons; track icon) {
+                      class="icon-option"
+                      [class.selected]="isIconSelected(icon)"
+                      (click)="selectIcon(icon)"
+                      [title]="extractIconName(icon)"
+                      role="radio"
+                      [attr.aria-checked]="isIconSelected(icon)"
+                      [attr.aria-label]="extractIconName(icon) + ' icon'"
+              <p class="empty-text">No icons found</p>
+              <p class="empty-subtext">Try a different search term</p>
+    <!-- Provider Sync Tab -->
+    @if (selectedTab === 'provider') {
+      <div class="provider-section" id="panel-provider" role="tabpanel">
+          <p>Sync your avatar from your authentication provider account</p>
+          class="sync-btn"
+          (click)="syncFromProvider()"
+            <span>Syncing...</span>
+            <span>Sync from Microsoft Account</span>
+        <div class="provider-note">
+          <i class="fa-solid fa-lightbulb" aria-hidden="true"></i>
+          <small>This will download your profile photo from Microsoft and save it to your profile</small>
+        <hr class="provider-divider" />
+          class="revert-btn"
+          (click)="revertToDefault()"
+            <span>Reverting...</span>
+            <span>Revert to Default</span>
+          <small>Clears your avatar settings and restores the automatic sync from your auth provider</small>
+      [disabled]="isSaving || selectedTab === 'provider'"

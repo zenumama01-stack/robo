@@ -1,0 +1,15 @@
+<div class="erd-section">
+      <h3>{{ headerTitle }}</h3>
+      <div class="erd-controls">
+        <button class="control-btn" (click)="zoomIn()" title="Zoom In">
+          <span class="fa-solid fa-search-plus"></span>
+        <button class="control-btn" (click)="zoomOut()" title="Zoom Out">
+          <span class="fa-solid fa-search-minus"></span>
+        <button class="control-btn" (click)="resetZoom()" title="Reset Zoom">
+          <span class="fa-solid fa-expand"></span>
+        <button class="control-btn" (click)="refresh(); refreshRequested.emit()" title="Refresh Diagram">
+          <span class="fa-solid fa-refresh"></span>
+  <div class="erd-container" #erdContainer>
+    @if (isRefreshing) {
+            <div class="spinner-ring"></div>
+          <div class="loading-text">Loading diagram...</div>

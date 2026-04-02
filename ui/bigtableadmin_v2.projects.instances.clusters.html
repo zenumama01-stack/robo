@@ -1,0 +1,51 @@
+<h1><a href="bigtableadmin_v2.html">Cloud Bigtable Admin API</a> . <a href="bigtableadmin_v2.projects.html">projects</a> . <a href="bigtableadmin_v2.projects.instances.html">instances</a> . <a href="bigtableadmin_v2.projects.instances.clusters.html">clusters</a></h1>
+  <code><a href="bigtableadmin_v2.projects.instances.clusters.backups.html">backups()</a></code>
+  <code><a href="bigtableadmin_v2.projects.instances.clusters.hotTablets.html">hotTablets()</a></code>
+<p class="firstline">Returns the hotTablets Resource.</p>
+  <code><a href="#create">create(parent, body=None, clusterId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Creates a cluster within an instance. Note that exactly one of Cluster.serve_nodes and Cluster.cluster_config.cluster_autoscaling_config can be set. If serve_nodes is set to non-zero, then the cluster is manually scaled. If cluster_config.cluster_autoscaling_config is non-empty, then autoscaling is enabled.</p>
+<p class="firstline">Deletes a cluster from an instance.</p>
+<p class="firstline">Gets information about a cluster.</p>
+  <code><a href="#list">list(parent, pageToken=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Lists information about clusters in an instance.</p>
+  <code><a href="#partialUpdateCluster">partialUpdateCluster(name, body=None, updateMask=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Partially updates a cluster within a project. This method is the preferred way to update a Cluster. To enable and update autoscaling, set cluster_config.cluster_autoscaling_config. When autoscaling is enabled, serve_nodes is treated as an OUTPUT_ONLY field, meaning that updates to it are ignored. Note that an update cannot simultaneously set serve_nodes to non-zero and cluster_config.cluster_autoscaling_config to non-empty, and also specify both in the update_mask. To disable autoscaling, clear cluster_config.cluster_autoscaling_config, and explicitly set a serve_node count via the update_mask.</p>
+<p class="firstline">Updates a cluster within an instance. Note that UpdateCluster does not support updating cluster_config.cluster_autoscaling_config. In order to update it, you must use PartialUpdateCluster.</p>
+    <code class="details" id="create">create(parent, body=None, clusterId=None, x__xgafv=None)</code>
+  <pre>Creates a cluster within an instance. Note that exactly one of Cluster.serve_nodes and Cluster.cluster_config.cluster_autoscaling_config can be set. If serve_nodes is set to non-zero, then the cluster is manually scaled. If cluster_config.cluster_autoscaling_config is non-empty, then autoscaling is enabled.
+  parent: string, Required. The unique name of the instance in which to create the new cluster. Values are of the form `projects/{project}/instances/{instance}`. (required)
+{ # A resizable group of nodes in a particular cloud location, capable of serving all Tables in the parent Instance.
+  &quot;clusterConfig&quot;: { # Configuration for a cluster. # Configuration for this cluster.
+    &quot;clusterAutoscalingConfig&quot;: { # Autoscaling config for a cluster. # Autoscaling configuration for this cluster.
+      &quot;autoscalingLimits&quot;: { # Limits for the number of nodes a Cluster can autoscale up/down to. # Required. Autoscaling limits for this cluster.
+        &quot;maxServeNodes&quot;: 42, # Required. Maximum number of nodes to scale up to.
+        &quot;minServeNodes&quot;: 42, # Required. Minimum number of nodes to scale down to.
+      &quot;autoscalingTargets&quot;: { # The Autoscaling targets for a Cluster. These determine the recommended nodes. # Required. Autoscaling targets for this cluster.
+        &quot;cpuUtilizationPercent&quot;: 42, # The cpu utilization that the Autoscaler should be trying to achieve. This number is on a scale from 0 (no utilization) to 100 (total utilization), and is limited between 10 and 80, otherwise it will return INVALID_ARGUMENT error.
+        &quot;storageUtilizationGibPerNode&quot;: 42, # The storage utilization that the Autoscaler should be trying to achieve. This number is limited between 2560 (2.5TiB) and 5120 (5TiB) for a SSD cluster and between 8192 (8TiB) and 16384 (16TiB) for an HDD cluster, otherwise it will return INVALID_ARGUMENT error. If this value is set to 0, it will be treated as if it were set to the default value: 2560 for SSD, 8192 for HDD.
+  &quot;defaultStorageType&quot;: &quot;A String&quot;, # Immutable. The type of storage used by this cluster to serve its parent instance&#x27;s tables, unless explicitly overridden.
+  &quot;encryptionConfig&quot;: { # Cloud Key Management Service (Cloud KMS) settings for a CMEK-protected cluster. # Immutable. The encryption configuration for CMEK-protected clusters.
+    &quot;kmsKeyName&quot;: &quot;A String&quot;, # Describes the Cloud KMS encryption key that will be used to protect the destination Bigtable cluster. The requirements for this key are: 1) The Cloud Bigtable service account associated with the project that contains this cluster must be granted the `cloudkms.cryptoKeyEncrypterDecrypter` role on the CMEK key. 2) Only regional keys can be used and the region of the CMEK key must match the region of the cluster. Values are of the form `projects/{project}/locations/{location}/keyRings/{keyring}/cryptoKeys/{key}`
+  &quot;location&quot;: &quot;A String&quot;, # Immutable. The location where this cluster&#x27;s nodes and storage reside. For best performance, clients should be located as close as possible to this cluster. Currently only zones are supported, so values should be of the form `projects/{project}/locations/{zone}`.
+  &quot;name&quot;: &quot;A String&quot;, # The unique name of the cluster. Values are of the form `projects/{project}/instances/{instance}/clusters/a-z*`.
+  &quot;nodeScalingFactor&quot;: &quot;A String&quot;, # Immutable. The node scaling factor of this cluster.
+  &quot;serveNodes&quot;: 42, # The number of nodes in the cluster. If no value is set, Cloud Bigtable automatically allocates nodes based on your data footprint and optimized for 50% storage utilization.
+  &quot;state&quot;: &quot;A String&quot;, # Output only. The current state of the cluster.
+  clusterId: string, Required. The ID to be used when referring to the new cluster within its instance, e.g., just `mycluster` rather than `projects/myproject/instances/myinstance/clusters/mycluster`.
+  <pre>Deletes a cluster from an instance.
+  name: string, Required. The unique name of the cluster to be deleted. Values are of the form `projects/{project}/instances/{instance}/clusters/{cluster}`. (required)
+  <pre>Gets information about a cluster.
+  name: string, Required. The unique name of the requested cluster. Values are of the form `projects/{project}/instances/{instance}/clusters/{cluster}`. (required)
+    <code class="details" id="list">list(parent, pageToken=None, x__xgafv=None)</code>
+  <pre>Lists information about clusters in an instance.
+  parent: string, Required. The unique name of the instance for which a list of clusters is requested. Values are of the form `projects/{project}/instances/{instance}`. Use `{instance} = &#x27;-&#x27;` to list Clusters for all Instances in a project, e.g., `projects/myproject/instances/-`. (required)
+  pageToken: string, DEPRECATED: This field is unused and ignored.
+    { # Response message for BigtableInstanceAdmin.ListClusters.
+  &quot;clusters&quot;: [ # The list of requested clusters.
+  &quot;failedLocations&quot;: [ # Locations from which Cluster information could not be retrieved, due to an outage or some other transient condition. Clusters from these locations may be missing from `clusters`, or may only have partial information returned. Values are of the form `projects//locations/`
+  &quot;nextPageToken&quot;: &quot;A String&quot;, # DEPRECATED: This field is unused and ignored.
+    <code class="details" id="partialUpdateCluster">partialUpdateCluster(name, body=None, updateMask=None, x__xgafv=None)</code>
+  <pre>Partially updates a cluster within a project. This method is the preferred way to update a Cluster. To enable and update autoscaling, set cluster_config.cluster_autoscaling_config. When autoscaling is enabled, serve_nodes is treated as an OUTPUT_ONLY field, meaning that updates to it are ignored. Note that an update cannot simultaneously set serve_nodes to non-zero and cluster_config.cluster_autoscaling_config to non-empty, and also specify both in the update_mask. To disable autoscaling, clear cluster_config.cluster_autoscaling_config, and explicitly set a serve_node count via the update_mask.
+  name: string, The unique name of the cluster. Values are of the form `projects/{project}/instances/{instance}/clusters/a-z*`. (required)
+  updateMask: string, Required. The subset of Cluster fields which should be replaced.
+  <pre>Updates a cluster within an instance. Note that UpdateCluster does not support updating cluster_config.cluster_autoscaling_config. In order to update it, you must use PartialUpdateCluster.

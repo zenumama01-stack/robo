@@ -1,0 +1,137 @@
+<h1><a href="aiplatform_v1.html">Vertex AI API</a> . <a href="aiplatform_v1.projects.html">projects</a> . <a href="aiplatform_v1.projects.locations.html">locations</a> . <a href="aiplatform_v1.projects.locations.tuningJobs.html">tuningJobs</a></h1>
+  <code><a href="aiplatform_v1.projects.locations.tuningJobs.operations.html">operations()</a></code>
+<p class="firstline">Cancels a tuning job. Starts an asynchronous cancellation request. The server makes a best effort to cancel the job, but success is not guaranteed. Clients can use GenAiTuningService.GetTuningJob or other methods to check whether the cancellation succeeded or whether the job completed despite cancellation. On successful cancellation, the tuning job is not deleted. Instead, its state is set to `CANCELLED`, and `error` is set to a status with a `google.rpc.Status.code` of 1, corresponding to `Code.CANCELLED`.</p>
+<p class="firstline">Creates a tuning job. A created tuning job will be subsequently executed to start the model tuning process.</p>
+<p class="firstline">Gets a tuning job.</p>
+<p class="firstline">Lists tuning jobs in a location.</p>
+  <code><a href="#rebaseTunedModel">rebaseTunedModel(parent, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Rebase a tuned model. A rebase operation takes a model that was previously tuned on a base model version, and retunes it on a new base model version. The rebase operation creates a new tuning job and a new tuned model.</p>
+  <pre>Cancels a tuning job. Starts an asynchronous cancellation request. The server makes a best effort to cancel the job, but success is not guaranteed. Clients can use GenAiTuningService.GetTuningJob or other methods to check whether the cancellation succeeded or whether the job completed despite cancellation. On successful cancellation, the tuning job is not deleted. Instead, its state is set to `CANCELLED`, and `error` is set to a status with a `google.rpc.Status.code` of 1, corresponding to `Code.CANCELLED`.
+  name: string, Required. The name of the tuning job to cancel. Format: `projects/{project}/locations/{location}/tuningJobs/{tuning_job}` (required)
+{ # Request message for GenAiTuningService.CancelTuningJob.
+  <pre>Creates a tuning job. A created tuning job will be subsequently executed to start the model tuning process.
+  parent: string, Required. The resource name of the location to create the tuning job in. Format: `projects/{project}/locations/{location}` (required)
+{ # Represents a TuningJob that runs with Google owned models.
+  &quot;baseModel&quot;: &quot;A String&quot;, # The base model that is being tuned. See [Supported models](https://cloud.google.com/vertex-ai/generative-ai/docs/model-reference/tuning#supported_models).
+  &quot;createTime&quot;: &quot;A String&quot;, # Output only. Time when the TuningJob was created.
+  &quot;description&quot;: &quot;A String&quot;, # Optional. The description of the TuningJob.
+  &quot;encryptionSpec&quot;: { # Represents a customer-managed encryption key specification that can be applied to a Vertex AI resource. # Customer-managed encryption key options for a TuningJob. If this is set, then all resources created by the TuningJob will be encrypted with the provided encryption key.
+  &quot;endTime&quot;: &quot;A String&quot;, # Output only. Time when the TuningJob entered any of the following JobStates: `JOB_STATE_SUCCEEDED`, `JOB_STATE_FAILED`, `JOB_STATE_CANCELLED`, `JOB_STATE_EXPIRED`.
+  &quot;evaluateDatasetRuns&quot;: [ # Output only. Evaluation runs for the Tuning Job.
+    { # Evaluate Dataset Run Result for Tuning Job.
+      &quot;checkpointId&quot;: &quot;A String&quot;, # Output only. The checkpoint id used in the evaluation run. Only populated when evaluating checkpoints.
+      &quot;error&quot;: { # The `Status` type defines a logical error model that is suitable for different programming environments, including REST APIs and RPC APIs. It is used by [gRPC](https://github.com/grpc). Each `Status` message contains three pieces of data: error code, error message, and error details. You can find out more about this error model and how to work with it in the [API Design Guide](https://cloud.google.com/apis/design/errors). # Output only. The error of the evaluation run if any.
+      &quot;evaluateDatasetResponse&quot;: { # The results from an evaluation run performed by the EvaluationService. # Output only. Results for EvaluationService.
+        &quot;aggregationOutput&quot;: { # The aggregation result for the entire dataset and all metrics. # Output only. Aggregation statistics derived from results of EvaluationService.
+          &quot;aggregationResults&quot;: [ # One AggregationResult per metric.
+            { # The aggregation result for a single metric.
+              &quot;aggregationMetric&quot;: &quot;A String&quot;, # Aggregation metric.
+              &quot;bleuMetricValue&quot;: { # Bleu metric value for an instance. # Results for bleu metric.
+              &quot;customCodeExecutionResult&quot;: { # Result for custom code execution metric. # Result for code execution metric.
+                &quot;score&quot;: 3.14, # Output only. Custom code execution score.
+              &quot;exactMatchMetricValue&quot;: { # Exact match metric value for an instance. # Results for exact match metric.
+              &quot;pointwiseMetricResult&quot;: { # Spec for pointwise metric result. # Result for pointwise metric.
+              &quot;rougeMetricValue&quot;: { # Rouge metric value for an instance. # Results for rouge metric.
+          &quot;dataset&quot;: { # The dataset used for evaluation. # The dataset used for evaluation &amp; aggregation.
+        &quot;outputInfo&quot;: { # Describes the info for output of EvaluationService. # Output only. Output info for EvaluationService.
+          &quot;gcsOutputDirectory&quot;: &quot;A String&quot;, # Output only. The full path of the Cloud Storage directory created, into which the evaluation results and aggregation results are written.
+      &quot;evaluationRun&quot;: &quot;A String&quot;, # Output only. The resource name of the evaluation run. Format: `projects/{project}/locations/{location}/evaluationRuns/{evaluation_run_id}`.
+      &quot;operationName&quot;: &quot;A String&quot;, # Output only. Deprecated: The updated architecture uses evaluation_run instead.
+  &quot;experiment&quot;: &quot;A String&quot;, # Output only. The Experiment associated with this TuningJob.
+  &quot;labels&quot;: { # Optional. The labels with user-defined metadata to organize TuningJob and generated resources such as Model and Endpoint. Label keys and values can be no longer than 64 characters (Unicode codepoints), can only contain lowercase letters, numeric characters, underscores and dashes. International characters are allowed. See https://goo.gl/xmQnxf for more information and examples of labels.
+  &quot;name&quot;: &quot;A String&quot;, # Output only. Identifier. Resource name of a TuningJob. Format: `projects/{project}/locations/{location}/tuningJobs/{tuning_job}`
+  &quot;preTunedModel&quot;: { # A pre-tuned model for continuous tuning. # The pre-tuned model for continuous tuning.
+    &quot;baseModel&quot;: &quot;A String&quot;, # Output only. The name of the base model this PreTunedModel was tuned from.
+    &quot;checkpointId&quot;: &quot;A String&quot;, # Optional. The source checkpoint id. If not specified, the default checkpoint will be used.
+    &quot;tunedModelName&quot;: &quot;A String&quot;, # The resource name of the Model. E.g., a model resource name with a specified version id or alias: `projects/{project}/locations/{location}/models/{model}@{version_id}` `projects/{project}/locations/{location}/models/{model}@{alias}` Or, omit the version id to use the default version: `projects/{project}/locations/{location}/models/{model}`
+  &quot;preferenceOptimizationSpec&quot;: { # Tuning Spec for Preference Optimization. # Tuning Spec for Preference Optimization.
+    &quot;exportLastCheckpointOnly&quot;: True or False, # Optional. If set to true, disable intermediate checkpoints for Preference Optimization and only the last checkpoint will be exported. Otherwise, enable intermediate checkpoints for Preference Optimization. Default is false.
+    &quot;hyperParameters&quot;: { # Hyperparameters for Preference Optimization. # Optional. Hyperparameters for Preference Optimization.
+      &quot;adapterSize&quot;: &quot;A String&quot;, # Optional. Adapter size for preference optimization.
+      &quot;beta&quot;: 3.14, # Optional. Weight for KL Divergence regularization.
+      &quot;epochCount&quot;: &quot;A String&quot;, # Optional. Number of complete passes the model makes over the entire training dataset during training.
+      &quot;learningRateMultiplier&quot;: 3.14, # Optional. Multiplier for adjusting the default learning rate.
+    &quot;trainingDatasetUri&quot;: &quot;A String&quot;, # Required. Cloud Storage path to file containing training dataset for preference optimization tuning. The dataset must be formatted as a JSONL file.
+    &quot;validationDatasetUri&quot;: &quot;A String&quot;, # Optional. Cloud Storage path to file containing validation dataset for preference optimization tuning. The dataset must be formatted as a JSONL file.
+  &quot;serviceAccount&quot;: &quot;A String&quot;, # The service account that the tuningJob workload runs as. If not specified, the Vertex AI Secure Fine-Tuned Service Agent in the project will be used. See https://cloud.google.com/iam/docs/service-agents#vertex-ai-secure-fine-tuning-service-agent Users starting the pipeline must have the `iam.serviceAccounts.actAs` permission on this service account.
+  &quot;startTime&quot;: &quot;A String&quot;, # Output only. Time when the TuningJob for the first time entered the `JOB_STATE_RUNNING` state.
+  &quot;supervisedTuningSpec&quot;: { # Tuning Spec for Supervised Tuning for first party models. # Tuning Spec for Supervised Fine Tuning.
+    &quot;evaluationConfig&quot;: { # Evaluation Config for Tuning Job. # Optional. Evaluation Config for Tuning Job.
+      &quot;autoraterConfig&quot;: { # The configs for autorater. This is applicable to both EvaluateInstances and EvaluateDataset. # Optional. Autorater config for evaluation.
+      &quot;inferenceGenerationConfig&quot;: { # Configuration for content generation. This message contains all the parameters that control how the model generates content. It allows you to influence the randomness, length, and structure of the output. # Optional. Configuration options for inference generation and outputs. If not set, default generation parameters are used.
+    &quot;exportLastCheckpointOnly&quot;: True or False, # Optional. If set to true, disable intermediate checkpoints for SFT and only the last checkpoint will be exported. Otherwise, enable intermediate checkpoints for SFT. Default is false.
+    &quot;hyperParameters&quot;: { # Hyperparameters for SFT. # Optional. Hyperparameters for SFT.
+      &quot;adapterSize&quot;: &quot;A String&quot;, # Optional. Adapter size for tuning.
+      &quot;learningRateMultiplier&quot;: 3.14, # Optional. Multiplier for adjusting the default learning rate. Mutually exclusive with `learning_rate`. This feature is only available for 1P models.
+    &quot;trainingDatasetUri&quot;: &quot;A String&quot;, # Required. Training dataset used for tuning. The dataset can be specified as either a Cloud Storage path to a JSONL file or as the resource name of a Vertex Multimodal Dataset.
+    &quot;validationDatasetUri&quot;: &quot;A String&quot;, # Optional. Validation dataset used for tuning. The dataset can be specified as either a Cloud Storage path to a JSONL file or as the resource name of a Vertex Multimodal Dataset.
+  &quot;tunedModel&quot;: { # The Model Registry Model and Online Prediction Endpoint associated with this TuningJob. # Output only. The tuned model resources associated with this TuningJob.
+    &quot;checkpoints&quot;: [ # Output only. The checkpoints associated with this TunedModel. This field is only populated for tuning jobs that enable intermediate checkpoints.
+      { # TunedModelCheckpoint for the Tuned Model of a Tuning Job.
+        &quot;endpoint&quot;: &quot;A String&quot;, # The Endpoint resource name that the checkpoint is deployed to. Format: `projects/{project}/locations/{location}/endpoints/{endpoint}`.
+    &quot;endpoint&quot;: &quot;A String&quot;, # Output only. A resource name of an Endpoint. Format: `projects/{project}/locations/{location}/endpoints/{endpoint}`.
+    &quot;model&quot;: &quot;A String&quot;, # Output only. The resource name of the TunedModel. Format: `projects/{project}/locations/{location}/models/{model}@{version_id}` When tuning from a base model, the version ID will be 1. For continuous tuning, if the provided tuned_model_display_name is set and different from parent model&#x27;s display name, the tuned model will have a new parent model with version 1. Otherwise the version id will be incremented by 1 from the last version ID in the parent model. E.g., `projects/{project}/locations/{location}/models/{model}@{last_version_id + 1}`
+  &quot;tunedModelDisplayName&quot;: &quot;A String&quot;, # Optional. The display name of the TunedModel. The name can be up to 128 characters long and can consist of any UTF-8 characters. For continuous tuning, tuned_model_display_name will by default use the same display name as the pre-tuned model. If a new display name is provided, the tuning job will create a new model instead of a new version.
+  &quot;tuningDataStats&quot;: { # The tuning data statistic values for TuningJob. # Output only. The tuning data statistics associated with this TuningJob.
+    &quot;preferenceOptimizationDataStats&quot;: { # Statistics computed for datasets used for preference optimization. # Output only. Statistics for preference optimization.
+      &quot;droppedExampleIndices&quot;: [ # Output only. A partial sample of the indices (starting from 1) of the dropped examples.
+      &quot;droppedExampleReasons&quot;: [ # Output only. For each index in `dropped_example_indices`, the user-facing reason why the example was dropped.
+      &quot;scoreVariancePerExampleDistribution&quot;: { # Distribution computed over a tuning dataset. # Output only. Dataset distributions for scores variance per example.
+        &quot;buckets&quot;: [ # Output only. Defines the histogram bucket.
+          { # Dataset bucket used to create a histogram for the distribution given a population of values.
+            &quot;count&quot;: &quot;A String&quot;, # Output only. Number of values in the bucket.
+            &quot;left&quot;: 3.14, # Output only. Left bound of the bucket.
+            &quot;right&quot;: 3.14, # Output only. Right bound of the bucket.
+        &quot;max&quot;: 3.14, # Output only. The maximum of the population values.
+        &quot;mean&quot;: 3.14, # Output only. The arithmetic mean of the values in the population.
+        &quot;median&quot;: 3.14, # Output only. The median of the values in the population.
+        &quot;min&quot;: 3.14, # Output only. The minimum of the population values.
+        &quot;p5&quot;: 3.14, # Output only. The 5th percentile of the values in the population.
+        &quot;p95&quot;: 3.14, # Output only. The 95th percentile of the values in the population.
+        &quot;sum&quot;: 3.14, # Output only. Sum of a given population of values.
+      &quot;scoresDistribution&quot;: { # Distribution computed over a tuning dataset. # Output only. Dataset distributions for scores.
+      &quot;totalBillableTokenCount&quot;: &quot;A String&quot;, # Output only. Number of billable tokens in the tuning dataset.
+      &quot;tuningDatasetExampleCount&quot;: &quot;A String&quot;, # Output only. Number of examples in the tuning dataset.
+      &quot;tuningStepCount&quot;: &quot;A String&quot;, # Output only. Number of tuning steps for this Tuning Job.
+      &quot;userDatasetExamples&quot;: [ # Output only. Sample user examples in the training dataset.
+        { # Input example for preference optimization.
+          &quot;completions&quot;: [ # List of completions for a given prompt.
+            { # Completion and its preference score.
+              &quot;completion&quot;: { # The structured data content of a message. A Content message contains a `role` field, which indicates the producer of the content, and a `parts` field, which contains the multi-part data of the message. # Single turn completion for the given prompt.
+              &quot;score&quot;: 3.14, # The score for the given completion.
+          &quot;contents&quot;: [ # Multi-turn contents that represents the Prompt.
+      &quot;userInputTokenDistribution&quot;: { # Distribution computed over a tuning dataset. # Output only. Dataset distributions for the user input tokens.
+      &quot;userOutputTokenDistribution&quot;: { # Distribution computed over a tuning dataset. # Output only. Dataset distributions for the user output tokens.
+    &quot;supervisedTuningDataStats&quot;: { # Tuning data statistics for Supervised Tuning. # The SFT Tuning data stats.
+      &quot;droppedExampleReasons&quot;: [ # Output only. For each index in `truncated_example_indices`, the user-facing reason why the example was dropped.
+      &quot;totalBillableCharacterCount&quot;: &quot;A String&quot;, # Output only. Number of billable characters in the tuning dataset.
+      &quot;totalTruncatedExampleCount&quot;: &quot;A String&quot;, # Output only. The number of examples in the dataset that have been dropped. An example can be dropped for reasons including: too many tokens, contains an invalid image, contains too many images, etc.
+      &quot;totalTuningCharacterCount&quot;: &quot;A String&quot;, # Output only. Number of tuning characters in the tuning dataset.
+      &quot;truncatedExampleIndices&quot;: [ # Output only. A partial sample of the indices (starting from 1) of the dropped examples.
+      &quot;userDatasetExamples&quot;: [ # Output only. Sample user messages in the training dataset uri.
+      &quot;userInputTokenDistribution&quot;: { # Dataset distribution for Supervised Tuning. # Output only. Dataset distributions for the user input tokens.
+        &quot;billableSum&quot;: &quot;A String&quot;, # Output only. Sum of a given population of values that are billable.
+            &quot;count&quot;: 3.14, # Output only. Number of values in the bucket.
+        &quot;sum&quot;: &quot;A String&quot;, # Output only. Sum of a given population of values.
+      &quot;userMessagePerExampleDistribution&quot;: { # Dataset distribution for Supervised Tuning. # Output only. Dataset distributions for the messages per example.
+      &quot;userOutputTokenDistribution&quot;: { # Dataset distribution for Supervised Tuning. # Output only. Dataset distributions for the user output tokens.
+  &quot;updateTime&quot;: &quot;A String&quot;, # Output only. Time when the TuningJob was most recently updated.
+  <pre>Gets a tuning job.
+  name: string, Required. The name of the tuning job to retrieve. Format: `projects/{project}/locations/{location}/tuningJobs/{tuning_job}` (required)
+  <pre>Lists tuning jobs in a location.
+  parent: string, Required. The resource name of the location to list the tuning jobs from. Format: `projects/{project}/locations/{location}` (required)
+  pageToken: string, Optional. The standard list page token. Typically obtained from ListTuningJobsResponse.next_page_token of the previous GenAiTuningService.ListTuningJobs call.
+    { # Response message for GenAiTuningService.ListTuningJobs
+  &quot;nextPageToken&quot;: &quot;A String&quot;, # A token to retrieve the next page of results. Pass this token in a subsequent [GenAiTuningService.ListTuningJobs] call to retrieve the next page of results.
+  &quot;tuningJobs&quot;: [ # The tuning jobs that match the request.
+    <code class="details" id="rebaseTunedModel">rebaseTunedModel(parent, body=None, x__xgafv=None)</code>
+  <pre>Rebase a tuned model. A rebase operation takes a model that was previously tuned on a base model version, and retunes it on a new base model version. The rebase operation creates a new tuning job and a new tuned model.
+  parent: string, Required. The resource name of the location in which to rebase the Model. Format: `projects/{project}/locations/{location}` (required)
+{ # Request message for GenAiTuningService.RebaseTunedModel.
+  &quot;artifactDestination&quot;: { # The Google Cloud Storage location where the output is to be written to. # Optional. The Google Cloud Storage location to write the artifacts to.
+  &quot;deployToSameEndpoint&quot;: True or False, # Optional. By default, rebasing a model creates a new endpoint for the new model. If this flag is set to true, the new model will be deployed to the same endpoint as the original model. WARNING: If you deploy to the same endpoint, the original model will be un-deployed and replaced by the new model.
+  &quot;tunedModelRef&quot;: { # TunedModel Reference for legacy model migration. # Required. A reference to the tuned model to rebase.
+    &quot;pipelineJob&quot;: &quot;A String&quot;, # Support migration from tuning job list page, from bison model to gemini model.
+    &quot;tunedModel&quot;: &quot;A String&quot;, # Support migration from model registry.
+    &quot;tuningJob&quot;: &quot;A String&quot;, # Support migration from tuning job list page, from gemini-1.0-pro-002 to 1.5 and above.
+  &quot;tuningJob&quot;: { # Represents a TuningJob that runs with Google owned models. # Optional. The tuning job to be updated. Users can use this field to overwrite tuning configs.

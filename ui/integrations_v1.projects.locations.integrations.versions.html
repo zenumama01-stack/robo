@@ -1,0 +1,81 @@
+<h1><a href="integrations_v1.html">Application Integration API</a> . <a href="integrations_v1.projects.html">projects</a> . <a href="integrations_v1.projects.locations.html">locations</a> . <a href="integrations_v1.projects.locations.integrations.html">integrations</a> . <a href="integrations_v1.projects.locations.integrations.versions.html">versions</a></h1>
+  <code><a href="integrations_v1.projects.locations.integrations.versions.testCases.html">testCases()</a></code>
+  <code><a href="#create">create(parent, body=None, createSampleIntegrations=None, newIntegration=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Create a integration with a draft version in the specified project.</p>
+<p class="firstline">Soft-deletes the integration. Changes the status of the integration to ARCHIVED. If the integration being ARCHIVED is tagged as "HEAD", the tag is removed from this snapshot and set to the previous non-ARCHIVED snapshot. The PUBLISH_REQUESTED, DUE_FOR_DELETION tags are removed too. This RPC throws an exception if the version being deleted is DRAFT, and if the `locked_by` user is not the same as the user performing the Delete. Audit fields updated include last_modified_timestamp, last_modified_by. Any existing lock is released when Deleting a integration. Currently, there is no undelete mechanism.</p>
+  <code><a href="#download">download(name, fileFormat=None, files=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Downloads an integration. Retrieves the `IntegrationVersion` for a given `integration_id` and returns the response as a string.</p>
+  <code><a href="#downloadJsonPackage">downloadJsonPackage(name, files=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Downloads an Integration version package like IntegrationVersion,Integration Config etc. Retrieves the IntegrationVersion package for a given `integration_id` and returns the response as a JSON.</p>
+<p class="firstline">Get a integration in the specified project.</p>
+  <code><a href="#list">list(parent, fieldMask=None, filter=None, orderBy=None, pageSize=None, pageToken=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Returns the list of all integration versions in the specified project.</p>
+<p class="firstline">Update a integration with a draft version in the specified project.</p>
+<p class="firstline">This RPC throws an exception if the integration is in ARCHIVED or ACTIVE state. This RPC throws an exception if the version being published is DRAFT, and if the `locked_by` user is not the same as the user performing the Publish. Audit fields updated include last_published_timestamp, last_published_by, last_modified_timestamp, last_modified_by. Any existing lock is on this integration is released.</p>
+  <code><a href="#unpublish">unpublish(name, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Sets the status of the ACTIVE integration to SNAPSHOT with a new tag "PREVIOUSLY_PUBLISHED" after validating it. The "HEAD" and "PUBLISH_REQUESTED" tags do not change. This RPC throws an exception if the version being snapshot is not ACTIVE. Audit fields added include action, action_by, action_timestamp.</p>
+<p class="firstline">Uploads an integration. The content can be a previously downloaded integration. Performs the same function as CreateDraftIntegrationVersion, but accepts input in a string format, which holds the complete representation of the IntegrationVersion content.</p>
+    <code class="details" id="create">create(parent, body=None, createSampleIntegrations=None, newIntegration=None, x__xgafv=None)</code>
+  <pre>Create a integration with a draft version in the specified project.
+  parent: string, Required. The parent resource where this version will be created. Format: projects/{project}/locations/{location}/integrations/{integration} (required)
+{ # The integration version definition.
+  createSampleIntegrations: boolean, Optional. Optional. Indicates if sample workflow should be created.
+  newIntegration: boolean, Set this flag to true, if draft version is to be created for a brand new integration. False, if the request is for an existing integration. For backward compatibility reasons, even if this flag is set to `false` and no existing integration is found, a new draft integration will still be created.
+  <pre>Soft-deletes the integration. Changes the status of the integration to ARCHIVED. If the integration being ARCHIVED is tagged as &quot;HEAD&quot;, the tag is removed from this snapshot and set to the previous non-ARCHIVED snapshot. The PUBLISH_REQUESTED, DUE_FOR_DELETION tags are removed too. This RPC throws an exception if the version being deleted is DRAFT, and if the `locked_by` user is not the same as the user performing the Delete. Audit fields updated include last_modified_timestamp, last_modified_by. Any existing lock is released when Deleting a integration. Currently, there is no undelete mechanism.
+  name: string, Required. The version to delete. Format: projects/{project}/locations/{location}/integrations/{integration}/versions/{version} (required)
+    <code class="details" id="download">download(name, fileFormat=None, files=None, x__xgafv=None)</code>
+  <pre>Downloads an integration. Retrieves the `IntegrationVersion` for a given `integration_id` and returns the response as a string.
+  name: string, Required. The version to download. Format: projects/{project}/locations/{location}/integrations/{integration}/versions/{version} (required)
+  fileFormat: string, File format for download request.
+      FILE_FORMAT_UNSPECIFIED - Unspecified file format
+      JSON - JSON File Format
+      YAML - YAML File Format
+  files: string, Optional. Integration related file to download like Integration Json, Config variable, testcase etc. (repeated)
+      INTEGRATION_FILE_UNSPECIFIED - Default value.
+      INTEGRATION - Integration file.
+      INTEGRATION_CONFIG_VARIABLES - Integration Config variables.
+    { # Response for DownloadIntegrationVersion.
+  &quot;content&quot;: &quot;A String&quot;, # String representation of the requested file.
+  &quot;files&quot;: [ # List containing String represendation for multiple file with type.
+    { # To store string representation of Integration file.
+      &quot;content&quot;: &quot;A String&quot;, # String representation of the file content.
+      &quot;file&quot;: &quot;A String&quot;, # File information like Integration version, Integration Config variables etc.
+    <code class="details" id="downloadJsonPackage">downloadJsonPackage(name, files=None, x__xgafv=None)</code>
+  <pre>Downloads an Integration version package like IntegrationVersion,Integration Config etc. Retrieves the IntegrationVersion package for a given `integration_id` and returns the response as a JSON.
+  name: string, Required. Integration version name Format: projects/{project}/locations/{location}/integrations/{integration}/versions/{version} (required)
+  files: string, Optional. Integration related file to download like Integration Version, Config variable, testcase etc. (repeated)
+    { # Response for DownloadJsonPackage.
+  &quot;files&quot;: [ # List containing JSON for multiple file with type information.
+    { # To store Integration version related file i.e. Integration Version, Config variable etc.
+      &quot;integrationConfig&quot;: { # Integration version config file
+      &quot;integrationVersion&quot;: { # The integration version definition. # Integration version
+      &quot;type&quot;: &quot;A String&quot;, # File information like Integration version, Integration Config variables etc.
+  <pre>Get a integration in the specified project.
+  name: string, Required. The version to retrieve. Format: projects/{project}/locations/{location}/integrations/{integration}/versions/{version} (required)
+    <code class="details" id="list">list(parent, fieldMask=None, filter=None, orderBy=None, pageSize=None, pageToken=None, x__xgafv=None)</code>
+  <pre>Returns the list of all integration versions in the specified project.
+  parent: string, Required. The parent resource where this version will be created. Format: projects/{project}/locations/{location}/integrations/{integration} Specifically, when parent equals: 1. projects//locations//integrations/, Meaning: &quot;List versions (with filter) for a particular integration&quot;. 2. projects//locations//integrations/- Meaning: &quot;List versions (with filter) for a client within a particular region&quot;. (required)
+  fieldMask: string, The field mask which specifies the particular data to be returned.
+  orderBy: string, The results would be returned in order you specified here. Currently supported sort keys are: Descending sort order for &quot;last\_modified\_time&quot;, &quot;created\_time&quot;, and &quot;snapshot\_number&quot;. Ascending sort order for `name`.
+  pageSize: integer, The maximum number of versions to return. The service may return fewer than this value. If unspecified, at most 50 versions will be returned. The maximum value is 1000; values above 1000 will be coerced to 1000.
+  pageToken: string, A page token, received from a previous `ListIntegrationVersions` call. Provide this to retrieve the subsequent page. When paginating, all other parameters provided to `ListIntegrationVersions` must match the call that provided the page token.
+    { # Response for ListIntegrationVersions.
+  &quot;integrationVersions&quot;: [ # The integrations which match the request.
+  &quot;noPermission&quot;: True or False, # Whether the user has no permission on the version or not.
+  <pre>Update a integration with a draft version in the specified project.
+  updateMask: string, Field mask specifying the fields in the above integration that have been modified and need to be updated.
+  <pre>This RPC throws an exception if the integration is in ARCHIVED or ACTIVE state. This RPC throws an exception if the version being published is DRAFT, and if the `locked_by` user is not the same as the user performing the Publish. Audit fields updated include last_published_timestamp, last_published_by, last_modified_timestamp, last_modified_by. Any existing lock is on this integration is released.
+  name: string, Required. The version to publish. Format: projects/{project}/locations/{location}/integrations/{integration}/versions/{version} (required)
+{ # Request for PublishIntegrationVersion.
+    { # Response for PublishIntegrationVersion.
+    <code class="details" id="unpublish">unpublish(name, body=None, x__xgafv=None)</code>
+  <pre>Sets the status of the ACTIVE integration to SNAPSHOT with a new tag &quot;PREVIOUSLY_PUBLISHED&quot; after validating it. The &quot;HEAD&quot; and &quot;PUBLISH_REQUESTED&quot; tags do not change. This RPC throws an exception if the version being snapshot is not ACTIVE. Audit fields added include action, action_by, action_timestamp.
+  name: string, Required. The version to deactivate. Format: projects/{project}/locations/{location}/integrations/{integration}/versions/{version} (required)
+{ # Request for UnpublishIntegrationVersion.
+  <pre>Uploads an integration. The content can be a previously downloaded integration. Performs the same function as CreateDraftIntegrationVersion, but accepts input in a string format, which holds the complete representation of the IntegrationVersion content.
+  parent: string, Required. The version to upload. Format: projects/{project}/locations/{location}/integrations/{integration} (required)
+{ # Request for UploadIntegrationVersion.
+  &quot;content&quot;: &quot;A String&quot;, # The textproto of the IntegrationVersion.
+  &quot;fileFormat&quot;: &quot;A String&quot;, # File format for upload request.
+    { # Response for UploadIntegrationVersion.
+  &quot;integrationVersion&quot;: { # The integration version definition. # The uploaded integration.

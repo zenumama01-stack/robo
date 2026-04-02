@@ -1,0 +1,25 @@
+<h1><a href="dataflow_v1b3.html">Dataflow API</a> . <a href="dataflow_v1b3.projects.html">projects</a> . <a href="dataflow_v1b3.projects.locations.html">locations</a> . <a href="dataflow_v1b3.projects.locations.jobs.html">jobs</a> . <a href="dataflow_v1b3.projects.locations.jobs.debug.html">debug</a></h1>
+  <code><a href="#getConfig">getConfig(projectId, location, jobId, body=None, x__xgafv=None)</a></code></p>
+  <code><a href="#getWorkerStacktraces">getWorkerStacktraces(projectId, location, jobId, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Get worker stacktraces from debug capture.</p>
+  <code><a href="#sendCapture">sendCapture(projectId, location, jobId, body=None, x__xgafv=None)</a></code></p>
+    <code class="details" id="getConfig">getConfig(projectId, location, jobId, body=None, x__xgafv=None)</code>
+  location: string, The [regional endpoint] (https://cloud.google.com/dataflow/docs/concepts/regional-endpoints) that contains the job specified by job_id. (required)
+    <code class="details" id="getWorkerStacktraces">getWorkerStacktraces(projectId, location, jobId, body=None, x__xgafv=None)</code>
+  <pre>Get worker stacktraces from debug capture.
+  jobId: string, The job for which to get stacktraces. (required)
+{ # Request to get worker stacktraces from debug capture.
+  &quot;endTime&quot;: &quot;A String&quot;, # The end time for the stacktrace query. The returned stacktraces will be a recent stack trace at or shortly before this time.
+  &quot;workerId&quot;: &quot;A String&quot;, # The worker for which to get stacktraces. The returned stacktraces will be for the SDK harness running on this worker.
+    { # Response to get worker stacktraces from debug capture.
+  &quot;sdks&quot;: [ # Repeated as unified worker may have multiple SDK processes.
+    { # A structured representation of an SDK.
+      &quot;sdkId&quot;: &quot;A String&quot;, # The SDK harness id.
+      &quot;stacks&quot;: [ # The stacktraces for the processes running on the SDK harness.
+        { # A structuredstacktrace for a process running on the worker.
+          &quot;stackContent&quot;: &quot;A String&quot;, # The raw stack trace.
+          &quot;threadCount&quot;: 42, # With java thread dumps we may get collapsed stacks e.g., N threads in stack &quot;&quot;. Instead of having to copy over the same stack trace N times, this int field captures this.
+          &quot;threadName&quot;: &quot;A String&quot;, # Thread name. For example, &quot;CommitThread-0,10,main&quot;
+          &quot;threadState&quot;: &quot;A String&quot;, # The state of the thread. For example, &quot;WAITING&quot;.
+          &quot;timestamp&quot;: &quot;A String&quot;, # Timestamp at which the stack was captured.
+    <code class="details" id="sendCapture">sendCapture(projectId, location, jobId, body=None, x__xgafv=None)</code>

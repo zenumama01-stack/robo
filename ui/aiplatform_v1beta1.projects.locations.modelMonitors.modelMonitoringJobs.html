@@ -1,0 +1,43 @@
+<h1><a href="aiplatform_v1beta1.html">Vertex AI API</a> . <a href="aiplatform_v1beta1.projects.html">projects</a> . <a href="aiplatform_v1beta1.projects.locations.html">locations</a> . <a href="aiplatform_v1beta1.projects.locations.modelMonitors.html">modelMonitors</a> . <a href="aiplatform_v1beta1.projects.locations.modelMonitors.modelMonitoringJobs.html">modelMonitoringJobs</a></h1>
+  <code><a href="#create">create(parent, body=None, modelMonitoringJobId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Creates a ModelMonitoringJob.</p>
+<p class="firstline">Deletes a ModelMonitoringJob.</p>
+<p class="firstline">Gets a ModelMonitoringJob.</p>
+<p class="firstline">Lists ModelMonitoringJobs. Callers may choose to read across multiple Monitors as per [AIP-159](https://google.aip.dev/159) by using '-' (the hyphen or dash character) as a wildcard character instead of modelMonitor id in the parent. Format `projects/{project_id}/locations/{location}/moodelMonitors/-/modelMonitoringJobs`</p>
+    <code class="details" id="create">create(parent, body=None, modelMonitoringJobId=None, x__xgafv=None)</code>
+  <pre>Creates a ModelMonitoringJob.
+  parent: string, Required. The parent of the ModelMonitoringJob. Format: `projects/{project}/locations/{location}/modelMoniitors/{model_monitor}` (required)
+{ # Represents a model monitoring job that analyze dataset using different monitoring algorithm.
+  &quot;createTime&quot;: &quot;A String&quot;, # Output only. Timestamp when this ModelMonitoringJob was created.
+  &quot;displayName&quot;: &quot;A String&quot;, # The display name of the ModelMonitoringJob. The name can be up to 128 characters long and can consist of any UTF-8.
+  &quot;jobExecutionDetail&quot;: { # Represent the execution details of the job. # Output only. Execution results for all the monitoring objectives.
+    &quot;baselineDatasets&quot;: [ # Processed baseline datasets.
+      { # Processed dataset information.
+        &quot;location&quot;: &quot;A String&quot;, # Actual data location of the processed dataset.
+        &quot;timeRange&quot;: { # Represents a time interval, encoded as a Timestamp start (inclusive) and a Timestamp end (exclusive). The start must be less than or equal to the end. When the start equals the end, the interval is empty (matches no time). When both start and end are unspecified, the interval matches any time. # Dataset time range information if any.
+    &quot;error&quot;: { # The `Status` type defines a logical error model that is suitable for different programming environments, including REST APIs and RPC APIs. It is used by [gRPC](https://github.com/grpc). Each `Status` message contains three pieces of data: error code, error message, and error details. You can find out more about this error model and how to work with it in the [API Design Guide](https://cloud.google.com/apis/design/errors). # Additional job error status.
+    &quot;objectiveStatus&quot;: { # Status of data processing for each monitoring objective. Key is the objective.
+      &quot;a_key&quot;: { # The `Status` type defines a logical error model that is suitable for different programming environments, including REST APIs and RPC APIs. It is used by [gRPC](https://github.com/grpc). Each `Status` message contains three pieces of data: error code, error message, and error details. You can find out more about this error model and how to work with it in the [API Design Guide](https://cloud.google.com/apis/design/errors).
+    &quot;targetDatasets&quot;: [ # Processed target datasets.
+  &quot;modelMonitoringSpec&quot;: { # Monitoring monitoring job spec. It outlines the specifications for monitoring objectives, notifications, and result exports. # Monitoring monitoring job spec. It outlines the specifications for monitoring objectives, notifications, and result exports. If left blank, the default monitoring specifications from the top-level resource &#x27;ModelMonitor&#x27; will be applied. If provided, we will use the specification defined here rather than the default one.
+    &quot;notificationSpec&quot;: { # Notification spec(email, notification channel) for model monitoring statistics/alerts. # The model monitoring notification spec.
+    &quot;objectiveSpec&quot;: { # Monitoring objectives spec. # The monitoring objective spec.
+      &quot;baselineDataset&quot;: { # Model monitoring data input spec. # Baseline dataset. It could be the training dataset or production serving dataset from a previous period.
+      &quot;explanationSpec&quot;: { # Specification of Model explanation. # The explanation spec. This spec is required when the objectives spec includes feature attribution objectives.
+      &quot;tabularObjective&quot;: { # Tabular monitoring objective. # Tabular monitoring objective.
+      &quot;targetDataset&quot;: { # Model monitoring data input spec. # Target dataset.
+    &quot;outputSpec&quot;: { # Specification for the export destination of monitoring results, including metrics, logs, etc. # The Output destination spec for metrics, error logs, etc.
+  &quot;name&quot;: &quot;A String&quot;, # Output only. Resource name of a ModelMonitoringJob. Format: `projects/{project_id}/locations/{location_id}/modelMonitors/{model_monitor_id}/modelMonitoringJobs/{model_monitoring_job_id}`
+  &quot;schedule&quot;: &quot;A String&quot;, # Output only. Schedule resource name. It will only appear when this job is triggered by a schedule.
+  &quot;scheduleTime&quot;: &quot;A String&quot;, # Output only. Timestamp when this ModelMonitoringJob was scheduled. It will only appear when this job is triggered by a schedule.
+  &quot;state&quot;: &quot;A String&quot;, # Output only. The state of the monitoring job. * When the job is still creating, the state will be &#x27;JOB_STATE_PENDING&#x27;. * Once the job is successfully created, the state will be &#x27;JOB_STATE_RUNNING&#x27;. * Once the job is finished, the state will be one of &#x27;JOB_STATE_FAILED&#x27;, &#x27;JOB_STATE_SUCCEEDED&#x27;, &#x27;JOB_STATE_PARTIALLY_SUCCEEDED&#x27;.
+  &quot;updateTime&quot;: &quot;A String&quot;, # Output only. Timestamp when this ModelMonitoringJob was updated most recently.
+  modelMonitoringJobId: string, Optional. The ID to use for the Model Monitoring Job, which will become the final component of the model monitoring job resource name. The maximum length is 63 characters, and valid characters are `/^[a-z]([a-z0-9-]{0,61}[a-z0-9])?$/`.
+  <pre>Deletes a ModelMonitoringJob.
+  name: string, Required. The resource name of the model monitoring job to delete. Format: `projects/{project}/locations/{location}/modelMonitors/{model_monitor}/modelMonitoringJobs/{model_monitoring_job}` (required)
+  <pre>Gets a ModelMonitoringJob.
+  name: string, Required. The resource name of the ModelMonitoringJob. Format: `projects/{project}/locations/{location}/modelMonitors/{model_monitor}/modelMonitoringJobs/{model_monitoring_job}` (required)
+  <pre>Lists ModelMonitoringJobs. Callers may choose to read across multiple Monitors as per [AIP-159](https://google.aip.dev/159) by using &#x27;-&#x27; (the hyphen or dash character) as a wildcard character instead of modelMonitor id in the parent. Format `projects/{project_id}/locations/{location}/moodelMonitors/-/modelMonitoringJobs`
+  parent: string, Required. The parent of the ModelMonitoringJob. Format: `projects/{project}/locations/{location}/modelMonitors/{model_monitor}` (required)
+    { # Response message for ModelMonitoringService.ListModelMonitoringJobs.
+  &quot;modelMonitoringJobs&quot;: [ # A list of ModelMonitoringJobs that matches the specified filter in the request.

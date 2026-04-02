@@ -1,0 +1,67 @@
+        <div class="template-main-area" style="display: flex; flex-direction: column; flex: 1; min-height: 0; overflow-y: auto;">
+            <div class="template-header" style="flex-shrink: 0; padding: 20px; background: #f8f9fa; border-bottom: 2px solid #e9ecef;">
+                    <!-- Left: Template Info -->
+                            <i class="fa-solid fa-file-code" style="color: #17a2b8; font-size: 1.4em;"></i>
+                                              name="templateName"
+                                              placeholder="Enter template name..."
+                                <h4 style="margin: 0; color: #495057; font-weight: 600; flex: 1;">{{ record.Name || 'Unnamed Template' }}</h4>
+                                @if (record.IsActive) {
+                                    <span style="background: #28a745; color: white; padding: 4px 10px; border-radius: 12px; font-size: 0.75em; font-weight: 500;">
+                                        <i class="fa-solid fa-check-circle"></i> Active
+                                    <span style="background: #6c757d; color: white; padding: 4px 10px; border-radius: 12px; font-size: 0.75em; font-weight: 500;">
+                                        <i class="fa-solid fa-pause-circle"></i> Inactive
+                        <!-- Category and Active toggle when in edit mode -->
+                            <div style="display: flex; gap: 16px; margin-bottom: 12px; flex-wrap: wrap; align-items: center;">
+                                    <label style="display: block; margin-bottom: 4px; font-weight: 600; color: #495057; font-size: 0.9em;">Category</label>
+                                    <kendo-combobox [(ngModel)]="record.CategoryID"
+                                                   [allowCustom]="true"
+                                                   (valueChange)="onCategoryChange($event)"
+                                                   placeholder="Select or enter new category..."
+                                                   style="width: 250px;">
+                                    </kendo-combobox>
+                                    <label style="display: block; margin-bottom: 4px; font-weight: 600; color: #495057; font-size: 0.9em;">Active</label>
+                                    <kendo-switch [(ngModel)]="record.IsActive" name="isActive"></kendo-switch>
+                                           placeholder="Enter template description..."
+                        <!-- Quick Info Row -->
+                        <div style="display: flex; align-items: center; gap: 16px; flex-wrap: wrap;">
+                            @if (record.Category) {
+                                <div style="display: flex; align-items: center; gap: 6px; font-size: 0.85em;">
+                                    <span style="color: #495057; font-weight: 500;">{{ record.Category }}</span>
+                                <i class="fa-solid fa-file-lines" style="color: #6c757d;"></i>
+                                <span style="color: #6c757d;">Contents:</span>
+                                <span style="color: #495057; font-weight: 500;">{{ templateContents.length }}</span>
+                    <div style="display: flex; flex-direction: column; gap: 8px; align-items: flex-end;">
+                                    (click)="runTemplate()"
+                                    title="Run Template">
+                            @if (templateContents.length > 0) {
+                                    {{ templateContents.length }}
+                    <div style="padding: 8px; min-height: 400px;">
+                            [template]="record"
+                            (contentChange)="onSharedTemplateContentChange($event)"
+                            (runTemplate)="onSharedTemplateRun($event)"
+                            style="height: 100%; display: block;">
+                <!-- Details Section -->
+                                    FieldName="UserPrompt"
+                                    FieldName="ActiveAt"
+                                    Type="datepicker"
+                                    FieldName="DisabledAt"
+                                    FieldName="IsActive"
+                                    FieldName="Category"
+                                    FieldName="User"
+                            <mj-template-params-grid
+                                [editMode]="EditMode">
+                            </mj-template-params-grid>
+                <!-- AI Prompts Section -->
+                                <i class="fa-solid fa-robot" style="color: #6c757d;"></i>
+                                AI Prompts
+                                [Params]="BuildRelationshipViewParamsByEntityName('MJ: AI Prompts','TemplateID')"
+                <!-- Entity Documents Section -->
+                                <i class="fa-solid fa-file-text" style="color: #6c757d;"></i>
+                                Entity Documents
+                                [Params]="BuildRelationshipViewParamsByEntityName('MJ: Entity Documents','TemplateID')"
+                                [NewRecordValues]="NewRecordValues('MJ: Entity Documents')"
+        <!-- Template Parameter Dialog -->
+        <mj-template-param-dialog
+            [(isVisible)]="showParamDialog"
+            (onClose)="onParamDialogClose()">
+        </mj-template-param-dialog>

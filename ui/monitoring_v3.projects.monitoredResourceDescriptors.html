@@ -1,0 +1,9 @@
+<h1><a href="monitoring_v3.html">Cloud Monitoring API</a> . <a href="monitoring_v3.projects.html">projects</a> . <a href="monitoring_v3.projects.monitoredResourceDescriptors.html">monitoredResourceDescriptors</a></h1>
+<p class="firstline">Gets a single monitored resource descriptor.</p>
+<p class="firstline">Lists monitored resource descriptors that match a filter.</p>
+  <pre>Gets a single monitored resource descriptor.
+  name: string, Required. The monitored resource descriptor to get. The format is: projects/[PROJECT_ID_OR_NUMBER]/monitoredResourceDescriptors/[RESOURCE_TYPE] The [RESOURCE_TYPE] is a predefined type, such as cloudsql_database. (required)
+  <pre>Lists monitored resource descriptors that match a filter.
+  filter: string, An optional filter (https://cloud.google.com/monitoring/api/v3/filters) describing the descriptors to be returned. The filter can reference the descriptor&#x27;s type and labels. For example, the following filter returns only Google Compute Engine descriptors that have an id label: resource.type = starts_with(&quot;gce_&quot;) AND resource.label:id 
+    { # The ListMonitoredResourceDescriptors response.
+  &quot;resourceDescriptors&quot;: [ # The monitored resource descriptors that are available to this project and that match filter, if present.

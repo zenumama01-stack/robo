@@ -1,0 +1,35 @@
+<h1><a href="mybusinessqanda_v1.html">My Business Q&A API</a> . <a href="mybusinessqanda_v1.locations.html">locations</a> . <a href="mybusinessqanda_v1.locations.questions.html">questions</a></h1>
+  <code><a href="mybusinessqanda_v1.locations.questions.answers.html">answers()</a></code>
+<p class="firstline">Adds a question for the specified location.</p>
+<p class="firstline">Deletes a specific question written by the current user.</p>
+  <code><a href="#list">list(parent, answersPerQuestion=None, filter=None, orderBy=None, pageSize=None, pageToken=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Returns the paginated list of questions and some of its answers for a specified location. This operation is only valid if the specified location is verified.</p>
+<p class="firstline">Updates a specific question written by the current user.</p>
+  <pre>Adds a question for the specified location.
+  parent: string, Required. The name of the location to write a question for. (required)
+{ # Represents a single question and some of its answers.
+  &quot;author&quot;: { # Represents the author of a question or answer # Output only. The author of the question.
+  &quot;createTime&quot;: &quot;A String&quot;, # Output only. The timestamp for when the question was written.
+  &quot;name&quot;: &quot;A String&quot;, # Immutable. The unique name for the question. locations/*/questions/* This field will be ignored if set during question creation.
+  &quot;text&quot;: &quot;A String&quot;, # Required. The text of the question. It should contain at least three words and the total length should be greater than or equal to 10 characters. The maximum length is 4096 characters.
+  &quot;topAnswers&quot;: [ # Output only. A list of answers to the question, sorted by upvotes. This may not be a complete list of answers depending on the request parameters (answers_per_question)
+  &quot;totalAnswerCount&quot;: 42, # Output only. The total number of answers posted for this question.
+  &quot;updateTime&quot;: &quot;A String&quot;, # Output only. The timestamp for when the question was last modified.
+  &quot;upvoteCount&quot;: 42, # Output only. The number of upvotes for the question.
+  <pre>Deletes a specific question written by the current user.
+  name: string, Required. The name of the question to delete. (required)
+    <code class="details" id="list">list(parent, answersPerQuestion=None, filter=None, orderBy=None, pageSize=None, pageToken=None, x__xgafv=None)</code>
+  <pre>Returns the paginated list of questions and some of its answers for a specified location. This operation is only valid if the specified location is verified.
+  parent: string, Required. The name of the location to fetch questions for. (required)
+  answersPerQuestion: integer, Optional. How many answers to fetch per question. The default and maximum `answers_per_question` values are 10.
+  filter: string, Optional. A filter constraining the questions to return. The only filter currently supported is &quot;ignore_answered=true&quot;
+  orderBy: string, Optional. The order to return the questions. Valid options include &#x27;update_time desc&#x27; and &#x27;upvote_count desc&#x27;, which will return the questions sorted descendingly by the requested field. The default sort order is &#x27;update_time desc&#x27;.
+  pageSize: integer, Optional. How many questions to fetch per page. The default and maximum `page_size` values are 10.
+  pageToken: string, Optional. If specified, the next page of questions is retrieved.
+    { # Response message for QuestionsAndAnswers.ListQuestions
+  &quot;nextPageToken&quot;: &quot;A String&quot;, # If the number of questions exceeds the requested max page size, this field is populated with a token to fetch the next page of questions on a subsequent call. If there are no more questions, this field is not present in the response.
+  &quot;questions&quot;: [ # The requested questions,
+  &quot;totalSize&quot;: 42, # The total number of questions posted for this location across all pages.
+  <pre>Updates a specific question written by the current user.
+  name: string, Immutable. The unique name for the question. locations/*/questions/* This field will be ignored if set during question creation. (required)
+  updateMask: string, Required. The specific fields to update. Only question text can be updated.

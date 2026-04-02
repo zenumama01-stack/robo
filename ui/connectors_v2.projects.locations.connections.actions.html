@@ -1,0 +1,52 @@
+<h1><a href="connectors_v2.html">Connectors API</a> . <a href="connectors_v2.projects.html">projects</a> . <a href="connectors_v2.projects.locations.html">locations</a> . <a href="connectors_v2.projects.locations.connections.html">connections</a> . <a href="connectors_v2.projects.locations.connections.actions.html">actions</a></h1>
+<p class="firstline">Executes an action with the name specified in the request. The input parameters for executing the action are passed through the body of the ExecuteAction request.</p>
+  <code><a href="#get">get(name, executionConfig_headers=None, view=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Gets the schema of the given action.</p>
+  <code><a href="#list">list(parent, executionConfig_headers=None, pageSize=None, pageToken=None, view=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Gets the schema of all the actions supported by the connector.</p>
+  <pre>Executes an action with the name specified in the request. The input parameters for executing the action are passed through the body of the ExecuteAction request.
+  name: string, Required. Resource name of the Action. Format: projects/{project}/locations/{location}/connections/{connection}/actions/{action} (required)
+{ # Request message for ActionService.ExecuteAction
+  &quot;executionConfig&quot;: { # Execution config for the request.
+    &quot;headers&quot;: &quot;A String&quot;, # headers to be used for the request. For example: headers:&#x27;{&quot;x-integration-connectors-managed-connection-id&quot;:&quot;conn-id&quot;,&quot;x-integration-connectors-runtime-config&quot;:&quot;runtime-cfg&quot;}&#x27;
+  &quot;parameters&quot;: { # Parameters for executing the action. The parameters can be key/value pairs or nested structs.
+    { # Response message for ActionService.ExecuteAction
+  &quot;metadata&quot;: { # Metadata like service latency, etc.
+  &quot;results&quot;: [ # In the case of successful invocation of the specified action, the results Struct contains values based on the response of the action invoked. 1. If the action execution produces any entities as a result, they are returned as an array of Structs with the &#x27;key&#x27; being the field name and the &#x27;value&#x27; being the value of that field in each result row. { &#x27;results&#x27;: [{&#x27;key&#x27;: &#x27;value&#x27;}, ...] }
+    <code class="details" id="get">get(name, executionConfig_headers=None, view=None, x__xgafv=None)</code>
+  <pre>Gets the schema of the given action.
+  executionConfig_headers: string, headers to be used for the request. For example: headers:&#x27;{&quot;x-integration-connectors-managed-connection-id&quot;:&quot;conn-id&quot;,&quot;x-integration-connectors-runtime-config&quot;:&quot;runtime-cfg&quot;}&#x27;
+  view: string, Specified view of the action schema.
+      ACTION_SCHEMA_VIEW_UNSPECIFIED - VIEW_UNSPECIFIED. The unset value. Defaults to BASIC View.
+      ACTION_SCHEMA_VIEW_BASIC - Return basic action schema.
+      ACTION_SCHEMA_VIEW_ENRICHED - Return enriched action schema.
+    { # Action message contains metadata information about a single action present in the external system.
+  &quot;description&quot;: &quot;A String&quot;, # Brief Description of action
+  &quot;displayName&quot;: &quot;A String&quot;, # Display Name of action to be shown on client side
+  &quot;inputJsonSchema&quot;: { # JsonSchema representation of schema metadata # JsonSchema representation of this actions&#x27;s input schema
+  &quot;inputParameters&quot;: [ # List containing input parameter metadata.
+    { # Input Parameter message contains metadata about the parameters required for executing an Action.
+      &quot;dataType&quot;: &quot;A String&quot;, # The data type of the Parameter
+      &quot;jsonSchema&quot;: { # JsonSchema representation of schema metadata # JsonSchema of the parameter, applicable only if parameter is of type `STRUCT`
+      &quot;name&quot;: &quot;A String&quot;, # Name of the Parameter.
+  &quot;name&quot;: &quot;A String&quot;, # Name of the action.
+  &quot;resultJsonSchema&quot;: { # JsonSchema representation of schema metadata # JsonSchema representation of this actions&#x27;s result schema
+  &quot;resultMetadata&quot;: [ # List containing the metadata of result fields.
+    { # Result Metadata message contains metadata about the result returned after executing an Action.
+      &quot;dataType&quot;: &quot;A String&quot;, # The data type of the metadata field
+      &quot;description&quot;: &quot;A String&quot;, # A brief description of the metadata field.
+      &quot;jsonSchema&quot;: { # JsonSchema representation of schema metadata # JsonSchema of the result, applicable only if parameter is of type `STRUCT`
+      &quot;name&quot;: &quot;A String&quot;, # Name of the metadata field.
+    <code class="details" id="list">list(parent, executionConfig_headers=None, pageSize=None, pageToken=None, view=None, x__xgafv=None)</code>
+  <pre>Gets the schema of all the actions supported by the connector.
+  parent: string, Required. Parent resource name of the Action. Format: projects/{project}/locations/{location}/connections/{connection} (required)
+  pageSize: integer, Number of Actions to return. Defaults to 25.
+  pageToken: string, Page token, return from a previous ListActions call, that can be used retrieve the next page of content. If unspecified, the request returns the first page of actions.
+  view: string, Specifies which fields of the Action are returned in the response.
+      ACTION_VIEW_UNSPECIFIED - VIEW_UNSPECIFIED. The unset value Defaults to FULL View.
+      ACTION_VIEW_BASIC - Return only action names.
+      ACTION_VIEW_FULL - Return actions with schema.
+    { # Response message for ActionService.ListActions
+  &quot;actions&quot;: [ # List of action metadata.
+  &quot;nextPageToken&quot;: &quot;A String&quot;, # Next page token if more actions available.
+  &quot;unsupportedActionNames&quot;: [ # List of actions which contain unsupported Datatypes. Check datatype.proto for more information.

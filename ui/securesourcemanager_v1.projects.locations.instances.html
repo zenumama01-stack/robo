@@ -1,0 +1,24 @@
+<h1><a href="securesourcemanager_v1.html">Secure Source Manager API</a> . <a href="securesourcemanager_v1.projects.html">projects</a> . <a href="securesourcemanager_v1.projects.locations.html">locations</a> . <a href="securesourcemanager_v1.projects.locations.instances.html">instances</a></h1>
+<p class="firstline">Creates a new instance in a given project and location.</p>
+  <pre>Creates a new instance in a given project and location.
+{ # A resource that represents a Secure Source Manager instance.
+  &quot;hostConfig&quot;: { # HostConfig has different instance endpoints. # Output only. A list of hostnames for this instance.
+    &quot;api&quot;: &quot;A String&quot;, # Output only. API hostname.
+    &quot;gitHttp&quot;: &quot;A String&quot;, # Output only. Git HTTP hostname.
+    &quot;gitSsh&quot;: &quot;A String&quot;, # Output only. Git SSH hostname.
+    &quot;html&quot;: &quot;A String&quot;, # Output only. HTML hostname.
+  &quot;kmsKey&quot;: &quot;A String&quot;, # Optional. Immutable. Customer-managed encryption key name, in the format projects/*/locations/*/keyRings/*/cryptoKeys/*.
+  &quot;name&quot;: &quot;A String&quot;, # Optional. A unique identifier for an instance. The name should be of the format: `projects/{project_number}/locations/{location_id}/instances/{instance_id}` `project_number`: Maps to a unique int64 id assigned to each project. `location_id`: Refers to the region where the instance will be deployed. Since Secure Source Manager is a regional service, it must be one of the valid GCP regions. `instance_id`: User provided name for the instance, must be unique for a project_number and location_id combination.
+  &quot;privateConfig&quot;: { # PrivateConfig includes settings for private instance. # Optional. Private settings for private instance.
+    &quot;caPool&quot;: &quot;A String&quot;, # Optional. Immutable. CA pool resource, resource must in the format of `projects/{project}/locations/{location}/caPools/{ca_pool}`.
+    &quot;httpServiceAttachment&quot;: &quot;A String&quot;, # Output only. Service Attachment for HTTP, resource is in the format of `projects/{project}/regions/{region}/serviceAttachments/{service_attachment}`.
+    &quot;isPrivate&quot;: True or False, # Required. Immutable. Indicate if it&#x27;s private instance.
+    &quot;pscAllowedProjects&quot;: [ # Optional. Additional allowed projects for setting up PSC connections. Instance host project is automatically allowed and does not need to be included in this list.
+    &quot;sshServiceAttachment&quot;: &quot;A String&quot;, # Output only. Service Attachment for SSH, resource is in the format of `projects/{project}/regions/{region}/serviceAttachments/{service_attachment}`.
+  &quot;state&quot;: &quot;A String&quot;, # Output only. Current state of the instance.
+  &quot;stateNote&quot;: &quot;A String&quot;, # Output only. An optional field providing information about the current instance state.
+  &quot;workforceIdentityFederationConfig&quot;: { # WorkforceIdentityFederationConfig allows this instance to support users from external identity providers. # Optional. Configuration for Workforce Identity Federation to support third party identity provider. If unset, defaults to the Google OIDC IdP.
+    &quot;enabled&quot;: True or False, # Optional. Immutable. Whether Workforce Identity Federation is enabled.
+  instanceId: string, Required. ID of the instance to be created.
+  filter: string, Filter for filtering results.
+  &quot;instances&quot;: [ # The list of instances.

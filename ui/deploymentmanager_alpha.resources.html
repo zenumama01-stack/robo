@@ -1,0 +1,31 @@
+<h1><a href="deploymentmanager_alpha.html">Cloud Deployment Manager V2 API</a> . <a href="deploymentmanager_alpha.resources.html">resources</a></h1>
+  <code><a href="#get">get(project, deployment, resource, header_bypassBillingFilter=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Gets information about a single resource.</p>
+<p class="firstline">Lists all resources in a given deployment.</p>
+    <code class="details" id="get">get(project, deployment, resource, header_bypassBillingFilter=None, x__xgafv=None)</code>
+  <pre>Gets information about a single resource.
+  resource: string, The name of the resource for this request. (required)
+  &quot;accessControl&quot;: { # The access controls set on the resource. # The Access Control Policy set on this resource.
+    &quot;gcpIamPolicy&quot;: &quot;A String&quot;, # The GCP IAM Policy to set on the resource.
+  &quot;finalProperties&quot;: &quot;A String&quot;, # Output only. The evaluated properties of the resource with references expanded. Returned as serialized YAML.
+  &quot;lastUsedCredential&quot;: { # The credential used by Deployment Manager and TypeProvider. Only one of the options is permitted. # Output only. The last used credential that successfully created/updated the resource.
+  &quot;manifest&quot;: &quot;A String&quot;, # Output only. URL of the manifest representing the current configuration of this resource.
+  &quot;name&quot;: &quot;A String&quot;, # Output only. The name of the resource as it appears in the YAML config.
+  &quot;properties&quot;: &quot;A String&quot;, # Output only. The current properties of the resource before any references have been filled in. Returned as serialized YAML.
+  &quot;runtimePolicies&quot;: [ # Output only. In case this is an action, it will show the runtimePolicies on which this action will run in the deployment
+  &quot;type&quot;: &quot;A String&quot;, # Output only. The type of the resource, for example `compute.v1.instance`, or `cloudfunctions.v1beta1.function`.
+  &quot;update&quot;: { # Output only. If Deployment Manager is currently updating or previewing an update to this resource, the updated configuration appears here.
+    &quot;accessControl&quot;: { # The access controls set on the resource. # The Access Control Policy to set on this resource after updating the resource itself.
+    &quot;credential&quot;: { # The credential used by Deployment Manager and TypeProvider. Only one of the options is permitted. # Output only. The credential that will be used creating/updating this resource.
+    &quot;error&quot;: { # Output only. If errors are generated during update of the resource, this field will be populated.
+    &quot;finalProperties&quot;: &quot;A String&quot;, # Output only. The expanded properties of the resource with reference values expanded. Returned as serialized YAML.
+    &quot;intent&quot;: &quot;A String&quot;, # Output only. The intent of the resource: `PREVIEW`, `UPDATE`, or `CANCEL`.
+    &quot;manifest&quot;: &quot;A String&quot;, # Output only. URL of the manifest representing the update configuration of this resource.
+    &quot;properties&quot;: &quot;A String&quot;, # Output only. The set of updated properties for this resource, before references are expanded. Returned as serialized YAML.
+    &quot;runtimePolicies&quot;: [ # Output only. In case this is an action, it will show the runtimePolicies that this action will have after updating the deployment.
+    &quot;state&quot;: &quot;A String&quot;, # Output only. The state of the resource.
+    &quot;warnings&quot;: [ # Output only. If warning messages are generated during processing of this resource, this field will be populated.
+  &quot;url&quot;: &quot;A String&quot;, # Output only. The URL of the actual resource.
+  <pre>Lists all resources in a given deployment.
+    { # A response containing a partial list of resources and a page token used to build the next request if the request has been truncated.
+  &quot;resources&quot;: [ # Resources contained in this list response.

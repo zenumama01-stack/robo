@@ -1,0 +1,37 @@
+<h1><a href="file_v1.html">Cloud Filestore API</a> . <a href="file_v1.projects.html">projects</a> . <a href="file_v1.projects.locations.html">locations</a> . <a href="file_v1.projects.locations.backups.html">backups</a></h1>
+<p class="firstline">Creates a backup.</p>
+<p class="firstline">Deletes a backup.</p>
+<p class="firstline">Gets the details of a specific backup.</p>
+<p class="firstline">Lists all backups in a project for either a specified location or for all locations.</p>
+<p class="firstline">Updates the settings of a specific backup.</p>
+  <pre>Creates a backup.
+  parent: string, Required. The backup&#x27;s project and location, in the format `projects/{project_number}/locations/{location}`. In Filestore, backup locations map to Google Cloud regions, for example **us-west1**. (required)
+{ # A Filestore backup.
+  &quot;capacityGb&quot;: &quot;A String&quot;, # Output only. Capacity of the source file share when the backup was created.
+  &quot;createTime&quot;: &quot;A String&quot;, # Output only. The time when the backup was created.
+  &quot;description&quot;: &quot;A String&quot;, # A description of the backup with 2048 characters or less. Requests with longer descriptions will be rejected.
+  &quot;downloadBytes&quot;: &quot;A String&quot;, # Output only. Amount of bytes that will be downloaded if the backup is restored. This may be different than storage bytes, since sequential backups of the same disk will share storage.
+  &quot;fileSystemProtocol&quot;: &quot;A String&quot;, # Output only. The file system protocol of the source Filestore instance that this backup is created from.
+  &quot;kmsKey&quot;: &quot;A String&quot;, # Immutable. KMS key name used for data encryption.
+  &quot;labels&quot;: { # Resource labels to represent user provided metadata.
+  &quot;name&quot;: &quot;A String&quot;, # Output only. The resource name of the backup, in the format `projects/{project_number}/locations/{location_id}/backups/{backup_id}`.
+  &quot;sourceFileShare&quot;: &quot;A String&quot;, # Name of the file share in the source Filestore instance that the backup is created from.
+  &quot;sourceInstance&quot;: &quot;A String&quot;, # The resource name of the source Filestore instance, in the format `projects/{project_number}/locations/{location_id}/instances/{instance_id}`, used to create this backup.
+  &quot;sourceInstanceTier&quot;: &quot;A String&quot;, # Output only. The service tier of the source Filestore instance that this backup is created from.
+  &quot;state&quot;: &quot;A String&quot;, # Output only. The backup state.
+  &quot;storageBytes&quot;: &quot;A String&quot;, # Output only. The size of the storage used by the backup. As backups share storage, this number is expected to change with backup creation/deletion.
+  &quot;tags&quot;: { # Optional. Input only. Immutable. Tag key-value pairs bound to this resource. Each key must be a namespaced name and each value a short name. Example: &quot;123456789012/environment&quot; : &quot;production&quot;, &quot;123456789013/costCenter&quot; : &quot;marketing&quot; See the documentation for more information: - Namespaced name: https://cloud.google.com/resource-manager/docs/tags/tags-creating-and-managing#retrieving_tag_key - Short name: https://cloud.google.com/resource-manager/docs/tags/tags-creating-and-managing#retrieving_tag_value
+  backupId: string, Required. The ID to use for the backup. The ID must be unique within the specified project and location. This value must start with a lowercase letter followed by up to 62 lowercase letters, numbers, or hyphens, and cannot end with a hyphen. Values that do not match this pattern will trigger an INVALID_ARGUMENT error.
+  <pre>Deletes a backup.
+  name: string, Required. The backup resource name, in the format `projects/{project_number}/locations/{location}/backups/{backup_id}` (required)
+  <pre>Gets the details of a specific backup.
+  name: string, Required. The backup resource name, in the format `projects/{project_number}/locations/{location}/backups/{backup_id}`. (required)
+  <pre>Lists all backups in a project for either a specified location or for all locations.
+  parent: string, Required. The project and location for which to retrieve backup information, in the format `projects/{project_number}/locations/{location}`. In Filestore, backup locations map to Google Cloud regions, for example **us-west1**. To retrieve backup information for all locations, use &quot;-&quot; for the `{location}` value. (required)
+  orderBy: string, Sort results. Supported values are &quot;name&quot;, &quot;name desc&quot; or &quot;&quot; (unsorted).
+    { # ListBackupsResponse is the result of ListBackupsRequest.
+  &quot;backups&quot;: [ # A list of backups in the project for the specified location. If the `{location}` value in the request is &quot;-&quot;, the response contains a list of backups from all locations. If any location is unreachable, the response will only return backups in reachable locations and the &quot;unreachable&quot; field will be populated with a list of unreachable locations.
+  &quot;nextPageToken&quot;: &quot;A String&quot;, # The token you can use to retrieve the next page of results. Not returned if there are no more results in the list.
+  <pre>Updates the settings of a specific backup.
+  name: string, Output only. The resource name of the backup, in the format `projects/{project_number}/locations/{location_id}/backups/{backup_id}`. (required)
+  updateMask: string, Required. Mask of fields to update. At least one path must be supplied in this field.

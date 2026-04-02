@@ -1,0 +1,282 @@
+<h1><a href="compute_alpha.html">Compute Engine API</a> . <a href="compute_alpha.firewallPolicies.html">firewallPolicies</a></h1>
+  <code><a href="#addAssociation">addAssociation(firewallPolicy, body=None, replaceExistingAssociation=None, requestId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Inserts an association for the specified firewall policy.</p>
+  <code><a href="#addPacketMirroringRule">addPacketMirroringRule(firewallPolicy, body=None, requestId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Inserts a packet mirroring rule into a firewall policy.</p>
+  <code><a href="#addRule">addRule(firewallPolicy, body=None, requestId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Inserts a rule into a firewall policy.</p>
+  <code><a href="#cloneRules">cloneRules(firewallPolicy, requestId=None, sourceFirewallPolicy=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Copies rules to the specified firewall policy.</p>
+  <code><a href="#delete">delete(firewallPolicy, requestId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Deletes the specified policy.</p>
+  <code><a href="#forceStartProgressiveRollout">forceStartProgressiveRollout(firewallPolicy, x__xgafv=None)</a></code></p>
+<p class="firstline">Starts a brand new progressive rollout of hierarchical firewall policy.</p>
+  <code><a href="#get">get(firewallPolicy, x__xgafv=None)</a></code></p>
+<p class="firstline">Returns the specified firewall policy.</p>
+  <code><a href="#getAssociation">getAssociation(firewallPolicy, name=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Gets an association with the specified name.</p>
+  <code><a href="#getIamPolicy">getIamPolicy(resource, optionsRequestedPolicyVersion=None, x__xgafv=None)</a></code></p>
+  <code><a href="#getPacketMirroringRule">getPacketMirroringRule(firewallPolicy, priority=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Gets a packet mirroring rule of the specified priority.</p>
+  <code><a href="#getRule">getRule(firewallPolicy, priority=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Gets a rule of the specified priority.</p>
+  <code><a href="#insert">insert(body=None, parentId=None, requestId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Creates a new policy in the specified project using the data included in</p>
+  <code><a href="#list">list(filter=None, maxResults=None, orderBy=None, pageToken=None, parentId=None, returnPartialSuccess=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Lists all the policies that have been configured for the specified</p>
+  <code><a href="#listAssociations">listAssociations(includeInheritedPolicies=None, targetResource=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Lists associations of a specified target, i.e., organization or folder.</p>
+  <code><a href="#move">move(firewallPolicy, parentId=None, requestId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Moves the specified firewall policy.</p>
+  <code><a href="#patch">patch(firewallPolicy, body=None, requestId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Patches the specified policy with the data included in the request.</p>
+  <code><a href="#patchPacketMirroringRule">patchPacketMirroringRule(firewallPolicy, body=None, priority=None, requestId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Patches a packet mirroring rule of the specified priority.</p>
+  <code><a href="#patchRule">patchRule(firewallPolicy, body=None, priority=None, requestId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Patches a rule of the specified priority.</p>
+  <code><a href="#removeAssociation">removeAssociation(firewallPolicy, name=None, requestId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Removes an association for the specified firewall policy.</p>
+  <code><a href="#removePacketMirroringRule">removePacketMirroringRule(firewallPolicy, priority=None, requestId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Deletes a packet mirroring rule of the specified priority.</p>
+  <code><a href="#removeRule">removeRule(firewallPolicy, priority=None, requestId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Deletes a rule of the specified priority.</p>
+    <code class="details" id="addAssociation">addAssociation(firewallPolicy, body=None, replaceExistingAssociation=None, requestId=None, x__xgafv=None)</code>
+  <pre>Inserts an association for the specified firewall policy.
+  firewallPolicy: string, Name of the firewall policy to update. (required)
+  &quot;attachmentTarget&quot;: &quot;A String&quot;, # The target that the firewall policy is attached to.
+  &quot;displayName&quot;: &quot;A String&quot;, # [Output Only] Deprecated, please use short name instead. The display name
+      # of the firewall policy of the association.
+  &quot;firewallPolicyId&quot;: &quot;A String&quot;, # Output only. [Output Only] The firewall policy ID of the association.
+  &quot;priority&quot;: 42, # An integer indicating the priority of an association. The priority
+      # must be a positive value between 1 and 2147483647.
+      # Firewall Policies are evaluated from highest to lowest priority where 1
+      # is the highest priority and 2147483647 is the lowest priority.
+      # The default value is `1000`. If two associations have the same priority
+      # then lexicographical order on association names is applied.
+  &quot;shortName&quot;: &quot;A String&quot;, # Output only. [Output Only] The short name of the firewall policy of the association.
+  replaceExistingAssociation: boolean, Indicates whether or not to replace it if an association of the attachment
+already exists. This is false by default, in which case an error will be
+returned if an association already exists.
+    <code class="details" id="addPacketMirroringRule">addPacketMirroringRule(firewallPolicy, body=None, requestId=None, x__xgafv=None)</code>
+  <pre>Inserts a packet mirroring rule into a firewall policy.
+  &quot;action&quot;: &quot;A String&quot;, # The Action to perform when the client connection triggers the rule.
+      # Valid actions for firewall rules are: &quot;allow&quot;, &quot;deny&quot;,
+      # &quot;apply_security_profile_group&quot; and &quot;goto_next&quot;.
+      # Valid actions for packet mirroring rules are: &quot;mirror&quot;, &quot;do_not_mirror&quot;
+      # and &quot;goto_next&quot;.
+  &quot;description&quot;: &quot;A String&quot;, # An optional description for this resource.
+  &quot;direction&quot;: &quot;A String&quot;, # The direction in which this rule applies.
+  &quot;disabled&quot;: True or False, # Denotes whether the firewall policy rule is disabled. When set to true,
+      # the firewall policy rule is not enforced and traffic behaves as if it did
+      # not exist. If this is unspecified, the firewall policy rule will be
+      # enabled.
+  &quot;kind&quot;: &quot;compute#firewallPolicyRule&quot;, # Output only. [Output only] Type of the resource. Returnscompute#firewallPolicyRule for firewall rules andcompute#packetMirroringRule for packet mirroring rules.
+    &quot;destAddressGroups&quot;: [ # Address groups which should be matched against the traffic destination.
+        # Maximum number of destination address groups is 10.
+    &quot;destFqdns&quot;: [ # Fully Qualified Domain Name (FQDN) which should be matched against
+        # traffic destination.
+        # Maximum number of destination fqdn allowed is 100.
+        # Maximum number of destination CIDR IP ranges allowed is 5000.
+    &quot;destNetworkContext&quot;: &quot;A String&quot;, # Network context of the traffic destination. Allowed values are:
+        #      - UNSPECIFIED
+        #      - INTERNET
+        #      - NON_INTERNET
+    &quot;destNetworkScope&quot;: &quot;A String&quot;, # Network scope of the traffic destination.
+    &quot;destNetworkType&quot;: &quot;A String&quot;, # Network type of the traffic destination. Allowed values are:
+    &quot;destRegionCodes&quot;: [ # Region codes whose IP addresses will be used to match for destination
+        # of traffic. Should be specified as 2 letter country code defined as per
+        # ISO 3166 alpha-2 country codes. ex.&quot;US&quot;
+        # Maximum number of dest region codes allowed is 5000.
+    &quot;destThreatIntelligences&quot;: [ # Names of Network Threat Intelligence lists.
+        # The IPs in these lists will be matched against traffic destination.
+    &quot;srcAddressGroups&quot;: [ # Address groups which should be matched against the traffic source.
+        # Maximum number of source address groups is 10.
+    &quot;srcFqdns&quot;: [ # Fully Qualified Domain Name (FQDN) which should be matched against
+        # traffic source.
+        # Maximum number of source fqdn allowed is 100.
+        # Maximum number of source CIDR IP ranges allowed is 5000.
+    &quot;srcNetworkContext&quot;: &quot;A String&quot;, # Network context of the traffic source. Allowed values are:
+        #      - INTRA_VPC
+        #      - VPC_NETWORKS
+    &quot;srcNetworkScope&quot;: &quot;A String&quot;, # Network scope of the traffic source.
+    &quot;srcNetworkType&quot;: &quot;A String&quot;, # Network type of the traffic source. Allowed values are:
+    &quot;srcNetworks&quot;: [ # Networks of the traffic source. It can be either a full or partial url.
+    &quot;srcRegionCodes&quot;: [ # Region codes whose IP addresses will be used to match for source
+        # Maximum number of source region codes allowed is 5000.
+    &quot;srcSecureTags&quot;: [ # List of secure tag values, which should be matched at the source
+        # of the traffic.
+        # For INGRESS rule, if all the srcSecureTag are INEFFECTIVE,
+        # and there is no srcIpRange, this rule will be ignored.
+        # Maximum number of source tag values allowed is 256.
+        &quot;name&quot;: &quot;A String&quot;, # Name of the secure tag, created with TagManager&#x27;s TagValue API.
+        &quot;state&quot;: &quot;A String&quot;, # Output only. [Output Only] State of the secure tag, either `EFFECTIVE` or
+            # `INEFFECTIVE`. A secure tag is `INEFFECTIVE` when it is deleted
+            # or its network is deleted.
+    &quot;srcThreatIntelligences&quot;: [ # Names of Network Threat Intelligence lists.
+        # The IPs in these lists will be matched against traffic source.
+  &quot;ruleName&quot;: &quot;A String&quot;, # An optional name for the rule. This field is not a unique identifier
+      # and can be updated.
+  &quot;ruleTupleCount&quot;: 42, # Output only. [Output Only] Calculation of the complexity of a single firewall policy
+  &quot;securityProfileGroup&quot;: &quot;A String&quot;, # A fully-qualified URL of a SecurityProfile resource instance.
+      # https://networksecurity.googleapis.com/v1/projects/{project}/locations/{location}/securityProfileGroups/my-security-profile-group
+      # Must be specified if action is one of &#x27;apply_security_profile_group&#x27; or
+      # &#x27;mirror&#x27;. Cannot be specified for other actions.
+  &quot;targetForwardingRules&quot;: [ # A list of forwarding rules to which this rule applies.
+      # This field allows you to control which load balancers get this rule.
+      #      - https://www.googleapis.com/compute/v1/projects/project/global/forwardingRules/forwardingRule
+      #      - https://www.googleapis.com/compute/v1/projects/project/regions/region/forwardingRules/forwardingRule
+      #      - projects/project/global/
+      #      forwardingRules/forwardingRule
+      #      - projects/project/regions/region/forwardingRules/
+      #      forwardingRule
+  &quot;targetSecureTags&quot;: [ # A list of secure tags that controls which instances the firewall rule
+      # applies to. If targetSecureTag are specified, then the
+      # firewall rule applies only to instances in the VPC network that have one
+      # of those EFFECTIVE secure tags, if all the target_secure_tag are in
+      # INEFFECTIVE state, then this rule will be ignored.targetSecureTag may not be set at the same time astargetServiceAccounts.
+      # If neither targetServiceAccounts nortargetSecureTag are specified, the firewall rule applies
+      # to all instances on the specified network.
+      # Maximum number of target label tags allowed is 256.
+  &quot;targetType&quot;: &quot;A String&quot;, # Target types of the firewall policy rule.
+      # Default value is INSTANCES.
+  &quot;tlsInspect&quot;: True or False, # Boolean flag indicating if the traffic should be TLS decrypted.
+      # Can be set only if action = &#x27;apply_security_profile_group&#x27; and cannot
+      # be set for other actions.
+    <code class="details" id="addRule">addRule(firewallPolicy, body=None, requestId=None, x__xgafv=None)</code>
+  <pre>Inserts a rule into a firewall policy.
+    <code class="details" id="cloneRules">cloneRules(firewallPolicy, requestId=None, sourceFirewallPolicy=None, x__xgafv=None)</code>
+  <pre>Copies rules to the specified firewall policy.
+  sourceFirewallPolicy: string, The firewall policy from which to copy rules.
+    <code class="details" id="delete">delete(firewallPolicy, requestId=None, x__xgafv=None)</code>
+  <pre>Deletes the specified policy.
+  firewallPolicy: string, Name of the firewall policy to delete. (required)
+    <code class="details" id="forceStartProgressiveRollout">forceStartProgressiveRollout(firewallPolicy, x__xgafv=None)</code>
+  <pre>Starts a brand new progressive rollout of hierarchical firewall policy.
+This API will return an error when there is an ongoing progressive rollout.
+  firewallPolicy: string, Name of the target firewall policy. (required)
+    <code class="details" id="get">get(firewallPolicy, x__xgafv=None)</code>
+  <pre>Returns the specified firewall policy.
+  firewallPolicy: string, Name of the firewall policy to get. (required)
+    { # Represents a Firewall Policy resource.
+  &quot;associations&quot;: [ # A list of associations that belong to this firewall policy.
+  &quot;displayName&quot;: &quot;A String&quot;, # Deprecated, please use short name instead. User-provided name of the
+      # Organization firewall policy. The name should be unique in the organization
+      # in which the firewall policy is created.
+      # This field is not applicable to network firewall policies.
+      # This name must be set on creation and cannot be changed.
+      # The name must be 1-63 characters long, and comply
+      # with RFC1035. Specifically, the name must be 1-63 characters
+      # long and match the regular expression `[a-z]([-a-z0-9]*[a-z0-9])?` which
+      # means the first character must be a lowercase letter, and all following
+      # characters must be a dash, lowercase letter, or digit, except the last
+      # character, which cannot be a dash.
+      # firewall policy.
+  &quot;kind&quot;: &quot;compute#firewallPolicy&quot;, # Output only. [Output only] Type of the resource. Alwayscompute#firewallPolicyfor firewall policies
+  &quot;name&quot;: &quot;A String&quot;, # Name of the resource. For Organization Firewall Policies it&#x27;s a
+      # [Output Only] numeric ID allocated by Google Cloud which uniquely
+      # identifies the Organization Firewall Policy.
+  &quot;packetMirroringRules&quot;: [ # A list of packet mirroring rules that belong to this policy.
+  &quot;parent&quot;: &quot;A String&quot;, # Output only. [Output Only] The parent of the firewall policy.
+  &quot;policySource&quot;: &quot;A String&quot;, # Indicates the source of this Firewall Policy. This field is optional on
+      # creation and defaults to USER_DEFINED.
+      # The USER_DEFINED value indicates a regular firewall policy.
+      # The SYSTEM value indicates a system-level policy managed by an
+      # internal service like GKE. This SYSTEM value is reserved for
+      # internal services and cannot be set by users during policy creation.
+      # Policies with a SYSTEM source cannot be modified or deleted by
+      # users.
+  &quot;policyType&quot;: &quot;A String&quot;, # The type of the firewall policy. This field can be eitherVPC_POLICY or RDMA_ROCE_POLICY.
+      # Note: if not specified then VPC_POLICY will be used.
+  &quot;region&quot;: &quot;A String&quot;, # Output only. [Output Only] URL of the region where the regional firewall policy resides.
+      # This field is not applicable to global firewall policies.
+  &quot;rolloutOperation&quot;: { # Represents progressive rollout input parameters and current status. # Configuration and status of the progressive rollout of this resource.
+    &quot;rolloutInput&quot;: { # Represents progressive rollout input parameters. # Input parameters to be used by the next not yet scheduled rollout.
+      &quot;name&quot;: &quot;A String&quot;, # The name of the rollout plan. Ex.
+          # organizations//locations/global/rolloutPlans/.
+      &quot;predefinedRolloutPlan&quot;: &quot;A String&quot;, # Predefined rollout plan.
+      &quot;retryUuid&quot;: &quot;A String&quot;, # The UUID of the retry action. Only needed if this is a retry for an
+          # existing rollout. This can be used after the user canceled a rollout
+          # and want to retry it with no changes.
+    &quot;rolloutStatus&quot;: { # Represents progressive rollout current status. # [Output only] Current status of the rollout.
+      &quot;nextRollout&quot;: { # [Output only] The next rollout.
+        &quot;rolloutId&quot;: &quot;A String&quot;, # Output only. [Output only] The id of the next rollout.
+        &quot;rolloutPlan&quot;: &quot;A String&quot;, # The name of the rollout plan to be used by the next not yet started
+            # rollout. This field is auto populated based on RolloutInput when a
+            # new rollout is scheduled. This can be manually changed before the
+            # scheduled rollout starts.
+            # Ex.
+            # organizations//locations/global/rolloutPlans/
+      &quot;ongoingRollouts&quot;: [ # [Output only] The ongoing rollout.
+        { # Represents the status of the progressive rollout instance, either
+            # completed or ongoing.
+          &quot;rollout&quot;: &quot;A String&quot;, # Output only. [Output only] The name of the rollout
+              # organizations//locations/global/rollouts/
+          &quot;rolloutPlan&quot;: &quot;A String&quot;, # Output only. [Output only] The name of the rollout plan used by this rollout
+          &quot;state&quot;: &quot;A String&quot;, # Output only. [Output only] The state of the rollout.
+      &quot;previousRollout&quot;: { # Represents the status of the progressive rollout instance, either # [Output only] The last previously executed rollout.
+  &quot;ruleTupleCount&quot;: 42, # Output only. [Output Only] Total count of all firewall policy rule tuples. A firewall
+      # There must always be a default rule (rule with priority 2147483647 and
+      # match &quot;*&quot;). If no rules are provided when creating a firewall policy, a
+      # default rule with action &quot;allow&quot; will be added.
+  &quot;shortName&quot;: &quot;A String&quot;, # User-provided name of the Organization firewall policy. The name should be
+      # unique in the organization in which the firewall policy is created.
+      # This name must be set on creation and cannot be changed. The name must be
+      # 1-63 characters long, and comply with RFC1035.
+  &quot;vpcNetworkScope&quot;: &quot;A String&quot;, # The scope of networks allowed to be associated with the firewall
+      # policy. This field can be either GLOBAL_VPC_NETWORK orREGIONAL_VPC_NETWORK.
+      # A firewall policy with the VPC scope set to GLOBAL_VPC_NETWORK
+      # is allowed to be attached only to global networks.
+      # When the VPC scope is set to REGIONAL_VPC_NETWORK the firewall
+      # policy is allowed to be attached only to regional networks in the same
+      # scope as the firewall policy.
+      # Note: if not specified then GLOBAL_VPC_NETWORK will be used.
+    <code class="details" id="getAssociation">getAssociation(firewallPolicy, name=None, x__xgafv=None)</code>
+  <pre>Gets an association with the specified name.
+  firewallPolicy: string, Name of the firewall policy to which the queried rule belongs. (required)
+  name: string, The name of the association to get from the firewall policy.
+    <code class="details" id="getIamPolicy">getIamPolicy(resource, optionsRequestedPolicyVersion=None, x__xgafv=None)</code>
+    <code class="details" id="getPacketMirroringRule">getPacketMirroringRule(firewallPolicy, priority=None, x__xgafv=None)</code>
+  <pre>Gets a packet mirroring rule of the specified priority.
+  priority: integer, The priority of the rule to get from the firewall policy.
+    <code class="details" id="getRule">getRule(firewallPolicy, priority=None, x__xgafv=None)</code>
+  <pre>Gets a rule of the specified priority.
+    <code class="details" id="insert">insert(body=None, parentId=None, requestId=None, x__xgafv=None)</code>
+  <pre>Creates a new policy in the specified project using the data included in
+  parentId: string, Parent ID for this request. The ID can be either be &quot;folders/[FOLDER_ID]&quot;
+if the parent is a folder or &quot;organizations/[ORGANIZATION_ID]&quot; if the
+parent is an organization.
+    <code class="details" id="list">list(filter=None, maxResults=None, orderBy=None, pageToken=None, parentId=None, returnPartialSuccess=None, x__xgafv=None)</code>
+  <pre>Lists all the policies that have been configured for the specified
+folder or organization.
+  &quot;items&quot;: [ # A list of FirewallPolicy resources.
+  &quot;kind&quot;: &quot;compute#firewallPolicyList&quot;, # Output only. [Output Only] Type of resource. Alwayscompute#firewallPolicyList for listsof FirewallPolicies
+    <code class="details" id="listAssociations">listAssociations(includeInheritedPolicies=None, targetResource=None, x__xgafv=None)</code>
+  <pre>Lists associations of a specified target, i.e., organization or folder.
+  includeInheritedPolicies: boolean, If set to &quot;true&quot;, the response will contain a list of all associations for
+the containing folders and the containing organization of the target. The
+parameter has no effect if the target is an organization.
+  targetResource: string, The target resource to list associations. It is an organization, or a
+folder.
+  &quot;associations&quot;: [ # A list of associations.
+  &quot;kind&quot;: &quot;compute#firewallPoliciesListAssociationsResponse&quot;, # Output only. [Output Only] Type of firewallPolicy associations. Alwayscompute#FirewallPoliciesListAssociations for lists of
+      # firewallPolicy associations.
+    <code class="details" id="move">move(firewallPolicy, parentId=None, requestId=None, x__xgafv=None)</code>
+  <pre>Moves the specified firewall policy.
+  parentId: string, The new parent of the firewall policy. The ID can be either be
+&quot;folders/[FOLDER_ID]&quot; if the parent is a folder or
+&quot;organizations/[ORGANIZATION_ID]&quot; if the parent is an organization.
+    <code class="details" id="patch">patch(firewallPolicy, body=None, requestId=None, x__xgafv=None)</code>
+  <pre>Patches the specified policy with the data included in the request.
+    <code class="details" id="patchPacketMirroringRule">patchPacketMirroringRule(firewallPolicy, body=None, priority=None, requestId=None, x__xgafv=None)</code>
+  <pre>Patches a packet mirroring rule of the specified priority.
+  priority: integer, The priority of the rule to patch.
+    <code class="details" id="patchRule">patchRule(firewallPolicy, body=None, priority=None, requestId=None, x__xgafv=None)</code>
+  <pre>Patches a rule of the specified priority.
+    <code class="details" id="removeAssociation">removeAssociation(firewallPolicy, name=None, requestId=None, x__xgafv=None)</code>
+  <pre>Removes an association for the specified firewall policy.
+  name: string, Name for the attachment that will be removed.
+    <code class="details" id="removePacketMirroringRule">removePacketMirroringRule(firewallPolicy, priority=None, requestId=None, x__xgafv=None)</code>
+  <pre>Deletes a packet mirroring rule of the specified priority.
+  priority: integer, The priority of the rule to remove from the firewall policy.
+    <code class="details" id="removeRule">removeRule(firewallPolicy, priority=None, requestId=None, x__xgafv=None)</code>
+  <pre>Deletes a rule of the specified priority.

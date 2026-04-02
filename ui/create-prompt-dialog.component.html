@@ -1,0 +1,98 @@
+<!-- Create Prompt Dialog -->
+<div class="create-prompt-dialog">
+      <p>Loading prompt creation form...</p>
+    <form [formGroup]="promptForm" class="dialog-content">
+      <!-- Basic Prompt Information -->
+        <h4 class="section-title">
+          Basic Information
+          <!-- Name Field -->
+            <label for="promptName" class="field-label required">
+              id="promptName"
+              formControlName="name"
+              placeholder="Enter prompt name..."
+              class="full-width">
+            @if (promptForm.get('name')?.invalid && promptForm.get('name')?.touched) {
+              <div class="field-error">
+                <i class="fa-solid fa-exclamation-triangle"></i>
+                Name is required
+          <!-- Type Field -->
+            <label for="promptType" class="field-label required">
+              <i class="fa-solid fa-category"></i>
+              id="promptType"
+              [data]="availablePromptTypes$ | async"
+              placeholder="Select prompt type..."
+            @if (promptForm.get('typeID')?.invalid && promptForm.get('typeID')?.touched) {
+                Type is required
+          <!-- Status Field -->
+            <label for="promptStatus" class="field-label">
+              id="promptStatus"
+              [data]="['Pending', 'Active', 'Disabled']"
+          <!-- Output Type Field -->
+            <label for="outputType" class="field-label">
+              <i class="fa-solid fa-file-code"></i>
+              Output Type
+              id="outputType"
+              formControlName="outputType"
+              [data]="['string', 'object']"
+        <!-- Description Field -->
+          <label for="promptDescription" class="field-label">
+            Description
+            id="promptDescription"
+            formControlName="description"
+            placeholder="Enter prompt description (optional)..."
+      <!-- Template Configuration -->
+          <i class="fa-solid fa-file-alt"></i>
+          Template Configuration
+        <div class="template-mode-section">
+          <label class="field-label">
+            Template Mode
+          <div class="template-mode-options">
+            <div class="radio-option">
+              <input type="radio" 
+                     id="templateNew" 
+                     value="new" 
+                     formControlName="templateMode"
+                     class="radio-input">
+              <label for="templateNew" class="radio-label">
+                <i class="fa-solid fa-plus-circle"></i>
+                Create New Template
+                     id="templateExisting" 
+                     value="existing" 
+              <label for="templateExisting" class="radio-label">
+                Link Existing Template
+        <!-- Template Editor Section (New Template) -->
+        @if (showTemplateEditor && templateEntity && templateMode === 'new') {
+          <div class="template-editor-section">
+            <div class="template-info">
+              <h5 class="template-name">
+                {{ templateEntity.Name }}
+              @if (templateEntity.Description) {
+                <p class="template-description">{{ templateEntity.Description }}</p>
+            <div class="template-editor-container">
+              <mj-template-editor 
+                #templateEditor
+                [template]="templateEntity"
+                [config]="templateEditorConfig"
+                (contentChange)="onTemplateContentChange($event)">
+              </mj-template-editor>
+        <!-- Existing Template Display -->
+        @if (templateEntity && templateMode === 'existing') {
+          <div class="existing-template-section">
+            <div class="existing-template-info">
+              <div class="template-header">
+                <span class="template-type-badge">
+                  Existing Template
+              <div class="template-actions">
+                        look="outline" 
+                        (click)="handleTemplateModeChange('existing')">
+                  <i class="fa-solid fa-sync"></i>
+                  Change Template
+  <div class="footer-left">
+    <span class="form-hint">
+      @if (templateMode === 'new') {
+        Created prompts and templates will be saved when you save the AI Agent
+        Created prompt will be linked to existing template when you save the AI Agent
+  <div class="footer-right">
+            [disabled]="!promptForm.valid || ((isSaving$ | async) || false)">
+        Creating...
+        Create Prompt

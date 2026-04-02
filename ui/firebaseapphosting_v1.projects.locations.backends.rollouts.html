@@ -1,0 +1,22 @@
+<h1><a href="firebaseapphosting_v1.html">Firebase App Hosting API</a> . <a href="firebaseapphosting_v1.projects.html">projects</a> . <a href="firebaseapphosting_v1.projects.locations.html">locations</a> . <a href="firebaseapphosting_v1.projects.locations.backends.html">backends</a> . <a href="firebaseapphosting_v1.projects.locations.backends.rollouts.html">rollouts</a></h1>
+  <code><a href="#create">create(parent, body=None, requestId=None, rolloutId=None, validateOnly=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Creates a new rollout for a backend.</p>
+<p class="firstline">Gets information about a rollout.</p>
+<p class="firstline">Lists rollouts for a backend.</p>
+    <code class="details" id="create">create(parent, body=None, requestId=None, rolloutId=None, validateOnly=None, x__xgafv=None)</code>
+  <pre>Creates a new rollout for a backend.
+{ # A single rollout of a build for a backend.
+  &quot;build&quot;: &quot;A String&quot;, # Required. Immutable. The name of a build that already exists. It doesn&#x27;t have to be built; a rollout will wait for a build to be ready before updating traffic.
+  &quot;createTime&quot;: &quot;A String&quot;, # Output only. Time at which the rollout was created.
+  &quot;deleteTime&quot;: &quot;A String&quot;, # Output only. Time at which the rollout was deleted.
+  &quot;error&quot;: { # The `Status` type defines a logical error model that is suitable for different programming environments, including REST APIs and RPC APIs. It is used by [gRPC](https://github.com/grpc). Each `Status` message contains three pieces of data: error code, error message, and error details. You can find out more about this error model and how to work with it in the [API Design Guide](https://cloud.google.com/apis/design/errors). # Output only. A status and (human readable) error message for the rollout, if in a `FAILED` state.
+  &quot;name&quot;: &quot;A String&quot;, # Identifier. The resource name of the rollout. Format: `projects/{project}/locations/{locationId}/backends/{backendId}/rollouts/{rolloutId}`.
+  &quot;reconciling&quot;: True or False, # Output only. A field that, if true, indicates that the Rollout currently has an LRO.
+  &quot;state&quot;: &quot;A String&quot;, # Output only. The state of the rollout.
+  &quot;updateTime&quot;: &quot;A String&quot;, # Output only. Time at which the rollout was last updated.
+  rolloutId: string, Optional. Desired ID of the rollout being created.
+  <pre>Gets information about a rollout.
+  name: string, Required. Name of the resource in the format: `projects/{project}/locations/{locationId}/backends/{backendId}/rollouts/{rolloutId}`. (required)
+  <pre>Lists rollouts for a backend.
+    { # Message for response to list rollouts.
+  &quot;rollouts&quot;: [ # The list of rollouts.

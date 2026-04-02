@@ -1,0 +1,32 @@
+<h1><a href="saasservicemgmt_v1beta1.html">SaaS Runtime API</a> . <a href="saasservicemgmt_v1beta1.projects.html">projects</a> . <a href="saasservicemgmt_v1beta1.projects.locations.html">locations</a> . <a href="saasservicemgmt_v1beta1.projects.locations.rolloutKinds.html">rolloutKinds</a></h1>
+  <code><a href="#create">create(parent, body=None, requestId=None, rolloutKindId=None, validateOnly=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Create a new rollout kind.</p>
+<p class="firstline">Delete a single rollout kind.</p>
+<p class="firstline">Retrieve a single rollout kind.</p>
+<p class="firstline">Retrieve a collection of rollout kinds.</p>
+<p class="firstline">Update a single rollout kind.</p>
+    <code class="details" id="create">create(parent, body=None, requestId=None, rolloutKindId=None, validateOnly=None, x__xgafv=None)</code>
+  <pre>Create a new rollout kind.
+  parent: string, Required. The parent of the rollout kind. (required)
+{ # An object that describes various settings of Rollout execution. Includes built-in policies across GCP and GDC, and customizable policies.
+  &quot;errorBudget&quot;: { # The configuration for error budget. If the number of failed units exceeds max(allowed_count, allowed_ratio * total_units), the rollout will be paused. # Optional. The configuration for error budget. If the number of failed units exceeds max(allowed_count, allowed_ratio * total_units), the rollout will be paused. If not set, all units will be attempted to be updated regardless of the number of failures encountered.
+    &quot;allowedCount&quot;: 42, # Optional. The maximum number of failed units allowed in a location without pausing the rollout.
+    &quot;allowedPercentage&quot;: 42, # Optional. The maximum percentage of units allowed to fail (0, 100] within a location without pausing the rollout.
+  &quot;maintenancePolicyEnforcement&quot;: &quot;A String&quot;, # Optional. Value among strict (enforcing maintenance policy and only looking at Units with maintenance policy), ignore (ignoring maintenance policy) and skip (skipping Units with maintenance policy)
+  &quot;name&quot;: &quot;A String&quot;, # Identifier. The resource name (full URI of the resource) following the standard naming scheme: &quot;projects/{project}/locations/{location}/rolloutKinds/{rollout_kind_id}&quot;
+  &quot;rolloutOrchestrationStrategy&quot;: &quot;A String&quot;, # Optional. The strategy used for executing a Rollout. This is a required field. There are two supported values strategies which are used to control - &quot;Google.Cloud.Simple.AllAtOnce&quot; - &quot;Google.Cloud.Simple.OneLocationAtATime&quot; A rollout with one of these simple strategies will rollout across all locations defined in the associated UnitKind&#x27;s Saas Locations.
+  &quot;unitFilter&quot;: &quot;A String&quot;, # Optional. CEL(https://github.com/google/cel-spec) formatted filter string against Unit. The filter will be applied to determine the eligible unit population. This filter can only reduce, but not expand the scope of the rollout.
+  &quot;unitKind&quot;: &quot;A String&quot;, # Required. Immutable. UnitKind that this rollout kind corresponds to. Rollouts stemming from this rollout kind will target the units of this unit kind. In other words, this defines the population of target units to be upgraded by rollouts.
+  &quot;updateUnitKindStrategy&quot;: &quot;A String&quot;, # Optional. The config for updating the unit kind. By default, the unit kind will be updated on the rollout start.
+  rolloutKindId: string, Required. The ID value for the new rollout kind.
+  <pre>Delete a single rollout kind.
+  etag: string, The etag known to the client for the expected state of the rollout kind. This is used with state-changing methods to prevent accidental overwrites when multiple user agents might be acting in parallel on the same resource. An etag wildcard provide optimistic concurrency based on the expected existence of the rollout kind. The Any wildcard (`*`) requires that the resource must already exists, and the Not Any wildcard (`!*`) requires that it must not.
+  <pre>Retrieve a single rollout kind.
+  <pre>Retrieve a collection of rollout kinds.
+  pageSize: integer, The maximum number of rollout kinds to send per page.
+    { # The response structure for the ListRolloutKinds method.
+  &quot;nextPageToken&quot;: &quot;A String&quot;, # If present, the next page token can be provided to a subsequent ListRolloutKinds call to list the next page. If empty, there are no more pages.
+  &quot;rolloutKinds&quot;: [ # The resulting rollout kinds.
+  <pre>Update a single rollout kind.
+  name: string, Identifier. The resource name (full URI of the resource) following the standard naming scheme: &quot;projects/{project}/locations/{location}/rolloutKinds/{rollout_kind_id}&quot; (required)
+  updateMask: string, Field mask is used to specify the fields to be overwritten in the RolloutKind resource by the update. The fields specified in the update_mask are relative to the resource, not the full request. A field will be overwritten if it is in the mask. If the user does not provide a mask then all fields in the RolloutKind will be overwritten.

@@ -1,0 +1,31 @@
+<h1><a href="vmwareengine_v1.html">VMware Engine API</a> . <a href="vmwareengine_v1.projects.html">projects</a> . <a href="vmwareengine_v1.projects.locations.html">locations</a> . <a href="vmwareengine_v1.projects.locations.privateClouds.html">privateClouds</a> . <a href="vmwareengine_v1.projects.locations.privateClouds.loggingServers.html">loggingServers</a></h1>
+  <code><a href="#create">create(parent, body=None, loggingServerId=None, requestId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Create a new logging server for a given private cloud.</p>
+<p class="firstline">Deletes a single logging server.</p>
+<p class="firstline">Gets details of a logging server.</p>
+<p class="firstline">Lists logging servers configured for a given private cloud.</p>
+<p class="firstline">Updates the parameters of a single logging server. Only fields specified in `update_mask` are applied.</p>
+    <code class="details" id="create">create(parent, body=None, loggingServerId=None, requestId=None, x__xgafv=None)</code>
+  <pre>Create a new logging server for a given private cloud.
+  parent: string, Required. The resource name of the private cloud to create a new Logging Server in. Resource names are schemeless URIs that follow the conventions in https://cloud.google.com/apis/design/resource_names. For example: `projects/my-project/locations/us-central1-a/privateClouds/my-cloud` (required)
+{ # Logging server to receive vCenter or ESXi logs.
+  &quot;hostname&quot;: &quot;A String&quot;, # Required. Fully-qualified domain name (FQDN) or IP Address of the logging server.
+  &quot;name&quot;: &quot;A String&quot;, # Output only. The resource name of this logging server. Resource names are schemeless URIs that follow the conventions in https://cloud.google.com/apis/design/resource_names. For example: `projects/my-project/locations/us-central1-a/privateClouds/my-cloud/loggingServers/my-logging-server`
+  &quot;port&quot;: 42, # Required. Port number at which the logging server receives logs.
+  &quot;protocol&quot;: &quot;A String&quot;, # Required. Protocol used by vCenter to send logs to a logging server.
+  &quot;sourceType&quot;: &quot;A String&quot;, # Required. The type of component that produces logs that will be forwarded to this logging server.
+  loggingServerId: string, Required. The user-provided identifier of the `LoggingServer` to be created. This identifier must be unique among `LoggingServer` resources within the parent and becomes the final token in the name URI. The identifier must meet the following requirements: * Only contains 1-63 alphanumeric characters and hyphens * Begins with an alphabetical character * Ends with a non-hyphen character * Not formatted as a UUID * Complies with [RFC 1034](https://datatracker.ietf.org/doc/html/rfc1034) (section 3.5)
+  <pre>Deletes a single logging server.
+  name: string, Required. The resource name of the logging server to delete. Resource names are schemeless URIs that follow the conventions in https://cloud.google.com/apis/design/resource_names. For example: `projects/my-project/locations/us-central1-a/privateClouds/my-cloud/loggingServers/my-logging-server` (required)
+  <pre>Gets details of a logging server.
+  name: string, Required. The resource name of the Logging Server to retrieve. Resource names are schemeless URIs that follow the conventions in https://cloud.google.com/apis/design/resource_names. For example: `projects/my-project/locations/us-central1-a/privateClouds/my-cloud/loggingServers/my-logging-server` (required)
+  <pre>Lists logging servers configured for a given private cloud.
+  parent: string, Required. The resource name of the private cloud to be queried for logging servers. Resource names are schemeless URIs that follow the conventions in https://cloud.google.com/apis/design/resource_names. For example: `projects/my-project/locations/us-central1-a/privateClouds/my-cloud` (required)
+  filter: string, A filter expression that matches resources returned in the response. The expression must specify the field name, a comparison operator, and the value that you want to use for filtering. The value must be a string, a number, or a boolean. The comparison operator must be `=`, `!=`, `&gt;`, or `&lt;`. For example, if you are filtering a list of logging servers, you can exclude the ones named `example-server` by specifying `name != &quot;example-server&quot;`. To filter on multiple expressions, provide each separate expression within parentheses. For example: ``` (name = &quot;example-server&quot;) (createTime &gt; &quot;2021-04-12T08:15:10.40Z&quot;) ``` By default, each expression is an `AND` expression. However, you can include `AND` and `OR` expressions explicitly. For example: ``` (name = &quot;example-server-1&quot;) AND (createTime &gt; &quot;2021-04-12T08:15:10.40Z&quot;) OR (name = &quot;example-server-2&quot;) ```
+  pageSize: integer, The maximum number of logging servers to return in one page. The service may return fewer than this value. The maximum value is coerced to 1000. The default value of this field is 500.
+  pageToken: string, A page token, received from a previous `ListLoggingServersRequest` call. Provide this to retrieve the subsequent page. When paginating, all other parameters provided to `ListLoggingServersRequest` must match the call that provided the page token.
+    { # Response message for VmwareEngine.ListLoggingServers
+  &quot;loggingServers&quot;: [ # A list of Logging Servers.
+  <pre>Updates the parameters of a single logging server. Only fields specified in `update_mask` are applied.
+  name: string, Output only. The resource name of this logging server. Resource names are schemeless URIs that follow the conventions in https://cloud.google.com/apis/design/resource_names. For example: `projects/my-project/locations/us-central1-a/privateClouds/my-cloud/loggingServers/my-logging-server` (required)
+  updateMask: string, Required. Field mask is used to specify the fields to be overwritten in the `LoggingServer` resource by the update. The fields specified in the `update_mask` are relative to the resource, not the full request. A field will be overwritten if it is in the mask. If the user does not provide a mask then all fields will be overwritten.

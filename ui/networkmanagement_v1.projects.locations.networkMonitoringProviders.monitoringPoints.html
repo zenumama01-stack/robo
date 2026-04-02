@@ -1,0 +1,49 @@
+<h1><a href="networkmanagement_v1.html">Network Management API</a> . <a href="networkmanagement_v1.projects.html">projects</a> . <a href="networkmanagement_v1.projects.locations.html">locations</a> . <a href="networkmanagement_v1.projects.locations.networkMonitoringProviders.html">networkMonitoringProviders</a> . <a href="networkmanagement_v1.projects.locations.networkMonitoringProviders.monitoringPoints.html">monitoringPoints</a></h1>
+<p class="firstline">Gets the MonitoringPoint resource.</p>
+<p class="firstline">Lists MonitoringPoints for a given network monitoring provider.</p>
+  <pre>Gets the MonitoringPoint resource.
+  name: string, Required. Name of the resource. Format: projects/{project}/locations/{location}/networkMonitoringProviders/{network_monitoring_provider}/monitoringPoints/{monitoring_point} (required)
+    { # Message describing MonitoringPoint resource.
+  &quot;autoGeoLocationEnabled&quot;: True or False, # Output only. Indicates if automaitic geographic location is enabled for the MonitoringPoint.
+  &quot;connectionStatus&quot;: &quot;A String&quot;, # Output only. Connection status of the MonitoringPoint.
+  &quot;createTime&quot;: &quot;A String&quot;, # Output only. The time the MonitoringPoint was created.
+  &quot;displayName&quot;: &quot;A String&quot;, # Output only. Display name of the MonitoringPoint.
+  &quot;errors&quot;: [ # Output only. The codes of errors detected in the MonitoringPoint.
+  &quot;geoLocation&quot;: { # The geographical location of the MonitoringPoint. # Output only. The geographical location of the MonitoringPoint. ;
+    &quot;country&quot;: &quot;A String&quot;, # Country.
+    &quot;formattedAddress&quot;: &quot;A String&quot;, # Formatted address.
+  &quot;host&quot;: { # Message describing information about the host. # Output only. The host information of the MonitoringPoint.
+    &quot;cloudInstanceId&quot;: &quot;A String&quot;, # Output only. The cloud instance id of the host.
+    &quot;cloudProjectId&quot;: &quot;A String&quot;, # Output only. The cloud project id of the host.
+    &quot;cloudProvider&quot;: &quot;A String&quot;, # Output only. The cloud provider of the host.
+    &quot;cloudRegion&quot;: &quot;A String&quot;, # Output only. The cloud region of the host.
+    &quot;cloudVirtualNetworkIds&quot;: [ # Output only. The ids of cloud virtual networks of the host.
+    &quot;cloudVpcId&quot;: &quot;A String&quot;, # Output only. The id of Virtual Private Cloud (VPC) of the host.
+    &quot;cloudZone&quot;: &quot;A String&quot;, # Output only. The cloud zone of the host.
+    &quot;os&quot;: &quot;A String&quot;, # Output only. The operating system of the host.
+  &quot;hostname&quot;: &quot;A String&quot;, # Output only. The hostname of the MonitoringPoint.
+  &quot;name&quot;: &quot;A String&quot;, # Identifier. Name of the resource. Format: `projects/{project}/locations/{location}/networkMonitoringProviders/{network_monitoring_provider}/monitoringPoints/{monitoring_point}`
+  &quot;networkInterfaces&quot;: [ # Output only. The network interfaces of the MonitoringPoint.
+    { # Message describing network interfaces.
+      &quot;adapterDescription&quot;: &quot;A String&quot;, # Output only. The description of the interface.
+      &quot;cidr&quot;: &quot;A String&quot;, # Output only. The IP address of the interface and subnet mask in CIDR format. Examples: 192.168.1.0/24, 2001:db8::/32
+      &quot;interfaceName&quot;: &quot;A String&quot;, # Output only. The name of the network interface. Examples: eth0, eno1
+      &quot;ipAddress&quot;: &quot;A String&quot;, # Output only. The IP address of the interface.
+      &quot;macAddress&quot;: &quot;A String&quot;, # Output only. The MAC address of the interface.
+      &quot;speed&quot;: &quot;A String&quot;, # Output only. Speed of the interface in millions of bits per second.
+      &quot;vlanId&quot;: &quot;A String&quot;, # Output only. The id of the VLAN.
+  &quot;originatingIp&quot;: &quot;A String&quot;, # Output only. IP address visible when MonitoringPoint connects to the provider.
+  &quot;providerTags&quot;: [ # Output only. The provider tags of the MonitoringPoint.
+    { # Message describing the provider tag.
+      &quot;category&quot;: &quot;A String&quot;, # Output only. The category of the provider tag.
+      &quot;resourceType&quot;: &quot;A String&quot;, # Output only. The resource type of the provider tag.
+      &quot;value&quot;: &quot;A String&quot;, # Output only. The value of the provider tag.
+  &quot;type&quot;: &quot;A String&quot;, # Output only. Deployment type of the MonitoringPoint.
+  &quot;updateTime&quot;: &quot;A String&quot;, # Output only. The time the MonitoringPoint was updated.
+  &quot;upgradeAvailable&quot;: True or False, # Output only. Indicates if an upgrade is available for the MonitoringPoint.
+  &quot;upgradeType&quot;: &quot;A String&quot;, # Output only. The type of upgrade available for the MonitoringPoint.
+  &quot;version&quot;: &quot;A String&quot;, # Output only. Version of the software running on the MonitoringPoint.
+  <pre>Lists MonitoringPoints for a given network monitoring provider.
+  parent: string, Required. Parent value for ListMonitoringPointsRequest. Format: projects/{project}/locations/{location}/networkMonitoringProviders/{network_monitoring_provider} (required)
+    { # Message for response to listing MonitoringPoints
+  &quot;monitoringPoints&quot;: [ # The list of MonitoringPoints.

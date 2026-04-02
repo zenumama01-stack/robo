@@ -1,0 +1,16 @@
+<h1><a href="tpu_v2alpha1.html">Cloud TPU API</a> . <a href="tpu_v2alpha1.projects.html">projects</a> . <a href="tpu_v2alpha1.projects.locations.html">locations</a> . <a href="tpu_v2alpha1.projects.locations.reservations.html">reservations</a></h1>
+<p class="firstline">Retrieves the reservations for the given project in the given location.</p>
+  <pre>Retrieves the reservations for the given project in the given location.
+  parent: string, Required. The parent for reservations. (required)
+  pageSize: integer, The maximum number of items to return. Defaults to 0 if not specified, which means no limit.
+  &quot;reservations&quot;: [ # The listed reservations.
+    { # A reservation describes the amount of a resource &#x27;allotted&#x27; for a defined period of time.
+      &quot;name&quot;: &quot;A String&quot;, # The reservation name with the format: projects/{projectID}/locations/{location}/reservations/{reservationID}
+      &quot;standard&quot;: { # Details of a standard reservation. # A standard reservation.
+        &quot;capacityUnits&quot;: &quot;A String&quot;, # Capacity units this reservation is measured in.
+        &quot;interval&quot;: { # Represents a time interval, encoded as a Timestamp start (inclusive) and a Timestamp end (exclusive). The start must be less than or equal to the end. When the start equals the end, the interval is empty (matches no time). When both start and end are unspecified, the interval matches any time. # The start and end time of the reservation.
+        &quot;resourceType&quot;: &quot;A String&quot;, # The resource type of the reservation.
+        &quot;size&quot;: 42, # The size of the reservation, in the units specified in the &#x27;capacity_units&#x27; field.
+        &quot;usage&quot;: { # Usage details of a reservation. # The current usage of the reservation.
+          &quot;total&quot;: &quot;A String&quot;, # The real-time value of usage within the reservation, with the unit specified in field capacity_units.
+      &quot;state&quot;: &quot;A String&quot;, # Output only. The state of the Reservation.

@@ -1,0 +1,1108 @@
+import { Component, OnInit, OnDestroy, AfterViewInit, ChangeDetectorRef, ViewContainerRef, ViewChild, ElementRef, HostListener } from '@angular/core';
+import { ActivatedRoute, Router, NavigationEnd } from '@angular/router';
+import { Subscription, combineLatest, Subject } from 'rxjs';
+import { filter, takeUntil } from 'rxjs/operators';
+  ApplicationManager,
+  WorkspaceStateManager,
+  GoldenLayoutManager,
+  TabService,
+  AppAccessResult,
+  NavItem
+} from '@memberjunction/ng-base-application';
+import { Metadata, EntityInfo, LogStatus, StartupManager, CompositeKey } from '@memberjunction/core';
+import { MJEventType, MJGlobal, uuidv4 } from '@memberjunction/global';
+import { EventCodes, NavigationService, SYSTEM_APP_ID, TitleService, DeveloperModeService } from '@memberjunction/ng-shared';
+import { NavItemClickEvent } from './components/header/app-nav.component';
+import { UserAvatarService } from '@memberjunction/ng-user-avatar';
+import { SettingsDialogService } from './services/settings-dialog.service';
+import { LoadingTheme, LoadingAnimationType, AnimationStep, getActiveTheme } from './loading-themes';
+import { AppAccessDialogComponent, AppAccessDialogConfig, AppAccessDialogResult } from './components/dialogs/app-access-dialog.component';
+import { BaseUserMenu, UserMenuElement, UserMenuItem, UserMenuContext, isUserMenuDivider, ApplicationInfoRef } from '../user-menu';
+import { CommandPaletteService } from '../command-palette/command-palette.service';
+ * Main shell component for the new Explorer UX.
+ * Provides:
+ * - App-centric header with app switcher and nav items
+ * - Golden Layout-based tab container
+ * - Unified workspace state management
+  selector: 'mj-shell',
+  templateUrl: './shell.component.html',
+  styleUrls: ['./shell.component.css']
+export class ShellComponent implements OnInit, OnDestroy, AfterViewInit {
+  private urlBasedNavigation = false; // Track if we're loading from a URL
+  private initialNavigationComplete = false; // Track if initial navigation has completed
+  private firstUrlSync = true; // Track if this is the first URL sync (for replaceUrl behavior)
+  activeApp: BaseApplication | null = null;
+  loading = true;
+  private waitingForFirstResource = false;
+  tabBarVisible = true; // Controlled by workspace manager
+  userMenuVisible = false; // User avatar context menu
+  mobileNavOpen = false; // Mobile navigation drawer
+  unreadNotificationCount = 0; // Notification badge count
+  isViewingSystemTab = false; // True when viewing a resource tab (not associated with a registered app)
+  loadingAppId: string | null = null; // ID of app currently being loaded (for app switcher loading indicator)
+  // Loading animation state
+  private loadingMessageInterval: ReturnType<typeof setInterval> | null = null;
+  private usedMessageIndices: number[] = [];
+  private usedGradientIndices: number[] = [];
+  private messageCycleCount = 0; // Track message cycles for color changes
+  private activeTheme: LoadingTheme;
+  private readonly messageIntervalMs = 2500; // 2.5 seconds per message
+  private readonly colorChangeEveryNMessages = 2; // Change color every 2 messages (5 seconds)
+  // All available animation types (used for random selection when theme doesn't specify)
+  private readonly allAnimationTypes: LoadingAnimationType[] = ['pulse', 'spin', 'bounce', 'pulse-spin'];
+  // Animation sequencing
+  private animationSequence: AnimationStep[] = [];
+  private currentAnimationIndex = 0;
+  private animationSequenceTimeout: ReturnType<typeof setTimeout> | null = null;
+  currentLoadingText: string;
+  currentLoadingColor: string;
+  currentLoadingTextColor: string;
+  currentLoadingGradient: LogoGradient | null;
+  currentLoadingAnimation: 'pulse' | 'spin' | 'bounce' | 'pulse-spin' = 'pulse';
+  // User avatar state
+  userImageURL = '';
+  userIconClass: string | null = null;
+  userName = '';
+  private userEntity: MJUserEntity | null = null;
+  // User menu plugin system
+  private userMenu: BaseUserMenu | null = null;
+  public userMenuElements: UserMenuElement[] = [];
+  // Search state
+  isSearchOpen = false;
+  searchableEntities: EntityInfo[] = [];
+  selectedEntity: EntityInfo | null = null;
+  @ViewChild('searchInput') searchInput!: ElementRef<HTMLInputElement>;
+  // App access dialog
+  @ViewChild('appAccessDialog') appAccessDialog!: AppAccessDialogComponent;
+  private pendingAppPath: string | null = null; // Store the app path we tried to access
+   * Get Nav Bar apps positioned to the left of the app switcher
+   * Filters out apps that have HideNavBarIconWhenActive=true and are currently active
+  get leftOfSwitcherApps(): BaseApplication[] {
+    return this.appManager.GetNavBarApps('Left of App Switcher')
+      .filter(app => !(app.HideNavBarIconWhenActive && app.ID === this.activeApp?.ID));
+   * Get Nav Bar apps positioned to the left of the user menu
+  get leftOfUserMenuApps(): BaseApplication[] {
+    return this.appManager.GetNavBarApps('Left of User Menu')
+    private workspaceManager: WorkspaceStateManager,
+    private layoutManager: GoldenLayoutManager,
+    private userAvatarService: UserAvatarService,
+    private settingsDialogService: SettingsDialogService,
+    private titleService: TitleService,
+    public developerModeService: DeveloperModeService,
+    private commandPaletteService: CommandPaletteService
+    // Initialize theme immediately so loading UI shows correct colors from the start
+    this.activeTheme = getActiveTheme();
+    // Initialize animation based on theme configuration
+    this.initializeAnimationFromTheme();
+    // Set first message
+    this.currentLoadingText = this.activeTheme.messages[0];
+    if (this.activeTheme.staticColors) {
+      // Standard theme: keep MJ blue, no gradient
+      this.currentLoadingColor = this.activeTheme.colors[0];
+      this.currentLoadingTextColor = '#757575'; // Default gray text
+      this.currentLoadingGradient = null;
+      // Themed period: use theme colors and first gradient from the start
+      this.currentLoadingTextColor = this.activeTheme.colors[0];
+      // Set initial gradient if theme has gradients
+      if (this.activeTheme.gradients && this.activeTheme.gradients.length > 0) {
+        this.currentLoadingGradient = this.activeTheme.gradients[0];
+      MJGlobal.Instance.GetEventListener(true).subscribe(async (loginEvent) => {
+        if (loginEvent.event === MJEventType.LoggedIn) {
+          if (this.authBase.initialPath === "/") {
+            // Base route - no need to wait for NavigationEnd
+            await this.initializeShell();
+            // Deep link route - wait for NavigationEnd to ensure router URL is correct
+              filter(() => !this.initialNavigationComplete)
+            ).subscribe(async () => {
+              this.initialNavigationComplete = true;
+      console.error('Failed to initialize shell:', error);
+  async initializeShell(): Promise<void> {
+    // Start the loading animation with cycling messages
+    this.startLoadingAnimation();
+    // Initialize application manager (subscribes to LoggedIn event)
+    this.appManager.Initialize();
+    const user = md.CurrentUser;
+      throw new Error('No current user found');
+    // Check the current URL to determine if we're loading from a URL-based navigation
+    const currentUrl = this.router.url;
+    this.urlBasedNavigation = currentUrl.includes('/app/') || currentUrl.includes('/resource/');
+    // Wait for workspace initialization to complete before allowing any tab operations
+    await this.workspaceManager.Initialize(user.ID);
+    // Subscribe to tab bar visibility changes
+      this.workspaceManager.TabBarVisible.subscribe(visible => {
+        this.tabBarVisible = visible;
+    // Subscribe to unread notification count changes
+      MJNotificationService.UnreadCount$.subscribe(count => {
+        this.unreadNotificationCount = count;
+    // Subscribe to active app changes
+      this.appManager.ActiveApp.subscribe(async app => {
+        this.activeApp = app;
+        // Create default tab when app is activated ONLY if:
+        // 1. App has no tabs yet
+        // 2. We're not loading from a URL that will create its own tab
+          const existingTabs = this.workspaceManager.GetAppTabs(app.ID);
+          if (existingTabs.length === 0) {
+            // Check if we're loading from a URL that will create a tab
+            const hasResourceUrl = currentUrl.includes('/app/') ||
+                                   currentUrl.includes('/resource/');
+            // Only create default tab if we're NOT loading from a resource URL
+            if (!hasResourceUrl) {
+              const tabRequest = await app.CreateDefaultTab();
+              if (tabRequest) {
+                this.tabService.OpenTab(tabRequest);
+    // Subscribe to applications loading - set app based on URL or default to first
+    // Use combineLatest to wait for loading to complete before deciding there are no apps
+      combineLatest([this.appManager.Applications, this.appManager.Loading]).subscribe(async ([apps, isLoading]) => {
+        // Don't make decisions while still loading - wait for load to complete
+        if (isLoading) {
+        // Handle the case where user has no apps at all (only after loading is complete)
+        if (apps.length === 0) {
+          await this.handleNoAppsAvailable();
+        // Check if URL specifies an app by parsing the browser URL
+        const appMatch = currentUrl.match(/\/app\/([^\/]+)/);
+        if (appMatch) {
+          const routeAppPath = decodeURIComponent(appMatch[1]);
+          // Find the app from the URL by Path (or Name for backwards compatibility)
+          const urlApp = this.appManager.GetAppByPath(routeAppPath);
+          if (urlApp) {
+            // Set the app from URL - takes precedence over workspace restoration
+            await this.appManager.SetActiveApp(urlApp.ID);
+            // If the URL is just /app/:appName (no nav item), create default tab
+            const hasNavItem = currentUrl.match(/\/app\/[^\/]+\/[^\/]+/);
+            if (!hasNavItem) {
+              const existingTabs = this.workspaceManager.GetAppTabs(urlApp.ID);
+                const tabRequest = await urlApp.CreateDefaultTab();
+            // App not found in user's list - check why and show appropriate dialog
+            await this.handleAppAccessError(routeAppPath, apps);
+        // Set default app if URL doesn't specify one AND no app is active yet
+        const currentActiveApp = this.appManager.GetActiveApp();
+        if (!appMatch && !currentActiveApp) {
+          await this.appManager.SetActiveApp(apps[0].ID);
+    // Subscribe to tab open requests from TabService
+      this.tabService.TabRequests.subscribe(async request => {
+        await this.processTabRequest(request);
+    // Replay any tab requests that were queued before we subscribed
+    // This handles the case where ResourceResolver creates requests before shell is ready
+    const queuedRequests = this.tabService.GetQueuedRequests();
+    if (queuedRequests.length > 0) {
+      for (const request of queuedRequests) {
+      this.tabService.ClearQueue();
+    // Clear urlBasedNavigation flag after initial setup completes
+    // This must happen regardless of whether there were queued requests,
+    // because apps with zero nav items create tabs directly (not via ResourceResolver)
+    // and we still need URL sync to work for subsequent navigation
+    if (this.urlBasedNavigation) {
+      this.urlBasedNavigation = false;
+    // Subscribe to workspace configuration changes to sync URL and active app
+      this.workspaceManager.Configuration.subscribe(async config => {
+        if (config && this.initialized) {
+          // Sync active app with active tab's application
+          await this.syncActiveAppWithTab(config);
+          this.syncUrlWithWorkspace(config);
+          // Update browser tab title
+          this.updateBrowserTitle(config);
+    // Subscribe to router navigation events (for browser back/forward)
+        filter((event): event is NavigationEnd => event instanceof NavigationEnd)
+          this.syncWorkspaceWithUrl(event.urlAfterRedirects || event.url);
+    // Check for deep link parameters on initialization
+    this.handleDeepLink();
+    // Load user avatar and initialize user menu
+    await this.loadUserAvatar(user);
+    await this.initializeUserMenu();
+    // Listen for avatar updates from settings page
+      MJGlobal.Instance.GetEventListener(false).subscribe(async (updateEvent) => {
+        if (updateEvent.eventCode === EventCodes.AvatarUpdated) {
+          const currentUserInfo = md.CurrentUser;
+          const userEntity = await md.GetEntityObject<any>('MJ: Users');
+          await userEntity.Load(currentUserInfo.ID);
+          this.applyUserAvatar(userEntity);
+    // Load searchable entities for search functionality
+    await this.loadSearchableEntities();
+    this.waitingForFirstResource = true;
+    // Force change detection to sync Angular's expected values after all async
+    // state changes (apps loaded, searchableEntities populated, etc.) to prevent
+    // NG0100 ExpressionChangedAfterItHasBeenCheckedError in dev mode
+   * Handle deep links from URL
+   * Resource URLs like /resource/record/Companies/123 are handled by ResourceResolver
+   * Legacy ?tab= params are supported for backward compatibility
+  private handleDeepLink(): void {
+    const queryParams = this.route.snapshot.queryParams;
+    const tabParam = queryParams['tab'];
+    // Legacy support for ?tab= parameters
+    if (tabParam) {
+      const tabIds = Array.isArray(tabParam) ? tabParam : [tabParam];
+      if (tabIds.length > 0) {
+        this.workspaceManager.SetActiveTab(tabIds[0]);
+    // Note: Resource URLs like /resource/record/EntityName/123 are automatically
+    // handled by the ResourceResolver which raises MJ events that the workspace
+    // manager listens to. No additional handling needed here.
+   * Process a tab request (from subscription or replay)
+  private async processTabRequest(request: any): Promise<void> {
+    const app = this.appManager.GetAppById(request.ApplicationId);
+    const appColor = app?.GetColor() || '#757575';
+    // Determine if this is a URL-based tab request
+    // URL-based tabs have appName/resourceType BUT NOT isAppDefault
+    // (isAppDefault indicates workspace restoration, not URL navigation)
+    const isUrlBasedTab = (request.Configuration?.appName || request.Configuration?.resourceType) &&
+                         !request.Configuration?.isAppDefault;
+    // Only set the app as active if:
+    // 1. We're initialized (past the startup phase)
+    // 2. App is different from current
+    // 3. Either NOT in URL-based navigation mode, OR this IS a URL-based tab
+    const shouldSetActiveApp = this.initialized &&
+                              app &&
+                              currentActiveApp?.ID !== request.ApplicationId &&
+                              (!this.urlBasedNavigation || isUrlBasedTab);
+    if (shouldSetActiveApp) {
+      await this.appManager.SetActiveApp(request.ApplicationId);
+    this.workspaceManager.OpenTab(request, appColor);
+   * Sync active app with the active tab's application
+   * Called when workspace configuration changes (e.g., user clicks on a tab in Golden Layout)
+  private async syncActiveAppWithTab(config: WorkspaceConfiguration): Promise<void> {
+    if (!config.activeTabId) {
+      this.titleService.reset();
+    // Find the active tab
+    const activeTab = config.tabs?.find(tab => tab.id === config.activeTabId);
+    // Get the tab's application ID
+    const tabAppId = activeTab.applicationId;
+    if (!tabAppId) {
+      this.titleService.setResourceName(activeTab.title || null);
+    // Check if this is a system tab (not associated with a registered app)
+    if (tabAppId === SYSTEM_APP_ID) {
+      this.isViewingSystemTab = true;
+      // Don't try to set active app - SYSTEM_APP_ID has no registered app
+      // Update browser title with just the tab title (no app context)
+      this.titleService.setContext(null, activeTab.title || 'Explorer');
+    // Not a system tab - clear the flag
+    this.isViewingSystemTab = false;
+    // Check if active app needs to be updated
+    if (currentActiveApp?.ID !== tabAppId) {
+      // Update the active app to match the tab's application
+      await this.appManager.SetActiveApp(tabAppId);
+    // Update browser title with app and tab context
+    const app = this.appManager.GetAppById(tabAppId);
+    const appName = app?.Name || null;
+    const tabTitle = activeTab.title || null;
+    this.titleService.setContext(appName, tabTitle);
+   * Sync URL with active tab's resource
+  private async syncUrlWithWorkspace(config: WorkspaceConfiguration): Promise<void> {
+    // Don't sync URL during URL-based navigation initialization
+    // Build resource URL from tab configuration
+    const resourceUrl = await this.buildResourceUrl(activeTab);
+    if (resourceUrl) {
+      // Compare full URLs including query params to detect changes
+      const newUrl = resourceUrl;
+      // Only update if URL is different (path or query params changed)
+      if (currentUrl !== newUrl) {
+        // Suppress ResourceResolver for this navigation - we're just syncing the URL
+        // to reflect the current active tab, not requesting a new tab to be opened
+        this.tabService.SuppressNextResolve();
+        // Replace URL on first sync (initialization), push new history entries after that
+        const replaceUrl = this.firstUrlSync;
+        this.firstUrlSync = false;
+        this.router.navigateByUrl(resourceUrl, { replaceUrl });
+   * Sync workspace state with the current URL (for browser back/forward navigation).
+   * Finds and activates the tab that matches the URL.
+  private async syncWorkspaceWithUrl(url: string): Promise<void> {
+    if (!config?.tabs?.length) {
+    // Find the tab that matches this URL
+    const matchingTab = await this.findTabForUrl(url, config.tabs);
+    if (matchingTab && matchingTab.id !== config.activeTabId) {
+      // Activate the matching tab
+      this.workspaceManager.SetActiveTab(matchingTab.id);
+    } else if (!matchingTab) {
+      // No matching tab found - check if this is an app-only URL for an app with zero nav items
+      // If so, we need to create a new tab for it (the old one was replaced when navigating away)
+      await this.handleMissingTabForUrl(url);
+   * Handle the case where no tab matches the URL during back/forward navigation.
+   * Creates new tabs for resources when the original tab was replaced.
+  private async handleMissingTabForUrl(url: string): Promise<void> {
+    const urlPath = url.split('?')[0];
+    const queryString = url.split('?')[1] || '';
+    const queryParams = new URLSearchParams(queryString);
+    // Use urlBasedNavigation flag to prevent syncUrlWithWorkspace from triggering again
+    this.urlBasedNavigation = true;
+      // Check for app-scoped record URL: /app/:appName/record/:entityName/:recordId
+      const appRecordMatch = urlPath.match(/^\/app\/([^\/]+)\/record\/([^\/]+)\/(.+)$/);
+      if (appRecordMatch) {
+        const entityName = decodeURIComponent(appRecordMatch[2]);
+        const recordId = decodeURIComponent(appRecordMatch[3]);
+        compositeKey.SimpleLoadFromURLSegment(recordId);
+      // Check for app-scoped view URL: /app/:appName/view/:viewId
+      const appViewMatch = urlPath.match(/^\/app\/([^\/]+)\/view\/([^\/]+)$/);
+      if (appViewMatch && appViewMatch[2] !== 'dynamic') {
+        const viewId = appViewMatch[2];
+        this.navigationService.OpenView(viewId, 'View');
+      // Check for app-scoped dynamic view URL: /app/:appName/view/dynamic/:entityName
+      const appDynamicViewMatch = urlPath.match(/^\/app\/([^\/]+)\/view\/dynamic\/(.+)$/);
+      if (appDynamicViewMatch) {
+        const entityName = decodeURIComponent(appDynamicViewMatch[2]);
+        const extraFilter = queryParams.get('ExtraFilter') || undefined;
+        this.navigationService.OpenDynamicView(entityName, extraFilter);
+      // Check for app-scoped dashboard URL: /app/:appName/dashboard/:dashboardId
+      const appDashboardMatch = urlPath.match(/^\/app\/([^\/]+)\/dashboard\/(.+)$/);
+      if (appDashboardMatch) {
+        const dashboardId = appDashboardMatch[2];
+        this.navigationService.OpenDashboard(dashboardId, 'Dashboard');
+      // Check for app-scoped artifact URL: /app/:appName/artifact/:artifactId
+      const appArtifactMatch = urlPath.match(/^\/app\/([^\/]+)\/artifact\/(.+)$/);
+      if (appArtifactMatch) {
+        const artifactId = appArtifactMatch[2];
+        this.navigationService.OpenArtifact(artifactId, 'Artifact');
+      // Check for app-scoped query URL: /app/:appName/query/:queryId
+      const appQueryMatch = urlPath.match(/^\/app\/([^\/]+)\/query\/(.+)$/);
+      if (appQueryMatch) {
+        const queryId = appQueryMatch[2];
+        this.navigationService.OpenQuery(queryId, 'Query');
+      // Check for app-scoped report URL: /app/:appName/report/:reportId
+      const appReportMatch = urlPath.match(/^\/app\/([^\/]+)\/report\/(.+)$/);
+      if (appReportMatch) {
+        const reportId = appReportMatch[2];
+        this.navigationService.OpenReport(reportId, 'Report');
+      // Check for app-only URL: /app/:appName
+      const appOnlyMatch = urlPath.match(/^\/app\/([^\/]+)$/);
+      if (appOnlyMatch) {
+        const appPath = decodeURIComponent(appOnlyMatch[1]);
+        const app = this.appManager.GetAppByPath(appPath) || this.appManager.GetAppByName(appPath);
+          // Only auto-create tabs for apps with zero nav items
+          // Apps with nav items should have had their tabs preserved
+          if (navItems.length === 0) {
+            // Set the app as active and create its default tab
+            await this.appManager.SetActiveApp(app.ID);
+            const defaultTab = await app.CreateDefaultTab();
+            if (defaultTab) {
+              this.workspaceManager.OpenTab(defaultTab, app.GetColor());
+      // Legacy resource URLs (backward compatibility)
+      // Check for legacy record URL: /resource/record/:entityName/:recordId
+      const legacyRecordMatch = urlPath.match(/^\/resource\/record\/([^\/]+)\/(.+)$/);
+      if (legacyRecordMatch) {
+        const entityName = decodeURIComponent(legacyRecordMatch[1]);
+        const recordId = decodeURIComponent(legacyRecordMatch[2]);
+      // Check for legacy view URL: /resource/view/:viewId
+      const legacyViewMatch = urlPath.match(/^\/resource\/view\/([^\/]+)$/);
+      if (legacyViewMatch && legacyViewMatch[1] !== 'dynamic') {
+        const viewId = legacyViewMatch[1];
+      // Check for legacy dashboard URL: /resource/dashboard/:dashboardId
+      const legacyDashboardMatch = urlPath.match(/^\/resource\/dashboard\/(.+)$/);
+      if (legacyDashboardMatch) {
+        const dashboardId = legacyDashboardMatch[1];
+   * Find the tab that matches a given URL
+  private async findTabForUrl(url: string, tabs: WorkspaceTab[]): Promise<WorkspaceTab | null> {
+    // Parse the URL to extract resource info
+    // Check for app nav item URL: /app/:appName/:navItemName
+    const appNavMatch = urlPath.match(/^\/app\/([^\/]+)\/([^\/]+)$/);
+    if (appNavMatch) {
+      const appPath = decodeURIComponent(appNavMatch[1]);
+      const navItemName = decodeURIComponent(appNavMatch[2]);
+      return tabs.find(tab => {
+        const tabConfig = tab.configuration || {};
+        const tabAppName = tabConfig['appName'] as string | undefined;
+        const tabNavItemName = tabConfig['navItemName'] as string | undefined;
+        if (!tabAppName || !tabNavItemName) return false;
+        // Match by app path/name and nav item name (case-insensitive)
+        if (!app) return false;
+        const appMatches = tabAppName.toLowerCase() === app.Name.toLowerCase() ||
+                          tab.applicationId === app.ID;
+        const navMatches = tabNavItemName.toLowerCase() === navItemName.toLowerCase();
+        return appMatches && navMatches;
+      }) || null;
+        // First, try to find a tab with isAppDefault for this app
+        const defaultTab = tabs.find(tab => {
+          return tab.applicationId === app.ID && tabConfig['isAppDefault'] === true;
+          return defaultTab;
+        // Fallback for apps with zero nav items: match ANY tab belonging to this app
+        // This handles the case where the default tab was replaced when navigating away
+          return tabs.find(tab => tab.applicationId === app.ID) || null;
+    // Check for app-scoped resource URLs (new pattern)
+    // Pattern: /app/:appName/:resourceType/:param1/:param2?
+    // Dashboard: /app/:appName/dashboard/:dashboardId
+        const resourceType = (tabConfig['resourceType'] as string | undefined)?.toLowerCase();
+        const tabDashboardId = (tabConfig['dashboardId'] || tabConfig['recordId'] || tab.resourceRecordId) as string | undefined;
+        return resourceType === 'dashboards' && tabDashboardId === dashboardId;
+    // Record: /app/:appName/record/:entityName/:recordId
+        const tabEntity = (tabConfig['Entity'] || tabConfig['entity']) as string | undefined;
+        const tabRecordId = (tabConfig['recordId'] || tab.resourceRecordId) as string | undefined;
+        return tabEntity?.toLowerCase() === entityName.toLowerCase() &&
+               tabRecordId === recordId;
+        const isDynamic = tabConfig['isDynamic'] as boolean | undefined;
+        return resourceType === 'user views' && isDynamic && tabEntity?.toLowerCase() === entityName.toLowerCase();
+    if (appViewMatch) {
+        const tabViewId = (tabConfig['viewId'] || tabConfig['recordId'] || tab.resourceRecordId) as string | undefined;
+        return resourceType === 'user views' && tabViewId === viewId;
+    // Query: /app/:appName/query/:queryId
+        const tabQueryId = (tabConfig['queryId'] || tabConfig['recordId'] || tab.resourceRecordId) as string | undefined;
+        return resourceType === 'queries' && tabQueryId === queryId;
+    // Report: /app/:appName/report/:reportId
+        const tabReportId = (tabConfig['reportId'] || tabConfig['recordId'] || tab.resourceRecordId) as string | undefined;
+        return resourceType === 'reports' && tabReportId === reportId;
+    // Artifact: /app/:appName/artifact/:artifactId
+        const tabArtifactId = (tabConfig['artifactId'] || tabConfig['recordId'] || tab.resourceRecordId) as string | undefined;
+        return resourceType === 'artifacts' && tabArtifactId === artifactId;
+    // Search: /app/:appName/search/:searchInput
+    const appSearchMatch = urlPath.match(/^\/app\/([^\/]+)\/search\/(.+)$/);
+    if (appSearchMatch) {
+      const searchInput = decodeURIComponent(appSearchMatch[2]);
+        const tabSearchInput = (tabConfig['SearchInput'] || tab.resourceRecordId) as string | undefined;
+        return resourceType === 'search results' && tabSearchInput === searchInput;
+    // Legacy resource URLs (kept for backward compatibility)
+    // Check for resource record URL: /resource/record/:entityName/:recordId
+    const recordMatch = urlPath.match(/^\/resource\/record\/([^\/]+)\/(.+)$/);
+    if (recordMatch) {
+      const entityName = decodeURIComponent(recordMatch[1]);
+      const recordId = decodeURIComponent(recordMatch[2]);
+    // Check for view URL: /resource/view/:viewId
+    const viewMatch = urlPath.match(/^\/resource\/view\/([^\/]+)$/);
+    if (viewMatch) {
+      const viewId = viewMatch[1];
+      // Check if it's a dynamic view
+      if (viewId === 'dynamic') {
+        // Dynamic views include entity name in a different path
+        return null; // Let the resolver handle dynamic views
+    // Check for dashboard URL: /resource/dashboard/:dashboardId
+    const dashboardMatch = urlPath.match(/^\/resource\/dashboard\/(.+)$/);
+    if (dashboardMatch) {
+      const dashboardId = dashboardMatch[1];
+    // Check for artifact URL: /resource/artifact/:artifactId
+    const artifactMatch = urlPath.match(/^\/resource\/artifact\/(.+)$/);
+    if (artifactMatch) {
+      const artifactId = artifactMatch[1];
+    // Check for query URL: /resource/query/:queryId
+    const queryMatch = urlPath.match(/^\/resource\/query\/(.+)$/);
+    if (queryMatch) {
+      const queryId = queryMatch[1];
+   * Build a shareable resource URL from tab data.
+   * Uses app.Path for cleaner URLs (e.g., /app/data-explorer instead of /app/Data%20Explorer)
+  private async buildResourceUrl(tab: WorkspaceTab): Promise<string | null> {
+    const config = tab.configuration || {};
+    const resourceType = (config['resourceType'] as string | undefined)?.toLowerCase();
+    const recordId = tab.resourceRecordId;
+    const appName = config['appName'] as string | undefined;
+    const navItemName = config['navItemName'] as string | undefined;
+    const queryParams = config['queryParams'] as Record<string, string> | undefined;
+    const isAppDefault = config['isAppDefault'] as boolean | undefined;
+    const tabAppId = tab.applicationId;
+    // Helper function to get app path for URL
+    const getAppPath = (appIdOrName: string): string | null => {
+      // First try by ID
+      let app = this.appManager.GetAppById(appIdOrName);
+        // Try by name
+        app = this.appManager.GetAppByName(appIdOrName);
+        // Prefer Path, fall back to Name for backwards compatibility
+        return app.Path || app.Name;
+    // If this is an app nav item, build app-based URL
+    if (appName && navItemName) {
+      // Look up the app to get its Path
+      const appPath = getAppPath(appName) || appName;
+      let url = `/app/${encodeURIComponent(appPath)}/${encodeURIComponent(navItemName)}`;
+      // Add query params if present
+      if (queryParams && Object.keys(queryParams).length > 0) {
+        const params = new URLSearchParams(queryParams);
+        url += `?${params.toString()}`;
+    // If this is an app's default dashboard (no nav items), use app-level URL
+    if (isAppDefault && appName) {
+      return `/app/${encodeURIComponent(appPath)}`;
+    // Fallback: If tab belongs to a non-system app but doesn't have appName/navItemName,
+    // try to reconstruct the URL from the ApplicationId and tab title
+    if (tabAppId && tabAppId !== '__explorer') {
+        // Prefer Path, fall back to Name
+        const appPath = app.Path || app.Name;
+        // If app has nav items, try to find the matching one
+        // Filter out dynamic nav items - they're generated from tab state and shouldn't affect URL building
+        const staticNavItems = navItems.filter(item => !(item as { isDynamic?: boolean }).isDynamic);
+        if (staticNavItems.length > 0) {
+          const driverClass = config['driverClass'] as string | undefined;
+          // Match by DriverClass for Custom resources (more reliable than title matching)
+          // or by ResourceType + RecordID for other resource types
+          const navItem = staticNavItems.find(item => {
+            if (item.ResourceType === 'Custom' && item.DriverClass && driverClass) {
+              return item.DriverClass === driverClass;
+            // For non-Custom resources, match by ResourceType + RecordID
+            if (item.ResourceType && item.RecordID) {
+              return item.ResourceType.toLowerCase() === resourceType && item.RecordID === recordId;
+          if (navItem) {
+            let url = `/app/${encodeURIComponent(appPath)}/${encodeURIComponent(navItem.Label)}`;
+          // No matching nav item found - fall through to orphan resource handling
+        // Handle apps with no static nav items that show a default dashboard (custom resource type)
+        if (staticNavItems.length === 0 && (!resourceType || resourceType === 'custom')) {
+          // App has zero static nav items AND this is not an orphan resource (no resourceType or custom)
+          // Use app-level URL - this handles apps that only have a default dashboard
+        // Fall through to orphan resource URL building below
+    const entityName = (config['Entity'] || config['entity']) as string | undefined;
+    const isDynamic = config['isDynamic'] as boolean | undefined;
+    const extraFilter = (config['ExtraFilter'] || config['extraFilter']) as string | undefined;
+    // For orphan resources (not tied to a specific nav item), use app-scoped URLs
+    // Get the app path for the URL
+    let appPath: string | null = null;
+    if (tabAppId && tabAppId !== SYSTEM_APP_ID) {
+        appPath = app.Path || app.Name;
+    // If no app path found, try to use Home app as the default
+    if (!appPath) {
+      const homeApp = this.appManager.GetAppByName('Home');
+      if (homeApp) {
+        appPath = homeApp.Path || homeApp.Name;
+    // Build app-scoped URLs (new pattern) if we have an app context
+    if (appPath) {
+        case 'records':
+            return `/app/${encodeURIComponent(appPath)}/record/${encodeURIComponent(entityName)}/${recordId}`;
+        case 'user views':
+          if (isDynamic || recordId === 'dynamic') {
+            // /app/:appName/view/dynamic/:entityName?ExtraFilter=...
+              let url = `/app/${encodeURIComponent(appPath)}/view/dynamic/${encodeURIComponent(entityName)}`;
+                url += `?ExtraFilter=${encodeURIComponent(extraFilter)}`;
+          } else if (recordId) {
+            // /app/:appName/view/:viewId (saved view)
+            return `/app/${encodeURIComponent(appPath)}/view/${recordId}`;
+        case 'dashboards':
+            return `/app/${encodeURIComponent(appPath)}/dashboard/${recordId}`;
+        case 'artifacts':
+            return `/app/${encodeURIComponent(appPath)}/artifact/${recordId}`;
+        case 'queries':
+            return `/app/${encodeURIComponent(appPath)}/query/${recordId}`;
+        case 'reports':
+            return `/app/${encodeURIComponent(appPath)}/report/${recordId}`;
+        case 'search results':
+          // /app/:appName/search/:searchInput?Entity=...
+          const searchInput = config['SearchInput'] as string | undefined;
+          if (searchInput) {
+            let url = `/app/${encodeURIComponent(appPath)}/search/${encodeURIComponent(searchInput)}`;
+              url += `?Entity=${encodeURIComponent(entityName)}`;
+    // Fallback to legacy routes (for backward compatibility during transition)
+          return `/resource/record/${encodeURIComponent(entityName)}/${recordId}`;
+            let url = `/resource/view/dynamic/${encodeURIComponent(entityName)}`;
+          return `/resource/view/${recordId}`;
+          return `/resource/dashboard/${recordId}`;
+          return `/resource/artifact/${recordId}`;
+          return `/resource/query/${recordId}`;
+    // Layout initialization happens in TabContainerComponent
+   * Called when the first resource component finishes loading.
+   * We accept subsequent calls to this method in ordre to ensure we are
+   * not forever showing animation for loading - this can happen if there is
+   * a race condition in components we DO NOT control, so while the naming
+   * is intended to imply the goal it doesn't "hurt" to have this work this way
+  onFirstResourceLoadComplete(): void {
+    this.waitingForFirstResource = false;
+    this.stopLoadingAnimation();
+   * Start the loading message cycling animation.
+   * Messages cycle every 2.5 seconds without repeating until all are used.
+   * Colors change every 5 seconds (every 2nd message cycle).
+   * For themed periods: use theme colors/gradients from the start.
+   * For standard theme: keep MJ blue throughout (no color changes).
+   * Animation is randomly selected from pulse, spin, and pulse-spin.
+   * Theme is selected based on current date and user's browser locale.
+  private startLoadingAnimation(): void {
+    // Select the appropriate theme based on date and locale
+    this.usedMessageIndices = [0]; // Mark first message as used
+    this.usedGradientIndices = [];
+    this.loadingMessageIndex = 0;
+    this.messageCycleCount = 0;
+    // Initialize display with first message and initial color/gradient
+    this.initializeLoadingDisplay();
+    // Start the animation sequence (if there are multiple steps)
+    this.startAnimationSequence();
+    // Start cycling every 2.5 seconds
+      this.cycleToNextMessage();
+    }, this.messageIntervalMs);
+   * Stop the loading message cycling animation.
+  private stopLoadingAnimation(): void {
+      this.loadingMessageInterval = null;
+    // Also clear any animation sequence timeout
+    if (this.animationSequenceTimeout) {
+      clearTimeout(this.animationSequenceTimeout);
+      this.animationSequenceTimeout = null;
+   * Initialize the loading display with first message and initial color/gradient.
+   * For themed periods, applies theme styling from the start.
+   * For standard theme, keeps MJ blue throughout.
+  private initializeLoadingDisplay(): void {
+        this.usedGradientIndices = [0];
+   * Cycle to the next loading message, avoiding repeats until all are used.
+   * Colors change every colorChangeEveryNMessages cycles (5 seconds).
+   * For standard theme, colors remain static.
+  private cycleToNextMessage(): void {
+    const messages = this.activeTheme.messages;
+    this.messageCycleCount++;
+    // If we've used all messages, reset the used list (but exclude current to avoid immediate repeat)
+    if (this.usedMessageIndices.length >= messages.length) {
+      this.usedMessageIndices = [this.loadingMessageIndex];
+    // Find a random unused message index
+    const availableIndices = messages
+      .map((_, i) => i)
+      .filter(i => !this.usedMessageIndices.includes(i));
+    if (availableIndices.length > 0) {
+      const randomIndex = availableIndices[Math.floor(Math.random() * availableIndices.length)];
+      this.usedMessageIndices.push(randomIndex);
+      this.loadingMessageIndex = randomIndex;
+      // Update the message
+      this.currentLoadingText = this.activeTheme.messages[randomIndex];
+      // Check if it's time to change colors (every 2nd message = every 5 seconds)
+      // But only for non-static themes
+      if (!this.activeTheme.staticColors && this.messageCycleCount % this.colorChangeEveryNMessages === 0) {
+        this.cycleToNextColor();
+   * Cycle to the next color/gradient from the theme.
+   * Alternates through gradients if available.
+  private cycleToNextColor(): void {
+    // Cycle to next gradient if available
+      const gradients = this.activeTheme.gradients;
+      // If we've used all gradients, reset (but exclude current to avoid immediate repeat)
+      if (this.usedGradientIndices.length >= gradients.length) {
+        const lastUsed = this.usedGradientIndices[this.usedGradientIndices.length - 1];
+        this.usedGradientIndices = [lastUsed];
+      // Find next gradient (simple rotation for gradients)
+      const currentIndex = this.usedGradientIndices[this.usedGradientIndices.length - 1] ?? -1;
+      const nextIndex = (currentIndex + 1) % gradients.length;
+      this.usedGradientIndices.push(nextIndex);
+      this.currentLoadingGradient = gradients[nextIndex];
+    // Also cycle text color through theme colors
+    const colors = this.activeTheme.colors;
+    if (colors.length > 1) {
+      // Get a random color from the theme for text
+      const randomIndex = Math.floor(Math.random() * colors.length);
+      this.currentLoadingColor = colors[randomIndex];
+      this.currentLoadingTextColor = colors[randomIndex];
+   * Initialize animation configuration from the current theme.
+   * Converts the theme's animation config (string or array) to a normalized sequence.
+  private initializeAnimationFromTheme(): void {
+    this.currentAnimationIndex = 0;
+    const themeAnimations = this.activeTheme.animations;
+    if (!themeAnimations) {
+      // No animation config - use random selection for non-standard themes
+      if (this.activeTheme.id === 'standard') {
+        // Standard theme defaults to pulse only
+        this.animationSequence = [{ type: 'pulse' }];
+        // Random selection for themed holidays without explicit config
+        const randomType = this.allAnimationTypes[
+          Math.floor(Math.random() * this.allAnimationTypes.length)
+        this.animationSequence = [{ type: randomType }];
+    } else if (typeof themeAnimations === 'string') {
+      // Single animation type specified
+      this.animationSequence = [{ type: themeAnimations }];
+      // Array of animation steps
+      this.animationSequence = themeAnimations;
+    // Set initial animation
+    if (this.animationSequence.length > 0) {
+      this.currentLoadingAnimation = this.animationSequence[0].type;
+   * Start the animation sequence, scheduling transitions between animation steps.
+  private startAnimationSequence(): void {
+    // Clear any existing timeout
+    this.scheduleNextAnimationStep();
+   * Schedule the transition to the next animation step based on current step's duration.
+  private scheduleNextAnimationStep(): void {
+    if (this.animationSequence.length <= 1) {
+      // Only one step - no transitions needed
+    const currentStep = this.animationSequence[this.currentAnimationIndex];
+    const durationMs = currentStep.durationMs;
+    // If no duration specified (or 0), this step runs indefinitely
+    if (!durationMs || durationMs <= 0) {
+    // Schedule transition to next step
+    this.animationSequenceTimeout = setTimeout(() => {
+      this.transitionToNextAnimation();
+    }, durationMs);
+   * Transition to the next animation in the sequence.
+  private transitionToNextAnimation(): void {
+    this.currentAnimationIndex++;
+    if (this.currentAnimationIndex >= this.animationSequence.length) {
+      // Sequence complete - stay on last animation
+    const nextStep = this.animationSequence[this.currentAnimationIndex];
+    this.currentLoadingAnimation = nextStep.type;
+    // Schedule the next transition if this step has a duration
+    this.subscriptions.forEach(sub => sub.unsubscribe());
+    this.layoutManager.Destroy();
+    // Clean up user menu
+    this.userMenu?.Destroy();
+   * Handle app switch from app switcher
+  async onAppSwitch(appId: string): Promise<void> {
+    // Clear the system tab flag since we're switching to a real app
+    // Show loading indicator in app switcher
+    this.loadingAppId = appId;
+      const app = this.appManager.GetAppById(appId);
+        // Get app info from all system apps to show the name
+        const systemApp = this.appManager.GetAllSystemApps().find(a => a.ID === appId);
+        const appName = systemApp?.Name || 'this application';
+        // Clear loading indicator before showing dialog
+        this.loadingAppId = null;
+        // Show "Add Application?" dialog
+        if (this.appAccessDialog) {
+          this.appAccessDialog.show({
+            type: 'not_installed',
+            appId: appId
+      await this.appManager.SetActiveApp(appId);
+      // Get the default nav item for this app (if any)
+      const defaultNavItem = navItems.find(item => item.isDefault);
+      // Check if app has any tabs
+      const appTabs = this.workspaceManager.GetAppTabs(appId);
+      if (appTabs.length === 0) {
+        // No tabs - create default tab (will trigger URL sync via workspace config subscription)
+      } else if (defaultNavItem) {
+        // App has tabs AND has a default nav item - try to find/create tab for default nav item
+        // This ensures clicking the app icon always goes to the "home" of that app
+        const defaultNavItemTab = this.findTabForDefaultNavItem(appTabs, defaultNavItem);
+        if (defaultNavItemTab) {
+          // Found existing tab for default nav item - activate it
+          this.workspaceManager.SetActiveTab(defaultNavItemTab.id);
+          const resourceUrl = await this.buildResourceUrl(defaultNavItemTab);
+            this.router.navigateByUrl(resourceUrl, { replaceUrl: true });
+          // No tab for default nav item - create one via NavigationService
+          this.navigationService.OpenNavItem(appId, defaultNavItem, app.GetColor());
+        // App has existing tabs but no default nav item - activate the first one
+        const firstTab = appTabs[0];
+        this.workspaceManager.SetActiveTab(firstTab.id);
+        // The workspace configuration subscription will trigger URL sync
+        // but we can also manually trigger it here to ensure immediate update
+        const resourceUrl = await this.buildResourceUrl(firstTab);
+      // Clear loading indicator
+   * Find an existing tab that matches the default nav item
+  private findTabForDefaultNavItem(tabs: WorkspaceTab[], defaultNavItem: NavItem): WorkspaceTab | null {
+      // For Custom resource type, match by DriverClass
+      if (defaultNavItem.ResourceType === 'Custom' && defaultNavItem.DriverClass) {
+        return config['driverClass'] === defaultNavItem.DriverClass ||
+               config['resourceTypeDriverClass'] === defaultNavItem.DriverClass;
+      // For other resource types, match by navItemName or by ResourceType + RecordID
+      if (config['navItemName'] === defaultNavItem.Label) {
+      if (defaultNavItem.ResourceType && defaultNavItem.RecordID) {
+        const tabResourceType = (config['resourceType'] as string)?.toLowerCase();
+        const tabRecordId = config['recordId'] || tab.resourceRecordId;
+        return tabResourceType === defaultNavItem.ResourceType.toLowerCase() &&
+               tabRecordId === defaultNavItem.RecordID;
+   * Handle Nav Bar app icon click (single click switches to app)
+  onNavBarAppClick(app: BaseApplication, event: MouseEvent): void {
+    // If shift key is held, force new tab
+    if (event.shiftKey) {
+      this.openNavBarAppInNewTab(app);
+      this.onAppSwitch(app.ID);
+   * Handle Nav Bar app icon double-click (opens in new tab)
+  onNavBarAppDblClick(app: BaseApplication, event: MouseEvent): void {
+   * Open a nav bar app's default content in a new tab
+  private async openNavBarAppInNewTab(app: BaseApplication): Promise<void> {
+    // Create the default tab for this app with forceNewTab
+      // Set the app as active first if it isn't already
+      if (this.activeApp?.ID !== app.ID) {
+      // Open in new tab by adding to workspace
+      this.workspaceManager.OpenTab(tabRequest, app.GetColor());
+   * Handle navigation item click with shift-key detection
+  onNavItemClick(event: NavItemClickEvent): void {
+    if (!this.activeApp) {
+    const { item, shiftKey } = event;
+    // Close mobile nav if open
+    this.mobileNavOpen = false;
+    // Use NavigationService with forceNewTab option if shift was pressed
+    this.navigationService.OpenNavItem(
+      this.activeApp.ID,
+      this.activeApp.GetColor(),
+      { forceNewTab: shiftKey }
+   * Handle dismiss of a dynamic nav item (remove from recent stack)
+  onNavItemDismiss(item: NavItem): void {
+    // Delegate to HomeApplication's RemoveDynamicNavItem if available
+    const appWithRemove = this.activeApp as BaseApplication & {
+      RemoveDynamicNavItem?: (item: NavItem) => void;
+    if (typeof appWithRemove.RemoveDynamicNavItem === 'function') {
+      appWithRemove.RemoveDynamicNavItem(item);
+   * Toggle mobile navigation drawer
+  toggleMobileNav(): void {
+    this.mobileNavOpen = !this.mobileNavOpen;
+   * Close mobile navigation drawer
+  closeMobileNav(): void {
+   * Toggle user menu visibility
+  toggleUserMenu(event: Event): void {
+    this.userMenuVisible = !this.userMenuVisible;
+    if (this.userMenuVisible) {
+      // Close menu when clicking outside
+      const closeHandler = () => {
+        this.userMenuVisible = false;
+        document.removeEventListener('click', closeHandler);
+        document.addEventListener('click', closeHandler);
+   * Initialize the user menu plugin system
+  private async initializeUserMenu(): Promise<void> {
+    // Get the highest priority user menu implementation via ClassFactory
+    this.userMenu = MJGlobal.Instance.ClassFactory.CreateInstance<BaseUserMenu>(BaseUserMenu);
+    if (!this.userMenu) {
+      console.error('No user menu implementation found');
+    // Initialize developer mode service
+    if (this.userEntity) {
+      await this.developerModeService.Initialize(this.userEntity);
+    // Build context for the menu
+    const context: UserMenuContext = {
+      user: new Metadata().CurrentUser,
+      userEntity: this.userEntity!,
+      shell: this as unknown as Record<string, unknown>,
+      viewContainerRef: this.viewContainerRef,
+      isDeveloper: this.developerModeService.IsDeveloper,
+      developerModeEnabled: this.developerModeService.IsEnabled,
+      currentApplication: this.activeApp as unknown as ApplicationInfoRef | null,
+      workspaceManager: this.workspaceManager,
+      authService: this.authBase,
+      openSettings: () => this.openSettingsDialog()
+    // Initialize menu
+    await this.userMenu.Initialize(context);
+    // Get initial menu elements
+    this.refreshMenuElements();
+    // Subscribe to developer mode changes to refresh menu
+    this.developerModeService.IsEnabled$.pipe(
+      // Update context and refresh menu
+      if (this.userMenu) {
+        this.userMenu.UpdateContext({
+          developerModeEnabled: this.developerModeService.IsEnabled
+   * Refresh the user menu elements from the menu instance
+  private refreshMenuElements(): void {
+      this.userMenuElements = this.userMenu.GetMenuElements();
+   * Handle user menu item click
+  async onUserMenuItemClick(itemId: string): Promise<void> {
+    if (!this.userMenu) return;
+    const result = await this.userMenu.HandleItemClick(itemId);
+    // Handle special signals from menu handlers
+    if (result.message === 'toggle-dev-mode') {
+      await this.developerModeService.Toggle();
+      // Menu will refresh via the subscription above
+    if (result.message === 'reset-layout') {
+      await this.onResetLayout();
+    if (result.closeMenu) {
+    // Refresh menu elements (some items may have changed state)
+   * Get user menu options for template
+  getUserMenuOptions() {
+    return this.userMenu?.GetOptions();
+   * Get user display info for template
+  getUserDisplayInfo() {
+    return this.userMenu?.GetUserDisplayInfo();
+   * Check if an element is a divider (for template)
+  isMenuDivider(element: UserMenuElement): boolean {
+    return isUserMenuDivider(element);
+   * Cast element to UserMenuItem (for template type safety)
+   * Call this only after checking !isMenuDivider(element)
+  asMenuItem(element: UserMenuElement): UserMenuItem {
+    return element as UserMenuItem;
+   * Open the settings dialog
+  private openSettingsDialog(): void {
+    this.settingsDialogService.open(this.viewContainerRef);
+   * Open Settings in a full-screen modal dialog
+  onSettings(): void {
+    this.openSettingsDialog();
+   * Log current workspace configuration to console (debug)
+  onLogLayout(): void {
+    console.log('📋 Workspace Configuration:', JSON.stringify(config, null, 2));
+    console.log('📋 Workspace Configuration (object):', config);
+   * Reset workspace layout - clears all tabs and switches to single-resource mode
+  async onResetLayout(): Promise<void> {
+    // Get current active app to create a fresh default tab
+    const currentApp = this.activeApp;
+    if (!currentApp) {
+      console.warn('No active app to reset to');
+    // Create a fresh configuration with just one default tab
+    const defaultTabRequest = await currentApp.CreateDefaultTab();
+    if (!defaultTabRequest) {
+      console.warn('Could not create default tab for app');
+    // Generate a new tab ID
+    const newTabId = uuidv4();
+    // Create minimal configuration with single tab (will trigger single-resource mode)
+    const freshConfig = {
+          type: 'row' as const,
+      activeTabId: newTabId,
+      theme: 'light' as const,
+        tabPosition: 'top' as const,
+      tabs: [{
+        id: newTabId,
+        applicationId: defaultTabRequest.ApplicationId,
+        title: defaultTabRequest.Title,
+        resourceTypeId: defaultTabRequest.ResourceTypeId || '',
+        resourceRecordId: defaultTabRequest.ResourceRecordId || '',
+        sequence: 0,
+        configuration: defaultTabRequest.Configuration || {}
+    // Update workspace configuration
+    this.workspaceManager.UpdateConfiguration(freshConfig);
+   * Logout user and clear authentication data
+  async onLogout(): Promise<void> {
+    this.authBase.logout();
+    localStorage.removeItem('auth');
+    localStorage.removeItem('claims');
+   * Global keyboard shortcut handler
+   * Cmd+/ (Mac) or Ctrl+/ (Windows) opens the command palette
+  handleGlobalKeyboardShortcuts(event: KeyboardEvent): void {
+    // Skip if user is typing in an input/textarea
+    // Platform detection
+    const isMac = navigator.platform.toUpperCase().indexOf('MAC') >= 0;
+    const isCtrlOrCmd = isMac ? event.metaKey : event.ctrlKey;
+    // Cmd+/ or Ctrl+/ opens command palette
+    if (isCtrlOrCmd && event.key === '/') {
+      this.commandPaletteService.Open();
+   * Load user avatar from database, auto-sync from auth provider if needed
+  private async loadUserAvatar(currentUserInfo: { ID: string; FirstLast?: string; Name?: string; Email?: string }): Promise<void> {
+      this.userName = currentUserInfo.FirstLast || currentUserInfo.Name || 'User';
+      this.userEmail = currentUserInfo.Email || '';
+      // Load the full MJUserEntity to access avatar fields
+      const currentUserEntity = await md.GetEntityObject<MJUserEntity>('MJ: Users');
+      await currentUserEntity.Load(currentUserInfo.ID);
+      // Store reference for user menu
+      this.userEntity = currentUserEntity;
+      // Auto-sync avatar from auth provider if user has no avatar settings in DB
+      if (!currentUserEntity.UserImageURL && !currentUserEntity.UserImageIconClass) {
+        const synced = await this.syncAvatarFromAuthProvider(currentUserEntity);
+        if (synced) {
+          // Reload user entity to get saved values
+      // Load avatar for display (always from DB after potential sync)
+      this.applyUserAvatar(currentUserEntity);
+      console.warn('Could not load user avatar:', error);
+      // Use fallback
+      this.userImageURL = '';
+      this.userIconClass = null;
+   * Syncs avatar from auth provider (Microsoft, Google, etc.)
+  private async syncAvatarFromAuthProvider(user: any): Promise<boolean> {
+      // v3.0 API - Clean encapsulation! No provider-specific logic needed!
+      // The provider handles whether it's Graph API, Auth0, or Okta internally
+      const pictureUrl = await this.authBase.getProfilePictureUrl();
+        return await this.userAvatarService.syncFromImageUrl(user, pictureUrl);
+      console.warn('Could not sync avatar from auth provider:', error);
+   * Apply user avatar to component state
+   * Priority: UserImageURL > UserImageIconClass > default icon
+  private applyUserAvatar(user: any): void {
+    if (user.UserImageURL) {
+      this.userImageURL = user.UserImageURL;
+    } else if (user.UserImageIconClass) {
+      this.userIconClass = user.UserImageIconClass;
+      // Default fallback - show icon
+   * Update browser tab title based on current app and active tab.
+   * Format: "Resource Name - App Name - MemberJunction"
+  private updateBrowserTitle(config: WorkspaceConfiguration): void {
+    // Get app name
+    const appName = this.activeApp?.Name || null;
+    // Get resource name from active tab
+    let resourceName: string | null = null;
+    if (activeTab) {
+      resourceName = activeTab.title || null;
+    // Update title via TitleService
+    this.titleService.setContext(appName, resourceName);
+  // SEARCH FUNCTIONALITY
+   * Load searchable entities from metadata
+  private async loadSearchableEntities(): Promise<void> {
+    this.searchableEntities = md.Entities.filter((e) => e.AllowUserSearchAPI).sort((a, b) => a.Name.localeCompare(b.Name));
+    if (this.searchableEntities.length > 0) {
+      this.selectedEntity = this.searchableEntities[0];
+   * Toggle search popup visibility
+  toggleSearch(): void {
+    this.isSearchOpen = !this.isSearchOpen;
+    // Focus on search input when opened
+    if (this.isSearchOpen) {
+        if (this.searchInput && this.searchInput.nativeElement) {
+          this.searchInput.nativeElement.focus();
+   * Close search popup
+  closeSearch(): void {
+    this.isSearchOpen = false;
+   * Handle search submission
+  onSearch(event: Event): void {
+    if (!this.searchInput) {
+    const inputValue = this.searchInput.nativeElement.value;
+    if (inputValue && inputValue.length > 0 && inputValue.trim().length > 2) {
+      this.searchInput.nativeElement.value = ''; // Clear input
+      this.isSearchOpen = false; // Close search popup
+      // Navigate to search results
+        this.router.navigate(['resource', 'search', inputValue], { queryParams: { Entity: this.selectedEntity.Name } });
+      // Show warning notification
+          message: 'Please enter at least 3 characters to search',
+          style: 'warning',
+          DisplayDuration: 1500
+  // NOTIFICATION FUNCTIONALITY
+   * Show notifications page as a tab
+  showNotifications(): void {
+      event: MJEventType.ComponentEvent,
+      eventCode: EventCodes.ViewNotifications,
+      args: {}
+    // Open notifications in a tab
+    // Use 'Custom' resource type with explicit driverClass to load NotificationsResource component
+      Title: 'Notifications',
+        driverClass: 'NotificationsResource',
+        route: 'notifications'
+  // APP ACCESS ERROR HANDLING
+   * Handle app access error by showing the appropriate dialog based on the access check result.
+   * IMPORTANT: This keeps the loading screen visible and does NOT navigate to any app
+   * until the user makes a decision in the dialog.
+   * @param appPath The app path from the URL that the user tried to access
+   * @param availableApps The list of apps the user has access to (for fallback)
+  private async handleAppAccessError(appPath: string, availableApps: BaseApplication[]): Promise<void> {
+    // Prevent showing the dialog multiple times for the same app path
+    // This can happen when the applications$ observable emits multiple times during reload
+    if (this.pendingAppPath === appPath) {
+    const accessResult = this.appManager.CheckAppAccess(appPath);
+    this.pendingAppPath = appPath;
+    LogStatus(`App access check for "${appPath}": ${accessResult.status} - ${accessResult.message}`);
+    const dialogConfig = this.mapAccessResultToDialogConfig(accessResult);
+    // IMPORTANT: Keep loading screen visible while dialog is shown
+    // Do NOT set any active app or create any tabs yet
+    // The loading screen stays visible because we haven't called onFirstResourceLoadComplete
+    // Show the dialog on top of the loading screen
+    // Use setTimeout to ensure the dialog component is ready after view init
+        this.appAccessDialog.show(dialogConfig);
+        // Fallback if dialog not available - redirect to first app
+        console.warn('App access dialog not available, redirecting to first app');
+        this.redirectToFirstApp(availableApps);
+   * Map an AppAccessResult to the dialog configuration
+  private mapAccessResultToDialogConfig(accessResult: AppAccessResult): AppAccessDialogConfig {
+    switch (accessResult.status) {
+      case 'not_found':
+          type: 'not_found',
+          appName: accessResult.appName
+          type: 'inactive',
+          appName: accessResult.appName,
+          appId: accessResult.appId
+      case 'disabled':
+          type: 'disabled',
+        // 'accessible' shouldn't reach here, but handle it as a generic error
+          type: 'no_access',
+   * Handle when user has no apps available at all
+  private async handleNoAppsAvailable(): Promise<void> {
+    LogStatus('User has no applications available');
+    // Stop loading animation and show the dialog
+        this.appAccessDialog.show({ type: 'no_apps' });
+   * Handle Golden Layout initialization failure
+  handleLayoutError(): void {
+    LogStatus('Golden Layout initialization failed');
+    const availableApps = this.appManager.GetAllApps();
+    if (availableApps.length > 0) {
+          this.appAccessDialog.show({ type: 'layout_error' });
+          // Direct redirect if dialog not available
+   * Handle dialog result (install, enable, or redirect)
+  async onAppAccessDialogResult(result: AppAccessDialogResult): Promise<void> {
+    switch (result.action) {
+      case 'install':
+        if (result.appId) {
+          await this.installAndNavigateToApp(result.appId);
+      case 'enable':
+          await this.enableAndNavigateToApp(result.appId);
+      case 'redirect':
+      case 'dismissed':
+   * Install an app for the user and navigate to it
+  private async installAndNavigateToApp(appId: string): Promise<void> {
+    // Clear pendingAppPath to allow fresh handling after installation
+    this.pendingAppPath = null;
+      const userApp = await this.appManager.InstallAppForUser(appId);
+      if (userApp) {
+        // Force refresh the app list to ensure the new app is in the observable
+        await this.appManager.ReloadUserApplications();
+        // App added successfully - wait for observable to sync then navigate
+        await this.waitForAppAndNavigate(appId);
+          console.error('[ShellComponent] Failed to add application');
+          this.appAccessDialog?.completeProcessing();
+          this.redirectToFirstApp(this.appManager.GetAllApps());
+      console.error('Error adding app:', error);
+   * Enable a disabled app for the user and navigate to it
+  private async enableAndNavigateToApp(appId: string): Promise<void> {
+      const success = await this.appManager.EnableAppForUser(appId);
+        // App enabled successfully - wait for observable to sync then navigate
+      console.error('Error enabling app:', error);
+   * Wait for an app to appear in the applications observable and then navigate to it.
+   * This handles the async nature of observable updates after install/enable.
+  private async waitForAppAndNavigate(appId: string, maxWaitMs: number = 3000): Promise<void> {
+    const pollInterval = 100;
+    // Poll for the app to appear in the observable
+    while (Date.now() - startTime < maxWaitMs) {
+        await this.navigateToApp(app);
+      // Wait a bit before checking again
+    // Timeout - try to get from system apps as fallback
+    if (systemApp) {
+      await this.navigateToApp(systemApp);
+      console.warn(`[ShellComponent] App ${appId} not found after waiting, redirecting to first app`);
+   * Navigate to a specific app and create its default tab
+  private async navigateToApp(app: BaseApplication): Promise<void> {
+    // Update URL to reflect the new app
+    this.router.navigateByUrl(`/app/${encodeURIComponent(appPath)}`, { replaceUrl: true });
+   * Redirect to the first available app (fallback)
+  private async redirectToFirstApp(apps: BaseApplication[]): Promise<void> {
+    if (apps.length > 0) {
+      const firstApp = apps[0];
+      await this.navigateToApp(firstApp);
+      // No apps available - this shouldn't happen, but handle gracefully

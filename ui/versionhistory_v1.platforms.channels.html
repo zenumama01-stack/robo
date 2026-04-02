@@ -1,0 +1,11 @@
+<h1><a href="versionhistory_v1.html">versionhistory.googleapis.com API</a> . <a href="versionhistory_v1.platforms.html">platforms</a> . <a href="versionhistory_v1.platforms.channels.html">channels</a></h1>
+  <code><a href="versionhistory_v1.platforms.channels.versions.html">versions()</a></code>
+<p class="firstline">Returns list of channels that are available for a given platform.</p>
+  <pre>Returns list of channels that are available for a given platform.
+  parent: string, Required. The platform, which owns this collection of channels. Format: {product}/platforms/{platform} (required)
+  pageSize: integer, Optional. Optional limit on the number of channels to include in the response. If unspecified, the server will pick an appropriate default.
+  pageToken: string, Optional. A page token, received from a previous `ListChannels` call. Provide this to retrieve the subsequent page.
+    { # Response message for ListChannels.
+    { # Each Channel is owned by a Platform and owns a collection of versions. Possible Channels are listed in the Channel enum below. Not all Channels are available for every Platform (e.g. CANARY does not exist for LINUX).
+      &quot;channelType&quot;: &quot;A String&quot;, # Type of channel.
+      &quot;name&quot;: &quot;A String&quot;, # Channel name. Format is &quot;{product}/platforms/{platform}/channels/{channel}&quot;

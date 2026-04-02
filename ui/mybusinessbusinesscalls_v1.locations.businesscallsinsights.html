@@ -1,0 +1,25 @@
+<h1><a href="mybusinessbusinesscalls_v1.html">My Business Business Calls API</a> . <a href="mybusinessbusinesscalls_v1.locations.html">locations</a> . <a href="mybusinessbusinesscalls_v1.locations.businesscallsinsights.html">businesscallsinsights</a></h1>
+<p class="firstline">Returns insights for Business calls for a location.</p>
+  <pre>Returns insights for Business calls for a location.
+  parent: string, Required. The parent location to fetch calls insights for. Format: locations/{location_id} (required)
+  filter: string, Optional. A filter constraining the calls insights to return. The response includes only entries that match the filter. If the MetricType is not provided, AGGREGATE_COUNT is returned. If no end_date is provided, the last date for which data is available is used. If no start_date is provided, we will default to the first date for which data is available, which is currently 6 months. If start_date is before the date when data is available, data is returned starting from the date when it is available. At this time we support following filters. 1. start_date=&quot;DATE&quot; where date is in YYYY-MM-DD format. 2. end_date=&quot;DATE&quot; where date is in YYYY-MM-DD format. 3. metric_type=XYZ where XYZ is a valid MetricType. 4. Conjunctions(AND) of all of the above. e.g., &quot;start_date=2021-08-01 AND end_date=2021-08-10 AND metric_type=AGGREGATE_COUNT&quot; The AGGREGATE_COUNT metric_type ignores the DD part of the date.
+  pageSize: integer, Optional. The maximum number of BusinessCallsInsights to return. If unspecified, at most 20 will be returned. Some of the metric_types(e.g, AGGREGATE_COUNT) returns a single page. For these metrics, the page_size is ignored.
+  pageToken: string, Optional. A page token, received from a previous `ListBusinessCallsInsights` call. Provide this to retrieve the subsequent page. When paginating, all other parameters provided to `ListBusinessCallsInsights` must match the call that provided the page token. Some of the metric_types (e.g, AGGREGATE_COUNT) returns a single page. For these metrics, the pake_token is ignored.
+    { # Response message for ListBusinessCallsInsights.
+  &quot;businessCallsInsights&quot;: [ # A collection of business calls insights for the location.
+    { # Insights for calls made to a location.
+      &quot;aggregateMetrics&quot;: { # Metrics aggregated over the input time range. # Metric for the time range based on start_date and end_date.
+        &quot;answeredCallsCount&quot;: 42, # Total count of answered calls.
+        &quot;endDate&quot;: { # Represents a whole or partial calendar date, such as a birthday. The time of day and time zone are either specified elsewhere or are insignificant. The date is relative to the Gregorian Calendar. This can represent one of the following: * A full date, with non-zero year, month, and day values. * A month and day, with a zero year (for example, an anniversary). * A year on its own, with a zero month and a zero day. * A year and month, with a zero day (for example, a credit card expiration date). Related types: * google.type.TimeOfDay * google.type.DateTime * google.protobuf.Timestamp # End date for this metric.
+        &quot;hourlyMetrics&quot;: [ # A list of metrics by hour of day.
+          { # Metrics for an hour.
+            &quot;hour&quot;: 42, # Hour of the day. Allowed values are 0-23.
+            &quot;missedCallsCount&quot;: 42, # Total count of missed calls for this hour.
+        &quot;missedCallsCount&quot;: 42, # Total count of missed calls.
+        &quot;startDate&quot;: { # Represents a whole or partial calendar date, such as a birthday. The time of day and time zone are either specified elsewhere or are insignificant. The date is relative to the Gregorian Calendar. This can represent one of the following: * A full date, with non-zero year, month, and day values. * A month and day, with a zero year (for example, an anniversary). * A year on its own, with a zero month and a zero day. * A year and month, with a zero day (for example, a credit card expiration date). Related types: * google.type.TimeOfDay * google.type.DateTime * google.protobuf.Timestamp # Date for this metric. If metric is monthly, only year and month are used.
+        &quot;weekdayMetrics&quot;: [ # A list of metrics by day of week.
+          { # Metrics for a week day.
+            &quot;day&quot;: &quot;A String&quot;, # Day of the week. Allowed values are Sunday - Saturday.
+      &quot;metricType&quot;: &quot;A String&quot;, # The metric for which the value applies.
+      &quot;name&quot;: &quot;A String&quot;, # Required. The resource name of the calls insights. Format: locations/{location}/businesscallsinsights
+  &quot;nextPageToken&quot;: &quot;A String&quot;, # A token, which can be sent as `page_token` to retrieve the next page. If this field is omitted, there are no subsequent pages. Some of the metric_types (e.g, AGGREGATE_COUNT) returns a single page. For these metrics, the next_page_token will be empty.

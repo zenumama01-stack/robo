@@ -1,0 +1,40 @@
+<h1><a href="netapp_v1.html">NetApp API</a> . <a href="netapp_v1.projects.html">projects</a> . <a href="netapp_v1.projects.locations.html">locations</a> . <a href="netapp_v1.projects.locations.backupVaults.html">backupVaults</a></h1>
+  <code><a href="netapp_v1.projects.locations.backupVaults.backups.html">backups()</a></code>
+  <code><a href="#create">create(parent, backupVaultId=None, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Creates new backup vault</p>
+<p class="firstline">Warning! This operation will permanently delete the backup vault.</p>
+<p class="firstline">Returns the description of the specified backup vault</p>
+<p class="firstline">Returns list of all available backup vaults.</p>
+<p class="firstline">Updates the settings of a specific backup vault.</p>
+    <code class="details" id="create">create(parent, backupVaultId=None, body=None, x__xgafv=None)</code>
+  <pre>Creates new backup vault
+  parent: string, Required. The location to create the backup vaults, in the format `projects/{project_id}/locations/{location}` (required)
+{ # A NetApp BackupVault.
+  &quot;backupRegion&quot;: &quot;A String&quot;, # Optional. Region where the backups are stored. Format: `projects/{project_id}/locations/{location}`
+  &quot;backupRetentionPolicy&quot;: { # Retention policy for backups in the backup vault # Optional. Backup retention policy defining the retention of backups.
+    &quot;backupMinimumEnforcedRetentionDays&quot;: 42, # Required. Minimum retention duration in days for backups in the backup vault.
+    &quot;dailyBackupImmutable&quot;: True or False, # Optional. Indicates if the daily backups are immutable. At least one of daily_backup_immutable, weekly_backup_immutable, monthly_backup_immutable and manual_backup_immutable must be true.
+    &quot;manualBackupImmutable&quot;: True or False, # Optional. Indicates if the manual backups are immutable. At least one of daily_backup_immutable, weekly_backup_immutable, monthly_backup_immutable and manual_backup_immutable must be true.
+    &quot;monthlyBackupImmutable&quot;: True or False, # Optional. Indicates if the monthly backups are immutable. At least one of daily_backup_immutable, weekly_backup_immutable, monthly_backup_immutable and manual_backup_immutable must be true.
+    &quot;weeklyBackupImmutable&quot;: True or False, # Optional. Indicates if the weekly backups are immutable. At least one of daily_backup_immutable, weekly_backup_immutable, monthly_backup_immutable and manual_backup_immutable must be true.
+  &quot;backupVaultType&quot;: &quot;A String&quot;, # Optional. Type of backup vault to be created. Default is IN_REGION.
+  &quot;backupsCryptoKeyVersion&quot;: &quot;A String&quot;, # Output only. The crypto key version used to encrypt the backup vault. Format: `projects/{project}/locations/{location}/keyRings/{key_ring}/cryptoKeys/{crypto_key}/cryptoKeyVersions/{crypto_key_version}`
+  &quot;createTime&quot;: &quot;A String&quot;, # Output only. Create time of the backup vault.
+  &quot;description&quot;: &quot;A String&quot;, # Description of the backup vault.
+  &quot;destinationBackupVault&quot;: &quot;A String&quot;, # Output only. Name of the Backup vault created in backup region. Format: `projects/{project_id}/locations/{location}/backupVaults/{backup_vault_id}`
+  &quot;encryptionState&quot;: &quot;A String&quot;, # Output only. Field indicating encryption state of CMEK backups.
+  &quot;kmsConfig&quot;: &quot;A String&quot;, # Optional. Specifies the Key Management System (KMS) configuration to be used for backup encryption. Format: `projects/{project}/locations/{location}/kmsConfigs/{kms_config}`
+  &quot;name&quot;: &quot;A String&quot;, # Identifier. The resource name of the backup vault. Format: `projects/{project_id}/locations/{location}/backupVaults/{backup_vault_id}`.
+  &quot;sourceBackupVault&quot;: &quot;A String&quot;, # Output only. Name of the Backup vault created in source region. Format: `projects/{project_id}/locations/{location}/backupVaults/{backup_vault_id}`
+  &quot;sourceRegion&quot;: &quot;A String&quot;, # Output only. Region in which the backup vault is created. Format: `projects/{project_id}/locations/{location}`
+  &quot;state&quot;: &quot;A String&quot;, # Output only. The backup vault state.
+  backupVaultId: string, Required. The ID to use for the backupVault. The ID must be unique within the specified location. Must contain only letters, numbers and hyphen, with the first character a letter, the last a letter or a number, and a 63 character maximum.
+  <pre>Warning! This operation will permanently delete the backup vault.
+  name: string, Required. The backupVault resource name, in the format `projects/{project_id}/locations/{location}/backupVaults/{backup_vault_id}` (required)
+  <pre>Returns the description of the specified backup vault
+  <pre>Returns list of all available backup vaults.
+  parent: string, Required. The location for which to retrieve backupVault information, in the format `projects/{project_id}/locations/{location}`. (required)
+    { # ListBackupVaultsResponse is the result of ListBackupVaultsRequest.
+  &quot;backupVaults&quot;: [ # A list of backupVaults in the project for the specified location.
+  <pre>Updates the settings of a specific backup vault.
+  name: string, Identifier. The resource name of the backup vault. Format: `projects/{project_id}/locations/{location}/backupVaults/{backup_vault_id}`. (required)

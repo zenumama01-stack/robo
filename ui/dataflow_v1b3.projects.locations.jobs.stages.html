@@ -1,0 +1,23 @@
+<h1><a href="dataflow_v1b3.html">Dataflow API</a> . <a href="dataflow_v1b3.projects.html">projects</a> . <a href="dataflow_v1b3.projects.locations.html">locations</a> . <a href="dataflow_v1b3.projects.locations.jobs.html">jobs</a> . <a href="dataflow_v1b3.projects.locations.jobs.stages.html">stages</a></h1>
+  <code><a href="#getExecutionDetails">getExecutionDetails(projectId, location, jobId, stageId, endTime=None, pageSize=None, pageToken=None, startTime=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Request detailed information about the execution status of a stage of the job. EXPERIMENTAL. This API is subject to change or removal without notice.</p>
+    <code class="details" id="getExecutionDetails">getExecutionDetails(projectId, location, jobId, stageId, endTime=None, pageSize=None, pageToken=None, startTime=None, x__xgafv=None)</code>
+  <pre>Request detailed information about the execution status of a stage of the job. EXPERIMENTAL. This API is subject to change or removal without notice.
+  stageId: string, The stage for which to fetch information. (required)
+  endTime: string, Upper time bound of work items to include, by start time.
+  pageSize: integer, If specified, determines the maximum number of work items to return. If unspecified, the service may choose an appropriate default, or may return an arbitrarily large number of results.
+  startTime: string, Lower time bound of work items to include, by start time.
+    { # Information about the workers and work items within a stage.
+  &quot;workers&quot;: [ # Workers that have done work on the stage.
+    { # Information about a worker
+      &quot;workItems&quot;: [ # Work items processed by this worker, sorted by time.
+        { # Information about an individual work item execution.
+          &quot;attemptId&quot;: &quot;A String&quot;, # Attempt ID of this work item
+          &quot;endTime&quot;: &quot;A String&quot;, # End time of this work item attempt. If the work item is completed, this is the actual end time of the work item. Otherwise, it is the predicted end time.
+          &quot;metrics&quot;: [ # Metrics for this work item.
+          &quot;progress&quot;: { # Information about the progress of some component of job execution. # Progress of this work item.
+          &quot;startTime&quot;: &quot;A String&quot;, # Start time of this work item attempt.
+          &quot;state&quot;: &quot;A String&quot;, # State of this work item.
+          &quot;stragglerInfo&quot;: { # Information useful for straggler identification and debugging. # Information about straggler detections for this work item.
+          &quot;taskId&quot;: &quot;A String&quot;, # Name of this work item.
+      &quot;workerName&quot;: &quot;A String&quot;, # Name of this worker

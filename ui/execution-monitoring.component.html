@@ -1,0 +1,70 @@
+<div class="execution-monitoring">
+    <h3>Execution Monitoring</h3>
+    <p>Monitor AI agent execution and performance</p>
+    <p>Execution monitoring interface will be implemented here.</p>
+<div class="execution-monitoring" >
+      <h3><i class="fa-solid fa-chart-line"></i> Execution Monitoring</h3>
+      <button kendoButton [primary]="true" [icon]="'refresh'" (click)="refreshData()" class="refresh-btn">
+          [data]="timeRangeOptions"
+          [value]="selectedTimeRange$.value"
+          (valueChange)="onTimeRangeChange($event)">
+          [data]="resultOptions"
+          [value]="selectedResult$.value"
+          (valueChange)="onResultFilterChange($event)">
+          [data]="actionOptions"
+          [value]="selectedAction$.value"
+          (valueChange)="onActionFilterChange($event)">
+  <!-- Metrics Summary -->
+  <div class="metrics-summary">
+    <div class="metric-card total clickable" (click)="onTotalExecutionsClick()">
+    <div class="metric-card success clickable" (click)="onSuccessRateClick()">
+        <div class="metric-value">{{ getSuccessRate() }}%</div>
+        <div class="metric-label">Success Rate</div>
+        <div class="metric-detail">{{ metrics.successfulExecutions }}/{{ metrics.totalExecutions }}</div>
+    <div class="metric-card error clickable" (click)="onFailedExecutionsClick()">
+        <div class="metric-value">{{ metrics.failedExecutions }}</div>
+        <div class="metric-label">Failed Executions</div>
+    <div class="metric-card duration">
+        <div class="metric-value">{{ metrics.averageDuration }}s</div>
+    <div class="metric-card activity">
+        <i class="fa-solid fa-calendar-day"></i>
+        <div class="metric-value">{{ metrics.executionsToday }}</div>
+        <div class="metric-label">Today</div>
+        <div class="metric-detail">{{ metrics.executionsThisWeek }} this week</div>
+    <div class="metric-card running clickable" (click)="onRunningExecutionsClick()">
+        <div class="metric-value">{{ metrics.currentlyRunning }}</div>
+        <div class="metric-label">Currently Running</div>
+  <!-- Execution Trends Chart -->
+  <div class="trends-section">
+      <h4><i class="fa-solid fa-chart-area"></i> 7-Day Execution Trends</h4>
+    <div class="trends-chart">
+      @if (executionTrends.length > 0) {
+        <div class="trend-bars">
+          @for (trend of executionTrends; track trend.date) {
+            <div class="trend-bar">
+                <div class="bar-success" [style.height.%]="trend.total > 0 ? (trend.successful / trend.total) * 100 : 0"></div>
+                <div class="bar-failed" [style.height.%]="trend.total > 0 ? (trend.failed / trend.total) * 100 : 0"></div>
+              <div class="bar-label">{{ trend.date | date:'MMM d' }}</div>
+              <div class="bar-total">{{ trend.total }}</div>
+            <div class="legend-color success"></div>
+            <span>Successful</span>
+            <div class="legend-color failed"></div>
+            <span>Failed</span>
+          <p>No execution trends available</p>
+  <!-- Execution List -->
+  <div class="executions-section">
+      <h4><i class="fa-solid fa-list"></i> Recent Executions</h4>
+      <div class="results-count">{{ filteredExecutions.length }} executions</div>
+      @if (filteredExecutions.length > 0) {
+          <div class="execution-item" (click)="openExecution(execution)">
+              <i [class]="getResultIcon(execution.ResultCode)"></i>
+            <div class="execution-main">
+              <div class="execution-action" (click)="openAction(execution.ActionID!); $event.stopPropagation()">
+                {{ getActionName(execution.ActionID!) }}
+                <span class="execution-time">{{ execution.StartedAt | date:'MMM d, HH:mm:ss' }}</span>
+                <span class="execution-user">{{ execution.UserID }}</span>
+                <span class="execution-duration">{{ getDuration(execution) }}</span>
+                [themeColor]="getResultColor(execution.ResultCode)"
+                [icon]="'more-vertical'"
+          <h5>No executions found</h5>
+          <p>Try adjusting your filters or search terms</p>

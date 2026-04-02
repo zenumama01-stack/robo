@@ -1,0 +1,79 @@
+<div class="restore-container">
+    <mj-loading text="Loading restore history..."></mj-loading>
+        <h2 class="page-title">Restore History</h2>
+        <p class="page-subtitle">Track all restore operations and their outcomes</p>
+          <div class="kpi-value">{{TotalRestores}}</div>
+          <div class="kpi-label">Total Restores</div>
+          <div class="kpi-value">{{SuccessfulRestores}}</div>
+          <div class="kpi-label">Successful</div>
+        <div class="kpi-icon" style="background: rgba(239, 68, 68, 0.1); color: #ef4444;">
+          <div class="kpi-value">{{FailedRestores}}</div>
+          <div class="kpi-label">Failed</div>
+          <div class="kpi-value">{{PartialRestores}}</div>
+          <div class="kpi-label">Partial</div>
+    <div class="filter-row">
+      <button class="filter-chip"
+        [class.active]="StatusFilter === 'Complete'"
+        (click)="OnStatusFilterChange('Complete')">
+        <i class="fa-solid fa-circle-check"></i> Complete
+        [class.active]="StatusFilter === 'Error'"
+        (click)="OnStatusFilterChange('Error')">
+        <i class="fa-solid fa-circle-xmark"></i> Error
+        [class.active]="StatusFilter === 'Partial'"
+        (click)="OnStatusFilterChange('Partial')">
+        <i class="fa-solid fa-circle-half-stroke"></i> Partial
+    <!-- Restore List -->
+    @if (FilteredRestores.length > 0) {
+      <div class="restore-list">
+        @for (restore of FilteredRestores; track restore) {
+          <div class="restore-card"
+            [ngClass]="{'expanded': IsExpanded(restore.ID)}">
+            <div class="restore-header" (click)="ToggleExpand(restore.ID)">
+              <div class="restore-header-left">
+                <i [class]="GetStatusIcon(restore.Status)"
+                  [ngClass]="GetStatusClass(restore.Status)"
+                class="status-icon"></i>
+                <div class="restore-info">
+                  <div class="restore-label-name">
+                    {{restore.VersionLabel}}
+                  @if (restore.StartedAt) {
+                    <div class="restore-date">{{FormatDate(restore.StartedAt)}}</div>
+              <div class="restore-header-right">
+                <div class="restore-progress-bar">
+                  <div class="progress-fill"
+                    [style.width.%]="GetProgressPercent(restore)">
+                <span class="restore-count">
+                  {{restore.CompletedItems ?? 0}} / {{restore.TotalItems ?? 0}} items
+                  [ngClass]="IsExpanded(restore.ID) ? 'fa-chevron-up' : 'fa-chevron-down'"
+                  class="expand-icon">
+            @if (IsExpanded(restore.ID)) {
+              <div class="restore-details">
+                    <span class="detail-value" [ngClass]="GetStatusClass(restore.Status)">
+                      {{restore.Status}}
+                    <span class="detail-label">Items Completed</span>
+                    <span class="detail-value">{{restore.CompletedItems ?? 0}}</span>
+                    <span class="detail-label">Items Failed</span>
+                    <span class="detail-value" [class.text-error]="(restore.FailedItems ?? 0) > 0">
+                      {{restore.FailedItems ?? 0}}
+                  @if (restore.User) {
+                      <span class="detail-label">Restored By</span>
+                      <span class="detail-value">{{restore.User}}</span>
+                  @if (restore.PreRestoreLabelID) {
+                      <span class="detail-label">Pre-Restore Label</span>
+                      @if (restore.PreRestoreLabel) {
+                        <span class="detail-value detail-mono">
+                          {{restore.PreRestoreLabel}}
+                      @if (!restore.PreRestoreLabel) {
+                          {{restore.PreRestoreLabelID | slice:0:20}}...
+                @if (restore.ErrorLog) {
+                  <div class="error-log">
+                    <div class="error-log-header">
+                      Error Log
+                    <pre class="error-log-content">{{restore.ErrorLog}}</pre>
+    @if (FilteredRestores.length === 0 && !IsLoading) {
+        <i class="fa-solid fa-clock-rotate-left empty-icon"></i>
+        <h3>No restore operations found</h3>
+        @if (StatusFilter) {
+            Try adjusting your filters.
+        @if (!StatusFilter) {
+            No restores have been performed yet. Use the VersionHistoryEngine to restore records to a labeled state.

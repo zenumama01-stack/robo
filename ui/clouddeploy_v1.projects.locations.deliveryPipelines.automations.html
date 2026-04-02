@@ -1,0 +1,30 @@
+<h1><a href="clouddeploy_v1.html">Cloud Deploy API</a> . <a href="clouddeploy_v1.projects.html">projects</a> . <a href="clouddeploy_v1.projects.locations.html">locations</a> . <a href="clouddeploy_v1.projects.locations.deliveryPipelines.html">deliveryPipelines</a> . <a href="clouddeploy_v1.projects.locations.deliveryPipelines.automations.html">automations</a></h1>
+  <code><a href="#create">create(parent, automationId=None, body=None, requestId=None, validateOnly=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Creates a new Automation in a given project and location.</p>
+<p class="firstline">Deletes a single Automation resource.</p>
+<p class="firstline">Gets details of a single Automation.</p>
+<p class="firstline">Lists Automations in a given project and location.</p>
+<p class="firstline">Updates the parameters of a single Automation resource.</p>
+    <code class="details" id="create">create(parent, automationId=None, body=None, requestId=None, validateOnly=None, x__xgafv=None)</code>
+  <pre>Creates a new Automation in a given project and location.
+  parent: string, Required. The parent collection in which the `Automation` must be created. The format is `projects/{project_id}/locations/{location_name}/deliveryPipelines/{pipeline_name}`. (required)
+{ # An `Automation` resource in the Cloud Deploy API. An `Automation` enables the automation of manually driven actions for a Delivery Pipeline, which includes Release promotion among Targets, Rollout repair and Rollout deployment strategy advancement. The intention of Automation is to reduce manual intervention in the continuous delivery process.
+  automationId: string, Required. ID of the `Automation`.
+  <pre>Deletes a single Automation resource.
+  name: string, Required. The name of the `Automation` to delete. The format is `projects/{project_id}/locations/{location_name}/deliveryPipelines/{pipeline_name}/automations/{automation_name}`. (required)
+  allowMissing: boolean, Optional. If set to true, then deleting an already deleted or non-existing `Automation` will succeed.
+  etag: string, Optional. The weak etag of the request. This checksum is computed by the server based on the value of other fields, and may be sent on update and delete requests to ensure the client has an up-to-date value before proceeding.
+  validateOnly: boolean, Optional. If set, validate the request and verify whether the resource exists, but do not actually post it.
+  <pre>Gets details of a single Automation.
+  name: string, Required. Name of the `Automation`. Format must be `projects/{project_id}/locations/{location_name}/deliveryPipelines/{pipeline_name}/automations/{automation_name}`. (required)
+  <pre>Lists Automations in a given project and location.
+  parent: string, Required. The parent `Delivery Pipeline`, which owns this collection of automations. Format must be `projects/{project_id}/locations/{location_name}/deliveryPipelines/{pipeline_name}`. (required)
+  filter: string, Filter automations to be returned. All fields can be used in the filter.
+  pageSize: integer, The maximum number of automations to return. The service may return fewer than this value. If unspecified, at most 50 automations will be returned. The maximum value is 1000; values above 1000 will be set to 1000.
+  pageToken: string, A page token, received from a previous `ListAutomations` call. Provide this to retrieve the subsequent page. When paginating, all other provided parameters match the call that provided the page token.
+    { # The response object from `ListAutomations`.
+  &quot;automations&quot;: [ # The `Automation` objects.
+  <pre>Updates the parameters of a single Automation resource.
+  name: string, Output only. Name of the `Automation`. Format is `projects/{project}/locations/{location}/deliveryPipelines/{delivery_pipeline}/automations/{automation}`. (required)
+  allowMissing: boolean, Optional. If set to true, updating a `Automation` that does not exist will result in the creation of a new `Automation`.
+  updateMask: string, Required. Field mask is used to specify the fields to be overwritten by the update in the `Automation` resource. The fields specified in the update_mask are relative to the resource, not the full request. A field will be overwritten if it&#x27;s in the mask. If the user doesn&#x27;t provide a mask then all fields are overwritten.

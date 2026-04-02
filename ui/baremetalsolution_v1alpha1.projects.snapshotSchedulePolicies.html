@@ -1,0 +1,26 @@
+<h1><a href="baremetalsolution_v1alpha1.html">Bare Metal Solution API</a> . <a href="baremetalsolution_v1alpha1.projects.html">projects</a> . <a href="baremetalsolution_v1alpha1.projects.snapshotSchedulePolicies.html">snapshotSchedulePolicies</a></h1>
+<p class="firstline">Create a SnapshotSchedulePolicy.</p>
+<p class="firstline">Delete removes named snapshot schedule policy</p>
+<p class="firstline">Get details for a specific snapshot schedule policy</p>
+<p class="firstline">List the snapshot schedule policies for the specified project</p>
+<p class="firstline">Update a SnapshotSchedulePolicy.</p>
+  <pre>Create a SnapshotSchedulePolicy.
+  parent: string, Required. The parent project containing the SnapshotSchedulePolicy. (required)
+{ # A snapshot schedule policy.
+  &quot;description&quot;: &quot;A String&quot;, # The description of this SnapshotSchedulePolicy.
+  &quot;name&quot;: &quot;A String&quot;, # Output only. The name of this SnapshotSchedulePolicy.
+  &quot;schedules&quot;: [ # The snapshot Schedules contained in this Policy. At most 5 Schedules may be specified.
+    { # A snapshot schedule.
+      &quot;crontabSpec&quot;: &quot;A String&quot;, # The crontab-like specification that this Schedule will use to take snapshots.
+      &quot;prefix&quot;: &quot;A String&quot;, # A string to prefix names of snapshots created under this Schedule.
+      &quot;retentionCount&quot;: 42, # The maximum number of snapshots to retain under this Schedule.
+  &quot;volumes&quot;: [ # The names of the Volumes this policy is associated with.
+  <pre>Delete removes named snapshot schedule policy
+  <pre>Get details for a specific snapshot schedule policy
+  name: string, Required. The name of the policy to retrieve. (required)
+  <pre>List the snapshot schedule policies for the specified project
+  parent: string, Required. The parent project containing the Snapshot Schedule Policies. (required)
+    { # Response for ListSnapshotSchedulePolicies.
+  &quot;snapshotSchedulePolicies&quot;: [ # The snapshot schedule policies registered in this project.
+  <pre>Update a SnapshotSchedulePolicy.
+  name: string, Output only. The name of this SnapshotSchedulePolicy. (required)

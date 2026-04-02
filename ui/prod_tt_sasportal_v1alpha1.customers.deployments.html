@@ -1,0 +1,33 @@
+<h1><a href="prod_tt_sasportal_v1alpha1.html">SAS Portal API (Testing)</a> . <a href="prod_tt_sasportal_v1alpha1.customers.html">customers</a> . <a href="prod_tt_sasportal_v1alpha1.customers.deployments.html">deployments</a></h1>
+  <code><a href="prod_tt_sasportal_v1alpha1.customers.deployments.devices.html">devices()</a></code>
+<p class="firstline">Creates a new deployment.</p>
+<p class="firstline">Deletes a deployment.</p>
+<p class="firstline">Returns a requested deployment.</p>
+<p class="firstline">Lists deployments.</p>
+<p class="firstline">Moves a deployment under another node or customer.</p>
+<p class="firstline">Updates an existing deployment.</p>
+  <pre>Creates a new deployment.
+  parent: string, Required. The parent resource name where the deployment is to be created. (required)
+{ # The Deployment.
+  &quot;displayName&quot;: &quot;A String&quot;, # The deployment&#x27;s display name.
+  &quot;frns&quot;: [ # Output only. The FCC Registration Numbers (FRNs) copied from its direct parent.
+  &quot;name&quot;: &quot;A String&quot;, # Output only. Resource name.
+  &quot;sasUserIds&quot;: [ # User ID used by the devices belonging to this deployment. Each deployment should be associated with one unique user ID.
+  <pre>Deletes a deployment.
+  name: string, Required. The name of the deployment. (required)
+  <pre>Returns a requested deployment.
+  <pre>Lists deployments.
+  parent: string, Required. The parent resource name, for example, &quot;nodes/1&quot;, customer/1/nodes/2. (required)
+  filter: string, The filter expression. The filter should have the following format: &quot;DIRECT_CHILDREN&quot; or format: &quot;direct_children&quot;. The filter is case insensitive. If empty, then no deployments are filtered.
+  pageSize: integer, The maximum number of deployments to return in the response.
+  pageToken: string, A pagination token returned from a previous call to ListDeployments that indicates where this listing should continue from.
+    { # Response for ListDeployments.
+  &quot;deployments&quot;: [ # The deployments that match the request.
+  &quot;nextPageToken&quot;: &quot;A String&quot;, # A pagination token returned from a previous call to ListDeployments that indicates from where listing should continue. If the field is missing or empty, it means there are no more deployments.
+  <pre>Moves a deployment under another node or customer.
+  name: string, Required. The name of the deployment to move. (required)
+{ # Request for MoveDeployment.
+  &quot;destination&quot;: &quot;A String&quot;, # Required. The name of the new parent resource node or customer to reparent the deployment under.
+  <pre>Updates an existing deployment.
+  name: string, Output only. Resource name. (required)
+  updateMask: string, Fields to be updated.

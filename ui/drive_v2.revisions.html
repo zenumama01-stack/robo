@@ -1,0 +1,45 @@
+<h1><a href="drive_v2.html">Google Drive API</a> . <a href="drive_v2.revisions.html">revisions</a></h1>
+  <code><a href="#delete">delete(fileId, revisionId, x__xgafv=None)</a></code></p>
+<p class="firstline">Permanently deletes a file version. You can only delete revisions for files with binary content, like images or videos. Revisions for other files, like Google Docs or Sheets, and the last remaining file version can't be deleted.</p>
+  <code><a href="#get">get(fileId, revisionId, x__xgafv=None)</a></code></p>
+<p class="firstline">Gets a specific revision.</p>
+  <code><a href="#list">list(fileId, maxResults=None, pageToken=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Lists a file's revisions. **Important:** The list of revisions returned by this method might be incomplete for files with a large revision history, including frequently edited Google Docs, Sheets, and Slides. Older revisions might be omitted from the response, meaning the first revision returned may not be the oldest existing revision. The revision history visible in the Workspace editor user interface might be more complete than the list returned by the API.</p>
+  <code><a href="#patch">patch(fileId, revisionId, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Updates a revision.</p>
+  <code><a href="#update">update(fileId, revisionId, body=None, x__xgafv=None)</a></code></p>
+    <code class="details" id="delete">delete(fileId, revisionId, x__xgafv=None)</code>
+  <pre>Permanently deletes a file version. You can only delete revisions for files with binary content, like images or videos. Revisions for other files, like Google Docs or Sheets, and the last remaining file version can&#x27;t be deleted.
+  revisionId: string, The ID of the revision. (required)
+    <code class="details" id="get">get(fileId, revisionId, x__xgafv=None)</code>
+  <pre>Gets a specific revision.
+    { # A revision of a file. Some resource methods (such as `revisions.update`) require a `revisionId`. Use the `revisions.list` method to retrieve the ID for a revision.
+  &quot;downloadUrl&quot;: &quot;A String&quot;, # Output only. Short term download URL for the file. This will only be populated on files with content stored in Drive.
+  &quot;etag&quot;: &quot;A String&quot;, # Output only. The ETag of the revision.
+  &quot;fileSize&quot;: &quot;A String&quot;, # Output only. The size of the revision in bytes. This will only be populated on files with content stored in Drive.
+  &quot;id&quot;: &quot;A String&quot;, # Output only. The ID of the revision.
+  &quot;kind&quot;: &quot;drive#revision&quot;, # Output only. This is always `drive#revision`.
+  &quot;lastModifyingUser&quot;: { # Information about a Drive user. # Output only. The last user to modify this revision. This field is only populated when the last modification was performed by a signed-in user.
+  &quot;lastModifyingUserName&quot;: &quot;A String&quot;, # Output only. Name of the last user to modify this revision.
+  &quot;md5Checksum&quot;: &quot;A String&quot;, # Output only. An MD5 checksum for the content of this revision. This will only be populated on files with content stored in Drive.
+  &quot;mimeType&quot;: &quot;A String&quot;, # Output only. The MIME type of the revision.
+  &quot;modifiedDate&quot;: &quot;A String&quot;, # Last time this revision was modified (formatted RFC 3339 timestamp).
+  &quot;originalFilename&quot;: &quot;A String&quot;, # Output only. The original filename when this revision was created. This will only be populated on files with content stored in Drive.
+  &quot;pinned&quot;: True or False, # Whether this revision is pinned to prevent automatic purging. If not set, the revision is automatically purged 30 days after newer content is uploaded. This field can only be modified on files with content stored in Drive, excluding Docs Editors files. Revisions can also be pinned when they are created through the drive.files.insert/update/copy by using the pinned query parameter. Pinned revisions are stored indefinitely using additional storage quota, up to a maximum of 200 revisions.
+  &quot;publishAuto&quot;: True or False, # Whether subsequent revisions will be automatically republished. This is only populated and can only be modified for Docs Editors files.
+  &quot;published&quot;: True or False, # Whether this revision is published. This is only populated and can only be modified for Docs Editors files.
+  &quot;publishedLink&quot;: &quot;A String&quot;, # Output only. A link to the published revision. This is only populated for Docs Editors files.
+  &quot;publishedOutsideDomain&quot;: True or False, # Whether this revision is published outside the domain. This is only populated and can only be modified for Docs Editors files.
+  &quot;selfLink&quot;: &quot;A String&quot;, # Output only. A link back to this revision.
+    <code class="details" id="list">list(fileId, maxResults=None, pageToken=None, x__xgafv=None)</code>
+  <pre>Lists a file&#x27;s revisions. **Important:** The list of revisions returned by this method might be incomplete for files with a large revision history, including frequently edited Google Docs, Sheets, and Slides. Older revisions might be omitted from the response, meaning the first revision returned may not be the oldest existing revision. The revision history visible in the Workspace editor user interface might be more complete than the list returned by the API.
+  maxResults: integer, Maximum number of revisions to return.
+  pageToken: string, Page token for revisions. To get the next page of results, set this parameter to the value of &quot;nextPageToken&quot; from the previous response.
+    { # A list of revisions of a file.
+  &quot;items&quot;: [ # The list of revisions. If nextPageToken is populated, then this list may be incomplete and an additional page of results should be fetched.
+  &quot;kind&quot;: &quot;drive#revisionList&quot;, # This is always `drive#revisionList`.
+  &quot;nextPageToken&quot;: &quot;A String&quot;, # The page token for the next page of revisions. This field will be absent if the end of the revisions list has been reached. If the token is rejected for any reason, it should be discarded and pagination should be restarted from the first page of results.
+    <code class="details" id="patch">patch(fileId, revisionId, body=None, x__xgafv=None)</code>
+  <pre>Updates a revision.
+  revisionId: string, The ID for the revision. (required)
+    <code class="details" id="update">update(fileId, revisionId, body=None, x__xgafv=None)</code>

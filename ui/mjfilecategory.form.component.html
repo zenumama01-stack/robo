@@ -1,0 +1,22 @@
+    <!-- Hierarchy Identifiers Section -->
+        SectionKey="hierarchyIdentifiers"
+        SectionName="Hierarchy Identifiers"
+    <!-- Category Information Section -->
+        SectionKey="categoryInformation"
+        SectionName="Category Information"
+    <!-- File Categories Section -->
+        SectionKey="fileCategories"
+        SectionName="File Categories"
+        [BadgeCount]="GetSectionRowCount('fileCategories')"
+                [Params]="BuildRelationshipViewParamsByEntityName('MJ: File Categories','ParentID')"
+                [NewRecordValues]="NewRecordValues('MJ: File Categories')"
+                [AllowLoad]="IsSectionExpanded('fileCategories')"
+                (AfterDataLoad)="SetSectionRowCount('fileCategories', $event.totalRowCount)"
+    <!-- Files Section -->
+        SectionKey="files"
+        SectionName="Files"
+        [BadgeCount]="GetSectionRowCount('files')"
+                [Params]="BuildRelationshipViewParamsByEntityName('MJ: Files','CategoryID')"
+                [NewRecordValues]="NewRecordValues('MJ: Files')"
+                [AllowLoad]="IsSectionExpanded('files')"
+                (AfterDataLoad)="SetSectionRowCount('files', $event.totalRowCount)"

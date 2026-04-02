@@ -1,0 +1,36 @@
+<h1><a href="run_v2.html">Cloud Run Admin API</a> . <a href="run_v2.projects.html">projects</a> . <a href="run_v2.projects.locations.html">locations</a> . <a href="run_v2.projects.locations.services.html">services</a> . <a href="run_v2.projects.locations.services.revisions.html">revisions</a></h1>
+<p class="firstline">Deletes a Revision.</p>
+<p class="firstline">Gets information about a Revision.</p>
+<p class="firstline">Lists Revisions from a given Service, or from a given location. Results are sorted by creation time, descending.</p>
+  <pre>Deletes a Revision.
+  name: string, Required. The name of the Revision to delete. Format: projects/{project}/locations/{location}/services/{service}/revisions/{revision} (required)
+  <pre>Gets information about a Revision.
+  name: string, Required. The full name of the Revision. Format: projects/{project}/locations/{location}/services/{service}/revisions/{revision} (required)
+    { # A Revision is an immutable snapshot of code and configuration. A Revision references a container image. Revisions are only created by updates to its parent Service.
+  &quot;conditions&quot;: [ # Output only. The Condition of this Revision, containing its readiness status, and detailed error information in case it did not reach a serving state.
+  &quot;executionEnvironment&quot;: &quot;A String&quot;, # The execution environment being used to host this Revision.
+  &quot;gpuZonalRedundancyDisabled&quot;: True or False, # Optional. Output only. True if GPU zonal redundancy is disabled on this revision.
+  &quot;labels&quot;: { # Output only. Unstructured key value map that can be used to organize and categorize objects. User-provided labels are shared with Google&#x27;s billing system, so they can be used to filter, or break down billing charges by team, component, environment, state, etc. For more information, visit https://cloud.google.com/resource-manager/docs/creating-managing-labels or https://cloud.google.com/run/docs/configuring/labels.
+  &quot;logUri&quot;: &quot;A String&quot;, # Output only. The Google Console URI to obtain logs for the Revision.
+  &quot;maxInstanceRequestConcurrency&quot;: 42, # Sets the maximum number of requests that each serving instance can receive.
+  &quot;name&quot;: &quot;A String&quot;, # Output only. The unique name of this Revision.
+  &quot;nodeSelector&quot;: { # Hardware constraints configuration. # The node selector for the revision.
+  &quot;observedGeneration&quot;: &quot;A String&quot;, # Output only. The generation of this Revision currently serving traffic. See comments in `reconciling` for additional information on reconciliation process in Cloud Run.
+  &quot;reconciling&quot;: True or False, # Output only. Indicates whether the resource&#x27;s reconciliation is still in progress. See comments in `Service.reconciling` for additional information on reconciliation process in Cloud Run.
+  &quot;scaling&quot;: { # Settings for revision-level scaling settings. # Scaling settings for this revision.
+  &quot;scalingStatus&quot;: { # Effective settings for the current revision # Output only. The current effective scaling settings for the revision.
+    &quot;desiredMinInstanceCount&quot;: 42, # The current number of min instances provisioned for this revision.
+  &quot;service&quot;: &quot;A String&quot;, # Output only. The name of the parent service.
+  &quot;serviceAccount&quot;: &quot;A String&quot;, # Email address of the IAM service account associated with the revision of the service. The service account represents the identity of the running revision, and determines what permissions the revision has.
+  &quot;serviceMesh&quot;: { # Settings for Cloud Service Mesh. For more information see https://cloud.google.com/service-mesh/docs/overview. # Enables service mesh connectivity.
+  &quot;sessionAffinity&quot;: True or False, # Enable session affinity.
+  &quot;timeout&quot;: &quot;A String&quot;, # Max allowed time for an instance to respond to a request.
+  &quot;uid&quot;: &quot;A String&quot;, # Output only. Server assigned unique identifier for the Revision. The value is a UUID4 string and guaranteed to remain unchanged until the resource is deleted.
+  &quot;vpcAccess&quot;: { # VPC Access settings. For more information on sending traffic to a VPC network, visit https://cloud.google.com/run/docs/configuring/connecting-vpc. # VPC Access configuration for this Revision. For more information, visit https://cloud.google.com/run/docs/configuring/connecting-vpc.
+  <pre>Lists Revisions from a given Service, or from a given location. Results are sorted by creation time, descending.
+  parent: string, Required. The Service from which the Revisions should be listed. To list all Revisions across Services, use &quot;-&quot; instead of Service name. Format: projects/{project}/locations/{location}/services/{service} (required)
+  pageSize: integer, Maximum number of revisions to return in this call.
+  pageToken: string, A page token received from a previous call to ListRevisions. All other parameters must match.
+    { # Response message containing a list of Revisions.
+  &quot;nextPageToken&quot;: &quot;A String&quot;, # A token indicating there are more items than page_size. Use it in the next ListRevisions request to continue.
+  &quot;revisions&quot;: [ # The resulting list of Revisions.

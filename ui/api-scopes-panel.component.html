@@ -1,0 +1,97 @@
+<div class="scopes-panel">
+          API Scopes
+        <p class="panel-subtitle">Manage hierarchical permission scopes for API access</p>
+        <div class="scope-stats">
+          <span class="stat">
+            <i class="fa-solid fa-shield"></i>
+            {{getTotalCount()}} total
+          <span class="stat active">
+            {{getActiveCount()}} active
+        <div class="tree-controls">
+          <button class="btn-icon" (click)="expandAll()" title="Expand All">
+            <i class="fa-solid fa-plus-square"></i>
+          <button class="btn-icon" (click)="collapseAll()" title="Collapse All">
+            <i class="fa-solid fa-minus-square"></i>
+        <button class="btn-create" (click)="openCreateDialog()">
+          New Scope
+    <!-- Scope Tree -->
+    <div class="scope-tree">
+      @for (node of ScopeTree; track node) {
+        <ng-container *ngTemplateOutlet="scopeNode; context: { node: node }"></ng-container>
+      @if (ScopeTree.length === 0) {
+          <p>Create scopes to define API access permissions</p>
+    <!-- Recursive Node Template -->
+    <ng-template #scopeNode let-node="node">
+      <div class="scope-node" [style.padding-left.px]="node.level * 24">
+        <div class="node-content" [class.inactive]="!node.scope.IsActive">
+          @if (node.children.length > 0) {
+            <button class="expand-btn"
+              (click)="toggleExpanded(node)">
+                [class.fa-chevron-right]="!node.expanded"
+              [class.fa-chevron-down]="node.expanded"></i>
+          @if (node.children.length === 0) {
+            <span class="expand-placeholder"></span>
+          <div class="scope-info" (click)="openEditDialog(node.scope)">
+            <div class="scope-icon" [style.backgroundColor]="getCategoryColor(node.scope.Category)">
+            <div class="scope-details">
+              <div class="scope-name">
+                {{node.scope.Name}}
+                @if (node.scope.FullPath && node.scope.FullPath !== node.scope.Name) {
+                  <span class="full-path">
+                    {{node.scope.FullPath}}
+                @if (!node.scope.IsActive) {
+                  <span class="status-badge">Inactive</span>
+              <div class="scope-meta">
+                <span class="category" [style.color]="getCategoryColor(node.scope.Category)">
+                  {{node.scope.Category}}
+                @if (node.scope.ResourceType) {
+                  <span class="resource-type">
+                    {{node.scope.ResourceType}}
+                @if (node.scope.Description) {
+                  <span class="description">
+                    {{node.scope.Description}}
+          <div class="node-actions">
+            <button class="btn-node-action" (click)="openCreateDialog(node.scope)" title="Add Child Scope">
+            <button class="btn-node-action" (click)="openEditDialog(node.scope)" title="Edit Scope">
+        @if (node.expanded && node.children.length > 0) {
+          <div class="children">
+            @for (child of node.children; track child) {
+              <ng-container *ngTemplateOutlet="scopeNode; context: { node: child }"></ng-container>
+  <!-- Create/Edit Dialog -->
+  @if (ShowCreateDialog || ShowEditDialog) {
+      [width]="560"
+      [minWidth]="420"
+      [minHeight]="480"
+      [top]="80"
+      (close)="closeDialogs()">
+      <kendo-window-titlebar>
+        <div class="dialog-title">
+          <span>{{EditingScope ? 'Edit Scope' : 'New Scope'}}</span>
+        <button kendoButton fillMode="flat" (click)="closeDialogs()" class="window-close-btn" title="Close (Esc)">
+      </kendo-window-titlebar>
+          <label>Scope Name *</label>
+            placeholder="e.g., runview, create, execute"
+          <span class="field-hint">Use lowercase, single word. Will be combined with parent for full path.</span>
+          <label>Parent Scope</label>
+          <kendo-dropdownlist [(ngModel)]="EditParentId"
+            [data]="getParentOptions()"
+            [textField]="'FullPath'"
+            [valueField]="'ID'"
+            [defaultItem]="{ FullPath: '(No Parent - Root Level)', ID: null }">
+          @if (SelectedParentScope) {
+            <span class="field-hint">
+              Full path will be: <code>{{SelectedParentScope.FullPath}}:{{EditName || '...'}}</code>
+          <div class="form-field half">
+            <label>Category</label>
+            <kendo-dropdownlist [(ngModel)]="EditCategory"
+              [data]="Categories"
+              [valuePrimitive]="true">
+            <label>Resource Type</label>
+            <kendo-dropdownlist [(ngModel)]="EditResourceType"
+              [data]="ResourceTypes"
+              [defaultItem]="''">
+            placeholder="Describe what this scope allows..."
+              <span class="checkbox-hint">Inactive scopes cannot be assigned to keys or applications</span>
+            (click)="saveScope()">
+                {{EditingScope ? 'Update' : 'Create'}}
+          <button kendoButton (click)="closeDialogs()">Cancel</button>

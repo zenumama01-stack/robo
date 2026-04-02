@@ -1,0 +1,42 @@
+<h1><a href="aiplatform_v1beta1.html">Vertex AI API</a> . <a href="aiplatform_v1beta1.projects.html">projects</a> . <a href="aiplatform_v1beta1.projects.locations.html">locations</a> . <a href="aiplatform_v1beta1.projects.locations.reasoningEngines.html">reasoningEngines</a> . <a href="aiplatform_v1beta1.projects.locations.reasoningEngines.a2aTasks.html">a2aTasks</a></h1>
+  <code><a href="aiplatform_v1beta1.projects.locations.reasoningEngines.a2aTasks.events.html">events()</a></code>
+  <code><a href="#appendEvents">appendEvents(name, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Appends TaskEvents to an A2aTask.</p>
+  <code><a href="#create">create(parent, a2aTaskId=None, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Creates an A2aTask.</p>
+<p class="firstline">Gets an A2aTask.</p>
+<p class="firstline">Lists A2aTasks for a ReasoningEngine.</p>
+    <code class="details" id="appendEvents">appendEvents(name, body=None, x__xgafv=None)</code>
+  <pre>Appends TaskEvents to an A2aTask.
+  name: string, Required. The resource name of the A2aTask to append events to. Format: `projects/{project}/locations/{location}/reasoningEngines/{reasoning_engine}/a2aTasks/{a2a_task}` (required)
+{ # Request message for AgentEngineTaskStoreService.AppendA2aTaskEvents.
+  &quot;taskEvents&quot;: [ # Required. The events to append. The number of events to append must be less than or equal to 100. Otherwise, an exception will be thrown.
+    { # Response message for AgentEngineTaskStoreService.AppendA2aTaskEvents.
+    <code class="details" id="create">create(parent, a2aTaskId=None, body=None, x__xgafv=None)</code>
+  <pre>Creates an A2aTask.
+  parent: string, Required. The resource name of the ReasoningEngine to create the A2aTask under. Format: `projects/{project}/locations/{location}/reasoningEngines/{reasoning_engine}` (required)
+{ # An A2aTask represents a unit of work.
+  &quot;contextId&quot;: &quot;A String&quot;, # Optional. A generic identifier for grouping related tasks (e.g., session_id, workflow_id).
+  &quot;createTime&quot;: &quot;A String&quot;, # Output only. The creation timestamp of the task.
+  &quot;expireTime&quot;: &quot;A String&quot;, # Optional. Timestamp of when this task is considered expired. This is *always* provided on output, and is calculated based on the `ttl` if set on the request
+  &quot;metadata&quot;: { # Optional. Arbitrary, user-defined metadata.
+  &quot;name&quot;: &quot;A String&quot;, # Identifier. The resource name of the task. Format: `projects/{project}/locations/{location}/reasoningEngines/{reasoning_engine}/a2aTasks/{a2a_task}`
+  &quot;nextEventSequenceNumber&quot;: &quot;A String&quot;, # Output only. The next event sequence number to be appended to the task. This value starts at 1 and is guaranteed to be monotonically increasing.
+  &quot;output&quot;: { # Represents the final output of a task. # Optional. The final output of the task.
+    &quot;artifacts&quot;: [ # Optional. A list of artifacts (files, data) produced by the task.
+  &quot;state&quot;: &quot;A String&quot;, # Output only. The state of the task. The state of a new task is SUBMITTED by default. The state of a task can only be updated via AppendA2aTaskEvents API.
+  &quot;statusDetails&quot;: { # Represents the additional status details of a task. # Optional. The status details of the task.
+  &quot;ttl&quot;: &quot;A String&quot;, # Optional. Input only. The TTL (Time To Live) for the task. If not set, the task will expire in 365 days by default. Valid range: (0 seconds, 1000 days]
+  &quot;updateTime&quot;: &quot;A String&quot;, # Output only. The last update timestamp of the task.
+  a2aTaskId: string, Required. User-defined ID of the A2aTask. This ID must be unique within the ReasoningEngine.
+  <pre>Gets an A2aTask.
+  name: string, Required. The resource name of the A2aTask. Format: `projects/{project}/locations/{location}/reasoningEngines/{reasoning_engine}/a2aTasks/{a2a_task}` (required)
+  <pre>Lists A2aTasks for a ReasoningEngine.
+  parent: string, Required. The resource name of the ReasoningEngine to list the A2aTasks under. Format: `projects/{project}/locations/{location}/reasoningEngines/{reasoning_engine}` (required)
+  filter: string, Optional. The standard list filter. More detail in [AIP-160](https://google.aip.dev/160). Supported fields: * `context_id` * `state` Example: `context_id=&quot;abc&quot;`, `state=&quot;WORKING&quot;`.
+  orderBy: string, Optional. A comma-separated list of fields to order by, sorted in ascending order. Use &quot;desc&quot; after a field name for descending. If this field is omitted, the default ordering is `create_time` descending. More detail in [AIP-132](https://google.aip.dev/132). Supported fields: * `create_time` * `update_time` Example: `create_time desc`.
+  pageSize: integer, Optional. The maximum number of tasks to return. The service may return fewer than this value. If unspecified, at most 10 tasks will be returned. The maximum value is 100; values above 100 will hit exception.
+  pageToken: string, Optional. The next_page_token value returned from a previous list AgentEngineTaskStoreService.ListA2aTasks call.
+    { # Response message for AgentEngineTaskStoreService.ListA2aTasks.
+  &quot;a2aTasks&quot;: [ # List of A2aTasks in the requested page.
+  &quot;nextPageToken&quot;: &quot;A String&quot;, # A token, which can be sent as ListA2aTasksRequest.page_token to retrieve the next page. Absence of this field indicates there are no subsequent pages.

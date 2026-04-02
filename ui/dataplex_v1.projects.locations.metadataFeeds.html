@@ -1,0 +1,39 @@
+<h1><a href="dataplex_v1.html">Cloud Dataplex API</a> . <a href="dataplex_v1.projects.html">projects</a> . <a href="dataplex_v1.projects.locations.html">locations</a> . <a href="dataplex_v1.projects.locations.metadataFeeds.html">metadataFeeds</a></h1>
+  <code><a href="#create">create(parent, body=None, metadataFeedId=None, validateOnly=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Creates a MetadataFeed.</p>
+<p class="firstline">Deletes a MetadataFeed.</p>
+<p class="firstline">Gets a MetadataFeed.</p>
+<p class="firstline">Retrieve a list of MetadataFeeds.</p>
+<p class="firstline">Updates a MetadataFeed.</p>
+    <code class="details" id="create">create(parent, body=None, metadataFeedId=None, validateOnly=None, x__xgafv=None)</code>
+  <pre>Creates a MetadataFeed.
+  parent: string, Required. The resource name of the parent location, in the format projects/{project_id_or_number}/locations/{location_id} (required)
+{ # MetadataFeed contains information related to the metadata feed.
+  &quot;createTime&quot;: &quot;A String&quot;, # Output only. The time when the feed was created.
+  &quot;filters&quot;: { # Filters defines the type of changes that you want to listen to. You can have multiple entry type filters and multiple aspect type filters. All of the entry type filters are OR&#x27;ed together. All of the aspect type filters are OR&#x27;ed together. All of the entry type filters and aspect type filters are AND&#x27;ed together. # Optional. The filters of the metadata feed. Only the changes that match the filters are published.
+    &quot;aspectTypes&quot;: [ # Optional. The aspect types that you want to listen to. Depending on how the aspect is attached to the entry, in the format: projects/{project_id_or_number}/locations/{location}/aspectTypes/{aspect_type_id}.
+    &quot;changeTypes&quot;: [ # Optional. The type of change that you want to listen to. If not specified, all changes are published.
+    &quot;entryTypes&quot;: [ # Optional. The entry types that you want to listen to, specified as relative resource names in the format projects/{project_id_or_number}/locations/{location}/entryTypes/{entry_type_id}. Only entries that belong to the specified entry types are published.
+  &quot;labels&quot;: { # Optional. User-defined labels.
+  &quot;name&quot;: &quot;A String&quot;, # Identifier. The resource name of the metadata feed, in the format projects/{project_id_or_number}/locations/{location_id}/metadataFeeds/{metadata_feed_id}.
+  &quot;pubsubTopic&quot;: &quot;A String&quot;, # Optional. The pubsub topic that you want the metadata feed messages to publish to. Please grant Dataplex service account the permission to publish messages to the topic. The service account is: service-{PROJECT_NUMBER}@gcp-sa-dataplex.iam.gserviceaccount.com.
+  &quot;scope&quot;: { # Scope defines the scope of the metadata feed. Scopes are exclusive. Only one of the scopes can be specified. # Required. The scope of the metadata feed. Only the in scope changes are published.
+    &quot;entryGroups&quot;: [ # Optional. The entry groups whose entries you want to listen to. Must be in the format: projects/{project_id_or_number}/locations/{location_id}/entryGroups/{entry_group_id}.
+    &quot;organizationLevel&quot;: True or False, # Optional. Whether the metadata feed is at the organization-level. If true, all changes happened to the entries in the same organization as the feed are published. If false, you must specify a list of projects or a list of entry groups whose entries you want to listen to.The default is false.
+    &quot;projects&quot;: [ # Optional. The projects whose entries you want to listen to. Must be in the same organization as the feed. Must be in the format: projects/{project_id_or_number}.
+  &quot;uid&quot;: &quot;A String&quot;, # Output only. A system-generated, globally unique ID for the metadata job. If the metadata job is deleted and then re-created with the same name, this ID is different.
+  &quot;updateTime&quot;: &quot;A String&quot;, # Output only. The time when the feed was updated.
+  metadataFeedId: string, Optional. The metadata job ID. If not provided, a unique ID is generated with the prefix metadata-job-.
+  <pre>Deletes a MetadataFeed.
+  name: string, Required. The resource name of the metadata feed, in the format projects/{project_id_or_number}/locations/{location_id}/MetadataFeeds/{metadata_feed_id}. (required)
+  <pre>Gets a MetadataFeed.
+  <pre>Retrieve a list of MetadataFeeds.
+  filter: string, Optional. Filter request. Filters are case-sensitive. The service supports the following formats: labels.key1 = &quot;value1&quot; labels:key1 name = &quot;value&quot;You can combine filters with AND, OR, and NOT operators.
+  orderBy: string, Optional. The field to sort the results by, either name or create_time. If not specified, the ordering is undefined.
+  pageSize: integer, Optional. The maximum number of metadata feeds to return. The service might return fewer feeds than this value. If unspecified, at most 10 feeds are returned. The maximum value is 1,000.
+  pageToken: string, Optional. The page token received from a previous ListMetadataFeeds call. Provide this token to retrieve the subsequent page of results. When paginating, all other parameters that are provided to the ListMetadataFeeds request must match the call that provided the page token.
+    { # Response message for ListMetadataFeeds.
+  &quot;metadataFeeds&quot;: [ # List of metadata feeds under the specified parent location.
+  &quot;nextPageToken&quot;: &quot;A String&quot;, # A token to retrieve the next page of results. If there are no more results in the list, the value is empty.
+  <pre>Updates a MetadataFeed.
+  name: string, Identifier. The resource name of the metadata feed, in the format projects/{project_id_or_number}/locations/{location_id}/metadataFeeds/{metadata_feed_id}. (required)

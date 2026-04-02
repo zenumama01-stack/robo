@@ -1,0 +1,19 @@
+<h1><a href="config_v1.html">Infrastructure Manager API</a> . <a href="config_v1.projects.html">projects</a> . <a href="config_v1.projects.locations.html">locations</a> . <a href="config_v1.projects.locations.terraformVersions.html">terraformVersions</a></h1>
+<p class="firstline">Gets details about a TerraformVersion.</p>
+<p class="firstline">Lists TerraformVersions in a given project and location.</p>
+  <pre>Gets details about a TerraformVersion.
+  name: string, Required. The name of the TerraformVersion. Format: &#x27;projects/{project_id}/locations/{location}/terraformVersions/{terraform_version}&#x27; (required)
+    { # A TerraformVersion represents the support state the corresponding Terraform version.
+  &quot;deprecateTime&quot;: &quot;A String&quot;, # Output only. When the version is deprecated.
+  &quot;name&quot;: &quot;A String&quot;, # Identifier. The version name is in the format: &#x27;projects/{project_id}/locations/{location}/terraformVersions/{terraform_version}&#x27;.
+  &quot;obsoleteTime&quot;: &quot;A String&quot;, # Output only. When the version is obsolete.
+  &quot;state&quot;: &quot;A String&quot;, # Output only. The state of the version, ACTIVE, DEPRECATED or OBSOLETE.
+  &quot;supportTime&quot;: &quot;A String&quot;, # Output only. When the version is supported.
+  <pre>Lists TerraformVersions in a given project and location.
+  parent: string, Required. The parent in whose context the TerraformVersions are listed. The parent value is in the format: &#x27;projects/{project_id}/locations/{location}&#x27;. (required)
+  filter: string, Optional. Lists the TerraformVersions that match the filter expression. A filter expression filters the resources listed in the response. The expression must be of the form &#x27;{field} {operator} {value}&#x27; where operators: &#x27;&lt;&#x27;, &#x27;&gt;&#x27;, &#x27;&lt;=&#x27;, &#x27;&gt;=&#x27;, &#x27;!=&#x27;, &#x27;=&#x27;, &#x27;:&#x27; are supported (colon &#x27;:&#x27; represents a HAS operator which is roughly synonymous with equality). {field} can refer to a proto or JSON field, or a synthetic field. Field names can be camelCase or snake_case.
+  pageSize: integer, Optional. When requesting a page of terraform versions, &#x27;page_size&#x27; specifies number of terraform versions to return. If unspecified, at most 500 will be returned. The maximum value is 1000.
+  pageToken: string, Optional. Token returned by previous call to &#x27;ListTerraformVersions&#x27; which specifies the position in the list from where to continue listing the terraform versions.
+    { # The response message for the `ListTerraformVersions` method.
+  &quot;nextPageToken&quot;: &quot;A String&quot;, # Token to be supplied to the next ListTerraformVersions request via `page_token` to obtain the next set of results.
+  &quot;terraformVersions&quot;: [ # List of TerraformVersions.

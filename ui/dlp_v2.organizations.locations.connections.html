@@ -1,0 +1,47 @@
+<h1><a href="dlp_v2.html">Sensitive Data Protection (DLP)</a> . <a href="dlp_v2.organizations.html">organizations</a> . <a href="dlp_v2.organizations.locations.html">locations</a> . <a href="dlp_v2.organizations.locations.connections.html">connections</a></h1>
+<p class="firstline">Create a Connection to an external data source.</p>
+<p class="firstline">Delete a Connection.</p>
+<p class="firstline">Get a Connection by name.</p>
+<p class="firstline">Lists Connections in a parent. Use SearchConnections to see all connections within an organization.</p>
+<p class="firstline">Update a Connection.</p>
+<p class="firstline">Searches for Connections in a parent.</p>
+  <pre>Create a Connection to an external data source.
+  parent: string, Required. Parent resource name. The format of this value varies depending on the scope of the request (project or organization): + Projects scope: `projects/{project_id}/locations/{location_id}` + Organizations scope: `organizations/{org_id}/locations/{location_id}` (required)
+{ # Request message for CreateConnection.
+  &quot;connection&quot;: { # A data connection to allow the DLP API to profile data in locations that require additional configuration. # Required. The connection resource.
+    &quot;cloudSql&quot;: { # Cloud SQL connection properties. # Connect to a Cloud SQL instance.
+      &quot;cloudSqlIam&quot;: { # Use IAM authentication to connect. This requires the Cloud SQL IAM feature to be enabled on the instance, which is not the default for Cloud SQL. See https://cloud.google.com/sql/docs/postgres/authentication and https://cloud.google.com/sql/docs/mysql/authentication. # Built-in IAM authentication (must be configured in Cloud SQL).
+      &quot;connectionName&quot;: &quot;A String&quot;, # Optional. Immutable. The Cloud SQL instance for which the connection is defined. Only one connection per instance is allowed. This can only be set at creation time, and cannot be updated. It is an error to use a connection_name from different project or region than the one that holds the connection. For example, a Connection resource for Cloud SQL connection_name `project-id:us-central1:sql-instance` must be created under the parent `projects/project-id/locations/us-central1`
+      &quot;databaseEngine&quot;: &quot;A String&quot;, # Required. The database engine used by the Cloud SQL instance that this connection configures.
+      &quot;maxConnections&quot;: 42, # Required. The DLP API will limit its connections to max_connections. Must be 2 or greater.
+      &quot;usernamePassword&quot;: { # A credential consisting of a username and password, where the password is stored in a Secret Manager resource. Note: Secret Manager [charges apply](https://cloud.google.com/secret-manager/pricing). # A username and password stored in Secret Manager.
+        &quot;passwordSecretVersionName&quot;: &quot;A String&quot;, # Required. The name of the Secret Manager resource that stores the password, in the form `projects/project-id/secrets/secret-name/versions/version`.
+        &quot;username&quot;: &quot;A String&quot;, # Required. The username.
+    &quot;errors&quot;: [ # Output only. Set if status == ERROR, to provide additional details. Will store the last 10 errors sorted with the most recent first.
+      { # Details information about an error encountered during job execution or the results of an unsuccessful activation of the JobTrigger.
+        &quot;details&quot;: { # The `Status` type defines a logical error model that is suitable for different programming environments, including REST APIs and RPC APIs. It is used by [gRPC](https://github.com/grpc). Each `Status` message contains three pieces of data: error code, error message, and error details. You can find out more about this error model and how to work with it in the [API Design Guide](https://cloud.google.com/apis/design/errors). # Detailed error codes and messages.
+        &quot;extraInfo&quot;: &quot;A String&quot;, # Additional information about the error.
+        &quot;timestamps&quot;: [ # The times the error occurred. List includes the oldest timestamp and the last 9 timestamps.
+    &quot;name&quot;: &quot;A String&quot;, # Output only. Name of the connection: `projects/{project}/locations/{location}/connections/{name}`.
+    &quot;state&quot;: &quot;A String&quot;, # Required. The connection&#x27;s state in its lifecycle.
+    { # A data connection to allow the DLP API to profile data in locations that require additional configuration.
+  <pre>Delete a Connection.
+  name: string, Required. Resource name of the Connection to be deleted, in the format: `projects/{project}/locations/{location}/connections/{connection}`. (required)
+  <pre>Get a Connection by name.
+  name: string, Required. Resource name in the format: `projects/{project}/locations/{location}/connections/{connection}`. (required)
+  <pre>Lists Connections in a parent. Use SearchConnections to see all connections within an organization.
+  parent: string, Required. Resource name of the organization or project, for example, `organizations/433245324/locations/europe` or `projects/project-id/locations/asia`. (required)
+  filter: string, Optional. Supported field/value: `state` - MISSING|AVAILABLE|ERROR The syntax is based on https://google.aip.dev/160.
+  pageSize: integer, Optional. Number of results per page, max 1000.
+  pageToken: string, Optional. Page token from a previous page to return the next set of results. If set, all other request fields must match the original request.
+    { # Response message for ListConnections.
+  &quot;nextPageToken&quot;: &quot;A String&quot;, # Token to retrieve the next page of results. An empty value means there are no more results.
+  <pre>Update a Connection.
+{ # Request message for UpdateConnection.
+  &quot;connection&quot;: { # A data connection to allow the DLP API to profile data in locations that require additional configuration. # Required. The connection with new values for the relevant fields.
+  &quot;updateMask&quot;: &quot;A String&quot;, # Optional. Mask to control which fields get updated.
+  <pre>Searches for Connections in a parent.
+  parent: string, Required. Resource name of the organization or project with a wildcard location, for example, `organizations/433245324/locations/-` or `projects/project-id/locations/-`. (required)
+  filter: string, Optional. Supported field/value: - `state` - MISSING|AVAILABLE|ERROR The syntax is based on https://google.aip.dev/160.
+    { # Response message for SearchConnections.
+  &quot;connections&quot;: [ # List of connections that match the search query. Note that only a subset of the fields will be populated, and only &quot;name&quot; is guaranteed to be set. For full details of a Connection, call GetConnection with the name.

@@ -1,0 +1,36 @@
+<h1><a href="translate_v3.html">Cloud Translation API</a> . <a href="translate_v3.projects.html">projects</a> . <a href="translate_v3.projects.locations.html">locations</a> . <a href="translate_v3.projects.locations.datasets.html">datasets</a></h1>
+  <code><a href="translate_v3.projects.locations.datasets.examples.html">examples()</a></code>
+<p class="firstline">Deletes a dataset and all of its contents.</p>
+  <code><a href="#exportData">exportData(dataset, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Exports dataset's data to the provided output location.</p>
+  <code><a href="#importData">importData(dataset, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Import sentence pairs into translation Dataset.</p>
+<p class="firstline">Lists datasets.</p>
+{ # A dataset that hosts the examples (sentence pairs) used for translation models.
+  &quot;exampleCount&quot;: 42, # Output only. The number of examples in the dataset.
+  &quot;name&quot;: &quot;A String&quot;, # The resource name of the dataset, in form of `projects/{project-number-or-id}/locations/{location_id}/datasets/{dataset_id}`
+  &quot;testExampleCount&quot;: 42, # Output only. Number of test examples (sentence pairs).
+  &quot;trainExampleCount&quot;: 42, # Output only. Number of training examples (sentence pairs).
+  &quot;validateExampleCount&quot;: 42, # Output only. Number of validation examples (sentence pairs).
+  <pre>Deletes a dataset and all of its contents.
+    <code class="details" id="exportData">exportData(dataset, body=None, x__xgafv=None)</code>
+  <pre>Exports dataset&#x27;s data to the provided output location.
+  dataset: string, Required. Name of the dataset. In form of `projects/{project-number-or-id}/locations/{location-id}/datasets/{dataset-id}` (required)
+{ # Request message for ExportData.
+  &quot;outputConfig&quot;: { # Output configuration for datasets. # Required. The config for the output content.
+    &quot;gcsDestination&quot;: { # The Google Cloud Storage location for the output content. # Google Cloud Storage destination to write the output.
+      &quot;outputUriPrefix&quot;: &quot;A String&quot;, # Required. Google Cloud Storage URI to output directory. For example, `gs://bucket/directory`. The requesting user must have write permission to the bucket. The directory will be created if it doesn&#x27;t exist.
+  name: string, Required. The resource name of the dataset to retrieve. (required)
+    <code class="details" id="importData">importData(dataset, body=None, x__xgafv=None)</code>
+  <pre>Import sentence pairs into translation Dataset.
+{ # Request message for ImportData.
+  &quot;inputConfig&quot;: { # Input configuration for datasets. # Required. The config for the input content.
+    &quot;inputFiles&quot;: [ # Files containing the sentence pairs to be imported to the dataset.
+      { # An input file.
+        &quot;gcsSource&quot;: { # The Google Cloud Storage location for the input content. # Google Cloud Storage file source.
+        &quot;usage&quot;: &quot;A String&quot;, # Optional. Usage of the file contents. Options are TRAIN|VALIDATION|TEST, or UNASSIGNED (by default) for auto split.
+  <pre>Lists datasets.
+  pageToken: string, Optional. A token identifying a page of results for the server to return. Typically obtained from next_page_token field in the response of a ListDatasets call.
+    { # Response message for ListDatasets.
+  &quot;datasets&quot;: [ # The datasets read.
+  &quot;nextPageToken&quot;: &quot;A String&quot;, # A token to retrieve next page of results. Pass this token to the page_token field in the ListDatasetsRequest to obtain the corresponding page.

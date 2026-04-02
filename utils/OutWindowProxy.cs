@@ -1,0 +1,100 @@
+    internal sealed class OutWindowProxy : IDisposable
+        private const string OutGridViewWindowClassName = "Microsoft.Management.UI.Internal.OutGridViewWindow";
+        private const string OriginalTypePropertyName = "OriginalType";
+        internal const string OriginalObjectPropertyName = "OutGridViewOriginalObject";
+        private const string ToStringValuePropertyName = "ToStringValue";
+        private const string IndexPropertyName = "IndexValue";
+        private int _index;
+        /// <summary> Columns definition of the underlying Management List</summary>
+        private HeaderInfo _headerInfo;
+        private bool _isWindowStarted;
+        private readonly string _title;
+        private readonly OutputModeOption _outputMode;
+        private AutoResetEvent _closedEvent;
+        private readonly GraphicalHostReflectionWrapper _graphicalHostReflectionWrapper;
+        /// Initializes a new instance of the <see cref="OutWindowProxy"/> class.
+        internal OutWindowProxy(string title, OutputModeOption outPutMode, OutGridViewCommand parentCmdlet)
+            _title = title;
+            _outputMode = outPutMode;
+            _graphicalHostReflectionWrapper = GraphicalHostReflectionWrapper.GetGraphicalHostReflectionWrapper(parentCmdlet, OutWindowProxy.OutGridViewWindowClassName);
+        /// Adds columns to the output window.
+        internal void AddColumns(string[] propertyNames, string[] displayNames, Type[] types)
+            ArgumentNullException.ThrowIfNull(displayNames);
+            ArgumentNullException.ThrowIfNull(types);
+                _graphicalHostReflectionWrapper.CallMethod("AddColumns", propertyNames, displayNames, types);
+            catch (TargetInvocationException ex)
+                // Verify if this is an error loading the System.Core dll.
+                if (ex.InnerException is FileNotFoundException fileNotFoundEx && fileNotFoundEx.FileName.Contains("System.Core"))
+                    _parentCmdlet.ThrowTerminatingError(
+                        new ErrorRecord(new InvalidOperationException(
+                                StringUtil.Format(FormatAndOut_out_gridview.RestartPowerShell,
+                                _parentCmdlet.CommandInfo.Name), ex.InnerException),
+                    // Let PowerShell take care of this problem.
+        // Types that are not defined in the database and are not scalar.
+        internal void AddColumnsAndItem(PSObject liveObject, TableView tableView)
+            _headerInfo = tableView.GenerateHeaderInfo(liveObject, _parentCmdlet);
+            AddColumnsAndItemEnd(liveObject);
+        // Database defined types.
+        internal void AddColumnsAndItem(PSObject liveObject, TableView tableView, TableControlBody tableBody)
+            _headerInfo = tableView.GenerateHeaderInfo(liveObject, tableBody, _parentCmdlet);
+        // Scalar types.
+        internal void AddColumnsAndItem(PSObject liveObject)
+            _headerInfo = new HeaderInfo();
+            _headerInfo.AddColumn(new ScalarTypeColumnInfo(liveObject.BaseObject.GetType()));
+        private void AddColumnsAndItemEnd(PSObject liveObject)
+            // Add columns to the underlying Management list and as a byproduct get a stale PSObject.
+            PSObject staleObject = _headerInfo.AddColumnsToWindow(this, liveObject);
+            // Add 3 extra properties, so that the stale PSObject has meaningful info in the Hetero-type header view.
+            AddExtraProperties(staleObject, liveObject);
+            // Add the stale PSObject to the underlying Management list.
+            _graphicalHostReflectionWrapper.CallMethod("AddItem", staleObject);
+        // Hetero types.
+        internal void AddHeteroViewColumnsAndItem(PSObject liveObject)
+            _headerInfo.AddColumn(new IndexColumnInfo(OutWindowProxy.IndexPropertyName,
+                StringUtil.Format(FormatAndOut_out_gridview.IndexColumnName), _index));
+            _headerInfo.AddColumn(new ToStringColumnInfo(OutWindowProxy.ToStringValuePropertyName,
+                StringUtil.Format(FormatAndOut_out_gridview.ValueColumnName), _parentCmdlet));
+            _headerInfo.AddColumn(new TypeNameColumnInfo(OutWindowProxy.OriginalTypePropertyName,
+                StringUtil.Format(FormatAndOut_out_gridview.TypeColumnName)));
+        private void AddExtraProperties(PSObject staleObject, PSObject liveObject)
+            staleObject.Properties.Add(new PSNoteProperty(OutWindowProxy.IndexPropertyName, _index++));
+            staleObject.Properties.Add(new PSNoteProperty(OutWindowProxy.OriginalTypePropertyName, liveObject.BaseObject.GetType().FullName));
+            staleObject.Properties.Add(new PSNoteProperty(OutWindowProxy.OriginalObjectPropertyName, liveObject));
+            // Convert the LivePSObject to a string preserving PowerShell formatting.
+            staleObject.Properties.Add(new PSNoteProperty(OutWindowProxy.ToStringValuePropertyName,
+                                                          _parentCmdlet.ConvertToString(liveObject)));
+        /// Adds an item to the out window.
+        /// <param name="livePSObject">
+        internal void AddItem(PSObject livePSObject)
+            ArgumentNullException.ThrowIfNull(livePSObject);
+            if (_headerInfo == null)
+            PSObject stalePSObject = _headerInfo.CreateStalePSObject(livePSObject);
+            AddExtraProperties(stalePSObject, livePSObject);
+            _graphicalHostReflectionWrapper.CallMethod("AddItem", stalePSObject);
+        internal void AddHeteroViewItem(PSObject livePSObject)
+        /// Shows the out window if it has not already been displayed.
+        internal void ShowWindow()
+            if (!_isWindowStarted)
+                _closedEvent = new AutoResetEvent(false);
+                _graphicalHostReflectionWrapper.CallMethod("StartWindow", _title, _outputMode.ToString(), _closedEvent);
+                _isWindowStarted = true;
+        internal void BlockUntilClosed() => _closedEvent?.WaitOne();
+                if (_closedEvent != null)
+                    _closedEvent.Dispose();
+                    _closedEvent = null;
+        /// Close the window if it has already been displayed.
+        internal void CloseWindow()
+            if (_isWindowStarted)
+                _graphicalHostReflectionWrapper.CallMethod("CloseWindow");
+                _isWindowStarted = false;
+        /// Gets a value indicating whether the out window is closed.
+        /// True if the out window is closed, false otherwise.
+        internal bool IsWindowClosed()
+            return (bool)_graphicalHostReflectionWrapper.CallMethod("GetWindowClosedStatus");
+        /// <summary>Returns any exception that has been thrown by previous method calls.</summary>
+        internal Exception GetLastException()
+            return (Exception)_graphicalHostReflectionWrapper.CallMethod("GetLastException");
+        /// Return the selected item of the OutGridView.
+        /// The selected item.
+        internal List<PSObject> GetSelectedItems()
+            return (List<PSObject>)_graphicalHostReflectionWrapper.CallMethod("SelectedItems");

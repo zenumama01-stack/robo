@@ -1,0 +1,30 @@
+<h1><a href="integrations_v1.html">Application Integration API</a> . <a href="integrations_v1.projects.html">projects</a> . <a href="integrations_v1.projects.locations.html">locations</a> . <a href="integrations_v1.projects.locations.products.html">products</a> . <a href="integrations_v1.projects.locations.products.sfdcInstances.html">sfdcInstances</a></h1>
+  <code><a href="integrations_v1.projects.locations.products.sfdcInstances.sfdcChannels.html">sfdcChannels()</a></code>
+<p class="firstline">Returns the sfdcChannels Resource.</p>
+<p class="firstline">Creates an sfdc instance record. Store the sfdc instance in Spanner. Returns the sfdc instance.</p>
+<p class="firstline">Deletes an sfdc instance.</p>
+<p class="firstline">Gets an sfdc instance. If the instance doesn't exist, Code.NOT_FOUND exception will be thrown.</p>
+<p class="firstline">Lists all sfdc instances that match the filter. Restrict to sfdc instances belonging to the current client only.</p>
+<p class="firstline">Updates an sfdc instance. Updates the sfdc instance in spanner. Returns the sfdc instance.</p>
+  <pre>Creates an sfdc instance record. Store the sfdc instance in Spanner. Returns the sfdc instance.
+{ # The SfdcInstance resource use to hold channels and connection config data.
+  &quot;authConfigId&quot;: [ # A list of AuthConfigs that can be tried to open the channel to SFDC
+  &quot;createTime&quot;: &quot;A String&quot;, # Output only. Time when the instance is created
+  &quot;deleteTime&quot;: &quot;A String&quot;, # Output only. Time when the instance was deleted. Empty if not deleted.
+  &quot;description&quot;: &quot;A String&quot;, # Optional. A description of the sfdc instance.
+  &quot;displayName&quot;: &quot;A String&quot;, # Optional. User selected unique name/alias to easily reference an instance.
+  &quot;name&quot;: &quot;A String&quot;, # Resource name of the SFDC instance projects/{project}/locations/{location}/sfdcInstances/{sfdcInstance}.
+  &quot;serviceAuthority&quot;: &quot;A String&quot;, # Optional. URL used for API calls after authentication (the login authority is configured within the referenced AuthConfig).
+  &quot;sfdcOrgId&quot;: &quot;A String&quot;, # The SFDC Org Id. This is defined in salesforce.
+  &quot;updateTime&quot;: &quot;A String&quot;, # Output only. Time when the instance was last updated
+  <pre>Deletes an sfdc instance.
+  name: string, Required. The name that is associated with the SfdcInstance. (required)
+  <pre>Gets an sfdc instance. If the instance doesn&#x27;t exist, Code.NOT_FOUND exception will be thrown.
+  <pre>Lists all sfdc instances that match the filter. Restrict to sfdc instances belonging to the current client only.
+  parent: string, Required. The client, which owns this collection of SfdcInstances. (required)
+  readMask: string, The mask which specifies fields that need to be returned in the SfdcInstance&#x27;s response.
+    { # Response to list SfdcInstances.
+  &quot;sfdcInstances&quot;: [ # The list of SfdcInstances retrieved.
+  <pre>Updates an sfdc instance. Updates the sfdc instance in spanner. Returns the sfdc instance.
+  name: string, Resource name of the SFDC instance projects/{project}/locations/{location}/sfdcInstances/{sfdcInstance}. (required)
+  updateMask: string, Field mask specifying the fields in the above SfdcInstance that have been modified and need to be updated.

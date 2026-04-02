@@ -1,0 +1,37 @@
+<div class="filter-builder" [class.disabled]="disabled">
+  <!-- Header with summary and actions -->
+  <div class="filter-header">
+      <span class="filter-icon">
+        <span class="filter-count">{{ getFilterCount() }} condition{{ getFilterCount() !== 1 ? 's' : '' }}</span>
+        <span class="filter-count no-filters">No filters applied</span>
+      @if (mergedConfig.showClearButton && hasActiveFilters) {
+          class="action-btn clear-btn"
+          (click)="onClear()"
+          <span>Clear All</span>
+      @if (mergedConfig.showApplyButton) {
+          class="action-btn apply-btn"
+          (click)="onApply()"
+          title="Apply filters">
+          <span>Apply</span>
+  <!-- Filter Builder Content -->
+    <mj-filter-group
+      [filter]="internalFilter"
+      [isRoot]="true"
+      [depth]="0"
+      [maxDepth]="mergedConfig.maxDepth"
+    </mj-filter-group>
+  <!-- Quick tips (shown when no filters) -->
+    <div class="filter-tips">
+        <strong>Tip:</strong> Click "Add Condition" to create filter rules.
+        Use "Add Group" for complex AND/OR combinations.
+  <!-- Collapsible filter expression summary -->
+  @if (showSummary && hasActiveFilters) {
+    <div class="filter-expression-summary" [class.expanded]="isSummaryExpanded">
+      <button type="button" class="expression-toggle" (click)="toggleSummary()">
+        <i class="fa-solid" [class.fa-chevron-right]="!isSummaryExpanded" [class.fa-chevron-down]="isSummaryExpanded"></i>
+        <i class="fa-solid fa-code expression-icon"></i>
+        <span class="expression-label">View Filter Expression</span>
+        <span class="expression-badge">{{ getFilterCount() }}</span>
+      @if (isSummaryExpanded) {
+        <div class="expression-content">
+          <pre class="expression-text" [innerHTML]="getFilterSummaryHtml()"></pre>

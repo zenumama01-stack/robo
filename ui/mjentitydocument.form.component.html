@@ -1,0 +1,26 @@
+    <!-- Document Details Section -->
+        SectionKey="documentDetails"
+        SectionName="Document Details"
+            FieldName="VectorDatabaseID"
+    <!-- Matching Configuration Section -->
+        SectionKey="matchingConfiguration"
+        SectionName="Matching Configuration"
+            FieldName="PotentialMatchThreshold"
+            FieldName="AbsoluteMatchThreshold"
+    <!-- Entity Document Runs Section -->
+        SectionKey="entityDocumentRuns"
+        SectionName="Entity Document Runs"
+        [BadgeCount]="GetSectionRowCount('entityDocumentRuns')"
+                [Params]="BuildRelationshipViewParamsByEntityName('MJ: Entity Document Runs','EntityDocumentID')"
+                [NewRecordValues]="NewRecordValues('MJ: Entity Document Runs')"
+                [AllowLoad]="IsSectionExpanded('entityDocumentRuns')"
+                (AfterDataLoad)="SetSectionRowCount('entityDocumentRuns', $event.totalRowCount)"
+    <!-- Entity Document Settings Section -->
+        SectionKey="entityDocumentSettings"
+        SectionName="Entity Document Settings"
+        [BadgeCount]="GetSectionRowCount('entityDocumentSettings')"
+                [Params]="BuildRelationshipViewParamsByEntityName('MJ: Entity Document Settings','EntityDocumentID')"
+                [NewRecordValues]="NewRecordValues('MJ: Entity Document Settings')"
+                [AllowLoad]="IsSectionExpanded('entityDocumentSettings')"
+                (AfterDataLoad)="SetSectionRowCount('entityDocumentSettings', $event.totalRowCount)"
+                [Params]="BuildRelationshipViewParamsByEntityName('MJ: Entity Record Documents','EntityDocumentID')"

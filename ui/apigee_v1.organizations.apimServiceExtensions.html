@@ -1,0 +1,44 @@
+<h1><a href="apigee_v1.html">Apigee API</a> . <a href="apigee_v1.organizations.html">organizations</a> . <a href="apigee_v1.organizations.apimServiceExtensions.html">apimServiceExtensions</a></h1>
+  <code><a href="#create">create(parent, apimServiceExtensionId=None, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Creates an APIM ServiceExtension in an organization.</p>
+<p class="firstline">Deletes APIM service extension from an organization.</p>
+<p class="firstline">Gets APIM service extension details.</p>
+<p class="firstline">Lists all APIM service extensions in an organization.</p>
+<p class="firstline">Updates an APIM service extension in an organization.</p>
+    <code class="details" id="create">create(parent, apimServiceExtensionId=None, body=None, x__xgafv=None)</code>
+  <pre>Creates an APIM ServiceExtension in an organization.
+  parent: string, Required. Name of the organization in which the service extension will be created. Use the following structure in your request: `organizations/{org}` (required)
+{ # APIM Service Extension is a resource under an Apigee Organization that is used to create APIM Service Extension to route traffic to existing X instances.
+  &quot;createTime&quot;: &quot;A String&quot;, # Output only. The time that this resource was created on the server.
+  &quot;extensionProcessor&quot;: &quot;A String&quot;, # Required. Name of the proxy deployed in the Apigee X instance.
+  &quot;extensions&quot;: [ # Optional. List of extensions that are part of the service extension. Refer to https://cloud.google.com/service-extensions/docs/quotas#limits for any limits.
+    { # Extension configuration for Apigee extension processor service extension.
+      &quot;failOpen&quot;: True or False, # Optional. Whether this request should fail open.
+      &quot;hostname&quot;: &quot;A String&quot;, # Required. One of the hostnames of Apigee EnvGroup where the proxy is deployed. This hostname (i.e FDQN) will be used to route traffic from the specified forwarding rule to the environment in Apigee X instance where the proxy is deployed for handling extension traffic. Format: ^([a-zA-Z0-9. _-])+$
+      &quot;matchCondition&quot;: &quot;A String&quot;, # Optional. Match Condition for CEL expression. Refer to https://cloud.google.com/service-extensions/docs/cel-matcher-language-reference for more details.
+      &quot;name&quot;: &quot;A String&quot;, # Required. Name of the `LbTrafficExtension` resource. The name must conform with RFC-1034, is restricted to lower-cased letters, numbers and hyphens, and can have a maximum length of 63 characters. Additionally, the first character must be a letter and the last a letter or a number.
+      &quot;supportedEvents&quot;: [ # Optional. Supported events for the Service Extension. If not specified, all events are supported.
+  &quot;lbForwardingRule&quot;: &quot;A String&quot;, # Required. Name of the Google Cloud LB forwarding rule. Format: projects/{project}/regions/{region}/forwardingRules/{forwarding_rule} projects/{project}/global/forwardingRules/{forwarding_rule}
+  &quot;name&quot;: &quot;A String&quot;, # Identifier. unique name of the APIM service extension. The name must conform with RFC-1034, is restricted to lower-cased letters, numbers and hyphens, and can have a maximum length of 63 characters. Additionally, the first character must be a letter and the last a letter or a number.
+  &quot;network&quot;: &quot;A String&quot;, # Required. The network where the forwarding rule is created. Format: projects/{project}/global/networks/{network}
+  &quot;networkConfigs&quot;: [ # Required. List of network configurations for the APIM service extension.
+    { # Network configuration for the APIM service extension.
+      &quot;region&quot;: &quot;A String&quot;, # Required. The region for the PSC NEG.
+      &quot;subnet&quot;: &quot;A String&quot;, # Required. The subnet for the PSC NEG. Format: projects/{project}/regions/{region}/subnetworks/{subnet}
+  &quot;state&quot;: &quot;A String&quot;, # Output only. State of the APIM service extension. Values other than `ACTIVE` mean the resource is not ready to use.
+  &quot;updateTime&quot;: &quot;A String&quot;, # Output only. The time that this resource was updated on the server.
+  apimServiceExtensionId: string, Optional. ID used to uniquely identify of the service extension. It must conform with RFC-1034, is restricted to lower-cased letters, numbers and hyphens, and can have a maximum length of 63 characters. Additionally, the first character must be a letter and the last a letter or a number.
+  <pre>Deletes APIM service extension from an organization.
+  name: string, Required. Name of the service extension. Use the following structure in your request: `organizations/{org}/apimServiceExtensions/{extension_id}` (required)
+  <pre>Gets APIM service extension details.
+  <pre>Lists all APIM service extensions in an organization.
+  parent: string, Required. Name of the organization for which to list the service extension. Use the following structure in your request: `organizations/{org}/apimServiceExtensions` (required)
+  pageSize: integer, Optional. Maximum number of items to return. If unspecified, at most 25 service extension will be returned.
+  pageToken: string, Optional. Page token, returned from a previous `ListApimServiceExtensions` call, that you can use to retrieve the next page.
+    { # Response for list service extensions.
+  &quot;apimServiceExtensions&quot;: [ # service extension in a given organization.
+  &quot;nextPageToken&quot;: &quot;A String&quot;, # Page token that you can include in an `ListApimServiceExtensions` request to retrieve the next page. If omitted, no subsequent pages exist.
+  <pre>Updates an APIM service extension in an organization.
+  name: string, Identifier. unique name of the APIM service extension. The name must conform with RFC-1034, is restricted to lower-cased letters, numbers and hyphens, and can have a maximum length of 63 characters. Additionally, the first character must be a letter and the last a letter or a number. (required)
+  allowMissing: boolean, Optional. If set to true, and the service extension is not found, a new service extension will be created. In this situation, `update_mask` is ignored.
+  updateMask: string, Optional. The list of fields to update.

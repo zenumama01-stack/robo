@@ -1,0 +1,60 @@
+<h1><a href="mybusinessverifications_v1.html">My Business Verifications API</a> . <a href="mybusinessverifications_v1.locations.html">locations</a></h1>
+  <code><a href="mybusinessverifications_v1.locations.verifications.html">verifications()</a></code>
+<p class="firstline">Returns the verifications Resource.</p>
+  <code><a href="#fetchVerificationOptions">fetchVerificationOptions(location, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Reports all eligible verification options for a location in a specific language.</p>
+  <code><a href="#getVoiceOfMerchantState">getVoiceOfMerchantState(name, x__xgafv=None)</a></code></p>
+<p class="firstline">Gets the VoiceOfMerchant state.</p>
+<p class="firstline">Starts the verification process for a location.</p>
+    <code class="details" id="fetchVerificationOptions">fetchVerificationOptions(location, body=None, x__xgafv=None)</code>
+  <pre>Reports all eligible verification options for a location in a specific language.
+  location: string, Required. The location to verify. (required)
+{ # Request message for Verifications.FetchVerificationOptions.
+  &quot;context&quot;: { # Additional data for service business verification. # Optional. Extra context information for the verification of service businesses. Can only be applied to the locations whose business type is CUSTOMER_LOCATION_ONLY. Specifying an accurate address could enable more options. INVALID_ARGUMENT will be thrown if it is set for other business types of locations.
+    &quot;address&quot;: { # Represents a postal address, such as for postal delivery or payments addresses. With a postal address, a postal service can deliver items to a premise, P.O. box, or similar. A postal address is not intended to model geographical locations like roads, towns, or mountains. In typical usage, an address would be created by user input or from importing existing data, depending on the type of process. Advice on address input or editing: - Use an internationalization-ready address widget such as https://github.com/google/libaddressinput. - Users should not be presented with UI elements for input or editing of fields outside countries where that field is used. For more guidance on how to use this schema, see: https://support.google.com/business/answer/6397478. # The verification address of the location. It is used to either enable more verification options or send a postcard.
+  &quot;languageCode&quot;: &quot;A String&quot;, # Required. The BCP 47 language code representing the language that is to be used for the verification process. Available options vary by language.
+    { # Response message for Verifications.FetchVerificationOptions.
+  &quot;options&quot;: [ # The available verification options.
+    { # The verification option represents how to verify the location (indicated by verification method) and where the verification will be sent to (indicated by display data).
+      &quot;addressData&quot;: { # Display data for verifications through postcard. # Set only if the method is MAIL.
+        &quot;address&quot;: { # Represents a postal address, such as for postal delivery or payments addresses. With a postal address, a postal service can deliver items to a premise, P.O. box, or similar. A postal address is not intended to model geographical locations like roads, towns, or mountains. In typical usage, an address would be created by user input or from importing existing data, depending on the type of process. Advice on address input or editing: - Use an internationalization-ready address widget such as https://github.com/google/libaddressinput. - Users should not be presented with UI elements for input or editing of fields outside countries where that field is used. For more guidance on how to use this schema, see: https://support.google.com/business/answer/6397478. # Address that a postcard can be sent to.
+        &quot;business&quot;: &quot;A String&quot;, # Merchant&#x27;s business name.
+        &quot;expectedDeliveryDaysRegion&quot;: 42, # Expected number of days it takes to deliver a postcard to the address&#x27;s region.
+      &quot;announcement&quot;: &quot;A String&quot;, # Set only if the method is VETTED_PARTNER.
+      &quot;emailData&quot;: { # Display data for verifications through email. # Set only if the method is EMAIL.
+        &quot;domain&quot;: &quot;A String&quot;, # Domain name in the email address. e.g. &quot;gmail.com&quot; in foo@gmail.com
+        &quot;isUserNameEditable&quot;: True or False, # Whether client is allowed to provide a different user name.
+        &quot;user&quot;: &quot;A String&quot;, # User name in the email address. e.g. &quot;foo&quot; in foo@gmail.com
+      &quot;phoneNumber&quot;: &quot;A String&quot;, # Set only if the method is PHONE_CALL or SMS. Phone number that the PIN will be sent to.
+      &quot;verificationMethod&quot;: &quot;A String&quot;, # Method to verify the location.
+    <code class="details" id="getVoiceOfMerchantState">getVoiceOfMerchantState(name, x__xgafv=None)</code>
+  <pre>Gets the VoiceOfMerchant state.
+  name: string, Required. Resource name of the location. (required)
+    { # Response message for VoiceOfMerchant.GetVoiceOfMerchantState.
+  &quot;complyWithGuidelines&quot;: { # Indicates that the location fails to comply with our [guidelines](https://support.google.com/business/answer/3038177). # The location fails to comply with our [guidelines](https://support.google.com/business/answer/3038177) and requires additional steps for reinstatement. To fix this issue, consult the [Help Center Article](https://support.google.com/business/answer/4569145).
+    &quot;recommendationReason&quot;: &quot;A String&quot;, # The reason why the location is being recommended to comply with guidelines.
+  &quot;hasBusinessAuthority&quot;: True or False, # Indicates whether the location has the authority (ownership) over the business on Google. If true, another location cannot take over and become the dominant listing on Maps. However, edits will not become live unless Voice of Merchant is gained (i.e. has_voice_of_merchant is true).
+  &quot;hasVoiceOfMerchant&quot;: True or False, # Indicates whether the location is in good standing and has control over the business on Google. Any edits made to the location will propagate to Maps after passing the review phase.
+  &quot;resolveOwnershipConflict&quot;: { # Indicates that the location duplicates another location that is in good standing. # This location duplicates another location that is in good standing. If you have access to the location in good standing, use that location&#x27;s id to perform operations. Otherwise, request access from the current owner.
+  &quot;verify&quot;: { # Indicates that the location requires verification. Contains information about the current verification actions performed on the location. # Start or continue the verification process.
+    &quot;hasPendingVerification&quot;: True or False, # Indicates whether a verification process has already started, and can be completed by the location.
+  &quot;waitForVoiceOfMerchant&quot;: { # Indicates that the location will gain voice of merchant after passing review. # Wait to gain Voice of Merchant. The location is under review for quality purposes.
+  <pre>Starts the verification process for a location.
+  name: string, Required. Resource name of the location to verify. (required)
+{ # Request message for Verifications.VerifyLocation.
+  &quot;context&quot;: { # Additional data for service business verification. # Optional. Extra context information for the verification of service businesses. It is only required for the locations whose business type is CUSTOMER_LOCATION_ONLY. For ADDRESS verification, the address will be used to send out postcard. For other methods, it should be the same as the one that is passed to GetVerificationOptions. INVALID_ARGUMENT will be thrown if it is set for other types of business locations.
+  &quot;emailAddress&quot;: &quot;A String&quot;, # Optional. The input for EMAIL method. Email address where the PIN should be sent to. An email address is accepted only if it is one of the addresses provided by FetchVerificationOptions. If the EmailVerificationData has is_user_name_editable set to true, the client may specify a different user name (local-part) but must match the domain name.
+  &quot;languageCode&quot;: &quot;A String&quot;, # Optional. The BCP 47 language code representing the language that is to be used for the verification process.
+  &quot;mailerContact&quot;: &quot;A String&quot;, # Optional. The input for ADDRESS method. Contact name the mail should be sent to.
+  &quot;method&quot;: &quot;A String&quot;, # Required. Verification method.
+  &quot;phoneNumber&quot;: &quot;A String&quot;, # Optional. The input for PHONE_CALL/SMS method The phone number that should be called or be sent SMS to. It must be one of the phone numbers in the eligible options.
+  &quot;token&quot;: { # Token generated by a vetted [partner](https://support.google.com/business/answer/7674102). # Optional. The input for VETTED_PARTNER method available to select [partners.](https://support.google.com/business/answer/7674102) The input is not needed for a vetted account. Token that is associated to the location. Token that is associated to the location.
+    &quot;tokenString&quot;: &quot;A String&quot;, # The token string.
+  &quot;trustedPartnerToken&quot;: &quot;A String&quot;, # The input for TRUSTED_PARTNER method The verification token that is associated to the location.
+    { # Response message for Verifications.VerifyLocation.
+  &quot;verification&quot;: { # A verification represents a verification attempt on a location. # The created verification request.
+    &quot;announcement&quot;: &quot;A String&quot;, # Optional. Response announcement set only if the method is VETTED_PARTNER.
+    &quot;createTime&quot;: &quot;A String&quot;, # The timestamp when the verification is requested.
+    &quot;method&quot;: &quot;A String&quot;, # The method of the verification.
+    &quot;name&quot;: &quot;A String&quot;, # Resource name of the verification.
+    &quot;state&quot;: &quot;A String&quot;, # The state of the verification.

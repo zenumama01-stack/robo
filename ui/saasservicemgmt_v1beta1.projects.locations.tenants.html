@@ -1,0 +1,26 @@
+<h1><a href="saasservicemgmt_v1beta1.html">SaaS Runtime API</a> . <a href="saasservicemgmt_v1beta1.projects.html">projects</a> . <a href="saasservicemgmt_v1beta1.projects.locations.html">locations</a> . <a href="saasservicemgmt_v1beta1.projects.locations.tenants.html">tenants</a></h1>
+  <code><a href="#create">create(parent, body=None, requestId=None, tenantId=None, validateOnly=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Create a new tenant.</p>
+<p class="firstline">Delete a single tenant.</p>
+<p class="firstline">Retrieve a single tenant.</p>
+<p class="firstline">Retrieve a collection of tenants.</p>
+<p class="firstline">Update a single tenant.</p>
+    <code class="details" id="create">create(parent, body=None, requestId=None, tenantId=None, validateOnly=None, x__xgafv=None)</code>
+  <pre>Create a new tenant.
+  parent: string, Required. The parent of the tenant. (required)
+{ # Tenant represents the service producer side of an instance of the service created based on a request from a consumer. In a typical scenario a Tenant has a one-to-one mapping with a resource given out to a service consumer. Example: tenant: name: &quot;projects/svc1/locations/loc/tenants/inst-068afff8&quot; consumer_resource: &quot;projects/gshoe/locations/loc/shoes/black-shoe&quot;
+  &quot;consumerResource&quot;: &quot;A String&quot;, # Optional. Immutable. A reference to the consumer resource this SaaS Tenant is representing. The relationship with a consumer resource can be used by SaaS Runtime for retrieving consumer-defined settings and policies such as maintenance policies (using Unified Maintenance Policy API).
+  &quot;name&quot;: &quot;A String&quot;, # Identifier. The resource name (full URI of the resource) following the standard naming scheme: &quot;projects/{project}/locations/{location}/tenants/{tenant}&quot;
+  &quot;saas&quot;: &quot;A String&quot;, # Required. Immutable. A reference to the Saas that defines the product (managed service) that the producer wants to manage with SaaS Runtime. Part of the SaaS Runtime common data model.
+  tenantId: string, Required. The ID value for the new tenant.
+  <pre>Delete a single tenant.
+  etag: string, The etag known to the client for the expected state of the tenant. This is used with state-changing methods to prevent accidental overwrites when multiple user agents might be acting in parallel on the same resource. An etag wildcard provide optimistic concurrency based on the expected existence of the tenant. The Any wildcard (`*`) requires that the resource must already exists, and the Not Any wildcard (`!*`) requires that it must not.
+  <pre>Retrieve a single tenant.
+  <pre>Retrieve a collection of tenants.
+  pageSize: integer, The maximum number of tenants to send per page.
+    { # The response structure for the ListTenants method.
+  &quot;nextPageToken&quot;: &quot;A String&quot;, # If present, the next page token can be provided to a subsequent ListTenants call to list the next page. If empty, there are no more pages.
+  &quot;tenants&quot;: [ # The resulting tenants.
+  <pre>Update a single tenant.
+  name: string, Identifier. The resource name (full URI of the resource) following the standard naming scheme: &quot;projects/{project}/locations/{location}/tenants/{tenant}&quot; (required)
+  updateMask: string, Field mask is used to specify the fields to be overwritten in the Tenant resource by the update. The fields specified in the update_mask are relative to the resource, not the full request. A field will be overwritten if it is in the mask. If the user does not provide a mask then all fields in the Tenant will be overwritten.

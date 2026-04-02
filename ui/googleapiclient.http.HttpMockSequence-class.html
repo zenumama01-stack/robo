@@ -1,0 +1,27 @@
+  <title>googleapiclient.http.HttpMockSequence</title>
+        Class&nbsp;HttpMockSequence
+            >]&nbsp;|&nbsp;<a href="googleapiclient.http.HttpMockSequence-class.html"
+<h1 class="epydoc">Class HttpMockSequence</h1><p class="nomargin-top"><span class="codelink"><a href="googleapiclient.http-pysrc.html#HttpMockSequence">source&nbsp;code</a></span></p>
+        <strong class="uidshort">HttpMockSequence</strong>
+Mocks a sequence of calls to request returning different responses for each
+call. Create an instance initialized with the desired response headers
+and content and then use as if an httplib2.Http instance.
+  http = HttpMockSequence([
+    ({'status': '401'}, ''),
+    ({'status': '200'}, '{&quot;access_token&quot;:&quot;1/3w&quot;,&quot;expires_in&quot;:3600}'),
+    ({'status': '200'}, 'echo_request_headers'),
+  resp, content = http.request(&quot;http://examples.com&quot;)
+There are special values you can pass in for content to trigger
+behavours that are helpful in testing.
+'echo_request_headers' means return the request headers in the response body
+'echo_request_headers_as_json' means return the request headers in
+   the response body
+'echo_request_body' means return the request body in the response body
+'echo_request_uri' means return the request uri in the response body
+          <td><span class="summary-sig"><a href="googleapiclient.http.HttpMockSequence-class.html#__init__" class="summary-sig-name">__init__</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">iterable</span>)</span><br />
+            <span class="codelink"><a href="googleapiclient.http-pysrc.html#HttpMockSequence.__init__">source&nbsp;code</a></span>
+            <span class="codelink"><a href="googleapiclient.http-pysrc.html#HttpMockSequence.request">source&nbsp;code</a></span>
+        <span class="sig-arg">iterable</span>)</span>
+    ><span class="codelink"><a href="googleapiclient.http-pysrc.html#HttpMockSequence.__init__">source&nbsp;code</a></span>&nbsp;
+  iterable: iterable, a sequence of pairs of (headers, body)

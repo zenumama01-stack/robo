@@ -1,0 +1,27 @@
+<div class="file-browser">
+  <!-- Mobile header with sidebar toggle -->
+  <div class="mobile-header">
+    <button (click)="toggleSidebar()" class="sidebar-toggle">
+    <h2 class="browser-title">File Browser</h2>
+  <!-- Main two-panel layout -->
+  <div class="browser-container">
+    <!-- Left Sidebar: Accounts + Categories -->
+    <div class="sidebar" [class.collapsed]="isSidebarCollapsed">
+      <!-- Accounts Section -->
+          <h3>ACCOUNTS</h3>
+          <mj-storage-providers-list
+            (accountSelected)="onAccountSelected($event)"
+          ></mj-storage-providers-list>
+      <!-- Categories Section -->
+          <h3>FOLDERS</h3>
+          <mj-folder-tree
+            [account]="selectedAccount"
+            (folderSelected)="onFolderSelected($event)"
+          ></mj-folder-tree>
+    <!-- Right Panel: File Grid -->
+    <div class="main-panel">
+      <mj-file-grid
+        [folderPath]="selectedFolderPath"
+        (folderNavigate)="onFolderNavigate($event)"
+        (folderStructureChanged)="onFolderStructureChanged()"
+      ></mj-file-grid>

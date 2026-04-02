@@ -1,0 +1,47 @@
+<h1><a href="integrations_v1alpha.html">Application Integration API</a> . <a href="integrations_v1alpha.projects.html">projects</a> . <a href="integrations_v1alpha.projects.locations.html">locations</a> . <a href="integrations_v1alpha.projects.locations.connections.html">connections</a></h1>
+  <code><a href="integrations_v1alpha.projects.locations.connections.runtimeActionSchemas.html">runtimeActionSchemas()</a></code>
+  <code><a href="integrations_v1alpha.projects.locations.connections.runtimeEntitySchemas.html">runtimeEntitySchemas()</a></code>
+        &quot;additionalVariables&quot;: [ # List containing additional auth configs.
+            &quot;encryptionKeyValue&quot;: { # Encryption Key value. # Value is a Encryption Key.
+              &quot;kmsKeyName&quot;: &quot;A String&quot;, # The [KMS key name] with which the content of the Operation is encrypted. The expected format: `projects/*/locations/*/keyRings/*/cryptoKeys/*`. Will be empty string if google managed.
+              &quot;type&quot;: &quot;A String&quot;, # Type.
+            &quot;secretValue&quot;: { # Secret provides a reference to entries in Secret Manager. # Value is a secret.
+              &quot;secretVersion&quot;: &quot;A String&quot;, # The resource name of the secret version in the format, format as: `projects/*/secrets/*/versions/*`.
+          &quot;authCode&quot;: &quot;A String&quot;, # Authorization code to be exchanged for access and refresh tokens.
+          &quot;authUri&quot;: &quot;A String&quot;, # Auth URL for Authorization Code Flow
+          &quot;clientId&quot;: &quot;A String&quot;, # Client ID for user-provided OAuth app.
+          &quot;clientSecret&quot;: { # Secret provides a reference to entries in Secret Manager. # Client secret for user-provided OAuth app.
+          &quot;enablePkce&quot;: True or False, # Whether to enable PKCE when the user performs the auth code flow.
+          &quot;pkceVerifier&quot;: &quot;A String&quot;, # PKCE verifier to be used during the auth code exchange.
+          &quot;redirectUri&quot;: &quot;A String&quot;, # Redirect URI to be provided during the auth code exchange.
+          &quot;clientSecret&quot;: { # Secret provides a reference to entries in Secret Manager. # Secret version reference containing the client secret.
+          &quot;clientKey&quot;: { # Secret provides a reference to entries in Secret Manager. # Secret version reference containing a PKCS#8 PEM-encoded private key associated with the Client Certificate. This private key will be used to sign JWTs used for the jwt-bearer authorization grant. Specified in the form as: `projects/*/secrets/*/versions/*`.
+          &quot;sshClientCert&quot;: { # Secret provides a reference to entries in Secret Manager. # SSH Client Cert. It should contain both public and private key.
+          &quot;sshClientCertPass&quot;: { # Secret provides a reference to entries in Secret Manager. # Password (passphrase) for ssh client certificate if it has one.
+          &quot;password&quot;: { # Secret provides a reference to entries in Secret Manager. # Secret version reference containing the password.
+      &quot;connectorVersionInfraConfig&quot;: { # This cofiguration provides infra configs like rate limit threshold which need to be configurable for every connector version # Output only. Infra configs supported by Connector Version.
+        &quot;deploymentModel&quot;: &quot;A String&quot;, # Optional. Indicates whether connector is deployed on GKE/CloudRun
+          &quot;destinations&quot;: [ # The destinations for the key.
+              &quot;port&quot;: 42, # The port is the target port number that is accepted by the destination.
+          &quot;key&quot;: &quot;A String&quot;, # The key is the destination identifier that is supported by the Connector.
+      &quot;eventingConfig&quot;: { # Eventing Configuration of a connection # Optional. Eventing config of a connection
+        &quot;additionalVariables&quot;: [ # Additional eventing related field values
+        &quot;authConfig&quot;: { # AuthConfig defines details of a authentication type. # Auth details for the webhook adapter.
+        &quot;enrichmentEnabled&quot;: True or False, # Enrichment Enabled.
+        &quot;eventsListenerIngressEndpoint&quot;: &quot;A String&quot;, # Optional. Ingress endpoint of the event listener. This is used only when private connectivity is enabled.
+        &quot;registrationDestinationConfig&quot;: { # Define the Connectors target endpoint. # Registration endpoint for auto registration.
+        &quot;locked&quot;: True or False, # Indicates whether or not the connection is locked.
+        &quot;reason&quot;: &quot;A String&quot;, # Describes why a connection is locked.
+        &quot;enabled&quot;: True or False, # Enabled represents whether logging is enabled or not for a connection.
+        &quot;maxNodeCount&quot;: 42, # Maximum number of nodes in the runtime nodes.
+        &quot;minNodeCount&quot;: 42, # Minimum number of nodes in the runtime nodes.
+        &quot;additionalVariables&quot;: [ # Additional SSL related field values
+        &quot;clientCertType&quot;: &quot;A String&quot;, # Type of Client Cert (PEM/JKS/.. etc.)
+        &quot;clientCertificate&quot;: { # Secret provides a reference to entries in Secret Manager. # Client Certificate
+        &quot;clientPrivateKey&quot;: { # Secret provides a reference to entries in Secret Manager. # Client Private Key
+        &quot;clientPrivateKeyPass&quot;: { # Secret provides a reference to entries in Secret Manager. # Secret containing the passphrase protecting the Client Private Key
+        &quot;privateServerCertificate&quot;: { # Secret provides a reference to entries in Secret Manager. # Private Server Certificate. Needs to be specified if trust model is `PRIVATE`.
+        &quot;serverCertType&quot;: &quot;A String&quot;, # Type of Server Cert (PEM/JKS/.. etc.)
+        &quot;trustModel&quot;: &quot;A String&quot;, # Trust Model of the SSL connection
+        &quot;type&quot;: &quot;A String&quot;, # Controls the ssl type for the given connector version.
+        &quot;useSsl&quot;: True or False, # Bool for enabling SSL

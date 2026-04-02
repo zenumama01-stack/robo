@@ -1,0 +1,27 @@
+<h1><a href="discoveryengine_v1.html">Discovery Engine API</a> . <a href="discoveryengine_v1.projects.html">projects</a> . <a href="discoveryengine_v1.projects.locations.html">locations</a> . <a href="discoveryengine_v1.projects.locations.licenseConfigs.html">licenseConfigs</a></h1>
+  <code><a href="#create">create(parent, body=None, licenseConfigId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Creates a LicenseConfig This method should only be used for creating NotebookLm licenses or Gemini Enterprise free trial licenses.</p>
+<p class="firstline">Gets a LicenseConfig.</p>
+<p class="firstline">Updates the LicenseConfig</p>
+    <code class="details" id="create">create(parent, body=None, licenseConfigId=None, x__xgafv=None)</code>
+  <pre>Creates a LicenseConfig This method should only be used for creating NotebookLm licenses or Gemini Enterprise free trial licenses.
+  parent: string, Required. The parent resource name, such as `projects/{project}/locations/{location}`. (required)
+{ # Information about users&#x27; licenses.
+  &quot;autoRenew&quot;: True or False, # Optional. Whether the license config should be auto renewed when it reaches the end date.
+  &quot;earlyTerminated&quot;: True or False, # Output only. Indication of whether the subscription is terminated earlier than the expiration date. This is usually terminated by pipeline once the subscription gets terminated from subsv3.
+  &quot;earlyTerminationDate&quot;: { # Represents a whole or partial calendar date, such as a birthday. The time of day and time zone are either specified elsewhere or are insignificant. The date is relative to the Gregorian Calendar. This can represent one of the following: * A full date, with non-zero year, month, and day values. * A month and day, with a zero year (for example, an anniversary). * A year on its own, with a zero month and a zero day. * A year and month, with a zero day (for example, a credit card expiration date). Related types: * google.type.TimeOfDay * google.type.DateTime * google.protobuf.Timestamp # Output only. The date when the subscription is terminated earlier than the expiration date.
+  &quot;endDate&quot;: { # Represents a whole or partial calendar date, such as a birthday. The time of day and time zone are either specified elsewhere or are insignificant. The date is relative to the Gregorian Calendar. This can represent one of the following: * A full date, with non-zero year, month, and day values. * A month and day, with a zero year (for example, an anniversary). * A year on its own, with a zero month and a zero day. * A year and month, with a zero day (for example, a credit card expiration date). Related types: * google.type.TimeOfDay * google.type.DateTime * google.protobuf.Timestamp # Optional. The planed end date.
+  &quot;freeTrial&quot;: True or False, # Optional. Whether the license config is for free trial.
+  &quot;geminiBundle&quot;: True or False, # Output only. Whether the license config is for Gemini bundle.
+  &quot;licenseCount&quot;: &quot;A String&quot;, # Required. Number of licenses purchased.
+  &quot;name&quot;: &quot;A String&quot;, # Immutable. Identifier. The fully qualified resource name of the license config. Format: `projects/{project}/locations/{location}/licenseConfigs/{license_config}`
+  &quot;startDate&quot;: { # Represents a whole or partial calendar date, such as a birthday. The time of day and time zone are either specified elsewhere or are insignificant. The date is relative to the Gregorian Calendar. This can represent one of the following: * A full date, with non-zero year, month, and day values. * A month and day, with a zero year (for example, an anniversary). * A year on its own, with a zero month and a zero day. * A year and month, with a zero day (for example, a credit card expiration date). Related types: * google.type.TimeOfDay * google.type.DateTime * google.protobuf.Timestamp # Required. The start date.
+  &quot;state&quot;: &quot;A String&quot;, # Output only. The state of the license config.
+  &quot;subscriptionTerm&quot;: &quot;A String&quot;, # Required. Subscription term.
+  &quot;subscriptionTier&quot;: &quot;A String&quot;, # Required. Subscription tier information for the license config.
+  licenseConfigId: string, Optional. The ID to use for the LicenseConfig, which will become the final component of the LicenseConfig&#x27;s resource name. We are using the tier (product edition) name as the license config id such as `search` or `search_and_assistant`.
+  <pre>Gets a LicenseConfig.
+  name: string, Required. Full resource name of LicenseConfig, such as `projects/{project}/locations/{location}/licenseConfigs/*`. If the caller does not have permission to access the LicenseConfig, regardless of whether or not it exists, a PERMISSION_DENIED error is returned. If the requested LicenseConfig does not exist, a NOT_FOUND error is returned. (required)
+  <pre>Updates the LicenseConfig
+  name: string, Immutable. Identifier. The fully qualified resource name of the license config. Format: `projects/{project}/locations/{location}/licenseConfigs/{license_config}` (required)
+  updateMask: string, Optional. Indicates which fields in the provided LicenseConfig to update. If an unsupported or unknown field is provided, an INVALID_ARGUMENT error is returned.

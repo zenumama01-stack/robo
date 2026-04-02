@@ -1,0 +1,4 @@
+from .shared import chat_model
+__all__ = ["ChatModel"]
+ChatModel = chat_model.ChatModel
+ChatModel: TypeAlias = Literal[

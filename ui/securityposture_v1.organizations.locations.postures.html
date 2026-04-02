@@ -1,0 +1,51 @@
+<h1><a href="securityposture_v1.html">Security Posture API</a> . <a href="securityposture_v1.organizations.html">organizations</a> . <a href="securityposture_v1.organizations.locations.html">locations</a> . <a href="securityposture_v1.organizations.locations.postures.html">postures</a></h1>
+  <code><a href="#create">create(parent, body=None, postureId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Creates a new Posture.</p>
+<p class="firstline">Deletes all revisions of a Posture. You can only delete a posture if none of its revisions are deployed.</p>
+  <code><a href="#extract">extract(parent, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Extracts existing policies from an organization, folder, or project, and applies them to another organization, folder, or project as a Posture. If the other organization, folder, or project already has a posture, then the result of the long-running operation is an ALREADY_EXISTS error.</p>
+<p class="firstline">Gets a single revision of a Posture.</p>
+<p class="firstline">Lists the most recent revisions of all Posture resources in a specified organization and location.</p>
+<p class="firstline">Lists all revisions of a single Posture.</p>
+  <code><a href="#patch">patch(name, body=None, revisionId=None, updateMask=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Updates a revision of an existing Posture. If the posture revision that you update is currently deployed, then a new revision of the posture is created. To prevent concurrent updates from overwriting each other, always follow the read-modify-write pattern when you update a posture: 1. Call GetPosture to get the current version of the posture. 2. Update the fields in the posture as needed. 3. Call UpdatePosture to update the posture. Ensure that your request includes the `etag` value from the GetPosture response. **Important:** If you omit the `etag` when you call UpdatePosture, then the updated posture unconditionally overwrites the existing posture.</p>
+    <code class="details" id="create">create(parent, body=None, postureId=None, x__xgafv=None)</code>
+  <pre>Creates a new Posture.
+{ # The details of a posture.
+  &quot;annotations&quot;: { # Optional. The user-specified annotations for the posture. For details about the values you can use in an annotation, see [AIP-148: Standard fields](https://google.aip.dev/148#annotations).
+  &quot;categories&quot;: [ # Output only. The categories that the posture belongs to, as determined by the Security Posture API.
+  &quot;createTime&quot;: &quot;A String&quot;, # Output only. The time at which the posture was created.
+  &quot;description&quot;: &quot;A String&quot;, # Optional. A description of the posture.
+  &quot;etag&quot;: &quot;A String&quot;, # Optional. An opaque identifier for the current version of the posture at the specified `revision_id`. To prevent concurrent updates from overwriting each other, always provide the `etag` when you update a posture. You can also provide the `etag` when you delete a posture, to help ensure that you&#x27;re deleting the intended version of the posture.
+  &quot;name&quot;: &quot;A String&quot;, # Required. Identifier. The name of the posture, in the format `organizations/{organization}/locations/global/postures/{posture_id}`.
+  &quot;policySets&quot;: [ # Required. The PolicySet resources that the posture includes.
+  &quot;reconciling&quot;: True or False, # Output only. Whether the posture is in the process of being updated.
+  &quot;revisionId&quot;: &quot;A String&quot;, # Output only. Immutable. An opaque eight-character string that identifies the revision of the posture. A posture can have multiple revisions; when you deploy a posture, you deploy a specific revision of the posture.
+  &quot;state&quot;: &quot;A String&quot;, # Required. The state of the posture at the specified `revision_id`.
+  &quot;updateTime&quot;: &quot;A String&quot;, # Output only. The time at which the posture was last updated.
+  postureId: string, Required. An identifier for the posture.
+  <pre>Deletes all revisions of a Posture. You can only delete a posture if none of its revisions are deployed.
+  name: string, Required. The name of the Posture, in the format `organizations/{organization}/locations/global/postures/{posture_id}`. (required)
+  etag: string, Optional. An opaque identifier for the current version of the posture. If you provide this value, then it must match the existing value. If the values don&#x27;t match, then the request fails with an ABORTED error. If you omit this value, then the posture is deleted regardless of its current `etag` value.
+    <code class="details" id="extract">extract(parent, body=None, x__xgafv=None)</code>
+  <pre>Extracts existing policies from an organization, folder, or project, and applies them to another organization, folder, or project as a Posture. If the other organization, folder, or project already has a posture, then the result of the long-running operation is an ALREADY_EXISTS error.
+{ # Request message for ExtractPosture.
+  &quot;postureId&quot;: &quot;A String&quot;, # Required. An identifier for the posture.
+  &quot;workload&quot;: &quot;A String&quot;, # Required. The organization, folder, or project from which policies are extracted. Must be within the organization defined in parent. Use one of the following formats: * `organization/{organization_number}` * `folder/{folder_number}` * `project/{project_number}`
+  <pre>Gets a single revision of a Posture.
+  revisionId: string, Optional. The posture revision to retrieve. If not specified, the most recently updated revision is retrieved.
+  <pre>Lists the most recent revisions of all Posture resources in a specified organization and location.
+  pageSize: integer, The maximum number of postures to return. The default value is `500`. If you exceed the maximum value of `1000`, then the service uses the maximum value.
+  pageToken: string, A pagination token returned from a previous request to list postures. Provide this token to retrieve the next page of results.
+    { # Response message for ListPostures.
+  &quot;postures&quot;: [ # The list of Posture resources.
+  <pre>Lists all revisions of a single Posture.
+  pageSize: integer, Optional. The maximum number of posture revisions to return. The default value is `500`. If you exceed the maximum value of `1000`, then the service uses the maximum value.
+  pageToken: string, Optional. A pagination token from a previous request to list posture revisions. Provide this token to retrieve the next page of results.
+    { # Response message for ListPostureRevisions.
+  &quot;revisions&quot;: [ # The list of revisions for the Posture.
+    <code class="details" id="patch">patch(name, body=None, revisionId=None, updateMask=None, x__xgafv=None)</code>
+  <pre>Updates a revision of an existing Posture. If the posture revision that you update is currently deployed, then a new revision of the posture is created. To prevent concurrent updates from overwriting each other, always follow the read-modify-write pattern when you update a posture: 1. Call GetPosture to get the current version of the posture. 2. Update the fields in the posture as needed. 3. Call UpdatePosture to update the posture. Ensure that your request includes the `etag` value from the GetPosture response. **Important:** If you omit the `etag` when you call UpdatePosture, then the updated posture unconditionally overwrites the existing posture.
+  name: string, Required. Identifier. The name of the posture, in the format `organizations/{organization}/locations/global/postures/{posture_id}`. (required)
+  revisionId: string, Required. The revision ID of the posture to update. If the posture revision that you update is currently deployed, then a new revision of the posture is created.
+  updateMask: string, Required. The fields in the Posture to update. You can update only the following fields: * Posture.description * Posture.policy_sets * Posture.state

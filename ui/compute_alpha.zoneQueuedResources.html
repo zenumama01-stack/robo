@@ -1,0 +1,54 @@
+<h1><a href="compute_alpha.html">Compute Engine API</a> . <a href="compute_alpha.zoneQueuedResources.html">zoneQueuedResources</a></h1>
+<p class="firstline">Retrieves an aggregated list of all of the queued resources in a project</p>
+  <code><a href="#cancel">cancel(project, zone, queuedResource, requestId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Cancels a QueuedResource. Only a resource in ACCEPTED state may be</p>
+  <code><a href="#delete">delete(project, zone, queuedResource, requestId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Deletes a QueuedResource. For a QueuedResource in ACCEPTED state, call</p>
+  <code><a href="#get">get(project, zone, queuedResource, x__xgafv=None)</a></code></p>
+<p class="firstline">Returns the specified QueuedResource resource.</p>
+<p class="firstline">Creates a QueuedResource.</p>
+<p class="firstline">Retrieves the list of QueuedResource resources.</p>
+  <pre>Retrieves an aggregated list of all of the queued resources in a project
+across all zones.
+  &quot;items&quot;: { # A list of QueuedResourcesScopedList resources.
+    &quot;a_key&quot;: { # Name of the scope containing this set of queued resources.
+      &quot;queuedResources&quot;: [ # List of QueuedResources contained in this scope.
+        { # QueuedResource represents a request for future capacity. The capacity is
+            # delivered in the form of other GCE resources, either Instances or
+            # Reservations.
+          &quot;bulkInsertInstanceResource&quot;: { # A transient resource used in compute.instances.bulkInsert and # Specification of VM instances to create.
+          &quot;kind&quot;: &quot;compute#queuedResource&quot;, # Output only. [Output Only] Type of the resource. Alwayscompute#queuedResource for QueuedResources.
+          &quot;queuingPolicy&quot;: { # Queuing parameters for the requested deferred capacity. # Queuing parameters for the requested capacity.
+          &quot;state&quot;: &quot;A String&quot;, # Output only. [Output only] High-level status of the request.
+          &quot;status&quot;: { # [Output only] Result of queuing and provisioning based on deferred # Output only. [Output only] Result of queuing and provisioning based on deferred
+            &quot;failedData&quot;: { # Additional status detail for the FAILED state. # Output only. Additional status detail for the FAILED state.
+              &quot;error&quot;: { # The error(s) that caused the QueuedResource to enter the FAILED state.
+            &quot;provisioningOperations&quot;: [ # Output only. [Output only] Fully qualified URL of the provisioning GCE operation to
+                # track the provisioning along with provisioning errors. The referenced
+                # operation may not exist after having been deleted or expired.
+            &quot;queuingPolicy&quot;: { # Queuing parameters for the requested deferred capacity. # Output only. Constraints for the time when the resource(s) start provisioning. Always
+                # exposed as absolute times.
+          &quot;zone&quot;: &quot;A String&quot;, # Output only. [Output Only] URL of the zone where the resource resides. Only applicable
+              # for zonal resources. You must specify this field as part of the HTTP
+              # request URL. It is not settable as a field in the request body.
+  &quot;kind&quot;: &quot;compute#queuedResources&quot;, # Output only. [Output Only] Type of resource. Alwayscompute#queuedResourcesAggregatedList for lists of
+      # QueuedResource.
+    <code class="details" id="cancel">cancel(project, zone, queuedResource, requestId=None, x__xgafv=None)</code>
+  <pre>Cancels a QueuedResource. Only a resource in ACCEPTED state may be
+  queuedResource: string, Name of the QueuedResource to cancel. (required)
+The request ID must be a valid UUID with
+the exception that zero UUID is not supported
+    <code class="details" id="delete">delete(project, zone, queuedResource, requestId=None, x__xgafv=None)</code>
+  <pre>Deletes a QueuedResource. For a QueuedResource in ACCEPTED state, call
+cancel on the resource before deleting, to make sure no VMs have been
+provisioned and may require cleaning up. For a QueuedResource in
+PROVISIONING state the request to delete is registered for execution
+following the provisioning.
+  queuedResource: string, Name of the QueuedResource to delete. (required)
+    <code class="details" id="get">get(project, zone, queuedResource, x__xgafv=None)</code>
+  <pre>Returns the specified QueuedResource resource.
+  queuedResource: string, Name of the QueuedResource resource to return. (required)
+  <pre>Creates a QueuedResource.
+  <pre>Retrieves the list of QueuedResource resources.
+  &quot;items&quot;: [ # A list of QueuedResource resources.
+  &quot;kind&quot;: &quot;compute#queuedResourceList&quot;, # Output only. Type of resource.

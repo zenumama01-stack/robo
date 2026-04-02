@@ -1,0 +1,21 @@
+    <!-- Relationships & Ownership Section -->
+        SectionKey="relationshipsOwnership"
+        SectionName="Relationships & Ownership"
+    <!-- Task Details Section -->
+        SectionKey="taskDetails"
+        SectionName="Task Details"
+            FieldName="PercentComplete"
+    <!-- Timeline & Milestones Section -->
+        SectionKey="timelineMilestones"
+        SectionName="Timeline & Milestones"
+            FieldName="DueAt"
+    <!-- MJ: Task Dependencies Section -->
+        SectionKey="mJTaskDependencies"
+        SectionName="MJ: Task Dependencies"
+        [BadgeCount]="GetSectionRowCount('mJTaskDependencies')"
+                [Params]="BuildRelationshipViewParamsByEntityName('MJ: Task Dependencies','DependsOnTaskID')"
+                [NewRecordValues]="NewRecordValues('MJ: Task Dependencies')"
+                [AllowLoad]="IsSectionExpanded('mJTaskDependencies')"
+                (AfterDataLoad)="SetSectionRowCount('mJTaskDependencies', $event.totalRowCount)"
+                [Params]="BuildRelationshipViewParamsByEntityName('MJ: Task Dependencies','TaskID')"
+                [Params]="BuildRelationshipViewParamsByEntityName('MJ: Tasks','ParentID')"

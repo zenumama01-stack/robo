@@ -1,0 +1,35 @@
+<div class="k-overlay"></div>
+<kendo-window class="modal-body-wrap" [width]="500" [minHeight]="300" [minWidth]="400" [resizable]="true" (close)="closeDialog()"
+  title="Add Item to Dashboard">
+  <div class="k-d-flex k-flex-col resource-wrap">
+    <kendo-label text="Resource Type">
+      <kendo-dropdownlist [data]="ResourceTypes" [textField]="'DisplayName'" [valueField]="'ID'"
+        (valueChange)="onResourceTypeChange($event)" [(ngModel)]="resourceType">
+    </kendo-label>
+    <div class="user-view-wrap">
+      @switch (resourceType.Entity ) {
+        @case ('MJ: User Views') {
+          <kendo-label text="Entity">
+            <kendo-dropdownlist [data]="Entities" [textField]="'Name'" [valueField]="'ID'"
+              (valueChange)="onEntityChange($event)" [(ngModel)]="selectedEntity">
+          @if (selectedEntity && Views.length) {
+            <kendo-label text="Views">
+              <kendo-dropdownlist [data]="Views" [textField]="'Name'" [valueField]="'ID'"
+                (valueChange)="onViewChange($event)" [(ngModel)]="selectedView">
+          @if (selectedEntity && !Views.length && showloader) {
+          @if (selectedEntity && !Views.length && !showloader) {
+            <div class="no-views-message">
+              No views available for this entity
+        @case ('Reports') {
+          @if (Reports.length) {
+            <kendo-label text="Reports">
+              <kendo-dropdownlist [data]="Reports" [textField]="'Name'" [valueField]="'ID'"
+                (valueChange)="onViewChange($event)" [(ngModel)]="selectedReport">
+          @if (!Reports.length && showloader) {
+          @if (!Reports.length && !showloader) {
+            <div class="no-items-message">
+              No reports available
+  <div class="k-actions k-actions-end popup-actions customBtn">
+    <button themeColor="info" kendoButton (click)="addItem()">
+      <span class="fa-solid fa-check"></span> Add
+    <button themeColor="info" kendoButton fillMode="outline" (click)="closeDialog()">Cancel</button>

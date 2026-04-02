@@ -1,0 +1,29 @@
+    internal class ComTypeClassDesc : ComTypeDesc, IDynamicMetaObjectProvider
+        private LinkedList<string> _itfs; // implemented interfaces
+        private LinkedList<string> _sourceItfs; // source interfaces supported by this coclass
+        private Type _typeObj;
+        public object CreateInstance()
+            _typeObj ??= Type.GetTypeFromCLSID(Guid);
+            return Activator.CreateInstance(Type.GetTypeFromCLSID(Guid));
+        internal ComTypeClassDesc(ComTypes.ITypeInfo typeInfo, ComTypeLibDesc typeLibDesc) : base(typeInfo, typeLibDesc)
+            ComTypes.TYPEATTR typeAttr = ComRuntimeHelpers.GetTypeAttrForTypeInfo(typeInfo);
+            Guid = typeAttr.guid;
+            for (int i = 0; i < typeAttr.cImplTypes; i++)
+                typeInfo.GetRefTypeOfImplType(i, out int hRefType);
+                typeInfo.GetRefTypeInfo(hRefType, out ComTypes.ITypeInfo currentTypeInfo);
+                typeInfo.GetImplTypeFlags(i, out ComTypes.IMPLTYPEFLAGS implTypeFlags);
+                bool isSourceItf = (implTypeFlags & ComTypes.IMPLTYPEFLAGS.IMPLTYPEFLAG_FSOURCE) != 0;
+                AddInterface(currentTypeInfo, isSourceItf);
+        private void AddInterface(ComTypes.ITypeInfo itfTypeInfo, bool isSourceItf)
+            string itfName = ComRuntimeHelpers.GetNameOfType(itfTypeInfo);
+            if (isSourceItf)
+                _sourceItfs ??= new LinkedList<string>();
+                _sourceItfs.AddLast(itfName);
+                _itfs ??= new LinkedList<string>();
+                _itfs.AddLast(itfName);
+        internal bool Implements(string itfName, bool isSourceItf)
+                return _sourceItfs.Contains(itfName);
+            return _itfs.Contains(itfName);
+        #region IDynamicMetaObjectProvider Members
+        public DynamicMetaObject GetMetaObject(Expression parameter)
+            return new ComClassMetaObject(parameter, this);

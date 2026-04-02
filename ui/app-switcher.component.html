@@ -1,0 +1,24 @@
+<div class="app-switcher-container" [class.loading]="isLoading">
+  <div class="app-switcher-button"
+    (click)="toggleDropdown()">
+    <!-- Show spinner when loading, otherwise show app icon -->
+      <i class="app-icon loading-spinner fa-solid fa-spinner fa-spin"></i>
+      <i class="app-icon" [class]="activeApp?.Icon || 'fa-solid fa-cube'"
+        [style.color]="activeApp?.GetColor()"
+      [style.--active-color]="activeApp?.GetColor()"></i>
+    <i class="dropdown-arrow fa-solid fa-chevron-down"></i>
+  @if (showDropdown) {
+    <div class="app-switcher-dropdown">
+      @for (app of apps; track app) {
+          class="app-switcher-item"
+          [class.loading]="app.ID === loadingAppId"
+          [style.--item-color]="app.GetColor()"
+          (click)="selectApp(app)">
+          @if (app.ID === loadingAppId) {
+          @if (app.ID !== loadingAppId) {
+            <i [class]="app.Icon || 'fa-solid fa-cube'"></i>
+          <span>{{ app.Name }}</span>
+      <div class="app-switcher-divider"></div>
+      <!-- Configure option -->
+      <div class="app-switcher-item configure-item" (click)="openConfigDialog()">
+        <span>Configure...</span>

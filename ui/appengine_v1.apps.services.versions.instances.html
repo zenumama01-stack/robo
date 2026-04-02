@@ -1,0 +1,43 @@
+<h1><a href="appengine_v1.html">App Engine Admin API</a> . <a href="appengine_v1.apps.html">apps</a> . <a href="appengine_v1.apps.services.html">services</a> . <a href="appengine_v1.apps.services.versions.html">versions</a> . <a href="appengine_v1.apps.services.versions.instances.html">instances</a></h1>
+  <code><a href="#debug">debug(appsId, servicesId, versionsId, instancesId, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Enables debugging on a VM instance. This allows you to use the SSH command to connect to the virtual machine where the instance lives. While in "debug mode", the instance continues to serve live traffic. You should delete the instance when you are done debugging and then allow the system to take over and determine if another instance should be started.Only applicable for instances in App Engine flexible environment.</p>
+  <code><a href="#delete">delete(appsId, servicesId, versionsId, instancesId, x__xgafv=None)</a></code></p>
+<p class="firstline">Stops a running instance.The instance might be automatically recreated based on the scaling settings of the version. For more information, see "How Instances are Managed" (standard environment (https://cloud.google.com/appengine/docs/standard/python/how-instances-are-managed) | flexible environment (https://cloud.google.com/appengine/docs/flexible/python/how-instances-are-managed)).To ensure that instances are not re-created and avoid getting billed, you can stop all instances within the target version by changing the serving status of the version to STOPPED with the apps.services.versions.patch (https://cloud.google.com/appengine/docs/admin-api/reference/rest/v1/apps.services.versions/patch) method.</p>
+  <code><a href="#get">get(appsId, servicesId, versionsId, instancesId, x__xgafv=None)</a></code></p>
+<p class="firstline">Gets instance information.</p>
+  <code><a href="#list">list(appsId, servicesId, versionsId, pageSize=None, pageToken=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Lists the instances of a version.Tip: To aggregate details about instances over time, see the Stackdriver Monitoring API (https://cloud.google.com/monitoring/api/ref_v3/rest/v3/projects.timeSeries/list).</p>
+    <code class="details" id="debug">debug(appsId, servicesId, versionsId, instancesId, body=None, x__xgafv=None)</code>
+  <pre>Enables debugging on a VM instance. This allows you to use the SSH command to connect to the virtual machine where the instance lives. While in &quot;debug mode&quot;, the instance continues to serve live traffic. You should delete the instance when you are done debugging and then allow the system to take over and determine if another instance should be started.Only applicable for instances in App Engine flexible environment.
+  appsId: string, Part of `name`. Required. Name of the resource requested. Example: apps/myapp/services/default/versions/v1/instances/instance-1. (required)
+  instancesId: string, Part of `name`. See documentation of `appsId`. (required)
+{ # Request message for Instances.DebugInstance.
+  &quot;sshKey&quot;: &quot;A String&quot;, # Public SSH key to add to the instance. Examples: [USERNAME]:ssh-rsa [KEY_VALUE] [USERNAME] [USERNAME]:ssh-rsa [KEY_VALUE] google-ssh {&quot;userName&quot;:&quot;[USERNAME]&quot;,&quot;expireOn&quot;:&quot;[EXPIRE_TIME]&quot;}For more information, see Adding and Removing SSH Keys (https://cloud.google.com/compute/docs/instances/adding-removing-ssh-keys).
+    <code class="details" id="delete">delete(appsId, servicesId, versionsId, instancesId, x__xgafv=None)</code>
+  <pre>Stops a running instance.The instance might be automatically recreated based on the scaling settings of the version. For more information, see &quot;How Instances are Managed&quot; (standard environment (https://cloud.google.com/appengine/docs/standard/python/how-instances-are-managed) | flexible environment (https://cloud.google.com/appengine/docs/flexible/python/how-instances-are-managed)).To ensure that instances are not re-created and avoid getting billed, you can stop all instances within the target version by changing the serving status of the version to STOPPED with the apps.services.versions.patch (https://cloud.google.com/appengine/docs/admin-api/reference/rest/v1/apps.services.versions/patch) method.
+    <code class="details" id="get">get(appsId, servicesId, versionsId, instancesId, x__xgafv=None)</code>
+  <pre>Gets instance information.
+    { # An Instance resource is the computing unit that App Engine uses to automatically scale an application.
+  &quot;appEngineRelease&quot;: &quot;A String&quot;, # Output only. App Engine release this instance is running on.
+  &quot;availability&quot;: &quot;A String&quot;, # Output only. Availability of the instance.
+  &quot;averageLatency&quot;: 42, # Output only. Average latency (ms) over the last minute.
+  &quot;errors&quot;: 42, # Output only. Number of errors since this instance was started.
+  &quot;id&quot;: &quot;A String&quot;, # Output only. Relative name of the instance within the version. Example: instance-1.
+  &quot;memoryUsage&quot;: &quot;A String&quot;, # Output only. Total memory in use (bytes).
+  &quot;name&quot;: &quot;A String&quot;, # Output only. Full path to the Instance resource in the API. Example: apps/myapp/services/default/versions/v1/instances/instance-1.
+  &quot;qps&quot;: 3.14, # Output only. Average queries per second (QPS) over the last minute.
+  &quot;requests&quot;: 42, # Output only. Number of requests since this instance was started.
+  &quot;startTime&quot;: &quot;A String&quot;, # Output only. Time that this instance was started.@OutputOnly
+  &quot;vmDebugEnabled&quot;: True or False, # Output only. Whether this instance is in debug mode. Only applicable for instances in App Engine flexible environment.
+  &quot;vmId&quot;: &quot;A String&quot;, # Output only. Virtual machine ID of this instance. Only applicable for instances in App Engine flexible environment.
+  &quot;vmIp&quot;: &quot;A String&quot;, # Output only. The IP address of this instance. Only applicable for instances in App Engine flexible environment.
+  &quot;vmLiveness&quot;: &quot;A String&quot;, # Output only. The liveness health check of this instance. Only applicable for instances in App Engine flexible environment.
+  &quot;vmName&quot;: &quot;A String&quot;, # Output only. Name of the virtual machine where this instance lives. Only applicable for instances in App Engine flexible environment.
+  &quot;vmStatus&quot;: &quot;A String&quot;, # Output only. Status of the virtual machine where this instance lives. Only applicable for instances in App Engine flexible environment.
+  &quot;vmZoneName&quot;: &quot;A String&quot;, # Output only. Zone where the virtual machine is located. Only applicable for instances in App Engine flexible environment.
+    <code class="details" id="list">list(appsId, servicesId, versionsId, pageSize=None, pageToken=None, x__xgafv=None)</code>
+  <pre>Lists the instances of a version.Tip: To aggregate details about instances over time, see the Stackdriver Monitoring API (https://cloud.google.com/monitoring/api/ref_v3/rest/v3/projects.timeSeries/list).
+  appsId: string, Part of `parent`. Required. Name of the parent Version resource. Example: apps/myapp/services/default/versions/v1. (required)
+  versionsId: string, Part of `parent`. See documentation of `appsId`. (required)
+    { # Response message for Instances.ListInstances.
+  &quot;instances&quot;: [ # The instances belonging to the requested version.

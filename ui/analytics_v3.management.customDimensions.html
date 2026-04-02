@@ -1,0 +1,51 @@
+<h1><a href="analytics_v3.html">Google Analytics API</a> . <a href="analytics_v3.management.html">management</a> . <a href="analytics_v3.management.customDimensions.html">customDimensions</a></h1>
+  <code><a href="#get">get(accountId, webPropertyId, customDimensionId)</a></code></p>
+<p class="firstline">Get a custom dimension to which the user has access.</p>
+  <code><a href="#insert">insert(accountId, webPropertyId, body=None)</a></code></p>
+<p class="firstline">Create a new custom dimension.</p>
+<p class="firstline">Lists custom dimensions to which the user has access.</p>
+  <code><a href="#patch">patch(accountId, webPropertyId, customDimensionId, body=None, ignoreCustomDataSourceLinks=None)</a></code></p>
+<p class="firstline">Updates an existing custom dimension. This method supports patch semantics.</p>
+  <code><a href="#update">update(accountId, webPropertyId, customDimensionId, body=None, ignoreCustomDataSourceLinks=None)</a></code></p>
+<p class="firstline">Updates an existing custom dimension.</p>
+    <code class="details" id="get">get(accountId, webPropertyId, customDimensionId)</code>
+  <pre>Get a custom dimension to which the user has access.
+  accountId: string, Account ID for the custom dimension to retrieve. (required)
+  webPropertyId: string, Web property ID for the custom dimension to retrieve. (required)
+  customDimensionId: string, The ID of the custom dimension to retrieve. (required)
+    { # JSON template for Analytics Custom Dimension.
+  &quot;accountId&quot;: &quot;A String&quot;, # Account ID.
+  &quot;active&quot;: True or False, # Boolean indicating whether the custom dimension is active.
+  &quot;created&quot;: &quot;A String&quot;, # Time the custom dimension was created.
+  &quot;id&quot;: &quot;A String&quot;, # Custom dimension ID.
+  &quot;index&quot;: 42, # Index of the custom dimension.
+  &quot;kind&quot;: &quot;analytics#customDimension&quot;, # Kind value for a custom dimension. Set to &quot;analytics#customDimension&quot;. It is a read-only field.
+  &quot;name&quot;: &quot;A String&quot;, # Name of the custom dimension.
+  &quot;parentLink&quot;: { # Parent link for the custom dimension. Points to the property to which the custom dimension belongs.
+    &quot;href&quot;: &quot;A String&quot;, # Link to the property to which the custom dimension belongs.
+    &quot;type&quot;: &quot;analytics#webproperty&quot;, # Type of the parent link. Set to &quot;analytics#webproperty&quot;.
+  &quot;scope&quot;: &quot;A String&quot;, # Scope of the custom dimension: HIT, SESSION, USER or PRODUCT.
+  &quot;selfLink&quot;: &quot;A String&quot;, # Link for the custom dimension
+  &quot;updated&quot;: &quot;A String&quot;, # Time the custom dimension was last modified.
+  &quot;webPropertyId&quot;: &quot;A String&quot;, # Property ID.
+    <code class="details" id="insert">insert(accountId, webPropertyId, body=None)</code>
+  <pre>Create a new custom dimension.
+  accountId: string, Account ID for the custom dimension to create. (required)
+  webPropertyId: string, Web property ID for the custom dimension to create. (required)
+  <pre>Lists custom dimensions to which the user has access.
+  accountId: string, Account ID for the custom dimensions to retrieve. (required)
+  webPropertyId: string, Web property ID for the custom dimensions to retrieve. (required)
+  max_results: integer, The maximum number of custom dimensions to include in this response.
+    { # A custom dimension collection lists Analytics custom dimensions to which the user has access. Each resource in the collection corresponds to a single Analytics custom dimension.
+  &quot;items&quot;: [ # Collection of custom dimensions.
+  &quot;kind&quot;: &quot;analytics#customDimensions&quot;, # Collection type.
+  &quot;nextLink&quot;: &quot;A String&quot;, # Link to next page for this custom dimension collection.
+  &quot;previousLink&quot;: &quot;A String&quot;, # Link to previous page for this custom dimension collection.
+    <code class="details" id="patch">patch(accountId, webPropertyId, customDimensionId, body=None, ignoreCustomDataSourceLinks=None)</code>
+  <pre>Updates an existing custom dimension. This method supports patch semantics.
+  accountId: string, Account ID for the custom dimension to update. (required)
+  webPropertyId: string, Web property ID for the custom dimension to update. (required)
+  customDimensionId: string, Custom dimension ID for the custom dimension to update. (required)
+  ignoreCustomDataSourceLinks: boolean, Force the update and ignore any warnings related to the custom dimension being linked to a custom data source / data set.
+    <code class="details" id="update">update(accountId, webPropertyId, customDimensionId, body=None, ignoreCustomDataSourceLinks=None)</code>
+  <pre>Updates an existing custom dimension.

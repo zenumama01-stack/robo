@@ -1,0 +1,32 @@
+<h1><a href="documentai_v1beta3.html">Cloud Document AI API</a> . <a href="documentai_v1beta3.projects.html">projects</a> . <a href="documentai_v1beta3.projects.locations.html">locations</a> . <a href="documentai_v1beta3.projects.locations.processors.html">processors</a></h1>
+  <code><a href="documentai_v1beta3.projects.locations.processors.dataset.html">dataset()</a></code>
+<p class="firstline">Returns the dataset Resource.</p>
+  <code><a href="documentai_v1beta3.projects.locations.processors.humanReviewConfig.html">humanReviewConfig()</a></code>
+  <code><a href="documentai_v1beta3.projects.locations.processors.processorVersions.html">processorVersions()</a></code>
+  <code><a href="#updateDataset">updateDataset(name, body=None, updateMask=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Updates metadata associated with a dataset. Note that this method requires the `documentai.googleapis.com/datasets.update` permission on the project, which is highly privileged. A user or service account with this permission can create new processors that can interact with any gcs bucket in your project.</p>
+  &quot;inputConfigs&quot;: [ # The input config for each single document in the batch process.
+    { # The message for input config in batch process.
+      &quot;gcsSource&quot;: &quot;A String&quot;, # The Cloud Storage location as the source of the document.
+      &quot;mimeType&quot;: &quot;A String&quot;, # An IANA published [media type (MIME type)](https://www.iana.org/assignments/media-types/media-types.xhtml) of the input. If the input is a raw document, refer to [supported file types](https://cloud.google.com/document-ai/docs/file-types) for the list of media types. If the input is a Document, the type should be `application/json`.
+  &quot;outputConfig&quot;: { # The output configuration in the BatchProcessDocuments method. # The overall output config for batch process.
+    &quot;gcsDestination&quot;: &quot;A String&quot;, # The output Cloud Storage directory to put the processed documents.
+        &quot;breakpointPercentileThreshold&quot;: 42, # Optional. The percentile of cosine dissimilarity that must be exceeded between a group of tokens and the next. The smaller this number is, the more chunks will be generated. **Note:** This field is not yet used.
+        &quot;semanticChunkingGroupSize&quot;: True or False, # Optional. The number of tokens to group together when evaluating semantic similarity. **Note:** This field is not yet used.
+      &quot;enableImageExtraction&quot;: True or False, # Optional. Whether to extract images in layout parser response.
+      &quot;enableLlmLayoutParsing&quot;: True or False, # Optional. Whether to refine PDF layout using LLM.
+      &quot;enableTableSplit&quot;: True or False, # Optional. Whether to split table.
+  &quot;document&quot;: { # Document represents the canonical document resource in Document AI. It is an interchange format that provides insights into documents and allows for collaboration between users and Document AI to iterate and optimize for quality. # The document payload, the content and mime_type fields must be set.
+  &quot;humanReviewOperation&quot;: &quot;A String&quot;, # The name of the operation triggered by the processed document. If the human review process isn&#x27;t triggered, this field is empty. It has the same response type and metadata as the long-running operation returned by ReviewDocument.
+    <code class="details" id="updateDataset">updateDataset(name, body=None, updateMask=None, x__xgafv=None)</code>
+  <pre>Updates metadata associated with a dataset. Note that this method requires the `documentai.googleapis.com/datasets.update` permission on the project, which is highly privileged. A user or service account with this permission can create new processors that can interact with any gcs bucket in your project.
+  name: string, Dataset resource name. Format: `projects/{project}/locations/{location}/processors/{processor}/dataset` (required)
+{ # A singleton resource under a Processor which configures a collection of documents.
+  &quot;documentWarehouseConfig&quot;: { # Configuration specific to the Document AI Warehouse-based implementation. # Optional. Deprecated. Warehouse-based dataset configuration is not supported.
+    &quot;collection&quot;: &quot;A String&quot;, # Output only. The collection in Document AI Warehouse associated with the dataset.
+    &quot;schema&quot;: &quot;A String&quot;, # Output only. The schema in Document AI Warehouse associated with the dataset.
+  &quot;gcsManagedConfig&quot;: { # Configuration specific to the Cloud Storage-based implementation. # Optional. User-managed Cloud Storage dataset configuration. Use this configuration if the dataset documents are stored under a user-managed Cloud Storage location.
+    &quot;gcsPrefix&quot;: { # Specifies all documents on Cloud Storage with a common prefix. # Required. The Cloud Storage URI (a directory) where the documents belonging to the dataset must be stored.
+  &quot;name&quot;: &quot;A String&quot;, # Dataset resource name. Format: `projects/{project}/locations/{location}/processors/{processor}/dataset`
+  &quot;state&quot;: &quot;A String&quot;, # Required. State of the dataset. Ignored when updating dataset.
+  &quot;unmanagedDatasetConfig&quot;: { # Configuration specific to an unmanaged dataset. # Optional. Unmanaged dataset configuration. Use this configuration if the dataset documents are managed by the document service internally (not user-managed).

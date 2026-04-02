@@ -1,0 +1,55 @@
+package org.openhab.core.automation.module.script.rulesupport.loader;
+import static org.openhab.core.service.WatchService.Kind.CREATE;
+import static org.openhab.core.service.WatchService.Kind.DELETE;
+import static org.openhab.core.service.WatchService.Kind.MODIFY;
+import java.util.function.Consumer;
+import org.openhab.core.automation.module.script.ScriptDependencyTracker;
+import org.openhab.core.automation.module.script.rulesupport.internal.loader.BidiSetBag;
+ * The {@link AbstractScriptDependencyTracker} tracks dependencies between scripts and reloads dependees
+ * It needs to be sub-classed for each {@link org.openhab.core.automation.module.script.ScriptEngineFactory}
+ * that wants to support dependency tracking
+ * @author Jan N. Klug - Refactored to OSGi service
+public abstract class AbstractScriptDependencyTracker
+        implements ScriptDependencyTracker, WatchService.WatchEventListener {
+    private final Logger logger = LoggerFactory.getLogger(AbstractScriptDependencyTracker.class);
+    protected final Path libraryPath;
+    private final Set<ScriptDependencyTracker.Listener> dependencyChangeListeners = ConcurrentHashMap.newKeySet();
+    private final BidiSetBag<String, String> scriptToLibs = new BidiSetBag<>();
+    private final WatchService watchService;
+    protected AbstractScriptDependencyTracker(WatchService watchService, final String fileDirectory) {
+        this.watchService = watchService;
+        this.libraryPath = watchService.getWatchPath().resolve(fileDirectory);
+        if (!Files.exists(libraryPath)) {
+                Files.createDirectories(libraryPath);
+                logger.warn("Failed to create watched directory: {}", libraryPath);
+        } else if (!Files.isDirectory(libraryPath)) {
+            logger.warn("Trying to watch directory {}, however it is a file", libraryPath);
+        watchService.registerListener(this, this.libraryPath);
+        watchService.unregisterListener(this);
+    public Path getLibraryPath() {
+        return libraryPath;
+    public void processWatchEvent(WatchService.Kind kind, Path fullPath) {
+        File file = fullPath.toFile();
+        if (kind == DELETE || (!file.isHidden() && file.canRead() && (kind == CREATE || kind == MODIFY))) {
+            dependencyChanged(file.toString());
+    protected void dependencyChanged(String dependency) {
+        Set<String> scripts = new HashSet<>(scriptToLibs.getKeys(dependency)); // take a copy as it will change as we
+        logger.debug("Library {} changed; reimporting {} scripts...", libraryPath, scripts.size());
+        for (String scriptUrl : scripts) {
+            for (ScriptDependencyTracker.Listener listener : dependencyChangeListeners) {
+                    listener.onDependencyChange(scriptUrl);
+                    logger.warn("Failed to notify tracker of dependency change: {}: {}", e.getClass(), e.getMessage());
+    public Consumer<String> getTracker(String scriptId) {
+        return dependencyPath -> startTracking(scriptId, dependencyPath);
+    public void removeTracking(String scriptId) {
+        scriptToLibs.removeKey(scriptId);
+    protected void startTracking(String scriptId, String libPath) {
+        scriptToLibs.put(scriptId, libPath);
+     * Add a dependency change listener
+     * Since this is done via service injection and OSGi annotations are not inherited it is required that subclasses
+     * expose this method with proper annotation
+     * @param listener the dependency change listener
+    public void addChangeTracker(ScriptDependencyTracker.Listener listener) {
+        dependencyChangeListeners.add(listener);
+    public void removeChangeTracker(ScriptDependencyTracker.Listener listener) {
+        dependencyChangeListeners.remove(listener);

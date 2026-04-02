@@ -1,0 +1,30 @@
+<h1><a href="transcoder_v1.html">Transcoder API</a> . <a href="transcoder_v1.projects.html">projects</a> . <a href="transcoder_v1.projects.locations.html">locations</a> . <a href="transcoder_v1.projects.locations.jobs.html">jobs</a></h1>
+<p class="firstline">Creates a job in the specified region.</p>
+<p class="firstline">Returns the job data.</p>
+<p class="firstline">Lists jobs in the specified region.</p>
+  <pre>Creates a job in the specified region.
+  parent: string, Required. The parent location to create and process this job. Format: `projects/{project}/locations/{location}` (required)
+{ # Transcoding job resource.
+  &quot;batchModePriority&quot;: 42, # The processing priority of a batch job. This field can only be set for batch mode jobs. The default value is 0. This value cannot be negative. Higher values correspond to higher priorities for the job.
+  &quot;config&quot;: { # Job configuration # The configuration for this job.
+  &quot;createTime&quot;: &quot;A String&quot;, # Output only. The time the job was created.
+  &quot;endTime&quot;: &quot;A String&quot;, # Output only. The time the transcoding finished.
+  &quot;error&quot;: { # The `Status` type defines a logical error model that is suitable for different programming environments, including REST APIs and RPC APIs. It is used by [gRPC](https://github.com/grpc). Each `Status` message contains three pieces of data: error code, error message, and error details. You can find out more about this error model and how to work with it in the [API Design Guide](https://cloud.google.com/apis/design/errors). # Output only. An error object that describes the reason for the failure. This property is always present when ProcessingState is `FAILED`.
+  &quot;fillContentGaps&quot;: True or False, # Optional. Insert silence and duplicate frames when timestamp gaps are detected in a given stream.
+  &quot;inputUri&quot;: &quot;A String&quot;, # Input only. Specify the `input_uri` to populate empty `uri` fields in each element of `Job.config.inputs` or `JobTemplate.config.inputs` when using template. URI of the media. Input files must be at least 5 seconds in duration and stored in Cloud Storage (for example, `gs://bucket/inputs/file.mp4`). See [Supported input and output formats](https://cloud.google.com/transcoder/docs/concepts/supported-input-and-output-formats).
+  &quot;labels&quot;: { # The labels associated with this job. You can use these to organize and group your jobs.
+  &quot;mode&quot;: &quot;A String&quot;, # The processing mode of the job. The default is `PROCESSING_MODE_INTERACTIVE`.
+  &quot;name&quot;: &quot;A String&quot;, # The resource name of the job. Format: `projects/{project_number}/locations/{location}/jobs/{job}`
+  &quot;optimization&quot;: &quot;A String&quot;, # Optional. The optimization strategy of the job. The default is `AUTODETECT`.
+  &quot;outputUri&quot;: &quot;A String&quot;, # Input only. Specify the `output_uri` to populate an empty `Job.config.output.uri` or `JobTemplate.config.output.uri` when using template. URI for the output file(s). For example, `gs://my-bucket/outputs/`. See [Supported input and output formats](https://cloud.google.com/transcoder/docs/concepts/supported-input-and-output-formats).
+  &quot;startTime&quot;: &quot;A String&quot;, # Output only. The time the transcoding started.
+  &quot;state&quot;: &quot;A String&quot;, # Output only. The current state of the job.
+  &quot;templateId&quot;: &quot;A String&quot;, # Input only. Specify the `template_id` to use for populating `Job.config`. The default is `preset/web-hd`, which is the only supported preset. User defined JobTemplate: `{job_template_id}`
+  &quot;ttlAfterCompletionDays&quot;: 42, # Job time to live value in days, which will be effective after job completion. Job should be deleted automatically after the given TTL. Enter a value between 1 and 90. The default is 30.
+  name: string, Required. The name of the job to delete. Format: `projects/{project}/locations/{location}/jobs/{job}` (required)
+  allowMissing: boolean, If set to true, and the job is not found, the request will succeed but no action will be taken on the server.
+  <pre>Returns the job data.
+  name: string, Required. The name of the job to retrieve. Format: `projects/{project}/locations/{location}/jobs/{job}` (required)
+  <pre>Lists jobs in the specified region.
+    { # Response message for `TranscoderService.ListJobs`.
+  &quot;jobs&quot;: [ # List of jobs in the specified region.

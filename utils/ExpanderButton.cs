@@ -1,0 +1,49 @@
+    public partial class ExpanderButton : ToggleButton
+        protected virtual string ExpandToolTip
+            get { return XamlLocalizableResources.AutoResXGen_ManagementList2_ToolTip_32; }
+        /// Tooltip to show to collapse.
+        protected virtual string CollapseToolTip
+            get { return XamlLocalizableResources.CollapsingTabControl_ExpandButton_AutomationName; }
+        /// Initializes a new instance of the <see cref="ExpanderButton" /> class.
+        public ExpanderButton()
+        /// Invoked whenever the effective value of any dependency property on this <see cref="ExpanderButton"/> has been updated. The specific dependency property that changed is reported in the arguments parameter. Overrides <see cref="FrameworkElement.OnPropertyChanged"/>.
+        /// <param name="e">The event data that describes the property that changed, as well as old and new values.</param>
+        protected override void OnPropertyChanged(DependencyPropertyChangedEventArgs e)
+            base.OnPropertyChanged(e);
+            if (e.Property == ExpanderButton.IsCheckedProperty)
+                this.OnIsCheckedChanged(e);
+        /// Called when the <see cref="ToggleButton.IsChecked"/> property changes.
+        /// <param name="args">The event data that describes the property that changed, as well as old and new values.</param>
+        protected void OnIsCheckedChanged(DependencyPropertyChangedEventArgs args)
+            if (AutomationPeer.ListenerExists(AutomationEvents.PropertyChanged))
+                var peer = UIElementAutomationPeer.CreatePeerForElement(this);
+                if (peer != null)
+                    var oldValue = (bool?)args.OldValue;
+                    var newValue = (bool?)args.NewValue;
+                    peer.RaisePropertyChangedEvent(
+                        ExpandCollapsePatternIdentifiers.ExpandCollapseStateProperty,
+                        (oldValue == true) ? ExpandCollapseState.Expanded : ExpandCollapseState.Collapsed,
+                        (newValue == true) ? ExpandCollapseState.Expanded : ExpandCollapseState.Collapsed);
+            SetToolTip();
+            ToolTip toolTip = (ToolTip)this.ToolTip;
+            if (toolTip.IsOpen)
+                // need to reset so content changes if already open
+                toolTip.IsOpen = false;
+                toolTip.IsOpen = true;
+        /// Called when it has keyboard focus.
+        /// <param name="args">The event data that describes getting keyboard focus.</param>
+        protected override void OnGotKeyboardFocus(KeyboardFocusChangedEventArgs args)
+            ((ToolTip)this.ToolTip).IsOpen = true;
+        /// Called when it lost keyboard focus.
+        /// <param name="args">The event data that describes losing keyboard focus.</param>
+        protected override void OnLostKeyboardFocus(KeyboardFocusChangedEventArgs args)
+            if (this.ToolTip is ToolTip toolTip)
+        private void SetToolTip()
+            ToolTip toolTip;
+            if (this.ToolTip is ToolTip)
+                toolTip = (ToolTip)this.ToolTip;
+                toolTip = new ToolTip();
+            toolTip.Content = (this.IsChecked == true) ? CollapseToolTip : ExpandToolTip;
+            toolTip.PlacementTarget = this;
+            toolTip.Placement = PlacementMode.Bottom;
+            this.ToolTip = toolTip;

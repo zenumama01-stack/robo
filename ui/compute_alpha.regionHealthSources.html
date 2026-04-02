@@ -1,0 +1,69 @@
+<h1><a href="compute_alpha.html">Compute Engine API</a> . <a href="compute_alpha.regionHealthSources.html">regionHealthSources</a></h1>
+<p class="firstline">Retrieves the list of all HealthSource resources (all</p>
+  <code><a href="#delete">delete(project, region, healthSource, requestId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Deletes the specified HealthSource in the given region</p>
+  <code><a href="#get">get(project, region, healthSource, x__xgafv=None)</a></code></p>
+<p class="firstline">Returns the specified HealthSource resource in the given region.</p>
+  <code><a href="#getHealth">getHealth(project, region, healthSource, x__xgafv=None)</a></code></p>
+<p class="firstline">Create a HealthSource in the specified project in the given region</p>
+<p class="firstline">Lists the HealthSources for a project in the given region.</p>
+  <code><a href="#patch">patch(project, region, healthSource, body=None, requestId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Updates the specified regional HealthSource resource</p>
+  <pre>Retrieves the list of all HealthSource resources (all
+    { # Contains a list of HealthSourcesScopedList.
+  &quot;items&quot;: { # A list of HealthSourcesScopedList resources.
+    &quot;a_key&quot;: { # Name of the scope containing this set of HealthSources.
+      &quot;healthSources&quot;: [ # A list of HealthSources contained in this scope.
+        { # Represents a health source.
+            # A health source resource specifies the source resources and the health
+            # aggregation policy applied to the source resources to determine the
+            # aggregated health status.
+              # inserting a HealthSource. An up-to-date fingerprint
+              # must be provided in order to patch the HealthSource; Otherwise, the request
+              # will fail with error 412 conditionNotMet. To see the latest
+              # fingerprint, make a get() request to retrieve the
+              # HealthSource.
+          &quot;healthAggregationPolicy&quot;: &quot;A String&quot;, # URL to the HealthAggregationPolicy resource. Must be set. Must
+              # be regional and in the same region as the HealthSource. Can be
+          &quot;kind&quot;: &quot;compute#healthSource&quot;, # Output only. [Output Only] Type of the resource. Alwayscompute#healthSource for health sources.
+          &quot;region&quot;: &quot;A String&quot;, # Output only. [Output Only] URL of the region where the health source resides.
+          &quot;sourceType&quot;: &quot;A String&quot;, # Specifies the type of the HealthSource. The only allowed value
+              # is BACKEND_SERVICE. Must be specified when theHealthSource is created, and cannot be mutated.
+          &quot;sources&quot;: [ # URLs to the source resources. Must be size 1. Must be aBackendService if
+              # the sourceType is BACKEND_SERVICE. TheBackendService must have load balancing schemeINTERNAL or INTERNAL_MANAGED and must be regional
+              # and in the same region as the HealthSource (cross-region
+              # deployment for INTERNAL_MANAGED is not supported). TheBackendService may use only IGs, MIGs, or NEGs of typeGCE_VM_IP or GCE_VM_IP_PORT. TheBackendService may not use haPolicy. Can be
+          # health sources when the list is empty.
+  &quot;kind&quot;: &quot;compute#healthSourceAggregatedList&quot;, # Output only. Type of resource.
+    <code class="details" id="delete">delete(project, region, healthSource, requestId=None, x__xgafv=None)</code>
+  <pre>Deletes the specified HealthSource in the given region
+  healthSource: string, Name of the HealthSource resource to delete. (required)
+    <code class="details" id="get">get(project, region, healthSource, x__xgafv=None)</code>
+  <pre>Returns the specified HealthSource resource in the given region.
+  healthSource: string, Name of the HealthSource resource to return. (required)
+    <code class="details" id="getHealth">getHealth(project, region, healthSource, x__xgafv=None)</code>
+regional HealthSource.
+  healthSource: string, Name of the HealthSource resource to get health for. (required)
+    { # Response message for RegionHealthSources.GetHealth
+  &quot;healthState&quot;: &quot;A String&quot;, # Health state of the HealthSource.
+  &quot;kind&quot;: &quot;compute#healthSourceHealth&quot;, # Output only. [Output Only] Type of resource. Alwayscompute#healthSourceHealth for the health of health sources.
+  &quot;sources&quot;: [ # Health state details of the sources.
+      &quot;backends&quot;: [ # Represents an instance group or network endpoint group behind the source
+          # backend service. Only used if the sourceType of the regionHealthSource
+          # is BACKEND_SERVICE.
+          &quot;endpointCount&quot;: 42, # Total number of endpoints when determining the health of the
+              # regionHealthSource.
+          &quot;group&quot;: &quot;A String&quot;, # Fully qualified URL of an instance group or network endpoint group
+              # behind the source backend service.
+          &quot;healthyEndpointCount&quot;: 42, # Number of endpoints considered healthy when determining health of the
+      &quot;forwardingRule&quot;: &quot;A String&quot;, # Fully qualified URL of the forwarding rule associated with the source
+          # resource if it is a L4ILB backend service.
+      &quot;source&quot;: &quot;A String&quot;, # Fully qualified URL of the associated source resource. This is always a
+          # backend service URL.
+  <pre>Create a HealthSource in the specified project in the given region
+  <pre>Lists the HealthSources for a project in the given region.
+  &quot;items&quot;: [ # A list of HealthSource resources.
+  &quot;kind&quot;: &quot;compute#healthSourceList&quot;, # Output only. [Output Only] Type of the resource. Alwayscompute#healthSource for health sources.
+    <code class="details" id="patch">patch(project, region, healthSource, body=None, requestId=None, x__xgafv=None)</code>
+  <pre>Updates the specified regional HealthSource resource
+  healthSource: string, Name of the HealthSource to update. The name

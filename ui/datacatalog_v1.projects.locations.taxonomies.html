@@ -1,0 +1,78 @@
+<h1><a href="datacatalog_v1.html">Google Cloud Data Catalog API</a> . <a href="datacatalog_v1.projects.html">projects</a> . <a href="datacatalog_v1.projects.locations.html">locations</a> . <a href="datacatalog_v1.projects.locations.taxonomies.html">taxonomies</a></h1>
+  <code><a href="datacatalog_v1.projects.locations.taxonomies.policyTags.html">policyTags()</a></code>
+<p class="firstline">Returns the policyTags Resource.</p>
+<p class="firstline">Creates a taxonomy in a specified project. The taxonomy is initially empty, that is, it doesn't contain policy tags.</p>
+<p class="firstline">Deletes a taxonomy, including all policy tags in this taxonomy, their associated policies, and the policy tags references from BigQuery columns.</p>
+  <code><a href="#export">export(parent, serializedTaxonomies=None, taxonomies=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Exports taxonomies in the requested type and returns them, including their policy tags. The requested taxonomies must belong to the same project. This method generates `SerializedTaxonomy` protocol buffers with nested policy tags that can be used as input for `ImportTaxonomies` calls.</p>
+<p class="firstline">Gets a taxonomy.</p>
+<p class="firstline">Gets the IAM policy for a policy tag or a taxonomy.</p>
+<p class="firstline">Creates new taxonomies (including their policy tags) in a given project by importing from inlined or cross-regional sources. For a cross-regional source, new taxonomies are created by copying from a source in another region. For an inlined source, taxonomies and policy tags are created in bulk using nested protocol buffer structures.</p>
+<p class="firstline">Lists all taxonomies in a project in a particular location that you have a permission to view.</p>
+<p class="firstline">Updates a taxonomy, including its display name, description, and activated policy types.</p>
+  <code><a href="#replace">replace(name, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Replaces (updates) a taxonomy and all its policy tags. The taxonomy and its entire hierarchy of policy tags must be represented literally by `SerializedTaxonomy` and the nested `SerializedPolicyTag` messages. This operation automatically does the following: - Deletes the existing policy tags that are missing from the `SerializedPolicyTag`. - Creates policy tags that don't have resource names. They are considered new. - Updates policy tags with valid resources names accordingly.</p>
+<p class="firstline">Sets the IAM policy for a policy tag or a taxonomy.</p>
+<p class="firstline">Returns your permissions on a specified policy tag or taxonomy.</p>
+  <pre>Creates a taxonomy in a specified project. The taxonomy is initially empty, that is, it doesn&#x27;t contain policy tags.
+  parent: string, Required. Resource name of the project that the taxonomy will belong to. (required)
+{ # A taxonomy is a collection of hierarchical policy tags that classify data along a common axis. For example, a &quot;data sensitivity&quot; taxonomy might contain the following policy tags: ``` + PII + Account number + Age + SSN + Zipcode + Financials + Revenue ``` A &quot;data origin&quot; taxonomy might contain the following policy tags: ``` + User data + Employee data + Partner data + Public data ```
+  &quot;activatedPolicyTypes&quot;: [ # Optional. A list of policy types that are activated for this taxonomy. If not set, defaults to an empty list.
+  &quot;description&quot;: &quot;A String&quot;, # Optional. Description of this taxonomy. If not set, defaults to empty. The description must contain only Unicode characters, tabs, newlines, carriage returns, and page breaks, and be at most 2000 bytes long when encoded in UTF-8.
+  &quot;displayName&quot;: &quot;A String&quot;, # Required. User-defined name of this taxonomy. The name can&#x27;t start or end with spaces, must contain only Unicode letters, numbers, underscores, dashes, and spaces, and be at most 200 bytes long when encoded in UTF-8. The taxonomy display name must be unique within an organization.
+  &quot;name&quot;: &quot;A String&quot;, # Identifier. Resource name of this taxonomy in URL format. Note: Policy tag manager generates unique taxonomy IDs.
+  &quot;policyTagCount&quot;: 42, # Output only. Number of policy tags in this taxonomy.
+  &quot;service&quot;: { # The source system of the Taxonomy. # Output only. Identity of the service which owns the Taxonomy. This field is only populated when the taxonomy is created by a Google Cloud service. Currently only &#x27;DATAPLEX&#x27; is supported.
+    &quot;identity&quot;: &quot;A String&quot;, # The service agent for the service.
+    &quot;name&quot;: &quot;A String&quot;, # The Google Cloud service name.
+  &quot;taxonomyTimestamps&quot;: { # Timestamps associated with this resource in a particular system. # Output only. Creation and modification timestamps of this taxonomy.
+  <pre>Deletes a taxonomy, including all policy tags in this taxonomy, their associated policies, and the policy tags references from BigQuery columns.
+  name: string, Required. Resource name of the taxonomy to delete. Note: All policy tags in this taxonomy are also deleted. (required)
+    <code class="details" id="export">export(parent, serializedTaxonomies=None, taxonomies=None, x__xgafv=None)</code>
+  <pre>Exports taxonomies in the requested type and returns them, including their policy tags. The requested taxonomies must belong to the same project. This method generates `SerializedTaxonomy` protocol buffers with nested policy tags that can be used as input for `ImportTaxonomies` calls.
+  parent: string, Required. Resource name of the project that the exported taxonomies belong to. (required)
+  serializedTaxonomies: boolean, Serialized export taxonomies that contain all the policy tags as nested protocol buffers.
+  taxonomies: string, Required. Resource names of the taxonomies to export. (repeated)
+    { # Response message for ExportTaxonomies.
+  &quot;taxonomies&quot;: [ # List of taxonomies and policy tags as nested protocol buffers.
+    { # A nested protocol buffer that represents a taxonomy and the hierarchy of its policy tags. Used for taxonomy replacement, import, and export.
+      &quot;activatedPolicyTypes&quot;: [ # A list of policy types that are activated per taxonomy.
+      &quot;description&quot;: &quot;A String&quot;, # Description of the serialized taxonomy. At most 2000 bytes when encoded in UTF-8. If not set, defaults to an empty description.
+      &quot;displayName&quot;: &quot;A String&quot;, # Required. Display name of the taxonomy. At most 200 bytes when encoded in UTF-8.
+      &quot;policyTags&quot;: [ # Top level policy tags associated with the taxonomy, if any.
+        { # A nested protocol buffer that represents a policy tag and all its descendants.
+          &quot;childPolicyTags&quot;: [ # Children of the policy tag, if any.
+            # Object with schema name: GoogleCloudDatacatalogV1SerializedPolicyTag
+          &quot;description&quot;: &quot;A String&quot;, # Description of the serialized policy tag. At most 2000 bytes when encoded in UTF-8. If not set, defaults to an empty description.
+          &quot;displayName&quot;: &quot;A String&quot;, # Required. Display name of the policy tag. At most 200 bytes when encoded in UTF-8.
+          &quot;policyTag&quot;: &quot;A String&quot;, # Resource name of the policy tag. This field is ignored when calling `ImportTaxonomies`.
+  <pre>Gets a taxonomy.
+  name: string, Required. Resource name of the taxonomy to get. (required)
+  <pre>Gets the IAM policy for a policy tag or a taxonomy.
+  <pre>Creates new taxonomies (including their policy tags) in a given project by importing from inlined or cross-regional sources. For a cross-regional source, new taxonomies are created by copying from a source in another region. For an inlined source, taxonomies and policy tags are created in bulk using nested protocol buffer structures.
+  parent: string, Required. Resource name of project that the imported taxonomies will belong to. (required)
+{ # Request message for ImportTaxonomies.
+  &quot;crossRegionalSource&quot;: { # Cross-regional source used to import an existing taxonomy into a different region. # Cross-regional source taxonomy to import.
+    &quot;taxonomy&quot;: &quot;A String&quot;, # Required. The resource name of the source taxonomy to import.
+  &quot;inlineSource&quot;: { # Inline source containing taxonomies to import. # Inline source taxonomy to import.
+    &quot;taxonomies&quot;: [ # Required. Taxonomies to import.
+    { # Response message for ImportTaxonomies.
+  &quot;taxonomies&quot;: [ # Imported taxonomies.
+  <pre>Lists all taxonomies in a project in a particular location that you have a permission to view.
+  parent: string, Required. Resource name of the project to list the taxonomies of. (required)
+  filter: string, Supported field for filter is &#x27;service&#x27; and value is &#x27;dataplex&#x27;. Eg: service=dataplex.
+  pageSize: integer, The maximum number of items to return. Must be a value between 1 and 1000 inclusively. If not set, defaults to 50.
+  pageToken: string, The pagination token of the next results page. If not set, the first page is returned. The token is returned in the response to a previous list request.
+    { # Response message for ListTaxonomies.
+  &quot;nextPageToken&quot;: &quot;A String&quot;, # Pagination token of the next results page. Empty if there are no more results in the list.
+  &quot;taxonomies&quot;: [ # Taxonomies that the project contains.
+  <pre>Updates a taxonomy, including its display name, description, and activated policy types.
+  name: string, Identifier. Resource name of this taxonomy in URL format. Note: Policy tag manager generates unique taxonomy IDs. (required)
+  updateMask: string, Specifies fields to update. If not set, defaults to all fields you can update. For more information, see [FieldMask] (https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#fieldmask).
+    <code class="details" id="replace">replace(name, body=None, x__xgafv=None)</code>
+  <pre>Replaces (updates) a taxonomy and all its policy tags. The taxonomy and its entire hierarchy of policy tags must be represented literally by `SerializedTaxonomy` and the nested `SerializedPolicyTag` messages. This operation automatically does the following: - Deletes the existing policy tags that are missing from the `SerializedPolicyTag`. - Creates policy tags that don&#x27;t have resource names. They are considered new. - Updates policy tags with valid resources names accordingly.
+  name: string, Required. Resource name of the taxonomy to update. (required)
+{ # Request message for ReplaceTaxonomy.
+  &quot;serializedTaxonomy&quot;: { # A nested protocol buffer that represents a taxonomy and the hierarchy of its policy tags. Used for taxonomy replacement, import, and export. # Required. Taxonomy to update along with its child policy tags.
+  <pre>Sets the IAM policy for a policy tag or a taxonomy.
+  <pre>Returns your permissions on a specified policy tag or taxonomy.

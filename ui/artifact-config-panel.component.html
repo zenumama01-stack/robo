@@ -1,0 +1,71 @@
+<!-- Artifact Config Panel - Compact layout with tree dropdown and collapsible sections -->
+<div class="config-panel config-panel--compact">
+  <!-- Artifact Selection (Primary) -->
+      Select Artifact
+    <mj-tree-dropdown
+      #artifactDropdown
+      [BranchConfig]="CollectionConfig"
+      [LeafConfig]="ArtifactLeafConfig"
+      [Value]="ArtifactIdAsKey"
+      [SelectableTypes]="'leaf'"
+      [SelectionMode]="'single'"
+      [Placeholder]="'Search or browse artifacts...'"
+      [EnableSearch]="true"
+      (SelectionChange)="onArtifactSelection($event)"
+      [class.error]="artifactError">
+    </mj-tree-dropdown>
+    @if (artifactError) {
+      <span class="form-error">{{ artifactError }}</span>
+    @if (!artifactError && !artifactId) {
+        Browse collections or search to find an artifact
+    @if (!artifactError && artifactId) {
+      <span class="form-hint form-hint--selected">
+        Selected: {{ artifactName }}
+  <!-- Version Selection (Available only after artifact is selected) -->
+  @if (artifactId) {
+      <label for="versionSelect">
+        Version
+      <div class="version-select-wrapper">
+        @if (!isLoadingVersions && versions.length > 0) {
+            id="versionSelect"
+            [(ngModel)]="versionNumber"
+            (change)="onVersionChange()"
+            @for (v of versions; track v) {
+              <option [ngValue]="v.VersionNumber">
+                v{{ v.VersionNumber }} - {{ v.__mj_CreatedAt | date:'short' }}
+            Loading versions...
+        @if (!isLoadingVersions && versions.length === 0) {
+            No versions available
+          Select which version to display (latest is default)
+  <!-- Title (Optional) -->
+    <label for="partTitle">
+      <i class="fa-solid fa-heading"></i>
+      Part Title
+      <span class="optional-tag">(optional)</span>
+      id="partTitle"
+      [(ngModel)]="title"
+      (input)="onTitleChange()"
+      [placeholder]="artifactName ? 'Default: ' + artifactName : 'Enter a custom title'"
+    <span class="form-hint">Leave empty to use artifact name as title</span>
+  <!-- Display Options (Collapsible) -->
+  <div class="collapsible-section">
+      class="collapsible-header"
+      (click)="toggleOptions()"
+      [attr.aria-expanded]="showOptions">
+      <span class="collapsible-title">
+        Display Options
+      <i class="collapsible-chevron fa-solid"
+        [class.fa-chevron-down]="!showOptions"
+      [class.fa-chevron-up]="showOptions"></i>
+    @if (showOptions) {
+      <div class="collapsible-content">
+        <div class="checkbox-group checkbox-group--compact">
+          <label class="checkbox-option checkbox-option--compact">
+              [(ngModel)]="showHeader"
+              (change)="onOptionChange()">
+            <span class="checkbox-mark"></span>
+            <span class="checkbox-label">Show Header</span>
+              [(ngModel)]="showTabs"
+            <span class="checkbox-label">Show Tabs</span>
+              [(ngModel)]="showMetadata"
+            <span class="checkbox-label">Show Metadata</span>

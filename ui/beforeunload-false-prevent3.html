@@ -1,0 +1,7 @@
+  function installBeforeUnload(removeAfterNTimes) {
+    let count = 0
+    window.addEventListener('beforeunload', function handler(e) {
+      setTimeout(() => console.log('beforeunload'))
+      if (++count <= removeAfterNTimes) {
+        e.returnValue = '';
+    console.log('installed')

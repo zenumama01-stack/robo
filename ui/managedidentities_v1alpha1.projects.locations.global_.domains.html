@@ -1,0 +1,61 @@
+<h1><a href="managedidentities_v1alpha1.html">Managed Service for Microsoft Active Directory API</a> . <a href="managedidentities_v1alpha1.projects.html">projects</a> . <a href="managedidentities_v1alpha1.projects.locations.html">locations</a> . <a href="managedidentities_v1alpha1.projects.locations.global_.html">global_</a> . <a href="managedidentities_v1alpha1.projects.locations.global_.domains.html">domains</a></h1>
+  <code><a href="managedidentities_v1alpha1.projects.locations.global_.domains.backups.html">backups()</a></code>
+  <code><a href="managedidentities_v1alpha1.projects.locations.global_.domains.sqlIntegrations.html">sqlIntegrations()</a></code>
+<p class="firstline">Adds AD trust in a given domain. Operation</p>
+<p class="firstline">AuditMigration API gets the current state of DomainMigration</p>
+<p class="firstline">Creates a Microsoft AD Domain in a given project. Operation</p>
+<p class="firstline">Deletes identified domain. Operation</p>
+<p class="firstline">Removes identified trust. Operation</p>
+<p class="firstline">Gets details of a single Domain.</p>
+<p class="firstline">Lists Domains in a given project.</p>
+<p class="firstline">Updates the metadata and configuration of a specified domain. Operation</p>
+<p class="firstline">Updates the dns conditional forwarder. Operation</p>
+<p class="firstline">Resets managed identities admin password identified by managed_identities_admin_name</p>
+<p class="firstline">Validate the trust state Operation</p>
+  <pre>Adds AD trust in a given domain. Operation
+  name: string, The resource domain name, project name and location using the form: `projects/{project_id}/locations/global/domains/{domain_name}` (required)
+  &quot;trust&quot;: { # Represents a relationship between two domains which makes it possible for users in one domain to be authenticated by a dc in another domain. Refer https://docs.microsoft.com/en-us/previous-versions/windows/it-pro/windows-server-2008-R2-and-2008/cc731335(v%3dws.10) If the trust is being changed, it will be placed into the UPDATING state, which indicates that the resource is being reconciled. At this point, Get will reflect an intermediate state. # The domain trust resource.
+    &quot;lastKnownTrustConnectedHeartbeatTime&quot;: &quot;A String&quot;, # Output only. The last heartbeat time when the trust was known to be connected.
+    &quot;selectiveAuthentication&quot;: True or False, # The trust authentication type which decides whether the trusted side has forest/domain wide access or selective access to approved set of resources.
+    &quot;state&quot;: &quot;A String&quot;, # Output only. The current state of this trust.
+    &quot;stateDescription&quot;: &quot;A String&quot;, # Output only. Additional information about the current state of this trust, if available.
+    &quot;targetDnsIpAddresses&quot;: [ # The target dns server ip addresses which can resolve the remote domain involved in trust.
+    &quot;targetDomainName&quot;: &quot;A String&quot;, # The fully qualified target domain name which will be in trust with current domain.
+    &quot;trustDirection&quot;: &quot;A String&quot;, # The trust direction decides the current domain is trusted, trusting or both.
+    &quot;trustHandshakeSecret&quot;: &quot;A String&quot;, # Input only, and will not be stored. The trust secret used for handshake with target domain.
+    &quot;trustType&quot;: &quot;A String&quot;, # The type of trust represented by the trust resource.
+  <pre>AuditMigration API gets the current state of DomainMigration
+  <pre>Creates a Microsoft AD Domain in a given project. Operation
+  parent: string, Resource project name and location using the form: `projects/{project_id}/locations/global` (required)
+{ # If the domain is being changed, it will be placed into the UPDATING state, which indicates that the resource is being reconciled. At this point, Get will reflect an intermediate state.
+  &quot;authorizedNetworks&quot;: [ # Optional. The full names of the Google Compute Engine [networks](/compute/docs/networks-and-firewalls#networks) to which the instance is connected. Network can be added using UpdateDomain later. Domain is only available on network part of authorized_networks. Caller needs to make sure that CIDR subnets do not overlap between networks, else domain creation will fail.
+  &quot;createTime&quot;: &quot;A String&quot;, # Output only. The time the instance was created. Synthetic field is populated automatically by CCFE. go/ccfe-synthetic-field-user-guide
+  &quot;fqdn&quot;: &quot;A String&quot;, # Output only. Fully-qualified domain name of the exposed domain used by clients to connect to the service. Similar to what would be chosen for an Active Directory that is set up on an internal network.
+  &quot;labels&quot;: { # Optional. Resource labels to represent user provided metadata
+  &quot;locations&quot;: [ # Required. Locations where domain needs to be provisioned. regions e.g. us-west1 or us-east4 Service supports up to 4 locations at once. Each location will use a /26 block.
+  &quot;managedIdentitiesAdminName&quot;: &quot;A String&quot;, # Optional. Name of customer-visible admin used to perform Active Directory operations. If not specified `setupadmin` would be used.
+  &quot;name&quot;: &quot;A String&quot;, # Output only. Unique name of the domain in this scope including projects and location using the form: `projects/{project_id}/locations/global/domains/{domain_name}`.
+    { # Represents a relationship between two domains which makes it possible for users in one domain to be authenticated by a dc in another domain. Refer https://docs.microsoft.com/en-us/previous-versions/windows/it-pro/windows-server-2008-R2-and-2008/cc731335(v%3dws.10) If the trust is being changed, it will be placed into the UPDATING state, which indicates that the resource is being reconciled. At this point, Get will reflect an intermediate state.
+  &quot;updateTime&quot;: &quot;A String&quot;, # Output only. Last update time. Synthetic field is populated automatically by CCFE.
+  domainName: string, The fully qualified domain name. e.g. mydomain.myorganization.com, with the following restrictions: * Must contain only lowercase letters, numbers, periods and hyphens. * Must start with a letter. * Must contain between 2-64 characters. * Must end with a number or a letter. * Must not start with period. * Must be unique within the project. * First segment length (mydomain form example above) shouldn&#x27;t exceed 15 chars. * The last segment cannot be fully numeric.
+  <pre>Deletes identified domain. Operation
+  name: string, Domain resource name using the form: `projects/{project_id}/locations/global/domains/{domain_name}` (required)
+  <pre>Removes identified trust. Operation
+  name: string, The resource domain name, project name, and location using the form: `projects/{project_id}/locations/global/domains/{domain_name}` (required)
+  &quot;trust&quot;: { # Represents a relationship between two domains which makes it possible for users in one domain to be authenticated by a dc in another domain. Refer https://docs.microsoft.com/en-us/previous-versions/windows/it-pro/windows-server-2008-R2-and-2008/cc731335(v%3dws.10) If the trust is being changed, it will be placed into the UPDATING state, which indicates that the resource is being reconciled. At this point, Get will reflect an intermediate state. # The domain trust resource to removed.
+  &quot;enableDuration&quot;: &quot;A String&quot;, # Optional. Period after which the migration would be auto disabled. If unspecified, a default timeout of 48h is used.
+  <pre>Gets details of a single Domain.
+  &quot;certificatePassword&quot;: &quot;A String&quot;, # Input only. The password used to encrypt the uploaded pfx certificate.
+  <pre>Lists Domains in a given project.
+  filter: string, Optional. Filter specifying constraints of a list operation. For example, `Domain.fqdn=&quot;mydomain.myorginization&quot;`.
+  pageSize: integer, If not specified, a default value of 1000 will be used by the service. Regardless of the page_size value, the response may include a partial list and a caller should only rely on response&#x27;s next_page_token to determine if there are more instances left to be queried.
+  <pre>Updates the metadata and configuration of a specified domain. Operation
+  name: string, Output only. Unique name of the domain in this scope including projects and location using the form: `projects/{project_id}/locations/global/domains/{domain_name}`. (required)
+  updateMask: string, Mask of fields to update. At least one path must be supplied in this field. The elements of the repeated paths field may only include these fields from Domain: * `labels` * `locations` * `authorized_networks` * `audit_logs_enabled`
+  <pre>Updates the dns conditional forwarder. Operation
+  &quot;trust&quot;: { # Represents a relationship between two domains which makes it possible for users in one domain to be authenticated by a dc in another domain. Refer https://docs.microsoft.com/en-us/previous-versions/windows/it-pro/windows-server-2008-R2-and-2008/cc731335(v%3dws.10) If the trust is being changed, it will be placed into the UPDATING state, which indicates that the resource is being reconciled. At this point, Get will reflect an intermediate state. # The domain trust resource with updated dns conditional forwarder.
+  <pre>Resets managed identities admin password identified by managed_identities_admin_name
+  name: string, The domain resource name using the form: `projects/{project_id}/locations/global/domains/{domain_name}` (required)
+  name: string, Required. resource name for the domain to which the backup belongs (required)
+  <pre>Validate the trust state Operation
+  &quot;trust&quot;: { # Represents a relationship between two domains which makes it possible for users in one domain to be authenticated by a dc in another domain. Refer https://docs.microsoft.com/en-us/previous-versions/windows/it-pro/windows-server-2008-R2-and-2008/cc731335(v%3dws.10) If the trust is being changed, it will be placed into the UPDATING state, which indicates that the resource is being reconciled. At this point, Get will reflect an intermediate state. # The domain trust to validate trust state for.

@@ -1,0 +1,21 @@
+<h1><a href="cloudcontrolspartner_v1.html">Cloud Controls Partner API</a> . <a href="cloudcontrolspartner_v1.organizations.html">organizations</a> . <a href="cloudcontrolspartner_v1.organizations.locations.html">locations</a> . <a href="cloudcontrolspartner_v1.organizations.locations.customers.html">customers</a> . <a href="cloudcontrolspartner_v1.organizations.locations.customers.workloads.html">workloads</a> . <a href="cloudcontrolspartner_v1.organizations.locations.customers.workloads.violations.html">violations</a></h1>
+<p class="firstline">Gets details of a single Violation.</p>
+  <code><a href="#list">list(parent, filter=None, interval_endTime=None, interval_startTime=None, orderBy=None, pageSize=None, pageToken=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Lists Violations for a workload Callers may also choose to read across multiple Customers or for a single customer as per [AIP-159](https://google.aip.dev/159) by using '-' (the hyphen or dash character) as a wildcard character instead of {customer} & {workload}. Format: `organizations/{organization}/locations/{location}/customers/{customer}/workloads/{workload}`</p>
+  <pre>Gets details of a single Violation.
+  name: string, Required. Format: `organizations/{organization}/locations/{location}/customers/{customer}/workloads/{workload}/violations/{violation}` (required)
+    { # Details of resource Violation
+  &quot;folderId&quot;: &quot;A String&quot;, # The folder_id of the violation
+  &quot;name&quot;: &quot;A String&quot;, # Identifier. Format: `organizations/{organization}/locations/{location}/customers/{customer}/workloads/{workload}/violations/{violation}`
+  &quot;nonCompliantOrgPolicy&quot;: &quot;A String&quot;, # Output only. Immutable. Name of the OrgPolicy which was modified with non-compliant change and resulted this violation. Format: `projects/{project_number}/policies/{constraint_name}` `folders/{folder_id}/policies/{constraint_name}` `organizations/{organization_id}/policies/{constraint_name}`
+    &quot;remediationType&quot;: &quot;A String&quot;, # Output only. Remediation type based on the type of org policy values violated
+    <code class="details" id="list">list(parent, filter=None, interval_endTime=None, interval_startTime=None, orderBy=None, pageSize=None, pageToken=None, x__xgafv=None)</code>
+  <pre>Lists Violations for a workload Callers may also choose to read across multiple Customers or for a single customer as per [AIP-159](https://google.aip.dev/159) by using &#x27;-&#x27; (the hyphen or dash character) as a wildcard character instead of {customer} &amp; {workload}. Format: `organizations/{organization}/locations/{location}/customers/{customer}/workloads/{workload}`
+  parent: string, Required. Parent resource Format `organizations/{organization}/locations/{location}/customers/{customer}/workloads/{workload}` (required)
+  interval_endTime: string, Optional. Exclusive end of the interval. If specified, a Timestamp matching this interval will have to be before the end.
+  interval_startTime: string, Optional. Inclusive start of the interval. If specified, a Timestamp matching this interval will have to be the same or after the start.
+  pageSize: integer, Optional. The maximum number of customers row to return. The service may return fewer than this value. If unspecified, at most 10 customers will be returned.
+  pageToken: string, Optional. A page token, received from a previous `ListViolations` call. Provide this to retrieve the subsequent page.
+    { # Response message for list customer violation requests
+  &quot;unreachable&quot;: [ # Workloads that could not be reached due to permission errors or any other error. Ref: https://google.aip.dev/217
+  &quot;violations&quot;: [ # List of violation

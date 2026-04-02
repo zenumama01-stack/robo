@@ -1,0 +1,44 @@
+<mj-record-form-container [Record]="record" [FormComponent]="this"
+    (Navigate)="OnFormNavigate($event)"
+    (DeleteRequested)="OnDeleteRequested()"
+    (FavoriteToggled)="OnFavoriteToggled()"
+    (HistoryRequested)="OnHistoryRequested()"
+    (ListManagementRequested)="OnListManagementRequested()">
+    <!-- ========================================
+         FIELD PANELS
+         ======================================== -->
+    <!-- Action Definition Section -->
+        SectionKey="actionDefinition"
+        SectionName="Action Definition"
+        Icon="fa fa-bolt"
+        ></mj-form-field>
+        SectionKey="executionSettings"
+        SectionName="Execution Settings"
+        Icon="fa fa-sliders-h"
+            FieldName="DefaultPrompt"
+            FieldName="DefaultModelID"
+    <!-- System Metadata Section -->
+        SectionKey="systemMetadata"
+        SectionName="System Metadata"
+         RELATED ENTITY PANELS
+    <!-- AI Model Actions Section -->
+        SectionKey="aIModelActions"
+        SectionName="AI Model Actions"
+        Icon="fa fa-robot"
+        Variant="related-entity"
+        [BadgeCount]="GetSectionRowCount('aIModelActions')"
+        [DefaultExpanded]="false">
+                [Params]="BuildRelationshipViewParamsByEntityName('MJ: AI Model Actions','AIActionID')"
+                [NewRecordValues]="NewRecordValues('MJ: AI Model Actions')"
+                [AllowLoad]="IsSectionExpanded('aIModelActions')"
+                [ShowToolbar]="false"
+                (AfterDataLoad)="SetSectionRowCount('aIModelActions', $event.totalRowCount)"
+    <!-- Entity AI Actions Section -->
+        SectionKey="entityAIActions"
+        SectionName="Entity AI Actions"
+        [BadgeCount]="GetSectionRowCount('entityAIActions')"
+                [Params]="BuildRelationshipViewParamsByEntityName('MJ: Entity AI Actions','AIActionID')"
+                [NewRecordValues]="NewRecordValues('MJ: Entity AI Actions')"
+                [AllowLoad]="IsSectionExpanded('entityAIActions')"
+                (AfterDataLoad)="SetSectionRowCount('entityAIActions', $event.totalRowCount)"
+</mj-record-form-container>

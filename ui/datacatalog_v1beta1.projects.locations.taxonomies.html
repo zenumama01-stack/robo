@@ -1,0 +1,51 @@
+<h1><a href="datacatalog_v1beta1.html">Google Cloud Data Catalog API</a> . <a href="datacatalog_v1beta1.projects.html">projects</a> . <a href="datacatalog_v1beta1.projects.locations.html">locations</a> . <a href="datacatalog_v1beta1.projects.locations.taxonomies.html">taxonomies</a></h1>
+  <code><a href="datacatalog_v1beta1.projects.locations.taxonomies.policyTags.html">policyTags()</a></code>
+<p class="firstline">Creates a taxonomy in the specified project.</p>
+<p class="firstline">Deletes a taxonomy. This operation will also delete all policy tags in this taxonomy along with their associated policies.</p>
+<p class="firstline">Exports all taxonomies and their policy tags in a project. This method generates SerializedTaxonomy protos with nested policy tags that can be used as an input for future ImportTaxonomies calls.</p>
+<p class="firstline">Gets the IAM policy for a taxonomy or a policy tag.</p>
+<p class="firstline">Imports all taxonomies and their policy tags to a project as new taxonomies. This method provides a bulk taxonomy / policy tag creation using nested proto structure.</p>
+<p class="firstline">Lists all taxonomies in a project in a particular location that the caller has permission to view.</p>
+<p class="firstline">Updates a taxonomy.</p>
+<p class="firstline">Sets the IAM policy for a taxonomy or a policy tag.</p>
+<p class="firstline">Returns the permissions that a caller has on the specified taxonomy or policy tag.</p>
+  <pre>Creates a taxonomy in the specified project.
+{ # A taxonomy is a collection of policy tags that classify data along a common axis. For instance a data *sensitivity* taxonomy could contain policy tags denoting PII such as age, zipcode, and SSN. A data *origin* taxonomy could contain policy tags to distinguish user data, employee data, partner data, public data.
+  &quot;description&quot;: &quot;A String&quot;, # Optional. Description of this taxonomy. It must: contain only unicode characters, tabs, newlines, carriage returns and page breaks; and be at most 2000 bytes long when encoded in UTF-8. If not set, defaults to an empty description.
+  &quot;displayName&quot;: &quot;A String&quot;, # Required. User defined name of this taxonomy. It must: contain only unicode letters, numbers, underscores, dashes and spaces; not start or end with spaces; and be at most 200 bytes long when encoded in UTF-8. The taxonomy display name must be unique within an organization.
+  &quot;name&quot;: &quot;A String&quot;, # Identifier. Resource name of this taxonomy, whose format is: &quot;projects/{project_number}/locations/{location_id}/taxonomies/{id}&quot;.
+  &quot;policyTagCount&quot;: 42, # Output only. Number of policy tags contained in this taxonomy.
+  &quot;taxonomyTimestamps&quot;: { # Timestamps about this resource according to a particular system. # Output only. Timestamps about this taxonomy. Only create_time and update_time are used.
+  <pre>Deletes a taxonomy. This operation will also delete all policy tags in this taxonomy along with their associated policies.
+  name: string, Required. Resource name of the taxonomy to be deleted. All policy tags in this taxonomy will also be deleted. (required)
+  <pre>Exports all taxonomies and their policy tags in a project. This method generates SerializedTaxonomy protos with nested policy tags that can be used as an input for future ImportTaxonomies calls.
+  parent: string, Required. Resource name of the project that taxonomies to be exported will share. (required)
+  serializedTaxonomies: boolean, Export taxonomies as serialized taxonomies.
+  taxonomies: string, Required. Resource names of the taxonomies to be exported. (repeated)
+  &quot;taxonomies&quot;: [ # List of taxonomies and policy tags in a tree structure.
+    { # Message capturing a taxonomy and its policy tag hierarchy as a nested proto. Used for taxonomy import/export and mutation.
+      &quot;activatedPolicyTypes&quot;: [ # A list of policy types that are activated for a taxonomy.
+      &quot;description&quot;: &quot;A String&quot;, # Description of the serialized taxonomy. The length of the description is limited to 2000 bytes when encoded in UTF-8. If not set, defaults to an empty description.
+      &quot;displayName&quot;: &quot;A String&quot;, # Required. Display name of the taxonomy. Max 200 bytes when encoded in UTF-8.
+      &quot;policyTags&quot;: [ # Top level policy tags associated with the taxonomy if any.
+        { # Message representing one policy tag when exported as a nested proto.
+          &quot;childPolicyTags&quot;: [ # Children of the policy tag if any.
+            # Object with schema name: GoogleCloudDatacatalogV1beta1SerializedPolicyTag
+          &quot;description&quot;: &quot;A String&quot;, # Description of the serialized policy tag. The length of the description is limited to 2000 bytes when encoded in UTF-8. If not set, defaults to an empty description.
+          &quot;displayName&quot;: &quot;A String&quot;, # Required. Display name of the policy tag. Max 200 bytes when encoded in UTF-8.
+          &quot;policyTag&quot;: &quot;A String&quot;, # Resource name of the policy tag. This field will be ignored when calling ImportTaxonomies.
+  name: string, Required. Resource name of the requested taxonomy. (required)
+  <pre>Gets the IAM policy for a taxonomy or a policy tag.
+  <pre>Imports all taxonomies and their policy tags to a project as new taxonomies. This method provides a bulk taxonomy / policy tag creation using nested proto structure.
+  &quot;inlineSource&quot;: { # Inline source used for taxonomies import. # Inline source used for taxonomies to be imported.
+    &quot;taxonomies&quot;: [ # Required. Taxonomies to be imported.
+  &quot;taxonomies&quot;: [ # Taxonomies that were imported.
+  <pre>Lists all taxonomies in a project in a particular location that the caller has permission to view.
+  pageSize: integer, The maximum number of items to return. Must be a value between 1 and 1000. If not set, defaults to 50.
+  pageToken: string, The next_page_token value returned from a previous list request, if any. If not set, defaults to an empty string.
+  &quot;nextPageToken&quot;: &quot;A String&quot;, # Token used to retrieve the next page of results, or empty if there are no more results in the list.
+  <pre>Updates a taxonomy.
+  name: string, Identifier. Resource name of this taxonomy, whose format is: &quot;projects/{project_number}/locations/{location_id}/taxonomies/{id}&quot;. (required)
+  updateMask: string, The update mask applies to the resource. For the `FieldMask` definition, see https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#fieldmask If not set, defaults to all of the fields that are allowed to update.
+  <pre>Sets the IAM policy for a taxonomy or a policy tag.
+  <pre>Returns the permissions that a caller has on the specified taxonomy or policy tag.

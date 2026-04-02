@@ -1,0 +1,34 @@
+<!-- Dashboard Viewer Component -->
+<div class="dashboard-viewer" [class.editing]="isEditing" [class.has-toolbar]="shouldShowToolbar">
+  <!-- Breadcrumb Navigation (hidden in edit mode) -->
+  @if (showBreadcrumb && !isEditing && dashboard) {
+      [CurrentCategoryId]="dashboard.CategoryID"
+      [CurrentDashboard]="dashboard"
+  <!-- Toolbar (auto-hides when all elements are disabled) -->
+  @if (shouldShowToolbar) {
+    <div class="dashboard-toolbar">
+        @if (dashboard && (isEditing || !showBreadcrumb)) {
+            {{ dashboard.Name }}
+        @if (hasUnsavedChanges && isEditing) {
+          <span class="unsaved-indicator">
+        <!-- Open in New Tab button (when embedded) -->
+        @if (showOpenInTabButton && !isEditing) {
+            (click)="onOpenInTabClick()"
+            title="Open in its own tab">
+            Open in Tab
+            (click)="onAddPanelClick()">
+        @if (showEditButton) {
+            [class.active]="isEditing"
+            {{ isEditing ? 'Editing' : 'Edit' }}
+        @if (isEditing && hasUnsavedChanges) {
+            class="toolbar-button primary"
+            (click)="save()">
+      <mj-loading text="Loading dashboard..."></mj-loading>
+  <!-- Layout Container -->
+  <div class="layout-container" #layoutContainer>
+    <!-- Golden Layout will render panels here -->
+  @if (!hasPanels && !isLoading) {
+      <h3>No parts configured</h3>
+      <p>This dashboard has no parts yet. Add your first part to start visualizing your data.</p>
+        <button class="add-part-button" (click)="onAddPanelClick()">
+          Add Your First Part

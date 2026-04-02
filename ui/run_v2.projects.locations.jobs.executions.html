@@ -1,0 +1,80 @@
+<h1><a href="run_v2.html">Cloud Run Admin API</a> . <a href="run_v2.projects.html">projects</a> . <a href="run_v2.projects.locations.html">locations</a> . <a href="run_v2.projects.locations.jobs.html">jobs</a> . <a href="run_v2.projects.locations.jobs.executions.html">executions</a></h1>
+  <code><a href="run_v2.projects.locations.jobs.executions.tasks.html">tasks()</a></code>
+<p class="firstline">Cancels an Execution.</p>
+  <code><a href="#exportStatus">exportStatus(name, operationId, x__xgafv=None)</a></code></p>
+<p class="firstline">Read the status of an image export operation.</p>
+<p class="firstline">Gets information about an Execution.</p>
+<p class="firstline">Lists Executions from a Job. Results are sorted by creation time, descending.</p>
+  <pre>Cancels an Execution.
+  name: string, Required. The name of the Execution to cancel. Format: `projects/{project}/locations/{location}/jobs/{job}/executions/{execution}`, where `{project}` can be project id or number. (required)
+{ # Request message for deleting an Execution.
+  &quot;etag&quot;: &quot;A String&quot;, # A system-generated fingerprint for this version of the resource. This may be used to detect modification conflict during updates.
+  &quot;validateOnly&quot;: True or False, # Indicates that the request should be validated without actually cancelling any resources.
+  name: string, Required. The name of the Execution to delete. Format: `projects/{project}/locations/{location}/jobs/{job}/executions/{execution}`, where `{project}` can be project id or number. (required)
+  etag: string, A system-generated fingerprint for this version of the resource. This may be used to detect modification conflict during updates.
+  validateOnly: boolean, Indicates that the request should be validated without actually deleting any resources.
+    <code class="details" id="exportStatus">exportStatus(name, operationId, x__xgafv=None)</code>
+  <pre>Read the status of an image export operation.
+  name: string, Required. The name of the resource of which image export operation status has to be fetched. Format: `projects/{project_id_or_number}/locations/{location}/services/{service}/revisions/{revision}` for Revision `projects/{project_id_or_number}/locations/{location}/jobs/{job}/executions/{execution}` for Execution (required)
+  operationId: string, Required. The operation id returned from ExportImage. (required)
+    { # ExportStatusResponse contains the status of image export operation, with the status of each image export job.
+  &quot;imageExportStatuses&quot;: [ # The status of each image export job.
+    { # The status of an image export job.
+      &quot;exportJobState&quot;: &quot;A String&quot;, # Output only. Has the image export job finished (regardless of successful or failure).
+      &quot;exportedImageDigest&quot;: &quot;A String&quot;, # The exported image ID as it will appear in Artifact Registry.
+      &quot;status&quot;: { # Wire-format for a Status object # The status of the export task if done.
+        &quot;canonicalCode&quot;: 42, # copybara:strip_begin(b/383363683) copybara:strip_end_and_replace optional int32 canonical_code = 6;
+        &quot;code&quot;: 42, # Numeric code drawn from the space specified below. Often, this is the canonical error space, and code is drawn from google3/util/task/codes.proto copybara:strip_begin(b/383363683) copybara:strip_end_and_replace optional int32 code = 1;
+        &quot;message&quot;: &quot;A String&quot;, # Detail message copybara:strip_begin(b/383363683) copybara:strip_end_and_replace optional string message = 3;
+        &quot;messageSet&quot;: { # This is proto2&#x27;s version of MessageSet. DEPRECATED: DO NOT USE FOR NEW FIELDS. If you are using editions or proto2, please make your own extendable messages for your use case. If you are using proto3, please use `Any` instead. MessageSet was the implementation of extensions for proto1. When proto2 was introduced, extensions were implemented as a first-class feature. This schema for MessageSet was meant to be a &quot;bridge&quot; solution to migrate MessageSet-bearing messages from proto1 to proto2. This schema has been open-sourced only to facilitate the migration of Google products with MessageSet-bearing messages to open-source environments. # message_set associates an arbitrary proto message with the status. copybara:strip_begin(b/383363683) copybara:strip_end_and_replace optional proto2.bridge.MessageSet message_set = 5;
+        &quot;space&quot;: &quot;A String&quot;, # copybara:strip_begin(b/383363683) Space to which this status belongs copybara:strip_end_and_replace optional string space = 2; // Space to which this status belongs
+      &quot;tag&quot;: &quot;A String&quot;, # The image tag as it will appear in Artifact Registry.
+  &quot;operationId&quot;: &quot;A String&quot;, # The operation id.
+  &quot;operationState&quot;: &quot;A String&quot;, # Output only. The state of the overall export operation.
+  <pre>Gets information about an Execution.
+  name: string, Required. The full name of the Execution. Format: `projects/{project}/locations/{location}/jobs/{job}/executions/{execution}`, where `{project}` can be project id or number. (required)
+    { # Execution represents the configuration of a single execution. A execution an immutable resource that references a container image which is run to completion.
+  &quot;annotations&quot;: { # Output only. Unstructured key value map that may be set by external tools to store and arbitrary metadata. They are not queryable and should be preserved when modifying objects.
+  &quot;cancelledCount&quot;: 42, # Output only. The number of tasks which reached phase Cancelled.
+  &quot;client&quot;: &quot;A String&quot;, # Output only. Arbitrary identifier for the API client.
+  &quot;clientVersion&quot;: &quot;A String&quot;, # Output only. Arbitrary version identifier for the API client.
+  &quot;completionTime&quot;: &quot;A String&quot;, # Output only. Represents time when the execution was completed. It is not guaranteed to be set in happens-before order across separate operations.
+  &quot;conditions&quot;: [ # Output only. The Condition of this Execution, containing its readiness status, and detailed error information in case it did not reach the desired state.
+  &quot;createTime&quot;: &quot;A String&quot;, # Output only. Represents time when the execution was acknowledged by the execution controller. It is not guaranteed to be set in happens-before order across separate operations.
+  &quot;deleteTime&quot;: &quot;A String&quot;, # Output only. For a deleted resource, the deletion time. It is only populated as a response to a Delete request.
+  &quot;etag&quot;: &quot;A String&quot;, # Output only. A system-generated fingerprint for this version of the resource. May be used to detect modification conflict during updates.
+  &quot;expireTime&quot;: &quot;A String&quot;, # Output only. For a deleted resource, the time after which it will be permamently deleted. It is only populated as a response to a Delete request.
+  &quot;failedCount&quot;: 42, # Output only. The number of tasks which reached phase Failed.
+  &quot;generation&quot;: &quot;A String&quot;, # Output only. A number that monotonically increases every time the user modifies the desired state.
+  &quot;job&quot;: &quot;A String&quot;, # Output only. The name of the parent Job.
+  &quot;labels&quot;: { # Output only. Unstructured key value map that can be used to organize and categorize objects. User-provided labels are shared with Google&#x27;s billing system, so they can be used to filter, or break down billing charges by team, component, environment, state, etc. For more information, visit https://cloud.google.com/resource-manager/docs/creating-managing-labels or https://cloud.google.com/run/docs/configuring/labels
+  &quot;launchStage&quot;: &quot;A String&quot;, # The least stable launch stage needed to create this resource, as defined by [Google Cloud Platform Launch Stages](https://cloud.google.com/terms/launch-stages). Cloud Run supports `ALPHA`, `BETA`, and `GA`. Note that this value might not be what was used as input. For example, if ALPHA was provided as input in the parent resource, but only BETA and GA-level features are used, this field will be BETA.
+  &quot;logUri&quot;: &quot;A String&quot;, # Output only. URI where logs for this execution can be found in Cloud Console.
+  &quot;name&quot;: &quot;A String&quot;, # Output only. The unique name of this Execution.
+  &quot;observedGeneration&quot;: &quot;A String&quot;, # Output only. The generation of this Execution. See comments in `reconciling` for additional information on reconciliation process in Cloud Run.
+  &quot;parallelism&quot;: 42, # Output only. Specifies the maximum desired number of tasks the execution should run at any given time. Must be &lt;= task_count. The actual number of tasks running in steady state will be less than this number when ((.spec.task_count - .status.successful) &lt; .spec.parallelism), i.e. when the work left to do is less than max parallelism.
+  &quot;reconciling&quot;: True or False, # Output only. Indicates whether the resource&#x27;s reconciliation is still in progress. See comments in `Job.reconciling` for additional information on reconciliation process in Cloud Run.
+  &quot;retriedCount&quot;: 42, # Output only. The number of tasks which have retried at least once.
+  &quot;runningCount&quot;: 42, # Output only. The number of actively running tasks.
+  &quot;startTime&quot;: &quot;A String&quot;, # Output only. Represents time when the execution started to run. It is not guaranteed to be set in happens-before order across separate operations.
+  &quot;succeededCount&quot;: 42, # Output only. The number of tasks which reached phase Succeeded.
+  &quot;taskCount&quot;: 42, # Output only. Specifies the desired number of tasks the execution should run. Setting to 1 means that parallelism is limited to 1 and the success of that task signals the success of the execution.
+  &quot;template&quot;: { # TaskTemplate describes the data a task should have when created from a template. # Output only. The template used to create tasks for this execution.
+    &quot;containers&quot;: [ # Holds the single container that defines the unit of execution for this task.
+    &quot;executionEnvironment&quot;: &quot;A String&quot;, # Optional. The execution environment being used to host this Task.
+    &quot;gpuZonalRedundancyDisabled&quot;: True or False, # Optional. True if GPU zonal redundancy is disabled on this task template.
+    &quot;maxRetries&quot;: 42, # Number of retries allowed per Task, before marking this Task failed. Defaults to 3.
+    &quot;nodeSelector&quot;: { # Hardware constraints configuration. # Optional. The node selector for the task template.
+    &quot;serviceAccount&quot;: &quot;A String&quot;, # Optional. Email address of the IAM service account associated with the Task of a Job. The service account represents the identity of the running task, and determines what permissions the task has. If not provided, the task will use the project&#x27;s default service account.
+    &quot;timeout&quot;: &quot;A String&quot;, # Optional. Max allowed time duration the Task may be active before the system will actively try to mark it failed and kill associated containers. This applies per attempt of a task, meaning each retry can run for the full timeout. Defaults to 600 seconds.
+    &quot;volumes&quot;: [ # Optional. A list of Volumes to make available to containers.
+    &quot;vpcAccess&quot;: { # VPC Access settings. For more information on sending traffic to a VPC network, visit https://cloud.google.com/run/docs/configuring/connecting-vpc. # Optional. VPC Access configuration to use for this Task. For more information, visit https://cloud.google.com/run/docs/configuring/connecting-vpc.
+  &quot;uid&quot;: &quot;A String&quot;, # Output only. Server assigned unique identifier for the Execution. The value is a UUID4 string and guaranteed to remain unchanged until the resource is deleted.
+  <pre>Lists Executions from a Job. Results are sorted by creation time, descending.
+  parent: string, Required. The Execution from which the Executions should be listed. To list all Executions across Jobs, use &quot;-&quot; instead of Job name. Format: `projects/{project}/locations/{location}/jobs/{job}`, where `{project}` can be project id or number. (required)
+  pageSize: integer, Maximum number of Executions to return in this call.
+  pageToken: string, A page token received from a previous call to ListExecutions. All other parameters must match.
+  showDeleted: boolean, If true, returns deleted (but unexpired) resources along with active ones.
+    { # Response message containing a list of Executions.
+  &quot;executions&quot;: [ # The resulting list of Executions.
+  &quot;nextPageToken&quot;: &quot;A String&quot;, # A token indicating there are more items than page_size. Use it in the next ListExecutions request to continue.

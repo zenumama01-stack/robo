@@ -1,0 +1,34 @@
+<h1><a href="compute_alpha.html">Compute Engine API</a> . <a href="compute_alpha.globalOperations.html">globalOperations</a></h1>
+<p class="firstline">Retrieves an aggregated list of all operations.</p>
+  <code><a href="#delete">delete(project, operation, x__xgafv=None)</a></code></p>
+<p class="firstline">Deletes the specified Operations resource.</p>
+  <code><a href="#get">get(project, operation, x__xgafv=None)</a></code></p>
+  <code><a href="#wait">wait(project, operation, x__xgafv=None)</a></code></p>
+<p class="firstline">Waits for the specified Operation resource to return as `DONE`</p>
+  <pre>Retrieves an aggregated list of all operations.
+To prevent failure, Google recommends that you set the
+  &quot;items&quot;: { # [Output Only] A map of scoped operation lists.
+    &quot;a_key&quot;: { # [Output Only] Name of the scope containing this set of operations.
+      &quot;operations&quot;: [ # [Output Only] A list of operations contained in this scope.
+      &quot;warning&quot;: { # [Output Only] Informational warning which replaces the list of operations
+  &quot;kind&quot;: &quot;compute#operationAggregatedList&quot;, # Output only. [Output Only] Type of resource. Always `compute#operationAggregatedList`
+      # for aggregated lists of operations.
+    <code class="details" id="delete">delete(project, operation, x__xgafv=None)</code>
+  <pre>Deletes the specified Operations resource.
+  operation: string, Name of the Operations resource to delete, or its unique numeric
+identifier. (required)
+    <code class="details" id="get">get(project, operation, x__xgafv=None)</code>
+  operation: string, Name of the Operations resource to return, or its unique numeric
+    <code class="details" id="wait">wait(project, operation, x__xgafv=None)</code>
+  <pre>Waits for the specified Operation resource to return as `DONE`
+or for the request to approach the 2 minute deadline, and retrieves the
+specified Operation resource. This method differs from the
+`GET` method in that it waits for no more than the default
+deadline (2 minutes) and then returns the current state of the operation,
+which might be `DONE` or still in progress.
+This method is called on a best-effort basis. Specifically:
+    - In uncommon cases, when the server is overloaded, the request might
+    return before the default deadline is reached, or might return after zero
+   - If the default deadline is reached, there is no guarantee that the
+    operation is actually done when the method returns. Be prepared to retry
+    if the operation is not `DONE`.

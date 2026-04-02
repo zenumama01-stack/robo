@@ -1,0 +1,48 @@
+<h1><a href="apigee_v1.html">Apigee API</a> . <a href="apigee_v1.organizations.html">organizations</a> . <a href="apigee_v1.organizations.securityProfiles.html">securityProfiles</a> . <a href="apigee_v1.organizations.securityProfiles.environments.html">environments</a></h1>
+  <code><a href="#computeEnvironmentScores">computeEnvironmentScores(profileEnvironment, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">ComputeEnvironmentScores calculates scores for requested time range for the specified security profile and environment.</p>
+  <code><a href="#computeEnvironmentScores_next">computeEnvironmentScores_next()</a></code></p>
+<p class="firstline">CreateSecurityProfileEnvironmentAssociation creates profile environment association i.e. attaches environment to security profile.</p>
+<p class="firstline">DeleteSecurityProfileEnvironmentAssociation removes profile environment association i.e. detaches environment from security profile.</p>
+    <code class="details" id="computeEnvironmentScores">computeEnvironmentScores(profileEnvironment, body=None, x__xgafv=None)</code>
+  <pre>ComputeEnvironmentScores calculates scores for requested time range for the specified security profile and environment.
+  profileEnvironment: string, Required. Name of organization and environment and profile id for which score needs to be computed. Format: organizations/{org}/securityProfiles/{profile}/environments/{env} (required)
+{ # Request for ComputeEnvironmentScores.
+  &quot;filters&quot;: [ # Optional. Filters are used to filter scored components. Return all the components if no filter is mentioned. Example: [{ &quot;scorePath&quot;: &quot;/org@myorg/envgroup@myenvgroup/env@myenv/proxies/proxy@myproxy/source&quot; }, { &quot;scorePath&quot;: &quot;/org@myorg/envgroup@myenvgroup/env@myenv/proxies/proxy@myproxy/target&quot;, }] This will return components with path: &quot;/org@myorg/envgroup@myenvgroup/env@myenv/proxies/proxy@myproxy/source&quot; OR &quot;/org@myorg/envgroup@myenvgroup/env@myenv/proxies/proxy@myproxy/target&quot;
+    { # Filter scores by component path. Used custom filter instead of AIP-160 as the use cases are highly constrained and predictable.
+      &quot;scorePath&quot;: &quot;A String&quot;, # Optional. Return scores for this component. Example: &quot;/org@myorg/envgroup@myenvgroup/env@myenv/proxies/proxy@myproxy/source&quot;
+  &quot;pageSize&quot;: 42, # Optional. The maximum number of subcomponents to be returned in a single page. The service may return fewer than this value. If unspecified, at most 100 subcomponents will be returned in a single page.
+  &quot;pageToken&quot;: &quot;A String&quot;, # Optional. A token that can be sent as `page_token` to retrieve the next page. If this field is omitted, there are no subsequent pages.
+  &quot;timeRange&quot;: { # Represents a time interval, encoded as a Timestamp start (inclusive) and a Timestamp end (exclusive). The start must be less than or equal to the end. When the start equals the end, the interval is empty (matches no time). When both start and end are unspecified, the interval matches any time. # Required. Time range for score calculation. At most 14 days of scores will be returned, and both the start and end dates must be within the last 90 days.
+    { # Response for ComputeEnvironmentScores.
+  &quot;nextPageToken&quot;: &quot;A String&quot;, # A page token, received from a previous `ComputeScore` call. Provide this to retrieve the subsequent page.
+  &quot;scores&quot;: [ # List of scores. One score per day.
+    { # Represents Security Score.
+      &quot;component&quot;: { # Component is an individual security element that is scored. # Component containing score, recommendations and actions.
+        &quot;calculateTime&quot;: &quot;A String&quot;, # Time when score was calculated.
+        &quot;dataCaptureTime&quot;: &quot;A String&quot;, # Time in the requested time period when data was last captured to compute the score.
+        &quot;drilldownPaths&quot;: [ # List of paths for next components.
+        &quot;recommendations&quot;: [ # List of recommendations to improve API security.
+          { # Recommendation based on security concerns and score.
+            &quot;actions&quot;: [ # Actions for the recommendation to improve the security score.
+              { # Action to improve security score.
+                &quot;actionContext&quot;: { # Action context are all the relevant details for the action. # Action context for the action.
+                  &quot;documentationLink&quot;: &quot;A String&quot;, # Documentation link for the action.
+                &quot;description&quot;: &quot;A String&quot;, # Description of the action.
+            &quot;description&quot;: &quot;A String&quot;, # Description of the recommendation.
+            &quot;impact&quot;: 42, # Potential impact of this recommendation on the overall score. This denotes how important this recommendation is to improve the score.
+            &quot;title&quot;: &quot;A String&quot;, # Title represents recommendation title.
+        &quot;score&quot;: 42, # Score for the component.
+        &quot;scorePath&quot;: &quot;A String&quot;, # Path of the component. Example: /org@myorg/envgroup@myenvgroup/proxies/proxy@myproxy
+      &quot;subcomponents&quot;: [ # List of all the drilldown score components.
+        { # Component is an individual security element that is scored.
+      &quot;timeRange&quot;: { # Represents a time interval, encoded as a Timestamp start (inclusive) and a Timestamp end (exclusive). The start must be less than or equal to the end. When the start equals the end, the interval is empty (matches no time). When both start and end are unspecified, the interval matches any time. # Start and end time for the score.
+    <code class="details" id="computeEnvironmentScores_next">computeEnvironmentScores_next()</code>
+  <pre>CreateSecurityProfileEnvironmentAssociation creates profile environment association i.e. attaches environment to security profile.
+  parent: string, Required. Name of organization and security profile ID. Format: organizations/{org}/securityProfiles/{profile} (required)
+{ # Represents a SecurityProfileEnvironmentAssociation resource.
+  &quot;attachTime&quot;: &quot;A String&quot;, # Output only. The time when environment was attached to the security profile.
+  &quot;name&quot;: &quot;A String&quot;, # Immutable. Name of the environment that the profile is attached to.
+  &quot;securityProfileRevisionId&quot;: &quot;A String&quot;, # DEPRECATED: DO NOT USE Revision ID of the security profile.
+  <pre>DeleteSecurityProfileEnvironmentAssociation removes profile environment association i.e. detaches environment from security profile.
+  name: string, Required. The name of the environment attachment to delete. Format: organizations/{org}/securityProfiles/{profile}/environments/{env} (required)

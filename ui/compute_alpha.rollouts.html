@@ -1,0 +1,89 @@
+<h1><a href="compute_alpha.html">Compute Engine API</a> . <a href="compute_alpha.rollouts.html">rollouts</a></h1>
+  <code><a href="#cancel">cancel(project, rollout, requestId=None, rollback=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Cancels a Rollout.</p>
+  <code><a href="#delete">delete(project, rollout, requestId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Deletes a Rollout.</p>
+  <code><a href="#get">get(project, rollout, x__xgafv=None)</a></code></p>
+<p class="firstline">Gets details of a single project-scoped Rollout.</p>
+  <code><a href="#pause">pause(project, rollout, etag=None, requestId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Pauses a Rollout.</p>
+  <code><a href="#resume">resume(project, rollout, etag=None, requestId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Resumes a Rollout.</p>
+    <code class="details" id="cancel">cancel(project, rollout, requestId=None, rollback=None, x__xgafv=None)</code>
+  <pre>Cancels a Rollout.
+  rollout: string, Name of the Rollout resource to cancel. (required)
+  rollback: boolean, Optional. If true, then the ongoing rollout must be rolled back. Else, just cancel
+the rollout without taking any further actions. Note that products must
+support at least one of these options, however, it does not need to support
+both.
+    <code class="details" id="delete">delete(project, rollout, requestId=None, x__xgafv=None)</code>
+  <pre>Deletes a Rollout.
+  rollout: string, Name of the Rollout resource to delete. (required)
+    <code class="details" id="get">get(project, rollout, x__xgafv=None)</code>
+  <pre>Gets details of a single project-scoped Rollout.
+  rollout: string, Name of the persistent rollout to return. (required)
+    { # Rollout resource.
+    # A Rollout is a specific instance of a RolloutPlan. It represents a single
+    # execution of a strategy to roll out a specific resource. It also provides
+    # APIs to interact with the rollout.
+  &quot;cancellationTime&quot;: &quot;A String&quot;, # Output only. The timestamp at which the Rollout was cancelled.
+  &quot;completionTime&quot;: &quot;A String&quot;, # Output only. The timestamp at which the Rollout was completed.
+  &quot;currentWaveNumber&quot;: &quot;A String&quot;, # Output only. The number of the currently running wave.
+      # Ex. 1
+  &quot;etag&quot;: &quot;A String&quot;, # Output only. etag of the Rollout
+      # Ex. abc1234
+  &quot;kind&quot;: &quot;compute#rollout&quot;, # Output only. [Output Only] Type of the resource. Always compute#rollout
+      # for rollouts.
+  &quot;pauseTime&quot;: &quot;A String&quot;, # Output only. The timestamp at which the Rollout was paused.
+  &quot;resumeTime&quot;: &quot;A String&quot;, # Output only. The timestamp at which the Rollout was resumed.
+  &quot;rolloutEntity&quot;: { # Specifications of the resource to roll out. # Required. The resource being rolled out.
+    &quot;orchestratedEntity&quot;: { # This message is used if the resource type follows the Orchestrated # Optional. Entity details for products using the Orchestrated Integration model.
+        # integration model with ProgressiveRollout.
+      &quot;conflictBehavior&quot;: &quot;A String&quot;, # Required. Specifies the behavior of the Rollout if an out of band update is
+          # detected in a project during a Rollout. It can be one of the following
+          # 1) overwrite : Overwrite the local value with the rollout value.
+          # 2) no_overwrite : Do not overwrite the local value with the rollout
+      &quot;orchestrationAction&quot;: &quot;A String&quot;, # Required. Orchestration action during the Rollout. It can be one of the following
+          # 1) &quot;update&quot;: Resources will be updated by the rollout.
+          # 2) &quot;delete&quot;: Resources will be deleted by the rollout.
+      &quot;orchestrationSource&quot;: &quot;A String&quot;, # Required. Fully qualified resource name of the resource which contains the source
+          # of truth of the configuration being rolled out across
+          # locations/projects. For example, in the case of a global Rollout which
+          # is applied across regions, this contains the name of the global
+          # resource created by the user which contains a payload for a resource
+          # that is orchestrated across regions. This follows the following format:
+          # //.googleapis.com/projects//locations/global//
+          # //osconfig.googleapis.com/projects/1/locations/global/policyOrchestrators/po1
+  &quot;rolloutPlan&quot;: &quot;A String&quot;, # Required. Rollout Plan used to model the Rollout.
+      # Ex. compute.googleapis.com/v1/projects/1234/rolloutPlans/rp1
+  &quot;state&quot;: &quot;A String&quot;, # Output only. The current state of the Rollout.
+  &quot;waveDetails&quot;: [ # Output only. Details about each wave of the rollout.
+    { # Additional metadata about the status of each wave provided by the server.
+      &quot;orchestratedWaveDetails&quot;: { # Details of the wave for products using the Orchestrated integration # Output only. Additional details of the wave for products using the Orchestrated
+          # Integration model.
+          # model.
+        &quot;completedResourcesCount&quot;: &quot;A String&quot;, # Output only. Resource completed so far.
+        &quot;estimatedCompletionTime&quot;: &quot;A String&quot;, # Output only. Estimated timestamp at which the wave will complete. Extrapolated from
+            # current progress.
+        &quot;estimatedTotalResourcesCount&quot;: &quot;A String&quot;, # Output only. Estimated total count of resources.
+        &quot;failedLocations&quot;: [ # Output only. Locations that failed during orchestration, and ProgressiveRollout
+            # stopped retrying. There may be some successful resources rolled out in
+            # the wave as the location may have failed later in the Rollout.
+        &quot;failedResourcesCount&quot;: &quot;A String&quot;, # Output only. Resources failed.
+        &quot;locationStatus&quot;: { # Output only. Status of each location in the wave. Map keys (locations) must be
+            # specified like &quot;us-east1&quot; or &quot;asia-west1-a&quot;.
+          &quot;a_key&quot;: { # Represents the status of a location in a wave.
+            &quot;state&quot;: &quot;A String&quot;, # Output only. Location state of the wave.
+      &quot;waveDisplayName&quot;: &quot;A String&quot;, # Output only. Wave name.
+          # Ex. wave1
+      &quot;waveNumber&quot;: &quot;A String&quot;, # Output only. System generated number for the wave.
+  &quot;items&quot;: [ # A list of Rollout resources.
+    <code class="details" id="pause">pause(project, rollout, etag=None, requestId=None, x__xgafv=None)</code>
+  <pre>Pauses a Rollout.
+  rollout: string, Required. Name of the Rollout resource to pause. (required)
+  etag: string, The etag of the Rollout.
+If this is provided, the request will only succeed if the etag matches
+the current etag of the Rollout.
+    <code class="details" id="resume">resume(project, rollout, etag=None, requestId=None, x__xgafv=None)</code>
+  <pre>Resumes a Rollout.
+  rollout: string, Required. Name of the Rollout resource to resume. (required)

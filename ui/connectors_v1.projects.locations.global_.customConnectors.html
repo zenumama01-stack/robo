@@ -1,0 +1,31 @@
+<h1><a href="connectors_v1.html">Connectors API</a> . <a href="connectors_v1.projects.html">projects</a> . <a href="connectors_v1.projects.locations.html">locations</a> . <a href="connectors_v1.projects.locations.global_.html">global_</a> . <a href="connectors_v1.projects.locations.global_.customConnectors.html">customConnectors</a></h1>
+  <code><a href="connectors_v1.projects.locations.global_.customConnectors.customConnectorVersions.html">customConnectorVersions()</a></code>
+  <code><a href="#create">create(parent, body=None, customConnectorId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Creates a new CustomConnector in a given project and location.</p>
+<p class="firstline">Deletes a single CustomConnector.</p>
+<p class="firstline">Gets details of a single CustomConnector.</p>
+<p class="firstline">Updates the parameters of a CustomConnector.</p>
+    <code class="details" id="create">create(parent, body=None, customConnectorId=None, x__xgafv=None)</code>
+  <pre>Creates a new CustomConnector in a given project and location.
+  parent: string, Required. Parent resource of the CreateCustomConnector, of the form: `projects/{project}/locations/*` (required)
+{ # CustomConnector represents the custom connector defined by the customer as part of byoc.
+  &quot;activeConnectorVersions&quot;: [ # Output only. Active connector versions.
+  &quot;allConnectorVersions&quot;: [ # Output only. All connector versions.
+  &quot;allMarketplaceVersions&quot;: [ # Output only. All marketplace versions.
+  &quot;customConnectorType&quot;: &quot;A String&quot;, # Required. Type of the custom connector.
+  &quot;logo&quot;: &quot;A String&quot;, # Optional. Logo of the resource.
+  &quot;name&quot;: &quot;A String&quot;, # Identifier. Resource name of the CustomConnector. Format: projects/{project}/locations/{location}/customConnectors/{connector}
+  &quot;publishedMarketplaceVersions&quot;: [ # Output only. Published marketplace versions.
+  customConnectorId: string, Required. Identifier to assign to the CreateCustomConnector. Must be unique within scope of the parent resource.
+  <pre>Deletes a single CustomConnector.
+  name: string, Required. Resource name of the form: `projects/{project}/locations/{location}/customConnectors/{connector}` (required)
+  force: boolean, Optional. If set to true, any customConnectorVersion which is a child resource will also be deleted. https://aip.dev/135#cascading-delete
+  <pre>Gets details of a single CustomConnector.
+  name: string, Required. Resource name of the form: `projects/*/locations/*/customConnectors/*` (required)
+  parent: string, Required. Parent resource of the custom connectors, of the form: `projects/*/locations/*` Only global location is supported for CustomConnector resource. (required)
+  filter: string, Filter string.
+    { # Response message for Connectors.ListCustomConnectors.
+  &quot;customConnectors&quot;: [ # A list of customConnectors.
+  <pre>Updates the parameters of a CustomConnector.
+  name: string, Identifier. Resource name of the CustomConnector. Format: projects/{project}/locations/{location}/customConnectors/{connector} (required)
+  updateMask: string, Required. Field mask is used to specify the fields to be overwritten in the Connector resource by the update. The fields specified in the update_mask are relative to the resource, not the full request. A field will be overwritten if it is in the mask. Set the mask as &quot;*&quot; for full replacement, which means all fields will be overwritten.

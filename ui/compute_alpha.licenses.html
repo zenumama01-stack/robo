@@ -1,0 +1,44 @@
+<h1><a href="compute_alpha.html">Compute Engine API</a> . <a href="compute_alpha.licenses.html">licenses</a></h1>
+  <code><a href="#delete">delete(project, license, requestId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Deletes the specified license.</p>
+  <code><a href="#get">get(project, license, x__xgafv=None)</a></code></p>
+<p class="firstline">Returns the specified License resource.</p>
+<p class="firstline">Create a License resource in the specified project.</p>
+<p class="firstline">Retrieves the list of licenses</p>
+  <code><a href="#update">update(project, license, body=None, requestId=None, updateMask=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Updates a License resource in the specified project.</p>
+    <code class="details" id="delete">delete(project, license, requestId=None, x__xgafv=None)</code>
+  <pre>Deletes the specified license.
+  license: string, Name of the license resource to delete. (required)
+    <code class="details" id="get">get(project, license, x__xgafv=None)</code>
+  <pre>Returns the specified License resource.
+  license: string, Name of the License resource to return. (required)
+    { # Represents a License resource.
+    # A License represents billing and aggregate usage data forpublic andmarketplace images.
+  &quot;chargesUseFee&quot;: True or False, # [Output Only] Deprecated. This field no longer reflects whether a license
+      # charges a usage fee.
+  &quot;kind&quot;: &quot;compute#license&quot;, # Output only. [Output Only] Type of resource. Always compute#license for
+  &quot;licenseCode&quot;: &quot;A String&quot;, # [Output Only] The unique code used to attach this license to images,
+      # snapshots, and disks.
+  &quot;name&quot;: &quot;A String&quot;, # Name of the resource. The name must be 1-63 characters long and
+      # comply withRFC1035.
+  &quot;params&quot;: { # Additional license params. # Input only. Additional params passed with the request, but not persisted
+    &quot;resourceManagerTags&quot;: { # Input only. Resource manager tags to be bound to the license. Tag keys and values
+  &quot;resourceRequirements&quot;: { # [Input Only] Deprecated.
+    &quot;minGuestCpuCount&quot;: 42, # [Input Only] Deprecated. This field no longer reflects the minimum number
+        # of guest cpus required to use the Instance.
+    &quot;minMemoryMb&quot;: 42, # [Input Only] Deprecated. This field no longer reflects the minimum memory
+        # required to use the Instance.
+  &quot;transferable&quot;: True or False, # If false, licenses will not be copied from the source resource when
+      # creating an image from a disk, disk from snapshot, or snapshot from disk.
+  <pre>Create a License resource in the specified project.
+  <pre>Retrieves the list of licenses
+available in the specified project. This method does not
+get any licenses that belong to other projects, including licenses attached
+to publicly-available images, like Debian 9. If you want to get a list of
+publicly-available licenses, use this method to make a request to the
+respective image project, such as debian-cloud orwindows-cloud.
+  &quot;items&quot;: [ # A list of License resources.
+    <code class="details" id="update">update(project, license, body=None, requestId=None, updateMask=None, x__xgafv=None)</code>
+  <pre>Updates a License resource in the specified project.
+  license: string, The license name for this request. (required)

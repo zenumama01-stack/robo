@@ -1,0 +1,39 @@
+<div class="erd-composite">
+      (layoutChange)="onSplitterLayoutChange($event)">
+        <mj-entity-filter-panel
+          [filteredEntities]="filteredEntities"
+          [filters]="filters"
+          (closePanel)="onToggleFilterPanel()">
+        </mj-entity-filter-panel>
+      <!-- ERD Diagram (Center) -->
+        <div class="erd-pane-container">
+          <mj-entity-erd
+            [entities]="filteredEntities"
+            [allEntities]="entities"
+            [selectedEntityId]="selectedEntity?.ID || null"
+            [isRefreshing]="isRefreshingERD"
+            [depth]="depth"
+            [includeIncoming]="true"
+            [includeOutgoing]="true"
+            [config]="erdConfig"
+            headerTitle="Entity Relationship Diagram"
+            (entitySelected)="onERDEntitySelected($event)"
+            (entityDeselected)="onEntityDeselected()"
+            (openRecord)="onERDOpenRecord($event)"
+            (stateChange)="onERDStateChange($event)">
+          </mj-entity-erd>
+      <!-- Entity Details Panel (Right) -->
+        [size]="selectedEntity ? '320px' : '0px'"
+        [resizable]="!!selectedEntity"
+        [hidden]="!selectedEntity">
+        <mj-entity-details
+          [selectedEntity]="selectedEntity"
+          [allEntityFields]="allEntityFields"
+          [fieldsSectionExpanded]="fieldsSectionExpanded"
+          [relationshipsSectionExpanded]="relationshipsSectionExpanded"
+          (openEntity)="onEntityOpened($event)"
+          (closePanel)="onEntityDeselected()"
+          (fieldsSectionToggle)="onFieldsSectionToggle()"
+          (relationshipsSectionToggle)="onRelationshipsSectionToggle()"
+          (openRecord)="onOpenRecord($event)">
+        </mj-entity-details>

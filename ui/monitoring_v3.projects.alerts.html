@@ -1,0 +1,29 @@
+<h1><a href="monitoring_v3.html">Cloud Monitoring API</a> . <a href="monitoring_v3.projects.html">projects</a> . <a href="monitoring_v3.projects.alerts.html">alerts</a></h1>
+<p class="firstline">Gets a single alert.</p>
+<p class="firstline">Lists the existing alerts for the metrics scope of the project.</p>
+  <pre>Gets a single alert.
+  name: string, Required. The name of the alert.The format is: projects/[PROJECT_ID_OR_NUMBER]/alerts/[ALERT_ID] The [ALERT_ID] is a system-assigned unique identifier for the alert. (required)
+    { # An alert is the representation of a violation of an alert policy. It is a read-only resource that cannot be modified by the accompanied API.
+  &quot;closeTime&quot;: &quot;A String&quot;, # The time when the alert was closed.
+  &quot;log&quot;: { # Information about the log for log-based alerts. # The log information associated with the alert. This field is only populated for log-based alerts.
+    &quot;extractedLabels&quot;: { # The labels extracted from the log.
+  &quot;metadata&quot;: { # Auxiliary metadata for a MonitoredResource object. MonitoredResource objects contain the minimum set of information to uniquely identify a monitored resource instance. There is some other useful auxiliary metadata. Monitoring and Logging use an ingestion pipeline to extract metadata for cloud resources of all types, and store the metadata in this message. # The metadata of the monitored resource.
+  &quot;metric&quot;: { # A specific metric, identified by specifying values for all of the labels of a MetricDescriptor. # The metric type and any metric labels preserved from the incident&#x27;s generating condition.
+  &quot;name&quot;: &quot;A String&quot;, # Identifier. The name of the alert.The format is: projects/[PROJECT_ID_OR_NUMBER]/alerts/[ALERT_ID] The [ALERT_ID] is a system-assigned unique identifier for the alert.
+  &quot;openTime&quot;: &quot;A String&quot;, # The time when the alert was opened.
+  &quot;policy&quot;: { # The state of the policy at the time the alert was generated. # The snapshot of the alert policy that generated this alert.
+    &quot;displayName&quot;: &quot;A String&quot;, # The display name of the alert policy.
+    &quot;name&quot;: &quot;A String&quot;, # The name of the alert policy resource. In the form of &quot;projects/PROJECT_ID_OR_NUMBER/alertPolicies/ALERT_POLICY_ID&quot;.
+    &quot;severity&quot;: &quot;A String&quot;, # The severity of the alert policy.
+    &quot;userLabels&quot;: { # The user labels for the alert policy.
+  &quot;resource&quot;: { # An object representing a resource that can be used for monitoring, logging, billing, or other purposes. Examples include virtual machine instances, databases, and storage devices such as disks. The type field identifies a MonitoredResourceDescriptor object that describes the resource&#x27;s schema. Information in the labels field identifies the actual resource and its attributes according to the schema. For example, a particular Compute Engine VM instance could be represented by the following object, because the MonitoredResourceDescriptor for &quot;gce_instance&quot; has labels &quot;project_id&quot;, &quot;instance_id&quot; and &quot;zone&quot;: { &quot;type&quot;: &quot;gce_instance&quot;, &quot;labels&quot;: { &quot;project_id&quot;: &quot;my-project&quot;, &quot;instance_id&quot;: &quot;12345678901234&quot;, &quot;zone&quot;: &quot;us-central1-a&quot; }} # The monitored resource type and any monitored resource labels preserved from the incident&#x27;s generating condition.
+  &quot;state&quot;: &quot;A String&quot;, # Output only. The current state of the alert.
+  <pre>Lists the existing alerts for the metrics scope of the project.
+  parent: string, Required. The name of the project to list alerts for. (required)
+  filter: string, Optional. An alert is returned if there is a match on any fields belonging to the alert or its subfields.
+  orderBy: string, Optional. A comma-separated list of fields in Alert to use for sorting. The default sort direction is ascending. To specify descending order for a field, add a desc modifier. The following fields are supported: open_time close_timeFor example, close_time desc, open_time will return the alerts closed most recently, with ties broken in the order of older alerts listed first.If the field is not set, the results are sorted by open_time desc.
+  pageSize: integer, Optional. The maximum number of results to return in a single response. If not set to a positive number, at most 50 alerts will be returned. The maximum value is 1000; values above 1000 will be coerced to 1000.
+  pageToken: string, Optional. If non-empty, page_token must contain a value returned as the next_page_token in a previous response to request the next set of results.
+    { # The ListAlerts response.
+  &quot;nextPageToken&quot;: &quot;A String&quot;, # If not empty, indicates that there may be more results that match the request. Use the value in the page_token field in a subsequent request to fetch the next set of results. The token is encrypted and only guaranteed to return correct results for 72 hours after it is created. If empty, all results have been returned.
+  &quot;totalSize&quot;: 42, # The estimated total number of matching results for this query.

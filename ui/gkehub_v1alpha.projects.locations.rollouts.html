@@ -1,0 +1,47 @@
+<h1><a href="gkehub_v1alpha.html">GKE Hub API</a> . <a href="gkehub_v1alpha.projects.html">projects</a> . <a href="gkehub_v1alpha.projects.locations.html">locations</a> . <a href="gkehub_v1alpha.projects.locations.rollouts.html">rollouts</a></h1>
+<p class="firstline">Retrieve a single rollout.</p>
+<p class="firstline">Retrieve the list of all rollouts.</p>
+  <pre>Retrieve a single rollout.
+  name: string, Required. The name of the rollout to retrieve. projects/{project}/locations/{location}/rollouts/{rollout} (required)
+    { # Rollout contains the Rollout metadata and configuration. Next ID: 28
+  &quot;completeTime&quot;: &quot;A String&quot;, # Output only. The timestamp at which the Rollout was completed.
+  &quot;createTime&quot;: &quot;A String&quot;, # Output only. The timestamp at which the Rollout was created.
+  &quot;deleteTime&quot;: &quot;A String&quot;, # Output only. The timestamp at the Rollout was deleted.
+  &quot;displayName&quot;: &quot;A String&quot;, # Optional. Human readable display name of the Rollout.
+  &quot;etag&quot;: &quot;A String&quot;, # Output only. etag of the Rollout Ex. abc1234
+  &quot;labels&quot;: { # Optional. Labels for this Rollout.
+  &quot;membershipStates&quot;: { # Output only. States of upgrading control plane or node pool targets of a single cluster (GKE Hub membership) that&#x27;s part of this Rollout. The key is the membership name of the cluster. The value is the state of the cluster.
+    &quot;a_key&quot;: { # Metadata about single cluster (GKE Hub membership) that&#x27;s part of this Rollout.
+      &quot;lastUpdateTime&quot;: &quot;A String&quot;, # Optional. Output only. The time this status and any related Rollout-specific details for the membership were updated.
+      &quot;stageAssignment&quot;: 42, # Output only. The stage assignment of this cluster in this rollout.
+      &quot;targets&quot;: [ # Output only. The targets of the rollout - clusters or node pools that are being upgraded. All targets belongs to the same cluster, identified by the membership name (key of membership_states map).
+        { # Metadata about the status of targets (clusters or node pools) involved in the Rollout.
+          &quot;cluster&quot;: &quot;A String&quot;, # Optional. Output only. The resource link of the Cluster resource upgraded in this Rollout. It is formatted as: `//{api_service}/projects/{project_number}/locations/{location}/clusters/{cluster_name}`. .
+          &quot;nodePool&quot;: &quot;A String&quot;, # Optional. Output only. The resource link of the NodePool resource upgraded in this Rollout. It is formatted as: `//{api_service}/projects/{project_number}/locations/{location}/clusters/{cluster_name}/nodePools/{node_pool_name}`.
+          &quot;operation&quot;: &quot;A String&quot;, # Optional. Output only. The operation resource name performing the mutation.
+          &quot;reason&quot;: &quot;A String&quot;, # Optional. Output only. A human-readable description of the current status.
+          &quot;state&quot;: &quot;A String&quot;, # Output only. The high-level, machine-readable status of this Rollout for the target.
+  &quot;name&quot;: &quot;A String&quot;, # Identifier. The full, unique resource name of this Rollout in the format of `projects/{project}/locations/global/rollouts/{rollout}`.
+  &quot;rolloutSequence&quot;: &quot;A String&quot;, # Optional. Immutable. The full, unique resource name of the rollout sequence that initiatied this Rollout. In the format of `projects/{project}/locations/global/rolloutSequences/{rollout_sequence}`.
+  &quot;stages&quot;: [ # Output only. The stages of the Rollout.
+    { # Stage represents a single stage in the Rollout.
+      &quot;endTime&quot;: &quot;A String&quot;, # Optional. Output only. The time at which the stage ended.
+      &quot;soakDuration&quot;: &quot;A String&quot;, # Optional. Duration to soak after this stage before starting the next stage.
+      &quot;stageNumber&quot;: 42, # Output only. The stage number to which this status applies.
+      &quot;startTime&quot;: &quot;A String&quot;, # Optional. Output only. The time at which the stage started.
+      &quot;state&quot;: &quot;A String&quot;, # Output only. The state of the stage.
+  &quot;state&quot;: &quot;A String&quot;, # Output only. State specifies various states of the Rollout.
+  &quot;stateReason&quot;: &quot;A String&quot;, # Output only. A human-readable description explaining the reason for the current state.
+  &quot;stateReasonType&quot;: &quot;A String&quot;, # Output only. StateReasonType specifies the reason type of the Rollout state.
+  &quot;uid&quot;: &quot;A String&quot;, # Output only. Google-generated UUID for this resource. This is unique across all Rollout resources. If a Rollout resource is deleted and another resource with the same name is created, it gets a different uid.
+  &quot;updateTime&quot;: &quot;A String&quot;, # Output only. The timestamp at which the Rollout was last updated.
+  &quot;versionUpgrade&quot;: { # Config for version upgrade of clusters. # Optional. Config for version upgrade of clusters.
+    &quot;desiredVersion&quot;: &quot;A String&quot;, # Optional. Desired version of the component.
+    &quot;type&quot;: &quot;A String&quot;, # Optional. Type of version upgrade specifies which component should be upgraded.
+  <pre>Retrieve the list of all rollouts.
+  parent: string, Required. The parent, which owns this collection of rollout. Format: projects/{project}/locations/{location} (required)
+  filter: string, Optional. Lists Rollouts that match the filter expression, following the syntax outlined in https://google.aip.dev/160.
+  pageSize: integer, The maximum number of rollout to return. The service may return fewer than this value. If unspecified, at most 50 rollouts will be returned. The maximum value is 1000; values above 1000 will be coerced to 1000.
+  pageToken: string, A page token, received from a previous `ListRollouts` call. Provide this to retrieve the subsequent page. When paginating, all other parameters provided to `ListRollouts` must match the call that provided the page token.
+    { # Response message for listing rollouts.
+  &quot;rollouts&quot;: [ # The rollouts from the specified parent resource.

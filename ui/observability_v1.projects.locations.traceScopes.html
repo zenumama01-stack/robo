@@ -1,0 +1,28 @@
+<h1><a href="observability_v1.html">Observability API</a> . <a href="observability_v1.projects.html">projects</a> . <a href="observability_v1.projects.locations.html">locations</a> . <a href="observability_v1.projects.locations.traceScopes.html">traceScopes</a></h1>
+  <code><a href="#create">create(parent, body=None, traceScopeId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Create a new TraceScope.</p>
+<p class="firstline">Delete a TraceScope.</p>
+<p class="firstline">Get TraceScope resource.</p>
+<p class="firstline">List TraceScopes of a project in a particular location.</p>
+<p class="firstline">Update a TraceScope.</p>
+    <code class="details" id="create">create(parent, body=None, traceScopeId=None, x__xgafv=None)</code>
+  <pre>Create a new TraceScope.
+  parent: string, Required. The full resource name of the location where the trace scope should be created projects/[PROJECT_ID]/locations/[LOCATION_ID] For example: projects/my-project/locations/global (required)
+{ # A trace scope is a collection of resources whose traces are queried together.
+  &quot;createTime&quot;: &quot;A String&quot;, # Output only. The creation timestamp of the trace scope.
+  &quot;description&quot;: &quot;A String&quot;, # Optional. Describes this trace scope. The maximum length of the description is 8000 characters.
+  &quot;name&quot;: &quot;A String&quot;, # Identifier. The resource name of the trace scope. For example: projects/my-project/locations/global/traceScopes/my-trace-scope
+  &quot;resourceNames&quot;: [ # Required. Names of the projects that are included in this trace scope. * `projects/[PROJECT_ID]` A trace scope can include a maximum of 20 projects.
+  &quot;updateTime&quot;: &quot;A String&quot;, # Output only. The last update timestamp of the trace scope.
+  traceScopeId: string, Required. A client-assigned identifier for the trace scope.
+  <pre>Delete a TraceScope.
+  name: string, Required. The full resource name of the trace scope to delete: projects/[PROJECT_ID]/locations/[LOCATION_ID]/traceScopes/[TRACE_SCOPE_ID] For example: projects/my-project/locations/global/traceScopes/my-trace-scope (required)
+  <pre>Get TraceScope resource.
+  name: string, Required. The resource name of the trace scope: projects/[PROJECT_ID]/locations/[LOCATION_ID]/traceScopes/[TRACE_SCOPE_ID] For example: projects/my-project/locations/global/traceScopes/my-trace-scope (required)
+  <pre>List TraceScopes of a project in a particular location.
+  parent: string, Required. The full resource name of the location to look for trace scopes: projects/[PROJECT_ID]/locations/[LOCATION_ID] For example: projects/my-project/locations/global (required)
+    { # Response for listing TraceScopes.
+  &quot;nextPageToken&quot;: &quot;A String&quot;, # Optional. If there might be more results than appear in this response, then `next_page_token` is included. To get the next set of results, call the same method again using the value of `next_page_token` as `page_token`.
+  &quot;traceScopes&quot;: [ # Optional. A list of trace scopes.
+  <pre>Update a TraceScope.
+  name: string, Identifier. The resource name of the trace scope. For example: projects/my-project/locations/global/traceScopes/my-trace-scope (required)

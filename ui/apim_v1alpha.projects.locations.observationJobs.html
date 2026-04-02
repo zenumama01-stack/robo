@@ -1,0 +1,36 @@
+<h1><a href="apim_v1alpha.html">API Management API</a> . <a href="apim_v1alpha.projects.html">projects</a> . <a href="apim_v1alpha.projects.locations.html">locations</a> . <a href="apim_v1alpha.projects.locations.observationJobs.html">observationJobs</a></h1>
+  <code><a href="apim_v1alpha.projects.locations.observationJobs.apiObservations.html">apiObservations()</a></code>
+<p class="firstline">Returns the apiObservations Resource.</p>
+  <code><a href="#create">create(parent, body=None, observationJobId=None, requestId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">CreateObservationJob creates a new ObservationJob but does not have any effecton its own. It is a configuration that can be used in an Observation Job to collect data about existing APIs.</p>
+<p class="firstline">DeleteObservationJob deletes an ObservationJob. This method will fail if the observation job is currently being used by any ObservationSource, even if not enabled.</p>
+<p class="firstline">Disables the given ObservationJob.</p>
+<p class="firstline">Enables the given ObservationJob.</p>
+<p class="firstline">GetObservationJob retrieves a single ObservationJob by name.</p>
+<p class="firstline">ListObservationJobs gets all ObservationJobs for a given project and location.</p>
+    <code class="details" id="create">create(parent, body=None, observationJobId=None, requestId=None, x__xgafv=None)</code>
+  <pre>CreateObservationJob creates a new ObservationJob but does not have any effecton its own. It is a configuration that can be used in an Observation Job to collect data about existing APIs.
+  parent: string, Required. The parent resource where this ObservationJob will be created. Format: projects/{project}/locations/{location} (required)
+{ # Message describing ObservationJob object
+  &quot;createTime&quot;: &quot;A String&quot;, # Output only. [Output only] Create time stamp
+  &quot;name&quot;: &quot;A String&quot;, # Identifier. name of resource Format: projects/{project}/locations/{location}/observationJobs/{observation_job}
+  &quot;sources&quot;: [ # Optional. These should be of the same kind of source.
+  &quot;state&quot;: &quot;A String&quot;, # Output only. The observation job state
+  &quot;updateTime&quot;: &quot;A String&quot;, # Output only. [Output only] Update time stamp
+  observationJobId: string, Required. The ID to use for the Observation Job. This value should be 4-63 characters, and valid characters are /a-z-/.
+  <pre>DeleteObservationJob deletes an ObservationJob. This method will fail if the observation job is currently being used by any ObservationSource, even if not enabled.
+  name: string, Required. Name of the resource Format: projects/{project}/locations/{location}/observationJobs/{observation_job} (required)
+  <pre>Disables the given ObservationJob.
+  name: string, Required. The name of the ObservationJob to disable. Format: projects/{project}/locations/{location}/observationJobs/{job} (required)
+{ # Message for disabling an ObservationJob
+  <pre>Enables the given ObservationJob.
+  name: string, Required. The name of the ObservationJob to enable. Format: projects/{project}/locations/{location}/observationJobs/{job} (required)
+{ # Message for enabling an ObservationJob
+  <pre>GetObservationJob retrieves a single ObservationJob by name.
+  name: string, Required. The name of the ObservationJob to retrieve. Format: projects/{project}/locations/{location}/observationJobs/{job} (required)
+  <pre>ListObservationJobs gets all ObservationJobs for a given project and location.
+  parent: string, Required. The parent, which owns this collection of ObservationJobs. Format: projects/{project}/locations/{location} (required)
+  pageSize: integer, Optional. The maximum number of ObservationJobs to return. The service may return fewer than this value. If unspecified, at most 10 ObservationJobs will be returned. The maximum value is 1000; values above 1000 will be coerced to 1000.
+  pageToken: string, Optional. A page token, received from a previous `ListObservationJobs` call. Provide this to retrieve the subsequent page. When paginating, all other parameters provided to `ListObservationJobs` must match the call that provided the page token.
+    { # Message for response to listing ObservationJobs
+  &quot;observationJobs&quot;: [ # The ObservationJob from the specified project and location.

@@ -1,0 +1,17 @@
+<h1><a href="managedidentities_v1.html">Managed Service for Microsoft Active Directory API</a> . <a href="managedidentities_v1.projects.html">projects</a> . <a href="managedidentities_v1.projects.locations.html">locations</a> . <a href="managedidentities_v1.projects.locations.global_.html">global_</a> . <a href="managedidentities_v1.projects.locations.global_.domains.html">domains</a> . <a href="managedidentities_v1.projects.locations.global_.domains.sqlIntegrations.html">sqlIntegrations</a></h1>
+<p class="firstline">Gets details of a single sqlIntegration.</p>
+<p class="firstline">Lists SqlIntegrations in a given domain.</p>
+  <pre>Gets details of a single sqlIntegration.
+  name: string, Required. SQLIntegration resource name using the form: `projects/{project_id}/locations/global/domains/{domain}/sqlIntegrations/{name}` (required)
+    { # Represents the SQL instance integrated with Managed AD.
+  &quot;createTime&quot;: &quot;A String&quot;, # Output only. The time the SQL integration was created.
+  &quot;name&quot;: &quot;A String&quot;, # The unique name of the SQL integration in the form of `projects/{project_id}/locations/global/domains/{domain_name}/sqlIntegrations/{sql_integration}`
+  &quot;sqlInstance&quot;: &quot;A String&quot;, # The full resource name of an integrated SQL instance
+  &quot;state&quot;: &quot;A String&quot;, # Output only. The current state of the SQL integration.
+  &quot;updateTime&quot;: &quot;A String&quot;, # Output only. The time the SQL integration was updated.
+  <pre>Lists SqlIntegrations in a given domain.
+  parent: string, Required. The resource name of the SqlIntegrations using the form: `projects/{project_id}/locations/global/domains/*` (required)
+  filter: string, Optional. Filter specifying constraints of a list operation. For example, `SqlIntegration.name=&quot;sql&quot;`.
+  pageSize: integer, Optional. The maximum number of items to return. If not specified, a default value of 1000 will be used by the service. Regardless of the page_size value, the response may include a partial list and a caller should only rely on response&#x27;ANIZATIONs next_page_token to determine if there are more instances left to be queried.
+    { # ListSqlIntegrationsResponse is the response message for ListSqlIntegrations method.
+  &quot;sqlIntegrations&quot;: [ # A list of SQLIntegrations of a domain.

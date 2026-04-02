@@ -1,0 +1,21 @@
+<h1><a href="vmwareengine_v1.html">VMware Engine API</a> . <a href="vmwareengine_v1.projects.html">projects</a> . <a href="vmwareengine_v1.projects.locations.html">locations</a> . <a href="vmwareengine_v1.projects.locations.privateClouds.html">privateClouds</a> . <a href="vmwareengine_v1.projects.locations.privateClouds.subnets.html">subnets</a></h1>
+<p class="firstline">Gets details of a single subnet.</p>
+<p class="firstline">Lists subnets in a given private cloud.</p>
+<p class="firstline">Updates the parameters of a single subnet. Only fields specified in `update_mask` are applied. *Note*: This API is synchronous and always returns a successful `google.longrunning.Operation` (LRO). The returned LRO will only have `done` and `response` fields.</p>
+  <pre>Gets details of a single subnet.
+  name: string, Required. The resource name of the subnet to retrieve. Resource names are schemeless URIs that follow the conventions in https://cloud.google.com/apis/design/resource_names. For example: `projects/my-project/locations/us-central1-a/privateClouds/my-cloud/subnets/my-subnet` (required)
+    { # Subnet in a private cloud. Either `management` subnets (such as vMotion) that are read-only, or `userDefined`, which can also be updated.
+  &quot;gatewayIp&quot;: &quot;A String&quot;, # The IP address of the gateway of this subnet. Must fall within the IP prefix defined above.
+  &quot;ipCidrRange&quot;: &quot;A String&quot;, # The IP address range of the subnet in CIDR format &#x27;10.0.0.0/24&#x27;.
+  &quot;name&quot;: &quot;A String&quot;, # Output only. Identifier. The resource name of this subnet. Resource names are schemeless URIs that follow the conventions in https://cloud.google.com/apis/design/resource_names. For example: `projects/my-project/locations/us-central1-a/privateClouds/my-cloud/subnets/my-subnet`
+  &quot;type&quot;: &quot;A String&quot;, # Output only. The type of the subnet. For example &quot;management&quot; or &quot;userDefined&quot;.
+  &quot;vlanId&quot;: 42, # Output only. VLAN ID of the VLAN on which the subnet is configured
+  <pre>Lists subnets in a given private cloud.
+  parent: string, Required. The resource name of the private cloud to be queried for subnets. Resource names are schemeless URIs that follow the conventions in https://cloud.google.com/apis/design/resource_names. For example: `projects/my-project/locations/us-central1-a/privateClouds/my-cloud` (required)
+  pageSize: integer, The maximum number of subnets to return in one page. The service may return fewer than this value. The maximum value is coerced to 1000. The default value of this field is 500.
+  pageToken: string, A page token, received from a previous `ListSubnetsRequest` call. Provide this to retrieve the subsequent page. When paginating, all other parameters provided to `ListSubnetsRequest` must match the call that provided the page token.
+    { # Response message for VmwareEngine.ListSubnets
+  &quot;subnets&quot;: [ # A list of subnets.
+  <pre>Updates the parameters of a single subnet. Only fields specified in `update_mask` are applied. *Note*: This API is synchronous and always returns a successful `google.longrunning.Operation` (LRO). The returned LRO will only have `done` and `response` fields.
+  name: string, Output only. Identifier. The resource name of this subnet. Resource names are schemeless URIs that follow the conventions in https://cloud.google.com/apis/design/resource_names. For example: `projects/my-project/locations/us-central1-a/privateClouds/my-cloud/subnets/my-subnet` (required)
+  updateMask: string, Required. Field mask is used to specify the fields to be overwritten in the `Subnet` resource by the update. The fields specified in the `update_mask` are relative to the resource, not the full request. A field will be overwritten if it is in the mask. If the user does not provide a mask then all fields will be overwritten.

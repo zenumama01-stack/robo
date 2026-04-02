@@ -1,0 +1,39 @@
+<h1><a href="aiplatform_v1.html">Vertex AI API</a> . <a href="aiplatform_v1.projects.html">projects</a> . <a href="aiplatform_v1.projects.locations.html">locations</a> . <a href="aiplatform_v1.projects.locations.reasoningEngines.html">reasoningEngines</a> . <a href="aiplatform_v1.projects.locations.reasoningEngines.sessions.html">sessions</a> . <a href="aiplatform_v1.projects.locations.reasoningEngines.sessions.events.html">events</a></h1>
+<p class="firstline">Lists Events in a given session.</p>
+  <pre>Lists Events in a given session.
+  parent: string, Required. The resource name of the session to list events from. Format: `projects/{project}/locations/{location}/reasoningEngines/{reasoning_engine}/sessions/{session}` (required)
+  filter: string, Optional. The standard list filter. Supported fields: * `timestamp` range (i.e. `timestamp&gt;=&quot;2025-01-31T11:30:00-04:00&quot;` where the timestamp is in RFC 3339 format) More detail in [AIP-160](https://google.aip.dev/160).
+  orderBy: string, Optional. A comma-separated list of fields to order by, sorted in ascending order. Use &quot;desc&quot; after a field name for descending. Supported fields: * `timestamp` Example: `timestamp desc`.
+  pageSize: integer, Optional. The maximum number of events to return. The service may return fewer than this value. If unspecified, at most 100 events will be returned. These events are ordered by timestamp in ascending order.
+  pageToken: string, Optional. The next_page_token value returned from a previous list SessionService.ListEvents call.
+    { # Response message for SessionService.ListEvents.
+  &quot;nextPageToken&quot;: &quot;A String&quot;, # A token, which can be sent as ListEventsRequest.page_token to retrieve the next page. Absence of this field indicates there are no subsequent pages.
+  &quot;sessionEvents&quot;: [ # A list of events matching the request. Ordered by timestamp in ascending order.
+    { # An event represents a message from either the user or agent.
+      &quot;actions&quot;: { # Actions are parts of events that are executed by the agent. # Optional. Actions executed by the agent.
+        &quot;artifactDelta&quot;: { # Optional. Indicates that the event is updating an artifact. key is the filename, value is the version.
+        &quot;escalate&quot;: True or False, # Optional. The agent is escalating to a higher level agent.
+        &quot;requestedAuthConfigs&quot;: { # Optional. Will only be set by a tool response indicating tool request euc. Struct key is the function call id since one function call response (from model) could correspond to multiple function calls. Struct value is the required auth config, which can be another struct.
+        &quot;skipSummarization&quot;: True or False, # Optional. If true, it won&#x27;t call model to summarize function response. Only used for function_response event.
+        &quot;stateDelta&quot;: { # Optional. Indicates that the event is updating the state with the given delta.
+        &quot;transferAgent&quot;: &quot;A String&quot;, # Optional. If set, the event transfers to the specified agent.
+      &quot;author&quot;: &quot;A String&quot;, # Required. The name of the agent that sent the event, or user.
+      &quot;content&quot;: { # The structured data content of a message. A Content message contains a `role` field, which indicates the producer of the content, and a `parts` field, which contains the multi-part data of the message. # Optional. Content of the event provided by the author.
+      &quot;errorCode&quot;: &quot;A String&quot;, # Optional. Error code if the response is an error. Code varies by model.
+      &quot;errorMessage&quot;: &quot;A String&quot;, # Optional. Error message if the response is an error.
+      &quot;eventMetadata&quot;: { # Metadata relating to a LLM response event. # Optional. Metadata relating to this event.
+        &quot;branch&quot;: &quot;A String&quot;, # Optional. The branch of the event. The format is like agent_1.agent_2.agent_3, where agent_1 is the parent of agent_2, and agent_2 is the parent of agent_3. Branch is used when multiple child agents shouldn&#x27;t see their siblings&#x27; conversation history.
+        &quot;customMetadata&quot;: { # The custom metadata of the LlmResponse.
+        &quot;groundingMetadata&quot;: { # Information about the sources that support the content of a response. When grounding is enabled, the model returns citations for claims in the response. This object contains the retrieved sources. # Optional. Metadata returned to client when grounding is enabled.
+        &quot;inputTranscription&quot;: { # Audio transcription in Server Content. # Optional. Audio transcription of user input.
+          &quot;finished&quot;: True or False, # Optional. The bool indicates the end of the transcription.
+          &quot;text&quot;: &quot;A String&quot;, # Optional. Transcription text.
+        &quot;interrupted&quot;: True or False, # Optional. Flag indicating that LLM was interrupted when generating the content. Usually it&#x27;s due to user interruption during a bidi streaming.
+        &quot;longRunningToolIds&quot;: [ # Optional. Set of ids of the long running function calls. Agent client will know from this field about which function call is long running. Only valid for function call event.
+        &quot;outputTranscription&quot;: { # Audio transcription in Server Content. # Optional. Audio transcription of model output.
+        &quot;partial&quot;: True or False, # Optional. Indicates whether the text content is part of a unfinished text stream. Only used for streaming mode and when the content is plain text.
+        &quot;turnComplete&quot;: True or False, # Optional. Indicates whether the response from the model is complete. Only used for streaming mode.
+      &quot;invocationId&quot;: &quot;A String&quot;, # Required. The invocation id of the event, multiple events can have the same invocation id.
+      &quot;name&quot;: &quot;A String&quot;, # Identifier. The resource name of the event. Format:`projects/{project}/locations/{location}/reasoningEngines/{reasoning_engine}/sessions/{session}/events/{event}`.
+      &quot;rawEvent&quot;: { # Optional. Weakly typed raw event data in proto struct format.
+      &quot;timestamp&quot;: &quot;A String&quot;, # Required. Timestamp when the event was created on client side.

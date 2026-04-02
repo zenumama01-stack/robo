@@ -1,0 +1,52 @@
+<h1><a href="cloudcontrolspartner_v1.html">Cloud Controls Partner API</a> . <a href="cloudcontrolspartner_v1.organizations.html">organizations</a> . <a href="cloudcontrolspartner_v1.organizations.locations.html">locations</a> . <a href="cloudcontrolspartner_v1.organizations.locations.customers.html">customers</a> . <a href="cloudcontrolspartner_v1.organizations.locations.customers.workloads.html">workloads</a></h1>
+  <code><a href="cloudcontrolspartner_v1.organizations.locations.customers.workloads.accessApprovalRequests.html">accessApprovalRequests()</a></code>
+<p class="firstline">Returns the accessApprovalRequests Resource.</p>
+  <code><a href="cloudcontrolspartner_v1.organizations.locations.customers.workloads.violations.html">violations()</a></code>
+<p class="firstline">Gets details of a single workload</p>
+  <code><a href="#getEkmConnections">getEkmConnections(name, x__xgafv=None)</a></code></p>
+<p class="firstline">Gets the EKM connections associated with a workload</p>
+  <code><a href="#getPartnerPermissions">getPartnerPermissions(name, x__xgafv=None)</a></code></p>
+<p class="firstline">Gets the partner permissions granted for a workload</p>
+<p class="firstline">Lists customer workloads for a given customer org id</p>
+  <pre>Gets details of a single workload
+  name: string, Required. Format: `organizations/{organization}/locations/{location}/customers/{customer}/workloads/{workload}` (required)
+    { # Contains metadata around the [Workload resource](https://cloud.google.com/assured-workloads/docs/reference/rest/Shared.Types/Workload) in the Assured Workloads API.
+  &quot;createTime&quot;: &quot;A String&quot;, # Output only. Time the resource was created.
+  &quot;folder&quot;: &quot;A String&quot;, # Output only. The name of container folder of the assured workload
+  &quot;folderId&quot;: &quot;A String&quot;, # Output only. Folder id this workload is associated with
+  &quot;isOnboarded&quot;: True or False, # Indicates whether a workload is fully onboarded.
+  &quot;keyManagementProjectId&quot;: &quot;A String&quot;, # The project id of the key management project for the workload
+  &quot;location&quot;: &quot;A String&quot;, # The Google Cloud location of the workload
+  &quot;name&quot;: &quot;A String&quot;, # Identifier. Format: `organizations/{organization}/locations/{location}/customers/{customer}/workloads/{workload}`
+  &quot;partner&quot;: &quot;A String&quot;, # Partner associated with this workload.
+  &quot;workloadOnboardingState&quot;: { # Container for workload onboarding steps. # Container for workload onboarding steps.
+    &quot;onboardingSteps&quot;: [ # List of workload onboarding steps.
+      { # Container for workload onboarding information.
+        &quot;completionState&quot;: &quot;A String&quot;, # Output only. The completion state of the onboarding step.
+        &quot;completionTime&quot;: &quot;A String&quot;, # The completion time of the onboarding step.
+        &quot;startTime&quot;: &quot;A String&quot;, # The starting time of the onboarding step.
+        &quot;step&quot;: &quot;A String&quot;, # The onboarding step.
+    <code class="details" id="getEkmConnections">getEkmConnections(name, x__xgafv=None)</code>
+  <pre>Gets the EKM connections associated with a workload
+  name: string, Required. Format: `organizations/{organization}/locations/{location}/customers/{customer}/workloads/{workload}/ekmConnections` (required)
+    { # The EKM connections associated with a workload
+  &quot;ekmConnections&quot;: [ # The EKM connections associated with the workload
+    { # Details about the EKM connection
+      &quot;connectionError&quot;: { # Information around the error that occurred if the connection state is anything other than available or unspecified # The connection error that occurred if any
+        &quot;errorDomain&quot;: &quot;A String&quot;, # The error domain for the error
+        &quot;errorMessage&quot;: &quot;A String&quot;, # The error message for the error
+      &quot;connectionName&quot;: &quot;A String&quot;, # Resource name of the EKM connection in the format: projects/{project}/locations/{location}/ekmConnections/{ekm_connection}
+      &quot;connectionState&quot;: &quot;A String&quot;, # Output only. The connection state
+  &quot;name&quot;: &quot;A String&quot;, # Identifier. Format: `organizations/{organization}/locations/{location}/customers/{customer}/workloads/{workload}/ekmConnections`
+    <code class="details" id="getPartnerPermissions">getPartnerPermissions(name, x__xgafv=None)</code>
+  <pre>Gets the partner permissions granted for a workload
+  name: string, Required. Name of the resource to get in the format: `organizations/{organization}/locations/{location}/customers/{customer}/workloads/{workload}/partnerPermissions` (required)
+    { # The permissions granted to the partner for a workload
+  &quot;name&quot;: &quot;A String&quot;, # Identifier. Format: `organizations/{organization}/locations/{location}/customers/{customer}/workloads/{workload}/partnerPermissions`
+  &quot;partnerPermissions&quot;: [ # The partner permissions granted for the workload
+  <pre>Lists customer workloads for a given customer org id
+  parent: string, Required. Parent resource Format: `organizations/{organization}/locations/{location}/customers/{customer}` (required)
+  pageSize: integer, The maximum number of workloads to return. The service may return fewer than this value. If unspecified, at most 500 workloads will be returned.
+  pageToken: string, A page token, received from a previous `ListWorkloads` call. Provide this to retrieve the subsequent page.
+    { # Response message for list customer workloads requests.
+  &quot;workloads&quot;: [ # List of customer workloads

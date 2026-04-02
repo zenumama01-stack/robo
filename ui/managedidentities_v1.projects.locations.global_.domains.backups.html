@@ -1,0 +1,26 @@
+<h1><a href="managedidentities_v1.html">Managed Service for Microsoft Active Directory API</a> . <a href="managedidentities_v1.projects.html">projects</a> . <a href="managedidentities_v1.projects.locations.html">locations</a> . <a href="managedidentities_v1.projects.locations.global_.html">global_</a> . <a href="managedidentities_v1.projects.locations.global_.domains.html">domains</a> . <a href="managedidentities_v1.projects.locations.global_.domains.backups.html">backups</a></h1>
+<p class="firstline">Creates a Backup for a domain.</p>
+<p class="firstline">Deletes identified Backup.</p>
+<p class="firstline">Lists Backup in a given project.</p>
+<p class="firstline">Updates the labels for specified Backup.</p>
+  <pre>Creates a Backup for a domain.
+  parent: string, Required. The domain resource name using the form: `projects/{project_id}/locations/global/domains/{domain_name}` (required)
+{ # Represents a Managed Microsoft Identities backup.
+  &quot;createTime&quot;: &quot;A String&quot;, # Output only. The time the backups was created.
+  &quot;name&quot;: &quot;A String&quot;, # Output only. The unique name of the Backup in the form of `projects/{project_id}/locations/global/domains/{domain_name}/backups/{name}`
+  &quot;statusMessage&quot;: &quot;A String&quot;, # Output only. Additional information about the current status of this backup, if available.
+  &quot;type&quot;: &quot;A String&quot;, # Output only. Indicates whether it’s an on-demand backup or scheduled.
+  &quot;updateTime&quot;: &quot;A String&quot;, # Output only. Last update time.
+  backupId: string, Required. Backup Id, unique name to identify the backups with the following restrictions: * Must be lowercase letters, numbers, and hyphens * Must start with a letter. * Must contain between 1-63 characters. * Must end with a number or a letter. * Must be unique within the domain.
+  <pre>Deletes identified Backup.
+  name: string, Required. The backup resource name using the form: `projects/{project_id}/locations/global/domains/{domain_name}/backups/{backup_id}` (required)
+  <pre>Lists Backup in a given project.
+  filter: string, Optional. Filter specifying constraints of a list operation.
+  orderBy: string, Optional. Specifies the ordering of results following syntax at https://cloud.google.com/apis/design/design_patterns#sorting_order.
+  pageSize: integer, Optional. The maximum number of items to return. If not specified, a default value of 1000 will be used by the service. Regardless of the page_size value, the response may include a partial list and a caller should only rely on response&#x27;s next_page_token to determine if there are more instances left to be queried.
+  pageToken: string, Optional. The `next_page_token` value returned from a previous List request, if any.
+    { # ListBackupsResponse is the response message for ListBackups method.
+  &quot;backups&quot;: [ # A list of Cloud AD backups in the domain.
+  <pre>Updates the labels for specified Backup.
+  name: string, Output only. The unique name of the Backup in the form of `projects/{project_id}/locations/global/domains/{domain_name}/backups/{name}` (required)
+  updateMask: string, Required. Mask of fields to update. At least one path must be supplied in this field. The elements of the repeated paths field may only include these fields from Backup: * `labels`

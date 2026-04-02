@@ -1,0 +1,18 @@
+<h1><a href="accesscontextmanager_v1.html">Access Context Manager API</a> . <a href="accesscontextmanager_v1.services.html">services</a></h1>
+<p class="firstline">Returns a VPC-SC supported service based on the service name.</p>
+<p class="firstline">Lists all VPC-SC supported services.</p>
+  <pre>Returns a VPC-SC supported service based on the service name.
+  name: string, The name of the service to get information about. The names must be in the same format as used in defining a service perimeter, for example, `storage.googleapis.com`. (required)
+    { # `SupportedService` specifies the VPC Service Controls and its properties.
+  &quot;availableOnRestrictedVip&quot;: True or False, # True if the service is available on the restricted VIP. Services on the restricted VIP typically either support VPC Service Controls or are core infrastructure services required for the functioning of Google Cloud.
+  &quot;knownLimitations&quot;: True or False, # True if the service is supported with some limitations. Check [documentation](https://cloud.google.com/vpc-service-controls/docs/supported-products) for details.
+  &quot;name&quot;: &quot;A String&quot;, # The service name or address of the supported service, such as `service.googleapis.com`.
+  &quot;serviceSupportStage&quot;: &quot;A String&quot;, # The support stage of the service.
+  &quot;supportStage&quot;: &quot;A String&quot;, # The support stage of the service.
+  &quot;supportedMethods&quot;: [ # The list of the supported methods. This field exists only in response to GetSupportedService
+  &quot;title&quot;: &quot;A String&quot;, # The name of the supported product, such as &#x27;Cloud Product API&#x27;.
+  <pre>Lists all VPC-SC supported services.
+  pageSize: integer, This flag specifies the maximum number of services to return per page. Default is 100.
+  pageToken: string, Token to start on a later page. Default is the first page.
+    { # A response to `ListSupportedServicesRequest`.
+  &quot;supportedServices&quot;: [ # List of services supported by VPC Service Controls instances.

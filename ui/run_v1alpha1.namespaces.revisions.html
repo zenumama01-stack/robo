@@ -1,0 +1,17 @@
+<h1><a href="run_v1alpha1.html">Cloud Run Admin API</a> . <a href="run_v1alpha1.namespaces.html">namespaces</a> . <a href="run_v1alpha1.namespaces.revisions.html">revisions</a></h1>
+<p class="firstline">Rpc to delete a revision.</p>
+<p class="firstline">Rpc to get information about a revision.</p>
+<p class="firstline">Rpc to list revisions.</p>
+  <pre>Rpc to delete a revision.
+  name: string, The name of the revision being deleted. If needed, replace {namespace_id} with the project ID. (required)
+  <pre>Rpc to get information about a revision.
+  name: string, The name of the revision being retrieved. If needed, replace {namespace_id} with the project ID. (required)
+    { # Revision is an immutable snapshot of code and configuration. A revision references a container image. Revisions are created by updates to a Configuration. Cloud Run does not currently support referencing a build that is responsible for materializing the container image from source. See also: https://github.com/knative/serving/blob/master/docs/spec/overview.md#revision
+  &quot;metadata&quot;: { # ObjectMeta is metadata that all persisted resources must have, which includes all objects users must create. # Metadata associated with this Revision, including name, namespace, labels, and annotations.
+    &quot;conditions&quot;: [ # Conditions communicates information about ongoing/complete reconciliation processes that bring the &quot;spec&quot; inline with the observed state of the world. As a Revision is being prepared, it will incrementally update conditions &quot;ResourcesAvailable&quot;, &quot;ContainerHealthy&quot;, and &quot;Active&quot;, which contribute to the overall &quot;Ready&quot; condition.
+      { # RevisionCondition defines a readiness condition for a Revision.
+        &quot;type&quot;: &quot;A String&quot;, # RevisionConditionType is used to communicate the status of the reconciliation process. See also: https://github.com/knative/serving/blob/master/docs/spec/errors.md#error-conditions-and-reporting Types include: * &quot;Ready&quot;: True when the Revision is ready. * &quot;ResourcesAvailable&quot;: True when underlying resources have been provisioned. * &quot;ContainerHealthy&quot;: True when the Revision readiness check completes. * &quot;Active&quot;: True when the Revision may receive traffic.
+    &quot;logUrl&quot;: &quot;A String&quot;, # Specifies the generated logging url for this particular revision based on the revision url template specified in the controller&#x27;s config. +optional
+  <pre>Rpc to list revisions.
+  parent: string, The project ID or project number from which the revisions should be listed. (required)
+  &quot;metadata&quot;: { # ListMeta describes metadata that synthetic resources must have, including lists and various status objects. A resource may have only one of {ObjectMeta, ListMeta}. # Metadata associated with this revision list.

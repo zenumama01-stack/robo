@@ -1,0 +1,35 @@
+<h1><a href="run_v1.html">Cloud Run Admin API</a> . <a href="run_v1.namespaces.html">namespaces</a> . <a href="run_v1.namespaces.instances.html">instances</a></h1>
+<p class="firstline">Create a Instance.</p>
+<p class="firstline">Delete a Instance.</p>
+<p class="firstline">Get an Instance.</p>
+<p class="firstline">List Instances. Results are sorted by creation time, descending.</p>
+<p class="firstline">Start an Instance which has been stopped.</p>
+<p class="firstline">Stop an Instance that is running.</p>
+  <pre>Create a Instance.
+  parent: string, Required. The namespace in which the Instance should be created. Replace {namespace} with the project ID or number. It takes the form namespaces/{namespace}. For example: namespaces/PROJECT_ID (required)
+{ # Instance represents the configuration of a single Instance, which references a container image which is run to completion.
+  &quot;spec&quot;: { # InstanceSpec describes how the Instance will look. # Optional. Specification of the desired behavior of a Instance.
+    &quot;containers&quot;: [ # Optional. List of containers belonging to the Instance. We disallow a number of fields on this Container.
+    &quot;serviceAccountName&quot;: &quot;A String&quot;, # Optional. Email address of the IAM service account associated with the Instance. The service account represents the identity of the running container, and determines what permissions the Instance has. If not provided, the Instance will use the project&#x27;s default service account.
+    &quot;timeout&quot;: &quot;A String&quot;, # Optional. Duration the instance may be active before the system will shut it down.
+    &quot;volumes&quot;: [ # Optional. List of volumes that can be mounted by containers belonging to the Instance.
+  &quot;status&quot;: { # InstanceStatus represents the current state of a Instance. # Output only. Current status of a Instance.
+    &quot;conditions&quot;: [ # Output only. Conditions communicate information about ongoing/complete reconciliation processes that bring the &quot;spec&quot; inline with the observed state of the world. Instance-specific conditions include: * `Ready`: `True` when the Instance is ready to be executed.
+    &quot;observedGeneration&quot;: 42, # Output only. The &#x27;generation&#x27; of the Instance that was last processed by the controller.
+    &quot;urls&quot;: [ # Output only. All URLs serving traffic for this Instance.
+  <pre>Delete a Instance.
+  name: string, Required. The name of the Instance to delete. Replace {namespace} with the project ID or number. It takes the form namespaces/{namespace}. For example: namespaces/PROJECT_ID (required)
+  propagationPolicy: string, Optional. Specifies the propagation policy of delete. Cloud Run currently ignores this setting, and deletes in the background. Please see kubernetes.io/docs/concepts/workloads/controllers/garbage-collection/ for more information.
+  <pre>Get an Instance.
+  name: string, Required. The name of the Instance to retrieve. It takes the form namespaces/{namespace}/instances/{Instance_name} and the `endpoint` must be regional. Replace {namespace} with the project ID or number. (required)
+  <pre>List Instances. Results are sorted by creation time, descending.
+  parent: string, Required. The namespace from which the Instances should be listed. Replace {namespace} with the project ID or number. It takes the form namespaces/{namespace}. For example: namespaces/PROJECT_ID (required)
+    { # ListInstancesResponse is a list of Instances resources.
+  &quot;items&quot;: [ # List of Instances.
+  &quot;kind&quot;: &quot;A String&quot;, # The kind of this resource, in this case &quot;InstancesList&quot;.
+  &quot;metadata&quot;: { # Metadata for synthetic resources like List. In Cloud Run, all List Resources Responses will have a ListMeta instead of ObjectMeta. # Metadata associated with this Instances list.
+  <pre>Start an Instance which has been stopped.
+  name: string, Required. The name of the Instance to run. Replace {namespace} with the project ID or number. It takes the form namespaces/{namespace}. For example: namespaces/PROJECT_ID (required)
+{ # Request message for starting a stopped Instance.
+  <pre>Stop an Instance that is running.
+{ # Request message for stopping a running Instance.

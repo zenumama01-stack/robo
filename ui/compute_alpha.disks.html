@@ -1,0 +1,601 @@
+<h1><a href="compute_alpha.html">Compute Engine API</a> . <a href="compute_alpha.disks.html">disks</a></h1>
+  <code><a href="#addResourcePolicies">addResourcePolicies(project, zone, disk, body=None, requestId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Adds existing resource policies to a disk. You can only add one</p>
+<p class="firstline">Retrieves an aggregated list of persistent disks.</p>
+  <code><a href="#bulkInsert">bulkInsert(project, zone, body=None, requestId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Bulk create a set of disks.</p>
+  <code><a href="#bulkSetLabels">bulkSetLabels(project, zone, body=None, requestId=None, resource=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Sets the labels on many disks at once. To learn more about labels, read theLabeling</p>
+  <code><a href="#convert">convert(project, zone, disk, body=None, requestId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Converts a persistent disk to support Gen4+ VMs.</p>
+  <code><a href="#createSnapshot">createSnapshot(project, zone, disk, body=None, guestFlush=None, requestId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Creates a snapshot of a specified persistent disk. For regular snapshot</p>
+  <code><a href="#delete">delete(project, zone, disk, requestId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Deletes the specified persistent disk. Deleting a disk removes its data</p>
+  <code><a href="#get">get(project, zone, disk, x__xgafv=None)</a></code></p>
+<p class="firstline">Returns the specified persistent disk.</p>
+  <code><a href="#getAsyncReplicationStatus">getAsyncReplicationStatus(project, zone, disk, x__xgafv=None)</a></code></p>
+<p class="firstline">Gets the status of current async replication for a given device.</p>
+  <code><a href="#getIamPolicy">getIamPolicy(project, zone, resource, optionsRequestedPolicyVersion=None, x__xgafv=None)</a></code></p>
+  <code><a href="#insert">insert(project, zone, body=None, requestId=None, sourceImage=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Creates a persistent disk in the specified project using the data</p>
+<p class="firstline">Retrieves a list of persistent disks contained within</p>
+  <code><a href="#removeResourcePolicies">removeResourcePolicies(project, zone, disk, body=None, requestId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Removes resource policies from a disk.</p>
+  <code><a href="#resize">resize(project, zone, disk, body=None, requestId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Resizes the specified persistent disk.</p>
+  <code><a href="#setIamPolicy">setIamPolicy(project, zone, resource, body=None, x__xgafv=None)</a></code></p>
+  <code><a href="#setLabels">setLabels(project, zone, resource, body=None, requestId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Sets the labels on a disk. To learn more about labels, read theLabeling</p>
+  <code><a href="#startAsyncReplication">startAsyncReplication(project, zone, disk, body=None, requestId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Starts asynchronous replication.</p>
+  <code><a href="#stopAsyncReplication">stopAsyncReplication(project, zone, disk, requestId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Stops asynchronous replication.</p>
+  <code><a href="#stopGroupAsyncReplication">stopGroupAsyncReplication(project, zone, body=None, requestId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Stops asynchronous replication for a consistency group of disks.</p>
+  <code><a href="#update">update(project, zone, disk, body=None, paths=None, requestId=None, updateMask=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Updates the specified disk with the data included in the request.</p>
+  <code><a href="#updateKmsKey">updateKmsKey(project, zone, disk, body=None, requestId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Rotates the customer-managed</p>
+  <code><a href="#waitForReplicationCatchUp">waitForReplicationCatchUp(project, zone, disk, body=None, requestId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Wait for replication to catch up on the secondary disk.</p>
+    <code class="details" id="addResourcePolicies">addResourcePolicies(project, zone, disk, body=None, requestId=None, x__xgafv=None)</code>
+  <pre>Adds existing resource policies to a disk. You can only add one
+policy which will be applied to this disk for scheduling snapshot
+creation.
+  disk: string, The disk name for this request. (required)
+  &quot;resourcePolicies&quot;: [ # Full or relative path to the resource policy to be added to this disk. You
+      # can only specify one resource policy.
+  <pre>Retrieves an aggregated list of persistent disks.
+  &quot;items&quot;: { # A list of DisksScopedList resources.
+    &quot;a_key&quot;: { # [Output Only] Name of the scope containing this set of disks.
+      &quot;disks&quot;: [ # [Output Only] A list of disks contained in this scope.
+        { # Represents a Persistent Disk resource.
+            # Google Compute Engine has two Disk resources:
+            # * [Zonal](/compute/docs/reference/rest/alpha/disks)
+            # * [Regional](/compute/docs/reference/rest/alpha/regionDisks)
+            # Persistent disks are required for running your VM instances.
+            # Create both boot and non-boot (data) persistent disks. For more information,
+            # read Persistent Disks. For more
+            # storage options, read Storage options.
+            # The disks resource represents a zonal persistent disk.
+            # The regionDisks resource represents a
+            # regional persistent disk.  For more information, read
+            # Regional resources.
+          &quot;accessMode&quot;: &quot;A String&quot;, # The access mode of the disk.
+              #      - READ_WRITE_SINGLE: The default AccessMode, means the
+              #      disk can be attached to single instance in RW mode.
+              #      - READ_WRITE_MANY: The AccessMode means the disk can be
+              #      attached to multiple instances in RW mode.
+              #      - READ_ONLY_MANY: The AccessMode means the disk can be
+              #      attached to multiple instances in RO mode.
+              # The AccessMode is only valid for Hyperdisk disk types.
+          &quot;architecture&quot;: &quot;A String&quot;, # The architecture of the disk. Valid values are
+              # ARM64 or X86_64.
+          &quot;asyncPrimaryDisk&quot;: { # Disk asynchronously replicated into this disk.
+            &quot;consistencyGroupPolicy&quot;: &quot;A String&quot;, # Output only. [Output Only] URL of the DiskConsistencyGroupPolicy if replication was
+                # started on the disk as a member of a group.
+            &quot;consistencyGroupPolicyId&quot;: &quot;A String&quot;, # Output only. [Output Only] ID of the DiskConsistencyGroupPolicy if replication was
+            &quot;disk&quot;: &quot;A String&quot;, # The other disk asynchronously replicated to or from the current disk.
+                # You can provide this as a partial or full URL to the resource.
+                # For example, the following are valid values:
+                #      - https://www.googleapis.com/compute/v1/projects/project/zones/zone/disks/disk
+                #    - projects/project/zones/zone/disks/disk
+                #    - zones/zone/disks/disk
+            &quot;diskId&quot;: &quot;A String&quot;, # Output only. [Output Only] The unique ID of the other disk asynchronously replicated
+                # to or from the current disk. This value identifies the exact disk that
+                # was used to create this replication. For example, if you started
+                # replicating the persistent disk from a disk that was later deleted and
+                # recreated under the same name, the disk ID would identify the exact
+                # version of the disk that was used.
+          &quot;asyncSecondaryDisks&quot;: { # Output only. [Output Only] A list of disks this disk is asynchronously replicated to.
+              &quot;asyncReplicationDisk&quot;: {
+          &quot;diskEncryptionKey&quot;: { # Encrypts the disk using a
+              # customer-supplied encryption key or a
+              # customer-managed encryption key.
+              # Encryption keys do not protect access to metadata of the disk.
+              # After you encrypt a disk with a customer-supplied key, you must provide the
+              # same key if you use the disk later. For example, to create a disk snapshot,
+              # to create a disk image, to create a machine image, or to attach the disk to
+              # a virtual machine.
+              # After you encrypt a disk with a customer-managed key, thediskEncryptionKey.kmsKeyName is set to a key *version*
+              # name once the disk is created. The disk is encrypted with this version of
+              # the key. In the response, diskEncryptionKey.kmsKeyName appears
+              # in the following format:
+              # &quot;diskEncryptionKey.kmsKeyName&quot;:
+              # &quot;projects/kms_project_id/locations/region/keyRings/
+              # key_region/cryptoKeys/key
+              # /cryptoKeysVersions/version
+              # If you do not provide an encryption key when creating the disk, then the
+              # disk is encrypted using an automatically generated key and you don&#x27;t need
+              # to provide a key to use the disk later.
+            &quot;kmsKeyName&quot;: &quot;A String&quot;, # The name of the encryption key that is stored in Google Cloud KMS.
+                # For example:
+                # &quot;kmsKeyName&quot;: &quot;projects/kms_project_id/locations/region/keyRings/
+                # The fully-qualifed key name may be returned for resource GET requests. For
+                # example:
+                # /cryptoKeyVersions/1
+            &quot;kmsKeyServiceAccount&quot;: &quot;A String&quot;, # The service account being used for the encryption request for the given KMS
+                # key. If absent, the Compute Engine default service account is used.
+                # &quot;kmsKeyServiceAccount&quot;: &quot;name@project_id.iam.gserviceaccount.com/
+            &quot;rawKey&quot;: &quot;A String&quot;, # Specifies a 256-bit customer-supplied
+                # encryption key, encoded in RFC
+                # 4648 base64 to either encrypt or decrypt this resource. You can
+                # provide either the rawKey or thersaEncryptedKey.
+                # &quot;rawKey&quot;:
+                # &quot;SGVsbG8gZnJvbSBHb29nbGUgQ2xvdWQgUGxhdGZvcm0=&quot;
+            &quot;rsaEncryptedKey&quot;: &quot;A String&quot;, # Specifies an RFC 4648 base64 encoded, RSA-wrapped 2048-bit
+                # customer-supplied encryption key to either encrypt or decrypt this
+                # resource. You can provide either the rawKey or thersaEncryptedKey.
+                # &quot;rsaEncryptedKey&quot;:
+                # &quot;ieCx/NcW06PcT7Ep1X6LUTc/hLvUDYyzSZPPVCVPTVEohpeHASqC8uw5TzyO9U+Fka9JFH
+                # z0mBibXUInrC/jEk014kCK/NPjYgEMOyssZ4ZINPKxlUh2zn1bV+MCaTICrdmuSBTWlUUiFoD
+                # D6PYznLwh8ZNdaheCeZ8ewEXgFQ8V+sDroLaN3Xs3MDTXQEMMoNUXMCZEIpg9Vtp9x2oe==&quot;
+                # The key must meet the following requirements before you can provide it to
+                # Compute Engine:
+                #    1. The key is wrapped using a RSA public key certificate provided by
+                #    Google.
+                #    2. After being wrapped, the key must be encoded in RFC 4648 base64
+                #    encoding.
+                # Gets the RSA public key certificate provided by Google at:
+                # https://cloud-certs.storage.googleapis.com/google-cloud-csek-ingress.pem
+            &quot;sha256&quot;: &quot;A String&quot;, # [Output only] TheRFC
+                # 4648 base64 encoded SHA-256 hash of the customer-supplied
+                # encryption key that protects this resource.
+          &quot;enableConfidentialCompute&quot;: True or False, # Whether this disk is using confidential compute mode.
+          &quot;eraseWindowsVssSignature&quot;: True or False, # Specifies whether the disk restored from a source snapshot should erase
+              # Windows specific VSS signature.
+          &quot;guestOsFeatures&quot;: [ # A list of features to enable on the guest operating system. Applicable
+              # only for bootable images. Read
+              # Enabling guest operating system features to see a list of available
+              # options.
+            { # Guest OS features.
+              &quot;type&quot;: &quot;A String&quot;, # The ID of a supported feature. To add multiple values, use commas to
+                  # separate values. Set to one or more of the following values:
+                  #    - VIRTIO_SCSI_MULTIQUEUE
+                  #    - WINDOWS
+                  #    - MULTI_IP_SUBNET
+                  #    - UEFI_COMPATIBLE
+                  #    - GVNIC
+                  #    - SEV_CAPABLE
+                  #    - SUSPEND_RESUME_COMPATIBLE
+                  #    - SEV_LIVE_MIGRATABLE_V2
+                  #    - SEV_SNP_CAPABLE
+                  #    - TDX_CAPABLE
+                  #    - IDPF
+                  #    - SNP_SVSM_CAPABLE
+                  # Enabling guest operating system features.
+          &quot;interface&quot;: &quot;A String&quot;, # [Deprecated] Specifies the disk interface to use for attaching this disk,
+              # which is either SCSI or NVME. The default isSCSI.
+          &quot;kind&quot;: &quot;compute#disk&quot;, # Output only. [Output Only] Type of the resource. Always compute#disk for
+              # disks.
+          &quot;labelFingerprint&quot;: &quot;A String&quot;, # A fingerprint for the labels being applied to this disk, which is
+              # retrieve a disk.
+          &quot;labels&quot;: { # Labels to apply to this disk. These can be later modified by
+              # the setLabels method.
+          &quot;lastAttachTimestamp&quot;: &quot;A String&quot;, # Output only. [Output Only] Last attach timestamp inRFC3339
+          &quot;lastDetachTimestamp&quot;: &quot;A String&quot;, # Output only. [Output Only] Last detach timestamp inRFC3339
+          &quot;licenseCodes&quot;: [ # Integer license codes indicating which licenses are attached to this disk.
+          &quot;licenses&quot;: [ # A list of publicly visible licenses. Reserved for Google&#x27;s use.
+          &quot;locationHint&quot;: &quot;A String&quot;, # An opaque location hint used to place the disk close to other resources.
+              # This field is for use by internal tools that use the public API.
+          &quot;locked&quot;: True or False, # Output only. [Output Only] The field indicates if the disk is created from a locked
+              # source image. Attachment of a disk created from a locked source image will
+              # cause the following operations to become irreversibly prohibited:
+              #    - R/W or R/O disk attachment to any other instance
+              #    - Disk detachment. And the disk can only be deleted when the instance
+              #    is deleted
+              #    - Creation of images or snapshots
+              #    - Disk cloning
+              # Furthermore, the instance with at least one disk with locked flag set to
+              # true will be prohibited from performing the operations below:
+              #    - Further attachment of secondary disks.
+              #    - Detachment of any disks
+              #    - Create machine images
+              #    - Create instance template
+              #    - Delete the instance with --keep-disk parameter set to true for locked
+              #    disks
+              #    - Attach a locked disk with --auto-delete parameter set to false
+          &quot;multiWriter&quot;: True or False, # Indicates whether or not the disk can be read/write attached to
+              # more than one instance.
+              # expression `[a-z]([-a-z0-9]*[a-z0-9])?`
+              # which means the first character must be a lowercase letter, and all
+              # following characters must be a dash, lowercase letter, or digit, except
+              # the last character, which cannot be a dash.
+          &quot;options&quot;: &quot;A String&quot;, # Internal use only.
+          &quot;params&quot;: { # Additional disk params. # Input only. [Input Only] Additional params passed with the request, but not persisted
+            &quot;resourceManagerTags&quot;: { # Input only. Resource manager tags to be bound to the disk. Tag keys and values
+                # have the same definition as resource
+                # manager tags. Keys and values can be either in numeric format,
+                # such as `tagKeys/{tag_key_id}` and `tagValues/456` or in namespaced
+                # format such as `{org_id|project_id}/{tag_key_short_name}` and
+                # `{tag_value_short_name}`. The field is ignored (both PUT &amp;
+                # PATCH) when empty.
+          &quot;physicalBlockSizeBytes&quot;: &quot;A String&quot;, # Physical block size of the persistent disk, in bytes.
+              # If not present in a request, a default value is used.
+              # The currently supported size is 4096, other sizes may be added in
+              # the future.
+              # If an unsupported value is requested, the error message will list
+              # the supported values for the caller&#x27;s project.
+          &quot;provisionedIops&quot;: &quot;A String&quot;, # Indicates how many IOPS to provision for the disk. This sets the number
+              # of I/O operations per second that the disk can handle. Values must be
+              # between 10,000 and 120,000. For more details, see theExtreme persistent
+              # disk documentation.
+          &quot;provisionedThroughput&quot;: &quot;A String&quot;, # Indicates how much throughput to provision for the disk. This sets the
+              # number of throughput mb per second that the disk can handle. Values must be
+              # greater than or equal to 1.
+          &quot;region&quot;: &quot;A String&quot;, # Output only. [Output Only] URL of the region where the disk resides. Only applicable for
+              # regional resources.
+          &quot;replicaZones&quot;: [ # URLs of the zones where the disk should be replicated to. Only applicable
+              # for regional resources.
+          &quot;resourcePolicies&quot;: [ # Resource policies applied to this disk for automatic snapshot creations.
+          &quot;resourceStatus&quot;: { # Output only. [Output Only] Status information for the disk resource.
+            &quot;asyncPrimaryDisk&quot;: {
+              &quot;state&quot;: &quot;A String&quot;,
+            &quot;asyncSecondaryDisks&quot;: { # Key: disk, value: AsyncReplicationStatus message
+            &quot;usedBytes&quot;: &quot;A String&quot;, # [Output Only] Space used by data stored in the disk (in bytes). Note that
+                # this field is set only when the disk is in a storage pool.
+          &quot;satisfiesPzs&quot;: True or False, # Output only. [Output Only] Reserved for future use.
+          &quot;selfLink&quot;: &quot;A String&quot;, # Output only. [Output Only] Server-defined fully-qualified URL for this resource.
+          &quot;sizeGb&quot;: &quot;A String&quot;, # Size, in GB, of the persistent disk. You can specify
+              # this field when creating a persistent disk using thesourceImage, sourceSnapshot, orsourceDisk parameter, or specify it alone to create an empty
+              # If you specify this field along with a source, the value ofsizeGb must not be less than the size of the
+              # source.
+              # Acceptable values are greater than 0.
+          &quot;sourceConsistencyGroupPolicy&quot;: &quot;A String&quot;, # Output only. [Output Only] URL of the DiskConsistencyGroupPolicy for a secondary disk
+              # that was created using a consistency group.
+          &quot;sourceConsistencyGroupPolicyId&quot;: &quot;A String&quot;, # Output only. [Output Only] ID of the DiskConsistencyGroupPolicy for a secondary disk
+          &quot;sourceDisk&quot;: &quot;A String&quot;, # The source disk used to create this disk. You can provide this as a
+              # partial or full URL to the resource. For example, the following are valid
+              #      -
+              #        https://www.googleapis.com/compute/v1/projects/project/zones/zone/disks/disk
+              #        https://www.googleapis.com/compute/v1/projects/project/regions/region/disks/disk
+              #        projects/project/zones/zone/disks/disk
+              #        projects/project/regions/region/disks/disk
+              #        zones/zone/disks/disk
+              #        regions/region/disks/disk
+          &quot;sourceDiskId&quot;: &quot;A String&quot;, # Output only. [Output Only] The unique ID of the disk used to create this disk. This
+              # value identifies the exact disk that was used to create this persistent
+              # disk. For example, if you created the persistent disk from a disk that
+              # was later deleted and recreated under the same name, the source disk ID
+              # would identify the exact version of the disk that was used.
+          &quot;sourceImage&quot;: &quot;A String&quot;, # The source image used to create this disk. If the source image is
+              # deleted, this field will not be set.
+              # To create a disk with one of the public operating system images, specify
+              # the image by its family name. For example, specifyfamily/debian-9 to use the latest Debian 9 image:
+              # projects/debian-cloud/global/images/family/debian-9
+              # Alternatively, use a specific version of a public operating system image:
+              # projects/debian-cloud/global/images/debian-9-stretch-vYYYYMMDD
+              # To create a disk with a custom image that you created, specify the
+              # image name in the following format:
+              # global/images/my-custom-image
+              # You can also specify a custom image by its image family, which returns
+              # the latest version of the image in that family. Replace the image name
+              # with family/family-name:
+              # global/images/family/my-image-family
+          &quot;sourceImageEncryptionKey&quot;: { # Thecustomer-supplied
+              # encryption key of the source image. Required if the source image is
+              # protected by a customer-supplied encryption key.
+          &quot;sourceImageId&quot;: &quot;A String&quot;, # Output only. [Output Only] The ID value of the image used to create this disk. This
+              # value identifies the exact image that was used to create this persistent
+              # disk. For example, if you created the persistent disk from an image that
+              # was later deleted and recreated under the same name, the source image ID
+              # would identify the exact version of the image that was used.
+          &quot;sourceInstantSnapshot&quot;: &quot;A String&quot;, # The source instant snapshot used to create this disk. You can provide
+              # this as a partial or full URL to the resource. For example, the following
+              # are valid values:
+              #      - https://www.googleapis.com/compute/v1/projects/project/zones/zone/instantSnapshots/instantSnapshot
+              #      - projects/project/zones/zone/instantSnapshots/instantSnapshot
+              #    - zones/zone/instantSnapshots/instantSnapshot
+          &quot;sourceInstantSnapshotId&quot;: &quot;A String&quot;, # Output only. [Output Only] The unique ID of the instant snapshot used to create this
+              # disk. This value identifies the exact instant snapshot that was used to
+              # create this persistent disk. For example, if you created the persistent
+              # disk from an instant snapshot that was later deleted and recreated under
+              # the same name, the source instant snapshot ID would identify the exact
+              # version of the instant snapshot that was used.
+          &quot;sourceMachineImage&quot;: &quot;A String&quot;, # The machine image to create the disk from. You can provide this as a
+              #      - https://www.googleapis.com/compute/v1/projects/project/global/machineImages/machineImage
+              #    - projects/project/global/machineImages/machineImage
+              #      - global/machineImages/machineImage
+          &quot;sourceMachineImageDiskDeviceName&quot;: &quot;A String&quot;, # The device name of a disk within a given machine image. The
+              # source_machine_image must be specified.
+          &quot;sourceMachineImageEncryptionKey&quot;: { # Thecustomer-supplied
+              # encryption key of the source machine image. Required if the source
+              # machine image is protected by a customer-supplied encryption key.
+          &quot;sourceMachineImageId&quot;: &quot;A String&quot;, # Output only. [Output Only] The unique ID of the machine image used to create this disk.
+              # This value identifies the exact machine image that was used to create this
+              # persistent disk. For example, if you created the persistent disk from a
+              # machine image that was later deleted and recreated under the same name, the
+              # source machine image ID would identify the exact version of the machine
+              # image that was used.
+          &quot;sourceSnapshot&quot;: &quot;A String&quot;, # The source snapshot used to create this disk. You can provide this as a
+              #      - https://www.googleapis.com/compute/v1/projects/project/global/snapshots/snapshot
+              #    - projects/project/global/snapshots/snapshot
+              #      - global/snapshots/snapshot
+          &quot;sourceSnapshotEncryptionKey&quot;: { # Thecustomer-supplied
+              # encryption key of the source snapshot. Required if the source snapshot
+              # is protected by a customer-supplied encryption key.
+          &quot;sourceSnapshotId&quot;: &quot;A String&quot;, # Output only. [Output Only] The unique ID of the snapshot used to create this disk. This
+              # value identifies the exact snapshot that was used to create this persistent
+              # disk. For example, if you created the persistent disk from a snapshot that
+              # was later deleted and recreated under the same name, the source snapshot ID
+              # would identify the exact version of the snapshot that was used.
+          &quot;sourceStorageObject&quot;: &quot;A String&quot;, # The full Google Cloud Storage URI where the disk image is stored. This file
+              # must be a gzip-compressed tarball whose name ends in .tar.gz or virtual
+              # machine disk whose name ends in vmdk. Valid URIs may start with gs:// or
+              # https://storage.googleapis.com/. This flag is not optimized for creating
+              # multiple disks from a source storage object. To create many disks from a
+              # source storage object, use gcloud compute images
+              # import instead.
+          &quot;status&quot;: &quot;A String&quot;, # Output only. [Output Only] The status of disk creation.
+              #      - CREATING: Disk is provisioning.
+              #      - RESTORING: Source data is being copied into the
+              #      disk.
+              #      - FAILED: Disk creation failed.
+              #      - READY: Disk is ready for use.
+              #      - DELETING: Disk is deleting.
+          &quot;storagePool&quot;: &quot;A String&quot;, # The storage pool in which the new disk is created. You can provide
+              #      - https://www.googleapis.com/compute/v1/projects/project/zones/zone/storagePools/storagePool
+              #      - projects/project/zones/zone/storagePools/storagePool
+              #    - zones/zone/storagePools/storagePool
+          &quot;storageType&quot;: &quot;A String&quot;, # [Deprecated] Storage type of the persistent disk.
+          &quot;type&quot;: &quot;A String&quot;, # URL of the disk type resource describing which disk type to use to create
+              # the disk. Provide this when creating the disk. For example:projects/project/zones/zone/diskTypes/pd-ssd. See Persistent disk
+              # types.
+          &quot;users&quot;: [ # Output only. [Output Only] Links to the users of the disk (attached instances)
+              # in form:projects/project/zones/zone/instances/instance
+          &quot;zone&quot;: &quot;A String&quot;, # Output only. [Output Only] URL of the zone where the disk resides.
+      &quot;warning&quot;: { # [Output Only] Informational warning which replaces the list of disks when
+          # the list is empty.
+  &quot;kind&quot;: &quot;compute#diskAggregatedList&quot;, # Output only. [Output Only] Type of resource. Alwayscompute#diskAggregatedList for aggregated lists of persistent
+    <code class="details" id="bulkInsert">bulkInsert(project, zone, body=None, requestId=None, x__xgafv=None)</code>
+  <pre>Bulk create a set of disks.
+{ # A transient resource used in compute.disks.bulkInsert and
+    # compute.regionDisks.bulkInsert. It is only used to process
+    # requests and is not persisted.
+  &quot;instantSnapshotGroupParameters&quot;: { # The parameters for the instant snapshot group.
+    &quot;sourceInstantSnapshotGroup&quot;: &quot;A String&quot;, # The source instant snapshot group used to create disks. You can provide
+        #      - https://www.googleapis.com/compute/v1/projects/project/zones/zone/instantSnapshotGroups/instantSnapshotGroup
+        #      - projects/project/zones/zone/instantSnapshotGroups/instantSnapshotGroup
+        #      - zones/zone/instantSnapshotGroups/instantSnapshotGroup
+  &quot;snapshotGroupParameters&quot;: { # The parameters for the snapshot group.
+    &quot;replicaZones&quot;: [ # URLs of the zones where disks should be replicated to. Only applicable
+    &quot;sourceSnapshotGroup&quot;: &quot;A String&quot;, # The source snapshot group used to create disks. You can provide this as a
+        #      - https://www.googleapis.com/compute/v1/projects/project/global/snapshotGroups/snapshotGroup
+        #    - projects/project/global/snapshotGroups/snapshotGroup
+        #      - global/snapshotGroups/snapshotGroup
+        # disks. Provide this when creating the disk. For example:projects/project/zones/zone/diskTypes/pd-ssd. See Persistent disk
+  &quot;sourceConsistencyGroupPolicy&quot;: &quot;A String&quot;, # The URL of the DiskConsistencyGroupPolicy for the group of disks to clone.
+      # This may be a full or partial URL, such as:
+      #        https://www.googleapis.com/compute/v1/projects/project/regions/region/resourcePolicies/resourcePolicy
+      #        projects/project/regions/region/resourcePolicies/resourcePolicy
+      #        regions/region/resourcePolicies/resourcePolicy
+    <code class="details" id="bulkSetLabels">bulkSetLabels(project, zone, body=None, requestId=None, resource=None, x__xgafv=None)</code>
+  <pre>Sets the labels on many disks at once. To learn more about labels, read theLabeling
+  &quot;requests&quot;: [
+          # Engine and changes after every request to modify or update labels. You may
+          # optionally provide an up-to-date fingerprint hash in order to update or
+          # change labels. Make a get() request to the resource to get the
+          # latest fingerprint.
+  resource: string, Name or id of the resource for this request.
+    <code class="details" id="convert">convert(project, zone, disk, body=None, requestId=None, x__xgafv=None)</code>
+  <pre>Converts a persistent disk to support Gen4+ VMs.
+  disk: string, Name of the Disk resource, should conform to RFC1035. (required)
+  &quot;params&quot;: {
+    &quot;forceStopInProgressSnapshot&quot;: True or False,
+    &quot;provisionedIops&quot;: &quot;A String&quot;,
+    &quot;provisionedThroughput&quot;: &quot;A String&quot;,
+    &quot;quickConversionOnly&quot;: True or False,
+    &quot;resetSupportedVmFamilies&quot;: True or False,
+    &quot;targetDiskType&quot;: &quot;A String&quot;,
+    <code class="details" id="createSnapshot">createSnapshot(project, zone, disk, body=None, guestFlush=None, requestId=None, x__xgafv=None)</code>
+  <pre>Creates a snapshot of a specified persistent disk. For regular snapshot
+creation, consider using snapshots.insert
+instead, as that method supports more features, such as creating snapshots
+in a project different from the source disk project.
+  disk: string, Name of the persistent disk to snapshot. (required)
+{ # Represents a Persistent Disk Snapshot resource.
+    # You can use snapshots to back up data on a regular interval. For more
+    # information, read  Creating
+    # persistent disk snapshots.
+  &quot;architecture&quot;: &quot;A String&quot;, # Output only. [Output Only] The architecture of the snapshot. Valid values are
+  &quot;autoCreated&quot;: True or False, # Output only. [Output Only] Set to true if snapshots are automatically created by
+      # applying resource policy on the target disk.
+  &quot;chainName&quot;: &quot;A String&quot;, # Creates the new snapshot in the snapshot chain labeled with the
+      # specified name. The chain name must be 1-63 characters long and comply
+      # with RFC1035. This is an uncommon option only for advanced service
+      # owners who needs to create separate snapshot chains, for example,
+      # for chargeback tracking. When you describe your snapshot resource, this
+      # field is visible only if it has a non-empty value.
+  &quot;creationSizeBytes&quot;: &quot;A String&quot;, # Output only. [Output Only] Size in bytes of the snapshot at creation time.
+  &quot;diskSizeGb&quot;: &quot;A String&quot;, # Output only. [Output Only] Size of the source disk, specified in GB.
+  &quot;downloadBytes&quot;: &quot;A String&quot;, # Output only. [Output Only] Number of bytes downloaded to restore a snapshot to a disk.
+  &quot;enableConfidentialCompute&quot;: True or False, # Output only. Whether this snapshot is created from a confidential compute mode disk.
+      # [Output Only]: This field is not set by user, but from source disk.
+  &quot;guestFlush&quot;: True or False, # [Input Only] Whether to attempt an application consistent snapshot by
+      # informing the OS to prepare for the snapshot process.
+  &quot;guestOsFeatures&quot;: [ # Output only. [Output Only] A list of features to enable on the guest operating system.
+      # Applicable only for bootable images. Read
+  &quot;kind&quot;: &quot;compute#snapshot&quot;, # Output only. [Output Only] Type of the resource. Always compute#snapshot
+      # for Snapshot resources.
+  &quot;labelFingerprint&quot;: &quot;A String&quot;, # A fingerprint for the labels being applied to this snapshot, which is
+      # retrieve a snapshot.
+  &quot;labels&quot;: { # Labels to apply to this snapshot. These can be later modified by
+  &quot;licenseCodes&quot;: [ # Output only. [Output Only] Integer license codes indicating which licenses are attached
+      # to this snapshot.
+  &quot;licenses&quot;: [ # Output only. [Output Only] A list of public visible licenses that apply to this
+      # snapshot. This can be because the original image had licenses attached
+      # (such as a Windows image).
+  &quot;locationHint&quot;: &quot;A String&quot;, # An opaque location hint used to place the snapshot close to other
+      # resources.
+  &quot;maxRetentionDays&quot;: 42, # Number of days the snapshot should be retained before being deleted
+      # automatically.
+  &quot;name&quot;: &quot;A String&quot;, # Name of the resource; provided by the client when the resource is created.
+      # character must be a lowercase letter, and all following characters must be
+      # a dash, lowercase letter, or digit, except the last character, which cannot
+      # be a dash.
+  &quot;params&quot;: { # Additional snapshot params. # Input only. [Input Only] Additional params passed with the request, but not persisted
+    &quot;resourceManagerTags&quot;: { # Input only. Resource manager tags to be bound to the snapshot. Tag keys and values have
+        # the same definition as resource
+  &quot;region&quot;: &quot;A String&quot;, # Output only. [Output Only] URL of the region where the snapshot resides. Only applicable
+      # for regional snapshots.
+  &quot;resourceStatus&quot;: { # Output only. [Output only] ResourceStatus of the Snapshot resource
+    &quot;scheduledDeletionTime&quot;: &quot;A String&quot;, # Output only. [Output only] Scheduled deletion time of the snapshot. The snapshot will
+        # be deleted by the at any point within one hour after the deletion time.
+  &quot;snapshotEncryptionKey&quot;: { # Encrypts the snapshot using acustomer-supplied
+      # encryption key.
+      # After you encrypt a snapshot using a customer-supplied key, you must
+      # provide the same key if you use the snapshot later. For example, you must
+      # provide the encryption key when you create a disk from the encrypted
+      # snapshot in a future request.
+      # Customer-supplied encryption keys do not protect access to metadata
+      # of the snapshot.
+      # If you do not provide an encryption key when creating the snapshot, then
+      # the snapshot will be encrypted using an automatically generated key and you
+      # do not need to provide a key to use the snapshot later.
+  &quot;snapshotGroupId&quot;: &quot;A String&quot;, # Output only. [Output Only] The unique ID of the snapshot group that this snapshot
+      # belongs to.
+  &quot;snapshotGroupName&quot;: &quot;A String&quot;, # Output only. [Output only] The snapshot group that this snapshot belongs to.
+  &quot;snapshotType&quot;: &quot;A String&quot;, # Indicates the type of the snapshot.
+  &quot;sourceDisk&quot;: &quot;A String&quot;, # The source disk used to create this snapshot.
+  &quot;sourceDiskEncryptionKey&quot;: { # The customer-supplied
+      # encryption key of the source disk. Required if the source disk is
+  &quot;sourceDiskForRecoveryCheckpoint&quot;: &quot;A String&quot;, # The source disk whose recovery checkpoint will be used to create this
+      # snapshot.
+  &quot;sourceDiskId&quot;: &quot;A String&quot;, # Output only. [Output Only] The ID value of the disk used to create this snapshot. This
+      # value may be used to determine whether the snapshot was taken from the
+      # current or a previous instance of a given disk name.
+  &quot;sourceInstantSnapshot&quot;: &quot;A String&quot;, # The source instant snapshot used to create this snapshot. You can provide
+  &quot;sourceInstantSnapshotEncryptionKey&quot;: { # Customer provided encryption key when creating Snapshot from Instant
+      # Snapshot.
+      # snapshot. This value identifies the exact instant snapshot that was used to
+      # create this snapshot. For example, if you created the snapshot from an
+      # instant snapshot that was later deleted and recreated under the same name,
+      # the source instant snapshot ID would identify the exact instant snapshot
+      # that was used.
+  &quot;sourceSnapshotSchedulePolicy&quot;: &quot;A String&quot;, # Output only. [Output Only] URL of the resource policy which created this
+      # scheduled snapshot.
+  &quot;sourceSnapshotSchedulePolicyId&quot;: &quot;A String&quot;, # Output only. [Output Only] ID of the resource policy which created this
+  &quot;status&quot;: &quot;A String&quot;, # Output only. [Output Only] The status of the snapshot. This can beCREATING, DELETING, FAILED,READY, or UPLOADING.
+  &quot;storageBytes&quot;: &quot;A String&quot;, # Output only. [Output Only] A size of the storage used by the snapshot. As snapshots
+      # share storage, this number is expected to change with snapshot
+      # creation/deletion.
+  &quot;storageBytesStatus&quot;: &quot;A String&quot;, # Output only. [Output Only] An indicator whether storageBytes is in a
+      # stable state or it is being adjusted as a result of shared storage
+      # reallocation. This status can either be UPDATING, meaning
+      # the size of the snapshot is being updated, or UP_TO_DATE,
+      # meaning the size of the snapshot is up-to-date.
+  &quot;storageLocations&quot;: [ # Cloud Storage bucket storage location of the snapshot (regional or
+      # multi-regional).
+  guestFlush: boolean, [Input Only] Whether to attempt an application consistent snapshot by
+informing the OS to prepare for the snapshot process.
+    <code class="details" id="delete">delete(project, zone, disk, requestId=None, x__xgafv=None)</code>
+  <pre>Deletes the specified persistent disk. Deleting a disk removes its data
+permanently and is irreversible. However, deleting a disk does not
+delete any snapshots
+previously made from the disk. You must separatelydelete
+snapshots.
+  disk: string, Name of the persistent disk to delete. (required)
+    <code class="details" id="get">get(project, zone, disk, x__xgafv=None)</code>
+  <pre>Returns the specified persistent disk.
+  disk: string, Name of the persistent disk to return. (required)
+    <code class="details" id="getAsyncReplicationStatus">getAsyncReplicationStatus(project, zone, disk, x__xgafv=None)</code>
+  <pre>Gets the status of current async replication for a given device.
+  disk: string, Name of the Disk resource whose Async replication details are requested.
+Name should conform to RFC1035 or be an unsigned long integer. (required)
+  &quot;asyncReplicationStatus&quot;: {
+    &quot;diskPairReplicationState&quot;: {
+      &quot;dataReplicationState&quot;: &quot;A String&quot;, # Output only. [Output Only] The status of disk creation.
+          #      - ASYNC_REPLICATION_STATE_INITIALIZING: The device is
+          #     doing the initial replication after starting the
+          #    replication.
+          #    - ASYNC_REPLICATION_STATE_REPLICATING_HEALTHY: The
+          #     primary disk is healthily replicating to the secondary device i.e.
+          #    last_replication_time is within RPO.
+          #     - ASYNC_REPLICATION_STATE_REPLICATING_BEHIND_HIGH_CHURN:
+          #     The replication is lagging above the SLO limit due to the disk&#x27;s change
+          #     rate being above the supported limit.
+          #     - ASYNC_REPLICATION_STATE_REPLICATING_BEHIND_SYSTEM_LAGGING:
+          #     The replication is lagging, and the RPO is not being met due to some
+          #     internal issue.
+          #    - ASYNC_REPLICATION_STATE_REPLICATION_STUCK: The
+          #     replication is completely stuck due to some internal error.
+          #    - ASYNC_REPLICATION_STATE_STOPPING: The replication
+          #     is under the process of being stopped. This is a transient state.
+          #    - ASYNC_REPLICATION_STATE_STOPPED: The replication
+          #     between the disk-pairs have stopped.
+          #     - ASYNC_REPLICATION_STATE_REPLICATING_BEHIND_CG_HIGH_CHURN:
+          #     The replication is lagging above the SLO limit for the disk in the
+          #     consistency group due to disk&#x27;s change rate being above the supported
+          #     limit.
+      &quot;replicationDiskPair&quot;: {
+        &quot;primaryDisk&quot;: &quot;A String&quot;, # Output only. URL of the primary disk.
+        &quot;secondaryDisk&quot;: &quot;A String&quot;, # Output only. URL of the secondary disk.
+    &quot;lastReplicationDetails&quot;: {
+      &quot;lastReplicationTime&quot;: &quot;A String&quot;, # Output only. The last sync time of the device pair.
+      &quot;secondsSinceLastReplication&quot;: &quot;A String&quot;, # Output only. Replication lag in seconds. This will only be populated if device is in
+          # replicating state. Note that the value is calculated sometime during
+          # request processing and at the instant the client receives the response,
+          # the current replication_lag may have changed.
+  &quot;etag&quot;: &quot;A String&quot;, # end_interface: MixerGetResponseWithEtagBuilder
+    <code class="details" id="getIamPolicy">getIamPolicy(project, zone, resource, optionsRequestedPolicyVersion=None, x__xgafv=None)</code>
+    <code class="details" id="insert">insert(project, zone, body=None, requestId=None, sourceImage=None, x__xgafv=None)</code>
+  <pre>Creates a persistent disk in the specified project using the data
+in the request. You can create a disk from a source
+(sourceImage, sourceSnapshot, orsourceDisk) or create an empty 500 GB data disk by
+omitting all properties. You can also create a disk that is larger than
+the default size by specifying the sizeGb property.
+  sourceImage: string, Source image to restore onto a disk. This field is optional.
+  <pre>Retrieves a list of persistent disks contained within
+    { # A list of Disk resources.
+  &quot;items&quot;: [ # A list of Disk resources.
+  &quot;kind&quot;: &quot;compute#diskList&quot;, # Output only. [Output Only] Type of resource. Always compute#diskList for
+      # lists of disks.
+    <code class="details" id="removeResourcePolicies">removeResourcePolicies(project, zone, disk, body=None, requestId=None, x__xgafv=None)</code>
+  <pre>Removes resource policies from a disk.
+  &quot;resourcePolicies&quot;: [ # Resource policies to be removed from this disk.
+    <code class="details" id="resize">resize(project, zone, disk, body=None, requestId=None, x__xgafv=None)</code>
+  <pre>Resizes the specified persistent disk.
+You can only increase the size of the disk.
+  disk: string, The name of the persistent disk. (required)
+  &quot;sizeGb&quot;: &quot;A String&quot;, # The new size of the persistent disk, which is specified in GB.
+    <code class="details" id="setIamPolicy">setIamPolicy(project, zone, resource, body=None, x__xgafv=None)</code>
+  &quot;bindings&quot;: [ # Flatten Policy to create a backwacd compatible wire-format.
+    <code class="details" id="setLabels">setLabels(project, zone, resource, body=None, requestId=None, x__xgafv=None)</code>
+  <pre>Sets the labels on a disk. To learn more about labels, read theLabeling
+    <code class="details" id="startAsyncReplication">startAsyncReplication(project, zone, disk, body=None, requestId=None, x__xgafv=None)</code>
+  <pre>Starts asynchronous replication.
+Must be invoked on the primary disk.
+  &quot;asyncSecondaryDisk&quot;: &quot;A String&quot;, # The secondary disk to start asynchronous replication to.
+      # You can provide this as a partial or full URL to the resource. For example,
+      # the following are valid values:
+    <code class="details" id="stopAsyncReplication">stopAsyncReplication(project, zone, disk, requestId=None, x__xgafv=None)</code>
+  <pre>Stops asynchronous replication.
+Can be invoked either on the primary or on the secondary disk.
+    <code class="details" id="stopGroupAsyncReplication">stopGroupAsyncReplication(project, zone, body=None, requestId=None, x__xgafv=None)</code>
+  <pre>Stops asynchronous replication for a consistency group of disks.
+Can be invoked either in the primary or secondary scope.
+  zone: string, The name of the zone for this request. This must be the zone of the primary
+or secondary disks in the consistency group. (required)
+{ # A transient resource used in compute.disks.stopGroupAsyncReplication and
+    # compute.regionDisks.stopGroupAsyncReplication. It is only used to process
+  &quot;resourcePolicy&quot;: &quot;A String&quot;, # The URL of the DiskConsistencyGroupPolicy for the group of disks to stop.
+    <code class="details" id="update">update(project, zone, disk, body=None, paths=None, requestId=None, updateMask=None, x__xgafv=None)</code>
+  <pre>Updates the specified disk with the data included in the request.
+The update is performed only on selected fields included as part
+of update-mask.
+  paths: string, A parameter (repeated)
+    <code class="details" id="updateKmsKey">updateKmsKey(project, zone, disk, body=None, requestId=None, x__xgafv=None)</code>
+  <pre>Rotates the customer-managed
+encryption key to the latest version for the specified persistent disk.
+  &quot;kmsKeyName&quot;: &quot;A String&quot;, # Optional. The new KMS key to replace the current one on the disk. If empty, the disk
+      # will be re-encrypted using the primary version of the disk&#x27;s current KMS
+      # key.
+      # The KMS key can be provided in the following formats:
+      #      - projects/project_id/locations/location/keyRings/key_ring/cryptoKeys/key
+      # Where project is the project ID or
+      # project number.
+    <code class="details" id="waitForReplicationCatchUp">waitForReplicationCatchUp(project, zone, disk, body=None, requestId=None, x__xgafv=None)</code>
+  <pre>Wait for replication to catch up on the secondary disk.
+  disk: string, The name of the persistent disk.
+  &quot;maxWaitDuration&quot;: &quot;A String&quot;,

@@ -1,0 +1,7 @@
+  let echo
+  let requireError
+    echo = require('@electron-ci/echo')
+    requireError = error
+  if (requireError != null) {
+    ipcRenderer.send('answer', `Require echo failed: ${requireError.message}`)
+    ipcRenderer.send('answer', typeof echo)

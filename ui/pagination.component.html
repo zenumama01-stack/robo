@@ -1,0 +1,30 @@
+<div class="pagination-container">
+  <!-- Records summary -->
+  <div class="pagination-info">
+    <span class="records-display">
+      @if (pagination.totalRecords > 0) {
+        <span class="records-shown">{{ displayedTo | number }}</span>
+        <span class="records-separator">of</span>
+        <span class="records-total">{{ pagination.totalRecords | number }}</span>
+        <span class="records-label">records</span>
+        <span class="no-records">No records</span>
+  <!-- Progress bar -->
+      <div class="progress-bar-container">
+          class="progress-bar-fill"
+          [style.width.%]="progressPercent"
+          [class.complete]="!pagination.hasMore">
+  <!-- Load more button -->
+  @if (pagination.hasMore) {
+    <div class="load-more-section">
+        class="load-more-btn"
+        [disabled]="pagination.isLoading"
+        (click)="onLoadMore()">
+        @if (pagination.isLoading) {
+          <i class="fa-solid fa-spinner fa-spin loading-icon"></i>
+          <i class="fa-solid fa-arrow-down load-icon"></i>
+          <span>Load {{ nextLoadCount | number }} more</span>
+          <span class="remaining-badge">{{ remainingRecords | number }} remaining</span>
+  <!-- All loaded indicator -->
+  @if (!pagination.hasMore && pagination.totalRecords > 0) {
+    <div class="all-loaded">
+      <span>All records loaded</span>

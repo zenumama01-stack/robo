@@ -1,0 +1,45 @@
+<h1><a href="dataplex_v1.html">Cloud Dataplex API</a> . <a href="dataplex_v1.projects.html">projects</a> . <a href="dataplex_v1.projects.locations.html">locations</a> . <a href="dataplex_v1.projects.locations.lakes.html">lakes</a></h1>
+  <code><a href="dataplex_v1.projects.locations.lakes.actions.html">actions()</a></code>
+  <code><a href="dataplex_v1.projects.locations.lakes.environments.html">environments()</a></code>
+  <code><a href="dataplex_v1.projects.locations.lakes.tasks.html">tasks()</a></code>
+  <code><a href="dataplex_v1.projects.locations.lakes.zones.html">zones()</a></code>
+  <code><a href="#create">create(parent, body=None, lakeId=None, validateOnly=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Creates a lake resource.</p>
+<p class="firstline">Deletes a lake resource. All zones within the lake must be deleted before the lake can be deleted.</p>
+<p class="firstline">Retrieves a lake resource.</p>
+<p class="firstline">Lists lake resources in a project and location.</p>
+<p class="firstline">Updates a lake resource.</p>
+    <code class="details" id="create">create(parent, body=None, lakeId=None, validateOnly=None, x__xgafv=None)</code>
+  <pre>Creates a lake resource.
+  parent: string, Required. The resource name of the lake location, of the form: projects/{project_number}/locations/{location_id} where location_id refers to a Google Cloud region. (required)
+{ # A lake is a centralized repository for managing enterprise data across the organization distributed across many cloud projects, and stored in a variety of storage services such as Google Cloud Storage and BigQuery. The resources attached to a lake are referred to as managed resources. Data within these managed resources can be structured or unstructured. A lake provides data admins with tools to organize, secure and manage their data at scale, and provides data scientists and data engineers an integrated experience to easily search, discover, analyze and transform data and associated metadata.
+  &quot;assetStatus&quot;: { # Aggregated status of the underlying assets of a lake or zone. # Output only. Aggregated status of the underlying assets of the lake.
+    &quot;activeAssets&quot;: 42, # Number of active assets.
+    &quot;securityPolicyApplyingAssets&quot;: 42, # Number of assets that are in process of updating the security policy on attached resources.
+    &quot;updateTime&quot;: &quot;A String&quot;, # Last update time of the status.
+  &quot;createTime&quot;: &quot;A String&quot;, # Output only. The time when the lake was created.
+  &quot;description&quot;: &quot;A String&quot;, # Optional. Description of the lake.
+  &quot;labels&quot;: { # Optional. User-defined labels for the lake.
+  &quot;metastore&quot;: { # Settings to manage association of Dataproc Metastore with a lake. # Optional. Settings to manage lake and Dataproc Metastore service instance association.
+    &quot;service&quot;: &quot;A String&quot;, # Optional. A relative reference to the Dataproc Metastore (https://cloud.google.com/dataproc-metastore/docs) service associated with the lake: projects/{project_id}/locations/{location_id}/services/{service_id}
+  &quot;metastoreStatus&quot;: { # Status of Lake and Dataproc Metastore service instance association. # Output only. Metastore status of the lake.
+    &quot;endpoint&quot;: &quot;A String&quot;, # The URI of the endpoint used to access the Metastore service.
+    &quot;message&quot;: &quot;A String&quot;, # Additional information about the current status.
+    &quot;state&quot;: &quot;A String&quot;, # Current state of association.
+    &quot;updateTime&quot;: &quot;A String&quot;, # Last update time of the metastore status of the lake.
+  &quot;name&quot;: &quot;A String&quot;, # Output only. The relative resource name of the lake, of the form: projects/{project_number}/locations/{location_id}/lakes/{lake_id}.
+  &quot;serviceAccount&quot;: &quot;A String&quot;, # Output only. Service account associated with this lake. This service account must be authorized to access or operate on resources managed by the lake.
+  &quot;state&quot;: &quot;A String&quot;, # Output only. Current state of the lake.
+  &quot;uid&quot;: &quot;A String&quot;, # Output only. System generated globally unique ID for the lake. This ID will be different if the lake is deleted and re-created with the same name.
+  &quot;updateTime&quot;: &quot;A String&quot;, # Output only. The time when the lake was last updated.
+  lakeId: string, Required. Lake identifier. This ID will be used to generate names such as database and dataset names when publishing metadata to Hive Metastore and BigQuery. * Must contain only lowercase letters, numbers and hyphens. * Must start with a letter. * Must end with a number or a letter. * Must be between 1-63 characters. * Must be unique within the customer project / location.
+  <pre>Deletes a lake resource. All zones within the lake must be deleted before the lake can be deleted.
+  name: string, Required. The resource name of the lake: projects/{project_number}/locations/{location_id}/lakes/{lake_id}. (required)
+  <pre>Retrieves a lake resource.
+  <pre>Lists lake resources in a project and location.
+  pageSize: integer, Optional. Maximum number of Lakes to return. The service may return fewer than this value. If unspecified, at most 10 lakes will be returned. The maximum value is 1000; values above 1000 will be coerced to 1000.
+  pageToken: string, Optional. Page token received from a previous ListLakes call. Provide this to retrieve the subsequent page. When paginating, all other parameters provided to ListLakes must match the call that provided the page token.
+    { # List lakes response.
+  &quot;lakes&quot;: [ # Lakes under the given parent location.
+  <pre>Updates a lake resource.
+  name: string, Output only. The relative resource name of the lake, of the form: projects/{project_number}/locations/{location_id}/lakes/{lake_id}. (required)

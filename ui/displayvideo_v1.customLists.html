@@ -1,0 +1,20 @@
+<h1><a href="displayvideo_v1.html">Display & Video 360 API</a> . <a href="displayvideo_v1.customLists.html">customLists</a></h1>
+  <code><a href="#get">get(customListId, advertiserId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Gets a custom list.</p>
+  <code><a href="#list">list(advertiserId=None, filter=None, orderBy=None, pageSize=None, pageToken=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Lists custom lists. The order is defined by the order_by parameter.</p>
+    <code class="details" id="get">get(customListId, advertiserId=None, x__xgafv=None)</code>
+  <pre>Gets a custom list.
+  customListId: string, Required. The ID of the custom list to fetch. (required)
+  advertiserId: string, The ID of the DV360 advertiser that has access to the fetched custom lists.
+    { # Describes a custom list entity, such as a custom affinity or custom intent audience list.
+  &quot;customListId&quot;: &quot;A String&quot;, # Output only. The unique ID of the custom list. Assigned by the system.
+  &quot;displayName&quot;: &quot;A String&quot;, # Output only. The display name of the custom list. .
+  &quot;name&quot;: &quot;A String&quot;, # Output only. The resource name of the custom list.
+    <code class="details" id="list">list(advertiserId=None, filter=None, orderBy=None, pageSize=None, pageToken=None, x__xgafv=None)</code>
+  <pre>Lists custom lists. The order is defined by the order_by parameter.
+  filter: string, Allows filtering by custom list fields. Supported syntax: * Filter expressions for custom lists can only contain at most one restriction. * A restriction has the form of `{field} {operator} {value}`. * All fields must use the `HAS (:)` operator. Supported fields: * `displayName` Examples: * All custom lists for which the display name contains &quot;Google&quot;: `displayName:&quot;Google&quot;`. The length of this field should be no more than 500 characters. Reference our [filter `LIST` requests](/display-video/api/guides/how-tos/filters) guide for more information.
+  orderBy: string, Field by which to sort the list. Acceptable values are: * `customListId` (default) * `displayName` The default sorting order is ascending. To specify descending order for a field, a suffix &quot;desc&quot; should be added to the field name. Example: `displayName desc`.
+  pageToken: string, A token identifying a page of results the server should return. Typically, this is the value of next_page_token returned from the previous call to `ListCustomLists` method. If not specified, the first page of results will be returned.
+  &quot;customLists&quot;: [ # The list of custom lists. This list will be absent if empty.
+  &quot;nextPageToken&quot;: &quot;A String&quot;, # A token to retrieve the next page of results. Pass this value in the page_token field in the subsequent call to `ListCustomLists` method to retrieve the next page of results.

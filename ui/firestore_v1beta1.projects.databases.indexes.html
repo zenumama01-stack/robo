@@ -1,0 +1,21 @@
+<h1><a href="firestore_v1beta1.html">Cloud Firestore API</a> . <a href="firestore_v1beta1.projects.html">projects</a> . <a href="firestore_v1beta1.projects.databases.html">databases</a> . <a href="firestore_v1beta1.projects.databases.indexes.html">indexes</a></h1>
+<p class="firstline">Creates the specified index. A newly created index's initial state is `CREATING`. On completion of the returned google.longrunning.Operation, the state will be `READY`. If the index already exists, the call will return an `ALREADY_EXISTS` status. During creation, the process could result in an error, in which case the index will move to the `ERROR` state. The process can be recovered by fixing the data that caused the error, removing the index with delete, then re-creating the index with create. Indexes with a single field cannot be created.</p>
+<p class="firstline">Deletes an index.</p>
+<p class="firstline">Lists the indexes that match the specified filters.</p>
+  <pre>Creates the specified index. A newly created index&#x27;s initial state is `CREATING`. On completion of the returned google.longrunning.Operation, the state will be `READY`. If the index already exists, the call will return an `ALREADY_EXISTS` status. During creation, the process could result in an error, in which case the index will move to the `ERROR` state. The process can be recovered by fixing the data that caused the error, removing the index with delete, then re-creating the index with create. Indexes with a single field cannot be created.
+  parent: string, The name of the database this index will apply to. For example: `projects/{project_id}/databases/{database_id}` (required)
+{ # An index definition.
+  &quot;collectionId&quot;: &quot;A String&quot;, # The collection ID to which this index applies. Required.
+  &quot;fields&quot;: [ # The fields to index.
+    { # A field of an index.
+      &quot;fieldPath&quot;: &quot;A String&quot;, # The path of the field. Must match the field path specification described by google.firestore.v1beta1.Document.fields. Special field path `__name__` may be used by itself or at the end of a path. `__type__` may be used only at the end of path.
+      &quot;mode&quot;: &quot;A String&quot;, # The field&#x27;s mode.
+  &quot;name&quot;: &quot;A String&quot;, # The resource name of the index. Output only.
+  &quot;state&quot;: &quot;A String&quot;, # The state of the index. Output only.
+  <pre>Deletes an index.
+  name: string, The index name. For example: `projects/{project_id}/databases/{database_id}/indexes/{index_id}` (required)
+  name: string, The name of the index. For example: `projects/{project_id}/databases/{database_id}/indexes/{index_id}` (required)
+  <pre>Lists the indexes that match the specified filters.
+  parent: string, The database name. For example: `projects/{project_id}/databases/{database_id}` (required)
+  pageSize: integer, The standard List page size.
+  pageToken: string, The standard List page token.

@@ -1,0 +1,20 @@
+<h1><a href="securitycenter_v1.html">Security Command Center API</a> . <a href="securitycenter_v1.organizations.html">organizations</a> . <a href="securitycenter_v1.organizations.simulations.html">simulations</a> . <a href="securitycenter_v1.organizations.simulations.attackExposureResults.html">attackExposureResults</a> . <a href="securitycenter_v1.organizations.simulations.attackExposureResults.valuedResources.html">valuedResources</a></h1>
+<p class="firstline">Lists the valued resources for a set of simulation results and filter.</p>
+  <pre>Lists the valued resources for a set of simulation results and filter.
+  parent: string, Required. Name of parent to list valued resources. Valid formats: `organizations/{organization}`, `organizations/{organization}/simulations/{simulation}` `organizations/{organization}/simulations/{simulation}/attackExposureResults/{attack_exposure_result_v2}` (required)
+  filter: string, The filter expression that filters the valued resources in the response. Supported fields: * `resource_value` supports = * `resource_type` supports =
+  orderBy: string, Optional. The fields by which to order the valued resources response. Supported fields: * `exposed_score` * `resource_value` * `resource_type` * `resource` * `display_name` Values should be a comma separated list of fields. For example: `exposed_score,resource_value`. The default sorting order is descending. To specify ascending or descending order for a field, append a ` ASC` or a ` DESC` suffix, respectively; for example: `exposed_score DESC`.
+  pageToken: string, The value returned by the last `ListValuedResourcesResponse`; indicates that this is a continuation of a prior `ListValuedResources` call, and that the system should return the next page of data.
+    { # Response message for listing the valued resources for a given simulation.
+  &quot;totalSize&quot;: 42, # The estimated total number of results matching the query.
+  &quot;valuedResources&quot;: [ # The valued resources that the attack path simulation identified.
+    { # A resource that is determined to have value to a user&#x27;s system
+      &quot;displayName&quot;: &quot;A String&quot;, # Human-readable name of the valued resource.
+      &quot;exposedScore&quot;: 3.14, # Exposed score for this valued resource. A value of 0 means no exposure was detected exposure.
+      &quot;name&quot;: &quot;A String&quot;, # Valued resource name, for example, e.g.: `organizations/123/simulations/456/valuedResources/789`
+      &quot;resource&quot;: &quot;A String&quot;, # The [full resource name](https://cloud.google.com/apis/design/resource_names#full_resource_name) of the valued resource.
+      &quot;resourceType&quot;: &quot;A String&quot;, # The [resource type](https://cloud.google.com/asset-inventory/docs/supported-asset-types) of the valued resource.
+      &quot;resourceValue&quot;: &quot;A String&quot;, # How valuable this resource is.
+      &quot;resourceValueConfigsUsed&quot;: [ # List of resource value configurations&#x27; metadata used to determine the value of this resource. Maximum of 100.
+        { # Metadata about a ResourceValueConfig. For example, id and name.
+          &quot;name&quot;: &quot;A String&quot;, # Resource value config name

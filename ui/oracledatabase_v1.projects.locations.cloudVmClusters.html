@@ -1,0 +1,70 @@
+<h1><a href="oracledatabase_v1.html">Oracle Database@Google Cloud API</a> . <a href="oracledatabase_v1.projects.html">projects</a> . <a href="oracledatabase_v1.projects.locations.html">locations</a> . <a href="oracledatabase_v1.projects.locations.cloudVmClusters.html">cloudVmClusters</a></h1>
+  <code><a href="oracledatabase_v1.projects.locations.cloudVmClusters.dbNodes.html">dbNodes()</a></code>
+<p class="firstline">Returns the dbNodes Resource.</p>
+  <code><a href="#create">create(parent, body=None, cloudVmClusterId=None, requestId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Creates a new VM Cluster in a given project and location.</p>
+<p class="firstline">Deletes a single VM Cluster.</p>
+<p class="firstline">Gets details of a single VM Cluster.</p>
+<p class="firstline">Lists the VM Clusters in a given project and location.</p>
+    <code class="details" id="create">create(parent, body=None, cloudVmClusterId=None, requestId=None, x__xgafv=None)</code>
+  <pre>Creates a new VM Cluster in a given project and location.
+{ # Details of the Cloud VM Cluster resource. https://docs.oracle.com/en-us/iaas/api/#/en/database/20160918/CloudVmCluster/
+  &quot;backupOdbSubnet&quot;: &quot;A String&quot;, # Optional. The name of the backup OdbSubnet associated with the VM Cluster. Format: projects/{project}/locations/{location}/odbNetworks/{odb_network}/odbSubnets/{odb_subnet}
+  &quot;backupSubnetCidr&quot;: &quot;A String&quot;, # Optional. CIDR range of the backup subnet.
+  &quot;cidr&quot;: &quot;A String&quot;, # Optional. Network settings. CIDR to use for cluster IP allocation.
+  &quot;createTime&quot;: &quot;A String&quot;, # Output only. The date and time that the VM cluster was created.
+  &quot;exadataInfrastructure&quot;: &quot;A String&quot;, # Required. The name of the Exadata Infrastructure resource on which VM cluster resource is created, in the following format: projects/{project}/locations/{region}/cloudExadataInfrastuctures/{cloud_extradata_infrastructure}
+  &quot;gcpOracleZone&quot;: &quot;A String&quot;, # Output only. The GCP Oracle zone where Oracle CloudVmCluster is hosted. This will be the same as the gcp_oracle_zone of the CloudExadataInfrastructure. Example: us-east4-b-r2.
+  &quot;identityConnector&quot;: { # The identity connector details which will allow OCI to securely access the resources in the customer project. # Output only. The identity connector details which will allow OCI to securely access the resources in the customer project.
+    &quot;connectionState&quot;: &quot;A String&quot;, # Output only. The connection state of the identity connector.
+    &quot;serviceAgentEmail&quot;: &quot;A String&quot;, # Output only. A google managed service account on which customers can grant roles to access resources in the customer project. Example: `p176944527254-55-75119d87fd8f@gcp-sa-oci.iam.gserviceaccount.com`
+  &quot;labels&quot;: { # Optional. Labels or tags associated with the VM Cluster.
+  &quot;name&quot;: &quot;A String&quot;, # Identifier. The name of the VM Cluster resource with the format: projects/{project}/locations/{region}/cloudVmClusters/{cloud_vm_cluster}
+  &quot;network&quot;: &quot;A String&quot;, # Optional. The name of the VPC network. Format: projects/{project}/global/networks/{network}
+  &quot;odbNetwork&quot;: &quot;A String&quot;, # Optional. The name of the OdbNetwork associated with the VM Cluster. Format: projects/{project}/locations/{location}/odbNetworks/{odb_network} It is optional but if specified, this should match the parent ODBNetwork of the odb_subnet and backup_odb_subnet.
+  &quot;odbSubnet&quot;: &quot;A String&quot;, # Optional. The name of the OdbSubnet associated with the VM Cluster for IP allocation. Format: projects/{project}/locations/{location}/odbNetworks/{odb_network}/odbSubnets/{odb_subnet}
+  &quot;properties&quot;: { # Various properties and settings associated with Exadata VM cluster. # Optional. Various properties of the VM Cluster.
+    &quot;clusterName&quot;: &quot;A String&quot;, # Optional. OCI Cluster name.
+    &quot;compartmentId&quot;: &quot;A String&quot;, # Output only. Compartment ID of cluster.
+    &quot;computeModel&quot;: &quot;A String&quot;, # Output only. The compute model of the VM Cluster.
+    &quot;cpuCoreCount&quot;: 42, # Required. Number of enabled CPU cores.
+    &quot;dataStorageSizeTb&quot;: 3.14, # Optional. The data disk group size to be allocated in TBs.
+    &quot;dbServerOcids&quot;: [ # Optional. OCID of database servers.
+    &quot;diagnosticsDataCollectionOptions&quot;: { # Data collection options for diagnostics. # Optional. Data collection options for diagnostics.
+      &quot;diagnosticsEventsEnabled&quot;: True or False, # Optional. Indicates whether diagnostic collection is enabled for the VM cluster
+      &quot;healthMonitoringEnabled&quot;: True or False, # Optional. Indicates whether health monitoring is enabled for the VM cluster
+      &quot;incidentLogsEnabled&quot;: True or False, # Optional. Indicates whether incident logs and trace collection are enabled for the VM cluster
+    &quot;diskRedundancy&quot;: &quot;A String&quot;, # Optional. The type of redundancy.
+    &quot;dnsListenerIp&quot;: &quot;A String&quot;, # Output only. DNS listener IP.
+    &quot;domain&quot;: &quot;A String&quot;, # Output only. Parent DNS domain where SCAN DNS and hosts names are qualified. ex: ocispdelegated.ocisp10jvnet.oraclevcn.com
+    &quot;giVersion&quot;: &quot;A String&quot;, # Optional. Grid Infrastructure Version.
+    &quot;hostname&quot;: &quot;A String&quot;, # Output only. host name without domain. format: &quot;-&quot; with some suffix. ex: sp2-yi0xq where &quot;sp2&quot; is the hostname_prefix.
+    &quot;hostnamePrefix&quot;: &quot;A String&quot;, # Optional. Prefix for VM cluster host names.
+    &quot;licenseType&quot;: &quot;A String&quot;, # Required. License type of VM Cluster.
+    &quot;localBackupEnabled&quot;: True or False, # Optional. Use local backup.
+    &quot;nodeCount&quot;: 42, # Optional. Number of database servers.
+    &quot;ocid&quot;: &quot;A String&quot;, # Output only. Oracle Cloud Infrastructure ID of VM Cluster.
+    &quot;ocpuCount&quot;: 3.14, # Optional. OCPU count per VM. Minimum is 0.1.
+    &quot;scanDns&quot;: &quot;A String&quot;, # Output only. SCAN DNS name. ex: sp2-yi0xq-scan.ocispdelegated.ocisp10jvnet.oraclevcn.com
+    &quot;scanDnsRecordId&quot;: &quot;A String&quot;, # Output only. OCID of scan DNS record.
+    &quot;scanIpIds&quot;: [ # Output only. OCIDs of scan IPs.
+    &quot;scanListenerPortTcp&quot;: 42, # Output only. SCAN listener port - TCP
+    &quot;scanListenerPortTcpSsl&quot;: 42, # Output only. SCAN listener port - TLS
+    &quot;shape&quot;: &quot;A String&quot;, # Output only. Shape of VM Cluster.
+    &quot;sparseDiskgroupEnabled&quot;: True or False, # Optional. Use exadata sparse snapshots.
+    &quot;sshPublicKeys&quot;: [ # Optional. SSH public keys to be stored with cluster.
+    &quot;state&quot;: &quot;A String&quot;, # Output only. State of the cluster.
+    &quot;storageSizeGb&quot;: 42, # Output only. The storage allocation for the disk group, in gigabytes (GB).
+    &quot;systemVersion&quot;: &quot;A String&quot;, # Optional. Operating system version of the image.
+    &quot;timeZone&quot;: { # Represents a time zone from the [IANA Time Zone Database](https://www.iana.org/time-zones). # Optional. Time zone of VM Cluster to set. Defaults to UTC if not specified.
+  cloudVmClusterId: string, Required. The ID of the VM Cluster to create. This value is restricted to (^[a-z]([a-z0-9-]{0,61}[a-z0-9])?$) and must be a maximum of 63 characters in length. The value must start with a letter and end with a letter or a number.
+  <pre>Deletes a single VM Cluster.
+  name: string, Required. The name of the Cloud VM Cluster in the following format: projects/{project}/locations/{location}/cloudVmClusters/{cloud_vm_cluster}. (required)
+  force: boolean, Optional. If set to true, all child resources for the VM Cluster will be deleted. A VM Cluster can only be deleted once all its child resources have been deleted.
+  <pre>Gets details of a single VM Cluster.
+  <pre>Lists the VM Clusters in a given project and location.
+  pageSize: integer, Optional. The number of VM clusters to return. If unspecified, at most 50 VM clusters will be returned. The maximum value is 1,000.
+  pageToken: string, Optional. A token identifying the page of results the server returns.
+    { # The response for `CloudVmCluster.List`.
+  &quot;cloudVmClusters&quot;: [ # The list of VM Clusters.
+  &quot;nextPageToken&quot;: &quot;A String&quot;, # A token to fetch the next page of results.

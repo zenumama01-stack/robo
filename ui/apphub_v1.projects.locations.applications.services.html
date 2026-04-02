@@ -1,0 +1,42 @@
+<h1><a href="apphub_v1.html">App Hub API</a> . <a href="apphub_v1.projects.html">projects</a> . <a href="apphub_v1.projects.locations.html">locations</a> . <a href="apphub_v1.projects.locations.applications.html">applications</a> . <a href="apphub_v1.projects.locations.applications.services.html">services</a></h1>
+<p class="firstline">Creates a Service in an Application.</p>
+<p class="firstline">Deletes a Service from an Application.</p>
+<p class="firstline">Gets a Service in an Application.</p>
+<p class="firstline">Lists Services in an Application.</p>
+<p class="firstline">Updates a Service in an Application.</p>
+  <pre>Creates a Service in an Application.
+  parent: string, Required. Fully qualified name of the parent Application to create the Service in. Expected format: `projects/{project}/locations/{location}/applications/{application}`. (required)
+{ # Service is an App Hub data model that contains a discovered service, which represents a network or API interface that exposes some functionality to clients for consumption over the network.
+  &quot;description&quot;: &quot;A String&quot;, # Optional. User-defined description of a Service. Can have a maximum length of 2048 characters.
+  &quot;discoveredService&quot;: &quot;A String&quot;, # Required. Immutable. The resource name of the original discovered service.
+  &quot;displayName&quot;: &quot;A String&quot;, # Optional. User-defined name for the Service. Can have a maximum length of 63 characters.
+  &quot;name&quot;: &quot;A String&quot;, # Identifier. The resource name of a Service. Format: `&quot;projects/{host-project-id}/locations/{location}/applications/{application-id}/services/{service-id}&quot;`
+  &quot;serviceProperties&quot;: { # Properties of an underlying cloud resource that can comprise a Service. # Output only. Properties of an underlying compute resource that can comprise a Service. These are immutable.
+    &quot;extendedMetadata&quot;: { # Output only. Additional metadata specific to the resource type. The key is a string that identifies the type of metadata and the value is the metadata contents specific to that type. Key format: `apphub.googleapis.com/{metadataType}`
+      &quot;a_key&quot;: { # Additional metadata for a Service or Workload.
+        &quot;metadataStruct&quot;: { # Output only. The metadata contents.
+    &quot;functionalType&quot;: { # The functional type of a service or workload. # Output only. The type of the service.
+      &quot;type&quot;: &quot;A String&quot;, # Output only. The functional type of a service or workload.
+    &quot;gcpProject&quot;: &quot;A String&quot;, # Output only. The service project identifier that the underlying cloud resource resides in.
+    &quot;identity&quot;: { # The identity associated with a service or workload. # Output only. The identity associated with the service.
+      &quot;principal&quot;: &quot;A String&quot;, # Output only. The principal of the identity. Supported formats: * `sa://my-sa@PROJECT_ID.iam.gserviceaccount.com` for GCP Service Account * `principal://POOL_ID.global.PROJECT_NUMBER.workload.id.goog/ns/NAMESPACE_ID/sa/MANAGED_IDENTITY_ID` for Managed Workload Identity
+    &quot;location&quot;: &quot;A String&quot;, # Output only. The location that the underlying resource resides in, for example, us-west1.
+    &quot;registrationType&quot;: { # The registration type of a service. # Output only. The registration type of the service.
+      &quot;type&quot;: &quot;A String&quot;, # Output only. The registration type of a service.
+    &quot;zone&quot;: &quot;A String&quot;, # Output only. The location that the underlying resource resides in if it is zonal, for example, us-west1-a).
+  &quot;serviceReference&quot;: { # Reference to an underlying networking resource that can comprise a Service. # Output only. Reference to an underlying networking resource that can comprise a Service. These are immutable.
+    &quot;uri&quot;: &quot;A String&quot;, # Output only. The underlying resource URI. For example, URI of Forwarding Rule, URL Map, and Backend Service.
+  &quot;state&quot;: &quot;A String&quot;, # Output only. Service state.
+  &quot;uid&quot;: &quot;A String&quot;, # Output only. A universally unique identifier (UUID) for the `Service` in the UUID4 format.
+  serviceId: string, Required. The Service identifier. Must contain only lowercase letters, numbers or hyphens, with the first character a letter, the last a letter or a number, and a 63 character maximum.
+  <pre>Deletes a Service from an Application.
+  name: string, Required. Fully qualified name of the Service to delete from an Application. Expected format: `projects/{project}/locations/{location}/applications/{application}/services/{service}`. (required)
+  <pre>Gets a Service in an Application.
+  name: string, Required. Fully qualified name of the Service to fetch. Expected format: `projects/{project}/locations/{location}/applications/{application}/services/{service}`. (required)
+  <pre>Lists Services in an Application.
+  parent: string, Required. Fully qualified name of the parent Application to list Services for. Expected format: `projects/{project}/locations/{location}/applications/{application}`. (required)
+    { # Response for ListServices.
+  &quot;services&quot;: [ # List of Services.
+  <pre>Updates a Service in an Application.
+  name: string, Identifier. The resource name of a Service. Format: `&quot;projects/{host-project-id}/locations/{location}/applications/{application-id}/services/{service-id}&quot;` (required)
+  updateMask: string, Required. Field mask is used to specify the fields to be overwritten in the Service resource by the update. The fields specified in the update_mask are relative to the resource, not the full request. The API changes the values of the fields as specified in the update_mask. The API ignores the values of all fields not covered by the update_mask. You can also unset a field by not specifying it in the updated message, but adding the field to the mask. This clears whatever value the field previously had.

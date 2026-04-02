@@ -1,0 +1,52 @@
+<h1><a href="compute_alpha.html">Compute Engine API</a> . <a href="compute_alpha.nodeTemplates.html">nodeTemplates</a></h1>
+<p class="firstline">Retrieves an aggregated list of node templates.</p>
+  <code><a href="#delete">delete(project, region, nodeTemplate, requestId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Deletes the specified NodeTemplate resource.</p>
+  <code><a href="#get">get(project, region, nodeTemplate, x__xgafv=None)</a></code></p>
+<p class="firstline">Returns the specified node template.</p>
+<p class="firstline">Creates a NodeTemplate resource in the specified project using the data</p>
+<p class="firstline">Retrieves a list of node templates available to the specified</p>
+  <pre>Retrieves an aggregated list of node templates.
+  &quot;items&quot;: { # A list of NodeTemplatesScopedList resources.
+    &quot;a_key&quot;: { # [Output Only] Name of the scope containing this set of node templates.
+      &quot;nodeTemplates&quot;: [ # [Output Only] A list of node templates contained in this scope.
+        { # Represent a sole-tenant Node Template resource.
+            # You can use a template to define properties for nodes in a node group. For
+            # more information, readCreating node groups
+            # and instances.
+          &quot;accelerators&quot;: [
+          &quot;disks&quot;: [
+          &quot;kind&quot;: &quot;compute#nodeTemplate&quot;, # Output only. [Output Only] The type of the resource. Alwayscompute#nodeTemplate for node templates.
+              # a dash, lowercase letter, or digit, except the last character, which
+          &quot;nodeAffinityLabels&quot;: { # Labels to use for node affinity, which will be used in instance scheduling.
+          &quot;nodeType&quot;: &quot;A String&quot;, # The node type to use for nodes group that are created from this template.
+          &quot;nodeTypeFlexibility&quot;: { # Do not use. Instead, use the node_type property.
+            &quot;cpus&quot;: &quot;A String&quot;,
+            &quot;localSsd&quot;: &quot;A String&quot;,
+            &quot;memory&quot;: &quot;A String&quot;,
+          &quot;region&quot;: &quot;A String&quot;, # Output only. [Output Only] The name of the region where the node template resides,
+              # such as us-central1.
+          &quot;serverBinding&quot;: { # Sets the binding properties for the physical server. Valid values include:
+              #    - *[Default]* RESTART_NODE_ON_ANY_SERVER:
+              #    Restarts VMs on any available
+              #    physical server
+              #    - RESTART_NODE_ON_MINIMAL_SERVER: Restarts VMs on the same
+              #    physical server whenever possible
+              # See Sole-tenant
+              # node options for more information.
+          &quot;status&quot;: &quot;A String&quot;, # Output only. [Output Only] The status of the node template. One of the following values:CREATING, READY, and DELETING.
+      &quot;warning&quot;: { # [Output Only] An informational warning that appears when the node templates
+  &quot;kind&quot;: &quot;compute#nodeTemplateAggregatedList&quot;, # Output only. [Output Only] Type of resource.Alwayscompute#nodeTemplateAggregatedList for aggregated lists of
+      # node templates.
+    <code class="details" id="delete">delete(project, region, nodeTemplate, requestId=None, x__xgafv=None)</code>
+  <pre>Deletes the specified NodeTemplate resource.
+  nodeTemplate: string, Name of the NodeTemplate resource to delete. (required)
+    <code class="details" id="get">get(project, region, nodeTemplate, x__xgafv=None)</code>
+  <pre>Returns the specified node template.
+  nodeTemplate: string, Name of the node template to return. (required)
+  <pre>Creates a NodeTemplate resource in the specified project using the data
+  <pre>Retrieves a list of node templates available to the specified
+    { # Contains a list of node templates.
+  &quot;items&quot;: [ # A list of NodeTemplate resources.
+  &quot;kind&quot;: &quot;compute#nodeTemplateList&quot;, # Output only. [Output Only] Type of resource.Always compute#nodeTemplateList
+      # for lists of node templates.

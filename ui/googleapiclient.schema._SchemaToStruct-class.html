@@ -1,0 +1,64 @@
+  <title>googleapiclient.schema._SchemaToStruct</title>
+        Class&nbsp;_SchemaToStruct
+            >]&nbsp;|&nbsp;<a href="googleapiclient.schema._SchemaToStruct-class.html"
+<h1 class="epydoc">Class _SchemaToStruct</h1><p class="nomargin-top"><span class="codelink"><a href="googleapiclient.schema-pysrc.html#_SchemaToStruct">source&nbsp;code</a></span></p>
+        <strong class="uidshort">_SchemaToStruct</strong>
+<p>Convert schema to a prototype object.</p>
+          <td><span class="summary-sig"><a href="googleapiclient.schema._SchemaToStruct-class.html#__init__" class="summary-sig-name">__init__</a>(<span class="summary-sig-arg">*args</span>,
+            <span class="codelink"><a href="googleapiclient.schema-pysrc.html#_SchemaToStruct.__init__">source&nbsp;code</a></span>
+          <td><span class="summary-sig"><a href="googleapiclient.schema._SchemaToStruct-class.html#emit" class="summary-sig-name">emit</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">text</span>)</span><br />
+      Add text as a line to the output.</td>
+            <span class="codelink"><a href="googleapiclient.schema-pysrc.html#_SchemaToStruct.emit">source&nbsp;code</a></span>
+          <td><span class="summary-sig"><a href="googleapiclient.schema._SchemaToStruct-class.html#emitBegin" class="summary-sig-name">emitBegin</a>(<span class="summary-sig-arg">self</span>,
+      Add text to the output, but with no line terminator.</td>
+            <span class="codelink"><a href="googleapiclient.schema-pysrc.html#_SchemaToStruct.emitBegin">source&nbsp;code</a></span>
+          <td><span class="summary-sig"><a href="googleapiclient.schema._SchemaToStruct-class.html#emitEnd" class="summary-sig-name">emitEnd</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">text</span>,
+        <span class="summary-sig-arg">comment</span>)</span><br />
+      Add text and comment to the output with line terminator.</td>
+            <span class="codelink"><a href="googleapiclient.schema-pysrc.html#_SchemaToStruct.emitEnd">source&nbsp;code</a></span>
+          <td><span class="summary-sig"><a name="indent"></a><span class="summary-sig-name">indent</span>(<span class="summary-sig-arg">self</span>)</span><br />
+      Increase indentation level.</td>
+            <span class="codelink"><a href="googleapiclient.schema-pysrc.html#_SchemaToStruct.indent">source&nbsp;code</a></span>
+          <td><span class="summary-sig"><a name="undent"></a><span class="summary-sig-name">undent</span>(<span class="summary-sig-arg">self</span>)</span><br />
+      Decrease indentation level.</td>
+            <span class="codelink"><a href="googleapiclient.schema-pysrc.html#_SchemaToStruct.undent">source&nbsp;code</a></span>
+          <td><span class="summary-sig"><a href="googleapiclient.schema._SchemaToStruct-class.html#_to_str_impl" class="summary-sig-name" onclick="show_private();">_to_str_impl</a>(<span class="summary-sig-arg">self</span>,
+      Prototype object based on the schema, in Python code with comments.</td>
+            <span class="codelink"><a href="googleapiclient.schema-pysrc.html#_SchemaToStruct._to_str_impl">source&nbsp;code</a></span>
+          <td><span class="summary-sig"><a href="googleapiclient.schema._SchemaToStruct-class.html#to_str" class="summary-sig-name">to_str</a>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">from_cache</span>)</span><br />
+            <span class="codelink"><a href="googleapiclient.schema-pysrc.html#_SchemaToStruct.to_str">source&nbsp;code</a></span>
+    ><span class="codelink"><a href="googleapiclient.schema-pysrc.html#_SchemaToStruct.__init__">source&nbsp;code</a></span>&nbsp;
+  seen: list, List of names of schema already seen while parsing. Used to
+    handle recursive definitions.
+  dent: int, Initial indentation depth.
+        <span class="sig-arg">text</span>)</span>
+    ><span class="codelink"><a href="googleapiclient.schema-pysrc.html#_SchemaToStruct.emit">source&nbsp;code</a></span>&nbsp;
+Add text as a line to the output.
+  text: string, Text to output.
+<a name="emitBegin"></a>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">emitBegin</span>(<span class="sig-arg">self</span>,
+    ><span class="codelink"><a href="googleapiclient.schema-pysrc.html#_SchemaToStruct.emitBegin">source&nbsp;code</a></span>&nbsp;
+Add text to the output, but with no line terminator.
+<a name="emitEnd"></a>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">emitEnd</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">text</span>,
+        <span class="sig-arg">comment</span>)</span>
+    ><span class="codelink"><a href="googleapiclient.schema-pysrc.html#_SchemaToStruct.emitEnd">source&nbsp;code</a></span>&nbsp;
+Add text and comment to the output with line terminator.
+  comment: string, Python comment.
+<a name="_to_str_impl"></a>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">_to_str_impl</span>(<span class="sig-arg">self</span>,
+    ><span class="codelink"><a href="googleapiclient.schema-pysrc.html#_SchemaToStruct._to_str_impl">source&nbsp;code</a></span>&nbsp;
+Prototype object based on the schema, in Python code with comments.
+  schema: object, Parsed JSON schema file.
+<a name="to_str"></a>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">to_str</span>(<span class="sig-arg">self</span>,
+        <span class="sig-arg">from_cache</span>)</span>
+    ><span class="codelink"><a href="googleapiclient.schema-pysrc.html#_SchemaToStruct.to_str">source&nbsp;code</a></span>&nbsp;
+  from_cache: callable(name, seen), Callable that retrieves an object
+     prototype for a schema with the given name. Seen is a list of schema
+     names already seen as we recursively descend the schema definition.
+  The lines of the code will all be properly indented.

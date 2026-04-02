@@ -1,0 +1,29 @@
+<h1><a href="connectors_v1.html">Connectors API</a> . <a href="connectors_v1.projects.html">projects</a> . <a href="connectors_v1.projects.locations.html">locations</a> . <a href="connectors_v1.projects.locations.endpointAttachments.html">endpointAttachments</a></h1>
+<p class="firstline">Creates a new EndpointAttachment in a given project and location.</p>
+<p class="firstline">Deletes a single EndpointAttachment.</p>
+<p class="firstline">Gets details of a single EndpointAttachment.</p>
+<p class="firstline">List EndpointAttachments in a given project</p>
+<p class="firstline">Updates the parameters of a single EndpointAttachment.</p>
+  <pre>Creates a new EndpointAttachment in a given project and location.
+  parent: string, Required. Parent resource of the EndpointAttachment, of the form: `projects/*/locations/*` (required)
+{ # represents the Connector&#x27;s Endpoint Attachment resource
+  &quot;endpointGlobalAccess&quot;: True or False, # Optional. The Private Service Connect Connection Endpoint Global Access. https://cloud.google.com/vpc/docs/about-accessing-vpc-hosted-services-endpoints#global-access
+  &quot;endpointIp&quot;: &quot;A String&quot;, # Output only. The Private Service Connect connection endpoint ip
+  &quot;name&quot;: &quot;A String&quot;, # Output only. Resource name of the Endpoint Attachment. Format: projects/{project}/locations/{location}/endpointAttachments/{endpoint_attachment}
+  &quot;serviceAttachment&quot;: &quot;A String&quot;, # Required. The path of the service attachment
+  &quot;state&quot;: &quot;A String&quot;, # Output only. The Private Service Connect Connection Endpoint State. This value is only available in the Full view.
+  endpointAttachmentId: string, Required. Identifier to assign to the EndpointAttachment. Must be unique within scope of the parent resource. The regex is: `^[a-z]([a-z0-9-]{0,61}[a-z0-9])?$`.
+  <pre>Deletes a single EndpointAttachment.
+  name: string, Required. Resource name of the form: `projects/*/locations/*/endpointAttachments/*` (required)
+  <pre>Gets details of a single EndpointAttachment.
+  view: string, Optional. Specifies which fields of the EndpointAttachment are returned in the response. Defaults to `ENDPOINT_ATTACHMENT_VIEW_BASIC` view.
+      ENDPOINT_ATTACHMENT_VIEW_UNSPECIFIED - ENDPOINT_ATTACHMENT_VIEW_UNSPECIFIED.
+      ENDPOINT_ATTACHMENT_VIEW_BASIC - Do not include status.
+      ENDPOINT_ATTACHMENT_VIEW_FULL - Includes Status.
+  <pre>List EndpointAttachments in a given project
+  parent: string, Required. Parent resource od the EndpointAttachment, of the form: `projects/*/locations/*` (required)
+    { # Response message for ConnectorsService.ListEndpointAttachments
+  &quot;endpointAttachments&quot;: [ # EndpointAttachments.
+  <pre>Updates the parameters of a single EndpointAttachment.
+  name: string, Output only. Resource name of the Endpoint Attachment. Format: projects/{project}/locations/{location}/endpointAttachments/{endpoint_attachment} (required)
+  updateMask: string, Required. The list of fields to update. Fields are specified relative to the endpointAttachment. A field will be overwritten if it is in the mask. You can modify only the fields listed below. To update the endpointAttachment details: * `description` * `labels`

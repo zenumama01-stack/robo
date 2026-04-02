@@ -1,0 +1,4 @@
+from .realtime_transcription_session_audio_input_param import RealtimeTranscriptionSessionAudioInputParam
+__all__ = ["RealtimeTranscriptionSessionAudioParam"]
+class RealtimeTranscriptionSessionAudioParam(TypedDict, total=False):
+    input: RealtimeTranscriptionSessionAudioInputParam

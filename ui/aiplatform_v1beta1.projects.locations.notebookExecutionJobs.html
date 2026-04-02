@@ -1,0 +1,21 @@
+<h1><a href="aiplatform_v1beta1.html">Vertex AI API</a> . <a href="aiplatform_v1beta1.projects.html">projects</a> . <a href="aiplatform_v1beta1.projects.locations.html">locations</a> . <a href="aiplatform_v1beta1.projects.locations.notebookExecutionJobs.html">notebookExecutionJobs</a></h1>
+  <code><a href="aiplatform_v1beta1.projects.locations.notebookExecutionJobs.operations.html">operations()</a></code>
+  <code><a href="#generateAccessToken">generateAccessToken(name, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Internal only: Called from Compute Engine instance to obtain EUC for owner Anonymous access: authenticates caller using VM identity JWT. Design doc: go/colab-on-vertex-euc-dd</p>
+  <code><a href="#reportEvent">reportEvent(name, body=None, x__xgafv=None)</a></code></p>
+    <code class="details" id="generateAccessToken">generateAccessToken(name, body=None, x__xgafv=None)</code>
+  <pre>Internal only: Called from Compute Engine instance to obtain EUC for owner Anonymous access: authenticates caller using VM identity JWT. Design doc: go/colab-on-vertex-euc-dd
+  name: string, Required. The name of the resource requesting the OAuth2 token. Format: `projects/{project}/locations/{location}/notebookRuntimes/{notebook_runtime}` `projects/{project}/locations/{location}/notebookExecutionJobs/{notebook_execution_job}` (required)
+{ # Request message for NotebookInternalService.GenerateAccessToken.
+  &quot;vmToken&quot;: &quot;A String&quot;, # Required. The VM identity token (a JWT) for authenticating the VM. https://cloud.google.com/compute/docs/instances/verifying-instance-identity
+    { # Response message for NotebookInternalService.GenerateToken.
+  &quot;accessToken&quot;: &quot;A String&quot;, # Short-lived access token string which may be used to access Google APIs.
+  &quot;expiresIn&quot;: 42, # The time in seconds when the access token expires. Typically that&#x27;s 3600.
+  &quot;scope&quot;: &quot;A String&quot;, # Space-separated list of scopes contained in the returned token. https://cloud.google.com/docs/authentication/token-types#access-contents
+  &quot;tokenType&quot;: &quot;A String&quot;, # Type of the returned access token (e.g. &quot;Bearer&quot;). It specifies how the token must be used. Bearer tokens may be used by any entity without proof of identity.
+    <code class="details" id="reportEvent">reportEvent(name, body=None, x__xgafv=None)</code>
+  name: string, Required. The name of the NotebookExecutionJob resource. Format: `projects/{project}/locations/{location}/notebookExecutionJobs/{notebook_execution_jobs}` (required)
+{ # Request message for NotebookInternalService.ReportExecutionEvent.
+  &quot;eventType&quot;: &quot;A String&quot;, # Required. The type of the event.
+  &quot;status&quot;: { # The `Status` type defines a logical error model that is suitable for different programming environments, including REST APIs and RPC APIs. It is used by [gRPC](https://github.com/grpc). Each `Status` message contains three pieces of data: error code, error message, and error details. You can find out more about this error model and how to work with it in the [API Design Guide](https://cloud.google.com/apis/design/errors). # Optional. The error details of the event.
+    { # Response message for NotebookInternalService.ReportExecutionEvent.

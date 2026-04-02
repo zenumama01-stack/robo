@@ -1,0 +1,16 @@
+    <!-- Cache Settings Section -->
+        SectionKey="cacheSettings"
+        SectionName="Cache Settings"
+            FieldName="DefaultCacheEnabled"
+            FieldName="DefaultCacheTTLMinutes"
+            FieldName="DefaultCacheMaxSize"
+            FieldName="CacheInheritanceEnabled"
+                [Params]="BuildRelationshipViewParamsByEntityName('MJ: Queries','CategoryID')"
+    <!-- Query Categories Section -->
+        SectionKey="queryCategories"
+        SectionName="Query Categories"
+        [BadgeCount]="GetSectionRowCount('queryCategories')"
+                [Params]="BuildRelationshipViewParamsByEntityName('MJ: Query Categories','ParentID')"
+                [NewRecordValues]="NewRecordValues('MJ: Query Categories')"
+                [AllowLoad]="IsSectionExpanded('queryCategories')"
+                (AfterDataLoad)="SetSectionRowCount('queryCategories', $event.totalRowCount)"

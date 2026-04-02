@@ -1,0 +1,84 @@
+<h1><a href="analyticshub_v1.html">Analytics Hub API</a> . <a href="analyticshub_v1.projects.html">projects</a> . <a href="analyticshub_v1.projects.locations.html">locations</a> . <a href="analyticshub_v1.projects.locations.dataExchanges.html">dataExchanges</a></h1>
+  <code><a href="analyticshub_v1.projects.locations.dataExchanges.listings.html">listings()</a></code>
+<p class="firstline">Returns the listings Resource.</p>
+  <code><a href="analyticshub_v1.projects.locations.dataExchanges.queryTemplates.html">queryTemplates()</a></code>
+<p class="firstline">Returns the queryTemplates Resource.</p>
+  <code><a href="#create">create(parent, body=None, dataExchangeId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Creates a new data exchange.</p>
+<p class="firstline">Deletes an existing data exchange.</p>
+<p class="firstline">Gets the details of a data exchange.</p>
+<p class="firstline">Gets the IAM policy.</p>
+<p class="firstline">Lists all data exchanges in a given project and location.</p>
+  <code><a href="#listSubscriptions">listSubscriptions(resource, includeDeletedSubscriptions=None, pageSize=None, pageToken=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Lists all subscriptions on a given Data Exchange or Listing.</p>
+  <code><a href="#listSubscriptions_next">listSubscriptions_next()</a></code></p>
+<p class="firstline">Updates an existing data exchange.</p>
+<p class="firstline">Sets the IAM policy.</p>
+  <code><a href="#subscribe">subscribe(name, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Creates a Subscription to a Data Clean Room. This is a long-running operation as it will create one or more linked datasets. Throws a Bad Request error if the Data Exchange does not contain any listings.</p>
+<p class="firstline">Returns the permissions that a caller has.</p>
+    <code class="details" id="create">create(parent, body=None, dataExchangeId=None, x__xgafv=None)</code>
+  <pre>Creates a new data exchange.
+  parent: string, Required. The parent resource path of the data exchange. e.g. `projects/myproject/locations/us`. (required)
+  dataExchangeId: string, Required. The ID of the data exchange. Must contain only Unicode letters, numbers (0-9), underscores (_). Max length: 100 bytes.
+  <pre>Deletes an existing data exchange.
+  name: string, Required. The full name of the data exchange resource that you want to delete. For example, `projects/myproject/locations/us/dataExchanges/123`. (required)
+  <pre>Gets the details of a data exchange.
+  name: string, Required. The resource name of the data exchange. e.g. `projects/myproject/locations/us/dataExchanges/123`. (required)
+  <pre>Gets the IAM policy.
+  <pre>Lists all data exchanges in a given project and location.
+  parent: string, Required. The parent resource path of the data exchanges. e.g. `projects/myproject/locations/us`. (required)
+    { # Message for response to the list of data exchanges.
+    <code class="details" id="listSubscriptions">listSubscriptions(resource, includeDeletedSubscriptions=None, pageSize=None, pageToken=None, x__xgafv=None)</code>
+  <pre>Lists all subscriptions on a given Data Exchange or Listing.
+  resource: string, Required. Resource name of the requested target. This resource may be either a Listing or a DataExchange. e.g. projects/123/locations/us/dataExchanges/456 OR e.g. projects/123/locations/us/dataExchanges/456/listings/789 (required)
+  includeDeletedSubscriptions: boolean, If selected, includes deleted subscriptions in the response (up to 63 days after deletion).
+  pageSize: integer, The maximum number of results to return in a single response page.
+  pageToken: string, Page token, returned by a previous call.
+    { # Message for response to the listing of shared resource subscriptions.
+  &quot;nextPageToken&quot;: &quot;A String&quot;, # Next page token.
+  &quot;sharedResourceSubscriptions&quot;: [ # The list of subscriptions.
+    { # A subscription represents a subscribers&#x27; access to a particular set of published data. It contains references to associated listings, data exchanges, and linked datasets.
+      &quot;commercialInfo&quot;: { # Commercial info metadata for this subscription. # Output only. This is set if this is a commercial subscription i.e. if this subscription was created from subscribing to a commercial listing.
+        &quot;cloudMarketplace&quot;: { # Cloud Marketplace commercial metadata for this subscription. # Output only. This is set when the subscription is commercialised via Cloud Marketplace.
+          &quot;order&quot;: &quot;A String&quot;, # Resource name of the Marketplace Order.
+      &quot;creationTime&quot;: &quot;A String&quot;, # Output only. Timestamp when the subscription was created.
+      &quot;dataExchange&quot;: &quot;A String&quot;, # Output only. Resource name of the source Data Exchange. e.g. projects/123/locations/us/dataExchanges/456
+      &quot;destinationDataset&quot;: { # Defines the destination bigquery dataset. # Optional. BigQuery destination dataset to create for the subscriber.
+        &quot;datasetReference&quot;: { # Required. A reference that identifies the destination dataset.
+          &quot;datasetId&quot;: &quot;A String&quot;, # Required. A unique ID for this dataset, without the project name. The ID must contain only letters (a-z, A-Z), numbers (0-9), or underscores (_). The maximum length is 1,024 characters.
+          &quot;projectId&quot;: &quot;A String&quot;, # Required. The ID of the project containing this dataset.
+        &quot;description&quot;: &quot;A String&quot;, # Optional. A user-friendly description of the dataset.
+        &quot;friendlyName&quot;: &quot;A String&quot;, # Optional. A descriptive name for the dataset.
+        &quot;labels&quot;: { # Optional. The labels associated with this dataset. You can use these to organize and group your datasets. You can set this property when inserting or updating a dataset. See https://cloud.google.com/resource-manager/docs/creating-managing-labels for more information.
+        &quot;location&quot;: &quot;A String&quot;, # Required. The geographic location where the dataset should reside. See https://cloud.google.com/bigquery/docs/locations for supported locations.
+        &quot;replicaLocations&quot;: [ # Optional. The geographic locations where the dataset should be replicated. See [BigQuery locations](https://cloud.google.com/bigquery/docs/locations) for supported locations.
+      &quot;lastModifyTime&quot;: &quot;A String&quot;, # Output only. Timestamp when the subscription was last modified.
+      &quot;linkedDatasetMap&quot;: { # Output only. Map of listing resource names to associated linked resource, e.g. projects/123/locations/us/dataExchanges/456/listings/789 -&gt; projects/123/datasets/my_dataset For listing-level subscriptions, this is a map of size 1. Only contains values if state == STATE_ACTIVE.
+        &quot;a_key&quot;: { # Reference to a linked resource tracked by this Subscription.
+          &quot;linkedDataset&quot;: &quot;A String&quot;, # Output only. Name of the linked dataset, e.g. projects/subscriberproject/datasets/linked_dataset
+          &quot;linkedPubsubSubscription&quot;: &quot;A String&quot;, # Output only. Name of the Pub/Sub subscription, e.g. projects/subscriberproject/subscriptions/subscriptions/sub_id
+          &quot;listing&quot;: &quot;A String&quot;, # Output only. Listing for which linked resource is created.
+      &quot;linkedResources&quot;: [ # Output only. Linked resources created in the subscription. Only contains values if state = STATE_ACTIVE.
+        { # Reference to a linked resource tracked by this Subscription.
+      &quot;listing&quot;: &quot;A String&quot;, # Output only. Resource name of the source Listing. e.g. projects/123/locations/us/dataExchanges/456/listings/789
+      &quot;logLinkedDatasetQueryUserEmail&quot;: True or False, # Output only. By default, false. If true, the Subscriber agreed to the email sharing mandate that is enabled for DataExchange/Listing.
+      &quot;name&quot;: &quot;A String&quot;, # Output only. The resource name of the subscription. e.g. `projects/myproject/locations/us/subscriptions/123`.
+      &quot;organizationDisplayName&quot;: &quot;A String&quot;, # Output only. Display name of the project of this subscription.
+      &quot;organizationId&quot;: &quot;A String&quot;, # Output only. Organization of the project this subscription belongs to.
+      &quot;resourceType&quot;: &quot;A String&quot;, # Output only. Listing shared asset type.
+      &quot;state&quot;: &quot;A String&quot;, # Output only. Current state of the subscription.
+      &quot;subscriberContact&quot;: &quot;A String&quot;, # Output only. Email of the subscriber.
+    <code class="details" id="listSubscriptions_next">listSubscriptions_next()</code>
+  <pre>Updates an existing data exchange.
+  name: string, Output only. The resource name of the data exchange. e.g. `projects/myproject/locations/us/dataExchanges/123`. (required)
+  updateMask: string, Required. Field mask specifies the fields to update in the data exchange resource. The fields specified in the `updateMask` are relative to the resource and are not a full request.
+  <pre>Sets the IAM policy.
+    <code class="details" id="subscribe">subscribe(name, body=None, x__xgafv=None)</code>
+  <pre>Creates a Subscription to a Data Clean Room. This is a long-running operation as it will create one or more linked datasets. Throws a Bad Request error if the Data Exchange does not contain any listings.
+  name: string, Required. Resource name of the Data Exchange. e.g. `projects/publisherproject/locations/us/dataExchanges/123` (required)
+{ # Message for subscribing to a Data Exchange.
+  &quot;destination&quot;: &quot;A String&quot;, # Required. The parent resource path of the Subscription. e.g. `projects/subscriberproject/locations/us`
+  &quot;subscriberContact&quot;: &quot;A String&quot;, # Email of the subscriber.
+  &quot;subscription&quot;: &quot;A String&quot;, # Required. Name of the subscription to create. e.g. `subscription1`
+  <pre>Returns the permissions that a caller has.

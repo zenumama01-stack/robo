@@ -1,0 +1,85 @@
+<h1><a href="contactcenterinsights_v1.html">Contact Center AI Insights API</a> . <a href="contactcenterinsights_v1.projects.html">projects</a> . <a href="contactcenterinsights_v1.projects.locations.html">locations</a></h1>
+  <code><a href="contactcenterinsights_v1.projects.locations.analysisRules.html">analysisRules()</a></code>
+<p class="firstline">Returns the analysisRules Resource.</p>
+  <code><a href="contactcenterinsights_v1.projects.locations.assessmentRules.html">assessmentRules()</a></code>
+<p class="firstline">Returns the assessmentRules Resource.</p>
+  <code><a href="contactcenterinsights_v1.projects.locations.authorizedViewSets.html">authorizedViewSets()</a></code>
+<p class="firstline">Returns the authorizedViewSets Resource.</p>
+  <code><a href="contactcenterinsights_v1.projects.locations.autoLabelingRules.html">autoLabelingRules()</a></code>
+<p class="firstline">Returns the autoLabelingRules Resource.</p>
+  <code><a href="contactcenterinsights_v1.projects.locations.conversations.html">conversations()</a></code>
+  <code><a href="contactcenterinsights_v1.projects.locations.dashboards.html">dashboards()</a></code>
+<p class="firstline">Returns the dashboards Resource.</p>
+  <code><a href="contactcenterinsights_v1.projects.locations.datasets.html">datasets()</a></code>
+  <code><a href="contactcenterinsights_v1.projects.locations.encryptionSpec.html">encryptionSpec()</a></code>
+<p class="firstline">Returns the encryptionSpec Resource.</p>
+  <code><a href="contactcenterinsights_v1.projects.locations.insightsdata.html">insightsdata()</a></code>
+  <code><a href="contactcenterinsights_v1.projects.locations.issueModels.html">issueModels()</a></code>
+<p class="firstline">Returns the issueModels Resource.</p>
+  <code><a href="contactcenterinsights_v1.projects.locations.operations.html">operations()</a></code>
+  <code><a href="contactcenterinsights_v1.projects.locations.phraseMatchers.html">phraseMatchers()</a></code>
+<p class="firstline">Returns the phraseMatchers Resource.</p>
+  <code><a href="contactcenterinsights_v1.projects.locations.qaQuestionTags.html">qaQuestionTags()</a></code>
+<p class="firstline">Returns the qaQuestionTags Resource.</p>
+  <code><a href="contactcenterinsights_v1.projects.locations.qaScorecards.html">qaScorecards()</a></code>
+<p class="firstline">Returns the qaScorecards Resource.</p>
+  <code><a href="contactcenterinsights_v1.projects.locations.views.html">views()</a></code>
+<p class="firstline">Returns the views Resource.</p>
+  <code><a href="#getCorrelationConfig">getCorrelationConfig(name, x__xgafv=None)</a></code></p>
+<p class="firstline">Gets correlation config.</p>
+  <code><a href="#getEncryptionSpec">getEncryptionSpec(name, x__xgafv=None)</a></code></p>
+<p class="firstline">Gets location-level encryption key specification.</p>
+<p class="firstline">Gets project-level settings.</p>
+  <code><a href="#testCorrelationConfig">testCorrelationConfig(location, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Tests correlation config on a conversation.</p>
+  <code><a href="#updateCorrelationConfig">updateCorrelationConfig(name, body=None, updateMask=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Updates correlation config.</p>
+<p class="firstline">Updates project-level settings.</p>
+    <code class="details" id="getCorrelationConfig">getCorrelationConfig(name, x__xgafv=None)</code>
+  <pre>Gets correlation config.
+  name: string, Required. The name of the correlation config resource to get. Format: projects/{project}/locations/{location}/correlationConfig (required)
+    { # A configuration that defines how to correlate conversations for a given a given project.
+  &quot;createTime&quot;: &quot;A String&quot;, # Output only. The time at which the correlation config was created.
+  &quot;fullConversationConfig&quot;: { # A list of correlation rules for a given correlation type. # The correlation type config for full conversations.
+    &quot;correlationRules&quot;: [ # A list of correlation rules to be evaluated for correlation.
+      { # A correlation rule that defines how to join conversations for a given correlation type.
+        &quot;active&quot;: True or False, # Optional. Whether the config is active to be evaluated.
+        &quot;constraintExpression&quot;: &quot;A String&quot;, # Optional. A cel expression (go/cel) to be evaluated as a boolean value. Two variables conversation_a and conversation_b will be available for evaluation. This expression should evaluate to true if conversation_a and conversation_b should be joined. This is used as an extra constraint on top of the join_key_expression to further refine the group of conversations that are joined together and will be evaluated in both directions. for two conversations c1 and c2 and the result will be OR&#x27;d. We will evaluate: f(c1, c2) OR f(c2, c1)
+        &quot;joinKeyExpression&quot;: &quot;A String&quot;, # Optional. A cel expression (go/cel) to be evaluated as a string value. This string value will be used as the join key for the correlation.
+        &quot;ruleId&quot;: &quot;A String&quot;, # Required. The unique identifier of the rule.
+  &quot;name&quot;: &quot;A String&quot;, # Immutable. Identifier. The resource name of the correlation config. Format: projects/{project}/locations/{location}/correlationConfig
+  &quot;updateTime&quot;: &quot;A String&quot;, # Output only. The time at which the correlation config was last updated.
+    <code class="details" id="getEncryptionSpec">getEncryptionSpec(name, x__xgafv=None)</code>
+  <pre>Gets location-level encryption key specification.
+  name: string, Required. The name of the encryption spec resource to get. (required)
+    { # A customer-managed encryption key specification that can be applied to all created resources (e.g. `Conversation`).
+  <pre>Gets project-level settings.
+  name: string, Required. The name of the settings resource to get. (required)
+    { # The CCAI Insights project wide settings. Use these settings to configure the behavior of Insights. View these settings with [`getsettings`](https://cloud.google.com/contact-center/insights/docs/reference/rest/v1/projects.locations/getSettings) and change the settings with [`updateSettings`](https://cloud.google.com/contact-center/insights/docs/reference/rest/v1/projects.locations/updateSettings).
+  &quot;analysisConfig&quot;: { # Default configuration when creating Analyses in Insights. # Default analysis settings.
+    &quot;runtimeIntegrationAnalysisPercentage&quot;: 3.14, # Percentage of conversations created using Dialogflow runtime integration to analyze automatically, between [0, 100].
+    &quot;uploadConversationAnalysisPercentage&quot;: 3.14, # Percentage of conversations created using the UploadConversation endpoint to analyze automatically, between [0, 100].
+  &quot;conversationTtl&quot;: &quot;A String&quot;, # The default TTL for newly-created conversations. If a conversation has a specified expiration, that value will be used instead. Changing this value will not change the expiration of existing conversations. Conversations with no expire time persist until they are deleted.
+  &quot;createTime&quot;: &quot;A String&quot;, # Output only. The time at which the settings was created.
+  &quot;languageCode&quot;: &quot;A String&quot;, # A language code to be applied to each transcript segment unless the segment already specifies a language code. Language code defaults to &quot;en-US&quot; if it is neither specified on the segment nor here.
+  &quot;name&quot;: &quot;A String&quot;, # Immutable. The resource name of the settings resource. Format: projects/{project}/locations/{location}/settings
+  &quot;pubsubNotificationSettings&quot;: { # A map that maps a notification trigger to a Pub/Sub topic. Each time a specified trigger occurs, Insights will notify the corresponding Pub/Sub topic. Keys are notification triggers. Supported keys are: * &quot;all-triggers&quot;: Notify each time any of the supported triggers occurs. * &quot;create-analysis&quot;: Notify each time an analysis is created. * &quot;create-conversation&quot;: Notify each time a conversation is created. * &quot;export-insights-data&quot;: Notify each time an export is complete. * &quot;ingest-conversations&quot;: Notify each time an IngestConversations LRO is complete. * &quot;update-conversation&quot;: Notify each time a conversation is updated via UpdateConversation. * &quot;upload-conversation&quot;: Notify when an UploadConversation LRO is complete. * &quot;update-or-analyze-conversation&quot;: Notify when an analysis for a conversation is completed or when the conversation is updated. The message will contain the conversation with transcript, analysis and other metadata. Values are Pub/Sub topics. The format of each Pub/Sub topic is: projects/{project}/topics/{topic}
+  &quot;redactionConfig&quot;: { # DLP resources used for redaction while ingesting conversations. DLP settings are applied to conversations ingested from the `UploadConversation` and `IngestConversations` endpoints, including conversation coming from CCAI Platform. They are not applied to conversations ingested from the `CreateConversation` endpoint or the Dialogflow / Agent Assist runtime integrations. When using Dialogflow / Agent Assist runtime integrations, redaction should be performed in Dialogflow / Agent Assist. # Default DLP redaction resources to be applied while ingesting conversations. This applies to conversations ingested from the `UploadConversation` and `IngestConversations` endpoints, including conversations coming from CCAI Platform.
+  &quot;screenRecordingBucketUri&quot;: &quot;A String&quot;, # Optional. The path to a Cloud Storage bucket containing conversation screen recordings. If provided, Insights will search in the bucket for a screen recording file matching the conversation data source object name prefix. If matches are found, these file URIs will be stored in the conversation screen recordings field.
+  &quot;speechConfig&quot;: { # Speech-to-Text configuration. Speech-to-Text settings are applied to conversations ingested from the `UploadConversation` and `IngestConversations` endpoints, including conversation coming from CCAI Platform. They are not applied to conversations ingested from the `CreateConversation` endpoint. # Optional. Default Speech-to-Text resources to use while ingesting audio files. Optional, CCAI Insights will create a default if not provided. This applies to conversations ingested from the `UploadConversation` and `IngestConversations` endpoints, including conversations coming from CCAI Platform.
+  &quot;timeZone&quot;: &quot;A String&quot;, # Optional. The time zone applied to the project. This is a string representation of the time zone, for example, &quot;America/New_York&quot;. This field follows the IANA TZ database format. See https://www.iana.org/time-zones for a list of valid values. If no value is set the user time zone will be used.
+  &quot;updateTime&quot;: &quot;A String&quot;, # Output only. The time at which the settings were last updated.
+    <code class="details" id="testCorrelationConfig">testCorrelationConfig(location, body=None, x__xgafv=None)</code>
+  <pre>Tests correlation config on a conversation.
+  location: string, Required. The location to test correlation config. Format: projects/{project}/locations/{location} (required)
+{ # The request to test correlation config.
+  &quot;conversations&quot;: { # Wrapper for a list of conversations. # Optional. A list of conversations to test against.
+    &quot;conversations&quot;: [ # Optional. The conversations.
+  &quot;correlationConfig&quot;: { # A configuration that defines how to correlate conversations for a given a given project. # Required. The correlation config to test.
+  &quot;filter&quot;: &quot;A String&quot;, # Optional. Filter to select conversations to test correlation against. Conversations matching this filter will be sampled based on start time. The most recent `max_sample_count` conversations will be selected. If no conversations match the filter, the request will fail with an `INVALID_ARGUMENT` error.
+  &quot;maxSampleCount&quot;: 42, # Optional. The maximum number of conversations to sample when using the `filter`. If not set, defaults to 1000. Values greater than 1000 are coerced to 1000. This field is ignored if `conversations` is provided.
+    <code class="details" id="updateCorrelationConfig">updateCorrelationConfig(name, body=None, updateMask=None, x__xgafv=None)</code>
+  <pre>Updates correlation config.
+  name: string, Immutable. Identifier. The resource name of the correlation config. Format: projects/{project}/locations/{location}/correlationConfig (required)
+  <pre>Updates project-level settings.
+  name: string, Immutable. The resource name of the settings resource. Format: projects/{project}/locations/{location}/settings (required)

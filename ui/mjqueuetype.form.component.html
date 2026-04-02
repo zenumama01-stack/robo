@@ -1,0 +1,12 @@
+    <!-- Processing Driver Settings Section -->
+        SectionKey="processingDriverSettings"
+        SectionName="Processing Driver Settings"
+    <!-- Queues Section -->
+        SectionKey="queues"
+        SectionName="Queues"
+        Icon="fa-solid fa-folder-tree"
+        [BadgeCount]="GetSectionRowCount('queues')"
+                [Params]="BuildRelationshipViewParamsByEntityName('MJ: Queues','QueueTypeID')"
+                [NewRecordValues]="NewRecordValues('MJ: Queues')"
+                [AllowLoad]="IsSectionExpanded('queues')"
+                (AfterDataLoad)="SetSectionRowCount('queues', $event.totalRowCount)"

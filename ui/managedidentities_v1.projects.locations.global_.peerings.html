@@ -1,0 +1,29 @@
+<h1><a href="managedidentities_v1.html">Managed Service for Microsoft Active Directory API</a> . <a href="managedidentities_v1.projects.html">projects</a> . <a href="managedidentities_v1.projects.locations.html">locations</a> . <a href="managedidentities_v1.projects.locations.global_.html">global_</a> . <a href="managedidentities_v1.projects.locations.global_.peerings.html">peerings</a></h1>
+  <code><a href="#create">create(parent, body=None, peeringId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Creates a Peering for Managed AD instance.</p>
+<p class="firstline">Deletes identified Peering.</p>
+<p class="firstline">Gets details of a single Peering.</p>
+<p class="firstline">Lists Peerings in a given project.</p>
+<p class="firstline">Updates the labels for specified Peering.</p>
+    <code class="details" id="create">create(parent, body=None, peeringId=None, x__xgafv=None)</code>
+  <pre>Creates a Peering for Managed AD instance.
+  parent: string, Required. Resource project name and location using the form: `projects/{project_id}/locations/global` (required)
+{ # Represents a Managed Service for Microsoft Active Directory Peering.
+  &quot;authorizedNetwork&quot;: &quot;A String&quot;, # Required. The full names of the Google Compute Engine [networks](/compute/docs/networks-and-firewalls#networks) to which the instance is connected. Caller needs to make sure that CIDR subnets do not overlap between networks, else peering creation will fail.
+  &quot;domainResource&quot;: &quot;A String&quot;, # Required. Full domain resource path for the Managed AD Domain involved in peering. The resource path should be in the form: `projects/{project_id}/locations/global/domains/{domain_name}`
+  &quot;labels&quot;: { # Optional. Resource labels to represent user-provided metadata.
+  &quot;name&quot;: &quot;A String&quot;, # Output only. Unique name of the peering in this scope including projects and location using the form: `projects/{project_id}/locations/global/peerings/{peering_id}`.
+  &quot;state&quot;: &quot;A String&quot;, # Output only. The current state of this Peering.
+  &quot;statusMessage&quot;: &quot;A String&quot;, # Output only. Additional information about the current status of this peering, if available.
+  peeringId: string, Required. Peering Id, unique name to identify peering. It should follow the regex format &quot;^(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?)$&quot;
+  <pre>Deletes identified Peering.
+  name: string, Required. Peering resource name using the form: `projects/{project_id}/locations/global/peerings/{peering_id}` (required)
+  <pre>Gets details of a single Peering.
+  <pre>Lists Peerings in a given project.
+  parent: string, Required. The resource name of the peering location using the form: `projects/{project_id}/locations/global` (required)
+  filter: string, Optional. Filter specifying constraints of a list operation. For example, `peering.authorized_network=&quot;projects/myprojectid/global/networks/mynetwork&quot;`.
+    { # ListPeeringsResponse is the response message for ListPeerings method.
+  &quot;peerings&quot;: [ # A list of Managed Identities Service Peerings in the project.
+  <pre>Updates the labels for specified Peering.
+  name: string, Output only. Unique name of the peering in this scope including projects and location using the form: `projects/{project_id}/locations/global/peerings/{peering_id}`. (required)
+  updateMask: string, Required. Mask of fields to update. At least one path must be supplied in this field. The elements of the repeated paths field may only include these fields from Peering: * `labels`

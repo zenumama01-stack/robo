@@ -1,0 +1,40 @@
+<h1><a href="sourcerepo_v1.html">Cloud Source Repositories API</a> . <a href="sourcerepo_v1.projects.html">projects</a> . <a href="sourcerepo_v1.projects.repos.html">repos</a></h1>
+<p class="firstline">Creates a repo in the given project with the given name. If the named repository already exists, `CreateRepo` returns `ALREADY_EXISTS`.</p>
+<p class="firstline">Deletes a repo.</p>
+<p class="firstline">Returns information about a repo.</p>
+<p class="firstline">Gets the IAM policy policy for a resource. Returns an empty policy if the resource exists and does not have a policy set.</p>
+<p class="firstline">Returns all repos belonging to a project. The sizes of the repos are not set by ListRepos. To get the size of a repo, use GetRepo.</p>
+<p class="firstline">Updates information about a repo.</p>
+<p class="firstline">Sets the IAM policy on the specified resource. Replaces any existing policy.</p>
+<p class="firstline">Synchronize a connected repo. The response contains SyncRepoMetadata in the metadata field.</p>
+  <pre>Creates a repo in the given project with the given name. If the named repository already exists, `CreateRepo` returns `ALREADY_EXISTS`.
+  parent: string, The project in which to create the repo. Values are of the form `projects/`. (required)
+{ # A repository (or repo) is a Git repository storing versioned source content.
+  &quot;mirrorConfig&quot;: { # Configuration to automatically mirror a repository from another hosting service, for example GitHub or Bitbucket. # How this repository mirrors a repository managed by another service. Read-only field.
+    &quot;deployKeyId&quot;: &quot;A String&quot;, # ID of the SSH deploy key at the other hosting service. Removing this key from the other service would deauthorize Google Cloud Source Repositories from mirroring.
+    &quot;url&quot;: &quot;A String&quot;, # URL of the main repository at the other hosting service.
+    &quot;webhookId&quot;: &quot;A String&quot;, # ID of the webhook listening to updates to trigger mirroring. Removing this webhook from the other hosting service will stop Google Cloud Source Repositories from receiving notifications, and thereby disabling mirroring.
+  &quot;name&quot;: &quot;A String&quot;, # Resource name of the repository, of the form `projects//repos/`. The repo name may contain slashes. eg, `projects/myproject/repos/name/with/slash`
+  &quot;pubsubConfigs&quot;: { # How this repository publishes a change in the repository through Cloud Pub/Sub. Keyed by the topic names.
+  &quot;size&quot;: &quot;A String&quot;, # The disk usage of the repo, in bytes. Read-only field. Size is only returned by GetRepo.
+  &quot;url&quot;: &quot;A String&quot;, # URL to clone the repository from Google Cloud Source Repositories. Read-only field.
+  <pre>Deletes a repo.
+  name: string, The name of the repo to delete. Values are of the form `projects//repos/`. (required)
+  <pre>Returns information about a repo.
+  name: string, The name of the requested repository. Values are of the form `projects//repos/`. (required)
+  <pre>Gets the IAM policy policy for a resource. Returns an empty policy if the resource exists and does not have a policy set.
+  <pre>Returns all repos belonging to a project. The sizes of the repos are not set by ListRepos. To get the size of a repo, use GetRepo.
+  name: string, The project ID whose repos should be listed. Values are of the form `projects/`. (required)
+  pageSize: integer, Maximum number of repositories to return; between 1 and 500. If not set or zero, defaults to 100 at the server.
+  pageToken: string, Resume listing repositories where a prior ListReposResponse left off. This is an opaque token that must be obtained from a recent, prior ListReposResponse&#x27;s next_page_token field.
+    { # Response for ListRepos. The size is not set in the returned repositories.
+  &quot;nextPageToken&quot;: &quot;A String&quot;, # If non-empty, additional repositories exist within the project. These can be retrieved by including this value in the next ListReposRequest&#x27;s page_token field.
+  &quot;repos&quot;: [ # The listed repos.
+  <pre>Updates information about a repo.
+{ # Request for UpdateRepo.
+  &quot;repo&quot;: { # A repository (or repo) is a Git repository storing versioned source content. # The new configuration for the repository.
+  &quot;updateMask&quot;: &quot;A String&quot;, # A FieldMask specifying which fields of the repo to modify. Only the fields in the mask will be modified. If no mask is provided, this request is no-op.
+  <pre>Sets the IAM policy on the specified resource. Replaces any existing policy.
+  <pre>Synchronize a connected repo. The response contains SyncRepoMetadata in the metadata field.
+  name: string, The name of the repo to synchronize. Values are of the form `projects//repos/`. (required)
+{ # Request for SyncRepo.

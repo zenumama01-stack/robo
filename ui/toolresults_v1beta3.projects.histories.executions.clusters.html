@@ -1,0 +1,22 @@
+<h1><a href="toolresults_v1beta3.html">Cloud Tool Results API</a> . <a href="toolresults_v1beta3.projects.html">projects</a> . <a href="toolresults_v1beta3.projects.histories.html">histories</a> . <a href="toolresults_v1beta3.projects.histories.executions.html">executions</a> . <a href="toolresults_v1beta3.projects.histories.executions.clusters.html">clusters</a></h1>
+  <code><a href="#get">get(projectId, historyId, executionId, clusterId, x__xgafv=None)</a></code></p>
+<p class="firstline">Retrieves a single screenshot cluster by its ID</p>
+  <code><a href="#list">list(projectId, historyId, executionId, x__xgafv=None)</a></code></p>
+<p class="firstline">Lists Screenshot Clusters Returns the list of screenshot clusters corresponding to an execution. Screenshot clusters are created after the execution is finished. Clusters are created from a set of screenshots. Between any two screenshots, a matching score is calculated based off their metadata that determines how similar they are. Screenshots are placed in the cluster that has screens which have the highest matching scores.</p>
+    <code class="details" id="get">get(projectId, historyId, executionId, clusterId, x__xgafv=None)</code>
+  <pre>Retrieves a single screenshot cluster by its ID
+  projectId: string, A Project id. Required. (required)
+  historyId: string, A History id. Required. (required)
+  executionId: string, An Execution id. Required. (required)
+  clusterId: string, A Cluster id Required. (required)
+  &quot;activity&quot;: &quot;A String&quot;, # A string that describes the activity of every screen in the cluster.
+  &quot;clusterId&quot;: &quot;A String&quot;, # A unique identifier for the cluster. @OutputOnly
+  &quot;keyScreen&quot;: { # A singular screen that represents the cluster as a whole. This screen will act as the &quot;cover&quot; of the entire cluster. When users look at the clusters, only the key screen from each cluster will be shown. Which screen is the key screen is determined by the ClusteringAlgorithm
+    &quot;fileReference&quot;: &quot;A String&quot;, # File reference of the png file. Required.
+    &quot;locale&quot;: &quot;A String&quot;, # Locale of the device that the screenshot was taken on. Required.
+    &quot;model&quot;: &quot;A String&quot;, # Model of the device that the screenshot was taken on. Required.
+    &quot;version&quot;: &quot;A String&quot;, # OS version of the device that the screenshot was taken on. Required.
+  &quot;screens&quot;: [ # Full list of screens.
+    <code class="details" id="list">list(projectId, historyId, executionId, x__xgafv=None)</code>
+  <pre>Lists Screenshot Clusters Returns the list of screenshot clusters corresponding to an execution. Screenshot clusters are created after the execution is finished. Clusters are created from a set of screenshots. Between any two screenshots, a matching score is calculated based off their metadata that determines how similar they are. Screenshots are placed in the cluster that has screens which have the highest matching scores.
+  &quot;clusters&quot;: [ # The set of clusters associated with an execution Always set

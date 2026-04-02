@@ -1,0 +1,45 @@
+<h1><a href="saasservicemgmt_v1beta1.html">SaaS Runtime API</a> . <a href="saasservicemgmt_v1beta1.projects.html">projects</a> . <a href="saasservicemgmt_v1beta1.projects.locations.html">locations</a> . <a href="saasservicemgmt_v1beta1.projects.locations.unitOperations.html">unitOperations</a></h1>
+  <code><a href="#create">create(parent, body=None, requestId=None, unitOperationId=None, validateOnly=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Create a new unit operation.</p>
+<p class="firstline">Delete a single unit operation.</p>
+<p class="firstline">Retrieve a single unit operation.</p>
+<p class="firstline">Retrieve a collection of unit operations.</p>
+<p class="firstline">Update a single unit operation.</p>
+    <code class="details" id="create">create(parent, body=None, requestId=None, unitOperationId=None, validateOnly=None, x__xgafv=None)</code>
+  <pre>Create a new unit operation.
+  parent: string, Required. The parent of the unit operation. (required)
+{ # UnitOperation encapsulates the intent of changing/interacting with the service component represented by the specific Unit. Multiple UnitOperations can be created (requested) and scheduled in the future, however only one will be allowed to execute at a time (that can change in the future for non-mutating operations). UnitOperations allow different actors interacting with the same unit to focus only on the change they have requested. This is a base object that contains the common fields in all unit operations. Next: 22
+  &quot;cancel&quot;: True or False, # Optional. When true, attempt to cancel the operation. Cancellation may fail if the operation is already executing. (Optional)
+  &quot;conditions&quot;: [ # Optional. Output only. A set of conditions which indicate the various conditions this resource can have.
+    { # UnitOperationCondition describes the status of an Unit Operation. UnitOperationCondition is individual components that contribute to an overall state.
+      &quot;lastTransitionTime&quot;: &quot;A String&quot;, # Required. Last time the condition transited from one status to another.
+      &quot;message&quot;: &quot;A String&quot;, # Required. Human readable message indicating details about the last transition.
+      &quot;reason&quot;: &quot;A String&quot;, # Required. Brief reason for the condition&#x27;s last transition.
+      &quot;status&quot;: &quot;A String&quot;, # Required. Status of the condition.
+      &quot;type&quot;: &quot;A String&quot;, # Required. Type of the condition.
+  &quot;deprovision&quot;: { # Deprovision is the unit operation that deprovision the underlying resources represented by a Unit. Can only execute if the Unit is currently provisioned.
+  &quot;engineState&quot;: &quot;A String&quot;, # Optional. Output only. The engine state for on-going deployment engine operation(s). This field is opaque for external usage.
+  &quot;errorCategory&quot;: &quot;A String&quot;, # Optional. Output only. UnitOperationErrorCategory describe the error category.
+  &quot;name&quot;: &quot;A String&quot;, # Identifier. The resource name (full URI of the resource) following the standard naming scheme: &quot;projects/{project}/locations/{location}/unitOperations/{unitOperation}&quot;
+  &quot;parentUnitOperation&quot;: &quot;A String&quot;, # Optional. Reference to parent resource: UnitOperation. If an operation needs to create other operations as part of its workflow, each of the child operations should have this field set to the parent. This can be used for tracing. (Optional)
+  &quot;provision&quot;: { # Provision is the unit operation that provision the underlying resources represented by a Unit. Can only execute if the Unit is not currently provisioned.
+    &quot;inputVariables&quot;: [ # Optional. Set of input variables. Maximum 100. (optional)
+    &quot;release&quot;: &quot;A String&quot;, # Optional. Reference to the Release object to use for the Unit. (optional).
+  &quot;rollout&quot;: &quot;A String&quot;, # Optional. Specifies which rollout created this Unit Operation. This cannot be modified and is used for filtering purposes only. If a dependent unit and unit operation are created as part of another unit operation, they will use the same rolloutId.
+  &quot;schedule&quot;: { # A time specification to schedule the maintenance. # Optional. When to schedule this operation.
+    &quot;startTime&quot;: &quot;A String&quot;, # Optional. Start of operation. If not set, will be set to the start of the next window. (optional)
+  &quot;state&quot;: &quot;A String&quot;, # Optional. Output only. UnitOperationState describes the current state of the unit operation.
+  &quot;unit&quot;: &quot;A String&quot;, # Required. Immutable. The Unit a given UnitOperation will act upon.
+  &quot;upgrade&quot;: { # Upgrade is the unit operation that upgrades a provisioned unit, which may also include the underlying resources represented by a Unit. Can only execute if the Unit is currently provisioned.
+  unitOperationId: string, Required. The ID value for the new unit operation.
+  <pre>Delete a single unit operation.
+  etag: string, The etag known to the client for the expected state of the unit operation. This is used with state-changing methods to prevent accidental overwrites when multiple user agents might be acting in parallel on the same resource. An etag wildcard provide optimistic concurrency based on the expected existence of the unit operation. The Any wildcard (`*`) requires that the resource must already exists, and the Not Any wildcard (`!*`) requires that it must not.
+  <pre>Retrieve a single unit operation.
+  <pre>Retrieve a collection of unit operations.
+  pageSize: integer, The maximum number of unit operations to send per page.
+    { # The response structure for the ListUnitOperations method.
+  &quot;nextPageToken&quot;: &quot;A String&quot;, # If present, the next page token can be provided to a subsequent ListUnitOperations call to list the next page. If empty, there are no more pages.
+  &quot;unitOperations&quot;: [ # The resulting unit operations.
+  <pre>Update a single unit operation.
+  name: string, Identifier. The resource name (full URI of the resource) following the standard naming scheme: &quot;projects/{project}/locations/{location}/unitOperations/{unitOperation}&quot; (required)
+  updateMask: string, Field mask is used to specify the fields to be overwritten in the UnitOperation resource by the update. The fields specified in the update_mask are relative to the resource, not the full request. A field will be overwritten if it is in the mask. If the user does not provide a mask then all fields in the UnitOperation will be overwritten.

@@ -1,0 +1,43 @@
+<h1><a href="dataplex_v1.html">Cloud Dataplex API</a> . <a href="dataplex_v1.projects.html">projects</a> . <a href="dataplex_v1.projects.locations.html">locations</a> . <a href="dataplex_v1.projects.locations.glossaries.html">glossaries</a></h1>
+  <code><a href="dataplex_v1.projects.locations.glossaries.categories.html">categories()</a></code>
+<p class="firstline">Returns the categories Resource.</p>
+  <code><a href="dataplex_v1.projects.locations.glossaries.terms.html">terms()</a></code>
+<p class="firstline">Returns the terms Resource.</p>
+  <code><a href="#create">create(parent, body=None, glossaryId=None, validateOnly=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Creates a new Glossary resource.</p>
+<p class="firstline">Deletes a Glossary resource. All the categories and terms within the Glossary must be deleted before the Glossary can be deleted.</p>
+<p class="firstline">Gets a Glossary resource.</p>
+<p class="firstline">Lists Glossary resources in a project and location.</p>
+<p class="firstline">Updates a Glossary resource.</p>
+    <code class="details" id="create">create(parent, body=None, glossaryId=None, validateOnly=None, x__xgafv=None)</code>
+  <pre>Creates a new Glossary resource.
+  parent: string, Required. The parent resource where this Glossary will be created. Format: projects/{project_id_or_number}/locations/{location_id} where location_id refers to a Google Cloud region. (required)
+{ # A Glossary represents a collection of GlossaryCategories and GlossaryTerms defined by the user. Glossary is a top level resource and is the Google Cloud parent resource of all the GlossaryCategories and GlossaryTerms within it.
+  &quot;categoryCount&quot;: 42, # Output only. The number of GlossaryCategories in the Glossary.
+  &quot;createTime&quot;: &quot;A String&quot;, # Output only. The time at which the Glossary was created.
+  &quot;description&quot;: &quot;A String&quot;, # Optional. The user-mutable description of the Glossary.
+  &quot;displayName&quot;: &quot;A String&quot;, # Optional. User friendly display name of the Glossary. This is user-mutable. This will be same as the GlossaryId, if not specified.
+  &quot;etag&quot;: &quot;A String&quot;, # Optional. Needed for resource freshness validation. This checksum is computed by the server based on the value of other fields, and may be sent on update and delete requests to ensure the client has an up-to-date value before proceeding.
+  &quot;labels&quot;: { # Optional. User-defined labels for the Glossary.
+  &quot;name&quot;: &quot;A String&quot;, # Output only. Identifier. The resource name of the Glossary. Format: projects/{project_id_or_number}/locations/{location_id}/glossaries/{glossary_id}
+  &quot;termCount&quot;: 42, # Output only. The number of GlossaryTerms in the Glossary.
+  &quot;uid&quot;: &quot;A String&quot;, # Output only. System generated unique id for the Glossary. This ID will be different if the Glossary is deleted and re-created with the same name.
+  &quot;updateTime&quot;: &quot;A String&quot;, # Output only. The time at which the Glossary was last updated.
+  glossaryId: string, Required. Glossary ID: Glossary identifier.
+  validateOnly: boolean, Optional. Validates the request without actually creating the Glossary. Default: false.
+  <pre>Deletes a Glossary resource. All the categories and terms within the Glossary must be deleted before the Glossary can be deleted.
+  name: string, Required. The name of the Glossary to delete. Format: projects/{project_id_or_number}/locations/{location_id}/glossaries/{glossary_id} (required)
+  etag: string, Optional. The etag of the Glossary. If this is provided, it must match the server&#x27;s etag. If the etag is provided and does not match the server-computed etag, the request must fail with a ABORTED error code.
+  <pre>Gets a Glossary resource.
+  name: string, Required. The name of the Glossary to retrieve. Format: projects/{project_id_or_number}/locations/{location_id}/glossaries/{glossary_id} (required)
+  <pre>Lists Glossary resources in a project and location.
+  parent: string, Required. The parent, which has this collection of Glossaries. Format: projects/{project_id_or_number}/locations/{location_id} where location_id refers to a Google Cloud region. (required)
+  filter: string, Optional. Filter expression that filters Glossaries listed in the response. Filters on proto fields of Glossary are supported. Examples of using a filter are: - display_name=&quot;my-glossary&quot; - categoryCount=1 - termCount=0
+  orderBy: string, Optional. Order by expression that orders Glossaries listed in the response. Order by fields are: name or create_time for the result. If not specified, the ordering is undefined.
+  pageSize: integer, Optional. The maximum number of Glossaries to return. The service may return fewer than this value. If unspecified, at most 50 Glossaries will be returned. The maximum value is 1000; values above 1000 will be coerced to 1000.
+  pageToken: string, Optional. A page token, received from a previous ListGlossaries call. Provide this to retrieve the subsequent page. When paginating, all other parameters provided to ListGlossaries must match the call that provided the page token.
+    { # List Glossaries Response
+  &quot;glossaries&quot;: [ # Lists the Glossaries in the specified parent.
+  <pre>Updates a Glossary resource.
+  name: string, Output only. Identifier. The resource name of the Glossary. Format: projects/{project_id_or_number}/locations/{location_id}/glossaries/{glossary_id} (required)
+  validateOnly: boolean, Optional. Validates the request without actually updating the Glossary. Default: false.

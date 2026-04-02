@@ -1,0 +1,16 @@
+<h1><a href="aiplatform_v1.html">Vertex AI API</a> . <a href="aiplatform_v1.projects.html">projects</a> . <a href="aiplatform_v1.projects.locations.html">locations</a> . <a href="aiplatform_v1.projects.locations.nasJobs.html">nasJobs</a> . <a href="aiplatform_v1.projects.locations.nasJobs.nasTrialDetails.html">nasTrialDetails</a></h1>
+<p class="firstline">Gets a NasTrialDetail.</p>
+<p class="firstline">List top NasTrialDetails of a NasJob.</p>
+  <pre>Gets a NasTrialDetail.
+  name: string, Required. The name of the NasTrialDetail resource. Format: `projects/{project}/locations/{location}/nasJobs/{nas_job}/nasTrialDetails/{nas_trial_detail}` (required)
+    { # Represents a NasTrial details along with its parameters. If there is a corresponding train NasTrial, the train NasTrial is also returned.
+  &quot;name&quot;: &quot;A String&quot;, # Output only. Resource name of the NasTrialDetail.
+  &quot;parameters&quot;: &quot;A String&quot;, # The parameters for the NasJob NasTrial.
+  &quot;searchTrial&quot;: { # Represents a uCAIP NasJob trial. # The requested search NasTrial.
+  &quot;trainTrial&quot;: { # Represents a uCAIP NasJob trial. # The train NasTrial corresponding to search_trial. Only populated if search_trial is used for training.
+  <pre>List top NasTrialDetails of a NasJob.
+  parent: string, Required. The name of the NasJob resource. Format: `projects/{project}/locations/{location}/nasJobs/{nas_job}` (required)
+  pageToken: string, The standard list page token. Typically obtained via ListNasTrialDetailsResponse.next_page_token of the previous JobService.ListNasTrialDetails call.
+    { # Response message for JobService.ListNasTrialDetails
+  &quot;nasTrialDetails&quot;: [ # List of top NasTrials in the requested page.
+  &quot;nextPageToken&quot;: &quot;A String&quot;, # A token to retrieve the next page of results. Pass to ListNasTrialDetailsRequest.page_token to obtain that page.

@@ -1,0 +1,95 @@
+    <form [formGroup]="serverForm" class="server-form">
+          <label for="name">Name <span class="required">*</span></label>
+            placeholder="e.g., GitHub MCP Server" />
+            placeholder="Optional description of this server"
+      <!-- Transport Section -->
+        <h3><i class="fa-solid fa-network-wired"></i> Transport Configuration</h3>
+          <label for="transportType">Transport Type <span class="required">*</span></label>
+            id="transportType"
+            formControlName="TransportType"
+            [data]="transportTypes"
+            textField="label"
+            (valueChange)="onTransportTypeChange()">
+              <div class="transport-option">
+                <span class="transport-label">{{ dataItem.label }}</span>
+                <span class="transport-desc">{{ dataItem.description }}</span>
+        @if (RequiresURL) {
+            <label for="serverUrl">Server URL <span class="required">*</span></label>
+              id="serverUrl"
+              formControlName="ServerURL"
+              placeholder="https://api.example.com/mcp" />
+            @if (hasError('ServerURL', 'required')) {
+              <span class="error-text">Server URL is required for this transport type</span>
+        @if (RequiresCommand) {
+            <label for="command">Command <span class="required">*</span></label>
+              id="command"
+              formControlName="Command"
+              placeholder="e.g., npx or /usr/local/bin/mcp-server" />
+            @if (hasError('Command', 'required')) {
+              <span class="error-text">Command is required for Stdio transport</span>
+            <label for="commandArgs">Command Arguments (JSON array)</label>
+              id="commandArgs"
+              formControlName="CommandArgs"
+              placeholder='["arg1", "arg2"]' />
+            <span class="hint">JSON array of command line arguments</span>
+        <h3><i class="fa-solid fa-shield-halved"></i> Authentication</h3>
+          <label for="authType">Default Auth Type</label>
+            id="authType"
+            formControlName="DefaultAuthType"
+            [data]="authTypes"
+            (valueChange)="onAuthTypeChange()">
+              <div class="auth-option">
+                <span class="auth-label">{{ dataItem.label }}</span>
+                <span class="auth-desc">{{ dataItem.description }}</span>
+      <!-- OAuth 2.0 Configuration Section (only shown when OAuth2 is selected) -->
+      @if (IsOAuth2) {
+        <div class="form-section oauth-section">
+          <h3><i class="fa-solid fa-key"></i> OAuth 2.0 Configuration</h3>
+            <label for="oauthIssuerUrl">OAuth Issuer URL <span class="required">*</span></label>
+              id="oauthIssuerUrl"
+              formControlName="OAuthIssuerURL"
+              placeholder="https://auth.example.com" />
+            @if (hasError('OAuthIssuerURL', 'required')) {
+              <span class="error-text">OAuth Issuer URL is required for OAuth 2.0 authentication</span>
+            <span class="hint">The authorization server's issuer URL (e.g., https://login.microsoftonline.com/tenant-id or https://your-domain.auth0.com)</span>
+            <label for="oauthScopes">OAuth Scopes</label>
+              id="oauthScopes"
+              formControlName="OAuthScopes"
+              placeholder="openid profile email" />
+            <span class="hint">Space-separated list of OAuth scopes to request</span>
+            <label for="oauthCacheTtl">Metadata Cache TTL (minutes)</label>
+              id="oauthCacheTtl"
+              formControlName="OAuthMetadataCacheTTLMinutes"
+              [min]="5"
+              placeholder="1440">
+            <span class="hint">How long to cache OAuth metadata (default: 1440 minutes = 24 hours)</span>
+          <div class="oauth-client-section">
+            <h4>Pre-configured Client (Optional)</h4>
+            <p class="section-hint">Leave blank to use Dynamic Client Registration (DCR). If the auth server doesn't support DCR, configure your client credentials here.</p>
+              <label for="oauthClientId">Client ID</label>
+                id="oauthClientId"
+                formControlName="OAuthClientID"
+                placeholder="your-client-id" />
+              <label for="oauthClientSecret">Client Secret</label>
+                id="oauthClientSecret"
+                formControlName="OAuthClientSecretEncrypted"
+                type="password"
+                placeholder="your-client-secret" />
+              <span class="hint">The secret will be encrypted before storage</span>
+      <!-- Rate Limiting Section -->
+        <h3><i class="fa-solid fa-gauge-high"></i> Rate Limiting</h3>
+          <div class="form-group half">
+            <label for="rateLimitMinute">Requests per Minute</label>
+              id="rateLimitMinute"
+              formControlName="RateLimitPerMinute"
+              placeholder="No limit">
+            <label for="rateLimitHour">Requests per Hour</label>
+              id="rateLimitHour"
+              formControlName="RateLimitPerHour"
+          <label for="requestTimeout">Request Timeout (ms)</label>
+            id="requestTimeout"
+            formControlName="RequestTimeoutMs"
+            [min]="1000"
+            [max]="600000"
+            [step]="1000"
+          <span class="hint">Timeout for individual tool calls (1000-600000ms)</span>

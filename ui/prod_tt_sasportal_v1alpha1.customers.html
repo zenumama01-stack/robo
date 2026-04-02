@@ -1,0 +1,62 @@
+<h1><a href="prod_tt_sasportal_v1alpha1.html">SAS Portal API (Testing)</a> . <a href="prod_tt_sasportal_v1alpha1.customers.html">customers</a></h1>
+  <code><a href="prod_tt_sasportal_v1alpha1.customers.deployments.html">deployments()</a></code>
+  <code><a href="prod_tt_sasportal_v1alpha1.customers.devices.html">devices()</a></code>
+  <code><a href="prod_tt_sasportal_v1alpha1.customers.nodes.html">nodes()</a></code>
+<p class="firstline">Returns the nodes Resource.</p>
+<p class="firstline">Returns a requested customer.</p>
+<p class="firstline">Returns a list of requested customers.</p>
+  <code><a href="#listGcpProjectDeployments">listGcpProjectDeployments(x__xgafv=None)</a></code></p>
+<p class="firstline">Returns a list of SAS deployments associated with current GCP project. Includes whether SAS analytics has been enabled or not.</p>
+  <code><a href="#listLegacyOrganizations">listLegacyOrganizations(x__xgafv=None)</a></code></p>
+<p class="firstline">Returns a list of legacy organizations.</p>
+  <code><a href="#migrateOrganization">migrateOrganization(body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Migrates a SAS organization to the cloud. This will create GCP projects for each deployment and associate them. The SAS Organization is linked to the gcp project that called the command. go/sas-legacy-customer-migration</p>
+<p class="firstline">Updates an existing customer.</p>
+  <code><a href="#provisionDeployment">provisionDeployment(body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Creates a new SAS deployment through the GCP workflow. Creates a SAS organization if an organization match is not found.</p>
+  <code><a href="#setupSasAnalytics">setupSasAnalytics(body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Setups the a GCP Project to receive SAS Analytics messages via GCP Pub/Sub with a subscription to BigQuery. All the Pub/Sub topics and BigQuery tables are created automatically as part of this service.</p>
+  <pre>Returns a requested customer.
+  name: string, Required. The name of the customer. (required)
+    { # Entity representing a SAS customer.
+  &quot;displayName&quot;: &quot;A String&quot;, # Required. Name of the organization that the customer entity represents.
+  &quot;name&quot;: &quot;A String&quot;, # Output only. Resource name of the customer.
+  &quot;sasUserIds&quot;: [ # User IDs used by the devices belonging to this customer.
+  <pre>Returns a list of requested customers.
+  pageSize: integer, The maximum number of customers to return in the response.
+  pageToken: string, A pagination token returned from a previous call to ListCustomers that indicates where this listing should continue from.
+    { # Response for `ListCustomers`.
+  &quot;customers&quot;: [ # The list of customers that match the request.
+  &quot;nextPageToken&quot;: &quot;A String&quot;, # A pagination token returned from a previous call to ListCustomers that indicates from where listing should continue. If the field is missing or empty, it means there are no more customers.
+    <code class="details" id="listGcpProjectDeployments">listGcpProjectDeployments(x__xgafv=None)</code>
+  <pre>Returns a list of SAS deployments associated with current GCP project. Includes whether SAS analytics has been enabled or not.
+    { # Response for [ListGcpProjectDeployments].
+  &quot;deployments&quot;: [ # Optional. Deployments associated with the GCP project
+    { # Deployment associated with the GCP project. Includes whether SAS analytics has been enabled or not.
+      &quot;deployment&quot;: { # The Deployment. # Deployment associated with the GCP project.
+      &quot;hasEnabledAnalytics&quot;: True or False, # Whether SAS analytics has been enabled.
+    <code class="details" id="listLegacyOrganizations">listLegacyOrganizations(x__xgafv=None)</code>
+  <pre>Returns a list of legacy organizations.
+    { # Response for [ListLegacyOrganizations]. [spectrum.sas.portal.v1alpha1.Provisioning.ListLegacyOrganizations].
+  &quot;organizations&quot;: [ # Optional. Legacy SAS organizations.
+    { # Organization details.
+      &quot;displayName&quot;: &quot;A String&quot;, # Name of organization
+      &quot;id&quot;: &quot;A String&quot;, # Id of organization
+    <code class="details" id="migrateOrganization">migrateOrganization(body=None, x__xgafv=None)</code>
+  <pre>Migrates a SAS organization to the cloud. This will create GCP projects for each deployment and associate them. The SAS Organization is linked to the gcp project that called the command. go/sas-legacy-customer-migration
+{ # Request for [MigrateOrganization]. [spectrum.sas.portal.v1alpha1.Provisioning.MigrateOrganization]. GCP Project, Organization Info, and caller&#x27;s GAIA ID should be retrieved from the RPC handler, and used to check authorization on SAS Portal organization and to create GCP Projects.
+  &quot;organizationId&quot;: &quot;A String&quot;, # Required. Id of the SAS organization to be migrated.
+  <pre>Updates an existing customer.
+  name: string, Output only. Resource name of the customer. (required)
+    <code class="details" id="provisionDeployment">provisionDeployment(body=None, x__xgafv=None)</code>
+  <pre>Creates a new SAS deployment through the GCP workflow. Creates a SAS organization if an organization match is not found.
+{ # Request for [ProvisionDeployment]. [spectrum.sas.portal.v1alpha1.Provisioning.ProvisionDeployment]. GCP Project, Organization Info, and caller’s GAIA ID should be retrieved from the RPC handler, and used as inputs to create a new SAS organization (if not exists) and a new SAS deployment.
+  &quot;newDeploymentDisplayName&quot;: &quot;A String&quot;, # Optional. If this field is set, and a new SAS Portal Deployment needs to be created, its display name will be set to the value of this field.
+  &quot;newOrganizationDisplayName&quot;: &quot;A String&quot;, # Optional. If this field is set, and a new SAS Portal Organization needs to be created, its display name will be set to the value of this field.
+  &quot;organizationId&quot;: &quot;A String&quot;, # Optional. If this field is set then a new deployment will be created under the organization specified by this id.
+    { # Response for [ProvisionDeployment]. [spectrum.sas.portal.v1alpha1.Provisioning.ProvisionDeployment].
+  &quot;errorMessage&quot;: &quot;A String&quot;, # Optional. Optional error message if the provisioning request is not successful.
+    <code class="details" id="setupSasAnalytics">setupSasAnalytics(body=None, x__xgafv=None)</code>
+  <pre>Setups the a GCP Project to receive SAS Analytics messages via GCP Pub/Sub with a subscription to BigQuery. All the Pub/Sub topics and BigQuery tables are created automatically as part of this service.
+{ # Request for the SetupSasAnalytics rpc.
+  &quot;userId&quot;: &quot;A String&quot;, # Optional. User id to setup analytics for, if not provided the user id associated with the project is used. optional

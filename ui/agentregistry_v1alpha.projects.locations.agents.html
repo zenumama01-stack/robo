@@ -1,0 +1,46 @@
+<h1><a href="agentregistry_v1alpha.html">Agent Registry API</a> . <a href="agentregistry_v1alpha.projects.html">projects</a> . <a href="agentregistry_v1alpha.projects.locations.html">locations</a> . <a href="agentregistry_v1alpha.projects.locations.agents.html">agents</a></h1>
+<p class="firstline">Gets details of a single Agent.</p>
+  <code><a href="#list">list(parent, filter=None, orderBy=None, pageSize=None, pageToken=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Lists Agents in a given project and location.</p>
+  <pre>Gets details of a single Agent.
+  name: string, Required. Name of the resource (required)
+    { # Represents an Agent. &quot;A2A&quot; below refers to the Agent-to-Agent protocol.
+  &quot;agentId&quot;: &quot;A String&quot;, # Output only. A stable, globally unique identifier for agents.
+  &quot;attributes&quot;: { # Output only. Attributes of the Agent. Valid values: * `agentregistry.googleapis.com/system/Framework`: {&quot;framework&quot;: &quot;google-adk&quot;} - the agent framework used to develop the Agent. Example values: &quot;google-adk&quot;, &quot;langchain&quot;, &quot;custom&quot;. * `agentregistry.googleapis.com/system/RuntimeIdentity`: {&quot;principal&quot;: &quot;principal://...&quot;} - the runtime identity associated with the Agent. * `agentregistry.googleapis.com/system/RuntimeReference`: {&quot;uri&quot;: &quot;//...&quot;} - the URI of the underlying resource hosting the Agent, for example, the Reasoning Engine URI.
+    &quot;a_key&quot;: {
+  &quot;card&quot;: { # Full Agent Card payload, often obtained from the A2A Agent Card. # Output only. Full Agent Card payload, when available.
+    &quot;content&quot;: { # Output only. The content of the agent card.
+    &quot;type&quot;: &quot;A String&quot;, # Output only. The type of agent card.
+  &quot;createTime&quot;: &quot;A String&quot;, # Output only. Create time.
+  &quot;description&quot;: &quot;A String&quot;, # Output only. The description of the Agent, often obtained from the A2A Agent Card. Empty if Agent Card has no description.
+  &quot;displayName&quot;: &quot;A String&quot;, # Output only. The display name of the agent, often obtained from the A2A Agent Card.
+  &quot;location&quot;: &quot;A String&quot;, # Output only. The location where agent is hosted. The value is defined by the hosting environment (i.e. cloud provider).
+  &quot;name&quot;: &quot;A String&quot;, # Identifier. The resource name of an Agent. Format: `projects/{project}/locations/{location}/agents/{agent}`.
+  &quot;protocols&quot;: [ # Output only. The connection details for the Agent.
+    { # Represents the protocol of an Agent.
+      &quot;interfaces&quot;: [ # Output only. The connection details for the Agent.
+        { # Represents the connection details for an Agent or MCP Server.
+          &quot;protocolBinding&quot;: &quot;A String&quot;, # Required. The protocol binding of the interface.
+          &quot;url&quot;: &quot;A String&quot;, # Required. The destination URL.
+      &quot;protocolVersion&quot;: &quot;A String&quot;, # Output only. The version of the protocol, for example, the A2A Agent Card version.
+      &quot;type&quot;: &quot;A String&quot;, # Output only. The type of the protocol.
+  &quot;skills&quot;: [ # Output only. Skills the agent possesses, often obtained from the A2A Agent Card.
+    { # Represents the skills of an Agent.
+      &quot;description&quot;: &quot;A String&quot;, # Output only. A more detailed description of the skill.
+      &quot;examples&quot;: [ # Output only. Example prompts or scenarios this skill can handle.
+      &quot;id&quot;: &quot;A String&quot;, # Output only. A unique identifier for the agent&#x27;s skill.
+      &quot;name&quot;: &quot;A String&quot;, # Output only. A human-readable name for the agent&#x27;s skill.
+      &quot;tags&quot;: [ # Output only. Keywords describing the skill.
+  &quot;uid&quot;: &quot;A String&quot;, # Output only. A universally unique identifier for the Agent.
+  &quot;updateTime&quot;: &quot;A String&quot;, # Output only. Update time.
+  &quot;version&quot;: &quot;A String&quot;, # Output only. The version of the Agent, often obtained from the A2A Agent Card. Empty if Agent Card has no version or agent is not an A2A Agent.
+    <code class="details" id="list">list(parent, filter=None, orderBy=None, pageSize=None, pageToken=None, x__xgafv=None)</code>
+  <pre>Lists Agents in a given project and location.
+  parent: string, Required. Parent value for ListAgentsRequest (required)
+  filter: string, Optional. Filtering results
+  orderBy: string, Optional. Hint for how to order the results
+  pageSize: integer, Optional. Requested page size. Server may return fewer items than requested. If unspecified, server will pick an appropriate default.
+  pageToken: string, Optional. A token identifying a page of results the server should return.
+    { # Message for response to listing Agents
+  &quot;agents&quot;: [ # The list of Agents.
+  &quot;nextPageToken&quot;: &quot;A String&quot;, # A token identifying a page of results the server should return.

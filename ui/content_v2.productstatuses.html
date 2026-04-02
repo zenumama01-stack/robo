@@ -1,0 +1,45 @@
+<h1><a href="content_v2.html">Content API for Shopping</a> . <a href="content_v2.productstatuses.html">productstatuses</a></h1>
+  <code><a href="#custombatch">custombatch(body=None, includeAttributes=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Gets the statuses of multiple products in a single request.</p>
+  <code><a href="#get">get(merchantId, productId, destinations=None, includeAttributes=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Gets the status of a product from your Merchant Center account.</p>
+  <code><a href="#list">list(merchantId, destinations=None, includeAttributes=None, includeInvalidInsertedItems=None, maxResults=None, pageToken=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Lists the statuses of the products in your Merchant Center account.</p>
+    <code class="details" id="custombatch">custombatch(body=None, includeAttributes=None, x__xgafv=None)</code>
+  <pre>Gets the statuses of multiple products in a single request.
+    { # A batch entry encoding a single non-batch productstatuses request.
+      &quot;includeAttributes&quot;: True or False,
+      &quot;productId&quot;: &quot;A String&quot;, # The ID of the product whose status to get.
+  includeAttributes: boolean, Flag to include full product data in the results of this request. The default value is false.
+    { # A batch entry encoding a single non-batch productstatuses response.
+      &quot;errors&quot;: { # A list of errors returned by a failed batch entry. # A list of errors, if the request failed.
+      &quot;kind&quot;: &quot;A String&quot;, # Identifies what kind of resource this is. Value: the fixed string &quot;`content#productstatusesCustomBatchResponseEntry`&quot;
+      &quot;productStatus&quot;: { # The status of a product, i.e., information about a product computed asynchronously. # The requested product status. Only defined if the request was successful.
+        &quot;dataQualityIssues&quot;: [ # DEPRECATED - never populated
+            &quot;fetchStatus&quot;: &quot;A String&quot;,
+            &quot;timestamp&quot;: &quot;A String&quot;,
+            &quot;valueProvided&quot;: &quot;A String&quot;,
+        &quot;destinationStatuses&quot;: [ # The intended destinations for the product.
+            &quot;approvalPending&quot;: True or False, # Whether the approval status might change due to further processing.
+            &quot;approvalStatus&quot;: &quot;A String&quot;, # The destination&#x27;s approval status. Acceptable values are: - &quot;`approved`&quot; - &quot;`disapproved`&quot;
+            &quot;destination&quot;: &quot;A String&quot;, # The name of the destination
+            &quot;intention&quot;: &quot;A String&quot;, # Provided for backward compatibility only. Always set to &quot;required&quot;. Acceptable values are: - &quot;`default`&quot; - &quot;`excluded`&quot; - &quot;`optional`&quot; - &quot;`required`&quot;
+        &quot;googleExpirationDate&quot;: &quot;A String&quot;, # Date on which the item expires in Google Shopping, in ISO 8601 format.
+        &quot;itemLevelIssues&quot;: [ # A list of all issues associated with the product.
+            &quot;destination&quot;: &quot;A String&quot;, # The destination the issue applies to.
+        &quot;kind&quot;: &quot;A String&quot;, # Identifies what kind of resource this is. Value: the fixed string &quot;`content#productStatus`&quot;
+        &quot;lastUpdateDate&quot;: &quot;A String&quot;, # Date on which the item has been last updated, in ISO 8601 format.
+        &quot;link&quot;: &quot;A String&quot;, # The link to the product.
+        &quot;product&quot;: { #  Required product attributes are primarily defined by the products data specification. See the Products Data Specification Help Center article for information. Product data. After inserting, updating, or deleting a product, it may take several minutes before changes take effect. # Product data after applying all the join inputs.
+        &quot;productId&quot;: &quot;A String&quot;, # The ID of the product for which status is reported.
+  &quot;kind&quot;: &quot;A String&quot;, # Identifies what kind of resource this is. Value: the fixed string &quot;content#productstatusesCustomBatchResponse&quot;.
+    <code class="details" id="get">get(merchantId, productId, destinations=None, includeAttributes=None, x__xgafv=None)</code>
+  <pre>Gets the status of a product from your Merchant Center account.
+  includeAttributes: boolean, Flag to include full product data in the result of this get request. The default value is false.
+    { # The status of a product, i.e., information about a product computed asynchronously.
+    <code class="details" id="list">list(merchantId, destinations=None, includeAttributes=None, includeInvalidInsertedItems=None, maxResults=None, pageToken=None, x__xgafv=None)</code>
+  <pre>Lists the statuses of the products in your Merchant Center account.
+  includeAttributes: boolean, Flag to include full product data in the results of the list request. The default value is false.
+  maxResults: integer, The maximum number of product statuses to return in the response, used for paging.
+  &quot;kind&quot;: &quot;A String&quot;, # Identifies what kind of resource this is. Value: the fixed string &quot;content#productstatusesListResponse&quot;.
+  &quot;nextPageToken&quot;: &quot;A String&quot;, # The token for the retrieval of the next page of products statuses.

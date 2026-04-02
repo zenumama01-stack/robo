@@ -1,0 +1,115 @@
+<div class="form-question" [class.required]="question.required">
+  <!-- Label -->
+  @if (question.label) {
+    <label class="question-label">
+      {{ question.label }}
+      @if (question.required) {
+  @if (question.helpText) {
+    <div class="help-text">
+      {{ question.helpText }}
+  <!-- Input Container with width class -->
+  <div class="input-container" [ngClass]="widthClass">
+    <!-- Text Input -->
+    @if (questionType === 'text') {
+        [value]="value || ''"
+        (input)="onValueChange($any($event.target).value)"
+        class="question-input"
+    <!-- Email Input -->
+    @if (questionType === 'email') {
+    <!-- Textarea -->
+    @if (questionType === 'textarea') {
+        kendoTextArea
+        class="question-textarea"
+        rows="5"
+    <!-- Number Input -->
+    @if (questionType === 'number') {
+        [value]="value"
+        [min]="min || 0"
+        [max]="max || 999999999"
+        [step]="step || 1"
+        (valueChange)="onValueChange($event)"
+      ></kendo-numerictextbox>
+    <!-- Currency Input -->
+    @if (questionType === 'currency') {
+        [step]="step || 0.01"
+        [format]="'c2'"
+    <!-- Date Picker -->
+    @if (questionType === 'date') {
+      <kendo-datepicker
+      ></kendo-datepicker>
+    <!-- DateTime Picker -->
+    @if (questionType === 'datetime') {
+      <kendo-datetimepicker
+      ></kendo-datetimepicker>
+    <!-- Button Group -->
+    @if (questionType === 'buttongroup') {
+      <kendo-buttongroup
+        [selection]="'single'"
+        class="question-buttongroup"
+        @for (option of options; track trackByValue($index, option)) {
+            [selected]="value === option.value"
+            (click)="onValueChange(option.value)"
+            class="buttongroup-option"
+            @if (option.icon) {
+    <!-- Radio Buttons -->
+    @if (questionType === 'radio') {
+      <div class="question-radio-group">
+              kendoRadioButton
+              [name]="question.id"
+              [value]="option.value"
+              [checked]="value === option.value"
+              (change)="onValueChange(option.value)"
+              [id]="question.id + '_' + option.value"
+            <label [for]="question.id + '_' + option.value" class="radio-label">
+    <!-- Dropdown -->
+    @if (questionType === 'dropdown') {
+        [formControl]="control"
+        class="question-dropdown"
+        <option value="">Select an option...</option>
+          <option [value]="option.value">
+    <!-- Slider -->
+    @if (questionType === 'slider') {
+      <div class="question-slider-container">
+          [min]="getSliderConfig().min"
+          [max]="getSliderConfig().max"
+          [smallStep]="getSliderConfig().step || 1"
+          [value]="value || getSliderConfig().min"
+          class="question-slider"
+        ></kendo-slider>
+        <div class="slider-value">
+          {{ value || getSliderConfig().min }}{{ getSliderConfig().suffix || '' }}
+    <!-- Date Range -->
+    @if (questionType === 'daterange') {
+      <div class="question-daterange">
+          [value]="value?.start"
+          (valueChange)="onDateRangeStartChange($event)"
+          placeholder="Start Date"
+          class="daterange-start"
+        <span class="daterange-separator">to</span>
+          [value]="value?.end"
+          (valueChange)="onDateRangeEndChange($event)"
+          placeholder="End Date"
+          class="daterange-end"
+    <!-- Time Picker -->
+    @if (questionType === 'time') {
+      <kendo-timepicker
+        [format]="'h:mm a'"
+      ></kendo-timepicker>
+    @if (questionType === 'checkbox') {
+      <div class="question-checkbox-group">
+          <div class="checkbox-option">
+              kendoCheckBox
+              [checked]="isChecked(option)"
+              (change)="toggleCheckbox(option)"
+            <label [for]="question.id + '_' + option.value" class="checkbox-label">
+  </div><!-- end input-container -->
+  <!-- Validation Error -->
+  @if (control.invalid && control.touched) {
+      @if (control.errors?.['required']) {
+        <span>This field is required</span>
+      @if (control.errors?.['email']) {
+        <span>Please enter a valid email address</span>
+      @if (control.errors?.['min']) {
+        <span>Value must be at least {{ min }}</span>
+      @if (control.errors?.['max']) {
+        <span>Value must be at most {{ max }}</span>

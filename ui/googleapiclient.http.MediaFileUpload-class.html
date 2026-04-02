@@ -1,0 +1,62 @@
+  <title>googleapiclient.http.MediaFileUpload</title>
+        Class&nbsp;MediaFileUpload
+            >]&nbsp;|&nbsp;<a href="googleapiclient.http.MediaFileUpload-class.html"
+<h1 class="epydoc">Class MediaFileUpload</h1><p class="nomargin-top"><span class="codelink"><a href="googleapiclient.http-pysrc.html#MediaFileUpload">source&nbsp;code</a></span></p>
+  <a href="googleapiclient.http.MediaUpload-class.html">MediaUpload</a> --+    
+<a href="googleapiclient.http.MediaIoBaseUpload-class.html">MediaIoBaseUpload</a> --+
+                   <strong class="uidshort">MediaFileUpload</strong>
+Construct a MediaFileUpload and pass as the media_body parameter of the
+method. For example, if we had a service that allowed uploading images:
+    chunksize=1024*1024, resumable=True)
+  farm.animals().insert(
+      media_body=media).execute()
+Depending on the platform you are working on, you may pass -1 as the
+chunksize, which indicates that the entire file should be uploaded in a single
+request. If the underlying platform supports streams, such as Python 2.6 or
+later, then this can be very efficient as it avoids multiple connections, and
+also avoids loading the entire file into memory before sending it. Note that
+Google App Engine has a 5MB limit on request size, so you should never set
+your chunksize larger than 5MB, or to -1.
+          <td><span class="summary-sig"><a href="googleapiclient.http.MediaFileUpload-class.html#__init__" class="summary-sig-name">__init__</a>(<span class="summary-sig-arg">*args</span>,
+            <span class="codelink"><a href="googleapiclient.http-pysrc.html#MediaFileUpload.__init__">source&nbsp;code</a></span>
+          <td><span class="summary-sig"><a name="__del__"></a><span class="summary-sig-name">__del__</span>(<span class="summary-sig-arg">self</span>)</span></td>
+            <span class="codelink"><a href="googleapiclient.http-pysrc.html#MediaFileUpload.__del__">source&nbsp;code</a></span>
+          <td><span class="summary-sig"><a href="googleapiclient.http.MediaFileUpload-class.html#to_json" class="summary-sig-name">to_json</a>(<span class="summary-sig-arg">self</span>)</span><br />
+      Creating a JSON representation of an instance of MediaFileUpload.</td>
+            <span class="codelink"><a href="googleapiclient.http-pysrc.html#MediaFileUpload.to_json">source&nbsp;code</a></span>
+    <p class="indent-wrapped-lines"><b>Inherited from <code><a href="googleapiclient.http.MediaIoBaseUpload-class.html">MediaIoBaseUpload</a></code></b>:
+      <code><a href="googleapiclient.http.MediaIoBaseUpload-class.html#chunksize">chunksize</a></code>,
+      <code><a href="googleapiclient.http.MediaIoBaseUpload-class.html#getbytes">getbytes</a></code>,
+      <code><a href="googleapiclient.http.MediaIoBaseUpload-class.html#has_stream">has_stream</a></code>,
+      <code><a href="googleapiclient.http.MediaIoBaseUpload-class.html#mimetype">mimetype</a></code>,
+      <code><a href="googleapiclient.http.MediaIoBaseUpload-class.html#resumable">resumable</a></code>,
+      <code><a href="googleapiclient.http.MediaIoBaseUpload-class.html#size">size</a></code>,
+      <code><a href="googleapiclient.http.MediaIoBaseUpload-class.html#stream">stream</a></code>
+    <div class="private">    <p class="indent-wrapped-lines"><b>Inherited from <code><a href="googleapiclient.http.MediaUpload-class.html">MediaUpload</a></code></b> (private):
+      <code><a href="googleapiclient.http.MediaUpload-class.html#_to_json" onclick="show_private();">_to_json</a></code>
+<!-- ==================== CLASS METHODS ==================== -->
+<a name="section-ClassMethods"></a>
+        <td align="left"><span class="table-header">Class Methods</span></td>
+         ><span class="options">[<a href="#section-ClassMethods"
+    <p class="indent-wrapped-lines"><b>Inherited from <code><a href="googleapiclient.http.MediaUpload-class.html">MediaUpload</a></code></b>:
+      <code><a href="googleapiclient.http.MediaUpload-class.html#new_from_json">new_from_json</a></code>
+          <td><span class="summary-sig"><a name="from_json"></a><span class="summary-sig-name">from_json</span>(<span class="summary-sig-arg">s</span>)</span></td>
+            <span class="codelink"><a href="googleapiclient.http-pysrc.html#MediaFileUpload.from_json">source&nbsp;code</a></span>
+    ><span class="codelink"><a href="googleapiclient.http-pysrc.html#MediaFileUpload.__init__">source&nbsp;code</a></span>&nbsp;
+  filename: string, Name of the file.
+  mimetype: string, Mime-type of the file. If None then a mime-type will be
+    guessed from the file extension.
+  chunksize: int, File will be uploaded in chunks of this many bytes. Only
+    used if resumable=True. Pass in a value of -1 if the file is to be
+    uploaded in a single chunk. Note that Google App Engine has a 5MB limit
+    on request size, so you should never set your chunksize larger than 5MB,
+    or to -1.
+  resumable: bool, True if this is a resumable upload. False means upload
+    in a single request.
+<a name="to_json"></a>
+  <h3 class="epydoc"><span class="sig"><span class="sig-name">to_json</span>(<span class="sig-arg">self</span>)</span>
+    ><span class="codelink"><a href="googleapiclient.http-pysrc.html#MediaFileUpload.to_json">source&nbsp;code</a></span>&nbsp;
+Creating a JSON representation of an instance of MediaFileUpload.
+   string, a JSON representation of this instance, suitable to pass to
+   from_json().
+        <a href="googleapiclient.http.MediaUpload-class.html#to_json">MediaUpload.to_json</a>

@@ -1,0 +1,36 @@
+<h1><a href="securesourcemanager_v1.html">Secure Source Manager API</a> . <a href="securesourcemanager_v1.projects.html">projects</a> . <a href="securesourcemanager_v1.projects.locations.html">locations</a> . <a href="securesourcemanager_v1.projects.locations.repositories.html">repositories</a> . <a href="securesourcemanager_v1.projects.locations.repositories.branchRules.html">branchRules</a></h1>
+  <code><a href="#create">create(parent, body=None, branchRuleId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">CreateBranchRule creates a branch rule in a given repository.</p>
+<p class="firstline">DeleteBranchRule deletes a branch rule.</p>
+<p class="firstline">GetBranchRule gets a branch rule.</p>
+<p class="firstline">ListBranchRules lists branch rules in a given repository.</p>
+<p class="firstline">UpdateBranchRule updates a branch rule.</p>
+    <code class="details" id="create">create(parent, body=None, branchRuleId=None, x__xgafv=None)</code>
+  <pre>CreateBranchRule creates a branch rule in a given repository.
+{ # Metadata of a BranchRule. BranchRule is the protection rule to enforce pre-defined rules on designated branches within a repository.
+  &quot;allowStaleReviews&quot;: True or False, # Optional. Determines if allow stale reviews or approvals before merging to the branch.
+  &quot;annotations&quot;: { # Optional. User annotations. These attributes can only be set and used by the user. See https://google.aip.dev/128#annotations for more details such as format and size limitations.
+  &quot;disabled&quot;: True or False, # Optional. Determines if the branch rule is disabled or not.
+  &quot;includePattern&quot;: &quot;A String&quot;, # Optional. The pattern of the branch that can match to this BranchRule. Specified as regex. .* for all branches. Examples: main, (main|release.*). Current MVP phase only support `.*` for wildcard.
+  &quot;minimumApprovalsCount&quot;: 42, # Optional. The minimum number of approvals required for the branch rule to be matched.
+  &quot;minimumReviewsCount&quot;: 42, # Optional. The minimum number of reviews required for the branch rule to be matched.
+  &quot;name&quot;: &quot;A String&quot;, # Optional. A unique identifier for a BranchRule. The name should be of the format: `projects/{project}/locations/{location}/repositories/{repository}/branchRules/{branch_rule}`
+  &quot;requireCommentsResolved&quot;: True or False, # Optional. Determines if require comments resolved before merging to the branch.
+  &quot;requireLinearHistory&quot;: True or False, # Optional. Determines if require linear history before merging to the branch.
+  &quot;requirePullRequest&quot;: True or False, # Optional. Determines if the branch rule requires a pull request or not.
+  &quot;requiredStatusChecks&quot;: [ # Optional. List of required status checks before merging to the branch.
+    { # Check is a type for status check.
+      &quot;context&quot;: &quot;A String&quot;, # Required. The context of the check.
+  &quot;uid&quot;: &quot;A String&quot;, # Output only. Unique identifier of the repository.
+  branchRuleId: string, A parameter
+  <pre>DeleteBranchRule deletes a branch rule.
+  allowMissing: boolean, Optional. If set to true, and the branch rule is not found, the request will succeed but no action will be taken on the server.
+  <pre>GetBranchRule gets a branch rule.
+  name: string, Required. Name of the repository to retrieve. The format is `projects/{project}/locations/{location}/repositories/{repository}/branchRules/{branch_rule}`. (required)
+  <pre>ListBranchRules lists branch rules in a given repository.
+    { # ListBranchRulesResponse is the response to listing branchRules.
+  &quot;branchRules&quot;: [ # The list of branch rules.
+  <pre>UpdateBranchRule updates a branch rule.
+  name: string, Optional. A unique identifier for a BranchRule. The name should be of the format: `projects/{project}/locations/{location}/repositories/{repository}/branchRules/{branch_rule}` (required)
+  updateMask: string, Required. Field mask is used to specify the fields to be overwritten in the branchRule resource by the update. The fields specified in the update_mask are relative to the resource, not the full request. A field will be overwritten if it is in the mask. The special value &quot;*&quot; means full replacement.
+  validateOnly: boolean, Optional. If set, validate the request and preview the review, but do not actually post it. (https://google.aip.dev/163, for declarative friendly)

@@ -1,0 +1,24 @@
+    <!-- Template Content Section -->
+        SectionKey="templateContent"
+        SectionName="Template Content"
+    <!-- Availability & Status Section -->
+        SectionKey="availabilityStatus"
+        SectionName="Availability & Status"
+    <!-- Template Contents Section -->
+        SectionKey="templateContents"
+        SectionName="Template Contents"
+        [BadgeCount]="GetSectionRowCount('templateContents')"
+                [Params]="BuildRelationshipViewParamsByEntityName('MJ: Template Contents','TemplateID')"
+                [NewRecordValues]="NewRecordValues('MJ: Template Contents')"
+                [AllowLoad]="IsSectionExpanded('templateContents')"
+                (AfterDataLoad)="SetSectionRowCount('templateContents', $event.totalRowCount)"
+                [Params]="BuildRelationshipViewParamsByEntityName('MJ: Template Params','TemplateID')"
+    <!-- MJ: User Notification Types Section -->
+        SectionKey="mJUserNotificationTypes"
+        SectionName="MJ: User Notification Types"
+        [BadgeCount]="GetSectionRowCount('mJUserNotificationTypes')"
+                [Params]="BuildRelationshipViewParamsByEntityName('MJ: User Notification Types','SMSTemplateID')"
+                [NewRecordValues]="NewRecordValues('MJ: User Notification Types')"
+                [AllowLoad]="IsSectionExpanded('mJUserNotificationTypes')"
+                (AfterDataLoad)="SetSectionRowCount('mJUserNotificationTypes', $event.totalRowCount)"
+                [Params]="BuildRelationshipViewParamsByEntityName('MJ: User Notification Types','EmailTemplateID')"

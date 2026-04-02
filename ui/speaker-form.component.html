@@ -1,0 +1,149 @@
+          <h3>{{ record.FullName || 'New Speaker' }}</h3>
+          <p class="header-subtitle">{{ record.Title ? record.Title + (record.Organization ? ' at ' + record.Organization : '') : 'Speaker Profile' }}</p>
+        <!-- Personal Information Section -->
+          <div class="form-section-title">Personal Information</div>
+            <label for="fullName" class="form-label required">Full Name</label>
+              id="fullName"
+              name="fullName"
+              [(ngModel)]="record.FullName"
+              placeholder="Enter full name"
+              <label for="email" class="form-label required">Email</label>
+                type="email"
+                id="email"
+                name="email"
+                [(ngModel)]="record.Email"
+                placeholder="speaker@example.com"
+                maxlength="100"
+              <label for="phoneNumber" class="form-label">Phone Number</label>
+                type="tel"
+                id="phoneNumber"
+                name="phoneNumber"
+                [(ngModel)]="record.PhoneNumber"
+                placeholder="+1 (555) 123-4567"
+                maxlength="20">
+        <!-- Professional Information Section -->
+          <div class="form-section-title">Professional Information</div>
+              <label for="organization" class="form-label">Organization</label>
+                id="organization"
+                name="organization"
+                [(ngModel)]="record.Organization"
+                placeholder="Company or organization"
+              <label for="title" class="form-label">Title</label>
+                id="title"
+                name="title"
+                [(ngModel)]="record.Title"
+                placeholder="Professional title"
+                maxlength="100">
+            <label for="bio" class="form-label">Biography</label>
+              id="bio"
+              name="bio"
+              [(ngModel)]="record.Bio"
+              placeholder="Speaker biography"
+              rows="6"></textarea>
+        <!-- Social Media & Web Section -->
+          <div class="form-section-title">Social Media & Web</div>
+            <label for="linkedInUrl" class="form-label">LinkedIn URL</label>
+            <div class="url-input-group">
+                type="url"
+                id="linkedInUrl"
+                name="linkedInUrl"
+                [(ngModel)]="record.LinkedInURL"
+                placeholder="https://linkedin.com/in/...">
+              <a *ngIf="record.LinkedInURL && !EditMode"
+                 [href]="record.LinkedInURL"
+                 target="_blank"
+                 rel="noopener noreferrer"
+                 class="url-link-button"
+                 title="Open in new tab">
+                <i class="fa fa-external-link-alt"></i>
+              </a>
+              <label for="twitterHandle" class="form-label">Twitter Handle</label>
+                id="twitterHandle"
+                name="twitterHandle"
+                [(ngModel)]="record.TwitterHandle"
+                placeholder="@username"
+                maxlength="50">
+              <label for="websiteUrl" class="form-label">Website URL</label>
+                  id="websiteUrl"
+                  name="websiteUrl"
+                  [(ngModel)]="record.WebsiteURL"
+                  placeholder="https://example.com">
+                <a *ngIf="record.WebsiteURL && !EditMode"
+                   [href]="record.WebsiteURL"
+    <!-- AI Research Dossier Card - Always visible with special styling -->
+    <div class="ai-dossier-card">
+      <div class="ai-card-header">
+        <div class="ai-header-icon">
+          <i class="fa fa-user-secret"></i>
+        <div class="ai-header-content">
+          <h3>AI Research Dossier</h3>
+          <p>Automated background research and credibility analysis</p>
+        <div class="ai-status-indicator" [class.processed]="hasDossierData" [class.pending]="!hasDossierData">
+          <i [class]="hasDossierData ? 'fa fa-check-circle' : 'fa fa-clock'"></i>
+          <span>{{ hasDossierData ? 'Research Complete' : 'Not Yet Researched' }}</span>
+      <div class="ai-card-body">
+        <!-- Not Researched State -->
+        <div *ngIf="!hasDossierData" class="ai-empty-state">
+          <div class="empty-state-icon">
+            <i class="fa fa-search"></i>
+          <h4>Awaiting Background Research</h4>
+          <p>This speaker has not been researched by the AI system yet. Research includes credibility scoring, speaking history analysis, and expertise assessment.</p>
+        <!-- Researched State -->
+        <div *ngIf="hasDossierData" class="ai-content-grid">
+          <!-- Credibility Score Card -->
+          <div class="ai-metric-card" *ngIf="record.CredibilityScore != null">
+            <div class="metric-header">
+              <i class="fa fa-shield-alt"></i>
+              <span>Credibility Score</span>
+            <div class="score-display-large" [ngClass]="credibilityScoreClass">
+              <div class="score-number">{{ record.CredibilityScore }}</div>
+              <div class="score-label">/100</div>
+            <div class="score-description">
+              Based on research and verification
+          <!-- Dossier Summary Card -->
+          <div class="ai-content-card" *ngIf="record.DossierSummary">
+            <div class="content-card-header">
+              <span>Research Summary</span>
+            <div class="content-card-body">{{ record.DossierSummary }}</div>
+          <!-- Speaking History Card -->
+          <div class="ai-content-card" *ngIf="record.SpeakingHistory">
+              <i class="fa fa-microphone"></i>
+              <span>Speaking History</span>
+            <div class="content-card-body">
+              <div class="history-list">
+                <div *ngFor="let event of parseJsonArray(record.SpeakingHistory)" class="history-item">
+                  <span>{{ event }}</span>
+          <!-- Expertise Card -->
+          <div class="ai-content-card" *ngIf="record.Expertise">
+              <i class="fa fa-lightbulb"></i>
+              <span>Areas of Expertise</span>
+              <div class="topics-container">
+                <span *ngFor="let topic of parseJsonArray(record.Expertise)" class="topic-badge">
+                  {{ topic }}
+          <!-- Research Metrics -->
+          <div class="ai-metrics-grid" *ngIf="hasResearchData">
+            <div class="metric-item">
+              <i class="fa fa-book"></i>
+              <div class="metric-content">
+                <div class="metric-value">{{ formatNumber(record.PublicationsCount) }}</div>
+                <div class="metric-label">Publications</div>
+              <i class="fa fa-users"></i>
+                <div class="metric-value">{{ formatNumber(record.SocialMediaReach) }}</div>
+                <div class="metric-label">Social Reach</div>
+          <!-- Red Flags Card -->
+          <div class="ai-content-card warning-card" *ngIf="hasRedFlags">
+              <span>Red Flags</span>
+              <div class="warning-list">
+                <div *ngFor="let flag of parseJsonArray(record.RedFlags)" class="warning-item">
+                  <i class="fa fa-flag"></i>
+                  <span>{{ flag }}</span>
+    <!-- Metadata Section -->
+    <div class="form-card metadata-card" *ngIf="record.ID">
+          <div class="metadata-item" *ngIf="record.ContactID">
+            <span class="metadata-label">CRM Contact:</span>
+            <span class="metadata-value">
+              {{ getContactName(record.ContactID) }}
+              <a (click)="openContactRecord()"
+                 class="entity-link-icon"
+                 title="Open contact record">
+    <p>Loading speaker data...</p>

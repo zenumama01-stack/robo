@@ -1,0 +1,42 @@
+<h1><a href="drive_v2.html">Google Drive API</a> . <a href="drive_v2.drives.html">drives</a></h1>
+  <code><a href="#delete">delete(driveId, allowItemDeletion=None, useDomainAdminAccess=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Permanently deletes a shared drive for which the user is an `organizer`. The shared drive cannot contain any untrashed items.</p>
+  <code><a href="#get">get(driveId, useDomainAdminAccess=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Gets a shared drive's metadata by ID.</p>
+  <code><a href="#hide">hide(driveId, x__xgafv=None)</a></code></p>
+<p class="firstline">Hides a shared drive from the default view.</p>
+  <code><a href="#insert">insert(requestId, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Creates a new shared drive.</p>
+  <code><a href="#list">list(maxResults=None, pageToken=None, q=None, useDomainAdminAccess=None, x__xgafv=None)</a></code></p>
+<p class="firstline"> Lists the user's shared drives. This method accepts the `q` parameter, which is a search query combining one or more search terms. For more information, see the [Search for shared drives](/workspace/drive/api/guides/search-shareddrives) guide.</p>
+  <code><a href="#unhide">unhide(driveId, x__xgafv=None)</a></code></p>
+<p class="firstline">Restores a shared drive to the default view.</p>
+  <code><a href="#update">update(driveId, body=None, useDomainAdminAccess=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Updates the metadata for a shared drive.</p>
+    <code class="details" id="delete">delete(driveId, allowItemDeletion=None, useDomainAdminAccess=None, x__xgafv=None)</code>
+  <pre>Permanently deletes a shared drive for which the user is an `organizer`. The shared drive cannot contain any untrashed items.
+  driveId: string, The ID of the shared drive. (required)
+  allowItemDeletion: boolean, Whether any items inside the shared drive should also be deleted. This option is only supported when `useDomainAdminAccess` is also set to `true`.
+  useDomainAdminAccess: boolean, Issue the request as a domain administrator; if set to true, then the requester will be granted access if they are an administrator of the domain to which the shared drive belongs.
+    <code class="details" id="get">get(driveId, useDomainAdminAccess=None, x__xgafv=None)</code>
+  <pre>Gets a shared drive&#x27;s metadata by ID.
+    { # Representation of a shared drive. Some resource methods (such as `drives.update`) require a `driveId`. Use the `drives.list` method to retrieve the ID for a shared drive.
+    <code class="details" id="hide">hide(driveId, x__xgafv=None)</code>
+  <pre>Hides a shared drive from the default view.
+    <code class="details" id="insert">insert(requestId, body=None, x__xgafv=None)</code>
+  <pre>Creates a new shared drive.
+  requestId: string, Required. An ID, such as a random UUID, which uniquely identifies this user&#x27;s request for idempotent creation of a shared drive. A repeated request by the same user and with the same request ID will avoid creating duplicates by attempting to create the same shared drive. If the shared drive already exists a 409 error will be returned. (required)
+    <code class="details" id="list">list(maxResults=None, pageToken=None, q=None, useDomainAdminAccess=None, x__xgafv=None)</code>
+  <pre> Lists the user&#x27;s shared drives. This method accepts the `q` parameter, which is a search query combining one or more search terms. For more information, see the [Search for shared drives](/workspace/drive/api/guides/search-shareddrives) guide.
+  maxResults: integer, Maximum number of shared drives to return per page.
+  pageToken: string, Page token for shared drives.
+  q: string, Query string for searching shared drives.
+  useDomainAdminAccess: boolean, Issue the request as a domain administrator; if set to true, then all shared drives of the domain in which the requester is an administrator are returned.
+    { # A list of shared drives.
+  &quot;items&quot;: [ # The list of shared drives. If nextPageToken is populated, then this list may be incomplete and an additional page of results should be fetched.
+  &quot;kind&quot;: &quot;drive#driveList&quot;, # This is always `drive#driveList`
+  &quot;nextPageToken&quot;: &quot;A String&quot;, # The page token for the next page of shared drives. This will be absent if the end of the list has been reached. If the token is rejected for any reason, it should be discarded, and pagination should be restarted from the first page of results.
+    <code class="details" id="unhide">unhide(driveId, x__xgafv=None)</code>
+  <pre>Restores a shared drive to the default view.
+    <code class="details" id="update">update(driveId, body=None, useDomainAdminAccess=None, x__xgafv=None)</code>
+  <pre>Updates the metadata for a shared drive.

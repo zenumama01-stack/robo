@@ -1,0 +1,33 @@
+<h1><a href="privateca_v1.html">Certificate Authority API</a> . <a href="privateca_v1.projects.html">projects</a> . <a href="privateca_v1.projects.locations.html">locations</a> . <a href="privateca_v1.projects.locations.certificateTemplates.html">certificateTemplates</a></h1>
+  <code><a href="#create">create(parent, body=None, certificateTemplateId=None, requestId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Create a new CertificateTemplate in a given Project and Location.</p>
+<p class="firstline">DeleteCertificateTemplate deletes a CertificateTemplate.</p>
+<p class="firstline">Returns a CertificateTemplate.</p>
+<p class="firstline">Lists CertificateTemplates.</p>
+<p class="firstline">Update a CertificateTemplate.</p>
+    <code class="details" id="create">create(parent, body=None, certificateTemplateId=None, requestId=None, x__xgafv=None)</code>
+  <pre>Create a new CertificateTemplate in a given Project and Location.
+  parent: string, Required. The resource name of the location associated with the CertificateTemplate, in the format `projects/*/locations/*`. (required)
+{ # A CertificateTemplate refers to a managed template for certificate issuance.
+  &quot;createTime&quot;: &quot;A String&quot;, # Output only. The time at which this CertificateTemplate was created.
+  &quot;description&quot;: &quot;A String&quot;, # Optional. A human-readable description of scenarios this template is intended for.
+  &quot;identityConstraints&quot;: { # Describes constraints on a Certificate&#x27;s Subject and SubjectAltNames. # Optional. Describes constraints on identities that may be appear in Certificates issued using this template. If this is omitted, then this template will not add restrictions on a certificate&#x27;s identity.
+  &quot;maximumLifetime&quot;: &quot;A String&quot;, # Optional. The maximum lifetime allowed for issued Certificates that use this template. If the issuing CaPool resource&#x27;s IssuancePolicy specifies a maximum_lifetime the minimum of the two durations will be the maximum lifetime for issued Certificates. Note that if the issuing CertificateAuthority expires before a Certificate&#x27;s requested maximum_lifetime, the effective lifetime will be explicitly truncated to match it.
+  &quot;name&quot;: &quot;A String&quot;, # Identifier. The resource name for this CertificateTemplate in the format `projects/*/locations/*/certificateTemplates/*`.
+  &quot;passthroughExtensions&quot;: { # Describes a set of X.509 extensions that may be part of some certificate issuance controls. # Optional. Describes the set of X.509 extensions that may appear in a Certificate issued using this CertificateTemplate. If a certificate request sets extensions that don&#x27;t appear in the passthrough_extensions, those extensions will be dropped. If the issuing CaPool&#x27;s IssuancePolicy defines baseline_values that don&#x27;t appear here, the certificate issuance request will fail. If this is omitted, then this template will not add restrictions on a certificate&#x27;s X.509 extensions. These constraints do not apply to X.509 extensions set in this CertificateTemplate&#x27;s predefined_values.
+  &quot;predefinedValues&quot;: { # An X509Parameters is used to describe certain fields of an X.509 certificate, such as the key usage fields, fields specific to CA certificates, certificate policy extensions and custom extensions. # Optional. A set of X.509 values that will be applied to all issued certificates that use this template. If the certificate request includes conflicting values for the same properties, they will be overwritten by the values defined here. If the issuing CaPool&#x27;s IssuancePolicy defines conflicting baseline_values for the same properties, the certificate issuance request will fail.
+  &quot;updateTime&quot;: &quot;A String&quot;, # Output only. The time at which this CertificateTemplate was updated.
+  certificateTemplateId: string, Required. It must be unique within a location and match the regular expression `[a-zA-Z0-9_-]{1,63}`
+  <pre>DeleteCertificateTemplate deletes a CertificateTemplate.
+  name: string, Required. The resource name for this CertificateTemplate in the format `projects/*/locations/*/certificateTemplates/*`. (required)
+  <pre>Returns a CertificateTemplate.
+  name: string, Required. The name of the CertificateTemplate to get. (required)
+  <pre>Lists CertificateTemplates.
+  parent: string, Required. The resource name of the location associated with the CertificateTemplates, in the format `projects/*/locations/*`. (required)
+  pageSize: integer, Optional. Limit on the number of CertificateTemplates to include in the response. Further CertificateTemplates can subsequently be obtained by including the ListCertificateTemplatesResponse.next_page_token in a subsequent request. If unspecified, the server will pick an appropriate default.
+  pageToken: string, Optional. Pagination token, returned earlier via ListCertificateTemplatesResponse.next_page_token.
+    { # Response message for CertificateAuthorityService.ListCertificateTemplates.
+  &quot;certificateTemplates&quot;: [ # The list of CertificateTemplates.
+  &quot;nextPageToken&quot;: &quot;A String&quot;, # A token to retrieve next page of results. Pass this value in ListCertificateTemplatesRequest.page_token to retrieve the next page of results.
+  <pre>Update a CertificateTemplate.
+  name: string, Identifier. The resource name for this CertificateTemplate in the format `projects/*/locations/*/certificateTemplates/*`. (required)

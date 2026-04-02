@@ -1,0 +1,628 @@
+  <!-- Dialog container for Kendo dialogs -->
+  <div kendoDialogContainer></div>
+  <!-- Window container for Kendo windows -->
+  <div kendoWindowContainer></div>
+  @if (record) {
+    <form class="record-form" #form="ngForm">
+      <mj-form-toolbar [Form]="this"></mj-form-toolbar>
+      <!-- Agent Header — expanded view -->
+      @if (!HeaderCollapsed) {
+        <div class="agent-header">
+          <div class="agent-header-content">
+            <button class="agent-header-toggle" (click)="ToggleHeaderCollapsed()"
+              title="Minimize header">
+              <i class="fa-solid fa-chevron-up"></i>
+            <div class="agent-overview">
+              <div class="agent-icon-wrapper">
+                @if (hasLogoURL()) {
+                  <img [src]="record.LogoURL" [alt]="record.Name + ' logo'" class="agent-logo">
+                  <i [class]="getAgentIcon()"></i>
+              <div class="agent-info">
+                @if (EditMode) {
+                  <kendo-textbox [(ngModel)]="record.Name"
+                    name="agentName"
+                    placeholder="Enter agent name..."
+                    class="agent-name-input">
+                  <h1 class="agent-name">{{ record.Name || 'Untitled AI Agent' }}</h1>
+                <div class="agent-meta">
+                  @if (record.Status) {
+                    <span class="status-badge" [style.background-color]="getStatusBadgeColor()">
+                      <i class="fa-solid fa-circle"></i>
+                      {{ record.Status }}
+                  @if (record.Type) {
+                    <span class="execution-mode">
+                      Agent Type: {{ record.Type }}
+                  @if (record.Parent) {
+                    <span class="parent-agent clickable"
+                      (click)="navigateToParentAgent()"
+                      title="Open parent agent: {{ record.Parent }}">
+                      <i class="fa-solid fa-sitemap"></i>
+                      Child of {{ record.Parent }}
+                      <i class="fa-solid fa-external-link" style="margin-left: 4px; font-size: 10px;"></i>
+            <div class="agent-actions">
+              @if (record.ID) {
+                <button kendoButton themeColor="primary" size="large"
+                  (click)="openTestHarness()"
+                  [disabled]="record.Status !== 'Active'"
+                  title="Run this AI agent">
+                  <i class="fa-solid fa-play"></i> Run
+                <button kendoButton size="large"
+                  (click)="openPermissionsDialog()"
+                  [title]="IsOpenToEveryone ? 'Open to everyone — click to manage permissions' : 'Restricted — click to manage permissions'">
+                  <i class="fa-solid" [class.fa-lock-open]="IsOpenToEveryone" [class.fa-lock]="!IsOpenToEveryone"
+                  [style.color]="IsOpenToEveryone ? '#16a34a' : null"></i>
+                  {{ IsOpenToEveryone ? 'Open' : 'Restricted' }}
+              <button kendoButton fillMode="outline" size="small" (click)="refreshRelatedData()" title="Refresh all data">
+                <i class="fa-solid fa-refresh"></i>
+      <!-- Agent Header — minimized floating bar -->
+      @if (HeaderCollapsed) {
+        <div class="agent-header-mini">
+          <button class="agent-header-mini-expand" (click)="ToggleHeaderCollapsed()"
+            title="Expand header">
+            <i class="fa-solid fa-chevron-down"></i>
+          <span class="agent-header-mini-name">{{ record.Name || 'Untitled AI Agent' }}</span>
+            <span class="agent-header-mini-status" [style.background-color]="getStatusBadgeColor()">
+          <div class="agent-header-mini-spacer"></div>
+            <button class="agent-header-mini-btn agent-header-mini-btn--primary"
+              title="Run agent">
+              <i class="fa-solid fa-play"></i>
+            <button class="agent-header-mini-btn"
+              [title]="IsOpenToEveryone ? 'Open to everyone' : 'Restricted'">
+            (click)="refreshRelatedData()" title="Refresh">
+      <!-- Single Pane Layout with Expander Panels -->
+      <div class="form-content">
+        <kendo-panelbar [keepItemContent]="true" (stateChange)="OnPanelBarStateChange($event)">
+          <!-- Custom Agent Type Section (if defined) -->
+          @if (record.ID && agentType && agentType.UIFormSectionKey) {
+            <kendo-panelbar-item id="custom"
+              [expanded]="GetSectionExpanded('custom', agentType.UIFormSectionExpandedByDefault)">
+              <ng-template kendoPanelBarItemTitle>
+                <i class="fa-solid fa-puzzle-piece"></i> {{ agentType.Name }} Configuration
+              <ng-template kendoPanelBarContent>
+                <div class="panel-content custom-agent-type-section" [style.display]="'block'">
+                  @if (loadingStates.customSection) {
+                    <mj-loading text="Loading {{ agentType.Name }} configuration..." size="medium"></mj-loading>
+                  <ng-container #customSectionContainer></ng-container>
+            </kendo-panelbar-item>
+          <!-- Requests & History -->
+            <kendo-panelbar-item id="history" [expanded]="GetSectionExpanded('history', false)" [disabled]="loadingStates.executionHistory">
+                <i class="fa-solid fa-history"></i> Execution History
+                @if (loadingStates.executionHistory) {
+                  <span style="margin-left: 8px;"><i class="fa-solid fa-spinner fa-spin" style="font-size: 12px;"></i></span>
+                } @else if (executionHistoryCount > 0) {
+                  <span> ({{ executionHistoryCount }})@if(executionHistoryCount < totalExecutionHistoryCount){ of {{ totalExecutionHistoryCount }} }</span>
+                <div class="panel-content execution-history-panel">
+                  @if (executionHistoryCount === 0) {
+                      <i class="fa-solid fa-history"></i>
+                      <h4>No Execution History</h4>
+                      <p>This agent hasn't been executed yet. Use the Test Agent button to run the agent and see execution history here.</p>
+                    <!-- Search Bar -->
+                    <div class="execution-search-bar">
+                        [(ngModel)]="executionSearchText"
+                        (ngModelChange)="onExecutionSearchChange()"
+                        [ngModelOptions]="{standalone: true}"
+                        placeholder="Search by Run ID..."
+                    <div class="execution-history-list">
+                      @if (filteredExecutions.length === 0) {
+                          <h4>No Matching Results</h4>
+                          <p>No execution history found matching "{{ executionSearchText }}"</p>
+                      @for (execution of filteredExecutions; track execution.ID) {
+                        <div class="execution-card" [class.expanded]="expandedExecutions[execution.ID]">
+                          <div class="execution-header" (click)="toggleExecutionExpanded(execution.ID)">
+                            <div class="execution-left-section">
+                              <div class="execution-status">
+                                <div class="status-indicator" [style.background-color]="getExecutionStatusColor(execution.Status)">
+                                  <i [class]="getExecutionStatusIcon(execution.Status)"></i>
+                                <div class="execution-info">
+                                  <div class="execution-title">
+                                    <i class="fa-solid fa-chevron-right expand-icon" [class.expanded]="expandedExecutions[execution.ID]"></i>
+                                    Execution #{{ execution.ID.substring(0, 8) }}
+                                  <div class="execution-date">{{ execution.__mj_CreatedAt | date:'MMM d, h:mm a' }}</div>
+                              <div class="execution-metrics">
+                                @if (execution.Configuration) {
+                                    <span class="metric-label">Config:</span>
+                                    <span class="metric-value">{{ execution.Configuration }}</span>
+                                @if (execution.CompletedAt) {
+                                    <i class="fa-solid fa-stopwatch"></i>
+                                    <span class="metric-label">Duration:</span>
+                                    <span class="metric-value">{{ formatExecutionTimeFromDates(execution.StartedAt, execution.CompletedAt) }}</span>
+                                } @else if (execution.Status === 'Running') {
+                                    <i class="fa-solid fa-clock"></i>
+                                    <span class="metric-label">Running:</span>
+                                    <!-- <span class="metric-value">{{ execution.StartedAt | runningTime }}</span> -->
+                                @if (execution.TotalTokensUsedRollup || execution.TotalTokensUsed) {
+                                    <i class="fa-solid fa-microchip"></i>
+                                    <span class="metric-label">Tokens:</span>
+                                    <span class="metric-value">{{ formatTokenCount(execution.TotalTokensUsedRollup || execution.TotalTokensUsed) }}</span>
+                                @if (execution.TotalCostRollup || execution.TotalCost) {
+                                    <i class="fa-solid fa-dollar-sign"></i>
+                                    <span class="metric-label">Cost:</span>
+                                    <span class="metric-value">${{ formatCost(execution.TotalCostRollup || execution.TotalCost) }}</span>
+                            <div class="execution-actions">
+                              <button class="action-btn" (click)="openExecutionRecord(execution.ID); $event.stopPropagation()" title="View details">
+                                <i class="fa-solid fa-external-link-alt"></i>
+                          @if (expandedExecutions[execution.ID]) {
+                            <div class="execution-expanded-content">
+                              <!-- Detailed Metrics -->
+                              <div class="detailed-metrics">
+                                <div class="metrics-grid">
+                                  <div class="metric-detail">
+                                    <div class="metric-info">
+                                      <span class="metric-title">Started</span>
+                                      <span class="metric-data">{{ execution.StartedAt | date:'medium' }}</span>
+                                        <span class="metric-title">Completed</span>
+                                        <span class="metric-data">{{ execution.CompletedAt | date:'medium' }}</span>
+                                  @if (execution.TotalTokensUsed) {
+                                        <span class="metric-title">Direct Tokens</span>
+                                        <span class="metric-data">{{ formatTokenCount(execution.TotalTokensUsed) }}</span>
+                                  @if (execution.TotalTokensUsedRollup && execution.TotalTokensUsedRollup !== execution.TotalTokensUsed) {
+                                        <span class="metric-title">Total + Sub-agents</span>
+                                        <span class="metric-data">{{ formatTokenCount(execution.TotalTokensUsedRollup) }}</span>
+                                  @if (execution.TotalCost) {
+                                        <span class="metric-title">Direct Cost</span>
+                                        <span class="metric-data">${{ formatCost(execution.TotalCost) }}</span>
+                                  @if (execution.TotalCostRollup && execution.TotalCostRollup !== execution.TotalCost) {
+                                      <i class="fa-solid fa-calculator"></i>
+                                        <span class="metric-data">${{ formatCost(execution.TotalCostRollup) }}</span>
+                                  @if (execution.ConversationID) {
+                                        <span class="metric-title">Conversation</span>
+                                        <span class="metric-data">{{ execution.ConversationID.substring(0, 8) }}...</span>
+                              @if (execution.Result) {
+                                <div class="result-section">
+                                  <h5><i class="fa-solid fa-file-text"></i> Result</h5>
+                                  <mj-code-editor
+                                    [value]="getExecutionResultPreview(execution, false)"
+                                    [readonly]="true"
+                                    language="json"
+                                    [lineWrapping]="true"
+                                    style="max-height: 200px; width: 100%;">
+                                  </mj-code-editor>
+                              @if (execution.ErrorMessage) {
+                                <div class="error-section">
+                                  <h5><i class="fa-solid fa-exclamation-triangle"></i> Error</h5>
+                                  <div class="error-content">{{ execution.ErrorMessage }}</div>
+                      <!-- Pagination Controls -->
+                      @if (totalPages > 1) {
+                        <div class="pagination-controls">
+                            fillMode="outline"
+                            (click)="goToPreviousPage()"
+                            [disabled]="!hasPreviousPage || isLoadingPage"
+                            class="page-nav-btn">
+                            <i class="fa-solid fa-chevron-left"></i>
+                            Previous
+                          <div class="page-info">
+                            @if (isLoadingPage) {
+                              Loading...
+                              Page {{ executionHistoryCurrentPage }} of {{ totalPages }}
+                              <span class="record-count">({{ totalExecutionHistoryCount }} total)</span>
+                            (click)="goToNextPage()"
+                            [disabled]="!hasNextPage || isLoadingPage"
+                            Next
+                            <i class="fa-solid fa-chevron-right"></i>
+                            fillMode="flat"
+                            (click)="navigateToEntity('MJ: AI Agent Runs', '')"
+                            class="view-all-btn">
+                            View All in Grid
+          <!-- Actions -->
+            <kendo-panelbar-item id="actions" [expanded]="GetSectionExpanded('actions', false)" [disabled]="loadingStates.actions">
+                <i class="fa-solid fa-bolt"></i> Actions
+                @if (loadingStates.actions) {
+                } @else if (actionCount > 0) {
+                  <span> ({{ actionCount }})</span>
+                <div class="panel-content">
+                    <div class="section-header">
+                        @if (EditMode && UserCanCreateActions) {
+                          <button kendoButton themeColor="primary" size="small" (click)="configureActions()">
+                            <i class="fa-solid fa-plus"></i> Add Action
+                    @if (actionCount === 0) {
+                        <h4>No Actions Configured</h4>
+                        <p>Add actions to enable this agent to perform specific tasks and operations.</p>
+                          <button kendoButton themeColor="primary" (click)="configureActions()">
+                            <i class="fa-solid fa-plus"></i> Configure First Action
+                      <div class="entity-list">
+                        @for (action of agentActions; track action.ID) {
+                          <div class="entity-item action-item" (click)="navigateToEntity('MJ: Actions', action.ID)">
+                            <div class="item-icon">
+                              <i [class]="getActionIcon(action)"></i>
+                            <div class="item-content">
+                              <div class="item-title">{{ action.Name || 'Untitled Action' }}</div>
+                              @if (action.Description) {
+                                <div class="item-preview">{{ action.Description }}</div>
+                              <div class="item-meta">
+                                  <span class="meta-tag">{{ action.Type }}</span>
+                                <span class="status-tag" [class.active]="action.Status==='Active'" [class.inactive]="action.Status!=='Active'">
+                                  <i class="fa-solid" [class.fa-check-circle]="action.Status==='Active'" [class.fa-times-circle]="action.Status!=='Active'"></i>
+                                  {{ action.Status }}
+                            <div class="item-actions">
+                              @if (EditMode && UserCanDeleteActions) {
+                                  themeColor="error"
+                                  (click)="removeAction(action, $event)"
+                                  title="Remove action">
+                                  <i class="fa-solid fa-trash"></i>
+                        @if (actionCount > agentActions.length) {
+                          <div class="view-more-item" (click)="navigateToEntity('MJ: AI Agent Actions', '')">
+                            <span>View all {{ actionCount }} actions...</span>
+          <!-- Sub-Agents (Unified View with Filter) -->
+            <kendo-panelbar-item id="subagents" [expanded]="GetSectionExpanded('subagents', false)" [disabled]="loadingStates.subAgents">
+                <i class="fa-solid fa-sitemap"></i> Sub-Agents
+                @if (loadingStates.subAgents) {
+                } @else if (totalSubAgentCount > 0) {
+                  <span> ({{ totalSubAgentCount }})</span>
+                  <!-- Filter Controls -->
+                  <div class="section-header sub-agent-filter-header">
+                    <div class="filter-controls">
+                      <kendo-buttongroup selection="single">
+                          [selected]="subAgentFilter === 'all'"
+                          (click)="setSubAgentFilter('all')"
+                          size="small">
+                          <i class="fa-solid fa-layer-group"></i>
+                          All ({{ totalSubAgentCount }})
+                          [selected]="subAgentFilter === 'child'"
+                          (click)="setSubAgentFilter('child')"
+                          <i class="fa-solid fa-link"></i>
+                          Child ({{ childSubAgentCount }})
+                          [selected]="subAgentFilter === 'related'"
+                          (click)="setSubAgentFilter('related')"
+                          <i class="fa-solid fa-share-nodes"></i>
+                          Related ({{ relatedSubAgentCount }})
+                      </kendo-buttongroup>
+                      @if (EditMode && UserCanCreateSubAgents) {
+                          (click)="createChildSubAgent()"
+                          title="Create a new child sub-agent that shares this agent's payload">
+                          Create Child
+                          themeColor="secondary"
+                          (click)="linkRelatedSubAgent()"
+                          title="Link an existing agent as a related sub-agent with payload mapping">
+                          Link Related
+                  @if (totalSubAgentCount === 0) {
+                      <h4>No Sub-Agents</h4>
+                      <p>Sub-agents help build complex workflows through hierarchical orchestration.</p>
+                      <div class="empty-state-info">
+                        <div class="info-card">
+                          <i class="fa-solid fa-link" style="color: #2196F3;"></i>
+                          <strong>Child Sub-Agents</strong>
+                          <p>Share payload structure, dedicated to parent</p>
+                          <i class="fa-solid fa-share-nodes" style="color: #9C27B0;"></i>
+                          <strong>Related Sub-Agents</strong>
+                          <p>Reusable agents with payload mapping</p>
+                    <!-- Unified Sub-Agent List -->
+                      @for (item of filteredSubAgents; track item.agent.ID) {
+                        <div class="entity-item sub-agent-item"
+                          [class.child-sub-agent]="item.type === 'child'"
+                          [class.related-sub-agent]="item.type === 'related'"
+                          (click)="navigateToEntity('MJ: AI Agents', item.agent.ID)">
+                          <!-- Type Badge -->
+                          <div class="sub-agent-type-badge"
+                            [style.background-color]="getSubAgentBadgeColor(item)">
+                            <i [class]="getSubAgentBadgeIcon(item)"></i>
+                            {{ getSubAgentBadgeText(item) }}
+                          <!-- Agent Icon -->
+                            @if (hasSubAgentLogoURL(item.agent)) {
+                              <img [src]="item.agent.LogoURL"
+                                [alt]="item.agent.Name + ' logo'"
+                                class="sub-agent-logo">
+                              <i [class]="getSubAgentIcon(item.agent)"></i>
+                          <!-- Agent Content -->
+                            <div class="item-title">{{ item.agent.Name || 'Untitled Sub-Agent' }}</div>
+                            @if (item.agent.Description) {
+                              <div class="item-preview">{{ item.agent.Description }}</div>
+                              <!-- Payload Info -->
+                              <span class="meta-tag payload-info">
+                                <i class="fa-solid fa-database"></i>
+                                {{ getSubAgentPayloadInfo(item) }}
+                              @if (item.agent.Status) {
+                                <span class="status-tag"
+                                  [style.background-color]="getStatusBadgeColor()">
+                                  {{ item.agent.Status }}
+                              @if (item.agent.Type) {
+                                <span class="meta-tag">{{ item.agent.Type }}</span>
+                              <!-- Output Mapping Config (Related only) -->
+                              @if (item.type === 'related') {
+                                  (click)="configureOutputMapping(item, $event)"
+                                  title="Configure output mapping">
+                              <!-- Advanced Settings (Child only) -->
+                              @if (item.type === 'child' && UserCanCreateSubAgents) {
+                                  (click)="openSubAgentAdvancedSettings(item.agent, $event)"
+                                  title="Advanced settings">
+                              <!-- Remove/Unlink -->
+                              @if (UserCanDeleteSubAgents) {
+                                  (click)="item.type === 'child' ? removeChildSubAgent(item, $event) : unlinkRelatedSubAgent(item, $event)"
+                                  [title]="item.type === 'child' ? 'Delete child sub-agent' : 'Unlink related sub-agent'">
+                                  <i [class]="item.type === 'child' ? 'fa-solid fa-trash' : 'fa-solid fa-unlink'"></i>
+          <!-- Prompts (With Model Selection) -->
+            <kendo-panelbar-item id="prompts" [expanded]="GetSectionExpanded('prompts', false)" [disabled]="loadingStates.prompts">
+                <i class="fa-solid fa-comments"></i> Prompts
+                @if (loadingStates.prompts) {
+                } @else if (promptCount > 0) {
+                  <span> ({{ promptCount }})</span>
+                    <div class="prompt-controls">
+                      <!-- Model Selection Mode Control -->
+                      <div class="model-selection-mode">
+                        <label class="model-selection-label">
+                          <i class="fa-solid fa-sliders"></i>
+                          Model Selection:
+                            [(ngModel)]="record.ModelSelectionMode"
+                            name="modelSelectionMode"
+                            [data]="modelSelectionModes"
+                            class="model-selection-dropdown">
+                          <span class="model-selection-value">{{ record.ModelSelectionMode || 'Agent Type' }}</span>
+                      @if (EditMode && UserCanCreateNewPrompts) {
+                        <button kendoButton themeColor="primary" size="small" (click)="addPrompt()">
+                          <i class="fa-solid fa-plus"></i> Add Prompt
+                  @if (promptCount === 0) {
+                      <h4>No Prompts Configured</h4>
+                      <p>Add prompts to define how this agent processes requests and generates responses.</p>
+                        <button kendoButton themeColor="primary" (click)="addPrompt()">
+                          <i class="fa-solid fa-plus"></i> Create First Prompt
+                      @for (prompt of agentPrompts; track prompt.ID) {
+                        <div class="entity-item prompt-item" (click)="navigateToEntity('MJ: AI Prompts', prompt.ID)">
+                            <i class="fa-solid fa-comment-dots"></i>
+                            <div class="item-title">{{ prompt.Name }}</div>
+                            @if (prompt.TemplateText) {
+                              <div class="item-preview">{{ prompt.TemplateText.substring(0, 120) }}{{ prompt.TemplateText.length > 120 ? '...' : '' }}</div>
+                              @if (prompt.PromptRole) {
+                                <span class="meta-tag">{{ prompt.PromptRole }}</span>
+                            @if (EditMode && UserCanCreatePrompts) {
+                                (click)="openPromptAdvancedSettings(prompt, $event)"
+                            @if (EditMode && UserCanDeletePrompts) {
+                                (click)="removePrompt(prompt, $event)"
+                                title="Remove prompt">
+                      @if (promptCount > agentPrompts.length) {
+                        <div class="view-more-item" (click)="navigateToEntity('MJ: AI Prompts', '')">
+                          <span>View all {{ promptCount }} prompts...</span>
+          <!-- Learning & Analytics -->
+            <kendo-panelbar-item id="learning" [expanded]="GetSectionExpanded('learning', false)" [disabled]="loadingStates.learningCycles">
+                <i class="fa-solid fa-brain"></i> Learning Cycles{{ learningCycleCount > 0 ? ' (' + learningCycleCount + ')' : '' }}
+                @if (loadingStates.learningCycles) {
+                    <div class="section-description">
+                      Monitor and manage learning cycles, training sessions, and performance analytics.
+                  @if (learningCycleCount === 0) {
+                      <i class="fa-solid fa-brain"></i>
+                      <h4>No Learning Cycles</h4>
+                      <p>Learning cycles will appear here as the agent processes requests and improves over time.</p>
+                      @for (cycle of learningCycles; track cycle.ID) {
+                        <div class="entity-item learning-item" (click)="navigateToEntity('MJ: AI Agent Learning Cycles', cycle.ID)">
+                            <div class="item-title">Learning Cycle {{ cycle.ID.substring(0, 8) }}</div>
+                              @if (cycle.StartedAt) {
+                                <span class="meta-tag">
+                                  <i class="fa-solid fa-calendar"></i>
+                                  {{ cycle.StartedAt | date:'short' }}
+                              @if (cycle.Status) {
+                                <span class="status-tag">{{ cycle.Status }}</span>
+                      @if (learningCycleCount > learningCycles.length) {
+                        <div class="view-more-item" (click)="navigateToEntity('MJ: AI Agent Learning Cycles', '')">
+                          <span>View all {{ learningCycleCount }} cycles...</span>
+          <!-- Notes & Documentation -->
+            <kendo-panelbar-item id="notes" [expanded]="GetSectionExpanded('notes', false)" [disabled]="loadingStates.notes">
+                <i class="fa-solid fa-sticky-note"></i> Notes{{ noteCount > 0 ? ' (' + noteCount + ')' : '' }}
+                @if (loadingStates.notes) {
+                      Manage notes, documentation, and annotations for this agent.
+                      @if (EditMode && UserCanCreateNotes) {
+                        <button kendoButton themeColor="primary" size="small" (click)="addNote()">
+                          <i class="fa-solid fa-plus"></i> Add Note
+                  @if (noteCount === 0) {
+                      <i class="fa-solid fa-sticky-note"></i>
+                      <h4>No Notes</h4>
+                      <p>Add notes to document important information, observations, or instructions for this agent.</p>
+                        <button kendoButton themeColor="primary" (click)="addNote()">
+                          <i class="fa-solid fa-plus"></i> Create First Note
+                      @for (note of agentNotes; track note.ID) {
+                        <div class="entity-item note-item" (click)="navigateToEntity('MJ: AI Agent Notes', note.ID)">
+                            <div class="item-title">{{ note.Type || 'Note' }}</div>
+                            @if (note.Note) {
+                              <div class="item-preview">{{ note.Note.substring(0, 100) }}{{ note.Note.length > 100 ? '...' : '' }}</div>
+                              @if (note.__mj_CreatedAt) {
+                                  {{ note.__mj_CreatedAt | date:'short' }}
+                      @if (noteCount > agentNotes.length) {
+                        <div class="view-more-item" (click)="navigateToEntity('MJ: AI Agent Notes', '')">
+                          <span>View all {{ noteCount }} notes...</span>
+          <!-- Payload -->
+          <kendo-panelbar-item id="payload" [expanded]="GetSectionExpanded('payload', false)">
+              <i class="fa-solid fa-exchange-alt"></i> Payload Management
+                    Configure how this agent handles data payloads, path routing, and validation between parent and child agents.
+                <!-- Payload Scope Section -->
+                <div class="payload-section">
+                  <h3 class="payload-section-title">
+                    <i class="fa-solid fa-target"></i>
+                    Payload Scope
+                  <div class="payload-field-container">
+                    <div class="payload-field-info">
+                      <label class="payload-field-label">Payload Scope Path</label>
+                      <p class="payload-field-description">
+                        Specify a path within the parent payload that this sub-agent should operate on.
+                        Leave empty to receive the entire payload.
+                    <div class="payload-field-input">
+                      <mj-form-field
+                        FieldName="PayloadScope"
+                        Type="textbox"
+                        Caption=""
+                        [EditMode]="EditMode"
+                        [Record]="record"
+                        style="width: 100%;">
+                      </mj-form-field>
+                      <div class="payload-field-example">
+                        <i class="fa-solid fa-lightbulb"></i>
+                        <span>Example: <code>/customer/profile</code> or <code>/analysis/results</code></span>
+                <!-- Path Configuration Section -->
+                    <i class="fa-solid fa-route"></i>
+                    Path Configuration
+                  <div class="payload-paths-grid">
+                    <div class="payload-path-card">
+                      <div class="payload-path-header">
+                        <div class="payload-path-icon downstream">
+                          <i class="fa-solid fa-arrow-down"></i>
+                        <div class="payload-path-info">
+                          <h4>Downstream Paths</h4>
+                          <p>JSON array of paths to pass to sub-agents</p>
+                      <div class="payload-path-content">
+                        <div class="json-editor-container">
+                            [value]="record.PayloadDownstreamPaths || '[&quot;*&quot;]'"
+                            [readonly]="!EditMode"
+                            style="height: 100px; width: 100%;"
+                            (valueChange)="updatePayloadField('PayloadDownstreamPaths', $event)">
+                        <div class="payload-path-hint">
+                          <i class="fa-solid fa-info-circle"></i>
+                          Use <code>["*"]</code> to pass entire payload or specify paths like <code>["user.id", "order.*"]</code>
+                        <div class="payload-path-icon upstream">
+                          <i class="fa-solid fa-arrow-up"></i>
+                          <h4>Upstream Paths</h4>
+                          <p>JSON array of paths sub-agents can write back</p>
+                            [value]="record.PayloadUpstreamPaths || '[&quot;*&quot;]'"
+                            (valueChange)="updatePayloadField('PayloadUpstreamPaths', $event)">
+                          Use <code>["*"]</code> to allow all writes or limit to specific paths
+                        <div class="payload-path-icon self-read">
+                          <i class="fa-solid fa-eye"></i>
+                          <h4>Self Read Paths</h4>
+                          <p>JSON array of paths this agent can read</p>
+                            [value]="record.PayloadSelfReadPaths || '[]'"
+                            (valueChange)="updatePayloadField('PayloadSelfReadPaths', $event)">
+                          Paths this agent's prompts can read from the payload
+                        <div class="payload-path-icon self-write">
+                          <i class="fa-solid fa-pen"></i>
+                          <h4>Self Write Paths</h4>
+                          <p>JSON array of paths this agent can write to</p>
+                            [value]="record.PayloadSelfWritePaths || '[]'"
+                            (valueChange)="updatePayloadField('PayloadSelfWritePaths', $event)">
+                          Paths this agent's prompts can write back to the payload
+                <!-- Validation Section -->
+                    <i class="fa-solid fa-shield-check"></i>
+                    Final Payload Validation
+                  <div class="payload-validation-container">
+                    <div class="payload-validation-settings">
+                      <div class="validation-field-group">
+                        <label class="validation-field-label">Validation Mode</label>
+                        <p class="validation-field-description">How to handle validation failures</p>
+                          FieldName="FinalPayloadValidationMode"
+                          Type="dropdownlist"
+                        <label class="validation-field-label">Max Retries</label>
+                        <p class="validation-field-description">Maximum validation retry attempts</p>
+                          FieldName="FinalPayloadValidationMaxRetries"
+                          Type="numerictextbox"
+                    <div class="payload-validation-schema">
+                      <label class="validation-schema-label">
+                        <i class="fa-solid fa-code"></i>
+                        Validation Schema
+                      <p class="validation-schema-description">
+                        JSON schema or validation rules for the final payload structure
+                      <div class="validation-schema-editor">
+                          [value]="record.FinalPayloadValidation || '{}'"
+                          style="height: 200px; width: 100%;"
+                          (valueChange)="updatePayloadField('FinalPayloadValidation', $event)">
+          <!-- Execution Guardrails (New Separate Panel) -->
+          <kendo-panelbar-item id="guardrails" [expanded]="GetSectionExpanded('guardrails', false)">
+              <i class="fa-solid fa-shield-halved"></i> Execution Guardrails
+                    Set limits to prevent runaway agent executions and control resource usage.
+                <div class="form-fields-grid">
+                    FieldName="MaxCostPerRun"
+                    Caption="Max Cost ($)"
+                    Description="Maximum cost per run"
+                    [Record]="record">
+                    FieldName="MaxTokensPerRun"
+                    Caption="Max Tokens"
+                    Description="Maximum tokens per run"
+                    FieldName="MaxIterationsPerRun"
+                    Caption="Max Iterations"
+                    Description="Maximum prompt iterations"
+                    FieldName="MaxTimePerRun"
+                    Caption="Max Time (seconds)"
+                    Description="Maximum execution time"
+          <!-- Configuration (Settings Panel) -->
+          <kendo-panelbar-item id="config" [expanded]="GetSectionExpanded('config', false)">
+              <i class="fa-solid fa-cogs"></i> Configuration
+                    Configure agent behavior, execution settings, and advanced features.
+                <div class="config-section">
+                  <h3 class="config-section-title">
+                  <div class="config-grid">
+                    <div class="config-card">
+                      <div class="config-card-header">
+                        <div class="config-card-icon">
+                          <i class="fa-solid fa-toggle-on"></i>
+                        <div class="config-card-info">
+                          <h4>Agent Status</h4>
+                          <p>Current availability and operational status</p>
+                      <div class="config-card-content">
+                            name="agentStatus"
+                            class="config-field-input">
+                          <span class="config-field-display">{{ record.Status || 'Not Set' }}</span>
+                          <h4>Agent Type</h4>
+                          <p>Category and system-level behavior</p>
+                            [(ngModel)]="record.TypeID"
+                            [data]="agentTypes"
+                            name="agentTypeID"
+                          <span class="config-field-display">{{ record.Type || 'Not Set' }}</span>
+                          <h4>Expose as Action</h4>
+                          <p>Make available as an action for other agents</p>
+                          FieldName="ExposeAsAction"
+                          Type="checkbox"
+                    <div class="config-card full-width">
+                          <i class="fa-solid fa-align-left"></i>
+                          <h4>Description</h4>
+                          <p>Detailed agent description and purpose</p>
+                          FieldName="Description"
+                          Type="textarea"
+                <!-- Execution Settings Section -->
+                    Execution Settings
+                          <h4>Execution Mode</h4>
+                          <p>How sub-agents are executed</p>
+                          FieldName="ExecutionMode"
+                          <i class="fa-solid fa-sort-numeric-down"></i>
+                          <h4>Execution Order</h4>
+                          <p>Order when run with siblings</p>
+                          FieldName="ExecutionOrder"
+                          <i class="fa-solid fa-tachometer-alt"></i>
+                          <h4>Default Effort Level</h4>
+                          <p>Default effort level for all prompts (1-100)</p>
+                          FieldName="DefaultPromptEffortLevel"
+                        <div class="config-card-hint">
+                          Higher values request more thorough reasoning (1=minimal, 100=maximum)
+                          <h4>Driver Class</h4>
+                          <p>Custom implementation class</p>
+                          FieldName="DriverClass"
+                <!-- Visual Identity Section -->
+                    <i class="fa-solid fa-palette"></i>
+                    Visual Identity
+                          <i class="fa-solid fa-icons"></i>
+                          <h4>Icon Class</h4>
+                          <p>Font Awesome icon class</p>
+                          FieldName="IconClass"
+                          Example: <code>fa-solid fa-robot</code>
+                          <i class="fa-solid fa-image"></i>
+                          <h4>Logo URL</h4>
+                          <p>URL for agent logo image</p>
+                          FieldName="LogoURL"
+                          Takes precedence over Icon Class
+                          <h4>Enable Context Compression</h4>
+                          <p>Automatically compress conversation context when message threshold is reached</p>
+                          FieldName="EnableContextCompression"
+                          (valueChange)="onContextCompressionToggle($event)">
+                    @if (record.EnableContextCompression) {
+                            <i class="fa-solid fa-hashtag"></i>
+                            <h4>Message Threshold</h4>
+                            <p>Messages before compression triggers</p>
+                            FieldName="ContextCompressionMessageThreshold"
+                            <h4>Messages to Keep</h4>
+                            <p>Recent messages to retain uncompressed</p>
+                            FieldName="ContextCompressionMessageRetentionCount"
+                            <h4>Compression Prompt</h4>
+                            <p>Prompt used for summarization</p>
+                            <div class="prompt-selector-container">
+                              <div class="prompt-display">
+                                @if (selectedContextCompressionPrompt) {
+                                  <span class="prompt-name">{{ selectedContextCompressionPrompt.Name }}</span>
+                                  <span class="no-prompt">No prompt selected</span>
+                                <button type="button"
+                                  kendoButton
+                                  (click)="openContextCompressionPromptSelector()"
+                                  class="prompt-select-btn">
+                                  {{ selectedContextCompressionPrompt ? 'Change' : 'Select' }} Prompt
+                                    (click)="clearContextCompressionPrompt()"
+                                    class="prompt-clear-btn"
+                            <span class="config-field-display">{{ selectedContextCompressionPrompt?.Name || record.ContextCompressionPrompt || 'Not Set' }}</span>
+        </kendo-panelbar>
+  <!-- Permissions Dialog (from @memberjunction/ng-agents) -->
+  @if (ShowPermissionsDialog) {
+    <mj-agent-permissions-dialog
+      [Agent]="record"
+      (Closed)="onPermissionsDialogClosed()"
+      (PermissionsChanged)="refreshRelatedData()">
+    </mj-agent-permissions-dialog>

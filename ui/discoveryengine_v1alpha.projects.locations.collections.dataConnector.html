@@ -1,0 +1,43 @@
+<h1><a href="discoveryengine_v1alpha.html">Discovery Engine API</a> . <a href="discoveryengine_v1alpha.projects.html">projects</a> . <a href="discoveryengine_v1alpha.projects.locations.html">locations</a> . <a href="discoveryengine_v1alpha.projects.locations.collections.html">collections</a> . <a href="discoveryengine_v1alpha.projects.locations.collections.dataConnector.html">dataConnector</a></h1>
+  <code><a href="discoveryengine_v1alpha.projects.locations.collections.dataConnector.connectorRuns.html">connectorRuns()</a></code>
+<p class="firstline">Returns the connectorRuns Resource.</p>
+  <code><a href="discoveryengine_v1alpha.projects.locations.collections.dataConnector.operations.html">operations()</a></code>
+  <code><a href="#acquireAccessToken">acquireAccessToken(name, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Uses the per-user refresh token minted with AcquireAndStoreRefreshToken to generate and return a new access token and its details. Takes the access token from cache if available. Rotates the stored refresh token if needed. Uses the end user identity to return the user specific access token. Does *not* return the credentials configured by the administrator. Used by action execution and UI.</p>
+  <code><a href="#checkRefreshToken">checkRefreshToken(name, x__xgafv=None)</a></code></p>
+<p class="firstline">Deprecated: Checks the existence of a refresh token for the EUC user for a given connection and returns its details. Use AcquireAccessToken instead and then check the validity of the returned token by asking the 3rd party system. There's no way to know for sure if a refresh token is valid without asking the 3rd party system.</p>
+  <code><a href="#getConnectorSecret">getConnectorSecret(name, x__xgafv=None)</a></code></p>
+<p class="firstline">Get the secret for the associated connector.</p>
+  <code><a href="#startConnectorRun">startConnectorRun(parent, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Starts an immediate synchronization process for a DataConnector. Third Party Connector Users must specify which entities should be synced. FHIR Connectors must provide a timestamp to indicate the point in time from which data should be synced.</p>
+    <code class="details" id="acquireAccessToken">acquireAccessToken(name, body=None, x__xgafv=None)</code>
+  <pre>Uses the per-user refresh token minted with AcquireAndStoreRefreshToken to generate and return a new access token and its details. Takes the access token from cache if available. Rotates the stored refresh token if needed. Uses the end user identity to return the user specific access token. Does *not* return the credentials configured by the administrator. Used by action execution and UI.
+  name: string, Required. The resource name of the connector for which a token is queried. (required)
+{ # Request message for the DataConnectorService.AcquireAccessToken method.
+    { # Response message for the DataConnectorService.AcquireAccessToken method.
+  &quot;accessToken&quot;: &quot;A String&quot;, # The created access token.
+  &quot;refreshTokenInfo&quot;: { # Describes a refresh token. # Info about the stored refresh token used to create the access token.
+    &quot;name&quot;: &quot;A String&quot;, # Required. The connection for which this token applies.
+    &quot;scopes&quot;: [ # The list of scopes for this token.
+    <code class="details" id="checkRefreshToken">checkRefreshToken(name, x__xgafv=None)</code>
+  <pre>Deprecated: Checks the existence of a refresh token for the EUC user for a given connection and returns its details. Use AcquireAccessToken instead and then check the validity of the returned token by asking the 3rd party system. There&#x27;s no way to know for sure if a refresh token is valid without asking the 3rd party system.
+    { # Response message for the DataConnectorService.CheckRefreshToken method.
+  &quot;refreshTokenInfo&quot;: { # Describes a refresh token. # Info about the stored refresh token.
+    <code class="details" id="getConnectorSecret">getConnectorSecret(name, x__xgafv=None)</code>
+  <pre>Get the secret for the associated connector.
+  name: string, Required. The full resource name of the associated data connector. (required)
+    { # Response message for DataConnectorService.GetConnectorSecret.
+  &quot;app&quot;: &quot;A String&quot;, # The app name of the associated Connector.
+  &quot;authorizationUri&quot;: &quot;A String&quot;, # The authorization uri for the data connector.
+  &quot;clientId&quot;: &quot;A String&quot;, # The client id of the associated Connector.
+  &quot;instance&quot;: &quot;A String&quot;, # The instance name of the associated Connector.
+  &quot;redirectUri&quot;: &quot;A String&quot;, # The redirect url of the associated Connector.
+  &quot;tenantId&quot;: &quot;A String&quot;, # The tenant id of the associated Connector.
+    <code class="details" id="startConnectorRun">startConnectorRun(parent, body=None, x__xgafv=None)</code>
+  <pre>Starts an immediate synchronization process for a DataConnector. Third Party Connector Users must specify which entities should be synced. FHIR Connectors must provide a timestamp to indicate the point in time from which data should be synced.
+  parent: string, Required. Connector name of the form `projects/{project}/locations/{location}/collections/{collection_id}/dataConnector` (required)
+{ # Request message for DataConnectorService.StartConnectorRun method.
+  &quot;entities&quot;: [ # Specifies which Third Party Connector entities should be synced. If not specified, all entities will be synced.
+  &quot;healthcareFhirResourceTypes&quot;: [ # The FHIR resource types to import. The resource types should be a subset of all [supported FHIR resource types](https://cloud.google.com/generative-ai-app-builder/docs/fhir-schema-reference#resource-level-specification). Default to all supported FHIR resource types if empty.
+  &quot;syncIdentity&quot;: True or False, # If true, trigger Identity sync.
+  &quot;syncSinceTimestamp&quot;: &quot;A String&quot;, # Timestamp to indicate the point in time from which data should be synced for Streaming/Batch Data Connectors. This field is only utilized for Healthcare Connectors.

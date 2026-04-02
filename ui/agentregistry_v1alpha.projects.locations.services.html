@@ -1,0 +1,42 @@
+<h1><a href="agentregistry_v1alpha.html">Agent Registry API</a> . <a href="agentregistry_v1alpha.projects.html">projects</a> . <a href="agentregistry_v1alpha.projects.locations.html">locations</a> . <a href="agentregistry_v1alpha.projects.locations.services.html">services</a></h1>
+  <code><a href="#create">create(parent, body=None, requestId=None, serviceId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Creates a new Service in a given project and location.</p>
+  <code><a href="#delete">delete(name, requestId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Deletes a single Service.</p>
+<p class="firstline">Gets details of a single Service.</p>
+<p class="firstline">Lists Services in a given project and location.</p>
+  <code><a href="#patch">patch(name, body=None, requestId=None, updateMask=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Updates the parameters of a single Service.</p>
+    <code class="details" id="create">create(parent, body=None, requestId=None, serviceId=None, x__xgafv=None)</code>
+  <pre>Creates a new Service in a given project and location.
+  parent: string, Required. The project and location to create the Service in. Expected format: `projects/{project}/locations/{location}`. (required)
+{ # Represents a user-defined Service.
+  &quot;agentSpec&quot;: { # The spec of the agent. # Optional. The spec of the Agent. When `agent_spec` is set, the type of the service is Agent.
+    &quot;content&quot;: { # Optional. The content of the Agent spec in the JSON format. This payload is validated against the schema for the specified type. The content size is limited to `10KB`.
+    &quot;type&quot;: &quot;A String&quot;, # Required. The type of the agent spec content.
+  &quot;description&quot;: &quot;A String&quot;, # Optional. User-defined description of an Service. Can have a maximum length of `2048` characters.
+  &quot;displayName&quot;: &quot;A String&quot;, # Optional. User-defined display name for the Service. Can have a maximum length of `63` characters.
+  &quot;endpointSpec&quot;: { # The spec of the endpoint. # Optional. The spec of the Endpoint. When `endpoint_spec` is set, the type of the service is Endpoint.
+    &quot;content&quot;: { # Optional. The content of the endpoint spec. Reserved for future use.
+    &quot;type&quot;: &quot;A String&quot;, # Required. The type of the endpoint spec content.
+  &quot;interfaces&quot;: [ # Optional. The connection details for the Service.
+  &quot;mcpServerSpec&quot;: { # The spec of the MCP Server. # Optional. The spec of the MCP Server. When `mcp_server_spec` is set, the type of the service is MCP Server.
+    &quot;content&quot;: { # Optional. The content of the MCP Server spec. This payload is validated against the schema for the specified type. The content size is limited to `10KB`.
+    &quot;type&quot;: &quot;A String&quot;, # Required. The type of the MCP Server spec content.
+  &quot;name&quot;: &quot;A String&quot;, # Identifier. The resource name of the Service. Format: `projects/{project}/locations/{location}/services/{service}`.
+  requestId: string, Optional. An optional request ID to identify requests. Specify a unique request ID so that if you must retry your request, the server will know to ignore the request if it has already been completed. The server will guarantee that for at least 60 minutes since the first request. For example, consider a situation where you make an initial request and the request times out. If you make the request again with the same request ID, the server can check if original operation with the same request ID was received, and if so, will ignore the second request. This prevents clients from accidentally creating duplicate commitments. The request ID must be a valid UUID with the exception that zero UUID is not supported (00000000-0000-0000-0000-000000000000).
+  serviceId: string, Required. The ID to use for the service, which will become the final component of the service&#x27;s resource name. This value should be 4-63 characters, and valid characters are `/a-z-/`.
+    <code class="details" id="delete">delete(name, requestId=None, x__xgafv=None)</code>
+  <pre>Deletes a single Service.
+  name: string, Required. The name of the Service. Format: `projects/{project}/locations/{location}/services/{service}`. (required)
+  requestId: string, Optional. An optional request ID to identify requests. Specify a unique request ID so that if you must retry your request, the server will know to ignore the request if it has already been completed. The server will guarantee that for at least 60 minutes after the first request. For example, consider a situation where you make an initial request and the request times out. If you make the request again with the same request ID, the server can check if original operation with the same request ID was received, and if so, will ignore the second request. This prevents clients from accidentally creating duplicate commitments. The request ID must be a valid UUID with the exception that zero UUID is not supported (00000000-0000-0000-0000-000000000000).
+  <pre>Gets details of a single Service.
+  <pre>Lists Services in a given project and location.
+  parent: string, Required. The project and location to list services in. Expected format: `projects/{project}/locations/{location}`. (required)
+  filter: string, Optional. A query string used to filter the list of services returned. The filter expression must follow AIP-160 syntax. Filtering is supported on the `name`, `display_name`, `description`, and `labels` fields. Some examples: * `name = &quot;projects/p1/locations/l1/services/s1&quot;` * `display_name = &quot;my-service&quot;` * `description : &quot;myservice description&quot;` * `labels.env = &quot;prod&quot;`
+    { # Message for response to listing Services
+  &quot;services&quot;: [ # The list of Service resources matching the parent and filter criteria in the request. Each Service resource follows the format: `projects/{project}/locations/{location}/services/{service}`.
+    <code class="details" id="patch">patch(name, body=None, requestId=None, updateMask=None, x__xgafv=None)</code>
+  <pre>Updates the parameters of a single Service.
+  name: string, Identifier. The resource name of the Service. Format: `projects/{project}/locations/{location}/services/{service}`. (required)
+  updateMask: string, Optional. Field mask is used to specify the fields to be overwritten in the Service resource by the update. The fields specified in the update_mask are relative to the resource, not the full request. A field will be overwritten if it is in the mask. If the user does not provide a mask then all fields present in the request will be overwritten.

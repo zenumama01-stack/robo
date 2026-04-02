@@ -1,0 +1,24 @@
+<h1><a href="aiplatform_v1beta1.html">Vertex AI API</a> . <a href="aiplatform_v1beta1.projects.html">projects</a> . <a href="aiplatform_v1beta1.projects.locations.html">locations</a> . <a href="aiplatform_v1beta1.projects.locations.featureOnlineStores.html">featureOnlineStores</a> . <a href="aiplatform_v1beta1.projects.locations.featureOnlineStores.featureViews.html">featureViews</a></h1>
+  <code><a href="aiplatform_v1beta1.projects.locations.featureOnlineStores.featureViews.featureViewSyncs.html">featureViewSyncs()</a></code>
+  <code><a href="aiplatform_v1beta1.projects.locations.featureOnlineStores.featureViews.operations.html">operations()</a></code>
+  <code><a href="#streamingFetchFeatureValues">streamingFetchFeatureValues(featureView, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Bidirectional streaming RPC to fetch feature values under a FeatureView. Requests may not have a one-to-one mapping to responses and responses may be returned out-of-order to reduce latency.</p>
+  &quot;vectorSearchConfig&quot;: { # Deprecated. Use IndexConfig instead. # Optional. Deprecated: please use FeatureView.index_config instead.
+    &quot;bruteForceConfig&quot;: { # Optional. Configuration options for using brute force search, which simply implements the standard linear search in the database for each query. It is primarily meant for benchmarking and to generate the ground truth for approximate search.
+    &quot;treeAhConfig&quot;: { # Optional. Configuration options for the tree-AH algorithm (Shallow tree + Asymmetric Hashing). Please refer to this paper for more details: https://arxiv.org/abs/1908.10396
+                  &quot;value&quot;: # Object with schema name: GoogleCloudAiplatformV1beta1FeatureValue # The value for this field.
+          &quot;valueAndTimestamp&quot;: { # Feature value and timestamp. # Feature value and timestamp.
+            &quot;timestamp&quot;: &quot;A String&quot;, # The feature timestamp to store with this value. If not set, then the Feature Store server will generate a timestamp when it receives the write request.
+            &quot;value&quot;: { # Value for a feature. # The feature value.
+  &quot;format&quot;: &quot;A String&quot;, # Specify response data format. If not set, KeyValue format will be used. Deprecated. Use FetchFeatureValuesRequest.data_format.
+  &quot;id&quot;: &quot;A String&quot;, # Simple ID. The whole string will be used as is to identify Entity to fetch feature values for.
+    <code class="details" id="streamingFetchFeatureValues">streamingFetchFeatureValues(featureView, body=None, x__xgafv=None)</code>
+  <pre>Bidirectional streaming RPC to fetch feature values under a FeatureView. Requests may not have a one-to-one mapping to responses and responses may be returned out-of-order to reduce latency.
+{ # Request message for FeatureOnlineStoreService.StreamingFetchFeatureValues. For the entities requested, all features under the requested feature view will be returned.
+  &quot;dataFormat&quot;: &quot;A String&quot;, # Specify response data format. If not set, KeyValue format will be used.
+  &quot;dataKeys&quot;: [
+    { # Lookup key for a feature view.
+    { # Response message for FeatureOnlineStoreService.StreamingFetchFeatureValues.
+  &quot;data&quot;: [
+  &quot;dataKeysWithError&quot;: [
+  &quot;status&quot;: { # The `Status` type defines a logical error model that is suitable for different programming environments, including REST APIs and RPC APIs. It is used by [gRPC](https://github.com/grpc). Each `Status` message contains three pieces of data: error code, error message, and error details. You can find out more about this error model and how to work with it in the [API Design Guide](https://cloud.google.com/apis/design/errors). # Response status. If OK, then StreamingFetchFeatureValuesResponse.data will be populated. Otherwise StreamingFetchFeatureValuesResponse.data_keys_with_error will be populated with the appropriate data keys. The error only applies to the listed data keys - the stream will remain open for further FeatureOnlineStoreService.StreamingFetchFeatureValuesRequest requests.

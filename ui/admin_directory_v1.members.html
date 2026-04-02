@@ -1,0 +1,43 @@
+<h1><a href="admin_directory_v1.html">Admin SDK API</a> . <a href="admin_directory_v1.members.html">members</a></h1>
+  <code><a href="#delete">delete(groupKey, memberKey, x__xgafv=None)</a></code></p>
+<p class="firstline">Removes a member from a group.</p>
+  <code><a href="#get">get(groupKey, memberKey, x__xgafv=None)</a></code></p>
+<p class="firstline">Retrieves a group member's properties.</p>
+  <code><a href="#hasMember">hasMember(groupKey, memberKey, x__xgafv=None)</a></code></p>
+<p class="firstline">Checks whether the given user is a member of the group. Membership can be direct or nested, but if nested, the `memberKey` and `groupKey` must be entities in the same domain or an `Invalid input` error is returned. To check for nested memberships that include entities outside of the group's domain, use the [`checkTransitiveMembership()`](https://cloud.google.com/identity/docs/reference/rest/v1/groups.memberships/checkTransitiveMembership) method in the Cloud Identity Groups API.</p>
+<p class="firstline">Adds a user to the specified group.</p>
+  <code><a href="#list">list(groupKey, includeDerivedMembership=None, maxResults=None, pageToken=None, roles=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Retrieves a paginated list of all members in a group. This method times out after 60 minutes. For more information, see [Troubleshoot error codes](https://developers.google.com/workspace/admin/directory/v1/guides/troubleshoot-error-codes).</p>
+  <code><a href="#patch">patch(groupKey, memberKey, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Updates the membership properties of a user in the specified group. This method supports [patch semantics](https://developers.google.com/workspace/admin/directory/v1/guides/performance#patch).</p>
+  <code><a href="#update">update(groupKey, memberKey, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Updates the membership of a user in the specified group.</p>
+    <code class="details" id="delete">delete(groupKey, memberKey, x__xgafv=None)</code>
+  <pre>Removes a member from a group.
+  memberKey: string, Identifies the group member in the API request. A group member can be a user or another group. The value can be the member&#x27;s (group or user) primary email address, alias, or unique ID. (required)
+    <code class="details" id="get">get(groupKey, memberKey, x__xgafv=None)</code>
+  <pre>Retrieves a group member&#x27;s properties.
+    { # A Google Groups member can be a user or another group. This member can be inside or outside of your account&#x27;s domains. For more information about common group member tasks, see the [Developer&#x27;s Guide](https://developers.google.com/workspace/admin/directory/v1/guides/manage-group-members).
+  &quot;delivery_settings&quot;: &quot;A String&quot;, # Defines mail delivery preferences of member. This field is only supported by `insert`, `update`, and `get` methods.
+  &quot;email&quot;: &quot;A String&quot;, # The member&#x27;s email address. A member can be a user or another group. This property is required when adding a member to a group. The `email` must be unique and cannot be an alias of another group. If the email address is changed, the API automatically reflects the email address changes.
+  &quot;id&quot;: &quot;A String&quot;, # The unique ID of the group member. A member `id` can be used as a member request URI&#x27;s `memberKey`.
+  &quot;kind&quot;: &quot;admin#directory#member&quot;, # The type of the API resource. For Members resources, the value is `admin#directory#member`.
+  &quot;role&quot;: &quot;A String&quot;, # The member&#x27;s role in a group. The API returns an error for cycles in group memberships. For example, if `group1` is a member of `group2`, `group2` cannot be a member of `group1`. For more information about a member&#x27;s role, see the [administration help center](https://support.google.com/a/answer/167094).
+  &quot;status&quot;: &quot;A String&quot;, # Status of member (Immutable)
+  &quot;type&quot;: &quot;A String&quot;, # The type of group member.
+    <code class="details" id="hasMember">hasMember(groupKey, memberKey, x__xgafv=None)</code>
+  <pre>Checks whether the given user is a member of the group. Membership can be direct or nested, but if nested, the `memberKey` and `groupKey` must be entities in the same domain or an `Invalid input` error is returned. To check for nested memberships that include entities outside of the group&#x27;s domain, use the [`checkTransitiveMembership()`](https://cloud.google.com/identity/docs/reference/rest/v1/groups.memberships/checkTransitiveMembership) method in the Cloud Identity Groups API.
+  memberKey: string, Identifies the user member in the API request. The value can be the user&#x27;s primary email address, alias, or unique ID. (required)
+    { # JSON template for Has Member response in Directory API.
+  &quot;isMember&quot;: True or False, # Output only. Identifies whether the given user is a member of the group. Membership can be direct or nested.
+  <pre>Adds a user to the specified group.
+    <code class="details" id="list">list(groupKey, includeDerivedMembership=None, maxResults=None, pageToken=None, roles=None, x__xgafv=None)</code>
+  <pre>Retrieves a paginated list of all members in a group. This method times out after 60 minutes. For more information, see [Troubleshoot error codes](https://developers.google.com/workspace/admin/directory/v1/guides/troubleshoot-error-codes).
+  includeDerivedMembership: boolean, Whether to list indirect memberships. Default: false.
+  roles: string, The `roles` query parameter allows you to retrieve group members by role. Allowed values are `OWNER`, `MANAGER`, and `MEMBER`.
+  &quot;kind&quot;: &quot;admin#directory#members&quot;, # Kind of resource this is.
+  &quot;members&quot;: [ # A list of member objects.
+    <code class="details" id="patch">patch(groupKey, memberKey, body=None, x__xgafv=None)</code>
+  <pre>Updates the membership properties of a user in the specified group. This method supports [patch semantics](https://developers.google.com/workspace/admin/directory/v1/guides/performance#patch).
+    <code class="details" id="update">update(groupKey, memberKey, body=None, x__xgafv=None)</code>
+  <pre>Updates the membership of a user in the specified group.

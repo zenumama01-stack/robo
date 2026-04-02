@@ -1,0 +1,54 @@
+<h1><a href="contentwarehouse_v1.html">Document AI Warehouse API</a> . <a href="contentwarehouse_v1.projects.html">projects</a> . <a href="contentwarehouse_v1.projects.locations.html">locations</a> . <a href="contentwarehouse_v1.projects.locations.documentSchemas.html">documentSchemas</a></h1>
+<p class="firstline">Creates a document schema.</p>
+<p class="firstline">Deletes a document schema. Returns NOT_FOUND if the document schema does not exist. Returns BAD_REQUEST if the document schema has documents depending on it.</p>
+<p class="firstline">Gets a document schema. Returns NOT_FOUND if the document schema does not exist.</p>
+<p class="firstline">Lists document schemas.</p>
+<p class="firstline">Updates a Document Schema. Returns INVALID_ARGUMENT if the name of the Document Schema is non-empty and does not equal the existing name. Supports only appending new properties, adding new ENUM possible values, and updating the EnumTypeOptions.validation_check_disabled flag for ENUM possible values. Updating existing properties will result into INVALID_ARGUMENT.</p>
+  <pre>Creates a document schema.
+{ # A document schema used to define document structure.
+  &quot;createTime&quot;: &quot;A String&quot;, # Output only. The time when the document schema is created.
+  &quot;description&quot;: &quot;A String&quot;, # Schema description.
+  &quot;displayName&quot;: &quot;A String&quot;, # Required. Name of the schema given by the user. Must be unique per project.
+  &quot;documentIsFolder&quot;: True or False, # Document Type, true refers the document is a folder, otherwise it is a typical document.
+  &quot;name&quot;: &quot;A String&quot;, # The resource name of the document schema. Format: projects/{project_number}/locations/{location}/documentSchemas/{document_schema_id}. The name is ignored when creating a document schema.
+  &quot;propertyDefinitions&quot;: [ # Document details.
+    { # Defines the metadata for a schema property.
+      &quot;dateTimeTypeOptions&quot;: { # Configurations for a date time property. # Date time property. It is not supported by CMEK compliant deployment.
+      &quot;displayName&quot;: &quot;A String&quot;, # The display-name for the property, used for front-end.
+      &quot;enumTypeOptions&quot;: { # Configurations for an enum/categorical property. # Enum/categorical property.
+        &quot;possibleValues&quot;: [ # Required. List of possible enum values.
+        &quot;validationCheckDisabled&quot;: True or False, # Make sure the Enum property value provided in the document is in the possile value list during document creation. The validation check runs by default.
+      &quot;floatTypeOptions&quot;: { # Configurations for a float property. # Float property.
+      &quot;integerTypeOptions&quot;: { # Configurations for an integer property. # Integer property.
+      &quot;isFilterable&quot;: True or False, # Whether the property can be filtered. If this is a sub-property, all the parent properties must be marked filterable.
+      &quot;isMetadata&quot;: True or False, # Whether the property is user supplied metadata. This out-of-the box placeholder setting can be used to tag derived properties. Its value and interpretation logic should be implemented by API user.
+      &quot;isRepeatable&quot;: True or False, # Whether the property can have multiple values.
+      &quot;isRequired&quot;: True or False, # Whether the property is mandatory. Default is &#x27;false&#x27;, i.e. populating property value can be skipped. If &#x27;true&#x27; then user must populate the value for this property.
+      &quot;isSearchable&quot;: True or False, # Indicates that the property should be included in a global search.
+      &quot;mapTypeOptions&quot;: { # Configurations for a Map property. # Map property.
+      &quot;name&quot;: &quot;A String&quot;, # Required. The name of the metadata property. Must be unique within a document schema and is case insensitive. Names must be non-blank, start with a letter, and can contain alphanumeric characters and: /, :, -, _, and .
+      &quot;propertyTypeOptions&quot;: { # Configurations for a nested structured data property. # Nested structured data property.
+        &quot;propertyDefinitions&quot;: [ # Required. List of property definitions.
+          # Object with schema name: GoogleCloudContentwarehouseV1PropertyDefinition
+      &quot;retrievalImportance&quot;: &quot;A String&quot;, # The retrieval importance of the property during search.
+      &quot;schemaSources&quot;: [ # The mapping information between this property to another schema source.
+        { # The schema source information.
+          &quot;name&quot;: &quot;A String&quot;, # The schema name in the source.
+          &quot;processorType&quot;: &quot;A String&quot;, # The Doc AI processor type name.
+      &quot;textTypeOptions&quot;: { # Configurations for a text property. # Text/string property.
+      &quot;timestampTypeOptions&quot;: { # Configurations for a timestamp property. # Timestamp property. It is not supported by CMEK compliant deployment.
+  &quot;updateTime&quot;: &quot;A String&quot;, # Output only. The time when the document schema is last updated.
+  <pre>Deletes a document schema. Returns NOT_FOUND if the document schema does not exist. Returns BAD_REQUEST if the document schema has documents depending on it.
+  name: string, Required. The name of the document schema to delete. (required)
+  <pre>Gets a document schema. Returns NOT_FOUND if the document schema does not exist.
+  name: string, Required. The name of the document schema to retrieve. (required)
+  <pre>Lists document schemas.
+  parent: string, Required. The parent, which owns this collection of document schemas. Format: projects/{project_number}/locations/{location}. (required)
+  pageSize: integer, The maximum number of document schemas to return. The service may return fewer than this value. If unspecified, at most 50 document schemas will be returned. The maximum value is 1000; values above 1000 will be coerced to 1000.
+  pageToken: string, A page token, received from a previous `ListDocumentSchemas` call. Provide this to retrieve the subsequent page. When paginating, all other parameters provided to `ListDocumentSchemas` must match the call that provided the page token.
+    { # Response message for DocumentSchemaService.ListDocumentSchemas.
+  &quot;documentSchemas&quot;: [ # The document schemas from the specified parent.
+  <pre>Updates a Document Schema. Returns INVALID_ARGUMENT if the name of the Document Schema is non-empty and does not equal the existing name. Supports only appending new properties, adding new ENUM possible values, and updating the EnumTypeOptions.validation_check_disabled flag for ENUM possible values. Updating existing properties will result into INVALID_ARGUMENT.
+  name: string, Required. The name of the document schema to update. Format: projects/{project_number}/locations/{location}/documentSchemas/{document_schema_id}. (required)
+{ # Request message for DocumentSchemaService.UpdateDocumentSchema.
+  &quot;documentSchema&quot;: { # A document schema used to define document structure. # Required. The document schema to update with.

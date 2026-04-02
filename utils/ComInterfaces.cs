@@ -1,0 +1,138 @@
+    internal static class ComInterfaces
+        [DllImport("kernel32.dll", SetLastError = false, EntryPoint = "GetStartupInfoW")]
+        internal static extern void GetStartupInfo(out StartUpInfo lpStartupInfo);
+        /// IntPtr is being used for the string fields to make the marshaller faster and
+        /// simpler. With IntPtr, all fields are blittable, and since we don't use the
+        /// string fields at all, nothing is lost.
+        internal readonly struct StartUpInfo
+            public readonly uint cb;
+            private readonly IntPtr lpReserved;
+            public readonly IntPtr lpDesktop;
+            public readonly IntPtr lpTitle;
+            public readonly uint dwX;
+            public readonly uint dwY;
+            public readonly uint dwXSize;
+            public readonly uint dwYSize;
+            public readonly uint dwXCountChars;
+            public readonly uint dwYCountChars;
+            public readonly uint dwFillAttribute;
+            public readonly uint dwFlags;
+            public readonly ushort wShowWindow;
+            private readonly ushort cbReserved2;
+            private readonly IntPtr lpReserved2;
+            public readonly IntPtr hStdInput;
+            public readonly IntPtr hStdOutput;
+            public readonly IntPtr hStdError;
+        [ComImport]
+        [Guid("00021401-0000-0000-C000-000000000046")]
+        [ClassInterface(ClassInterfaceType.None)]
+        internal class CShellLink { }
+        [Guid("000214F9-0000-0000-C000-000000000046")]
+        [InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
+        internal interface IShellLinkW
+            void GetPath(
+                [Out(), MarshalAs(UnmanagedType.LPWStr)] StringBuilder pszFile,
+                int cchMaxPath,
+                IntPtr pfd,
+                uint fFlags);
+            void GetIDList(out IntPtr ppidl);
+            void SetIDList(IntPtr pidl);
+            void GetDescription(
+                int cchMaxName);
+            void SetDescription(
+                [MarshalAs(UnmanagedType.LPWStr)] string pszName);
+            void GetWorkingDirectory(
+                [Out(), MarshalAs(UnmanagedType.LPWStr)] StringBuilder pszDir,
+                int cchMaxPath
+            void SetWorkingDirectory(
+                [MarshalAs(UnmanagedType.LPWStr)] string pszDir);
+            void GetArguments(
+                [Out(), MarshalAs(UnmanagedType.LPWStr)] StringBuilder pszArgs,
+                int cchMaxPath);
+            void SetArguments(
+                [MarshalAs(UnmanagedType.LPWStr)] string pszArgs);
+            void GetHotKey(out short wHotKey);
+            void SetHotKey(short wHotKey);
+            void GetShowCmd(out uint iShowCmd);
+            void SetShowCmd(uint iShowCmd);
+            void GetIconLocation(
+                [Out(), MarshalAs(UnmanagedType.LPWStr)] out StringBuilder pszIconPath,
+                int cchIconPath,
+                out int iIcon);
+            void SetIconLocation(
+                [MarshalAs(UnmanagedType.LPWStr)] string pszIconPath,
+                int iIcon);
+            void SetRelativePath(
+                [MarshalAs(UnmanagedType.LPWStr)] string pszPathRel,
+                uint dwReserved);
+            void Resolve(IntPtr hwnd, uint fFlags);
+            void SetPath(
+                [MarshalAs(UnmanagedType.LPWStr)] string pszFile);
+        /// A property store.
+        [Guid("886D8EEB-8CF2-4446-8D02-CDBA1DBDCF99")]
+        internal interface IPropertyStore
+            /// Gets the number of properties contained in the property store.
+            /// <param name="propertyCount"></param>
+            [PreserveSig]
+            HResult GetCount([Out] out uint propertyCount);
+            /// Get a property key located at a specific index.
+            /// <param name="propertyIndex"></param>
+            HResult GetAt([In] uint propertyIndex, out PropertyKey key);
+            /// Gets the value of a property from the store.
+            /// <param name="pv"></param>
+            HResult GetValue([In] in PropertyKey key, [Out] PropVariant pv);
+            /// Sets the value of a property in the store.
+            HResult SetValue([In] in PropertyKey key, [In] PropVariant pv);
+            /// Commits the changes.
+            HResult Commit();
+        [Guid("6332DEBF-87B5-4670-90C0-5E57B408A49E")]
+        internal interface ICustomDestinationList
+            void SetAppID(
+                [MarshalAs(UnmanagedType.LPWStr)] string pszAppID);
+            HResult BeginList(
+                out uint cMaxSlots,
+                ref Guid riid,
+                [Out(), MarshalAs(UnmanagedType.Interface)] out object ppvObject);
+            HResult AppendCategory(
+                [MarshalAs(UnmanagedType.LPWStr)] string pszCategory,
+                [MarshalAs(UnmanagedType.Interface)] IObjectArray poa);
+            void AppendKnownCategory(
+                [MarshalAs(UnmanagedType.I4)] KnownDestinationCategory category);
+            HResult AddUserTasks(
+            void CommitList();
+            void GetRemovedDestinations(
+            void DeleteList(
+            void AbortList();
+        internal enum KnownDestinationCategory
+            Frequent = 1,
+            Recent
+        [Guid("92CA9DCD-5622-4BBA-A805-5E9F541BD8C9")]
+        internal interface IObjectArray
+            void GetCount(out uint cObjects);
+            void GetAt(
+                uint iIndex,
+        [Guid("5632B1A4-E38A-400A-928A-D4CD63230295")]
+        [InterfaceTypeAttribute(ComInterfaceType.InterfaceIsIUnknown)]
+        internal interface IObjectCollection
+            // IObjectArray
+            // IObjectCollection
+            void AddObject(
+                [MarshalAs(UnmanagedType.Interface)] object pvObject);
+            void AddFromArray(
+                [MarshalAs(UnmanagedType.Interface)] IObjectArray poaSource);
+            void RemoveObject(uint uiIndex);
+            void Clear();
+        [Guid("45e2b4ae-b1c3-11d0-b92f-00a0c90312e1"),
+        InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
+        internal interface IShellLinkDataListW
+            int AddDataBlock(IntPtr pDataBlock);
+            int CopyDataBlock(uint dwSig, out IntPtr ppDataBlock);
+            int RemoveDataBlock(uint dwSig);
+            void GetFlags(out uint pdwFlags);
+            void SetFlags(uint dwFlags);
+        [DllImport("ole32.Dll")]
+        internal static extern HResult CoCreateInstance(ref Guid clsid,
+           [MarshalAs(UnmanagedType.IUnknown)] object inner,
+           uint context,
+           ref Guid uuid,
+           [MarshalAs(UnmanagedType.IUnknown)] out object rReturnedComObject);

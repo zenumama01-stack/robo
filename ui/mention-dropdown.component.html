@@ -1,0 +1,37 @@
+    class="mention-dropdown"
+    [class.show-above]="showAbove"
+    [class.fixed-position]="useFixedPositioning"
+    [style.top.px]="position.top"
+    [style.left.px]="position.left"
+    <!-- Suggestions List -->
+    @if (suggestions.length > 0) {
+      <div class="mention-suggestions">
+        @for (suggestion of suggestions; track trackBySuggestion(i, suggestion); let i = $index) {
+            class="mention-suggestion"
+            [class.selected]="i === selectedIndex"
+            (mousedown)="selectSuggestion(suggestion); $event.preventDefault()"
+            (mouseenter)="selectedIndex = i"
+            <div class="suggestion-icon">
+              <!-- Agent with LogoURL image (takes precedence) -->
+              @if (suggestion.type === 'agent' && suggestion.imageUrl) {
+                  [src]="suggestion.imageUrl"
+                  [alt]="suggestion.displayName"
+                  class="suggestion-image"
+              <!-- Agent with icon class (fallback) -->
+              @if (suggestion.type === 'agent' && !suggestion.imageUrl && suggestion.icon) {
+                  [ngClass]="getIconClasses(suggestion.icon)"
+              <!-- User icon -->
+              @if (suggestion.type === 'user') {
+                  class="fa-solid fa-user"
+            <div class="suggestion-content">
+              <div class="suggestion-name">
+                @if (suggestion.type === 'agent') {
+                  <span class="suggestion-type-badge">Agent</span>
+                  <span class="suggestion-type-badge user">User</span>
+                {{ suggestion.displayName }}
+              @if (suggestion.description) {
+                <div class="suggestion-description">
+                  {{ suggestion.description }}
+    @if (suggestions.length === 0) {
+      <div class="mention-empty-state">
+        <p>No agents or users available</p>

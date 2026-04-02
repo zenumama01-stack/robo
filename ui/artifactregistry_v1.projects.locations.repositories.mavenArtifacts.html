@@ -1,0 +1,17 @@
+<h1><a href="artifactregistry_v1.html">Artifact Registry API</a> . <a href="artifactregistry_v1.projects.html">projects</a> . <a href="artifactregistry_v1.projects.locations.html">locations</a> . <a href="artifactregistry_v1.projects.locations.repositories.html">repositories</a> . <a href="artifactregistry_v1.projects.locations.repositories.mavenArtifacts.html">mavenArtifacts</a></h1>
+<p class="firstline">Gets a maven artifact.</p>
+<p class="firstline">Lists maven artifacts.</p>
+  <pre>Gets a maven artifact.
+  name: string, Required. The name of the maven artifact. (required)
+    { # MavenArtifact represents a maven artifact.
+  &quot;artifactId&quot;: &quot;A String&quot;, # Artifact ID for the artifact.
+  &quot;createTime&quot;: &quot;A String&quot;, # Output only. Time the artifact was created.
+  &quot;groupId&quot;: &quot;A String&quot;, # Group ID for the artifact. Example: com.google.guava
+  &quot;name&quot;: &quot;A String&quot;, # Required. registry_location, project_id, repository_name and maven_artifact forms a unique artifact For example, &quot;projects/test-project/locations/us-west4/repositories/test-repo/mavenArtifacts/ com.google.guava:guava:31.0-jre&quot;, where &quot;us-west4&quot; is the registry_location, &quot;test-project&quot; is the project_id, &quot;test-repo&quot; is the repository_name and &quot;com.google.guava:guava:31.0-jre&quot; is the maven artifact.
+  &quot;pomUri&quot;: &quot;A String&quot;, # Required. URL to access the pom file of the artifact. Example: us-west4-maven.pkg.dev/test-project/test-repo/com/google/guava/guava/31.0/guava-31.0.pom
+  &quot;updateTime&quot;: &quot;A String&quot;, # Output only. Time the artifact was updated.
+  &quot;version&quot;: &quot;A String&quot;, # Version of this artifact.
+  <pre>Lists maven artifacts.
+  parent: string, Required. The name of the parent resource whose maven artifacts will be listed. (required)
+    { # The response from listing maven artifacts.
+  &quot;mavenArtifacts&quot;: [ # The maven artifacts returned.

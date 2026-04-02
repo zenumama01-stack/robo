@@ -1,0 +1,16 @@
+    <!-- Category Identification Section -->
+        SectionKey="categoryIdentification"
+        SectionName="Category Identification"
+    <!-- Hierarchy Structure Section -->
+        SectionKey="hierarchyStructure"
+        SectionName="Hierarchy Structure"
+                [Params]="BuildRelationshipViewParamsByEntityName('MJ: AI Prompts','CategoryID')"
+    <!-- AI Prompt Categories Section -->
+        SectionKey="aIPromptCategories"
+        SectionName="AI Prompt Categories"
+        Icon="fa fa-tags"
+        [BadgeCount]="GetSectionRowCount('aIPromptCategories')"
+                [Params]="BuildRelationshipViewParamsByEntityName('MJ: AI Prompt Categories','ParentID')"
+                [NewRecordValues]="NewRecordValues('MJ: AI Prompt Categories')"
+                [AllowLoad]="IsSectionExpanded('aIPromptCategories')"
+                (AfterDataLoad)="SetSectionRowCount('aIPromptCategories', $event.totalRowCount)"

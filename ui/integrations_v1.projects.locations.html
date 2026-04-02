@@ -1,0 +1,51 @@
+<h1><a href="integrations_v1.html">Application Integration API</a> . <a href="integrations_v1.projects.html">projects</a> . <a href="integrations_v1.projects.locations.html">locations</a></h1>
+  <code><a href="integrations_v1.projects.locations.appsScriptProjects.html">appsScriptProjects()</a></code>
+<p class="firstline">Returns the appsScriptProjects Resource.</p>
+  <code><a href="integrations_v1.projects.locations.authConfigs.html">authConfigs()</a></code>
+<p class="firstline">Returns the authConfigs Resource.</p>
+  <code><a href="integrations_v1.projects.locations.certificates.html">certificates()</a></code>
+  <code><a href="integrations_v1.projects.locations.clients.html">clients()</a></code>
+  <code><a href="integrations_v1.projects.locations.cloudFunctions.html">cloudFunctions()</a></code>
+<p class="firstline">Returns the cloudFunctions Resource.</p>
+  <code><a href="integrations_v1.projects.locations.connections.html">connections()</a></code>
+  <code><a href="integrations_v1.projects.locations.integrations.html">integrations()</a></code>
+<p class="firstline">Returns the integrations Resource.</p>
+  <code><a href="integrations_v1.projects.locations.products.html">products()</a></code>
+  <code><a href="integrations_v1.projects.locations.sfdcInstances.html">sfdcInstances()</a></code>
+<p class="firstline">Returns the sfdcInstances Resource.</p>
+  <code><a href="integrations_v1.projects.locations.templates.html">templates()</a></code>
+  <code><a href="#generateOpenApiSpec">generateOpenApiSpec(name, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Generate OpenAPI spec for the requested integrations and api triggers</p>
+  <code><a href="#getClients">getClients(parent, x__xgafv=None)</a></code></p>
+<p class="firstline">Gets the client configuration for the given project and location resource name</p>
+    <code class="details" id="generateOpenApiSpec">generateOpenApiSpec(name, body=None, x__xgafv=None)</code>
+  <pre>Generate OpenAPI spec for the requested integrations and api triggers
+  name: string, Required. Project and location from which the integrations should be fetched. Format: projects/{project}/location/{location} (required)
+{ # Request for GenerateOpenApiSpec.
+  &quot;apiTriggerResources&quot;: [ # Required. List of api triggers
+    { # List of API triggerID and their workflow resource name.
+      &quot;integrationResource&quot;: &quot;A String&quot;, # Required. Integration where the API is published
+      &quot;triggerId&quot;: [ # Required. Trigger Id of the API trigger(s) in the integration
+  &quot;fileFormat&quot;: &quot;A String&quot;, # Required. File format for generated spec.
+    { # Response of the GenerateOpenApiSpec API.
+  &quot;openApiSpec&quot;: &quot;A String&quot;, # Open API spec as per the required format
+    <code class="details" id="getClients">getClients(parent, x__xgafv=None)</code>
+  <pre>Gets the client configuration for the given project and location resource name
+    { # Response for the GetClient rpc
+  &quot;client&quot;: { # The configuration information for the Client # Required. Required: The client configuration that was requested
+    &quot;billingType&quot;: &quot;A String&quot;, # Indicates the billing type of the client
+    &quot;clientState&quot;: &quot;A String&quot;, # Indicates the activity state the client
+    &quot;cloudKmsConfig&quot;: { # Configuration information for Client&#x27;s Cloud KMS information
+    &quot;createTime&quot;: &quot;A String&quot;, # The timestamp when the client was first created.
+    &quot;customerConfig&quot;: { # Customer configuration information for the given client # Optional. Customer configuration information for the given client.
+    &quot;description&quot;: &quot;A String&quot;, # Description of what the client is used for
+    &quot;enableHttpCall&quot;: True or False, # Optional.
+    &quot;enableInternalIp&quot;: True or False, # Optional. Indicates the client enables internal IP feature, this is applicable for internal clients only.
+    &quot;enableManagedAiFeatures&quot;: True or False, # Optional.
+    &quot;enableVariableMasking&quot;: True or False, # Optional.
+    &quot;id&quot;: &quot;A String&quot;, # Globally unique ID (project_id + region)
+    &quot;isGmek&quot;: True or False, # Optional. Indicates the client is provisioned with CMEK or GMEK.
+    &quot;p4ServiceAccount&quot;: &quot;A String&quot;, # The service agent associated with this client
+    &quot;projectId&quot;: &quot;A String&quot;, # The GCP project id of the client associated with
+    &quot;region&quot;: &quot;A String&quot;, # The region the client is linked to.
+    &quot;runAsServiceAccount&quot;: &quot;A String&quot;,

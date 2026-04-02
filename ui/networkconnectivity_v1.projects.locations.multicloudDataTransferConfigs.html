@@ -1,0 +1,33 @@
+<h1><a href="networkconnectivity_v1.html">Network Connectivity API</a> . <a href="networkconnectivity_v1.projects.html">projects</a> . <a href="networkconnectivity_v1.projects.locations.html">locations</a> . <a href="networkconnectivity_v1.projects.locations.multicloudDataTransferConfigs.html">multicloudDataTransferConfigs</a></h1>
+  <code><a href="networkconnectivity_v1.projects.locations.multicloudDataTransferConfigs.destinations.html">destinations()</a></code>
+<p class="firstline">Returns the destinations Resource.</p>
+  <code><a href="#create">create(parent, body=None, multicloudDataTransferConfigId=None, requestId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Creates a `MulticloudDataTransferConfig` resource in a specified project and location.</p>
+<p class="firstline">Deletes a `MulticloudDataTransferConfig` resource.</p>
+<p class="firstline">Gets the details of a `MulticloudDataTransferConfig` resource.</p>
+<p class="firstline">Lists the `MulticloudDataTransferConfig` resources in a specified project and location.</p>
+<p class="firstline">Updates a `MulticloudDataTransferConfig` resource in a specified project and location.</p>
+    <code class="details" id="create">create(parent, body=None, multicloudDataTransferConfigId=None, requestId=None, x__xgafv=None)</code>
+  <pre>Creates a `MulticloudDataTransferConfig` resource in a specified project and location.
+{ # The `MulticloudDataTransferConfig` resource. It lists the services that you configure for Data Transfer Essentials billing and metering.
+  &quot;createTime&quot;: &quot;A String&quot;, # Output only. Time when the `MulticloudDataTransferConfig` resource was created.
+  &quot;destinationsActiveCount&quot;: 42, # Output only. The number of `Destination` resources in use with the `MulticloudDataTransferConfig` resource.
+  &quot;destinationsCount&quot;: 42, # Output only. The number of `Destination` resources configured for the `MulticloudDataTransferConfig` resource.
+  &quot;name&quot;: &quot;A String&quot;, # Identifier. The name of the `MulticloudDataTransferConfig` resource. Format: `projects/{project}/locations/{location}/multicloudDataTransferConfigs/{multicloud_data_transfer_config}`.
+  &quot;services&quot;: { # Optional. Maps services to their current or planned states. Service names are keys, and the associated values describe the state of the service. If a state change is expected, the value is either `ADDING` or `DELETING`, depending on the actions taken. Sample output: &quot;services&quot;: { &quot;big-query&quot;: { &quot;states&quot;: [ { &quot;effectiveTime&quot;: &quot;2024-12-12T08:00:00Z&quot; &quot;state&quot;: &quot;ADDING&quot;, }, ] }, &quot;cloud-storage&quot;: { &quot;states&quot;: [ { &quot;state&quot;: &quot;ACTIVE&quot;, } ] } }
+    &quot;a_key&quot;: { # The timeline of the pending states for a resource.
+  &quot;uid&quot;: &quot;A String&quot;, # Output only. The Google-generated unique ID for the `MulticloudDataTransferConfig` resource. This value is unique across all `MulticloudDataTransferConfig` resources. If a resource is deleted and another with the same name is created, the new resource is assigned a different and unique ID.
+  &quot;updateTime&quot;: &quot;A String&quot;, # Output only. Time when the `MulticloudDataTransferConfig` resource was updated.
+  multicloudDataTransferConfigId: string, Required. The ID to use for the `MulticloudDataTransferConfig` resource, which becomes the final component of the `MulticloudDataTransferConfig` resource name.
+  requestId: string, Optional. A request ID to identify requests. Specify a unique request ID so that if you must retry your request, the server can ignore the request if it has already been completed. The server waits for at least 60 minutes since the first request. For example, consider a situation where you make an initial request and the request times out. If you make the request again with the same request ID, the server can check if original operation with the same request ID was received, and if so, can ignore the second request. This prevents clients from accidentally creating duplicate `MulticloudDataTransferConfig` resources. The request ID must be a valid UUID with the exception that zero UUID (00000000-0000-0000-0000-000000000000) isn&#x27;t supported.
+  <pre>Deletes a `MulticloudDataTransferConfig` resource.
+  name: string, Required. The name of the `MulticloudDataTransferConfig` resource to delete. (required)
+  <pre>Gets the details of a `MulticloudDataTransferConfig` resource.
+  name: string, Required. The name of the `MulticloudDataTransferConfig` resource to get. (required)
+  <pre>Lists the `MulticloudDataTransferConfig` resources in a specified project and location.
+  returnPartialSuccess: boolean, Optional. If `true`, allows partial responses for multi-regional aggregated list requests.
+    { # Response message to list `MulticloudDataTransferConfig` resources.
+  &quot;multicloudDataTransferConfigs&quot;: [ # The list of `MulticloudDataTransferConfig` resources to be listed.
+  <pre>Updates a `MulticloudDataTransferConfig` resource in a specified project and location.
+  name: string, Identifier. The name of the `MulticloudDataTransferConfig` resource. Format: `projects/{project}/locations/{location}/multicloudDataTransferConfigs/{multicloud_data_transfer_config}`. (required)
+  updateMask: string, Optional. `FieldMask` is used to specify the fields in the `MulticloudDataTransferConfig` resource to be overwritten by the update. The fields specified in `update_mask` are relative to the resource, not the full request. A field is overwritten if it is in the mask. If you don&#x27;t specify a mask, all fields are overwritten.

@@ -1,0 +1,59 @@
+<h1><a href="osconfig_v1.html">OS Config API</a> . <a href="osconfig_v1.projects.html">projects</a> . <a href="osconfig_v1.projects.patchJobs.html">patchJobs</a></h1>
+  <code><a href="osconfig_v1.projects.patchJobs.instanceDetails.html">instanceDetails()</a></code>
+<p class="firstline">Returns the instanceDetails Resource.</p>
+<p class="firstline">Cancel a patch job. The patch job must be active. Canceled patch jobs cannot be restarted.</p>
+<p class="firstline">Patch VM instances by creating and running a patch job.</p>
+<p class="firstline">Get the patch job. This can be used to track the progress of an ongoing patch job or review the details of completed jobs.</p>
+<p class="firstline">Get a list of patch jobs.</p>
+  <pre>Cancel a patch job. The patch job must be active. Canceled patch jobs cannot be restarted.
+  name: string, Required. Name of the patch in the form `projects/*/patchJobs/*` (required)
+{ # Message for canceling a patch job.
+    { # A high level representation of a patch job that is either in progress or has completed. Instance details are not included in the job. To paginate through instance details, use `ListPatchJobInstanceDetails`. For more information about patch jobs, see [Creating patch jobs](https://cloud.google.com/compute/docs/os-patch-management/create-patch-job).
+  &quot;createTime&quot;: &quot;A String&quot;, # Time this patch job was created.
+  &quot;description&quot;: &quot;A String&quot;, # Description of the patch job. Length of the description is limited to 1024 characters.
+  &quot;displayName&quot;: &quot;A String&quot;, # Display name for this patch job. This is not a unique identifier.
+  &quot;dryRun&quot;: True or False, # If this patch job is a dry run, the agent reports that it has finished without running any updates on the VM instance.
+  &quot;duration&quot;: &quot;A String&quot;, # Duration of the patch job. After the duration ends, the patch job times out.
+  &quot;errorMessage&quot;: &quot;A String&quot;, # If this patch job failed, this message provides information about the failure.
+  &quot;instanceDetailsSummary&quot;: { # A summary of the current patch state across all instances that this patch job affects. Contains counts of instances in different states. These states map to `InstancePatchState`. List patch job instance details to see the specific states of each instance. # Summary of instance details.
+    &quot;ackedInstanceCount&quot;: &quot;A String&quot;, # Number of instances that have acked and will start shortly.
+    &quot;applyingPatchesInstanceCount&quot;: &quot;A String&quot;, # Number of instances that are applying patches.
+    &quot;downloadingPatchesInstanceCount&quot;: &quot;A String&quot;, # Number of instances that are downloading patches.
+    &quot;failedInstanceCount&quot;: &quot;A String&quot;, # Number of instances that failed.
+    &quot;inactiveInstanceCount&quot;: &quot;A String&quot;, # Number of instances that are inactive.
+    &quot;noAgentDetectedInstanceCount&quot;: &quot;A String&quot;, # Number of instances that do not appear to be running the agent. Check to ensure that the agent is installed, running, and able to communicate with the service.
+    &quot;notifiedInstanceCount&quot;: &quot;A String&quot;, # Number of instances notified about patch job.
+    &quot;pendingInstanceCount&quot;: &quot;A String&quot;, # Number of instances pending patch job.
+    &quot;postPatchStepInstanceCount&quot;: &quot;A String&quot;, # Number of instances that are running the post-patch step.
+    &quot;prePatchStepInstanceCount&quot;: &quot;A String&quot;, # Number of instances that are running the pre-patch step.
+    &quot;rebootingInstanceCount&quot;: &quot;A String&quot;, # Number of instances rebooting.
+    &quot;skippedInstanceCount&quot;: &quot;A String&quot;, # Number of instances that were skipped during patching.
+    &quot;startedInstanceCount&quot;: &quot;A String&quot;, # Number of instances that have started.
+    &quot;succeededInstanceCount&quot;: &quot;A String&quot;, # Number of instances that have completed successfully.
+    &quot;succeededRebootRequiredInstanceCount&quot;: &quot;A String&quot;, # Number of instances that require reboot.
+    &quot;timedOutInstanceCount&quot;: &quot;A String&quot;, # Number of instances that exceeded the time out while applying the patch.
+  &quot;instanceFilter&quot;: { # A filter to target VM instances for patching. The targeted VMs must meet all criteria specified. So if both labels and zones are specified, the patch job targets only VMs with those labels and in those zones. # Instances to patch.
+  &quot;name&quot;: &quot;A String&quot;, # Unique identifier for this patch job in the form `projects/*/patchJobs/*`
+  &quot;patchConfig&quot;: { # Patch configuration specifications. Contains details on how to apply the patch(es) to a VM instance. # Patch configuration being applied.
+  &quot;patchDeployment&quot;: &quot;A String&quot;, # Output only. Name of the patch deployment that created this patch job.
+  &quot;percentComplete&quot;: 3.14, # Reflects the overall progress of the patch job in the range of 0.0 being no progress to 100.0 being complete.
+  &quot;rollout&quot;: { # Patch rollout configuration specifications. Contains details on the concurrency control when applying patch(es) to all targeted VMs. # Rollout strategy being applied.
+  &quot;state&quot;: &quot;A String&quot;, # The current state of the PatchJob.
+  &quot;updateTime&quot;: &quot;A String&quot;, # Last time this patch job was updated.
+  <pre>Patch VM instances by creating and running a patch job.
+  parent: string, Required. The project in which to run this patch in the form `projects/*` (required)
+{ # A request message to initiate patching across Compute Engine instances.
+  &quot;displayName&quot;: &quot;A String&quot;, # Display name for this patch job. This does not have to be unique.
+  &quot;dryRun&quot;: True or False, # If this patch is a dry-run only, instances are contacted but will do nothing.
+  &quot;instanceFilter&quot;: { # A filter to target VM instances for patching. The targeted VMs must meet all criteria specified. So if both labels and zones are specified, the patch job targets only VMs with those labels and in those zones. # Required. Instances to patch, either explicitly or filtered by some criteria such as zone or labels.
+  &quot;patchConfig&quot;: { # Patch configuration specifications. Contains details on how to apply the patch(es) to a VM instance. # Patch configuration being applied. If omitted, instances are patched using the default configurations.
+  &quot;rollout&quot;: { # Patch rollout configuration specifications. Contains details on the concurrency control when applying patch(es) to all targeted VMs. # Rollout strategy of the patch job.
+  <pre>Get the patch job. This can be used to track the progress of an ongoing patch job or review the details of completed jobs.
+  <pre>Get a list of patch jobs.
+  parent: string, Required. In the form of `projects/*` (required)
+  filter: string, If provided, this field specifies the criteria that must be met by patch jobs to be included in the response. Currently, filtering is only available on the patch_deployment field.
+  pageSize: integer, The maximum number of instance status to return.
+  pageToken: string, A pagination token returned from a previous call that indicates where this listing should continue from.
+    { # A response message for listing patch jobs.
+  &quot;nextPageToken&quot;: &quot;A String&quot;, # A pagination token that can be used to get the next page of results.
+  &quot;patchJobs&quot;: [ # The list of patch jobs.

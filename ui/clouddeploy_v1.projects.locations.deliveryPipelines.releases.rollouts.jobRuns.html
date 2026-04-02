@@ -1,0 +1,88 @@
+<h1><a href="clouddeploy_v1.html">Cloud Deploy API</a> . <a href="clouddeploy_v1.projects.html">projects</a> . <a href="clouddeploy_v1.projects.locations.html">locations</a> . <a href="clouddeploy_v1.projects.locations.deliveryPipelines.html">deliveryPipelines</a> . <a href="clouddeploy_v1.projects.locations.deliveryPipelines.releases.html">releases</a> . <a href="clouddeploy_v1.projects.locations.deliveryPipelines.releases.rollouts.html">rollouts</a> . <a href="clouddeploy_v1.projects.locations.deliveryPipelines.releases.rollouts.jobRuns.html">jobRuns</a></h1>
+<p class="firstline">Gets details of a single JobRun.</p>
+<p class="firstline">Lists JobRuns in a given project and location.</p>
+  <code><a href="#terminate">terminate(name, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Terminates a Job Run in a given project and location.</p>
+  <pre>Gets details of a single JobRun.
+  name: string, Required. Name of the `JobRun`. Format must be `projects/{project_id}/locations/{location_name}/deliveryPipelines/{pipeline_name}/releases/{release_name}/rollouts/{rollout_name}/jobRuns/{job_run_name}`. (required)
+    { # A `JobRun` resource in the Cloud Deploy API. A `JobRun` contains information of a single `Rollout` job evaluation.
+  &quot;advanceChildRolloutJobRun&quot;: { # AdvanceChildRolloutJobRun contains information specific to a advanceChildRollout `JobRun`. # Output only. Information specific to an advanceChildRollout `JobRun`
+    &quot;rollout&quot;: &quot;A String&quot;, # Output only. Name of the `ChildRollout`. Format is `projects/{project}/locations/{location}/deliveryPipelines/{deliveryPipeline}/releases/{release}/rollouts/{rollout}`.
+    &quot;rolloutPhaseId&quot;: &quot;A String&quot;, # Output only. the ID of the ChildRollout&#x27;s Phase.
+  &quot;analysisJobRun&quot;: { # AnalysisJobRun contains information specific to an analysis `JobRun`. # Output only. Information specific to an analysis `JobRun`.
+    &quot;alertPolicyAnalyses&quot;: [ # Output only. The status of the running alert policy checks configured for this analysis.
+      { # AlertPolicyCheckStatus contains information specific to a single run of an alert policy check.
+        &quot;alertPolicies&quot;: [ # Output only. The alert policies that this analysis monitors. Format is `projects/{project}/locations/{location}/alertPolicies/{alertPolicy}`.
+        &quot;failedAlertPolicies&quot;: [ # Output only. The alert policies that were found to be firing during this check. This will be empty if no incidents were found.
+          { # FailedAlertPolicy contains information about an alert policy that was found to be firing during an alert policy check.
+            &quot;alertPolicy&quot;: &quot;A String&quot;, # Output only. The name of the alert policy that was found to be firing. Format is `projects/{project}/locations/{location}/alertPolicies/{alertPolicy}`.
+            &quot;alerts&quot;: [ # Output only. Open alerts for the alerting policies that matched the alert policy check configuration.
+        &quot;failureMessage&quot;: &quot;A String&quot;, # Output only. Additional information about the alert policy check failure, if available. This will be empty if the alert policy check succeeded.
+        &quot;id&quot;: &quot;A String&quot;, # Output only. The ID of this analysis.
+        &quot;labels&quot;: { # Output only. The resolved labels used to filter for specific incidents.
+    &quot;customCheckAnalyses&quot;: [ # Output only. The status of the running custom checks configured for this analysis.
+      { # CustomCheckStatus contains information specific to a single iteration of a custom analysis job.
+        &quot;failureCause&quot;: &quot;A String&quot;, # Output only. The reason the analysis failed. This will always be unspecified while the analysis is in progress or if it succeeded.
+        &quot;failureMessage&quot;: &quot;A String&quot;, # Output only. Additional information about the analysis failure, if available.
+        &quot;frequency&quot;: &quot;A String&quot;, # Output only. The frequency in minutes at which the custom check is run.
+        &quot;id&quot;: &quot;A String&quot;, # Output only. The ID of the custom check.
+        &quot;latestBuild&quot;: &quot;A String&quot;, # Output only. The resource name of the Cloud Build `Build` object that was used to execute the latest run of this custom action check. Format is `projects/{project}/locations/{location}/builds/{build}`.
+        &quot;metadata&quot;: { # CustomMetadata contains information from a user-defined operation. # Output only. Custom metadata provided by the user-defined custom check operation. result.
+        &quot;task&quot;: { # A Task represents a unit of work that is executed as part of a Job. # Output only. The task that ran for this custom check.
+    &quot;failedCheckId&quot;: &quot;A String&quot;, # Output only. The ID of the configured check that failed. This will always be blank while the analysis is in progress or if it succeeded.
+  &quot;createChildRolloutJobRun&quot;: { # CreateChildRolloutJobRun contains information specific to a createChildRollout `JobRun`. # Output only. Information specific to a createChildRollout `JobRun`.
+    &quot;rolloutPhaseId&quot;: &quot;A String&quot;, # Output only. The ID of the childRollout Phase initiated by this JobRun.
+  &quot;createTime&quot;: &quot;A String&quot;, # Output only. Time at which the `JobRun` was created.
+  &quot;deployJobRun&quot;: { # DeployJobRun contains information specific to a deploy `JobRun`. # Output only. Information specific to a deploy `JobRun`.
+    &quot;artifact&quot;: { # The artifacts produced by a deploy operation. # Output only. The artifact of a deploy job run, if available.
+      &quot;artifactUri&quot;: &quot;A String&quot;, # Output only. URI of a directory containing the artifacts. All paths are relative to this location.
+      &quot;manifestPaths&quot;: [ # Output only. File paths of the manifests applied during the deploy operation relative to the URI.
+    &quot;build&quot;: &quot;A String&quot;, # Output only. The resource name of the Cloud Build `Build` object that is used to deploy. Format is `projects/{project}/locations/{location}/builds/{build}`.
+    &quot;failureCause&quot;: &quot;A String&quot;, # Output only. The reason the deploy failed. This will always be unspecified while the deploy is in progress or if it succeeded.
+    &quot;failureMessage&quot;: &quot;A String&quot;, # Output only. Additional information about the deploy failure, if available.
+    &quot;metadata&quot;: { # DeployJobRunMetadata surfaces information associated with a `DeployJobRun` to the user. # Output only. Metadata containing information about the deploy job run.
+      &quot;cloudRun&quot;: { # CloudRunMetadata contains information from a Cloud Run deployment. # Output only. The name of the Cloud Run Service that is associated with a `DeployJobRun`.
+      &quot;custom&quot;: { # CustomMetadata contains information from a user-defined operation. # Output only. Custom metadata provided by user-defined deploy operation.
+      &quot;customTarget&quot;: { # CustomTargetDeployMetadata contains information from a Custom Target deploy operation. # Output only. Custom Target metadata associated with a `DeployJobRun`.
+        &quot;skipMessage&quot;: &quot;A String&quot;, # Output only. Skip message provided in the results of a custom deploy operation.
+  &quot;endTime&quot;: &quot;A String&quot;, # Output only. Time at which the `JobRun` ended.
+  &quot;etag&quot;: &quot;A String&quot;, # Output only. This checksum is computed by the server based on the value of other fields, and may be sent on update and delete requests to ensure the client has an up-to-date value before proceeding.
+  &quot;jobId&quot;: &quot;A String&quot;, # Output only. ID of the `Rollout` job this `JobRun` corresponds to.
+  &quot;name&quot;: &quot;A String&quot;, # Output only. Name of the `JobRun`. Format is `projects/{project}/locations/{location}/deliveryPipelines/{deliveryPipeline}/releases/{releases}/rollouts/{rollouts}/jobRuns/{uuid}`.
+  &quot;phaseId&quot;: &quot;A String&quot;, # Output only. ID of the `Rollout` phase this `JobRun` belongs in.
+  &quot;postdeployJobRun&quot;: { # PostdeployJobRun contains information specific to a postdeploy `JobRun`. # Output only. Information specific to a postdeploy `JobRun`.
+    &quot;build&quot;: &quot;A String&quot;, # Output only. The resource name of the Cloud Build `Build` object that is used to execute the custom actions associated with the postdeploy Job. Format is `projects/{project}/locations/{location}/builds/{build}`.
+    &quot;failureCause&quot;: &quot;A String&quot;, # Output only. The reason the postdeploy failed. This will always be unspecified while the postdeploy is in progress or if it succeeded.
+    &quot;failureMessage&quot;: &quot;A String&quot;, # Output only. Additional information about the postdeploy failure, if available.
+    &quot;metadata&quot;: { # PostdeployJobRunMetadata contains metadata about the postdeploy `JobRun`. # Output only. Metadata containing information about the postdeploy `JobRun`.
+      &quot;custom&quot;: { # CustomMetadata contains information from a user-defined operation. # Output only. Custom metadata provided by user-defined postdeploy operation.
+  &quot;predeployJobRun&quot;: { # PredeployJobRun contains information specific to a predeploy `JobRun`. # Output only. Information specific to a predeploy `JobRun`.
+    &quot;build&quot;: &quot;A String&quot;, # Output only. The resource name of the Cloud Build `Build` object that is used to execute the custom actions associated with the predeploy Job. Format is `projects/{project}/locations/{location}/builds/{build}`.
+    &quot;failureCause&quot;: &quot;A String&quot;, # Output only. The reason the predeploy failed. This will always be unspecified while the predeploy is in progress or if it succeeded.
+    &quot;failureMessage&quot;: &quot;A String&quot;, # Output only. Additional information about the predeploy failure, if available.
+    &quot;metadata&quot;: { # PredeployJobRunMetadata contains metadata about the predeploy `JobRun`. # Output only. Metadata containing information about the predeploy `JobRun`.
+      &quot;custom&quot;: { # CustomMetadata contains information from a user-defined operation. # Output only. Custom metadata provided by user-defined predeploy operation.
+  &quot;startTime&quot;: &quot;A String&quot;, # Output only. Time at which the `JobRun` was started.
+  &quot;state&quot;: &quot;A String&quot;, # Output only. The current state of the `JobRun`.
+  &quot;uid&quot;: &quot;A String&quot;, # Output only. Unique identifier of the `JobRun`.
+  &quot;verifyJobRun&quot;: { # VerifyJobRun contains information specific to a verify `JobRun`. # Output only. Information specific to a verify `JobRun`.
+    &quot;artifactUri&quot;: &quot;A String&quot;, # Output only. URI of a directory containing the verify artifacts. This contains the Skaffold event log.
+    &quot;build&quot;: &quot;A String&quot;, # Output only. The resource name of the Cloud Build `Build` object that is used to verify. Format is `projects/{project}/locations/{location}/builds/{build}`.
+    &quot;eventLogPath&quot;: &quot;A String&quot;, # Output only. File path of the Skaffold event log relative to the artifact URI.
+    &quot;failureCause&quot;: &quot;A String&quot;, # Output only. The reason the verify failed. This will always be unspecified while the verify is in progress or if it succeeded.
+    &quot;failureMessage&quot;: &quot;A String&quot;, # Output only. Additional information about the verify failure, if available.
+    &quot;metadata&quot;: { # VerifyJobRunMetadata contains metadata about the verify `JobRun`. # Output only. Metadata containing information about the verify `JobRun`.
+      &quot;custom&quot;: { # CustomMetadata contains information from a user-defined operation. # Output only. Custom metadata provided by user-defined verify operation.
+  <pre>Lists JobRuns in a given project and location.
+  parent: string, Required. The `Rollout` which owns this collection of `JobRun` objects. (required)
+  filter: string, Optional. Filter results to be returned. See https://google.aip.dev/160 for more details.
+  pageSize: integer, Optional. The maximum number of `JobRun` objects to return. The service may return fewer than this value. If unspecified, at most 50 `JobRun` objects will be returned. The maximum value is 1000; values above 1000 will be set to 1000.
+  pageToken: string, Optional. A page token, received from a previous `ListJobRuns` call. Provide this to retrieve the subsequent page. When paginating, all other provided parameters match the call that provided the page token.
+    { # ListJobRunsResponse is the response object returned by `ListJobRuns`.
+  &quot;jobRuns&quot;: [ # The `JobRun` objects.
+  &quot;unreachable&quot;: [ # Locations that could not be reached
+    <code class="details" id="terminate">terminate(name, body=None, x__xgafv=None)</code>
+  <pre>Terminates a Job Run in a given project and location.
+  name: string, Required. Name of the `JobRun`. Format must be `projects/{project}/locations/{location}/deliveryPipelines/{deliveryPipeline}/releases/{release}/rollouts/{rollout}/jobRuns/{jobRun}`. (required)
+{ # The request object used by `TerminateJobRun`.
+    { # The response object from `TerminateJobRun`.

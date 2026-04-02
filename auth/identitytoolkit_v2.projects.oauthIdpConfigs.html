@@ -1,0 +1,28 @@
+<h1><a href="identitytoolkit_v2.html">Identity Toolkit API</a> . <a href="identitytoolkit_v2.projects.html">projects</a> . <a href="identitytoolkit_v2.projects.oauthIdpConfigs.html">oauthIdpConfigs</a></h1>
+  <code><a href="#create">create(parent, body=None, oauthIdpConfigId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Create an Oidc Idp configuration for an Identity Toolkit project.</p>
+<p class="firstline">Delete an Oidc Idp configuration for an Identity Toolkit project.</p>
+<p class="firstline">Retrieve an Oidc Idp configuration for an Identity Toolkit project.</p>
+<p class="firstline">List all Oidc Idp configurations for an Identity Toolkit project.</p>
+<p class="firstline">Update an Oidc Idp configuration for an Identity Toolkit project.</p>
+    <code class="details" id="create">create(parent, body=None, oauthIdpConfigId=None, x__xgafv=None)</code>
+  <pre>Create an Oidc Idp configuration for an Identity Toolkit project.
+{ # Configuration options for authenticating with an OAuth IDP.
+  &quot;clientId&quot;: &quot;A String&quot;, # The client id of an OAuth client.
+  &quot;clientSecret&quot;: &quot;A String&quot;, # The client secret of the OAuth client, to enable OIDC code flow.
+  &quot;issuer&quot;: &quot;A String&quot;, # For OIDC Idps, the issuer identifier.
+  &quot;name&quot;: &quot;A String&quot;, # The name of the OAuthIdpConfig resource, for example: &#x27;projects/my-awesome-project/oauthIdpConfigs/oauth-config-id&#x27;. Ignored during create requests.
+  &quot;responseType&quot;: { # The response type to request for in the OAuth authorization flow. You can set either `id_token` or `code` to true, but not both. Setting both types to be simultaneously true (`{code: true, id_token: true}`) is not yet supported. See https://openid.net/specs/openid-connect-core-1_0.html#Authentication for a mapping of response type to OAuth 2.0 flow. # The response type to request for in the OAuth authorization flow. You can set either `id_token` or `code` to true, but not both. Setting both types to be simultaneously true (`{code: true, id_token: true}`) is not yet supported.
+    &quot;code&quot;: True or False, # If true, authorization code is returned from IdP&#x27;s authorization endpoint.
+    &quot;idToken&quot;: True or False, # If true, ID token is returned from IdP&#x27;s authorization endpoint.
+    &quot;token&quot;: True or False, # Do not use. The `token` response type is not supported at the moment.
+  oauthIdpConfigId: string, The id to use for this config.
+  <pre>Delete an Oidc Idp configuration for an Identity Toolkit project.
+  name: string, The resource name of the config to be deleted, for example: &#x27;projects/my-awesome-project/oauthIdpConfigs/oauth-config-id&#x27;. (required)
+  <pre>Retrieve an Oidc Idp configuration for an Identity Toolkit project.
+  name: string, The resource name of the config, for example: &#x27;projects/my-awesome-project/oauthIdpConfigs/oauth-config-id&#x27;. (required)
+  <pre>List all Oidc Idp configurations for an Identity Toolkit project.
+    { # Response for ListOAuthIdpConfigs
+  &quot;oauthIdpConfigs&quot;: [ # The set of configs.
+  <pre>Update an Oidc Idp configuration for an Identity Toolkit project.
+  name: string, The name of the OAuthIdpConfig resource, for example: &#x27;projects/my-awesome-project/oauthIdpConfigs/oauth-config-id&#x27;. Ignored during create requests. (required)

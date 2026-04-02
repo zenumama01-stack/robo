@@ -1,0 +1,58 @@
+<h1><a href="discoveryengine_v1.html">Discovery Engine API</a> . <a href="discoveryengine_v1.projects.html">projects</a> . <a href="discoveryengine_v1.projects.locations.html">locations</a> . <a href="discoveryengine_v1.projects.locations.collections.html">collections</a> . <a href="discoveryengine_v1.projects.locations.collections.dataStores.html">dataStores</a> . <a href="discoveryengine_v1.projects.locations.collections.dataStores.siteSearchEngine.html">siteSearchEngine</a></h1>
+  <code><a href="discoveryengine_v1.projects.locations.collections.dataStores.siteSearchEngine.operations.html">operations()</a></code>
+  <code><a href="discoveryengine_v1.projects.locations.collections.dataStores.siteSearchEngine.sitemaps.html">sitemaps()</a></code>
+<p class="firstline">Returns the sitemaps Resource.</p>
+  <code><a href="discoveryengine_v1.projects.locations.collections.dataStores.siteSearchEngine.targetSites.html">targetSites()</a></code>
+<p class="firstline">Returns the targetSites Resource.</p>
+  <code><a href="#batchVerifyTargetSites">batchVerifyTargetSites(parent, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Verify target sites' ownership and validity. This API sends all the target sites under site search engine for verification.</p>
+  <code><a href="#disableAdvancedSiteSearch">disableAdvancedSiteSearch(siteSearchEngine, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Downgrade from advanced site search to basic site search.</p>
+  <code><a href="#enableAdvancedSiteSearch">enableAdvancedSiteSearch(siteSearchEngine, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Upgrade from basic site search to advanced site search.</p>
+  <code><a href="#fetchDomainVerificationStatus">fetchDomainVerificationStatus(siteSearchEngine, pageSize=None, pageToken=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Returns list of target sites with its domain verification status. This method can only be called under data store with BASIC_SITE_SEARCH state at the moment.</p>
+  <code><a href="#fetchDomainVerificationStatus_next">fetchDomainVerificationStatus_next()</a></code></p>
+  <code><a href="#recrawlUris">recrawlUris(siteSearchEngine, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Request on-demand recrawl for a list of URIs.</p>
+    <code class="details" id="batchVerifyTargetSites">batchVerifyTargetSites(parent, body=None, x__xgafv=None)</code>
+  <pre>Verify target sites&#x27; ownership and validity. This API sends all the target sites under site search engine for verification.
+  parent: string, Required. The parent resource shared by all TargetSites being verified. `projects/{project}/locations/{location}/collections/{collection}/dataStores/{data_store}/siteSearchEngine`. (required)
+{ # Request message for SiteSearchEngineService.BatchVerifyTargetSites method.
+    <code class="details" id="disableAdvancedSiteSearch">disableAdvancedSiteSearch(siteSearchEngine, body=None, x__xgafv=None)</code>
+  <pre>Downgrade from advanced site search to basic site search.
+  siteSearchEngine: string, Required. Full resource name of the SiteSearchEngine, such as `projects/{project}/locations/{location}/dataStores/{data_store_id}/siteSearchEngine`. (required)
+{ # Request message for SiteSearchEngineService.DisableAdvancedSiteSearch method.
+    <code class="details" id="enableAdvancedSiteSearch">enableAdvancedSiteSearch(siteSearchEngine, body=None, x__xgafv=None)</code>
+  <pre>Upgrade from basic site search to advanced site search.
+{ # Request message for SiteSearchEngineService.EnableAdvancedSiteSearch method.
+    <code class="details" id="fetchDomainVerificationStatus">fetchDomainVerificationStatus(siteSearchEngine, pageSize=None, pageToken=None, x__xgafv=None)</code>
+  <pre>Returns list of target sites with its domain verification status. This method can only be called under data store with BASIC_SITE_SEARCH state at the moment.
+  siteSearchEngine: string, Required. The site search engine resource under which we fetch all the domain verification status. `projects/{project}/locations/{location}/collections/{collection}/dataStores/{data_store}/siteSearchEngine`. (required)
+  pageSize: integer, Requested page size. Server may return fewer items than requested. If unspecified, server will pick an appropriate default. The maximum value is 1000; values above 1000 will be coerced to 1000. If this field is negative, an INVALID_ARGUMENT error is returned.
+  pageToken: string, A page token, received from a previous `FetchDomainVerificationStatus` call. Provide this to retrieve the subsequent page. When paginating, all other parameters provided to `FetchDomainVerificationStatus` must match the call that provided the page token.
+    { # Response message for SiteSearchEngineService.FetchDomainVerificationStatus method.
+  &quot;targetSites&quot;: [ # List of TargetSites containing the site verification status.
+    { # A target site for the SiteSearchEngine.
+      &quot;exactMatch&quot;: True or False, # Immutable. If set to false, a uri_pattern is generated to include all pages whose address contains the provided_uri_pattern. If set to true, an uri_pattern is generated to try to be an exact match of the provided_uri_pattern or just the specific page if the provided_uri_pattern is a specific one. provided_uri_pattern is always normalized to generate the URI pattern to be used by the search engine.
+      &quot;failureReason&quot;: { # Site search indexing failure reasons. # Output only. Failure reason.
+        &quot;quotaFailure&quot;: { # Failed due to insufficient quota. # Failed due to insufficient quota.
+          &quot;totalRequiredQuota&quot;: &quot;A String&quot;, # This number is an estimation on how much total quota this project needs to successfully complete indexing.
+      &quot;generatedUriPattern&quot;: &quot;A String&quot;, # Output only. This is system-generated based on the provided_uri_pattern.
+      &quot;indexingStatus&quot;: &quot;A String&quot;, # Output only. Indexing status.
+      &quot;name&quot;: &quot;A String&quot;, # Output only. The fully qualified resource name of the target site. `projects/{project}/locations/{location}/collections/{collection}/dataStores/{data_store}/siteSearchEngine/targetSites/{target_site}` The `target_site_id` is system-generated.
+      &quot;providedUriPattern&quot;: &quot;A String&quot;, # Required. Input only. The user provided URI pattern from which the `generated_uri_pattern` is generated.
+      &quot;rootDomainUri&quot;: &quot;A String&quot;, # Output only. Root domain of the provided_uri_pattern.
+      &quot;siteVerificationInfo&quot;: { # Verification information for target sites in advanced site search. # Output only. Site ownership and validity verification status.
+        &quot;siteVerificationState&quot;: &quot;A String&quot;, # Site verification state indicating the ownership and validity.
+        &quot;verifyTime&quot;: &quot;A String&quot;, # Latest site verification time.
+      &quot;type&quot;: &quot;A String&quot;, # The type of the target site, e.g., whether the site is to be included or excluded.
+      &quot;updateTime&quot;: &quot;A String&quot;, # Output only. The target site&#x27;s last updated time.
+  &quot;totalSize&quot;: 42, # The total number of items matching the request. This will always be populated in the response.
+    <code class="details" id="fetchDomainVerificationStatus_next">fetchDomainVerificationStatus_next()</code>
+    <code class="details" id="recrawlUris">recrawlUris(siteSearchEngine, body=None, x__xgafv=None)</code>
+  <pre>Request on-demand recrawl for a list of URIs.
+  siteSearchEngine: string, Required. Full resource name of the SiteSearchEngine, such as `projects/*/locations/*/collections/*/dataStores/*/siteSearchEngine`. (required)
+{ # Request message for SiteSearchEngineService.RecrawlUris method.
+  &quot;siteCredential&quot;: &quot;A String&quot;, # Optional. Credential id to use for crawling.
+  &quot;uris&quot;: [ # Required. List of URIs to crawl. At most 10K URIs are supported, otherwise an INVALID_ARGUMENT error is thrown. Each URI should match at least one TargetSite in `site_search_engine`.

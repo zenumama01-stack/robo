@@ -1,0 +1,32 @@
+  @if(_Loading) {
+  @if(ShowSaveButton) {
+    <button kendoButton (click)="SavePermissions()">Save</button>
+  <div class="table-container">
+    @if(AllowAddPermissions) {
+      <div class="add-permission-section">
+        <span class="add-permission-label">Add Permission</span>
+          [data]="PermissionTypes"
+          [(ngModel)]="SelectedType"
+          style="width: 100px;">
+        @if (SelectedType === 'User') {
+            [data]="AllUsers"
+            [(ngModel)]="SelectedUser"
+            style="width: 225px;">
+        @else if (SelectedType === 'Role') {
+            [data]="AllRoles"
+            [(ngModel)]="SelectedRole"
+          SelectedType: {{ SelectedType }}
+        @if (ShowPermissionLevels) {
+            [data]="PermissionLevels"
+            [(ngModel)]="SelectedPermissionLevel"
+        <button kendoButton (click)="addPermission()" [disabled]="permissionAlreadyExists()" [title]="permissionAlreadyExists() ? 'This combination of Type/User/Role already exists below' : ''" >Add</button>
+    <table class="resource-table">
+            <th>Level</th>
+          @if(AllowDeletePermissions) {
+        @for (p of resourcePermissions; track p) {
+            <td>{{ p.Type }}</td>
+            <td>{{ p.Type === 'User' ? p.User : p.Role }}</td>
+                @if (AllowEditPermissions) {
+                    [(ngModel)]="p.PermissionLevel"
+                  {{ p.PermissionLevel }}
+                <button kendoButton (click)="deletePermission(p)"><span class="fa-solid fa-trash-can"></span></button>

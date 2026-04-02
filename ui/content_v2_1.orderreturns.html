@@ -1,0 +1,74 @@
+<h1><a href="content_v2_1.html">Content API for Shopping</a> . <a href="content_v2_1.orderreturns.html">orderreturns</a></h1>
+  <code><a href="content_v2_1.orderreturns.labels.html">labels()</a></code>
+  <code><a href="#acknowledge">acknowledge(merchantId, returnId, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Acks an order return in your Merchant Center account.</p>
+  <code><a href="#createorderreturn">createorderreturn(merchantId, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Create return in your Merchant Center account.</p>
+  <code><a href="#list">list(merchantId, acknowledged=None, createdEndDate=None, createdStartDate=None, googleOrderIds=None, maxResults=None, orderBy=None, pageToken=None, shipmentStates=None, shipmentStatus=None, shipmentTrackingNumbers=None, shipmentTypes=None, x__xgafv=None)</a></code></p>
+  <code><a href="#process">process(merchantId, returnId, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Processes return in your Merchant Center account.</p>
+    <code class="details" id="acknowledge">acknowledge(merchantId, returnId, body=None, x__xgafv=None)</code>
+  <pre>Acks an order return in your Merchant Center account.
+  returnId: string, The ID of the return. (required)
+  &quot;operationId&quot;: &quot;A String&quot;, # [required] The ID of the operation, unique across all operations for a given order return.
+  &quot;kind&quot;: &quot;A String&quot;, # Identifies what kind of resource this is. Value: the fixed string &quot;`content#orderreturnsAcknowledgeResponse`&quot;.
+    <code class="details" id="createorderreturn">createorderreturn(merchantId, body=None, x__xgafv=None)</code>
+  <pre>Create return in your Merchant Center account.
+  &quot;lineItems&quot;: [ # The list of line items to return.
+      &quot;lineItemId&quot;: &quot;A String&quot;, # The ID of the line item. This value is assigned by Google when an order is created. Either lineItemId or productId is required.
+      &quot;quantity&quot;: 42, # The quantity of this line item.
+  &quot;returnMethodType&quot;: &quot;A String&quot;, # The way of the package being returned.
+  &quot;kind&quot;: &quot;A String&quot;, # Identifies what kind of resource this is. Value: the fixed string &quot;`content#orderreturnsCreateOrderReturnResponse`&quot;.
+  &quot;orderReturn&quot;: { # Order return. Production access (all methods) requires the order manager role. Sandbox access does not. # Created order return.
+        &quot;merchantRejectionReason&quot;: { # The reason that the merchant chose to reject an item return.
+          &quot;reasonCode&quot;: &quot;A String&quot;, # Code of the rejection reason.
+          &quot;targetCountry&quot;: &quot;A String&quot;, # The CLDR territory code of the target country of the product.
+        &quot;refundableAmount&quot;: { # Maximum amount that can be refunded for this return item.
+          &quot;priceAmount&quot;: { # The pre-tax or post-tax price depends on the location of the order. - For countries (for example, &quot;US&quot;. where price attribute excludes tax, this field corresponds to the pre-tax value. - For coutries (for example, &quot;France&quot;) where price attribute includes tax, this field corresponds to the post-tax value .
+          &quot;taxAmount&quot;: { # Tax value, present only for countries where price attribute excludes tax (for example, &quot;US&quot;. No tax is referenced as 0 value with the corresponding `currency`.
+        &quot;returnItemId&quot;: &quot;A String&quot;, # Unit level ID for the return item. Different units of the same product will have different IDs.
+        &quot;shipmentGroupId&quot;: &quot;A String&quot;, # ID of the original shipment group. Provided for shipments with invoice support.
+        &quot;shipmentUnitId&quot;: &quot;A String&quot;, # ID of the shipment unit assigned by the merchant. Provided for shipments with invoice support.
+    &quot;returnPricingInfo&quot;: { # Information about shipping costs.
+      &quot;chargeReturnShippingFee&quot;: True or False, # Default option for whether merchant should charge the customer for return shipping costs, based on customer selected return reason and merchant&#x27;s return policy for the items being returned.
+      &quot;maxReturnShippingFee&quot;: { # Maximum return shipping costs that may be charged to the customer depending on merchant&#x27;s assessment of the return reason and the merchant&#x27;s return policy for the items being returned.
+      &quot;refundableItemsTotalAmount&quot;: { # Total amount that can be refunded for the items in this return. It represents the total amount received by the merchant for the items, after applying merchant coupons.
+      &quot;refundableShippingAmount&quot;: { # Maximum amount that can be refunded for the original shipping fee.
+      &quot;totalRefundedAmount&quot;: { # Total amount already refunded by the merchant. It includes all types of refunds (items, shipping, etc.) Not provided if no refund has been applied yet.
+        &quot;returnMethodType&quot;: &quot;A String&quot;, # Type of the return method. Acceptable values are: - &quot;`byMail`&quot; - &quot;`contactCustomerSupport`&quot; - &quot;`returnless`&quot; - &quot;`inStore`&quot;
+    <code class="details" id="list">list(merchantId, acknowledged=None, createdEndDate=None, createdStartDate=None, googleOrderIds=None, maxResults=None, orderBy=None, pageToken=None, shipmentStates=None, shipmentStatus=None, shipmentTrackingNumbers=None, shipmentTypes=None, x__xgafv=None)</code>
+  acknowledged: boolean, Obtains order returns that match the acknowledgement status. When set to true, obtains order returns that have been acknowledged. When false, obtains order returns that have not been acknowledged. When not provided, obtains order returns regardless of their acknowledgement status. We recommend using this filter set to `false`, in conjunction with the `acknowledge` call, such that only un-acknowledged order returns are returned. 
+  googleOrderIds: string, Obtains order returns with the specified order ids. If this parameter is provided, createdStartDate, createdEndDate, shipmentType, shipmentStatus, shipmentState and acknowledged parameters must be not set. Note: if googleOrderId and shipmentTrackingNumber parameters are provided, the obtained results will include all order returns that either match the specified order id or the specified tracking number. (repeated)
+      RETURN_CREATION_TIME_DESC - Return results in descending order.
+      RETURN_CREATION_TIME_ASC - Return results in ascending order.
+  shipmentStates: string, Obtains order returns that match any shipment state provided in this parameter. When this parameter is not provided, order returns are obtained regardless of their shipment states. (repeated)
+      NEW - Return shipments with `new` state only.
+      SHIPPED - Return shipments with `shipped` state only.
+      COMPLETED - Return shipments with `completed` state only.
+      UNDELIVERABLE - Return shipments with `undeliverable` state only.
+      PENDING - Return shipments with `pending` state only.
+  shipmentStatus: string, Obtains order returns that match any shipment status provided in this parameter. When this parameter is not provided, order returns are obtained regardless of their shipment statuses. (repeated)
+      NEW - Return shipments with `new` status only.
+      IN_PROGRESS - Return shipments with `inProgress` status only.
+      PROCESSED - Return shipments with `processed` status only.
+  shipmentTrackingNumbers: string, Obtains order returns with the specified tracking numbers. If this parameter is provided, createdStartDate, createdEndDate, shipmentType, shipmentStatus, shipmentState and acknowledged parameters must be not set. Note: if googleOrderId and shipmentTrackingNumber parameters are provided, the obtained results will include all order returns that either match the specified order id or the specified tracking number. (repeated)
+  shipmentTypes: string, Obtains order returns that match any shipment type provided in this parameter. When this parameter is not provided, order returns are obtained regardless of their shipment types. (repeated)
+      BY_MAIL - Return shipments with type `byMail` only.
+      RETURNLESS - Return shipments with type `returnless` only.
+      CONTACT_CUSTOMER_SUPPORT - Return shipments with type `contactCustomerSupport` only.
+  &quot;kind&quot;: &quot;A String&quot;, # Identifies what kind of resource this is. Value: the fixed string &quot;`content#orderreturnsListResponse`&quot;.
+    <code class="details" id="process">process(merchantId, returnId, body=None, x__xgafv=None)</code>
+  <pre>Processes return in your Merchant Center account.
+  &quot;fullChargeReturnShippingCost&quot;: True or False, # Option to charge the customer return shipping cost.
+  &quot;refundShippingFee&quot;: { # Refunds for original shipping fee.
+    &quot;fullRefund&quot;: True or False, # If true, the item will be fully refunded. Allowed only when payment_type is FOP. Merchant can choose this refund option to indicate the full remaining amount of corresponding object to be refunded to the customer through FOP.
+    &quot;partialRefund&quot;: { # If this is set, the item will be partially refunded. Merchant can choose this refund option to specify the customized amount that to be refunded to the customer.
+      &quot;priceAmount&quot;: { # The pre-tax or post-tax amount to be refunded, depending on the location of the order.
+      &quot;taxAmount&quot;: { # Tax amount to be refunded. Note: This has different meaning depending on the location of the order.
+    &quot;paymentType&quot;: &quot;A String&quot;, # The payment way of issuing refund. Default value is ORIGINAL_FOP if not set.
+    &quot;returnRefundReason&quot;: &quot;A String&quot;, # Code of the refund reason.
+  &quot;returnItems&quot;: [ # The list of items to return.
+      &quot;refund&quot;: { # Refunds the item.
+      &quot;reject&quot;: { # Rejects the item.
+        &quot;reason&quot;: &quot;A String&quot;, # The reason for the return.
+  &quot;kind&quot;: &quot;A String&quot;, # Identifies what kind of resource this is. Value: the fixed string &quot;`content#orderreturnsProcessResponse`&quot;.

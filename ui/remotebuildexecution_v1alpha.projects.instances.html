@@ -1,0 +1,45 @@
+<h1><a href="remotebuildexecution_v1alpha.html">Remote Build Execution API</a> . <a href="remotebuildexecution_v1alpha.projects.html">projects</a> . <a href="remotebuildexecution_v1alpha.projects.instances.html">instances</a></h1>
+  <code><a href="remotebuildexecution_v1alpha.projects.instances.workerpools.html">workerpools()</a></code>
+<p class="firstline">Returns the workerpools Resource.</p>
+<p class="firstline">Creates a new instance in the specified region. Returns a long running operation which contains an instance on completion. While the long running operation is in progress, any call to `GetInstance` returns an instance in state `CREATING`.</p>
+<p class="firstline">Deletes the specified instance. Returns a long running operation which contains a `google.protobuf.Empty` response on completion. Deleting an instance with worker pools in it will delete these worker pools.</p>
+<p class="firstline">Returns the specified instance.</p>
+<p class="firstline">Lists instances in a project.</p>
+  <code><a href="#patch">patch(name, body=None, loggingEnabled=None, name1=None, updateMask=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Updates the specified instance. Returns a long running operation which contains the updated instance in the response on completion.</p>
+  <pre>Creates a new instance in the specified region. Returns a long running operation which contains an instance on completion. While the long running operation is in progress, any call to `GetInstance` returns an instance in state `CREATING`.
+  parent: string, Resource name of the project containing the instance. Format: `projects/[PROJECT_ID]`. (required)
+{ # The request used for `CreateInstance`.
+  &quot;instance&quot;: { # Instance conceptually encapsulates all Remote Build Execution resources for remote builds. An instance consists of storage and compute resources (for example, `ContentAddressableStorage`, `ActionCache`, `WorkerPools`) used for running remote builds. All Remote Build Execution API calls are scoped to an instance. # Specifies the instance to create. The name in the instance, if specified in the instance, is ignored.
+    &quot;featurePolicy&quot;: { # FeaturePolicy defines features allowed to be used on RBE instances, as well as instance-wide behavior changes that take effect without opt-in or opt-out at usage time. # The policy to define whether or not RBE features can be used or how they can be used.
+      &quot;containerImageSources&quot;: { # Defines whether a feature can be used or what values are accepted. # Which container image sources are allowed. Currently only RBE-supported registry (gcr.io) is allowed. One can allow all repositories under a project or one specific repository only. E.g. container_image_sources { policy: RESTRICTED allowed_values: [ &quot;gcr.io/project-foo&quot;, &quot;gcr.io/project-bar/repo-baz&quot;, ] } will allow any repositories under &quot;gcr.io/project-foo&quot; plus the repository &quot;gcr.io/project-bar/repo-baz&quot;. Default (UNSPECIFIED) is equivalent to any source is allowed.
+        &quot;allowedValues&quot;: [ # A list of acceptable values. Only effective when the policy is `RESTRICTED`.
+        &quot;policy&quot;: &quot;A String&quot;, # The policy of the feature.
+      &quot;dockerAddCapabilities&quot;: { # Defines whether a feature can be used or what values are accepted. # Whether dockerAddCapabilities can be used or what capabilities are allowed.
+      &quot;dockerChrootPath&quot;: { # Defines whether a feature can be used or what values are accepted. # Whether dockerChrootPath can be used.
+      &quot;dockerNetwork&quot;: { # Defines whether a feature can be used or what values are accepted. # Whether dockerNetwork can be used or what network modes are allowed. E.g. one may allow `off` value only via `allowed_values`.
+      &quot;dockerPrivileged&quot;: { # Defines whether a feature can be used or what values are accepted. # Whether dockerPrivileged can be used.
+      &quot;dockerRunAsRoot&quot;: { # Defines whether a feature can be used or what values are accepted. # Whether dockerRunAsRoot can be used.
+      &quot;dockerRuntime&quot;: { # Defines whether a feature can be used or what values are accepted. # Whether dockerRuntime is allowed to be set or what runtimes are allowed. Note linux_isolation takes precedence, and if set, docker_runtime values may be rejected if they are incompatible with the selected isolation.
+      &quot;dockerSiblingContainers&quot;: { # Defines whether a feature can be used or what values are accepted. # Whether dockerSiblingContainers can be used.
+      &quot;linuxIsolation&quot;: &quot;A String&quot;, # linux_isolation allows overriding the docker runtime used for containers started on Linux.
+    &quot;location&quot;: &quot;A String&quot;, # The location is a GCP region. Currently only `us-central1` is supported.
+    &quot;loggingEnabled&quot;: True or False, # Output only. Whether stack driver logging is enabled for the instance.
+    &quot;name&quot;: &quot;A String&quot;, # Output only. Instance resource name formatted as: `projects/[PROJECT_ID]/instances/[INSTANCE_ID]`. Name should not be populated when creating an instance since it is provided in the `instance_id` field.
+    &quot;state&quot;: &quot;A String&quot;, # Output only. State of the instance.
+  &quot;instanceId&quot;: &quot;A String&quot;, # ID of the created instance. A valid `instance_id` must: be 6-50 characters long, contain only lowercase letters, digits, hyphens and underscores, start with a lowercase letter, and end with a lowercase letter or a digit.
+  &quot;parent&quot;: &quot;A String&quot;, # Resource name of the project containing the instance. Format: `projects/[PROJECT_ID]`.
+  <pre>Deletes the specified instance. Returns a long running operation which contains a `google.protobuf.Empty` response on completion. Deleting an instance with worker pools in it will delete these worker pools.
+  name: string, Name of the instance to delete. Format: `projects/[PROJECT_ID]/instances/[INSTANCE_ID]`. (required)
+  <pre>Returns the specified instance.
+  name: string, Name of the instance to retrieve. Format: `projects/[PROJECT_ID]/instances/[INSTANCE_ID]`. (required)
+    { # Instance conceptually encapsulates all Remote Build Execution resources for remote builds. An instance consists of storage and compute resources (for example, `ContentAddressableStorage`, `ActionCache`, `WorkerPools`) used for running remote builds. All Remote Build Execution API calls are scoped to an instance.
+  <pre>Lists instances in a project.
+  parent: string, Resource name of the project. Format: `projects/[PROJECT_ID]`. (required)
+  &quot;instances&quot;: [ # The list of instances in a given project.
+    <code class="details" id="patch">patch(name, body=None, loggingEnabled=None, name1=None, updateMask=None, x__xgafv=None)</code>
+  <pre>Updates the specified instance. Returns a long running operation which contains the updated instance in the response on completion.
+  name: string, Output only. Instance resource name formatted as: `projects/[PROJECT_ID]/instances/[INSTANCE_ID]`. Name should not be populated when creating an instance since it is provided in the `instance_id` field. (required)
+  loggingEnabled: boolean, Deprecated, use instance.logging_enabled instead. Whether to enable Stackdriver logging for this instance.
+  name1: string, Deprecated, use instance.Name instead. Name of the instance to update. Format: `projects/[PROJECT_ID]/instances/[INSTANCE_ID]`.
+  updateMask: string, The update mask applies to instance. For the `FieldMask` definition, see https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#fieldmask If an empty update_mask is provided, only the non-default valued field in the worker pool field will be updated. Note that in order to update a field to the default value (zero, false, empty string) an explicit update_mask must be provided.

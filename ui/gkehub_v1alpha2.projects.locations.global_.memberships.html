@@ -1,0 +1,10 @@
+<h1><a href="gkehub_v1alpha2.html">GKE Hub API</a> . <a href="gkehub_v1alpha2.projects.html">projects</a> . <a href="gkehub_v1alpha2.projects.locations.html">locations</a> . <a href="gkehub_v1alpha2.projects.locations.global_.html">global_</a> . <a href="gkehub_v1alpha2.projects.locations.global_.memberships.html">memberships</a></h1>
+  <code><a href="#initializeHub">initializeHub(project, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Initializes the Hub in this project, which includes creating the default Hub Service Account and the Hub Workload Identity Pool. Initialization is optional, and happens automatically when the first Membership is created. InitializeHub should be called when the first Membership cannot be registered without these resources. A common example is granting the Hub Service Account access to another project, which requires the account to exist first.</p>
+    <code class="details" id="initializeHub">initializeHub(project, body=None, x__xgafv=None)</code>
+  <pre>Initializes the Hub in this project, which includes creating the default Hub Service Account and the Hub Workload Identity Pool. Initialization is optional, and happens automatically when the first Membership is created. InitializeHub should be called when the first Membership cannot be registered without these resources. A common example is granting the Hub Service Account access to another project, which requires the account to exist first.
+  project: string, Required. The Hub to initialize, in the format `projects/*/locations/*/memberships/*`. (required)
+{ # Request message for the InitializeHub method.
+    { # Response message for the InitializeHub method.
+  &quot;serviceIdentity&quot;: &quot;A String&quot;, # Name of the Hub default service identity, in the format: service-@gcp-sa-gkehub.iam.gserviceaccount.com The service account has `roles/gkehub.serviceAgent` in the Hub project.
+  &quot;workloadIdentityPool&quot;: &quot;A String&quot;, # The Workload Identity Pool used for Workload Identity-enabled clusters registered with this Hub. Format: `.hub.id.goog`

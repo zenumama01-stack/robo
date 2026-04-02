@@ -1,0 +1,34 @@
+<h1><a href="paymentsresellersubscription_v1.html">Payments Reseller Subscription API</a> . <a href="paymentsresellersubscription_v1.partners.html">partners</a> . <a href="paymentsresellersubscription_v1.partners.promotions.html">promotions</a></h1>
+  <code><a href="#findEligible">findEligible(parent, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Currently, it is only enabled for **YouTube**. Finds eligible promotions for the current user. The API requires user authorization via OAuth. The bare minimum oauth scope `openid` is sufficient, which will skip the consent screen.</p>
+  <code><a href="#findEligible_next">findEligible_next()</a></code></p>
+<p class="firstline">Currently, it doesn't support **YouTube** promotions. Retrieves the promotions, such as free trial, that can be used by the partner. It should be authenticated with a service account.</p>
+    <code class="details" id="findEligible">findEligible(parent, body=None, x__xgafv=None)</code>
+  <pre>Currently, it is only enabled for **YouTube**. Finds eligible promotions for the current user. The API requires user authorization via OAuth. The bare minimum oauth scope `openid` is sufficient, which will skip the consent screen.
+{ # Request to find eligible promotions for the current user.
+  &quot;filter&quot;: &quot;A String&quot;, # Optional. Specifies the filters for the promotion results. The syntax is defined in https://google.aip.dev/160 with the following caveats: 1. Only the following features are supported: - Logical operator `AND` - Comparison operator `=` (no wildcards `*`) - Traversal operator `.` - Has operator `:` (no wildcards `*`) 2. Only the following fields are supported: - `applicableProducts` - `regionCodes` - `youtubePayload.partnerEligibilityId` - `youtubePayload.postalCode` 3. Unless explicitly mentioned above, other features are not supported. Example: `applicableProducts:partners/partner1/products/product1 AND regionCodes:US AND youtubePayload.postalCode=94043 AND youtubePayload.partnerEligibilityId=eligibility-id`
+  &quot;pageSize&quot;: 42, # Optional. The maximum number of promotions to return. The service may return fewer than this value. If unspecified, at most 50 promotions will be returned. The maximum value is 1000; values above 1000 will be coerced to 1000.
+  &quot;pageToken&quot;: &quot;A String&quot;, # Optional. A page token, received from a previous `FindEligiblePromotions` call. Provide this to retrieve the subsequent page. When paginating, all other parameters provided to `FindEligiblePromotions` must match the call that provided the page token.
+    { # Response containing the found promotions for the current user.
+  &quot;promotions&quot;: [ # The promotions for the current user.
+    { # A Promotion resource that defines a promotion for a subscription that can be resold.
+      &quot;applicableProducts&quot;: [ # Output only. The product ids this promotion can be applied to.
+      &quot;endTime&quot;: &quot;A String&quot;, # Optional. Specifies the end time (exclusive) of the period that the promotion is available in. If unset, the promotion is available indefinitely.
+      &quot;freeTrialDuration&quot;: { # Describes the length of a period of a time. # Optional. Specifies the duration of the free trial of the subscription when promotion_type is PROMOTION_TYPE_FREE_TRIAL
+      &quot;introductoryPricingDetails&quot;: { # The details of a introductory pricing promotion. # Optional. Specifies the introductory pricing details when the promotion_type is PROMOTION_TYPE_INTRODUCTORY_PRICING.
+        &quot;introductoryPricingSpecs&quot;: [ # Output only. Specifies the introductory pricing periods.
+          { # The duration of an introductory pricing promotion.
+            &quot;discountAmount&quot;: { # Describes the amount unit including the currency code. # Output only. The discount amount. The value is positive.
+            &quot;discountRatioMicros&quot;: &quot;A String&quot;, # Output only. The discount percentage in micros. For example, 50,000 represents 5%.
+            &quot;recurrenceCount&quot;: 42, # Output only. The duration of an introductory offer in billing cycles.
+      &quot;name&quot;: &quot;A String&quot;, # Identifier. Response only. Resource name of the subscription promotion. It will have the format of &quot;partners/{partner_id}/promotion/{promotion_id}&quot;
+      &quot;promotionType&quot;: &quot;A String&quot;, # Output only. Specifies the type of the promotion.
+      &quot;regionCodes&quot;: [ # Output only. 2-letter ISO region code where the promotion is available in. Ex. &quot;US&quot; Please refer to: https://en.wikipedia.org/wiki/ISO_3166-1
+      &quot;startTime&quot;: &quot;A String&quot;, # Optional. Specifies the start time (inclusive) of the period that the promotion is available in.
+      &quot;titles&quot;: [ # Output only. Localized human readable name of the promotion.
+    <code class="details" id="findEligible_next">findEligible_next()</code>
+  <pre>Currently, it doesn&#x27;t support **YouTube** promotions. Retrieves the promotions, such as free trial, that can be used by the partner. It should be authenticated with a service account.
+  filter: string, Optional. Specifies the filters for the promotion results. The syntax is defined in https://google.aip.dev/160 with the following caveats: 1. Only the following features are supported: - Logical operator `AND` - Comparison operator `=` (no wildcards `*`) - Traversal operator `.` - Has operator `:` (no wildcards `*`) 2. Only the following fields are supported: - `applicableProducts` - `regionCodes` - `youtubePayload.partnerEligibilityId` - `youtubePayload.postalCode` 3. Unless explicitly mentioned above, other features are not supported. Example: `applicableProducts:partners/partner1/products/product1 AND regionCodes:US AND youtubePayload.postalCode=94043 AND youtubePayload.partnerEligibilityId=eligibility-id`
+  pageSize: integer, Optional. The maximum number of promotions to return. The service may return fewer than this value. If unspecified, at most 50 promotions will be returned. The maximum value is 1000; values above 1000 will be coerced to 1000.
+    { # Response that contains the promotions.
+  &quot;promotions&quot;: [ # The promotions for the specified partner.

@@ -1,0 +1,118 @@
+<div class="search-panel-overlay" (click)="closePanel()">
+  <div class="search-panel" (click)="$event.stopPropagation()">
+    <!-- Search Header -->
+    <div class="search-header">
+          placeholder="Search conversations, messages, artifacts, collections, and tasks..."
+            class="clear-button"
+            title="Clear search"
+        class="close-button"
+        (click)="closePanel()"
+        title="Close (Esc)"
+    <div class="search-filters">
+          [class.active]="activeFilter === 'all'"
+          (click)="setFilter('all')"
+          [class.active]="activeFilter === 'conversations'"
+          (click)="setFilter('conversations')"
+          Conversations
+          [class.active]="activeFilter === 'messages'"
+          (click)="setFilter('messages')"
+          [class.active]="activeFilter === 'artifacts'"
+          (click)="setFilter('artifacts')"
+          Artifacts
+          [class.active]="activeFilter === 'collections'"
+          (click)="setFilter('collections')"
+          Collections
+          [class.active]="activeFilter === 'tasks'"
+          (click)="setFilter('tasks')"
+          <i class="fa-solid fa-tasks"></i>
+          Tasks
+      <!-- Date Range Filter -->
+      <div class="date-filter">
+        <kendo-daterange>
+          <kendo-dateinput
+            kendoDateRangeStartInput
+            [(value)]="dateRange.start"
+            (valueChange)="onDateRangeChange()"
+          ></kendo-dateinput>
+            kendoDateRangeEndInput
+            [(value)]="dateRange.end"
+        </kendo-daterange>
+        @if (dateRange.start || dateRange.end) {
+            class="clear-date-button"
+            (click)="clearDateRange()"
+            title="Clear date range"
+    <!-- Search Results -->
+    <div class="search-results">
+      @if (isSearching) {
+        <div class="search-loading">
+          <mj-loading text="Searching..." size="medium"></mj-loading>
+      } @else if (!searchQuery) {
+        <!-- Recent Searches -->
+        @if (recentSearches.length > 0) {
+          <div class="recent-searches">
+            <div class="recent-searches-header">
+              <h3>Recent Searches</h3>
+                class="clear-recent-button"
+                (click)="clearRecentSearches()"
+                title="Clear recent searches"
+            <div class="recent-searches-list">
+              @for (search of recentSearches; track search) {
+                  class="recent-search-item"
+                  (click)="useRecentSearch(search)"
+                  <span>{{ search }}</span>
+          <p>Search across all your conversations, messages, artifacts, collections, and tasks</p>
+          <div class="search-tips">
+            <h4>Tips:</h4>
+              <li>Use filters to narrow results</li>
+              <li>Set date range to find recent content</li>
+              <li>Use keyboard shortcuts to navigate</li>
+      } @else if (results.total === 0) {
+        <!-- No Results -->
+          <i class="fa-solid fa-search-minus empty-icon"></i>
+          <p>No results found for "{{ searchQuery }}"</p>
+          <p class="no-results-hint">Try adjusting your filters or search terms</p>
+          Found {{ results.total }} result{{ results.total === 1 ? '' : 's' }}
+        <!-- Conversations Results -->
+        @if (results.conversations.length > 0) {
+          <div class="results-group">
+            <h3 class="results-group-title">
+              Conversations ({{ results.conversations.length }})
+            <div class="results-list">
+              @for (result of results.conversations; track result.id) {
+                  [class.selected]="isResultSelected(result)"
+                  (click)="selectResult(result)"
+                    <i class="fa-solid" [class]="getResultIcon(result.type)"></i>
+                    <div class="result-title" [innerHTML]="highlightMatch(result.title, searchQuery)"></div>
+                    <div class="result-preview" [innerHTML]="highlightMatch(result.preview, searchQuery)"></div>
+                    @if (result.matchedText) {
+                      <div class="result-match" [innerHTML]="highlightMatch(result.matchedText, searchQuery)"></div>
+                  <div class="result-meta">
+                    <span class="result-date">{{ formatDate(result.createdAt) }}</span>
+        <!-- Messages Results -->
+        @if (results.messages.length > 0) {
+              Messages ({{ results.messages.length }})
+              @for (result of results.messages; track result.id) {
+                    @if (result.conversationName) {
+                      <div class="result-conversation">
+                        {{ result.conversationName }}
+        <!-- Artifacts Results -->
+        @if (results.artifacts.length > 0) {
+              Artifacts ({{ results.artifacts.length }})
+              @for (result of results.artifacts; track result.id) {
+                    @if (result.artifactType) {
+                      <div class="result-type">
+                        <span class="type-badge">{{ result.artifactType }}</span>
+        <!-- Collections Results -->
+        @if (results.collections.length > 0) {
+              Collections ({{ results.collections.length }})
+              @for (result of results.collections; track result.id) {
+        <!-- Tasks Results -->
+        @if (results.tasks.length > 0) {
+              Tasks ({{ results.tasks.length }})
+              @for (result of results.tasks; track result.id) {
+    <!-- Footer with keyboard hints -->
+    <div class="search-footer">
+      <div class="keyboard-hints">
+        <span class="hint"><kbd>↑</kbd><kbd>↓</kbd> Navigate</span>
+        <span class="hint"><kbd>↵</kbd> Select</span>
+        <span class="hint"><kbd>Esc</kbd> Close</span>

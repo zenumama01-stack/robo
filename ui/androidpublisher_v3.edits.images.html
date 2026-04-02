@@ -1,0 +1,44 @@
+<h1><a href="androidpublisher_v3.html">Google Play Android Developer API</a> . <a href="androidpublisher_v3.edits.html">edits</a> . <a href="androidpublisher_v3.edits.images.html">images</a></h1>
+  <code><a href="#delete">delete(packageName, editId, language, imageType, imageId, x__xgafv=None)</a></code></p>
+<p class="firstline">Deletes the image (specified by id) from the edit.</p>
+  <code><a href="#deleteall">deleteall(packageName, editId, language, imageType, x__xgafv=None)</a></code></p>
+<p class="firstline">Deletes all images for the specified language and image type. Returns an empty response if no images are found.</p>
+  <code><a href="#list">list(packageName, editId, language, imageType, x__xgafv=None)</a></code></p>
+<p class="firstline">Lists all images. The response may be empty.</p>
+  <code><a href="#upload">upload(packageName, editId, language, imageType, media_body=None, media_mime_type=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Uploads an image of the specified language and image type, and adds to the edit.</p>
+    <code class="details" id="delete">delete(packageName, editId, language, imageType, imageId, x__xgafv=None)</code>
+  <pre>Deletes the image (specified by id) from the edit.
+  language: string, Language localization code (a BCP-47 language tag; for example, &quot;de-AT&quot; for Austrian German). (required)
+  imageType: string, Type of the Image. (required)
+      appImageTypeUnspecified - Unspecified type. Do not use.
+      phoneScreenshots - Phone screenshot.
+      sevenInchScreenshots - Seven inch screenshot.
+      tenInchScreenshots - Ten inch screenshot.
+      tvScreenshots - TV screenshot.
+      wearScreenshots - Wear screenshot.
+      icon - Icon.
+      featureGraphic - Feature graphic.
+      tvBanner - TV banner.
+  imageId: string, Unique identifier an image within the set of images attached to this edit. (required)
+    <code class="details" id="deleteall">deleteall(packageName, editId, language, imageType, x__xgafv=None)</code>
+  <pre>Deletes all images for the specified language and image type. Returns an empty response if no images are found.
+  language: string, Language localization code (a BCP-47 language tag; for example, &quot;de-AT&quot; for Austrian German). Providing a language that is not supported by the App is a no-op. (required)
+  imageType: string, Type of the Image. Providing an image type that refers to no images is a no-op. (required)
+    { # Response for deleting all images.
+  &quot;deleted&quot;: [ # The deleted images.
+    { # An uploaded image. The resource for ImagesService.
+      &quot;id&quot;: &quot;A String&quot;, # A unique id representing this image.
+      &quot;sha1&quot;: &quot;A String&quot;, # A sha1 hash of the image.
+      &quot;sha256&quot;: &quot;A String&quot;, # A sha256 hash of the image.
+      &quot;url&quot;: &quot;A String&quot;, # A URL that will serve a preview of the image.
+    <code class="details" id="list">list(packageName, editId, language, imageType, x__xgafv=None)</code>
+  <pre>Lists all images. The response may be empty.
+  language: string, Language localization code (a BCP-47 language tag; for example, &quot;de-AT&quot; for Austrian German). There must be a store listing for the specified language. (required)
+  imageType: string, Type of the Image. Providing an image type that refers to no images will return an empty response. (required)
+    { # Response listing all images.
+  &quot;images&quot;: [ # All listed Images.
+    <code class="details" id="upload">upload(packageName, editId, language, imageType, media_body=None, media_mime_type=None, x__xgafv=None)</code>
+  <pre>Uploads an image of the specified language and image type, and adds to the edit.
+    { # Response for uploading an image.
+  &quot;image&quot;: { # An uploaded image. The resource for ImagesService. # The uploaded image.

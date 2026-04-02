@@ -1,0 +1,27 @@
+<h1><a href="networkmanagement_v1.html">Network Management API</a> . <a href="networkmanagement_v1.projects.html">projects</a> . <a href="networkmanagement_v1.projects.locations.html">locations</a> . <a href="networkmanagement_v1.projects.locations.networkMonitoringProviders.html">networkMonitoringProviders</a> . <a href="networkmanagement_v1.projects.locations.networkMonitoringProviders.networkPaths.html">networkPaths</a></h1>
+<p class="firstline">Gets the NetworkPath resource.</p>
+<p class="firstline">Lists NetworkPaths for a given network monitoring provider.</p>
+  <pre>Gets the NetworkPath resource.
+  name: string, Required. Name of the resource. Format: projects/{project}/locations/{location}/networkMonitoringProviders/{network_monitoring_provider}/networkPaths/{network_path} (required)
+    { # Message describing NetworkPath resource.
+  &quot;createTime&quot;: &quot;A String&quot;, # Output only. The time the NetworkPath was created.
+  &quot;destination&quot;: &quot;A String&quot;, # Output only. IP address or hostname of the network path destination.
+  &quot;destinationGeoLocation&quot;: { # The geographical location of the MonitoringPoint. # Output only. Geographical location of the destination MonitoringPoint. ;
+  &quot;displayName&quot;: &quot;A String&quot;, # Output only. The display name of the network path.
+  &quot;dualEnded&quot;: True or False, # Output only. Indicates if the network path is dual ended. When true, the network path is measured both: from both source to destination, and from destination to source. When false, the network path is measured from the source through the destination back to the source (round trip measurement).
+  &quot;monitoringEnabled&quot;: True or False, # Output only. Is monitoring enabled for the network path.
+  &quot;monitoringPolicyDisplayName&quot;: &quot;A String&quot;, # Output only. Display name of the monitoring policy.
+  &quot;monitoringPolicyId&quot;: &quot;A String&quot;, # Output only. ID of monitoring policy.
+  &quot;monitoringStatus&quot;: &quot;A String&quot;, # Output only. The monitoring status of the network path.
+  &quot;name&quot;: &quot;A String&quot;, # Identifier. Name of the resource. Format: `projects/{project}/locations/{location}/networkMonitoringProviders/{network_monitoring_provider}/networkPaths/{network_path}`
+  &quot;networkProtocol&quot;: &quot;A String&quot;, # Output only. The network protocol of the network path.
+  &quot;providerTags&quot;: [ # Output only. The provider tags of the network path.
+  &quot;providerUiUri&quot;: &quot;A String&quot;, # Output only. Link to provider&#x27;s UI; link shows the NetworkPath.
+  &quot;sourceMonitoringPointId&quot;: &quot;A String&quot;, # Output only. Provider&#x27;s UUID of the source MonitoringPoint. This id may not point to a resource in the GCP.
+  &quot;updateTime&quot;: &quot;A String&quot;, # Output only. The time the NetworkPath was updated.
+  <pre>Lists NetworkPaths for a given network monitoring provider.
+  parent: string, Required. Parent value for ListNetworkPathsRequest. Format: projects/{project}/locations/{location}/networkMonitoringProviders/{network_monitoring_provider} (required)
+  pageSize: integer, Optional. The maximum number of network paths to return. The service may return fewer than this value. If unspecified, at most 20 network pathswill be returned. The maximum value is 1000; values above 1000 will be coerced to 1000.
+  pageToken: string, Optional. A page token, received from a previous `ListNetworkPaths` call. Provide this to retrieve the subsequent page. When paginating, all other parameters provided to `ListNetworkPaths` must match the call that provided the page token.
+    { # Message for response to listing NetworkPaths
+  &quot;networkPaths&quot;: [ # The list of NetworkPath

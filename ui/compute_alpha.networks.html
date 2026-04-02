@@ -1,0 +1,268 @@
+<h1><a href="compute_alpha.html">Compute Engine API</a> . <a href="compute_alpha.networks.html">networks</a></h1>
+  <code><a href="#addPeering">addPeering(project, network, body=None, requestId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Adds a peering to the specified network.</p>
+  <code><a href="#cancelRequestRemovePeering">cancelRequestRemovePeering(project, network, body=None, requestId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Cancel requests to remove a peering from the specified network. Applicable</p>
+  <code><a href="#delete">delete(project, network, requestId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Deletes the specified network.</p>
+  <code><a href="#get">get(project, network, x__xgafv=None)</a></code></p>
+<p class="firstline">Returns the specified network.</p>
+  <code><a href="#getEffectiveFirewalls">getEffectiveFirewalls(project, network, x__xgafv=None)</a></code></p>
+<p class="firstline">Returns the effective firewalls on a given network.</p>
+<p class="firstline">Creates a network in the specified project using the data included</p>
+<p class="firstline">Retrieves the list of networks available to the specified project.</p>
+  <code><a href="#listIpAddresses">listIpAddresses(project, network, filter=None, maxResults=None, orderBy=None, pageToken=None, returnPartialSuccess=None, types=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Lists the internal IP addresses in the specified network.</p>
+  <code><a href="#listIpAddresses_next">listIpAddresses_next()</a></code></p>
+  <code><a href="#listIpOwners">listIpOwners(project, network, filter=None, ipCidrRange=None, maxResults=None, orderBy=None, ownerProjects=None, ownerTypes=None, pageToken=None, returnPartialSuccess=None, subnetName=None, subnetRegion=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Lists the internal IP owners in the specified network.</p>
+  <code><a href="#listIpOwners_next">listIpOwners_next()</a></code></p>
+  <code><a href="#listPeeringRoutes">listPeeringRoutes(project, network, direction=None, filter=None, maxResults=None, orderBy=None, pageToken=None, peeringName=None, region=None, returnPartialSuccess=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Lists the peering routes exchanged over peering connection.</p>
+  <code><a href="#listPeeringRoutes_next">listPeeringRoutes_next()</a></code></p>
+  <code><a href="#patch">patch(project, network, body=None, requestId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Patches the specified network with the data included in the request.</p>
+  <code><a href="#removePeering">removePeering(project, network, body=None, requestId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Removes a peering from the specified network.</p>
+  <code><a href="#requestRemovePeering">requestRemovePeering(project, network, body=None, requestId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Requests to remove a peering from the specified network. Applicable only</p>
+  <code><a href="#switchToCustomMode">switchToCustomMode(project, network, requestId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Switches the network mode from auto subnet mode to custom subnet mode.</p>
+  <code><a href="#updatePeering">updatePeering(project, network, body=None, requestId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Updates the specified network peering with the data included in the</p>
+    <code class="details" id="addPeering">addPeering(project, network, body=None, requestId=None, x__xgafv=None)</code>
+  <pre>Adds a peering to the specified network.
+  network: string, Name of the network resource to add peering to. (required)
+  &quot;autoCreateRoutes&quot;: True or False, # This field will be deprecated soon. Useexchange_subnet_routes in network_peering
+      # Indicates whether full mesh connectivity is created and managed
+      # automatically between peered networks. Currently this field should always
+      # be true since Google Compute Engine will automatically create and manage
+      # subnetwork routes between two networks when peering state isACTIVE.
+  &quot;exportCustomRoutes&quot;: True or False, # This field will be deprecated soon. Useexport_custom_routes in network_peering instead.
+      # Whether to export the custom routes to peer network.
+  &quot;importCustomRoutes&quot;: True or False, # This field will be deprecated soon. Useimport_custom_routes in network_peering instead.
+      # Whether to import the custom routes from peer network.
+  &quot;name&quot;: &quot;A String&quot;, # Name of the peering, which should conform to RFC1035.
+  &quot;networkPeering&quot;: { # A network peering attached to a network resource. The message includes the # Network peering parameters.
+      # In order to specify route policies for peering using import and export
+      # custom routes, you must specify all peering related parameters
+      # (name, peer network,exchange_subnet_routes) in the network_peering
+      # The corresponding fields in NetworksAddPeeringRequest will be
+      # deprecated soon.
+      # peering name, peer network, peering state, and a flag indicating whether
+      # Google Compute Engine should automatically create routes for the peering.
+    &quot;advertisePeerSubnetsViaRouters&quot;: True or False, # Whether Cloud Routers in this network can automatically advertise subnets
+        # from the peer network.
+    &quot;autoCreateRoutes&quot;: True or False, # This field will be deprecated soon. Use theexchange_subnet_routes field instead.
+    &quot;connectionStatus&quot;: { # [Output Only] Describes the state of a peering connection, not just the # Output only. [Output Only] The effective state of the peering connection
+        # as a whole.
+        # local peering. This field provides information about the effective settings
+        # for the connection as a whole, including pending delete/update requests for
+        # CONSENSUS peerings.
+      &quot;consensusState&quot;: { # The status of update/delete for a consensus peering connection. Only set # The consensus state contains information about the status of update
+          # and delete for a consensus peering connection.
+          # when connection_status.update_strategy isCONSENSUS or a network peering is proposing to update the
+          # strategy to CONSENSUS.
+        &quot;deleteStatus&quot;: &quot;A String&quot;, # The status of the delete request.
+        &quot;updateStatus&quot;: &quot;A String&quot;, # The status of the update request.
+      &quot;trafficConfiguration&quot;: { # The active connectivity settings for the peering connection based on the
+          # settings of the network peerings.
+        &quot;exportCustomRoutesToPeer&quot;: True or False, # Whether custom routes are being exported to the peer network.
+        &quot;exportSubnetRoutesWithPublicIpToPeer&quot;: True or False, # Whether subnet routes with public IP ranges are being exported to the
+            # peer network.
+        &quot;importCustomRoutesFromPeer&quot;: True or False, # Whether custom routes are being imported from the peer network.
+        &quot;importSubnetRoutesWithPublicIpFromPeer&quot;: True or False, # Whether subnet routes with public IP ranges are being imported
+        &quot;stackType&quot;: &quot;A String&quot;, # Which IP version(s) of traffic and routes are being imported or
+            # exported between peer networks.
+      &quot;updateStrategy&quot;: &quot;A String&quot;, # The update strategy determines the update/delete semantics for this
+          # peering connection.
+    &quot;exchangeSubnetRoutes&quot;: True or False, # Indicates whether full mesh connectivity is created and managed
+    &quot;exportCustomRoutes&quot;: True or False, # Whether to export the custom routes to peer network. The default value is
+        # false.
+    &quot;exportSubnetRoutesWithPublicIp&quot;: True or False, # Whether subnet routes with public IP range are exported. The default value
+        # is true, all subnet routes are exported.IPv4
+        # special-use ranges are always
+        # exported to peers and are not controlled by this field.
+    &quot;importCustomRoutes&quot;: True or False, # Whether to import the custom routes from peer network. The default value is
+    &quot;importSubnetRoutesWithPublicIp&quot;: True or False, # Whether subnet routes with public IP range are imported. The default value
+        # is false.IPv4
+        # imported from peers and are not controlled by this field.
+    &quot;name&quot;: &quot;A String&quot;, # Name of this peering. Provided by the client when the peering is created.
+        # The name must comply withRFC1035.
+        # Specifically, the name must be 1-63 characters long and match regular
+        # expression `[a-z]([-a-z0-9]*[a-z0-9])?`. The first character must be a
+        # lowercase letter, and all the following characters must be a dash,
+    &quot;network&quot;: &quot;A String&quot;, # The URL of the peer network. It can be either full URL or partial URL. The
+        # peer network may belong to a different project. If the partial URL does not
+        # contain project, it is assumed that the peer network is in the same project
+        # as the current network.
+    &quot;peerMtu&quot;: 42, # Output only. [Output Only] Maximum Transmission Unit in bytes of the peer network.
+    &quot;stackType&quot;: &quot;A String&quot;, # Which IP version(s) of traffic and routes are allowed to be imported or
+        # exported between peer networks. The default value is IPV4_ONLY.
+    &quot;state&quot;: &quot;A String&quot;, # Output only. [Output Only] State for the peering.
+    &quot;stateDetails&quot;: &quot;A String&quot;, # Output only. [Output Only] Details about the current state of the peering.
+    &quot;updateStrategy&quot;: &quot;A String&quot;, # The update strategy determines the semantics for updates and deletes to the
+        # peering connection configuration.
+  &quot;peerNetwork&quot;: &quot;A String&quot;, # URL of the peer network.  It can be either full URL or partial URL. The
+    <code class="details" id="cancelRequestRemovePeering">cancelRequestRemovePeering(project, network, body=None, requestId=None, x__xgafv=None)</code>
+  <pre>Cancel requests to remove a peering from the specified network. Applicable
+only for PeeringConnection with update_strategy=CONSENSUS.  Cancels a
+request to remove a peering from the specified network.
+  network: string, Name of the network resource to remove peering from. (required)
+    <code class="details" id="delete">delete(project, network, requestId=None, x__xgafv=None)</code>
+  <pre>Deletes the specified network.
+  network: string, Name of the network to delete. (required)
+    <code class="details" id="get">get(project, network, x__xgafv=None)</code>
+  <pre>Returns the specified network.
+  network: string, Name of the network to return. (required)
+    { # Represents a VPC Network resource.
+    # Networks connect resources to each other and to the internet. For more
+    # information, readVirtual Private Cloud (VPC) Network.
+  &quot;IPv4Range&quot;: &quot;A String&quot;, # Deprecated in favor of subnet mode networks.
+      # The range of internal addresses that are legal on this network. This
+      # range is aCIDR specification, for example:192.168.0.0/16. Provided by the client when the network is
+  &quot;autoCreateSubnetworks&quot;: True or False, # Must be set to create a VPC network. If not set, a legacy network is
+      # When set to true, the VPC network is created in auto mode.
+      # When set to false, the VPC network is created in custom mode.
+      # An auto mode VPC network starts with one subnet per region. Each subnet
+      # has a predetermined range as described inAuto mode VPC network IP ranges.
+      # For custom mode VPC networks, you can add subnets using the subnetworksinsert
+  &quot;enableUlaInternalIpv6&quot;: True or False, # Enable ULA internal ipv6 on this network. Enabling this feature will assign
+      # a /48 from google defined ULA prefix fd20::/20.
+      # .
+  &quot;firewallPolicy&quot;: &quot;A String&quot;, # Output only. [Output Only] URL of the firewall policy the network is associated with.
+  &quot;gatewayIPv4&quot;: &quot;A String&quot;, # [Output Only] The gateway address for default routing out of the network,
+      # selected by Google Cloud.
+  &quot;internalIpv6Range&quot;: &quot;A String&quot;, # When enabling ula internal ipv6, caller optionally can specify the /48
+      # range they want from the google defined ULA prefix fd20::/20. The input
+      # must be a valid /48 ULA IPv6 address and must be within the fd20::/20.
+      # Operation will fail if the speficied /48 is already in used by another
+      # resource. If the field is not speficied, then a /48 range will be randomly
+      # allocated from fd20::/20 and returned via this field.
+  &quot;kind&quot;: &quot;compute#network&quot;, # Output only. [Output Only] Type of the resource. Always compute#network for
+      # networks.
+  &quot;mtu&quot;: 42, # Maximum Transmission Unit in bytes.
+      # The minimum value for this field is 1300 and the maximum value is 8896.
+      # The suggested value is 1500, which is the default MTU used on the
+      # Internet, or 8896 if you want to use Jumbo frames. If unspecified, the
+      # value defaults to 1460.
+      # lowercase letter, and all following characters (except for the last
+      # character) must be a dash, lowercase letter, or digit. The last character
+      # must be a lowercase letter or digit.
+  &quot;networkFirewallPolicyEnforcementOrder&quot;: &quot;A String&quot;, # The network firewall policy enforcement order. Can be either
+      # AFTER_CLASSIC_FIREWALL or BEFORE_CLASSIC_FIREWALL. Defaults to
+      # AFTER_CLASSIC_FIREWALL if the field is not specified.
+  &quot;networkProfile&quot;: &quot;A String&quot;, # A full or partial URL of the network profile to apply to this network.
+      # This field can be set only at resource creation time. For example, the
+      #    - https://www.googleapis.com/compute/{api_version}/projects/{project_id}/global/networkProfiles/{network_profile_name}
+      #    - projects/{project_id}/global/networkProfiles/{network_profile_name}
+  &quot;params&quot;: { # Additional network parameters. # Input only. [Input Only] Additional params passed with the request, but not persisted
+  &quot;peerings&quot;: [ # Output only. [Output Only] A list of network peerings for the resource.
+    { # A network peering attached to a network resource. The message includes the
+  &quot;region&quot;: &quot;A String&quot;, # Output only. [Output Only] URL of the region where the regional network resides.
+      # This field is not applicable to global network.
+  &quot;routingConfig&quot;: { # A routing configuration attached to a network resource. The message # The network-level routing configuration for this network.  Used by Cloud
+      # Router to determine what type of network-wide routing behavior to enforce.
+      # includes the list of routers associated with the network, and a flag
+      # indicating the type of routing behavior to enforce network-wide.
+    &quot;bgpAlwaysCompareMed&quot;: True or False, # Enable comparison of Multi-Exit Discriminators (MED) across routes with
+        # different neighbor ASNs when using the STANDARD BGP best path selection
+        # algorithm.
+    &quot;bgpBestPathSelectionMode&quot;: &quot;A String&quot;, # The BGP best path selection algorithm to be employed within this network
+        # for dynamic routes learned by Cloud Routers. Can be LEGACY
+        # (default) or STANDARD.
+    &quot;bgpInterRegionCost&quot;: &quot;A String&quot;, # Allows to define a preferred approach for handling inter-region cost in
+        # the selection process when using the STANDARD BGP best path
+        # selection algorithm. Can be DEFAULT orADD_COST_TO_MED.
+    &quot;effectiveBgpAlwaysCompareMed&quot;: True or False, # Output only. [Output Only] Effective value of the bgp_always_compare_med
+    &quot;effectiveBgpInterRegionCost&quot;: &quot;A String&quot;, # Output only. [Output Only] Effective value of the bgp_inter_region_cost
+    &quot;routingMode&quot;: &quot;A String&quot;, # The network-wide routing mode to use. If set to REGIONAL,
+        # this network&#x27;s Cloud Routers will only advertise routes with subnets
+        # of this network in the same region as the router. If set toGLOBAL, this network&#x27;s Cloud Routers will advertise
+        # routes with all subnets of this network, across regions.
+  &quot;subnetworks&quot;: [ # [Output Only] Server-defined fully-qualified URLs for all subnetworks
+      # in this VPC network.
+    <code class="details" id="getEffectiveFirewalls">getEffectiveFirewalls(project, network, x__xgafv=None)</code>
+  <pre>Returns the effective firewalls on a given network.
+  network: string, Name of the network for this request. (required)
+  &quot;firewallPolicys&quot;: [ # [Output Only] Effective firewalls from firewall policy. It returns Global
+      # Network Firewall Policies and Hierarchical Firewall Policies. UseregionNetworkFirewallPolicies.getEffectiveFirewalls to get
+      # Regional Network Firewall Policies as well.
+      &quot;packetMirroringRules&quot;: [ # Output only. [Output Only] The packet mirroring rules that apply to the network.
+      &quot;rules&quot;: [ # [Output Only] The rules that apply to the network.
+      &quot;type&quot;: &quot;A String&quot;, # Output only. [Output Only] The type of the firewall policy.
+  &quot;firewalls&quot;: [ # Effective firewalls on the network.
+      &quot;id&quot;: &quot;A String&quot;, # Output only. [Output Only] The unique identifier for the security policy. This
+  <pre>Creates a network in the specified project using the data included
+  <pre>Retrieves the list of networks available to the specified project.
+    { # Contains a list of networks.
+  &quot;items&quot;: [ # A list of Network resources.
+  &quot;kind&quot;: &quot;compute#networkList&quot;, # Output only. [Output Only] Type of resource. Always compute#networkList for
+      # lists of networks.
+    <code class="details" id="listIpAddresses">listIpAddresses(project, network, filter=None, maxResults=None, orderBy=None, pageToken=None, returnPartialSuccess=None, types=None, x__xgafv=None)</code>
+  <pre>Lists the internal IP addresses in the specified network.
+  types: string, (Optional) types filter separate by comma, valid values are: SUBNETWORK,
+RESERVED, PEER_USED, PEER_RESERVED, REMOTE_USED, REMOTE_RESERVED.
+  &quot;items&quot;: [ # A list of InternalIpAddress resources.
+      &quot;cidr&quot;: &quot;A String&quot;, # IP CIDR address or range.
+      &quot;owner&quot;: &quot;A String&quot;, # The owner of the internal IP address.
+      &quot;purpose&quot;: &quot;A String&quot;, # The purpose of the internal IP address if applicable.
+      &quot;region&quot;: &quot;A String&quot;, # The region of the internal IP address if applicable.
+      &quot;type&quot;: &quot;A String&quot;, # The type of the internal IP address.
+  &quot;kind&quot;: &quot;compute#ipAddressesList&quot;, # Output only. [Output Only] Type of resource. Always compute#ipAddressesList
+      # for IP addresses lists.
+    <code class="details" id="listIpAddresses_next">listIpAddresses_next()</code>
+    <code class="details" id="listIpOwners">listIpOwners(project, network, filter=None, ipCidrRange=None, maxResults=None, orderBy=None, ownerProjects=None, ownerTypes=None, pageToken=None, returnPartialSuccess=None, subnetName=None, subnetRegion=None, x__xgafv=None)</code>
+  <pre>Lists the internal IP owners in the specified network.
+  ipCidrRange: string, (Optional) IP CIDR range filter, example: &quot;10.128.10.0/30&quot;.
+  ownerProjects: string, (Optional) Project IDs filter, example: &quot;project-1,project-2&quot;.
+  ownerTypes: string, (Optional) Owner types filter, example: &quot;instance,forwardingRule&quot;.
+  subnetName: string, (Optional) Subnetwork name filter.
+  subnetRegion: string, (Optional) Subnetwork region filter.
+    { # Contains a list of IP owners.
+  &quot;items&quot;: [ # A list of InternalIpOwner resources.
+      &quot;ipCidrRange&quot;: &quot;A String&quot;, # IP CIDR range being owned.
+      &quot;owners&quot;: [ # URLs of the IP owners of the IP CIDR range.
+      &quot;systemOwned&quot;: True or False, # Whether this IP CIDR range is reserved for system use.
+  &quot;kind&quot;: &quot;compute#ipOwnerList&quot;, # Output only. [Output Only] Type of resource. Always compute#ipOwnerList for
+      # lists of IP owners.
+    <code class="details" id="listIpOwners_next">listIpOwners_next()</code>
+    <code class="details" id="listPeeringRoutes">listPeeringRoutes(project, network, direction=None, filter=None, maxResults=None, orderBy=None, pageToken=None, peeringName=None, region=None, returnPartialSuccess=None, x__xgafv=None)</code>
+  <pre>Lists the peering routes exchanged over peering connection.
+  direction: string, The direction of the exchanged routes.
+      INCOMING - For routes exported from peer network.
+      OUTGOING - For routes exported from local network.
+  peeringName: string, The response will show routes exchanged over the given peering connection.
+  region: string, The region of the request. The response will include all subnet routes,
+static routes and dynamic routes in the region.
+  &quot;items&quot;: [ # A list of ExchangedPeeringRoute resources.
+      &quot;destRange&quot;: &quot;A String&quot;, # The destination range of the route.
+      &quot;imported&quot;: True or False, # True if the peering route has been imported from a peer. The actual import
+          # happens if the field networkPeering.importCustomRoutes is true
+          # for this network, and networkPeering.exportCustomRoutes is
+          # true for the peer network, and the import does not result in a route
+          # conflict.
+      &quot;nextHopRegion&quot;: &quot;A String&quot;, # The region of peering route next hop, only applies to dynamic routes.
+      &quot;priority&quot;: 42, # The priority of the peering route.
+      &quot;type&quot;: &quot;A String&quot;, # The type of the peering route.
+  &quot;kind&quot;: &quot;compute#exchangedPeeringRoutesList&quot;, # Output only. [Output Only] Type of resource. Alwayscompute#exchangedPeeringRoutesList for exchanged peering
+      # routes lists.
+    <code class="details" id="listPeeringRoutes_next">listPeeringRoutes_next()</code>
+    <code class="details" id="patch">patch(project, network, body=None, requestId=None, x__xgafv=None)</code>
+  <pre>Patches the specified network with the data included in the request.
+Only routingConfig can be modified.
+  network: string, Name of the network to update. (required)
+    <code class="details" id="removePeering">removePeering(project, network, body=None, requestId=None, x__xgafv=None)</code>
+  <pre>Removes a peering from the specified network.
+    <code class="details" id="requestRemovePeering">requestRemovePeering(project, network, body=None, requestId=None, x__xgafv=None)</code>
+  <pre>Requests to remove a peering from the specified network. Applicable only
+for PeeringConnection with update_strategy=CONSENSUS.
+    <code class="details" id="switchToCustomMode">switchToCustomMode(project, network, requestId=None, x__xgafv=None)</code>
+  <pre>Switches the network mode from auto subnet mode to custom subnet mode.
+  network: string, Name of the network to be updated. (required)
+    <code class="details" id="updatePeering">updatePeering(project, network, body=None, requestId=None, x__xgafv=None)</code>
+  <pre>Updates the specified network peering with the data included in the
+request. You can only modify the NetworkPeering.export_custom_routes field
+and the NetworkPeering.import_custom_routes field.
+  network: string, Name of the network resource which the updated peering is belonging to. (required)
+  &quot;networkPeering&quot;: { # A network peering attached to a network resource. The message includes the

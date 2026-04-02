@@ -1,0 +1,52 @@
+<h1><a href="tpu_v2alpha1.html">Cloud TPU API</a> . <a href="tpu_v2alpha1.projects.html">projects</a> . <a href="tpu_v2alpha1.projects.locations.html">locations</a> . <a href="tpu_v2alpha1.projects.locations.queuedResources.html">queuedResources</a></h1>
+  <code><a href="#getMaintenanceInfo">getMaintenanceInfo(name, x__xgafv=None)</a></code></p>
+<p class="firstline">Gets the maintenance info for a queued resource.</p>
+  <code><a href="#performMaintenanceQueuedResource">performMaintenanceQueuedResource(name, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Perform manual maintenance on specific nodes of a QueuedResource.</p>
+  &quot;bestEffort&quot;: { # BestEffort tier definition. # The BestEffort tier.
+  &quot;guaranteed&quot;: { # Guaranteed tier definition. # The Guaranteed tier.
+    &quot;reserved&quot;: True or False, # Optional. Specifies the request should be scheduled on reserved capacity.
+  &quot;provisioningModel&quot;: &quot;A String&quot;, # Optional. The provisioning model for the resource.
+  &quot;queueingPolicy&quot;: { # Defines the policy of the QueuedRequest. # The queueing policy of the QueuedRequest.
+    &quot;validAfterDuration&quot;: &quot;A String&quot;, # A relative time after which resources may be created.
+    &quot;validAfterTime&quot;: &quot;A String&quot;, # An absolute time at which resources may be created.
+    &quot;validInterval&quot;: { # Represents a time interval, encoded as a Timestamp start (inclusive) and a Timestamp end (exclusive). The start must be less than or equal to the end. When the start equals the end, the interval is empty (matches no time). When both start and end are unspecified, the interval matches any time. # An absolute time interval within which resources may be created.
+    &quot;validUntilDuration&quot;: &quot;A String&quot;, # A relative time after which resources should not be created. If the request cannot be fulfilled by this time the request will be failed.
+    &quot;validUntilTime&quot;: &quot;A String&quot;, # An absolute time after which resources should not be created. If the request cannot be fulfilled by this time the request will be failed.
+  &quot;reservationName&quot;: &quot;A String&quot;, # Name of the reservation in which the resource should be provisioned. Format: projects/{project}/locations/{zone}/reservations/{reservation}
+  &quot;runDuration&quot;: { # Defines the maximum lifetime of the requested resource. # Optional. The duration of the requested resource.
+    &quot;maxRunDuration&quot;: &quot;A String&quot;, # The maximum duration of the requested resource.
+    &quot;terminationTime&quot;: &quot;A String&quot;, # The time at which the requested resource will be terminated.
+    &quot;acceptedData&quot;: { # Further data for the accepted state. # Further data for the accepted state.
+    &quot;activeData&quot;: { # Further data for the active state. # Further data for the active state.
+    &quot;creatingData&quot;: { # Further data for the creating state. # Further data for the creating state.
+    &quot;deletingData&quot;: { # Further data for the deleting state. # Further data for the deleting state.
+    &quot;failedData&quot;: { # Further data for the failed state. # Further data for the failed state.
+      &quot;error&quot;: { # The `Status` type defines a logical error model that is suitable for different programming environments, including REST APIs and RPC APIs. It is used by [gRPC](https://github.com/grpc). Each `Status` message contains three pieces of data: error code, error message, and error details. You can find out more about this error model and how to work with it in the [API Design Guide](https://cloud.google.com/apis/design/errors). # The error that caused the queued resource to enter the FAILED state.
+    &quot;provisioningData&quot;: { # Further data for the provisioning state. # Further data for the provisioning state.
+    &quot;state&quot;: &quot;A String&quot;, # State of the QueuedResource request.
+    &quot;suspendedData&quot;: { # Further data for the suspended state. # Further data for the suspended state.
+    &quot;suspendingData&quot;: { # Further data for the suspending state. # Further data for the suspending state.
+  &quot;tpu&quot;: { # Details of the TPU resource(s) being requested. # Defines a TPU resource.
+    &quot;nodeSpec&quot;: [ # The TPU node(s) being requested.
+        &quot;multiNodeParams&quot;: { # Parameters to specify for multi-node QueuedResource requests. This field must be populated in case of multi-node requests instead of node_id. It&#x27;s an error to specify both node_id and multi_node_params. # Optional. Fields to specify in case of multi-node request.
+          &quot;nodeCount&quot;: 42, # Required. Number of nodes with this spec. The system will attempt to provison &quot;node_count&quot; nodes as part of the request. This needs to be &gt; 1.
+          &quot;nodeIdPrefix&quot;: &quot;A String&quot;, # Prefix of node_ids in case of multi-node request Should follow the `^[A-Za-z0-9_.~+%-]+$` regex format. If node_count = 3 and node_id_prefix = &quot;np&quot;, node ids of nodes created will be &quot;np-0&quot;, &quot;np-1&quot;, &quot;np-2&quot;. If this field is not provided we use queued_resource_id as the node_id_prefix.
+          &quot;workloadType&quot;: &quot;A String&quot;, # Optional. The workload type for the multi-node request.
+        &quot;nodeId&quot;: &quot;A String&quot;, # The unqualified resource name. Should follow the `^[A-Za-z0-9_.~+%-]+$` regex format. This is only specified when requesting a single node. In case of multi-node requests, multi_node_params must be populated instead. It&#x27;s an error to specify both node_id and multi_node_params.
+  queuedResourceId: string, The unqualified resource name. Should follow the `^[A-Za-z0-9_.~+%-]+$` regex format.
+  force: boolean, If set to true, all running nodes belonging to this queued resource will be deleted first and then the queued resource will be deleted. Otherwise (i.e. force=false), the queued resource will only be deleted if its nodes have already been deleted or the queued resource is in the ACCEPTED, FAILED, or SUSPENDED state.
+    <code class="details" id="getMaintenanceInfo">getMaintenanceInfo(name, x__xgafv=None)</code>
+  <pre>Gets the maintenance info for a queued resource.
+  name: string, Required. The QueuedResource name. (required)
+    { # Response for GetMaintenanceInfo.
+  &quot;nodeUpcomingMaintenances&quot;: [ # The list of upcoming maintenance entries.
+    { # A tuple containing node name / ID and maintenance info.
+      &quot;nodeName&quot;: &quot;A String&quot;, # Unqualified node name.
+      &quot;nodeUid&quot;: &quot;A String&quot;, # UID of this node.
+      &quot;upcomingMaintenance&quot;: { # Upcoming Maintenance notification information. # Upcoming maintenance info for this node.
+    <code class="details" id="performMaintenanceQueuedResource">performMaintenanceQueuedResource(name, body=None, x__xgafv=None)</code>
+  <pre>Perform manual maintenance on specific nodes of a QueuedResource.
+  name: string, Required. The name of the QueuedResource which holds the nodes to perform maintenance on. (required)
+{ # Request for PerformMaintenanceQueuedResource.
+  &quot;nodeNames&quot;: [ # The names of the nodes to perform maintenance on.

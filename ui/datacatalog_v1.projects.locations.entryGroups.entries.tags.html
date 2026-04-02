@@ -1,0 +1,41 @@
+<h1><a href="datacatalog_v1.html">Google Cloud Data Catalog API</a> . <a href="datacatalog_v1.projects.html">projects</a> . <a href="datacatalog_v1.projects.locations.html">locations</a> . <a href="datacatalog_v1.projects.locations.entryGroups.html">entryGroups</a> . <a href="datacatalog_v1.projects.locations.entryGroups.entries.html">entries</a> . <a href="datacatalog_v1.projects.locations.entryGroups.entries.tags.html">tags</a></h1>
+<p class="firstline">Creates a tag and assigns it to: * An Entry if the method name is `projects.locations.entryGroups.entries.tags.create`. * Or EntryGroupif the method name is `projects.locations.entryGroups.tags.create`. Note: The project identified by the `parent` parameter for the [tag] (https://cloud.google.com/data-catalog/docs/reference/rest/v1/projects.locations.entryGroups.entries.tags/create#path-parameters) and the [tag template] (https://cloud.google.com/data-catalog/docs/reference/rest/v1/projects.locations.tagTemplates/create#path-parameters) used to create the tag must be in the same organization.</p>
+<p class="firstline">Lists tags assigned to an Entry. The columns in the response are lowercased.</p>
+<p class="firstline">Updates an existing tag.</p>
+  <code><a href="#reconcile">reconcile(parent, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">`ReconcileTags` creates or updates a list of tags on the entry. If the ReconcileTagsRequest.force_delete_missing parameter is set, the operation deletes tags not included in the input tag list. `ReconcileTags` returns a long-running operation resource that can be queried with Operations.GetOperation to return ReconcileTagsMetadata and a ReconcileTagsResponse message. Note: SearchCatalog might return stale search results for up to 24 hours after the `ReconcileTags` operation completes.</p>
+  <pre>Creates a tag and assigns it to: * An Entry if the method name is `projects.locations.entryGroups.entries.tags.create`. * Or EntryGroupif the method name is `projects.locations.entryGroups.tags.create`. Note: The project identified by the `parent` parameter for the [tag] (https://cloud.google.com/data-catalog/docs/reference/rest/v1/projects.locations.entryGroups.entries.tags/create#path-parameters) and the [tag template] (https://cloud.google.com/data-catalog/docs/reference/rest/v1/projects.locations.tagTemplates/create#path-parameters) used to create the tag must be in the same organization.
+  parent: string, Required. The name of the resource to attach this tag to. Tags can be attached to entries or entry groups. An entry can have up to 1000 attached tags. Note: The tag and its child resources might not be stored in the location specified in its name. (required)
+{ # Tags contain custom metadata and are attached to Data Catalog resources. Tags conform with the specification of their tag template. See [Data Catalog IAM](https://cloud.google.com/data-catalog/docs/concepts/iam) for information on the permissions needed to create or view tags.
+  &quot;column&quot;: &quot;A String&quot;, # Resources like entry can have schemas associated with them. This scope allows you to attach tags to an individual column based on that schema. To attach a tag to a nested column, separate column names with a dot (`.`). Example: `column.nested_column`.
+  &quot;dataplexTransferStatus&quot;: &quot;A String&quot;, # Output only. Denotes the transfer status of the Tag Template.
+  &quot;fields&quot;: { # Required. Maps the ID of a tag field to its value and additional information about that field. Tag template defines valid field IDs. A tag must have at least 1 field and at most 500 fields.
+    &quot;a_key&quot;: { # Contains the value and additional information on a field within a Tag.
+      &quot;boolValue&quot;: True or False, # The value of a tag field with a boolean type.
+      &quot;displayName&quot;: &quot;A String&quot;, # Output only. The display name of this field.
+      &quot;doubleValue&quot;: 3.14, # The value of a tag field with a double type.
+      &quot;enumValue&quot;: { # An enum value. # The value of a tag field with an enum type. This value must be one of the allowed values listed in this enum.
+        &quot;displayName&quot;: &quot;A String&quot;, # The display name of the enum value.
+      &quot;order&quot;: 42, # Output only. The order of this field with respect to other fields in this tag. Can be set by Tag. For example, a higher value can indicate a more important field. The value can be negative. Multiple fields can have the same order, and field orders within a tag don&#x27;t have to be sequential.
+      &quot;richtextValue&quot;: &quot;A String&quot;, # The value of a tag field with a rich text type. The maximum length is 10 MiB as this value holds HTML descriptions including encoded images. The maximum length of the text without images is 100 KiB.
+      &quot;stringValue&quot;: &quot;A String&quot;, # The value of a tag field with a string type. The maximum length is 2000 UTF-8 characters.
+      &quot;timestampValue&quot;: &quot;A String&quot;, # The value of a tag field with a timestamp type.
+  &quot;name&quot;: &quot;A String&quot;, # Identifier. The resource name of the tag in URL format where tag ID is a system-generated identifier. Note: The tag itself might not be stored in the location specified in its name.
+  &quot;template&quot;: &quot;A String&quot;, # Required. The resource name of the tag template this tag uses. Example: `projects/{PROJECT_ID}/locations/{LOCATION}/tagTemplates/{TAG_TEMPLATE_ID}` This field cannot be modified after creation.
+  &quot;templateDisplayName&quot;: &quot;A String&quot;, # Output only. The display name of the tag template.
+  name: string, Required. The name of the tag to delete. (required)
+  <pre>Lists tags assigned to an Entry. The columns in the response are lowercased.
+  parent: string, Required. The name of the Data Catalog resource to list the tags of. The resource can be an Entry or an EntryGroup (without `/entries/{entries}` at the end). (required)
+  pageSize: integer, The maximum number of tags to return. Default is 10. Maximum limit is 1000.
+    { # Response message for ListTags.
+  &quot;tags&quot;: [ # Tag details.
+  <pre>Updates an existing tag.
+  name: string, Identifier. The resource name of the tag in URL format where tag ID is a system-generated identifier. Note: The tag itself might not be stored in the location specified in its name. (required)
+  updateMask: string, Names of fields whose values to overwrite on a tag. Currently, a tag has the only modifiable field with the name `fields`. In general, if this parameter is absent or empty, all modifiable fields are overwritten. If such fields are non-required and omitted in the request body, their values are emptied.
+    <code class="details" id="reconcile">reconcile(parent, body=None, x__xgafv=None)</code>
+  <pre>`ReconcileTags` creates or updates a list of tags on the entry. If the ReconcileTagsRequest.force_delete_missing parameter is set, the operation deletes tags not included in the input tag list. `ReconcileTags` returns a long-running operation resource that can be queried with Operations.GetOperation to return ReconcileTagsMetadata and a ReconcileTagsResponse message. Note: SearchCatalog might return stale search results for up to 24 hours after the `ReconcileTags` operation completes.
+  parent: string, Required. Name of Entry to be tagged. (required)
+{ # Request message for ReconcileTags.
+  &quot;forceDeleteMissing&quot;: True or False,
+  &quot;tagTemplate&quot;: &quot;A String&quot;, # Required. The name of the tag template, which is used for reconciliation.
+  &quot;tags&quot;: [ # A list of tags to apply to an entry. A tag can specify a tag template, which must be the template specified in the `ReconcileTagsRequest`. The sole entry and each of its columns must be mentioned at most once.

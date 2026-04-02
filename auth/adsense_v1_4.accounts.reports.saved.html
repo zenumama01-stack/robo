@@ -1,0 +1,17 @@
+<h1><a href="adsense_v1_4.html">AdSense Management API</a> . <a href="adsense_v1_4.accounts.html">accounts</a> . <a href="adsense_v1_4.accounts.reports.html">reports</a> . <a href="adsense_v1_4.accounts.reports.saved.html">saved</a></h1>
+  <code><a href="#generate">generate(accountId, savedReportId, locale=None, maxResults=None, startIndex=None)</a></code></p>
+<p class="firstline">Generate an AdSense report based on the saved report ID sent in the query parameters.</p>
+<p class="firstline">List all saved reports in the specified AdSense account.</p>
+    <code class="details" id="generate">generate(accountId, savedReportId, locale=None, maxResults=None, startIndex=None)</code>
+  <pre>Generate an AdSense report based on the saved report ID sent in the query parameters.
+  accountId: string, Account to which the saved reports belong. (required)
+  savedReportId: string, The saved report to retrieve. (required)
+  <pre>List all saved reports in the specified AdSense account.
+  maxResults: integer, The maximum number of saved reports to include in the response, used for paging.
+  pageToken: string, A continuation token, used to page through saved reports. To retrieve the next page, set this parameter to the value of &quot;nextPageToken&quot; from the previous response.
+  &quot;items&quot;: [ # The saved reports returned in this list response.
+      &quot;id&quot;: &quot;A String&quot;, # Unique identifier of this saved report.
+      &quot;kind&quot;: &quot;adsense#savedReport&quot;, # Kind of resource this is, in this case adsense#savedReport.
+      &quot;name&quot;: &quot;A String&quot;, # This saved report&#x27;s name.
+  &quot;kind&quot;: &quot;adsense#savedReports&quot;, # Kind of list this is, in this case adsense#savedReports.
+  &quot;nextPageToken&quot;: &quot;A String&quot;, # Continuation token used to page through saved reports. To retrieve the next page of results, set the next request&#x27;s &quot;pageToken&quot; value to this.

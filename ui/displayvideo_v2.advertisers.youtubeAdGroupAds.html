@@ -1,0 +1,78 @@
+<h1><a href="displayvideo_v2.html">Display & Video 360 API</a> . <a href="displayvideo_v2.advertisers.html">advertisers</a> . <a href="displayvideo_v2.advertisers.youtubeAdGroupAds.html">youtubeAdGroupAds</a></h1>
+  <code><a href="#get">get(advertiserId, youtubeAdGroupAdId, x__xgafv=None)</a></code></p>
+<p class="firstline">Gets a YouTube ad group ad.</p>
+<p class="firstline">Lists YouTube ad group ads.</p>
+    <code class="details" id="get">get(advertiserId, youtubeAdGroupAdId, x__xgafv=None)</code>
+  <pre>Gets a YouTube ad group ad.
+  advertiserId: string, Required. The ID of the advertiser this ad group ad belongs to. (required)
+  youtubeAdGroupAdId: string, Required. The ID of the ad group ad to fetch. (required)
+    { # A single ad associated with a YouTube ad group.
+  &quot;adGroupAdId&quot;: &quot;A String&quot;, # The unique ID of the ad. Assigned by the system.
+  &quot;adGroupId&quot;: &quot;A String&quot;, # The unique ID of the ad group that the ad belongs to.
+  &quot;adUrls&quot;: [ # List of URLs used by the ad.
+    { # Additional URLs related to the ad, including beacons.
+      &quot;type&quot;: &quot;A String&quot;, # The type of the Ad URL.
+      &quot;url&quot;: &quot;A String&quot;, # The URL string value.
+  &quot;advertiserId&quot;: &quot;A String&quot;, # The unique ID of the advertiser the ad belongs to.
+  &quot;audioAd&quot;: { # Details for an audio ad. # Details of an [audio ad](//support.google.com/displayvideo/answer/6274216) used for reach marketing objectives.
+    &quot;displayUrl&quot;: &quot;A String&quot;, # The webpage address that appears with the ad.
+    &quot;finalUrl&quot;: &quot;A String&quot;, # The URL address of the webpage that people reach after they click the ad.
+    &quot;trackingUrl&quot;: &quot;A String&quot;, # The URL address loaded in the background for tracking purposes.
+    &quot;video&quot;: { # Details of a YouTube video. # The YouTube video of the ad.
+      &quot;id&quot;: &quot;A String&quot;, # Output only. The YouTube video ID which can be searched on YouTube webpage.
+      &quot;unavailableReason&quot;: &quot;A String&quot;, # The reason why the video data is not available.
+      &quot;videoAssetId&quot;: &quot;A String&quot;, # Required. The YouTube video asset id. This is ad_asset.ad_asset_id.
+  &quot;bumperAd&quot;: { # Details for a bumper ad. # Details of a [non-skippable short video ad](//support.google.com/displayvideo/answer/6274216), equal to or less than 6 seconds, used for reach.
+    &quot;commonInStreamAttribute&quot;: { # Common attributes for in-stream, non-skippable and bumper ads. # Common ad attributes.
+      &quot;actionButtonLabel&quot;: &quot;A String&quot;, # The text on the call-to-action button.
+      &quot;actionHeadline&quot;: &quot;A String&quot;, # The headline of the call-to-action banner.
+      &quot;companionBanner&quot;: { # Meta data of an image asset. # The image which shows next to the video ad.
+        &quot;assetId&quot;: &quot;A String&quot;, # Required. The unique ID of the asset.
+        &quot;fileSize&quot;: &quot;A String&quot;, # Output only. File size of the image asset in bytes.
+        &quot;fullSize&quot;: { # Dimensions. # Output only. Metadata for this image at its original size.
+        &quot;mimeType&quot;: &quot;A String&quot;, # Output only. MIME type of the image asset.
+  &quot;displayName&quot;: &quot;A String&quot;, # The display name of the ad. Must be UTF-8 encoded with a maximum size of 255 bytes.
+  &quot;displayVideoSourceAd&quot;: { # The ad sourced from a DV360 creative. # Details of an ad sourced from a Display &amp; Video 360 creative.
+    &quot;creativeId&quot;: &quot;A String&quot;, # The ID of the source creative.
+  &quot;entityStatus&quot;: &quot;A String&quot;, # The entity status of the ad.
+  &quot;inStreamAd&quot;: { # Details for an in-stream ad. # Details of an [in-stream ad skippable after 5 seconds](//support.google.com/displayvideo/answer/6274216), used for brand awareness or reach marketing objectives.
+    &quot;customParameters&quot;: { # The custom parameters to pass custom values to tracking URL template.
+  &quot;mastheadAd&quot;: { # Details for a Masthead Ad. # Details of an [ad served on the YouTube Home feed](//support.google.com/google-ads/answer/9709826).
+    &quot;autoplayVideoDuration&quot;: &quot;A String&quot;, # The duration of time the video will autoplay.
+    &quot;autoplayVideoStartMillisecond&quot;: &quot;A String&quot;, # The amount of time in milliseconds after which the video will start to play.
+    &quot;callToActionButtonLabel&quot;: &quot;A String&quot;, # The text on the call-to-action button.
+    &quot;callToActionFinalUrl&quot;: &quot;A String&quot;, # The destination URL for the call-to-action button.
+    &quot;callToActionTrackingUrl&quot;: &quot;A String&quot;, # The tracking URL for the call-to-action button.
+    &quot;companionYoutubeVideos&quot;: [ # The videos that appear next to the Masthead Ad on desktop. Can be no more than two.
+      { # Details of a YouTube video.
+    &quot;description&quot;: &quot;A String&quot;, # The description of the ad.
+    &quot;headline&quot;: &quot;A String&quot;, # The headline of the ad.
+    &quot;showChannelArt&quot;: True or False, # Whether to show a background or banner that appears at the top of a YouTube page.
+    &quot;video&quot;: { # Details of a YouTube video. # The YouTube video used by the ad.
+    &quot;videoAspectRatio&quot;: &quot;A String&quot;, # The aspect ratio of the autoplaying YouTube video on the Masthead.
+  &quot;name&quot;: &quot;A String&quot;, # The resource name of the ad.
+  &quot;nonSkippableAd&quot;: { # Details for a non-skippable ad. # Details of a [non-skippable short in-stream video ad](//support.google.com/displayvideo/answer/6274216), between 6 and 15 seconds, used for reach marketing objectives.
+  &quot;videoDiscoverAd&quot;: { # Details for a video discovery ad. # Details of an [ad promoting a video](//support.google.com/displayvideo/answer/6274216) that shows in places of discovery.
+    &quot;description1&quot;: &quot;A String&quot;, # First text line for the ad.
+    &quot;description2&quot;: &quot;A String&quot;, # Second text line for the ad.
+    &quot;headline&quot;: &quot;A String&quot;, # The headline of ad.
+    &quot;thumbnail&quot;: &quot;A String&quot;, # Thumbnail image used in the ad.
+    &quot;video&quot;: { # Details of a YouTube video. # The YouTube video the ad promotes.
+  &quot;videoPerformanceAd&quot;: { # Details for a video performance ad. # Details of an [ad used in a video action campaign](//support.google.com/google-ads/answer/10147229) to drive actions to the business, service or product.
+    &quot;actionButtonLabels&quot;: [ # The list of text assets shown on the call-to-action button.
+    &quot;companionBanners&quot;: [ # The list of companion banners used by this ad.
+      { # Meta data of an image asset.
+    &quot;descriptions&quot;: [ # The list of descriptions shown on the call-to-action banner.
+    &quot;displayUrlBreadcrumb1&quot;: &quot;A String&quot;, # The first piece after the domain in the display URL.
+    &quot;displayUrlBreadcrumb2&quot;: &quot;A String&quot;, # The second piece after the domain in the display URL.
+    &quot;domain&quot;: &quot;A String&quot;, # The domain of the display URL.
+    &quot;headlines&quot;: [ # The list of headlines shown on the call-to-action banner.
+    &quot;longHeadlines&quot;: [ # The list of lone headlines shown on the call-to-action banner.
+    &quot;videos&quot;: [ # The list of YouTube video assets used by this ad.
+  <pre>Lists YouTube ad group ads.
+  advertiserId: string, Required. The ID of the advertiser the ad groups belongs to. (required)
+  filter: string, Allows filtering by custom YouTube ad group ad fields. Supported syntax: * Filter expressions are made up of one or more restrictions. * Restrictions can be combined by `AND` and `OR`. A sequence of restrictions implicitly uses `AND`. * A restriction has the form of `{field} {operator} {value}`. * All fields must use the `EQUALS (=)` operator. Supported fields: * `adGroupId` * `displayName` * `entityStatus` * `adGroupAdId` Examples: * All ad group ads under an ad group: `adGroupId=&quot;1234&quot;` * All ad group ads under an ad group with an entityStatus of `ENTITY_STATUS_ACTIVE` or `ENTITY_STATUS_PAUSED`: `(entityStatus=&quot;ENTITY_STATUS_ACTIVE&quot; OR entityStatus=&quot;ENTITY_STATUS_PAUSED&quot;) AND adGroupId=&quot;12345&quot;` The length of this field should be no more than 500 characters. Reference our [filter `LIST` requests](/display-video/api/guides/how-tos/filters) guide for more information.
+  orderBy: string, Field by which to sort the list. Acceptable values are: * `displayName` (default) * `entityStatus` The default sorting order is ascending. To specify descending order for a field, a suffix &quot;desc&quot; should be added to the field name. Example: `displayName desc`.
+  pageToken: string, A token identifying a page of results the server should return. Typically, this is the value of next_page_token returned from the previous call to `ListYoutubeAdGroupAds` method. If not specified, the first page of results will be returned.
+  &quot;nextPageToken&quot;: &quot;A String&quot;, # A token to retrieve the next page of results. Pass this value in the page_token field in the subsequent call to `ListYoutubeAdGroupAds` method to retrieve the next page of results.
+  &quot;youtubeAdGroupAds&quot;: [ # The list of ad group ads. This list will be absent if empty.

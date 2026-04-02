@@ -1,0 +1,45 @@
+<h1><a href="analytics_v3.html">Google Analytics API</a> . <a href="analytics_v3.management.html">management</a> . <a href="analytics_v3.management.uploads.html">uploads</a></h1>
+  <code><a href="#deleteUploadData">deleteUploadData(accountId, webPropertyId, customDataSourceId, body=None)</a></code></p>
+<p class="firstline">Delete data associated with a previous upload.</p>
+  <code><a href="#get">get(accountId, webPropertyId, customDataSourceId, uploadId)</a></code></p>
+<p class="firstline">List uploads to which the user has access.</p>
+  <code><a href="#list">list(accountId, webPropertyId, customDataSourceId, max_results=None, start_index=None)</a></code></p>
+  <code><a href="#uploadData">uploadData(accountId, webPropertyId, customDataSourceId, media_body=None, media_mime_type=None)</a></code></p>
+<p class="firstline">Upload data for a custom data source.</p>
+    <code class="details" id="deleteUploadData">deleteUploadData(accountId, webPropertyId, customDataSourceId, body=None)</code>
+  <pre>Delete data associated with a previous upload.
+  accountId: string, Account Id for the uploads to be deleted. (required)
+  webPropertyId: string, Web property Id for the uploads to be deleted. (required)
+  customDataSourceId: string, Custom data source Id for the uploads to be deleted. (required)
+{ # Request template for the delete upload data request.
+  &quot;customDataImportUids&quot;: [ # A list of upload UIDs.
+    <code class="details" id="get">get(accountId, webPropertyId, customDataSourceId, uploadId)</code>
+  <pre>List uploads to which the user has access.
+  accountId: string, Account Id for the upload to retrieve. (required)
+  webPropertyId: string, Web property Id for the upload to retrieve. (required)
+  customDataSourceId: string, Custom data source Id for upload to retrieve. (required)
+  uploadId: string, Upload Id to retrieve. (required)
+    { # Metadata returned for an upload operation.
+  &quot;accountId&quot;: &quot;A String&quot;, # Account Id to which this upload belongs.
+  &quot;customDataSourceId&quot;: &quot;A String&quot;, # Custom data source Id to which this data import belongs.
+  &quot;errors&quot;: [ # Data import errors collection.
+  &quot;id&quot;: &quot;A String&quot;, # A unique ID for this upload.
+  &quot;kind&quot;: &quot;analytics#upload&quot;, # Resource type for Analytics upload.
+  &quot;status&quot;: &quot;A String&quot;, # Upload status. Possible values: PENDING, COMPLETED, FAILED, DELETING, DELETED.
+  &quot;uploadTime&quot;: &quot;A String&quot;, # Time this file is uploaded.
+    <code class="details" id="list">list(accountId, webPropertyId, customDataSourceId, max_results=None, start_index=None)</code>
+  accountId: string, Account Id for the uploads to retrieve. (required)
+  webPropertyId: string, Web property Id for the uploads to retrieve. (required)
+  customDataSourceId: string, Custom data source Id for uploads to retrieve. (required)
+  max_results: integer, The maximum number of uploads to include in this response.
+  start_index: integer, A 1-based index of the first upload to retrieve. Use this parameter as a pagination mechanism along with the max-results parameter.
+    { # Upload collection lists Analytics uploads to which the user has access. Each custom data source can have a set of uploads. Each resource in the upload collection corresponds to a single Analytics data upload.
+  &quot;items&quot;: [ # A list of uploads.
+  &quot;kind&quot;: &quot;analytics#uploads&quot;, # Collection type.
+  &quot;nextLink&quot;: &quot;A String&quot;, # Link to next page for this upload collection.
+  &quot;previousLink&quot;: &quot;A String&quot;, # Link to previous page for this upload collection.
+    <code class="details" id="uploadData">uploadData(accountId, webPropertyId, customDataSourceId, media_body=None, media_mime_type=None)</code>
+  <pre>Upload data for a custom data source.
+  accountId: string, Account Id associated with the upload. (required)
+  webPropertyId: string, Web property UA-string associated with the upload. (required)
+  customDataSourceId: string, Custom data source Id to which the data being uploaded belongs. (required)

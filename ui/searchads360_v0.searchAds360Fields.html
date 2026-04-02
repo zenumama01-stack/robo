@@ -1,0 +1,24 @@
+<h1><a href="searchads360_v0.html">Search Ads 360 Reporting API</a> . <a href="searchads360_v0.searchAds360Fields.html">searchAds360Fields</a></h1>
+<p class="firstline">Returns just the requested field. List of thrown errors: [AuthenticationError]() [AuthorizationError]() [HeaderError]() [InternalError]() [QuotaError]() [RequestError]()</p>
+<p class="firstline">Returns all fields that match the search [query](/search-ads/reporting/concepts/field-service#use_a_query_to_get_field_details). List of thrown errors: [AuthenticationError]() [AuthorizationError]() [HeaderError]() [InternalError]() [QueryError]() [QuotaError]() [RequestError]()</p>
+  <pre>Returns just the requested field. List of thrown errors: [AuthenticationError]() [AuthorizationError]() [HeaderError]() [InternalError]() [QuotaError]() [RequestError]()
+  resourceName: string, Required. The resource name of the field to get. (required)
+    { # A field or resource (artifact) used by SearchAds360Service.
+  &quot;attributeResources&quot;: [ # Output only. The names of all resources that are selectable with the described artifact. Fields from these resources do not segment metrics when included in search queries. This field is only set for artifacts whose category is RESOURCE.
+  &quot;category&quot;: &quot;A String&quot;, # Output only. The category of the artifact.
+  &quot;dataType&quot;: &quot;A String&quot;, # Output only. This field determines the operators that can be used with the artifact in WHERE clauses.
+  &quot;enumValues&quot;: [ # Output only. Values the artifact can assume if it is a field of type ENUM. This field is only set for artifacts of category SEGMENT or ATTRIBUTE.
+  &quot;filterable&quot;: True or False, # Output only. Whether the artifact can be used in a WHERE clause in search queries.
+  &quot;isRepeated&quot;: True or False, # Output only. Whether the field artifact is repeated.
+  &quot;metrics&quot;: [ # Output only. This field lists the names of all metrics that are selectable with the described artifact when it is used in the FROM clause. It is only set for artifacts whose category is RESOURCE.
+  &quot;name&quot;: &quot;A String&quot;, # Output only. The name of the artifact.
+  &quot;resourceName&quot;: &quot;A String&quot;, # Output only. The resource name of the artifact. Artifact resource names have the form: `SearchAds360Fields/{name}`
+  &quot;segments&quot;: [ # Output only. This field lists the names of all artifacts, whether a segment or another resource, that segment metrics when included in search queries and when the described artifact is used in the FROM clause. It is only set for artifacts whose category is RESOURCE.
+  &quot;selectable&quot;: True or False, # Output only. Whether the artifact can be used in a SELECT clause in search queries.
+  &quot;selectableWith&quot;: [ # Output only. The names of all resources, segments, and metrics that are selectable with the described artifact.
+  &quot;sortable&quot;: True or False, # Output only. Whether the artifact can be used in a ORDER BY clause in search queries.
+  &quot;typeUrl&quot;: &quot;A String&quot;, # Output only. The URL of proto describing the artifact&#x27;s data type.
+  <pre>Returns all fields that match the search [query](/search-ads/reporting/concepts/field-service#use_a_query_to_get_field_details). List of thrown errors: [AuthenticationError]() [AuthorizationError]() [HeaderError]() [InternalError]() [QueryError]() [QuotaError]() [RequestError]()
+{ # Request message for SearchAds360FieldService.SearchSearchAds360Fields.
+    { # Response message for SearchAds360FieldService.SearchSearchAds360Fields.
+  &quot;results&quot;: [ # The list of fields that matched the query.

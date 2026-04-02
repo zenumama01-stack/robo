@@ -1,0 +1,83 @@
+    [minHeight]="200"
+    [resizable]="false"
+    [keepContent]="true"
+    (close)="onCancel()"
+    class="mj-share-dialog-window"
+    kendoWindowContainer>
+      <div class="share-dialog-header">
+        <span>Share "{{ Dashboard?.Name }}"</span>
+    <div class="share-dialog-body">
+      <!-- Error Alert -->
+        <div class="share-alert share-alert-error">
+          <span>{{ Error }}</span>
+      <!-- Add Users Section -->
+      <div class="share-section">
+        <div class="share-search-box">
+            placeholder="Add people by name or email..."
+            [(ngModel)]="UserSearchFilter"
+            [disabled]="IsLoading">
+        <!-- Available Users Dropdown -->
+        @if (FilteredAvailableUsers.length > 0) {
+          <div class="share-user-dropdown">
+            @for (user of FilteredAvailableUsers; track user.ID) {
+              <button type="button" class="share-user-option" (click)="addUserShare(user)" [disabled]="IsLoading">
+                <span class="share-avatar">{{ getUserInitials(user) }}</span>
+                <span class="share-user-name">{{ user.Name }}</span>
+                @if (user.Email) {
+                  <span class="share-user-email">{{ user.Email }}</span>
+        @if (UserSearchFilter && FilteredAvailableUsers.length === 0) {
+          <div class="share-no-results">
+            No users found matching "{{ UserSearchFilter }}"
+      <!-- People with Access -->
+        <div class="share-section-label">People with access</div>
+        <!-- Owner -->
+        <div class="share-person share-owner">
+          <span class="share-avatar share-avatar-owner">
+            <i class="fa-solid fa-crown"></i>
+          <div class="share-person-info">
+            <span class="share-person-name">{{ Dashboard?.User || 'You' }}</span>
+            <span class="share-person-role">Owner</span>
+        <!-- Shared Users -->
+        @for (share of ActiveShares; track share.User.ID) {
+          <div class="share-person" [class.share-person-new]="share.IsNew" [class.share-person-modified]="share.Permission.Dirty">
+            <span class="share-avatar">{{ getUserInitials(share.User) }}</span>
+              <span class="share-person-name">
+                {{ share.User.Name }}
+                @if (share.IsNew) {
+                  <span class="share-badge-new">New</span>
+              @if (share.User.Email) {
+                <span class="share-person-email">{{ share.User.Email }}</span>
+            <div class="share-permissions">
+              <label class="share-perm" title="Can view">
+                <input type="checkbox" [checked]="share.Permission.CanRead" disabled>
+              <label class="share-perm" title="Can edit">
+                <input type="checkbox" [checked]="share.Permission.CanEdit" (change)="toggleCanEdit(share)">
+              <label class="share-perm" title="Can delete">
+                <input type="checkbox" [checked]="share.Permission.CanDelete" (change)="toggleCanDelete(share)">
+              <label class="share-perm" title="Can share">
+                <input type="checkbox" [checked]="share.Permission.CanShare" (change)="toggleCanShare(share)">
+                <i class="fa-solid fa-share"></i>
+            <button type="button" class="share-remove-btn" (click)="removeUserShare(share)" title="Remove">
+        @if (ActiveShares.length === 0) {
+          <div class="share-empty">
+            <i class="fa-solid fa-user-lock"></i>
+            <span>Not shared with anyone yet</span>
+        <!-- Pending Removals -->
+        @if (RemovedShares.length > 0) {
+          <div class="share-removed-section">
+            @for (share of RemovedShares; track share.User.ID) {
+              <div class="share-removed-item">
+                <span class="share-avatar share-avatar-removed">{{ getUserInitials(share.User) }}</span>
+                <span class="share-removed-name">{{ share.User.Name }}</span>
+                <button type="button" class="share-undo-btn" (click)="undoRemove(share)">
+                  <i class="fa-solid fa-undo"></i> Undo
+      <div class="share-footer">
+        @if (HasChanges) {
+          <span class="share-changes-hint">
+            <i class="fa-solid fa-circle"></i> Unsaved changes
+        <div class="share-footer-actions">
+          <button type="button" class="share-btn share-btn-secondary" (click)="onCancel()">
+            class="share-btn share-btn-primary"
+            (click)="onSave()"
+            [disabled]="!HasChanges || IsLoading">
+              <i class="fa-solid fa-spinner fa-spin"></i> Saving...

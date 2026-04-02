@@ -1,0 +1,60 @@
+<h1><a href="discoveryengine_v1alpha.html">Discovery Engine API</a> . <a href="discoveryengine_v1alpha.projects.html">projects</a> . <a href="discoveryengine_v1alpha.projects.locations.html">locations</a> . <a href="discoveryengine_v1alpha.projects.locations.evaluations.html">evaluations</a></h1>
+  <code><a href="discoveryengine_v1alpha.projects.locations.evaluations.operations.html">operations()</a></code>
+<p class="firstline">Creates a Evaluation. Upon creation, the evaluation will be automatically triggered and begin execution.</p>
+<p class="firstline">Gets a Evaluation.</p>
+<p class="firstline">Gets a list of Evaluations.</p>
+  <code><a href="#listResults">listResults(evaluation, pageSize=None, pageToken=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Gets a list of results for a given a Evaluation.</p>
+  <code><a href="#listResults_next">listResults_next()</a></code></p>
+  <pre>Creates a Evaluation. Upon creation, the evaluation will be automatically triggered and begin execution.
+{ # An evaluation is a single execution (or run) of an evaluation process. It encapsulates the state of the evaluation and the resulting data.
+  &quot;createTime&quot;: &quot;A String&quot;, # Output only. Timestamp the Evaluation was created at.
+  &quot;endTime&quot;: &quot;A String&quot;, # Output only. Timestamp the Evaluation was completed at.
+  &quot;error&quot;: { # The `Status` type defines a logical error model that is suitable for different programming environments, including REST APIs and RPC APIs. It is used by [gRPC](https://github.com/grpc). Each `Status` message contains three pieces of data: error code, error message, and error details. You can find out more about this error model and how to work with it in the [API Design Guide](https://cloud.google.com/apis/design/errors). # Output only. The error that occurred during evaluation. Only populated when the evaluation&#x27;s state is FAILED.
+  &quot;errorSamples&quot;: [ # Output only. A sample of errors encountered while processing the request.
+  &quot;evaluationSpec&quot;: { # Describes the specification of the evaluation. # Required. The specification of the evaluation.
+    &quot;querySetSpec&quot;: { # Describes the specification of the query set. # Optional. The specification of the query set.
+      &quot;sampleQuerySet&quot;: &quot;A String&quot;, # Optional. The full resource name of the SampleQuerySet used for the evaluation, in the format of `projects/{project}/locations/{location}/sampleQuerySets/{sampleQuerySet}`.
+    &quot;searchRequest&quot;: { # Request message for SearchService.Search method. # Required. The search request that is used to perform the evaluation. Only the following fields within SearchRequest are supported; if any other fields are provided, an UNSUPPORTED error will be returned: * SearchRequest.serving_config * SearchRequest.branch * SearchRequest.canonical_filter * SearchRequest.query_expansion_spec * SearchRequest.spell_correction_spec * SearchRequest.content_search_spec * SearchRequest.user_pseudo_id
+  &quot;name&quot;: &quot;A String&quot;, # Identifier. The full resource name of the Evaluation, in the format of `projects/{project}/locations/{location}/evaluations/{evaluation}`. This field must be a UTF-8 encoded string with a length limit of 1024 characters.
+  &quot;qualityMetrics&quot;: { # Describes the metrics produced by the evaluation. # Output only. The metrics produced by the evaluation, averaged across all SampleQuerys in the SampleQuerySet. Only populated when the evaluation&#x27;s state is SUCCEEDED.
+    &quot;docNdcg&quot;: { # Stores the metric values at specific top-k levels. # Normalized discounted cumulative gain (NDCG) per document, at various top-k cutoff levels. NDCG measures the ranking quality, giving higher relevance to top results. Example (top-3): Suppose SampleQuery with three retrieved documents (D1, D2, D3) and binary relevance judgements (1 for relevant, 0 for not relevant): Retrieved: [D3 (0), D1 (1), D2 (1)] Ideal: [D1 (1), D2 (1), D3 (0)] Calculate NDCG@3 for each SampleQuery: * DCG@3: 0/log2(1+1) + 1/log2(2+1) + 1/log2(3+1) = 1.13 * Ideal DCG@3: 1/log2(1+1) + 1/log2(2+1) + 0/log2(3+1) = 1.63 * NDCG@3: 1.13/1.63 = 0.693
+      &quot;top1&quot;: 3.14, # The top-1 value.
+      &quot;top10&quot;: 3.14, # The top-10 value.
+      &quot;top3&quot;: 3.14, # The top-3 value.
+      &quot;top5&quot;: 3.14, # The top-5 value.
+    &quot;docPrecision&quot;: { # Stores the metric values at specific top-k levels. # Precision per document, at various top-k cutoff levels. Precision is the fraction of retrieved documents that are relevant. Example (top-5): * For a single SampleQuery, If 4 out of 5 retrieved documents in the top-5 are relevant, precision@5 = 4/5 = 0.8
+    &quot;docRecall&quot;: { # Stores the metric values at specific top-k levels. # Recall per document, at various top-k cutoff levels. Recall is the fraction of relevant documents retrieved out of all relevant documents. Example (top-5): * For a single SampleQuery, If 3 out of 5 relevant documents are retrieved in the top-5, recall@5 = 3/5 = 0.6
+    &quot;pageNdcg&quot;: { # Stores the metric values at specific top-k levels. # Normalized discounted cumulative gain (NDCG) per page, at various top-k cutoff levels. NDCG measures the ranking quality, giving higher relevance to top results. Example (top-3): Suppose SampleQuery with three retrieved pages (P1, P2, P3) and binary relevance judgements (1 for relevant, 0 for not relevant): Retrieved: [P3 (0), P1 (1), P2 (1)] Ideal: [P1 (1), P2 (1), P3 (0)] Calculate NDCG@3 for SampleQuery: * DCG@3: 0/log2(1+1) + 1/log2(2+1) + 1/log2(3+1) = 1.13 * Ideal DCG@3: 1/log2(1+1) + 1/log2(2+1) + 0/log2(3+1) = 1.63 * NDCG@3: 1.13/1.63 = 0.693
+    &quot;pageRecall&quot;: { # Stores the metric values at specific top-k levels. # Recall per page, at various top-k cutoff levels. Recall is the fraction of relevant pages retrieved out of all relevant pages. Example (top-5): * For a single SampleQuery, if 3 out of 5 relevant pages are retrieved in the top-5, recall@5 = 3/5 = 0.6
+  &quot;state&quot;: &quot;A String&quot;, # Output only. The state of the evaluation.
+  <pre>Gets a Evaluation.
+  name: string, Required. Full resource name of Evaluation, such as `projects/{project}/locations/{location}/evaluations/{evaluation}`. If the caller does not have permission to access the Evaluation, regardless of whether or not it exists, a PERMISSION_DENIED error is returned. If the requested Evaluation does not exist, a NOT_FOUND error is returned. (required)
+  <pre>Gets a list of Evaluations.
+  parent: string, Required. The parent location resource name, such as `projects/{project}/locations/{location}`. If the caller does not have permission to list Evaluations under this location, regardless of whether or not this location exists, a `PERMISSION_DENIED` error is returned. (required)
+  pageSize: integer, Optional. Maximum number of Evaluations to return. If unspecified, defaults to 100. The maximum allowed value is 1000. Values above 1000 will be coerced to 1000. If this field is negative, an `INVALID_ARGUMENT` error is returned.
+  pageToken: string, Optional. A page token ListEvaluationsResponse.next_page_token, received from a previous EvaluationService.ListEvaluations call. Provide this to retrieve the subsequent page. When paginating, all other parameters provided to EvaluationService.ListEvaluations must match the call that provided the page token. Otherwise, an `INVALID_ARGUMENT` error is returned.
+    { # Response message for EvaluationService.ListEvaluations method.
+  &quot;evaluations&quot;: [ # The Evaluations.
+  &quot;nextPageToken&quot;: &quot;A String&quot;, # A token that can be sent as ListEvaluationsRequest.page_token to retrieve the next page. If this field is omitted, there are no subsequent pages.
+    <code class="details" id="listResults">listResults(evaluation, pageSize=None, pageToken=None, x__xgafv=None)</code>
+  <pre>Gets a list of results for a given a Evaluation.
+  evaluation: string, Required. The evaluation resource name, such as `projects/{project}/locations/{location}/evaluations/{evaluation}`. If the caller does not have permission to list ListEvaluationResultsResponse.EvaluationResult under this evaluation, regardless of whether or not this evaluation set exists, a `PERMISSION_DENIED` error is returned. (required)
+  pageSize: integer, Optional. Maximum number of ListEvaluationResultsResponse.EvaluationResult to return. If unspecified, defaults to 100. The maximum allowed value is 1000. Values above 1000 will be coerced to 1000. If this field is negative, an `INVALID_ARGUMENT` error is returned.
+  pageToken: string, Optional. A page token ListEvaluationResultsResponse.next_page_token, received from a previous EvaluationService.ListEvaluationResults call. Provide this to retrieve the subsequent page. When paginating, all other parameters provided to EvaluationService.ListEvaluationResults must match the call that provided the page token. Otherwise, an `INVALID_ARGUMENT` error is returned.
+    { # Response message for EvaluationService.ListEvaluationResults method.
+  &quot;evaluationResults&quot;: [ # The evaluation results for the SampleQuerys.
+    { # Represents the results of an evaluation for a single SampleQuery.
+      &quot;qualityMetrics&quot;: { # Describes the metrics produced by the evaluation. # Output only. The metrics produced by the evaluation, for a given SampleQuery.
+      &quot;sampleQuery&quot;: { # Sample Query captures metadata to be used for evaluation. # Output only. The SampleQuery that was evaluated.
+        &quot;createTime&quot;: &quot;A String&quot;, # Output only. Timestamp the SampleQuery was created at.
+        &quot;name&quot;: &quot;A String&quot;, # Identifier. The full resource name of the sample query, in the format of `projects/{project}/locations/{location}/sampleQuerySets/{sample_query_set}/sampleQueries/{sample_query}`. This field must be a UTF-8 encoded string with a length limit of 1024 characters.
+        &quot;queryEntry&quot;: { # Query Entry captures metadata to be used for search evaluation. # The query entry.
+          &quot;query&quot;: &quot;A String&quot;, # Required. The query.
+          &quot;targets&quot;: [ # List of targets for the query.
+            { # Defines the parameters of the query&#x27;s expected outcome.
+              &quot;pageNumbers&quot;: [ # Expected page numbers of the target. Each page number must be non negative.
+              &quot;score&quot;: 3.14, # Relevance score of the target.
+              &quot;uri&quot;: &quot;A String&quot;, # Expected uri of the target. This field must be a UTF-8 encoded string with a length limit of 2048 characters. Example of valid uris: `https://example.com/abc`, `gcs://example/example.pdf`.
+  &quot;nextPageToken&quot;: &quot;A String&quot;, # A token that can be sent as ListEvaluationResultsRequest.page_token to retrieve the next page. If this field is omitted, there are no subsequent pages.
+    <code class="details" id="listResults_next">listResults_next()</code>

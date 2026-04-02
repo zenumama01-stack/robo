@@ -1,0 +1,48 @@
+<h1><a href="compute_alpha.html">Compute Engine API</a> . <a href="compute_alpha.regionNotificationEndpoints.html">regionNotificationEndpoints</a></h1>
+<p class="firstline">Retrieves the list of all NotificationEndpoint resources,</p>
+  <code><a href="#delete">delete(project, region, notificationEndpoint, requestId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Deletes the specified NotificationEndpoint in the given region</p>
+  <code><a href="#get">get(project, region, notificationEndpoint, x__xgafv=None)</a></code></p>
+<p class="firstline">Returns the specified NotificationEndpoint resource in the given region.</p>
+<p class="firstline">Create a NotificationEndpoint in the specified project in the given region</p>
+<p class="firstline">Lists the NotificationEndpoints for a project in the given region.</p>
+  <pre>Retrieves the list of all NotificationEndpoint resources,
+    { # Contains a list of NotificationEndpointsScopedList.
+  &quot;items&quot;: { # A list of NotificationEndpointsScopedList resources.
+    &quot;a_key&quot;: { # Name of the scope containing this set of NotificationEndpoints.
+      &quot;resources&quot;: [ # A list of NotificationEndpoints contained in this scope.
+        { # Represents a notification endpoint.
+            # A notification endpoint resource defines an endpoint to receive notifications
+            # when there are status changes detected by the associated health check
+          &quot;grpcSettings&quot;: { # Represents a gRPC setting that describes one gRPC notification endpoint and # Settings of the gRPC notification endpoint including the endpoint URL and
+              # the retry duration.
+              # the retry duration attempting to send notification to this endpoint.
+            &quot;authority&quot;: &quot;A String&quot;, # Optional. If specified, this field is used to set the authority header by
+                # the sender of notifications. See
+                # https://tools.ietf.org/html/rfc7540#section-8.1.2.3
+            &quot;endpoint&quot;: &quot;A String&quot;, # Endpoint to which gRPC notifications are sent. This must be a valid
+                # gRPCLB DNS name.
+            &quot;payloadName&quot;: &quot;A String&quot;, # Optional. If specified, this field is used to populate the &quot;name&quot; field
+                # in gRPC requests.
+            &quot;resendInterval&quot;: { # A Duration represents a fixed-length span of time represented # Optional. This field is used to configure how often to send a full update
+                # of all non-healthy backends. If unspecified, full updates are not sent.
+                # If specified, must be in the range between 600 seconds to 3600 seconds.
+                # Nanos are disallowed. Can only be set for regional notification
+                # endpoints.
+            &quot;retryDurationSec&quot;: 42, # How much time (in seconds) is spent attempting notification retries
+                # until a successful response is received. Default is 30s. Limit is 20m
+                # (1200s). Must be a positive number.
+          &quot;kind&quot;: &quot;compute#notificationEndpoint&quot;, # Output only. [Output Only] Type of the resource. Alwayscompute#notificationEndpoint for notification endpoints.
+          &quot;region&quot;: &quot;A String&quot;, # Output only. [Output Only] URL of the region where the notification endpoint resides.
+          # notification endpoints when the list is empty.
+  &quot;kind&quot;: &quot;compute#notificationEndpointAggregatedList&quot;, # Output only. Type of resource.
+    <code class="details" id="delete">delete(project, region, notificationEndpoint, requestId=None, x__xgafv=None)</code>
+  <pre>Deletes the specified NotificationEndpoint in the given region
+  notificationEndpoint: string, Name of the NotificationEndpoint resource to delete. (required)
+    <code class="details" id="get">get(project, region, notificationEndpoint, x__xgafv=None)</code>
+  <pre>Returns the specified NotificationEndpoint resource in the given region.
+  notificationEndpoint: string, Name of the NotificationEndpoint resource to return. (required)
+  <pre>Create a NotificationEndpoint in the specified project in the given region
+  <pre>Lists the NotificationEndpoints for a project in the given region.
+  &quot;items&quot;: [ # A list of NotificationEndpoint resources.
+  &quot;kind&quot;: &quot;compute#notificationEndpointList&quot;, # Output only. [Output Only] Type of the resource. Alwayscompute#notificationEndpoint for notification endpoints.

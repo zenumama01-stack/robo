@@ -1,0 +1,19 @@
+<h1><a href="safebrowsing_v4.html">Safe Browsing API</a> . <a href="safebrowsing_v4.threatListUpdates.html">threatListUpdates</a></h1>
+  <code><a href="#fetch">fetch(body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Fetches the most recent threat list updates. A client can request updates for multiple lists at once.</p>
+    <code class="details" id="fetch">fetch(body=None, x__xgafv=None)</code>
+  <pre>Fetches the most recent threat list updates. A client can request updates for multiple lists at once.
+{ # Describes a Safe Browsing API update request. Clients can request updates for multiple lists in a single request. The server may not respond to all requests, if the server has no updates for that list. NOTE: Field index 2 is unused. NEXT: 5
+  &quot;listUpdateRequests&quot;: [ # The requested threat list updates.
+    { # A single list update request.
+      &quot;constraints&quot;: { # The constraints for this update. # The constraints associated with this request.
+        &quot;deviceLocation&quot;: &quot;A String&quot;, # A client&#x27;s physical location, expressed as a ISO 31166-1 alpha-2 region code.
+        &quot;language&quot;: &quot;A String&quot;, # Requests the lists for a specific language. Expects ISO 639 alpha-2 format.
+        &quot;maxDatabaseEntries&quot;: 42, # Sets the maximum number of entries that the client is willing to have in the local database for the specified list. This should be a power of 2 between 2**10 and 2**20. If zero, no database size limit is set.
+        &quot;maxUpdateEntries&quot;: 42, # The maximum size in number of entries. The update will not contain more entries than this value. This should be a power of 2 between 2**10 and 2**20. If zero, no update size limit is set.
+        &quot;region&quot;: &quot;A String&quot;, # Requests the list for a specific geographic location. If not set the server may pick that value based on the user&#x27;s IP address. Expects ISO 3166-1 alpha-2 format.
+        &quot;supportedCompressions&quot;: [ # The compression types supported by the client.
+      &quot;platformType&quot;: &quot;A String&quot;, # The type of platform at risk by entries present in the list.
+      &quot;state&quot;: &quot;A String&quot;, # The current state of the client for the requested list (the encrypted client state that was received from the last successful list update).
+      &quot;threatEntryType&quot;: &quot;A String&quot;, # The types of entries present in the list.
+      &quot;threatType&quot;: &quot;A String&quot;, # The type of threat posed by entries present in the list.

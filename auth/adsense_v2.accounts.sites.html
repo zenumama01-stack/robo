@@ -1,0 +1,18 @@
+<h1><a href="adsense_v2.html">AdSense Management API</a> . <a href="adsense_v2.accounts.html">accounts</a> . <a href="adsense_v2.accounts.sites.html">sites</a></h1>
+<p class="firstline">Gets information about the selected site.</p>
+<p class="firstline">Lists all the sites available in an account.</p>
+  <pre>Gets information about the selected site.
+  name: string, Required. Name of the site. Format: accounts/{account}/sites/{site} (required)
+    { # Representation of a Site.
+  &quot;autoAdsEnabled&quot;: True or False, # Whether auto ads is turned on for the site.
+  &quot;domain&quot;: &quot;A String&quot;, # Domain (or subdomain) of the site, e.g. &quot;example.com&quot; or &quot;www.example.com&quot;. This is used in the `OWNED_SITE_DOMAIN_NAME` reporting dimension.
+  &quot;name&quot;: &quot;A String&quot;, # Output only. Resource name of a site. Format: accounts/{account}/sites/{site}
+  &quot;reportingDimensionId&quot;: &quot;A String&quot;, # Output only. Unique ID of the site as used in the `OWNED_SITE_ID` reporting dimension.
+  &quot;state&quot;: &quot;A String&quot;, # Output only. State of a site.
+  <pre>Lists all the sites available in an account.
+  parent: string, Required. The account which owns the collection of sites. Format: accounts/{account} (required)
+  pageSize: integer, The maximum number of sites to include in the response, used for paging. If unspecified, at most 10000 sites will be returned. The maximum value is 10000; values above 10000 will be coerced to 10000.
+  pageToken: string, A page token, received from a previous `ListSites` call. Provide this to retrieve the subsequent page. When paginating, all other parameters provided to `ListSites` must match the call that provided the page token.
+    { # Response definition for the sites list rpc.
+  &quot;nextPageToken&quot;: &quot;A String&quot;, # Continuation token used to page through sites. To retrieve the next page of the results, set the next request&#x27;s &quot;page_token&quot; value to this.
+  &quot;sites&quot;: [ # The sites returned in this list response.

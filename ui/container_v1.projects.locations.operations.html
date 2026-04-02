@@ -1,0 +1,21 @@
+<h1><a href="container_v1.html">Kubernetes Engine API</a> . <a href="container_v1.projects.html">projects</a> . <a href="container_v1.projects.locations.html">locations</a> . <a href="container_v1.projects.locations.operations.html">operations</a></h1>
+<p class="firstline">Cancels the specified operation.</p>
+  <code><a href="#get">get(name, operationId=None, projectId=None, x__xgafv=None, zone=None)</a></code></p>
+<p class="firstline">Gets the specified operation.</p>
+<p class="firstline">Lists all operations in a project in a specific zone or all zones.</p>
+  <pre>Cancels the specified operation.
+  name: string, The name (project, location, operation id) of the operation to cancel. Specified in the format `projects/*/locations/*/operations/*`. (required)
+{ # CancelOperationRequest cancels a single operation.
+  &quot;name&quot;: &quot;A String&quot;, # The name (project, location, operation id) of the operation to cancel. Specified in the format `projects/*/locations/*/operations/*`.
+  &quot;operationId&quot;: &quot;A String&quot;, # Deprecated. The server-assigned `name` of the operation. This field has been deprecated and replaced by the name field.
+  &quot;zone&quot;: &quot;A String&quot;, # Deprecated. The name of the Google Compute Engine [zone](https://cloud.google.com/compute/docs/zones#available) in which the operation resides. This field has been deprecated and replaced by the name field.
+    <code class="details" id="get">get(name, operationId=None, projectId=None, x__xgafv=None, zone=None)</code>
+  <pre>Gets the specified operation.
+  name: string, The name (project, location, operation id) of the operation to get. Specified in the format `projects/*/locations/*/operations/*`. (required)
+  operationId: string, Deprecated. The server-assigned `name` of the operation. This field has been deprecated and replaced by the name field.
+  <pre>Lists all operations in a project in a specific zone or all zones.
+  parent: string, The parent (project and location) where the operations will be listed. Specified in the format `projects/*/locations/*`. Location &quot;-&quot; matches all zones and all regions. (required)
+  zone: string, Deprecated. The name of the Google Compute Engine [zone](https://cloud.google.com/compute/docs/zones#available) to return operations for, or `-` for all zones. This field has been deprecated and replaced by the parent field.
+    { # ListOperationsResponse is the result of ListOperationsRequest.
+  &quot;missingZones&quot;: [ # If any zones are listed here, the list of operations returned may be missing the operations from those zones.
+  &quot;operations&quot;: [ # A list of operations in the project in the specified zone.

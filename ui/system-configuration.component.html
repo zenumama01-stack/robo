@@ -1,0 +1,137 @@
+<div class="system-configuration-container">
+        AI Configuration
+      <span class="config-count">
+        {{ filteredConfigurations.length }} of {{ configurations.length }} configurations
+          <i class="fa-solid fa-grid-2"></i>
+        (click)="loadData()"
+        title="Refresh">
+        <mj-system-config-filter-panel
+          [configurations]="configurations"
+          [filteredConfigurations]="filteredConfigurations"
+        </mj-system-config-filter-panel>
+      <!-- Configurations List Panel -->
+        [scrollable]="false">
+        <div class="configurations-content">
+              <mj-loading text="Loading AI configurations..." size="large"></mj-loading>
+              <p class="error-message">
+          <!-- Configurations Content -->
+            @if (filteredConfigurations.length === 0) {
+                <h3>No configurations found</h3>
+                <p>No AI configurations match your current filters. Try adjusting your search criteria or create a new configuration.</p>
+                <div class="configurations-grid">
+                  @for (config of filteredConfigurations; track config.ID) {
+                    <div class="config-card" [class.expanded]="config.isExpanded">
+                      <div class="card-header" (click)="toggleExpanded(config)">
+                        <div class="config-info">
+                          <div class="config-icon">
+                          <div class="config-details">
+                            <h4 class="config-name">{{ config.Name }}</h4>
+                            <div class="config-meta">
+                              @if (config.IsDefault) {
+                                <span class="default-badge">
+                              <span class="status-badge" [ngClass]="getStatusClass(config.Status)">
+                                <i [class]="getStatusIcon(config.Status)"></i>
+                                {{ config.Status }}
+                           [class.rotated]="config.isExpanded"></i>
+                        @if (config.Description) {
+                          <p class="config-description">{{ config.Description }}</p>
+                          <p class="config-description text-muted">No description provided</p>
+                        <!-- Expanded Content -->
+                        @if (config.isExpanded) {
+                            <!-- Stats Grid -->
+                            <div class="config-stats">
+                                <span class="stat-label">Parameters</span>
+                                <span class="stat-value">{{ config.params?.length || 0 }}</span>
+                                <span class="stat-label">Created</span>
+                                <span class="stat-value">{{ formatDate(config.__mj_CreatedAt) }}</span>
+                                <span class="stat-value">{{ formatDate(config.__mj_UpdatedAt) }}</span>
+                            <!-- Linked Prompts -->
+                            <div class="prompts-section">
+                                <i class="fa-solid fa-message-lines"></i>
+                                Linked Prompts
+                              <div class="prompt-links">
+                                @if (config.compressionPrompt) {
+                                  <div class="prompt-link" (click)="onOpenPrompt(config.DefaultPromptForContextCompressionID!); $event.stopPropagation()">
+                                    <div class="prompt-link-info">
+                                      <div class="prompt-link-icon">
+                                      <div class="prompt-link-details">
+                                        <span class="prompt-link-label">Context Compression</span>
+                                        <span class="prompt-link-name">{{ config.compressionPrompt.Name }}</span>
+                                    <i class="fa-solid fa-arrow-right prompt-link-arrow"></i>
+                                  <div class="no-prompt">No compression prompt configured</div>
+                                @if (config.summarizationPrompt) {
+                                  <div class="prompt-link" (click)="onOpenPrompt(config.DefaultPromptForContextSummarizationID!); $event.stopPropagation()">
+                                        <i class="fa-solid fa-file-lines"></i>
+                                        <span class="prompt-link-label">Context Summarization</span>
+                                        <span class="prompt-link-name">{{ config.summarizationPrompt.Name }}</span>
+                                  <div class="no-prompt">No summarization prompt configured</div>
+                            <!-- Configuration Parameters -->
+                            @if (config.params && config.params.length > 0) {
+                                  <i class="fa-solid fa-gear"></i>
+                                  Configuration Parameters
+                                  @for (param of config.params; track param.ID) {
+                                    <div class="param-item" (click)="onOpenParam(param); $event.stopPropagation()">
+                                      <div class="param-info">
+                                        <div class="param-type-icon">
+                                          <i [class]="getParamTypeIcon(param.Type)"></i>
+                                          <span class="param-type">{{ param.Type }}</span>
+                                      <span class="param-value">{{ formatParamValue(param) }}</span>
+                                <div class="no-params">No parameters configured</div>
+                      <div class="card-actions" (click)="$event.stopPropagation()">
+                          (click)="showConfigDetails(config, $event)"
+                          (click)="onOpenConfiguration(config)">
+                          Configure
+                <div class="configurations-list">
+                  <table class="configurations-table">
+                        <th (click)="sortBy('Parameters')"
+                            [class.sorted]="sortColumn === 'Parameters'"
+                            [class.desc]="sortColumn === 'Parameters' && sortDirection === 'desc'">
+                        <th (click)="sortBy('Updated')"
+                            [class.sorted]="sortColumn === 'Updated'"
+                            [class.desc]="sortColumn === 'Updated' && sortDirection === 'desc'">
+                            Updated
+                            <div class="config-name-cell">
+                              <div class="config-icon-small">
+                                <div class="config-name-text">
+                                  {{ config.Name }}
+                                    <span class="default-badge" style="margin-left: 8px;">
+                                  <div class="config-description-small">{{ config.Description }}</div>
+                          <td>{{ config.params?.length || 0 }}</td>
+                          <td>{{ formatDate(config.__mj_UpdatedAt) }}</td>
+                                (click)="showConfigDetails(config)"
+    @if (selectedConfig) {
+            <h3>{{ selectedConfig.Name }}</h3>
+            <span class="detail-subtitle">AI Configuration</span>
+            <span class="status-badge" [ngClass]="getStatusClass(selectedConfig.Status)">
+              <i [class]="getStatusIcon(selectedConfig.Status)"></i>
+              {{ selectedConfig.Status }}
+            @if (selectedConfig.IsDefault) {
+              <span class="feature-badge default">
+                Default Configuration
+        @if (selectedConfig.Description) {
+            <p class="detail-description">{{ selectedConfig.Description }}</p>
+        <!-- Configuration Stats -->
+            Overview
+              <span class="detail-label">Parameters</span>
+              <span class="detail-value">{{ selectedConfig.params?.length || 0 }}</span>
+              <span class="detail-label">Status</span>
+              <span class="detail-value">{{ selectedConfig.Status }}</span>
+          <div class="detail-grid single-column">
+                @if (selectedConfig.compressionPrompt) {
+                  {{ selectedConfig.compressionPrompt.Name }}
+                  <span class="muted">Not configured</span>
+              <span class="detail-label">Context Summarization</span>
+                @if (selectedConfig.summarizationPrompt) {
+                  {{ selectedConfig.summarizationPrompt.Name }}
+        <!-- Parameters Preview -->
+        @if (selectedConfig.params && selectedConfig.params.length > 0) {
+              Parameters ({{ selectedConfig.params.length }})
+            <div class="detail-params-list">
+              @for (param of selectedConfig.params.slice(0, 5); track param.ID) {
+                <div class="detail-param-item">
+              @if (selectedConfig.params.length > 5) {
+                <div class="params-more">
+                  +{{ selectedConfig.params.length - 5 }} more parameters
+              <span class="detail-value">{{ formatDate(selectedConfig.__mj_CreatedAt) }}</span>
+              <span class="detail-value">{{ formatDate(selectedConfig.__mj_UpdatedAt) }}</span>
+          (click)="openConfigFromPanel()">

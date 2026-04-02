@@ -1,0 +1,21 @@
+<h1><a href="analyticsadmin_v1alpha.html">Google Analytics Admin API</a> . <a href="analyticsadmin_v1alpha.properties.html">properties</a> . <a href="analyticsadmin_v1alpha.properties.dataStreams.html">dataStreams</a> . <a href="analyticsadmin_v1alpha.properties.dataStreams.sKAdNetworkConversionValueSchema.html">sKAdNetworkConversionValueSchema</a></h1>
+<p class="firstline">Creates a SKAdNetworkConversionValueSchema.</p>
+<p class="firstline">Deletes target SKAdNetworkConversionValueSchema.</p>
+<p class="firstline">Looks up a single SKAdNetworkConversionValueSchema.</p>
+<p class="firstline">Lists SKAdNetworkConversionValueSchema on a stream. Properties can have at most one SKAdNetworkConversionValueSchema.</p>
+<p class="firstline">Updates a SKAdNetworkConversionValueSchema.</p>
+  <pre>Creates a SKAdNetworkConversionValueSchema.
+  parent: string, Required. The parent resource where this schema will be created. Format: properties/{property}/dataStreams/{dataStream} (required)
+{ # SKAdNetwork conversion value schema of an iOS stream.
+  <pre>Deletes target SKAdNetworkConversionValueSchema.
+  name: string, Required. The name of the SKAdNetworkConversionValueSchema to delete. Format: properties/{property}/dataStreams/{dataStream}/sKAdNetworkConversionValueSchema/{skadnetwork_conversion_value_schema} (required)
+  <pre>Looks up a single SKAdNetworkConversionValueSchema.
+  name: string, Required. The resource name of SKAdNetwork conversion value schema to look up. Format: properties/{property}/dataStreams/{dataStream}/sKAdNetworkConversionValueSchema/{skadnetwork_conversion_value_schema} (required)
+  <pre>Lists SKAdNetworkConversionValueSchema on a stream. Properties can have at most one SKAdNetworkConversionValueSchema.
+  parent: string, Required. The DataStream resource to list schemas for. Format: properties/{property_id}/dataStreams/{dataStream} Example: properties/1234/dataStreams/5678 (required)
+  pageToken: string, A page token, received from a previous `ListSKAdNetworkConversionValueSchemas` call. Provide this to retrieve the subsequent page. When paginating, all other parameters provided to `ListSKAdNetworkConversionValueSchema` must match the call that provided the page token.
+    { # Response message for ListSKAdNetworkConversionValueSchemas RPC
+  &quot;nextPageToken&quot;: &quot;A String&quot;, # A token, which can be sent as `page_token` to retrieve the next page. If this field is omitted, there are no subsequent pages. Currently, Google Analytics supports only one SKAdNetworkConversionValueSchema per dataStream, so this will never be populated.
+  &quot;skadnetworkConversionValueSchemas&quot;: [ # List of SKAdNetworkConversionValueSchemas. This will have at most one value.
+  <pre>Updates a SKAdNetworkConversionValueSchema.
+  name: string, Output only. Resource name of the schema. This will be child of ONLY an iOS stream, and there can be at most one such child under an iOS stream. Format: properties/{property}/dataStreams/{dataStream}/sKAdNetworkConversionValueSchema (required)

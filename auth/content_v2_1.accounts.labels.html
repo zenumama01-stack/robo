@@ -1,0 +1,28 @@
+<h1><a href="content_v2_1.html">Content API for Shopping</a> . <a href="content_v2_1.accounts.html">accounts</a> . <a href="content_v2_1.accounts.labels.html">labels</a></h1>
+<p class="firstline">Creates a new label, not assigned to any account.</p>
+  <code><a href="#delete">delete(accountId, labelId, x__xgafv=None)</a></code></p>
+<p class="firstline">Deletes a label and removes it from all accounts to which it was assigned.</p>
+<p class="firstline">Lists the labels assigned to an account.</p>
+  <code><a href="#patch">patch(accountId, labelId, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Updates a label.</p>
+  <pre>Creates a new label, not assigned to any account.
+  accountId: string, Required. The id of the account this label belongs to. (required)
+{ # Label assigned by CSS domain or CSS group to one of its sub-accounts.
+  &quot;accountId&quot;: &quot;A String&quot;, # Immutable. The ID of account this label belongs to.
+  &quot;description&quot;: &quot;A String&quot;, # The description of this label.
+  &quot;labelId&quot;: &quot;A String&quot;, # Output only. The ID of the label.
+  &quot;labelType&quot;: &quot;A String&quot;, # Output only. The type of this label.
+  &quot;name&quot;: &quot;A String&quot;, # The display name of this label.
+    <code class="details" id="delete">delete(accountId, labelId, x__xgafv=None)</code>
+  <pre>Deletes a label and removes it from all accounts to which it was assigned.
+  accountId: string, Required. The id of the account that owns the label. (required)
+  labelId: string, Required. The id of the label to delete. (required)
+  <pre>Lists the labels assigned to an account.
+  accountId: string, Required. The account id for whose labels are to be listed. (required)
+  pageSize: integer, The maximum number of labels to return. The service may return fewer than this value. If unspecified, at most 50 labels will be returned. The maximum value is 1000; values above 1000 will be coerced to 1000.
+  pageToken: string, A page token, received from a previous `ListAccountLabels` call. Provide this to retrieve the subsequent page. When paginating, all other parameters provided to `ListAccountLabels` must match the call that provided the page token.
+    { # Response message for the `ListAccountLabels` method.
+  &quot;accountLabels&quot;: [ # The labels from the specified account.
+    <code class="details" id="patch">patch(accountId, labelId, body=None, x__xgafv=None)</code>
+  <pre>Updates a label.
+  labelId: string, Required. The id of the label to update. (required)

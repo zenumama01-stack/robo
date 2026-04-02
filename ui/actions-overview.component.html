@@ -1,0 +1,79 @@
+<div class="actions-overview" >
+  <!-- Header with search and filters -->
+      <div class="filter-container">
+          [data]="[
+          ]"
+  <!-- Metrics Cards -->
+    <div class="metric-card primary clickable" (click)="onTotalActionsClick()">
+        <div class="metric-value">{{ metrics.totalActions }}</div>
+        <div class="metric-label">Total Actions</div>
+        <div class="metric-breakdown">
+          <span class="active">{{ metrics.activeActions }} Active</span>
+          <span class="pending">{{ metrics.pendingActions }} Pending</span>
+          <span class="disabled">{{ metrics.disabledActions }} Disabled</span>
+    <div class="metric-card success clickable" (click)="onExecutionsClick()">
+        <div class="metric-value">{{ metrics.totalExecutions }}</div>
+        <div class="metric-label">Total Executions</div>
+          <span class="recent">{{ metrics.recentExecutions }} in last 24h</span>
+          <span class="success-rate">{{ metrics.successRate }}% success rate</span>
+    <div class="metric-card info clickable" (click)="onCategoriesClick()">
+        <div class="metric-value">{{ metrics.totalCategories }}</div>
+        <div class="metric-label">Categories</div>
+          <span>Organized structure</span>
+    <div class="metric-card warning clickable" (click)="onAIGeneratedClick()">
+        <div class="metric-value">{{ metrics.aiGeneratedActions }}</div>
+        <div class="metric-label">AI Generated</div>
+          <span class="custom">{{ metrics.customActions }} Custom</span>
+    <div class="metric-card gallery clickable" (click)="onActionGalleryClick()">
+        <i class="fa-solid fa-th"></i>
+          <i class="fa-solid fa-sparkles"></i>
+        <div class="metric-label">Action Gallery</div>
+          <span>Visual action browser</span>
+    <!-- Category Statistics -->
+    <div class="panel category-stats">
+        <h3><i class="fa-solid fa-chart-bar"></i> Category Performance</h3>
+        @if (categoryStats.length > 0) {
+            @for (category of categoryStats; track category.categoryId) {
+              <div class="category-item" (click)="openCategory(category.categoryId)">
+                <div class="category-info">
+                  <div class="category-name">{{ category.categoryName }}</div>
+                  <div class="category-metrics">
+                    <span class="metric">{{ category.actionCount }} actions</span>
+                    <span class="metric">{{ category.executionCount }} executions</span>
+                    <span class="metric success-rate">{{ category.successRate }}% success</span>
+                <div class="category-chart">
+                    <div class="progress-fill" [style.width.%]="category.successRate"></div>
+            <p>No category statistics available</p>
+    <!-- Recent Actions -->
+    <div class="panel recent-actions">
+        <h3><i class="fa-solid fa-clock"></i> Recent Actions</h3>
+        @if (recentActions.length > 0) {
+            @for (action of recentActions; track action.ID) {
+              <div class="action-item" (click)="openAction(action)">
+                <div class="action-info">
+                  <div class="action-name">{{ action.Name }}</div>
+                  <div class="action-description">{{ action.Description || 'No description' }}</div>
+                <div class="action-status">
+            <p>No recent actions found</p>
+    <!-- Recent Executions -->
+    <div class="panel recent-executions">
+        <h3><i class="fa-solid fa-history"></i> Recent Executions</h3>
+        @if (recentExecutions.length > 0) {
+          <div class="executions-list">
+              <div class="execution-item" [class.expanded]="execution.isExpanded">
+                <div class="execution-header" (click)="toggleExecutionExpanded(execution)">
+                    {{ execution.StartedAt | date:'MMM d, HH:mm' }}
+                    <div class="execution-action">{{ execution.Action || 'Action ID: ' + execution.ActionID }}</div>
+                    <div class="execution-user">{{ execution.User || 'User ID: ' + execution.UserID }}</div>
+                  <div class="execution-result">
+                      [themeColor]="isExecutionSuccess(execution) ? 'success' : 'error'"
+                      {{ execution.ResultCode || 'Unknown' }}
+                  <div class="execution-expand-icon">
+                    <i [class]="execution.isExpanded ? 'fa-solid fa-chevron-up' : 'fa-solid fa-chevron-down'"></i>
+                @if (execution.isExpanded) {
+                      <h5><i class="fa-solid fa-sliders"></i> Parameters</h5>
+                        [ngModel]="formatJsonParams(execution.Params)"
+                        style="height: 150px; width: 100%;">
+                        (click)="openExecution(execution)">
+                        <i class="fa-solid fa-external-link"></i> Open Details
+            <p>No recent executions found</p>

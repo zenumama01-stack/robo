@@ -1,0 +1,19 @@
+<h1><a href="discoveryengine_v1alpha.html">Discovery Engine API</a> . <a href="discoveryengine_v1alpha.projects.html">projects</a> . <a href="discoveryengine_v1alpha.projects.locations.html">locations</a> . <a href="discoveryengine_v1alpha.projects.locations.collections.html">collections</a> . <a href="discoveryengine_v1alpha.projects.locations.collections.dataStores.html">dataStores</a> . <a href="discoveryengine_v1alpha.projects.locations.collections.dataStores.branches.html">branches</a> . <a href="discoveryengine_v1alpha.projects.locations.collections.dataStores.branches.documents.html">documents</a></h1>
+  <code><a href="discoveryengine_v1alpha.projects.locations.collections.dataStores.branches.documents.chunks.html">chunks()</a></code>
+<p class="firstline">Returns the chunks Resource.</p>
+  <code><a href="#getProcessedDocument">getProcessedDocument(name, imageId=None, processedDocumentFormat=None, processedDocumentType=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Gets the parsed layout information for a Document.</p>
+    <code class="details" id="getProcessedDocument">getProcessedDocument(name, imageId=None, processedDocumentFormat=None, processedDocumentType=None, x__xgafv=None)</code>
+  <pre>Gets the parsed layout information for a Document.
+  imageId: string, Optional. Specifies config for IMAGE_BYTES.
+  processedDocumentFormat: string, What format output should be. If unspecified, defaults to JSON.
+      PROCESSED_DOCUMENT_FORMAT_UNSPECIFIED - Default value.
+      JSON - Output format is a JSON string representation of processed document.
+  processedDocumentType: string, Required. What type of processing to return.
+      PROCESSED_DOCUMENT_TYPE_UNSPECIFIED - Default value.
+      PARSED_DOCUMENT - Available for all data store parsing configs.
+      CHUNKED_DOCUMENT - Only available if ChunkingConfig is enabled on the data store.
+      IMAGE_CONVERTED_DOCUMENT - Returns the converted Image bytes (as JPEG or PNG) if available.
+      IMAGE_BYTES - Return image bytes in base64 encoded format if image_id of a document is provided, only supported for enabling shareholder-structure in layout parsing config for now.
+  &quot;document&quot;: &quot;A String&quot;, # Required. Full resource name of the referenced document, in the format `projects/*/locations/*/collections/*/dataStores/*/branches/*/documents/*`.
+  &quot;jsonData&quot;: &quot;A String&quot;, # The JSON string representation of the processed document.

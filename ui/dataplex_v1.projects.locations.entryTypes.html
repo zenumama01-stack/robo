@@ -1,0 +1,38 @@
+<h1><a href="dataplex_v1.html">Cloud Dataplex API</a> . <a href="dataplex_v1.projects.html">projects</a> . <a href="dataplex_v1.projects.locations.html">locations</a> . <a href="dataplex_v1.projects.locations.entryTypes.html">entryTypes</a></h1>
+  <code><a href="#create">create(parent, body=None, entryTypeId=None, validateOnly=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Creates an EntryType.</p>
+<p class="firstline">Deletes an EntryType.</p>
+<p class="firstline">Gets an EntryType.</p>
+<p class="firstline">Lists EntryType resources in a project and location.</p>
+<p class="firstline">Updates an EntryType.</p>
+    <code class="details" id="create">create(parent, body=None, entryTypeId=None, validateOnly=None, x__xgafv=None)</code>
+  <pre>Creates an EntryType.
+  parent: string, Required. The resource name of the EntryType, of the form: projects/{project_number}/locations/{location_id} where location_id refers to a Google Cloud region. (required)
+{ # Entry Type is a template for creating Entries.
+  &quot;authorization&quot;: { # Authorization for an Entry Type. # Immutable. Authorization defined for this type.
+    &quot;alternateUsePermission&quot;: &quot;A String&quot;, # Immutable. The IAM permission grantable on the Entry Group to allow access to instantiate Entries of Dataplex Universal Catalog owned Entry Types, only settable for Dataplex Universal Catalog owned Types.
+  &quot;createTime&quot;: &quot;A String&quot;, # Output only. The time when the EntryType was created.
+  &quot;description&quot;: &quot;A String&quot;, # Optional. Description of the EntryType.
+  &quot;etag&quot;: &quot;A String&quot;, # Optional. This checksum is computed by the service, and might be sent on update and delete requests to ensure the client has an up-to-date value before proceeding.
+  &quot;labels&quot;: { # Optional. User-defined labels for the EntryType.
+  &quot;name&quot;: &quot;A String&quot;, # Output only. The relative resource name of the EntryType, of the form: projects/{project_number}/locations/{location_id}/entryTypes/{entry_type_id}.
+  &quot;platform&quot;: &quot;A String&quot;, # Optional. The platform that Entries of this type belongs to.
+  &quot;requiredAspects&quot;: [ # AspectInfo for the entry type.
+      &quot;type&quot;: &quot;A String&quot;, # Required aspect type for the entry type.
+  &quot;system&quot;: &quot;A String&quot;, # Optional. The system that Entries of this type belongs to. Examples include CloudSQL, MariaDB etc
+  &quot;typeAliases&quot;: [ # Optional. Indicates the classes this Entry Type belongs to, for example, TABLE, DATABASE, MODEL.
+  &quot;uid&quot;: &quot;A String&quot;, # Output only. System generated globally unique ID for the EntryType. This ID will be different if the EntryType is deleted and re-created with the same name.
+  &quot;updateTime&quot;: &quot;A String&quot;, # Output only. The time when the EntryType was last updated.
+  entryTypeId: string, Required. EntryType identifier.
+  <pre>Deletes an EntryType.
+  name: string, Required. The resource name of the EntryType: projects/{project_number}/locations/{location_id}/entryTypes/{entry_type_id}. (required)
+  etag: string, Optional. If the client provided etag value does not match the current etag value, the DeleteEntryTypeRequest method returns an ABORTED error response.
+  <pre>Gets an EntryType.
+  <pre>Lists EntryType resources in a project and location.
+  parent: string, Required. The resource name of the EntryType location, of the form: projects/{project_number}/locations/{location_id} where location_id refers to a Google Cloud region. (required)
+  pageSize: integer, Optional. Maximum number of EntryTypes to return. The service may return fewer than this value. If unspecified, the service returns at most 10 EntryTypes. The maximum value is 1000; values above 1000 will be coerced to 1000.
+  pageToken: string, Optional. Page token received from a previous ListEntryTypes call. Provide this to retrieve the subsequent page. When paginating, all other parameters you provided to ListEntryTypes must match the call that provided the page token.
+    { # List EntryTypes response.
+  &quot;entryTypes&quot;: [ # EntryTypes under the given parent location.
+  <pre>Updates an EntryType.
+  name: string, Output only. The relative resource name of the EntryType, of the form: projects/{project_number}/locations/{location_id}/entryTypes/{entry_type_id}. (required)

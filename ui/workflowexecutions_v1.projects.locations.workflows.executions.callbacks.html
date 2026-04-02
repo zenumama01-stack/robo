@@ -1,0 +1,13 @@
+<h1><a href="workflowexecutions_v1.html">Workflow Executions API</a> . <a href="workflowexecutions_v1.projects.html">projects</a> . <a href="workflowexecutions_v1.projects.locations.html">locations</a> . <a href="workflowexecutions_v1.projects.locations.workflows.html">workflows</a> . <a href="workflowexecutions_v1.projects.locations.workflows.executions.html">executions</a> . <a href="workflowexecutions_v1.projects.locations.workflows.executions.callbacks.html">callbacks</a></h1>
+<p class="firstline">Returns a list of active callbacks that belong to the execution with the given name. The returned callbacks are ordered by callback ID.</p>
+  <pre>Returns a list of active callbacks that belong to the execution with the given name. The returned callbacks are ordered by callback ID.
+  parent: string, Required. Name of the execution for which the callbacks should be listed. Format: projects/{project}/locations/{location}/workflows/{workflow}/executions/{execution} (required)
+  pageSize: integer, Maximum number of callbacks to return per call. The default value is 100 and is also the maximum value.
+  pageToken: string, A page token, received from a previous `ListCallbacks` call. Provide this to retrieve the subsequent page. Note that pagination is applied to dynamic data. The list of callbacks returned can change between page requests if callbacks are created or deleted.
+    { # RPC response object for the ListCallbacks method.
+  &quot;callbacks&quot;: [ # The callbacks which match the request.
+    { # An instance of a Callback created by an execution.
+      &quot;availablePayloads&quot;: [ # Output only. The payloads received by the callback that have not been processed by a waiting execution step.
+      &quot;method&quot;: &quot;A String&quot;, # Output only. The method accepted by the callback. For example: GET, POST, PUT.
+      &quot;name&quot;: &quot;A String&quot;, # Output only. The resource name of the callback. Format: projects/{project}/locations/{location}/workflows/{workflow}/executions/{execution}/callback/{callback}
+      &quot;waiters&quot;: &quot;A String&quot;, # Output only. Number of execution steps waiting on this callback.

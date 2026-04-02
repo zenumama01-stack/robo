@@ -1,0 +1,142 @@
+import static java.util.function.Predicate.not;
+import java.math.RoundingMode;
+import org.openhab.core.config.core.internal.normalization.Normalizer;
+import org.openhab.core.config.core.internal.normalization.NormalizerFactory;
+import org.openhab.core.config.core.validation.ConfigDescriptionValidator;
+import org.osgi.service.component.ComponentConstants;
+ * The configuration admin service provides us with a map of key->values. Values can be any
+ * primitive type like String, int, double as well as the object variants of the number types
+ * like Integer, Double etc. You find normalization utility methods in here to convert all
+ * number Types to BigDecimal and all Collections<type> to List<type>. This works on a best-effort
+ * strategy (e.g. "3" will always end up being a BigDecimal, never a String),
+ * except if a {@link ConfigDescriptionParameter} is given. In the latter case,
+ * a conversion according to the type given in the description is performed.
+ * @author Thomas Höfer - Minor changes for type normalization based on config description
+public class ConfigUtil {
+    private static final Pattern DEFAULT_LIST_SPLITTER = Pattern.compile("(?<!\\\\),");
+     * Maps the provided (default) value of the given {@link ConfigDescriptionParameter} to the corresponding Java type.
+     * In case the provided (default) value is supposed to be a number and cannot be converted into the target type
+     * correctly, this method will return <code>null</code> while logging a warning.
+     * @param parameter the {@link ConfigDescriptionParameter} which default value should be normalized (must not be
+     *            null)
+     * @return the default value as the corresponding Java type, or
+     *         a <code>List</code> of the corresponding Java type if the parameter contains multiple values.
+     *         Returns <code>null</code> if the value could not be converted.
+    public static @Nullable Object getDefaultValueAsCorrectType(ConfigDescriptionParameter parameter) {
+        if (parameter.isMultiple()) {
+            if (parameter.getDefault() == null) {
+            List<Object> defaultValues = Stream.of(DEFAULT_LIST_SPLITTER.split(parameter.getDefault())) //
+                    .map(value -> value.trim().replace("\\,", ",")) //
+                    .filter(not(String::isEmpty)) //
+                    .map(value -> getDefaultValueAsCorrectType(parameter.getName(), parameter.getType(), value)) //
+                    .filter(Objects::nonNull) //
+            Integer multipleLimit = parameter.getMultipleLimit();
+            if (multipleLimit != null && defaultValues.size() > multipleLimit.intValue()) {
+                LoggerFactory.getLogger(ConfigUtil.class).warn(
+                        "Number of default values ({}) for parameter '{}' is greater than multiple limit ({})",
+                        defaultValues.size(), parameter.getName(), multipleLimit);
+            return defaultValues;
+            return getDefaultValueAsCorrectType(parameter.getName(), parameter.getType(), parameter.getDefault());
+    static @Nullable Object getDefaultValueAsCorrectType(String parameterName, Type parameterType,
+            @Nullable String defaultValue) {
+            switch (parameterType) {
+                case TEXT:
+                case BOOLEAN:
+                    return Boolean.parseBoolean(defaultValue);
+                case INTEGER:
+                    BigDecimal value = new BigDecimal(defaultValue);
+                    if (getNumberOfDecimalPlaces(value) > 0) {
+                                "Default value for parameter '{}' of type 'INTEGER' seems not to be an integer value: {}",
+                                parameterName, defaultValue);
+                        return value.setScale(0, RoundingMode.DOWN);
+                case DECIMAL:
+                    return new BigDecimal(defaultValue);
+                    "Could not parse default value '{}' as type '{}' for parameter '{}': {}", defaultValue,
+                    parameterType, parameterName, e.getMessage(), e);
+    static int getNumberOfDecimalPlaces(BigDecimal bigDecimal) {
+        return Math.max(0, bigDecimal.stripTrailingZeros().scale());
+     * Applies the default values from a give {@link ConfigDescription} to the given {@link Configuration}.
+     * @param configuration the {@link Configuration} where the default values should be added (must not be null)
+     * @param configDescription the {@link ConfigDescription} where the default values are located (may be null, but
+     *            method won't have any effect then)
+    public static void applyDefaultConfiguration(Configuration configuration,
+            @Nullable ConfigDescription configDescription) {
+            for (ConfigDescriptionParameter parameter : configDescription.getParameters()) {
+                String defaultValue = parameter.getDefault();
+                if (defaultValue != null && configuration.get(parameter.getName()) == null) {
+                    Object value = ConfigUtil.getDefaultValueAsCorrectType(parameter);
+                        configuration.put(parameter.getName(), value);
+     * Normalizes the types to the ones allowed for configurations.
+     * @param configuration the configuration that needs to be normalized
+     * @return normalized configuration
+    public static Map<String, @Nullable Object> normalizeTypes(Map<String, @Nullable Object> configuration) {
+        Map<String, @Nullable Object> convertedConfiguration = new HashMap<>(configuration.size());
+        for (Entry<String, @Nullable Object> parameter : configuration.entrySet()) {
+            String name = parameter.getKey();
+            Object value = parameter.getValue();
+            if (!isOSGiConfigParameter(name)) {
+                convertedConfiguration.put(name, value == null ? null : normalizeType(value, null));
+        return convertedConfiguration;
+     * Normalizes the type of the parameter to the one allowed for configurations.
+     * @param value the value to return as normalized type
+     * @param configDescriptionParameter the parameter that needs to be normalized
+     * @return corresponding value as a valid type
+     * @throws IllegalArgumentException if an invalid type has been given
+    public static Object normalizeType(@Nullable Object value,
+            @Nullable ConfigDescriptionParameter configDescriptionParameter) {
+        if (configDescriptionParameter != null) {
+            Normalizer normalizer = NormalizerFactory.getNormalizer(configDescriptionParameter);
+            return normalizer.normalize(value);
+        } else if (value instanceof Boolean) {
+            return NormalizerFactory.getNormalizer(Type.BOOLEAN).normalize(value);
+        } else if (value instanceof String) {
+            return NormalizerFactory.getNormalizer(Type.TEXT).normalize(value);
+        } else if (value instanceof Number) {
+            return NormalizerFactory.getNormalizer(Type.DECIMAL).normalize(value);
+        } else if (value instanceof Collection collection) {
+            return normalizeCollection(collection);
+                "Invalid type '{%s}' of configuration value!".formatted(value.getClass().getCanonicalName()));
+     * Normalizes the given configuration according to the given config descriptions.
+     * By doing so, it tries to convert types on a best-effort basis. The result will contain
+     * BigDecimals, Strings and Booleans wherever a conversion of similar types was possible.
+     * However, it does not check for general correctness of types. This can be done using the
+     * {@link ConfigDescriptionValidator}.
+     * If multiple config descriptions are given and a parameter is described several times, then the first one (lower
+     * index in the list) wins.
+     * @param configuration the configuration to be normalized
+     * @param configDescriptions the configuration descriptions that should be applied (must not be empty).
+     * @return the normalized configuration or null if given configuration was null
+     * @throws IllegalArgumentException if given config description is null
+    public static Map<String, @Nullable Object> normalizeTypes(Map<String, @Nullable Object> configuration,
+            List<ConfigDescription> configDescriptions) {
+        if (configDescriptions.isEmpty()) {
+            throw new IllegalArgumentException("Config description must not be empty.");
+        Map<String, @Nullable Object> convertedConfiguration = new HashMap<>();
+        Map<String, ConfigDescriptionParameter> configParams = new HashMap<>();
+        for (int i = configDescriptions.size() - 1; i >= 0; i--) {
+            configParams.putAll(configDescriptions.get(i).toParametersMap());
+                ConfigDescriptionParameter configDescriptionParameter = configParams.get(name);
+                convertedConfiguration.put(name, normalizeType(value, configDescriptionParameter));
+     * The conversion is performed 'best-effort' (e.g. "3" will always end up being a BigDecimal, never a String).
+     * Use {@link #normalizeType(Object, ConfigDescriptionParameter)} to make sure your field type ends up as intended.
+    public static @Nullable Object normalizeType(@Nullable Object value) {
+        return normalizeType(value, null);
+     * Normalizes a collection.
+     * @param collection the collection that entries should be normalized
+     * @return a collection that contains the normalized entries
+     * @throws IllegalArgumentException if the type of the normalized values differ or an invalid type has been given
+    private static Collection<Object> normalizeCollection(Collection<@NonNull ?> collection)
+        if (collection.isEmpty()) {
+            final List<Object> lst = new ArrayList<>(collection.size());
+            for (final Object it : collection) {
+                final Object normalized = normalizeType(it, null);
+                if (normalized == null) {
+                lst.add(normalized);
+                if (normalized.getClass() != lst.getFirst().getClass()) {
+                            "Invalid configuration property. Heterogeneous collection value!");
+            return lst;
+     * We do not want to handle or try to normalize OSGi provided configuration parameters
+     * @param name The configuration parameter name
+    private static boolean isOSGiConfigParameter(String name) {
+        return Constants.OBJECTCLASS.equals(name) || ComponentConstants.COMPONENT_NAME.equals(name)
+                || ComponentConstants.COMPONENT_ID.equals(name);

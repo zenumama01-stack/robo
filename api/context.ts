@@ -1,0 +1,167 @@
+import { IncomingMessage } from 'http';
+import * as url from 'url';
+import { default as jwt } from 'jsonwebtoken';
+import 'reflect-metadata';
+import { Subject, firstValueFrom } from 'rxjs';
+import { AuthenticationError, AuthorizationError } from 'type-graphql';
+import { getSigningKeys, getSystemUser, getValidationOptions, verifyUserRecord, extractUserInfoFromPayload, TokenExpiredError } from './auth/index.js';
+import { authCache } from './cache.js';
+import { userEmailMap, apiKey, mj_core_schema } from './config.js';
+import { DataSourceInfo, UserPayload } from './types.js';
+import { GetReadOnlyDataSource, GetReadWriteDataSource } from './util.js';
+import e from 'express';
+import { DatabaseProviderBase } from '@memberjunction/core';
+import { SQLServerDataProvider, SQLServerProviderConfigData, UserCache } from '@memberjunction/sqlserver-dataprovider';
+import { AuthProviderFactory } from './auth/AuthProviderFactory.js';
+import { GetAPIKeyEngine } from '@memberjunction/api-keys';
+const verifyAsync = async (issuer: string, token: string): Promise<jwt.JwtPayload> =>
+  new Promise((resolve, reject) => {
+    const options = getValidationOptions(issuer);
+      reject(new Error(`No validation options found for issuer ${issuer}`));
+    jwt.verify(token, getSigningKeys(issuer), options, (err, jwt) => {
+      if (jwt && typeof jwt !== 'string' && !err) {
+        const payload = jwt.payload ?? jwt;
+        // Use provider to extract user info for logging
+        const userInfo = extractUserInfoFromPayload(payload);
+        console.log(`Valid token: ${userInfo.fullName || 'Unknown'} (${userInfo.email || userInfo.preferredUsername || 'Unknown'})`);
+        resolve(payload);
+        console.warn('Invalid token');
+ * Request context for API key usage logging.
+export interface RequestContext {
+  /** The API endpoint path (e.g., '/graphql', '/mcp') */
+  /** HTTP method (e.g., 'POST', 'GET') */
+  /** GraphQL operation name if available */
+  /** User-Agent header */
+export const getUserPayload = async (
+  bearerToken: string,
+  sessionId = 'default',
+  dataSources: DataSourceInfo[],
+  systemApiKey?: string,
+  userApiKey?: string,
+  requestContext?: RequestContext
+): Promise<UserPayload> => {
+    const readOnlyDataSource = GetReadOnlyDataSource(dataSources, { allowFallbackToReadWrite: true });
+    const readWriteDataSource = GetReadWriteDataSource(dataSources);
+    // Check for user API key first (X-API-Key header with mj_sk_* format)
+    // This authenticates as the specific user who owns the API key
+    if (userApiKey && userApiKey !== String(undefined)) {
+      // Use system user as context for validation operations
+      const systemUser = await getSystemUser(readOnlyDataSource);
+          RawKey: userApiKey,
+          ApplicationName: 'MJAPI', // Check if key is bound to this application
+          Endpoint: requestContext?.endpoint ?? '/api',
+          Method: requestContext?.method ?? 'POST',
+          Operation: requestContext?.operationName ?? null,
+          StatusCode: 200, // Auth succeeded if we get here
+          IPAddress: requestContext?.ipAddress ?? null,
+          UserAgent: requestContext?.userAgent ?? null,
+      if (validationResult.IsValid && validationResult.User) {
+        // Get the user from UserCache to ensure UserRoles is properly populated
+        // The validationResult.User from APIKeyEngine doesn't include UserRoles
+        const cachedUser = UserCache.Instance.Users.find(
+          u => u.ID === validationResult.User.ID
+        // Use cached user if available, otherwise fall back to the validation result
+        const userRecord = cachedUser || validationResult.User;
+          userRecord,
+          email: userRecord.Email,
+          apiKeyId: validationResult.APIKeyId,
+          apiKeyHash: validationResult.APIKeyHash,
+      // MJ API key validation failed - use generic message to prevent enumeration
+      throw new AuthenticationError('Invalid API key');
+    // Check for system API key (x-mj-api-key header)
+    if (systemApiKey && systemApiKey != String(undefined)) {
+      if (systemApiKey === apiKey) {
+          userRecord: systemUser,
+          email: systemUser.Email,
+          isSystemUser: true,
+      throw new AuthenticationError('Invalid system API key');
+    const token = bearerToken.replace('Bearer ', '');
+      console.warn('No token to validate');
+      throw new AuthenticationError('Missing token');
+    const payload = jwt.decode(token);
+    if (!payload || typeof payload === 'string') {
+      throw new AuthenticationError('Invalid token payload');
+    const expiryDate = new Date((payload.exp ?? 0) * 1000);
+    if (expiryDate.getTime() <= Date.now()) {
+      // Log at warn level since token expiration is expected behavior (long-lived browser sessions)
+      console.warn(`Token expired at ${expiryDate.toISOString()} - client should refresh`);
+      throw new TokenExpiredError(expiryDate);
+    if (!authCache.has(token)) {
+        console.warn('No issuer claim on token');
+        throw new AuthenticationError('Missing issuer claim on token');
+      // Verify issuer is supported
+      if (!factory.getByIssuer(issuer)) {
+        console.warn(`Unsupported issuer: ${issuer}`);
+        throw new AuthenticationError(`Unsupported authentication provider: ${issuer}`);
+      await verifyAsync(issuer, token);
+      authCache.set(token, true);
+    // Use provider to extract user information
+    const email = userInfo.email ? ((userEmailMap ?? {})[userInfo.email] ?? userInfo.email) : userInfo.preferredUsername;
+    const userRecord = await verifyUserRecord(
+      requestDomain, 
+      readWriteDataSource
+      console.error(`User ${email} not found`);
+      throw new AuthorizationError();
+    } else if (!userRecord.IsActive) {
+      console.error(`User ${email} found but inactive`);
+    return { userRecord, email: userRecord.Email, sessionId };
+    if (error instanceof TokenExpiredError) {
+    throw new AuthenticationError('Unable to authenticate user');
+export const contextFunction =
+  ({ setupComplete$, dataSource, dataSources }: { setupComplete$: Subject<unknown>; dataSource: sql.ConnectionPool, dataSources: DataSourceInfo[] }) =>
+  async ({ req }: { req: IncomingMessage }) => {
+    await firstValueFrom(setupComplete$); // wait for setup to complete before processing the request
+    // Extract request data first (synchronous operations)
+    const sessionIdRaw = req.headers['x-session-id'];
+    const requestDomain = url.parse(req.headers.origin || '');
+    const sessionId = sessionIdRaw ? sessionIdRaw.toString() : '';
+    const bearerToken = req.headers.authorization ?? '';
+    // Two types of API keys:
+    // - x-mj-api-key: System API key for system-level operations (authenticates as system user)
+    // - X-API-Key: User API key (mj_sk_*) for user-authenticated operations
+    const systemApiKey = String(req.headers['x-mj-api-key']);
+    const userApiKey = String(req.headers['x-api-key']);
+    const reqAny = req as any;
+    const operationName: string | undefined = reqAny.body?.operationName;
+    if (operationName !== 'IntrospectionQuery') {
+      console.log({ operationName, variables: reqAny.body?.variables || undefined });
+    // Build request context for API key logging
+    // Note: responseTimeMs is not available at auth time, only endpoint/method/ip/ua
+    const expressReq = req as e.Request;
+    const requestContext: RequestContext = {
+      endpoint: expressReq.path || expressReq.url || '/api',
+      method: expressReq.method || 'POST',
+      operationName: operationName,
+      ipAddress: expressReq.ip || expressReq.socket?.remoteAddress || undefined,
+      userAgent: req.headers['user-agent'] as string | undefined,
+    const userPayload = await getUserPayload(
+      bearerToken,
+      dataSources,
+      requestDomain?.hostname ? requestDomain.hostname : undefined,
+      systemApiKey,
+      userApiKey,
+      requestContext
+    if (Metadata.Provider.Entities.length === 0 ) {
+      console.warn('WARNING: No entities found in global/shared metadata, this can often be due to the use of **global** Metadata/RunView/DB Providers in a multi-user environment. Check your code to make sure you are using the providers passed to you in AppContext by MJServer and not calling new Metadata() new RunView() new RunQuery() and similar patterns as those are unstable at times in multi-user server environments!!!');
+    // now create a new instance of SQLServerDataProvider for each request
+    const config = new SQLServerProviderConfigData(dataSource, mj_core_schema, 0, undefined, undefined, false);
+    const p = new SQLServerDataProvider();
+    await p.Config(config);
+    let rp = null;
+      const readOnlyDataSource = GetReadOnlyDataSource(dataSources, { allowFallbackToReadWrite: false });
+      if (readOnlyDataSource) {
+        rp = new SQLServerDataProvider();
+        const rConfig = new SQLServerProviderConfigData(readOnlyDataSource, mj_core_schema, 0, undefined, undefined, false);
+        await rp.Config(rConfig);
+      // no read only data source available, so rp will remain null, this is OK!
+    const providers = [{
+      provider: p,
+      type: 'Read-Write' as 'Read-Write' | 'Read-Only'
+    if (rp) {
+        provider: rp,
+        type: 'Read-Only' as 'Read-Write' | 'Read-Only'
+    const contextResult = { 
+      dataSource, 
+      userPayload: userPayload,
+      providers,
+    return contextResult;

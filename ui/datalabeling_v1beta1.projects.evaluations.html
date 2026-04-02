@@ -1,0 +1,10 @@
+<h1><a href="datalabeling_v1beta1.html">Data Labeling API</a> . <a href="datalabeling_v1beta1.projects.html">projects</a> . <a href="datalabeling_v1beta1.projects.evaluations.html">evaluations</a></h1>
+  <code><a href="#search">search(parent, filter=None, pageSize=None, pageToken=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Searches evaluations within a project.</p>
+    <code class="details" id="search">search(parent, filter=None, pageSize=None, pageToken=None, x__xgafv=None)</code>
+  <pre>Searches evaluations within a project.
+  parent: string, Required. Evaluation search parent (project ID). Format: &quot;projects/ {project_id}&quot; (required)
+  filter: string, Optional. To search evaluations, you can filter by the following: * evaluation_job.evaluation_job_id (the last part of EvaluationJob.name) * evaluation_job.model_id (the {model_name} portion of EvaluationJob.modelVersion) * evaluation_job.evaluation_job_run_time_start (Minimum threshold for the evaluationJobRunTime that created the evaluation) * evaluation_job.evaluation_job_run_time_end (Maximum threshold for the evaluationJobRunTime that created the evaluation) * evaluation_job.job_state (EvaluationJob.state) * annotation_spec.display_name (the Evaluation contains a metric for the annotation spec with this displayName) To filter by multiple critiera, use the `AND` operator or the `OR` operator. The following examples shows a string that filters by several critiera: &quot;evaluation_job.evaluation_job_id = {evaluation_job_id} AND evaluation_job.model_id = {model_name} AND evaluation_job.evaluation_job_run_time_start = {timestamp_1} AND evaluation_job.evaluation_job_run_time_end = {timestamp_2} AND annotation_spec.display_name = {display_name}&quot;
+  pageToken: string, Optional. A token identifying a page of results for the server to return. Typically obtained by the nextPageToken of the response to a previous search request. If you don&#x27;t specify this field, the API call requests the first page of the search.
+    { # Results of searching evaluations.
+  &quot;evaluations&quot;: [ # The list of evaluations matching the search.

@@ -1,0 +1,58 @@
+<h1><a href="firebaseapphosting_v1.html">Firebase App Hosting API</a> . <a href="firebaseapphosting_v1.projects.html">projects</a> . <a href="firebaseapphosting_v1.projects.locations.html">locations</a> . <a href="firebaseapphosting_v1.projects.locations.backends.html">backends</a> . <a href="firebaseapphosting_v1.projects.locations.backends.domains.html">domains</a></h1>
+  <code><a href="#create">create(parent, body=None, domainId=None, requestId=None, validateOnly=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Links a new domain to a backend.</p>
+<p class="firstline">Deletes a single domain.</p>
+<p class="firstline">Gets information about a domain.</p>
+<p class="firstline">Lists domains of a backend.</p>
+<p class="firstline">Updates the information for a single domain.</p>
+    <code class="details" id="create">create(parent, body=None, domainId=None, requestId=None, validateOnly=None, x__xgafv=None)</code>
+  <pre>Links a new domain to a backend.
+{ # A domain name that is associated with a backend.
+  &quot;annotations&quot;: { # Optional. Annotations as key value pairs.
+  &quot;createTime&quot;: &quot;A String&quot;, # Output only. Time at which the domain was created.
+  &quot;customDomainStatus&quot;: { # The status of a custom domain&#x27;s linkage to a backend. # Output only. Represents the state and configuration of a `CUSTOM` type domain. It is only present on Domains of that type.
+    &quot;certState&quot;: &quot;A String&quot;, # Output only. Tracks SSL certificate status for the domain.
+    &quot;hostState&quot;: &quot;A String&quot;, # Output only. Tracks whether a custom domain is detected as appropriately directing traffic to App Hosting.
+    &quot;issues&quot;: [ # Output only. A list of issues with domain configuration. Allows users to self-correct problems with DNS records.
+    &quot;ownershipState&quot;: &quot;A String&quot;, # Output only. Tracks whether the backend is permitted to serve content on the domain, based off the domain&#x27;s DNS records.
+    &quot;requiredDnsUpdates&quot;: [ # Output only. Lists the records that must added or removed to a custom domain&#x27;s DNS in order to finish setup and start serving content. Field is present during onboarding. Also present after onboarding if one or more of the above states is not *_ACTIVE, indicating the domain&#x27;s DNS records are in a bad state.
+      { # A set of DNS record updates that you should make to allow App Hosting to serve secure content in response to requests against your domain. These updates present the current state of your domain&#x27;s and related subdomains&#x27; DNS records when App Hosting last queried them, and the desired set of records that App Hosting needs to see before your custom domain can be fully active.
+        &quot;checkTime&quot;: &quot;A String&quot;, # Output only. The last time App Hosting checked your custom domain&#x27;s DNS records.
+        &quot;desired&quot;: [ # Output only. The set of DNS records App Hosting needs in order to be able to serve secure content on the domain.
+          { # A set of DNS records relevant to the setup and maintenance of a custom domain in App Hosting.
+            &quot;checkError&quot;: { # The `Status` type defines a logical error model that is suitable for different programming environments, including REST APIs and RPC APIs. It is used by [gRPC](https://github.com/grpc). Each `Status` message contains three pieces of data: error code, error message, and error details. You can find out more about this error model and how to work with it in the [API Design Guide](https://cloud.google.com/apis/design/errors). # Output only. An error App Hosting services encountered when querying your domain&#x27;s DNS records. Note: App Hosting ignores `NXDOMAIN` errors, as those generally just mean that a domain name hasn&#x27;t been set up yet.
+            &quot;domainName&quot;: &quot;A String&quot;, # Output only. The domain name the record set pertains to.
+            &quot;records&quot;: [ # Output only. Records on the domain.
+              { # A representation of a DNS records for a domain. DNS records are resource records that define how systems and services should behave when handling requests for a domain. For example, when you add `A` records to your domain&#x27;s DNS records, you&#x27;re informing other systems (such as your users&#x27; web browsers) to contact those IPv4 addresses to retrieve resources relevant to your domain (such as your App Hosting files).
+                &quot;domainName&quot;: &quot;A String&quot;, # Output only. The domain the record pertains to, e.g. `foo.bar.com.`.
+                &quot;rdata&quot;: &quot;A String&quot;, # Output only. The data of the record. The meaning of the value depends on record type: - A and AAAA: IP addresses for the domain. - CNAME: Another domain to check for records. - TXT: Arbitrary text strings associated with the domain. App Hosting uses TXT records to determine which Firebase projects have permission to act on the domain&#x27;s behalf. - CAA: The record&#x27;s flags, tag, and value, e.g. `0 issue &quot;pki.goog&quot;`.
+                &quot;relevantState&quot;: [ # Output only. An enum that indicates which state(s) this DNS record applies to. Populated for all records with an `ADD` or `REMOVE` required action.
+                &quot;requiredAction&quot;: &quot;A String&quot;, # Output only. An enum that indicates the a required action for this record. Populated when the record is part of a required change in a `DnsUpdates` `discovered` or `desired` record set.
+                &quot;type&quot;: &quot;A String&quot;, # Output only. The record&#x27;s type, which determines what data the record contains.
+        &quot;discovered&quot;: [ # Output only. The set of DNS records App Hosting discovered when inspecting a domain.
+        &quot;domainName&quot;: &quot;A String&quot;, # Output only. The domain name the DNS updates pertain to.
+  &quot;deleteTime&quot;: &quot;A String&quot;, # Output only. Time at which the domain was deleted.
+  &quot;disabled&quot;: True or False, # Optional. Whether the domain is disabled. Defaults to false.
+  &quot;displayName&quot;: &quot;A String&quot;, # Optional. Mutable human-readable name for the domain. 63 character limit. e.g. `prod domain`.
+  &quot;labels&quot;: { # Optional. Labels as key value pairs.
+  &quot;name&quot;: &quot;A String&quot;, # Identifier. The resource name of the domain, e.g. `/projects/p/locations/l/backends/b/domains/foo.com`
+  &quot;serve&quot;: { # Indicates whether App Hosting will serve content on the domain. # Optional. The serving behavior of the domain. If specified, the domain will serve content other than its backend&#x27;s live content.
+    &quot;redirect&quot;: { # Specifies redirect behavior for a domain. # Optional. Redirect behavior for a domain, if provided.
+      &quot;status&quot;: &quot;A String&quot;, # Optional. The status code to use in a redirect response. Must be a valid HTTP 3XX status code. Defaults to 302 if not present.
+      &quot;uri&quot;: &quot;A String&quot;, # Required. The URI of the redirect&#x27;s intended destination. This URI will be prepended to the original request path. URI without a scheme are assumed to be HTTPS.
+  &quot;type&quot;: &quot;A String&quot;, # Output only. The type of the domain.
+  &quot;updateTime&quot;: &quot;A String&quot;, # Output only. Time at which the domain was last updated.
+  domainId: string, Required. Id of the domain to create. Must be a valid domain name.
+  <pre>Deletes a single domain.
+  name: string, Required. Name of the resource in the format: `projects/{project}/locations/{locationId}/backends/{backendId}/domains/{domainId}`. (required)
+  <pre>Gets information about a domain.
+  <pre>Lists domains of a backend.
+    { # Message for response to list domains.
+  &quot;domains&quot;: [ # Output only. The list of domains.
+  &quot;nextPageToken&quot;: &quot;A String&quot;, # Output only. A token identifying the next page of results the server should return.
+  &quot;unreachable&quot;: [ # Output only. Locations that could not be reached.
+  <pre>Updates the information for a single domain.
+  name: string, Identifier. The resource name of the domain, e.g. `/projects/p/locations/l/backends/b/domains/foo.com` (required)
+  allowMissing: boolean, Optional. If set to true, and the domain is not found, a new domain will be created.
+  updateMask: string, Optional. Field mask is used to specify the fields to be overwritten in the Domain resource by the update. The fields specified in the update_mask are relative to the resource, not the full request. A field will be overwritten if it is in the mask. If the user does not provide a mask then all fields will be overwritten.
+  validateOnly: boolean, Optional. Indicates that the request should be validated and default values populated, without persisting the request or modifying any resources.

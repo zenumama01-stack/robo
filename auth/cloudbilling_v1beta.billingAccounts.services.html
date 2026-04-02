@@ -1,0 +1,15 @@
+<h1><a href="cloudbilling_v1beta.html">Cloud Billing API</a> . <a href="cloudbilling_v1beta.billingAccounts.html">billingAccounts</a> . <a href="cloudbilling_v1beta.billingAccounts.services.html">services</a></h1>
+<p class="firstline">Gets a Google Cloud service visible to a billing account.</p>
+<p class="firstline">Lists services visible to a billing account.</p>
+  <pre>Gets a Google Cloud service visible to a billing account.
+  name: string, Required. The name of the billing account service to retrieve. Format: billingAccounts/{billing_account}/services/{service} (required)
+    { # Encapsulates a Google Cloud service visible to a billing account.
+  &quot;displayName&quot;: &quot;A String&quot;, # Description of the BillingAccountService. Example: &quot;BigQuery&quot;, &quot;Compute Engine&quot;.
+  &quot;name&quot;: &quot;A String&quot;, # Resource name for the BillingAccountService. Example: &quot;billingAccounts/012345-567890-ABCDEF/services/DA34-426B-A397&quot;.
+  &quot;serviceId&quot;: &quot;A String&quot;, # Identifier for the service. It is the string after the collection identifier &quot;services/&quot;. Example: &quot;DA34-426B-A397&quot;.
+  <pre>Lists services visible to a billing account.
+  parent: string, Required. The billing account to list billing account service from. Format: billingAccounts/{billing_account} (required)
+  pageSize: integer, Maximum number of billing account service to return. Results may return fewer than this value. Default value is 50 and maximum value is 5000.
+  pageToken: string, Page token received from a previous ListBillingAccountServices call to retrieve the next page of results. If this field is empty, the first page is returned.
+    { # Response message for ListBillingAccountServices.
+  &quot;billingAccountServices&quot;: [ # The returned billing account services.

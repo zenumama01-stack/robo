@@ -1,0 +1,90 @@
+<h1><a href="tagmanager_v2.html">Tag Manager API</a> . <a href="tagmanager_v2.accounts.html">accounts</a> . <a href="tagmanager_v2.accounts.containers.html">containers</a> . <a href="tagmanager_v2.accounts.containers.workspaces.html">workspaces</a></h1>
+  <code><a href="tagmanager_v2.accounts.containers.workspaces.built_in_variables.html">built_in_variables()</a></code>
+<p class="firstline">Returns the built_in_variables Resource.</p>
+  <code><a href="tagmanager_v2.accounts.containers.workspaces.clients.html">clients()</a></code>
+  <code><a href="tagmanager_v2.accounts.containers.workspaces.folders.html">folders()</a></code>
+  <code><a href="tagmanager_v2.accounts.containers.workspaces.gtag_config.html">gtag_config()</a></code>
+<p class="firstline">Returns the gtag_config Resource.</p>
+  <code><a href="tagmanager_v2.accounts.containers.workspaces.tags.html">tags()</a></code>
+  <code><a href="tagmanager_v2.accounts.containers.workspaces.templates.html">templates()</a></code>
+  <code><a href="tagmanager_v2.accounts.containers.workspaces.transformations.html">transformations()</a></code>
+<p class="firstline">Returns the transformations Resource.</p>
+  <code><a href="tagmanager_v2.accounts.containers.workspaces.triggers.html">triggers()</a></code>
+  <code><a href="tagmanager_v2.accounts.containers.workspaces.variables.html">variables()</a></code>
+  <code><a href="tagmanager_v2.accounts.containers.workspaces.zones.html">zones()</a></code>
+  <code><a href="#bulk_update">bulk_update(path, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Applies multiple entity changes to a workspace in one call. When creating new entities, their entity IDs must be unique and in correct format. That is, they must start with "new_" and followed by number, e.g. "new_1", "new_2". Example body snippet to create myNewTag under myNewFolder is: ``` "changes": [ { "folder": { "folderId": "new_1", "name": "myNewFolder", ... }, "changeStatus": "added" }, { "tag": { "tagId": "new_2", "name": "myNewTag", "parentFolderId": "new_1", ... }, "changeStatus": "added" } ] ```</p>
+<p class="firstline">Creates a Workspace.</p>
+  <code><a href="#create_version">create_version(path, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Creates a Container Version from the entities present in the workspace, deletes the workspace, and sets the base container version to the newly created version.</p>
+<p class="firstline">Deletes a Workspace.</p>
+<p class="firstline">Gets a Workspace.</p>
+  <code><a href="#getStatus">getStatus(path, x__xgafv=None)</a></code></p>
+<p class="firstline">Finds conflicting and modified entities in the workspace.</p>
+<p class="firstline">Lists all Workspaces that belong to a GTM Container.</p>
+  <code><a href="#quick_preview">quick_preview(path, x__xgafv=None)</a></code></p>
+<p class="firstline">Quick previews a workspace by creating a fake container version from all entities in the provided workspace.</p>
+  <code><a href="#resolve_conflict">resolve_conflict(path, body=None, fingerprint=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Resolves a merge conflict for a workspace entity by updating it to the resolved entity passed in the request.</p>
+  <code><a href="#sync">sync(path, x__xgafv=None)</a></code></p>
+<p class="firstline">Syncs a workspace to the latest container version by updating all unmodified workspace entities and displaying conflicts for modified entities.</p>
+<p class="firstline">Updates a Workspace.</p>
+    <code class="details" id="bulk_update">bulk_update(path, body=None, x__xgafv=None)</code>
+  <pre>Applies multiple entity changes to a workspace in one call. When creating new entities, their entity IDs must be unique and in correct format. That is, they must start with &quot;new_&quot; and followed by number, e.g. &quot;new_1&quot;, &quot;new_2&quot;. Example body snippet to create myNewTag under myNewFolder is: ``` &quot;changes&quot;: [ { &quot;folder&quot;: { &quot;folderId&quot;: &quot;new_1&quot;, &quot;name&quot;: &quot;myNewFolder&quot;, ... }, &quot;changeStatus&quot;: &quot;added&quot; }, { &quot;tag&quot;: { &quot;tagId&quot;: &quot;new_2&quot;, &quot;name&quot;: &quot;myNewTag&quot;, &quot;parentFolderId&quot;: &quot;new_1&quot;, ... }, &quot;changeStatus&quot;: &quot;added&quot; } ] ```
+  path: string, GTM Workspace&#x27;s API relative path. (required)
+  &quot;changes&quot;: [ # The list of workspace changes to be applied.
+    { # A workspace entity that may represent a tag, trigger, variable, or folder in addition to its status in the workspace.
+      &quot;builtInVariable&quot;: { # Built-in variables are a special category of variables that are pre-created and non-customizable. They provide common functionality like accessing properties of the gtm data layer, monitoring clicks, or accessing elements of a page URL. # The built in variable being represented by the entity.
+      &quot;changeStatus&quot;: &quot;A String&quot;, # Represents how the entity has been changed in the workspace.
+      &quot;client&quot;: { # The client being represented by the entity.
+      &quot;customTemplate&quot;: { # Represents a Google Tag Manager Custom Template&#x27;s contents. # The custom template being represented by the entity.
+      &quot;folder&quot;: { # Represents a Google Tag Manager Folder. # The folder being represented by the entity.
+      &quot;gtagConfig&quot;: { # Represents a Google tag configuration. # The gtag config being represented by the entity.
+      &quot;tag&quot;: { # Represents a Google Tag Manager Tag. # The tag being represented by the entity.
+      &quot;transformation&quot;: { # Represents a Google Tag Manager Transformation. # The transformation being represented by the entity.
+      &quot;trigger&quot;: { # Represents a Google Tag Manager Trigger # The trigger being represented by the entity.
+      &quot;variable&quot;: { # Represents a Google Tag Manager Variable. # The variable being represented by the entity.
+      &quot;zone&quot;: { # Represents a Google Tag Manager Zone&#x27;s contents. # The zone being represented by the entity.
+  &quot;changes&quot;: [ # The entities that were added or updated during the bulk-update. Does not include entities that were deleted or updated by the system.
+  <pre>Creates a Workspace.
+{ # Represents a Google Tag Manager Container Workspace.
+  &quot;description&quot;: &quot;A String&quot;, # Workspace description.
+  &quot;fingerprint&quot;: &quot;A String&quot;, # The fingerprint of the GTM Workspace as computed at storage time. This value is recomputed whenever the workspace is modified.
+  &quot;name&quot;: &quot;A String&quot;, # Workspace display name.
+  &quot;path&quot;: &quot;A String&quot;, # GTM Workspace&#x27;s API relative path.
+  &quot;workspaceId&quot;: &quot;A String&quot;, # The Workspace ID uniquely identifies the GTM Workspace.
+    <code class="details" id="create_version">create_version(path, body=None, x__xgafv=None)</code>
+  <pre>Creates a Container Version from the entities present in the workspace, deletes the workspace, and sets the base container version to the newly created version.
+  &quot;newWorkspacePath&quot;: &quot;A String&quot;, # Auto generated workspace path created as a result of version creation. This field should only be populated if the created version was not a quick preview.
+  &quot;syncStatus&quot;: { # The status of a workspace after synchronization. # Whether version creation failed when syncing the workspace to the latest container version.
+    &quot;mergeConflict&quot;: True or False, # Synchornization operation detected a merge conflict.
+    &quot;syncError&quot;: True or False, # An error occurred during the synchronization operation.
+  <pre>Deletes a Workspace.
+  <pre>Gets a Workspace.
+    <code class="details" id="getStatus">getStatus(path, x__xgafv=None)</code>
+  <pre>Finds conflicting and modified entities in the workspace.
+    { # The changes that have occurred in the workspace since the base container version.
+  &quot;mergeConflict&quot;: [ # The merge conflict after sync.
+    { # Represents a merge conflict.
+      &quot;entityInBaseVersion&quot;: { # A workspace entity that may represent a tag, trigger, variable, or folder in addition to its status in the workspace. # The base version entity (since the latest sync operation) that has conflicting changes compared to the workspace. If this field is missing, it means the workspace entity is deleted from the base version.
+      &quot;entityInWorkspace&quot;: { # A workspace entity that may represent a tag, trigger, variable, or folder in addition to its status in the workspace. # The workspace entity that has conflicting changes compared to the base version. If an entity is deleted in a workspace, it will still appear with a deleted change status.
+  &quot;workspaceChange&quot;: [ # Entities that have been changed in the workspace.
+  <pre>Lists all Workspaces that belong to a GTM Container.
+    { # A list of workspaces in a container.
+  &quot;workspace&quot;: [ # All Workspaces of a GTM Container.
+    <code class="details" id="quick_preview">quick_preview(path, x__xgafv=None)</code>
+  <pre>Quick previews a workspace by creating a fake container version from all entities in the provided workspace.
+    { # Response to quick previewing a workspace.
+  &quot;compilerError&quot;: True or False, # Were there compiler errors or not.
+  &quot;containerVersion&quot;: { # Represents a Google Tag Manager Container Version. # The quick previewed container version.
+  &quot;syncStatus&quot;: { # The status of a workspace after synchronization. # Whether quick previewing failed when syncing the workspace to the latest container version.
+    <code class="details" id="resolve_conflict">resolve_conflict(path, body=None, fingerprint=None, x__xgafv=None)</code>
+  <pre>Resolves a merge conflict for a workspace entity by updating it to the resolved entity passed in the request.
+  fingerprint: string, When provided, this fingerprint must match the fingerprint of the entity_in_workspace in the merge conflict.
+    <code class="details" id="sync">sync(path, x__xgafv=None)</code>
+  <pre>Syncs a workspace to the latest container version by updating all unmodified workspace entities and displaying conflicts for modified entities.
+    { # A response after synchronizing the workspace to the latest container version.
+  &quot;mergeConflict&quot;: [ # The merge conflict after sync. If this field is not empty, the sync is still treated as successful. But a version cannot be created until all conflicts are resolved.
+  &quot;syncStatus&quot;: { # The status of a workspace after synchronization. # Indicates whether synchronization caused a merge conflict or sync error.
+  <pre>Updates a Workspace.
+  fingerprint: string, When provided, this fingerprint must match the fingerprint of the workspace in storage.

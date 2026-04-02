@@ -1,0 +1,37 @@
+<h1><a href="cloudsupport_v2beta.html">Google Cloud Support API</a> . <a href="cloudsupport_v2beta.cases.html">cases</a></h1>
+  <code><a href="cloudsupport_v2beta.cases.attachments.html">attachments()</a></code>
+  <code><a href="cloudsupport_v2beta.cases.comments.html">comments()</a></code>
+  <code><a href="#list">list(parent, filter=None, pageSize=None, pageToken=None, productLine=None, x__xgafv=None)</a></code></p>
+  <code><a href="#search">search(pageSize=None, pageToken=None, parent=None, query=None, x__xgafv=None)</a></code></p>
+  <code><a href="#showFeed">showFeed(parent, orderBy=None, pageSize=None, pageToken=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Show items in the feed of this case, including case emails, attachments, and comments.</p>
+  <code><a href="#showFeed_next">showFeed_next()</a></code></p>
+  &quot;severity&quot;: &quot;A String&quot;, # REMOVED. The severity of this case. Use priority instead.
+    <code class="details" id="list">list(parent, filter=None, pageSize=None, pageToken=None, productLine=None, x__xgafv=None)</code>
+  productLine: string, The product line to request cases for. If unspecified, only Google Cloud cases will be returned.
+    <code class="details" id="search">search(pageSize=None, pageToken=None, parent=None, query=None, x__xgafv=None)</code>
+  parent: string, The name of the parent resource to search for cases under.
+    <code class="details" id="showFeed">showFeed(parent, orderBy=None, pageSize=None, pageToken=None, x__xgafv=None)</code>
+  <pre>Show items in the feed of this case, including case emails, attachments, and comments.
+  parent: string, Required. The resource name of the case for which feed items should be listed. (required)
+  orderBy: string, Optional. Field to order feed items by, followed by `asc` or `desc` postfix. The only valid field is `creation_time`. This list is case-insensitive, default sorting order is ascending, and the redundant space characters are insignificant. Example: `creation_time desc`
+  pageSize: integer, Optional. The maximum number of feed items fetched with each request.
+  pageToken: string, Optional. A token identifying the page of results to return. If unspecified, it retrieves the first page.
+    { # The response message for the ShowFeed endpoint.
+  &quot;feedItems&quot;: [ # The list of feed items associated with the given Case.
+    { # A feed item associated with a support case.
+      &quot;attachment&quot;: { # An Attachment contains metadata about a file that was uploaded to a case - it is NOT a file itself. That being said, the name of an Attachment object can be used to download its accompanying file through the `media.download` endpoint. While attachments can be uploaded in the console at the same time as a comment, they&#x27;re associated on a &quot;case&quot; level, not a &quot;comment&quot; level. # Output only. An attachment attached to the case.
+      &quot;comment&quot;: { # A comment associated with a support case. Case comments are the primary way for Google Support to communicate with a user who has opened a case. When a user responds to Google Support, the user&#x27;s responses also appear as comments. # Output only. A comment added to the case.
+      &quot;deletedAttachment&quot;: { # An Attachment contains metadata about a file that was uploaded to a case - it is NOT a file itself. That being said, the name of an Attachment object can be used to download its accompanying file through the `media.download` endpoint. While attachments can be uploaded in the console at the same time as a comment, they&#x27;re associated on a &quot;case&quot; level, not a &quot;comment&quot; level. # Output only. A deleted attachment that used to be associated with the support case.
+      &quot;emailMessage&quot;: { # An email associated with a support case. # Output only. An email message received in reply to the case.
+        &quot;actor&quot;: { # An Actor represents an entity that performed an action. For example, an actor could be a user who posted a comment on a support case, a user who uploaded an attachment, or a service account that created a support case. # Output only. The user or Google Support agent that created this email message. This is inferred from the headers on the email message.
+        &quot;bodyContent&quot;: { # Stores text attached to a support object. # Output only. The full email message body. A best-effort attempt is made to remove extraneous reply threads.
+          &quot;plainText&quot;: &quot;A String&quot;, # Content in this field should be rendered and interpreted as-is.
+        &quot;ccEmailAddresses&quot;: [ # Output only. Email addresses CCed on the email.
+        &quot;createTime&quot;: &quot;A String&quot;, # Output only. Time when this email message object was created.
+        &quot;name&quot;: &quot;A String&quot;, # Identifier. Resource name for the email message.
+        &quot;recipientEmailAddresses&quot;: [ # Output only. Email addresses the email was sent to.
+        &quot;subject&quot;: &quot;A String&quot;, # Output only. Subject of the email.
+      &quot;eventTime&quot;: &quot;A String&quot;, # Output only. Time corresponding to the event of this item.
+  &quot;nextPageToken&quot;: &quot;A String&quot;, # A token to retrieve the next page of results. This should be set in the `page_token` field of subsequent `ShowFeedRequests`. If unspecified, there are no more results to retrieve.
+    <code class="details" id="showFeed_next">showFeed_next()</code>

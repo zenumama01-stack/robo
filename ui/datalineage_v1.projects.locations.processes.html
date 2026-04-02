@@ -1,0 +1,34 @@
+<h1><a href="datalineage_v1.html">Data Lineage API</a> . <a href="datalineage_v1.projects.html">projects</a> . <a href="datalineage_v1.projects.locations.html">locations</a> . <a href="datalineage_v1.projects.locations.processes.html">processes</a></h1>
+  <code><a href="datalineage_v1.projects.locations.processes.runs.html">runs()</a></code>
+<p class="firstline">Creates a new process.</p>
+  <code><a href="#delete">delete(name, allowMissing=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Deletes the process with the specified name.</p>
+<p class="firstline">Gets the details of the specified process.</p>
+<p class="firstline">List processes in the given project and location. List order is descending by insertion time.</p>
+<p class="firstline">Updates a process.</p>
+  <pre>Creates a new process.
+  parent: string, Required. The name of the project and its location that should own the process. (required)
+{ # A process is the definition of a data transformation operation.
+  &quot;attributes&quot;: { # Optional. The attributes of the process. Should only be used for the purpose of non-semantic management (classifying, describing or labeling the process). Up to 100 attributes are allowed.
+  &quot;displayName&quot;: &quot;A String&quot;, # Optional. A human-readable name you can set to display in a user interface. Must be not longer than 200 characters and only contain UTF-8 letters or numbers, spaces or characters like `_-:&amp;.`
+  &quot;name&quot;: &quot;A String&quot;, # Immutable. The resource name of the lineage process. Format: `projects/{project}/locations/{location}/processes/{process}`. Can be specified or auto-assigned. {process} must be not longer than 200 characters and only contain characters in a set: `a-zA-Z0-9_-:.`
+  &quot;origin&quot;: { # Origin of a process. # Optional. The origin of this process and its runs and lineage events.
+    &quot;name&quot;: &quot;A String&quot;, # If the source_type isn&#x27;t CUSTOM, the value of this field should be a Google Cloud resource name of the system, which reports lineage. The project and location parts of the resource name must match the project and location of the lineage resource being created. Examples: - `{source_type: COMPOSER, name: &quot;projects/foo/locations/us/environments/bar&quot;}` - `{source_type: BIGQUERY, name: &quot;projects/foo/locations/eu&quot;}` - `{source_type: CUSTOM, name: &quot;myCustomIntegration&quot;}`
+    &quot;sourceType&quot;: &quot;A String&quot;, # Type of the source. Use of a source_type other than `CUSTOM` for process creation or updating is highly discouraged. It might be restricted in the future without notice. There will be increase in cost if you use any of the source types other than `CUSTOM`.
+    <code class="details" id="delete">delete(name, allowMissing=None, x__xgafv=None)</code>
+  <pre>Deletes the process with the specified name.
+  name: string, Required. The name of the process to delete. (required)
+  allowMissing: boolean, If set to true and the process is not found, the request succeeds but the server doesn&#x27;t perform any actions.
+  <pre>Gets the details of the specified process.
+  name: string, Required. The name of the process to get. (required)
+  <pre>List processes in the given project and location. List order is descending by insertion time.
+  parent: string, Required. The name of the project and its location that owns this collection of processes. (required)
+  pageSize: integer, The maximum number of processes to return. The service may return fewer than this value. If unspecified, at most 50 processes are returned. The maximum value is 100; values greater than 100 are cut to 100.
+  pageToken: string, The page token received from a previous `ListProcesses` call. Specify it to get the next page. When paginating, all other parameters specified in this call must match the parameters of the call that provided the page token.
+    { # Response message for ListProcesses.
+  &quot;nextPageToken&quot;: &quot;A String&quot;, # The token to specify as `page_token` in the next call to get the next page. If this field is omitted, there are no subsequent pages.
+  &quot;processes&quot;: [ # The processes from the specified project and location.
+  <pre>Updates a process.
+  name: string, Immutable. The resource name of the lineage process. Format: `projects/{project}/locations/{location}/processes/{process}`. Can be specified or auto-assigned. {process} must be not longer than 200 characters and only contain characters in a set: `a-zA-Z0-9_-:.` (required)
+  allowMissing: boolean, If set to true and the process is not found, the request inserts it.
+  updateMask: string, The list of fields to update. Currently not used. The whole message is updated.

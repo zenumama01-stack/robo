@@ -1,0 +1,73 @@
+<h1><a href="compute_alpha.html">Compute Engine API</a> . <a href="compute_alpha.regionTargetHttpProxies.html">regionTargetHttpProxies</a></h1>
+  <code><a href="#delete">delete(project, region, targetHttpProxy, requestId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Deletes the specified TargetHttpProxy resource.</p>
+  <code><a href="#get">get(project, region, targetHttpProxy, x__xgafv=None)</a></code></p>
+<p class="firstline">Returns the specified TargetHttpProxy resource in the specified region.</p>
+<p class="firstline">Creates a TargetHttpProxy resource in the specified project and region</p>
+<p class="firstline">Retrieves the list of TargetHttpProxy resources available</p>
+  <code><a href="#setUrlMap">setUrlMap(project, region, targetHttpProxy, body=None, requestId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Changes the URL map for TargetHttpProxy.</p>
+    <code class="details" id="delete">delete(project, region, targetHttpProxy, requestId=None, x__xgafv=None)</code>
+  <pre>Deletes the specified TargetHttpProxy resource.
+  targetHttpProxy: string, Name of the TargetHttpProxy resource to delete. (required)
+    <code class="details" id="get">get(project, region, targetHttpProxy, x__xgafv=None)</code>
+  <pre>Returns the specified TargetHttpProxy resource in the specified region.
+  targetHttpProxy: string, Name of the TargetHttpProxy resource to return. (required)
+    { # Represents a Target HTTP Proxy resource.
+    # Google Compute Engine has two Target HTTP Proxy resources:
+    # * [Global](/compute/docs/reference/rest/alpha/targetHttpProxies)
+    # * [Regional](/compute/docs/reference/rest/alpha/regionTargetHttpProxies)
+    # A target HTTP proxy is a component of Google Cloud HTTP load balancers.
+    # * targetHttpProxies are used by global external Application Load Balancers,
+    #   classic Application Load Balancers, cross-region internal Application Load
+    #   Balancers, and Traffic Director.
+    # * regionTargetHttpProxies are used by regional internal Application Load
+    #   Balancers and regional external Application Load Balancers.
+    # Forwarding rules reference a target HTTP proxy, and the target proxy
+    # then references a URL map. For more information, readUsing Target Proxies
+    # and
+      # inserting a TargetHttpProxy. An up-to-date fingerprint must
+      # be provided in order to patch/update the TargetHttpProxy; otherwise, the
+      # TargetHttpProxy.
+  &quot;httpFilters&quot;: [ # URLs to networkservices.HttpFilter resources
+      # enabled for xDS clients using this configuration. For example,https://networkservices.googleapis.com/v1alpha1/projects/project/locations/locationhttpFilters/httpFilter
+      # Only filters that handle outbound connection and
+      # stream events may be specified. These filters work in conjunction with
+      # a default set of HTTP filters that may already be configured by Traffic
+      # Director. Traffic Director will determine the final location of these
+      # filters within xDS configuration based on the name of the HTTP filter. If
+      # Traffic Director positions multiple filters at the same location, those
+      # filters will be in the same order as specified in this list.
+      # httpFilters only applies for loadbalancers withloadBalancingScheme set to INTERNAL_SELF_MANAGED.
+      # See ForwardingRule for more details.
+  &quot;httpKeepAliveTimeoutSec&quot;: 42, # Specifies how long to keep a connection open, after completing a response,
+      # while there is no matching traffic (in seconds). If an HTTP keep-alive is
+      # not specified, a default value (610 seconds) will be used.
+      # For global external Application Load Balancers, the minimum allowed value
+      # is 5 seconds and the maximum allowed value is 1200 seconds.
+      # For classic Application Load Balancers, this option is not supported.
+  &quot;kind&quot;: &quot;compute#targetHttpProxy&quot;, # Output only. [Output Only] Type of resource. Always compute#targetHttpProxy
+      # for target HTTP proxies.
+  &quot;proxyBind&quot;: True or False, # This field only applies when the forwarding rule that references this
+      # target proxy has a loadBalancingScheme set toINTERNAL_SELF_MANAGED.
+      # When this field is set to true, Envoy proxies set up inbound
+      # traffic interception and bind to the IP address and port specified in the
+      # forwarding rule. This is generally useful when using Traffic Director to
+      # configure Envoy as a gateway or middle proxy (in other words, not a
+      # sidecar proxy). The Envoy proxy listens for inbound requests and handles
+      # requests when it receives them.
+  &quot;region&quot;: &quot;A String&quot;, # Output only. [Output Only] URL of the region where the regional Target HTTP Proxy
+      # resides. This field is not applicable to global Target HTTP Proxies.
+  &quot;urlMap&quot;: &quot;A String&quot;, # URL to the UrlMap resource that defines the mapping from URL to
+      # the BackendService.
+  <pre>Creates a TargetHttpProxy resource in the specified project and region
+  <pre>Retrieves the list of TargetHttpProxy resources available
+to the specified project in the specified region.
+    { # A list of TargetHttpProxy resources.
+  &quot;items&quot;: [ # A list of TargetHttpProxy resources.
+  &quot;kind&quot;: &quot;compute#targetHttpProxyList&quot;, # Output only. Type of resource. Always compute#targetHttpProxyList for lists
+      # of target HTTP proxies.
+    <code class="details" id="setUrlMap">setUrlMap(project, region, targetHttpProxy, body=None, requestId=None, x__xgafv=None)</code>
+  <pre>Changes the URL map for TargetHttpProxy.
+  targetHttpProxy: string, Name of the TargetHttpProxy to set a URL map for. (required)
+  &quot;urlMap&quot;: &quot;A String&quot;,

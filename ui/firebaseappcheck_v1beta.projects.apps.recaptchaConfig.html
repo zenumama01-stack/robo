@@ -1,0 +1,16 @@
+<h1><a href="firebaseappcheck_v1beta.html">Firebase App Check API</a> . <a href="firebaseappcheck_v1beta.projects.html">projects</a> . <a href="firebaseappcheck_v1beta.projects.apps.html">apps</a> . <a href="firebaseappcheck_v1beta.projects.apps.recaptchaConfig.html">recaptchaConfig</a></h1>
+<p class="firstline">Atomically gets the RecaptchaConfigs for the specified list of apps. For security reasons, the `site_secret` field is never populated in the response.</p>
+<p class="firstline">Gets the RecaptchaConfig for the specified app. For security reasons, the `site_secret` field is never populated in the response.</p>
+<p class="firstline">Updates the RecaptchaConfig for the specified app. While this configuration is incomplete or invalid, the app will be unable to exchange reCAPTCHA tokens for App Check tokens. For security reasons, the `site_secret` field is never populated in the response.</p>
+  <pre>Atomically gets the RecaptchaConfigs for the specified list of apps. For security reasons, the `site_secret` field is never populated in the response.
+  parent: string, Required. The parent project name shared by all RecaptchaConfigs being retrieved, in the format ``` projects/{project_number} ``` The parent collection in the `name` field of any resource being retrieved must match this field, or the entire batch fails. (required)
+  names: string, Required. The relative resource names of the RecaptchaConfigs to retrieve, in the format: ``` projects/{project_number}/apps/{app_id}/recaptchaConfig ``` A maximum of 100 objects can be retrieved in a batch. (repeated)
+    { # Response message for the BatchGetRecaptchaConfigs method.
+  &quot;configs&quot;: [ # RecaptchaConfigs retrieved.
+    { # An app&#x27;s reCAPTCHA v3 configuration object. This configuration is used by ExchangeRecaptchaToken to validate reCAPTCHA tokens issued to apps by reCAPTCHA v3. It also controls certain properties of the returned `AppCheckToken`, such as its ttl.
+      &quot;name&quot;: &quot;A String&quot;, # Required. The relative resource name of the reCAPTCHA v3 configuration object, in the format: ``` projects/{project_number}/apps/{app_id}/recaptchaConfig ```
+  <pre>Gets the RecaptchaConfig for the specified app. For security reasons, the `site_secret` field is never populated in the response.
+  name: string, Required. The relative resource name of the RecaptchaConfig, in the format: ``` projects/{project_number}/apps/{app_id}/recaptchaConfig ``` (required)
+  <pre>Updates the RecaptchaConfig for the specified app. While this configuration is incomplete or invalid, the app will be unable to exchange reCAPTCHA tokens for App Check tokens. For security reasons, the `site_secret` field is never populated in the response.
+  name: string, Required. The relative resource name of the reCAPTCHA v3 configuration object, in the format: ``` projects/{project_number}/apps/{app_id}/recaptchaConfig ``` (required)
+  updateMask: string, Required. A comma-separated list of names of fields in the RecaptchaConfig to update. Example: `site_secret`.

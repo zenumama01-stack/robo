@@ -1,0 +1,43 @@
+<h1><a href="adsensehost_v4_1.html">AdSense Host API</a> . <a href="adsensehost_v4_1.accounts.html">accounts</a> . <a href="adsensehost_v4_1.accounts.adunits.html">adunits</a></h1>
+  <code><a href="#delete">delete(accountId, adClientId, adUnitId)</a></code></p>
+<p class="firstline">Delete the specified ad unit from the specified publisher AdSense account.</p>
+<p class="firstline">Get the specified host ad unit in this AdSense account.</p>
+  <code><a href="#getAdCode">getAdCode(accountId, adClientId, adUnitId, hostCustomChannelId=None)</a></code></p>
+<p class="firstline">Get ad code for the specified ad unit, attaching the specified host custom channels.</p>
+  <code><a href="#insert">insert(accountId, adClientId, body=None)</a></code></p>
+<p class="firstline">Insert the supplied ad unit into the specified publisher AdSense account.</p>
+<p class="firstline">List all ad units in the specified publisher's AdSense account.</p>
+  <code><a href="#patch">patch(accountId, adClientId, adUnitId, body=None)</a></code></p>
+<p class="firstline">Update the supplied ad unit in the specified publisher AdSense account. This method supports patch semantics.</p>
+  <code><a href="#update">update(accountId, adClientId, body=None)</a></code></p>
+<p class="firstline">Update the supplied ad unit in the specified publisher AdSense account.</p>
+    <code class="details" id="delete">delete(accountId, adClientId, adUnitId)</code>
+  <pre>Delete the specified ad unit from the specified publisher AdSense account.
+  adClientId: string, Ad client for which to get ad unit. (required)
+  adUnitId: string, Ad unit to delete. (required)
+      &quot;color&quot;: &quot;A String&quot;, # Color to use when type is set to COLOR. These are represented as six hexadecimal characters, similar to HTML color codes, but without the leading hash.
+    &quot;size&quot;: &quot;A String&quot;, # Size of this ad unit. Size values are in the form SIZE_{width}_{height}.
+    &quot;type&quot;: &quot;A String&quot;, # Type of this ad unit. Possible values are TEXT, TEXT_IMAGE, IMAGE and LINK.
+    &quot;colors&quot;: { # The colors included in the style. These are represented as six hexadecimal characters, similar to HTML color codes, but without the leading hash.
+      &quot;family&quot;: &quot;A String&quot;, # The family of the font. Possible values are: ACCOUNT_DEFAULT_FAMILY, ADSENSE_DEFAULT_FAMILY, ARIAL, TIMES and VERDANA.
+      &quot;size&quot;: &quot;A String&quot;, # The size of the font. Possible values are: ACCOUNT_DEFAULT_SIZE, ADSENSE_DEFAULT_SIZE, SMALL, MEDIUM and LARGE.
+    &quot;kind&quot;: &quot;adsensehost#adStyle&quot;, # Kind this is, in this case adsensehost#adStyle.
+  &quot;kind&quot;: &quot;adsensehost#adUnit&quot;, # Kind of resource this is, in this case adsensehost#adUnit.
+  &quot;mobileContentAdsSettings&quot;: { # Settings specific to WAP mobile content ads (AFMC - deprecated).
+  <pre>Get the specified host ad unit in this AdSense account.
+  adUnitId: string, Ad unit to get. (required)
+    <code class="details" id="getAdCode">getAdCode(accountId, adClientId, adUnitId, hostCustomChannelId=None)</code>
+  <pre>Get ad code for the specified ad unit, attaching the specified host custom channels.
+  hostCustomChannelId: string, Host custom channel to attach to the ad code. (repeated)
+  &quot;adCode&quot;: &quot;A String&quot;, # The ad code snippet.
+  &quot;kind&quot;: &quot;adsensehost#adCode&quot;, # Kind this is, in this case adsensehost#adCode.
+    <code class="details" id="insert">insert(accountId, adClientId, body=None)</code>
+  <pre>Insert the supplied ad unit into the specified publisher AdSense account.
+  accountId: string, Account which will contain the ad unit. (required)
+  adClientId: string, Ad client into which to insert the ad unit. (required)
+  <pre>List all ad units in the specified publisher&#x27;s AdSense account.
+  &quot;kind&quot;: &quot;adsensehost#adUnits&quot;, # Kind of list this is, in this case adsensehost#adUnits.
+    <code class="details" id="patch">patch(accountId, adClientId, adUnitId, body=None)</code>
+  <pre>Update the supplied ad unit in the specified publisher AdSense account. This method supports patch semantics.
+    <code class="details" id="update">update(accountId, adClientId, body=None)</code>
+  <pre>Update the supplied ad unit in the specified publisher AdSense account.

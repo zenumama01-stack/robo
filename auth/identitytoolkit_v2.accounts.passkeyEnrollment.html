@@ -1,0 +1,36 @@
+<h1><a href="identitytoolkit_v2.html">Identity Toolkit API</a> . <a href="identitytoolkit_v2.accounts.html">accounts</a> . <a href="identitytoolkit_v2.accounts.passkeyEnrollment.html">passkeyEnrollment</a></h1>
+<p class="firstline">Finishes enrolling a passkey credential for the user.</p>
+<p class="firstline">Step one of the passkey enrollment process. Returns a challenge and parameters for creation of the passkey credential.</p>
+  <pre>Finishes enrolling a passkey credential for the user.
+{ # FinalizePasskeyEnrollment request. Registers passkey as a first factor for the user.
+  &quot;authenticatorRegistrationResponse&quot;: { # Authenticator response to register a new FIDO key. # Optional. The registration object from the authenticator.
+    &quot;authenticatorAttestationResponse&quot;: { # Attestation response from a FIDO authenticator. # The attestation response object as described in the spec.
+      &quot;attestationObject&quot;: &quot;A String&quot;, # The attestation object from the authenticator.
+      &quot;clientDataJson&quot;: &quot;A String&quot;, # The CollectedClientData object from the authenticator.
+      &quot;transports&quot;: [ # Authenticator transports that are supported by the authenticator.
+    &quot;credentialId&quot;: &quot;A String&quot;, # Identifier for the registered credential.
+    &quot;credentialType&quot;: &quot;A String&quot;, # The type of credential.
+  &quot;idToken&quot;: &quot;A String&quot;, # Required. The GCIP ID token of the signed-in user
+  &quot;tenantId&quot;: &quot;A String&quot;, # Optional. The ID of the Identity Platform tenant the user is signing in to. If not set, the user will sign in to the default Identity Platform project.
+    { # FinalizePasskeyEnrollment response.
+  <pre>Step one of the passkey enrollment process. Returns a challenge and parameters for creation of the passkey credential.
+{ # Starts passkey enrollment for passkey as a first factor by returning the FIDO challenge.
+    { # StartPasskeyEnrollment response.
+  &quot;credentialCreationOptions&quot;: { # Parameters for creating a FIDO key. # Parameters specified for the authenticator to create a public key.
+    &quot;authenticatorSelection&quot;: { # Criteria for the authenticator to create a registered FIDO key. # Criteria for the authenticator to create a credential.
+      &quot;authenticatorAttachment&quot;: &quot;A String&quot;, # The preferred authenticator attachment modality.
+      &quot;requireResidentKey&quot;: True or False, # Whether resident key is required.
+      &quot;userVerification&quot;: &quot;A String&quot;, # The Relying Party&#x27;s user verification requirements.
+    &quot;challenge&quot;: &quot;A String&quot;, # The FIDO challenge.
+    &quot;excludeCredentials&quot;: [ # Credentials already mapped to this user.
+      { # Descriptor for a public key credential.
+        &quot;credentialId&quot;: &quot;A String&quot;, # The identifier for the credential.
+        &quot;credentialType&quot;: &quot;A String&quot;, # The type of public key.
+    &quot;pubKeyCredParams&quot;: [ # Lists the supported key types and signature algorithms.
+      { # Parameters to create a public credential.
+        &quot;alg&quot;: &quot;A String&quot;, # The COSE registry number of the cryptographic signature algorithm.
+        &quot;credentialType&quot;: &quot;A String&quot;, # The type of public key to be created.
+    &quot;rp&quot;: { # The entity object for the Relying Party. # The relying party attributes for creating a new credential.
+      &quot;id&quot;: &quot;A String&quot;, # The RP ID of the FIDO Relying Party.
+    &quot;user&quot;: { # The entity object for the user. # The user attributes for creating a new credential.
+      &quot;id&quot;: &quot;A String&quot;, # The user ID.

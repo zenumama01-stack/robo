@@ -1,0 +1,33 @@
+<h1><a href="apigee_v1.html">Apigee API</a> . <a href="apigee_v1.organizations.html">organizations</a> . <a href="apigee_v1.organizations.spaces.html">spaces</a></h1>
+  <code><a href="#create">create(parent, body=None, spaceId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Create a space under an organization.</p>
+<p class="firstline">Deletes an organization space.</p>
+<p class="firstline">Get a space under an Organization.</p>
+<p class="firstline">Callers must have apigee.spaces.getIamPolicy.</p>
+<p class="firstline">Lists spaces under an organization.</p>
+<p class="firstline">Updates a space.</p>
+<p class="firstline">IAM META APIs Callers must have apigee.spaces.setIamPolicy.</p>
+<p class="firstline">Callers don't need any permissions.</p>
+    <code class="details" id="create">create(parent, body=None, spaceId=None, x__xgafv=None)</code>
+  <pre>Create a space under an organization.
+  parent: string, Required. Name of the Google Cloud project in which to associate the Apigee space. Pass the information as a query parameter using the following structure in your request: `organizations/` (required)
+{ # Organization space resource.
+  &quot;createTime&quot;: &quot;A String&quot;, # Output only. Create timestamp of the space.
+  &quot;displayName&quot;: &quot;A String&quot;, # Optional. Display name of the space.
+  &quot;name&quot;: &quot;A String&quot;, # Output only. Identifier. Id of the space. This field is used as the resource name, and must follow [AIP-122](https://google.aip.dev/122) guidelines.
+  &quot;updateTime&quot;: &quot;A String&quot;, # Output only. Last modified timestamp of the space.
+  spaceId: string, Required. Resource ID of the space.
+  <pre>Deletes an organization space.
+  name: string, Required. Apigee organization space name in the following format: `organizations/{org}/spaces/{space}` (required)
+  <pre>Get a space under an Organization.
+  <pre>Callers must have apigee.spaces.getIamPolicy.
+  <pre>Lists spaces under an organization.
+  pageSize: integer, Optional. The maximum number of spaces to return. The service may return fewer than this value. If unspecified, at most 50 spaces will be returned. The maximum value is 1000; values above 1000 will be coerced to 1000.
+  pageToken: string, Optional. A page token, received from a previous `ListSpaces` call. Provide this to retrieve the subsequent page. When paginating, all parameters must match the original call.
+    { # A response to a ListSpaces request containing the list of organization spaces and a page token for the next page.
+  &quot;spaces&quot;: [ # List of Apigee organization spaces.
+  <pre>Updates a space.
+  name: string, Required. Name of the space in the following format: `organizations/{org}/spaces/{space_id}`. (required)
+  updateMask: string, Required. List of fields to be updated. Fields that can be updated: display_name.
+  <pre>IAM META APIs Callers must have apigee.spaces.setIamPolicy.
+  <pre>Callers don&#x27;t need any permissions.

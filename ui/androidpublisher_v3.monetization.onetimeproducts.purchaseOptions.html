@@ -1,0 +1,35 @@
+<h1><a href="androidpublisher_v3.html">Google Play Android Developer API</a> . <a href="androidpublisher_v3.monetization.html">monetization</a> . <a href="androidpublisher_v3.monetization.onetimeproducts.html">onetimeproducts</a> . <a href="androidpublisher_v3.monetization.onetimeproducts.purchaseOptions.html">purchaseOptions</a></h1>
+  <code><a href="androidpublisher_v3.monetization.onetimeproducts.purchaseOptions.offers.html">offers()</a></code>
+<p class="firstline">Returns the offers Resource.</p>
+  <code><a href="#batchDelete">batchDelete(packageName, productId, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Deletes purchase options across one or multiple one-time products. By default this operation will fail if there are any existing offers under the deleted purchase options. Use the force parameter to override the default behavior.</p>
+  <code><a href="#batchUpdateStates">batchUpdateStates(packageName, productId, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Activates or deactivates purchase options across one or multiple one-time products.</p>
+    <code class="details" id="batchDelete">batchDelete(packageName, productId, body=None, x__xgafv=None)</code>
+  <pre>Deletes purchase options across one or multiple one-time products. By default this operation will fail if there are any existing offers under the deleted purchase options. Use the force parameter to override the default behavior.
+  packageName: string, Required. The parent app (package name) of the purchase options to delete. (required)
+  productId: string, Required. The product ID of the parent one-time product, if all purchase options to delete belong to the same one-time product. If this batch delete spans multiple one-time products, set this field to &quot;-&quot;. (required)
+{ # Request message for BatchDeletePurchaseOption.
+  &quot;requests&quot;: [ # Required. A list of delete requests of up to 100 elements. All requests must delete purchase options from different one-time products.
+    { # Request message for deleting a purchase option.
+      &quot;force&quot;: True or False, # Optional. This field has no effect for purchase options with no offers under them. For purchase options with associated offers: * If `force` is set to false (default), an error will be returned. * If `force` is set to true, any associated offers under the purchase option will be deleted.
+      &quot;packageName&quot;: &quot;A String&quot;, # Required. The parent app (package name) of the purchase option to delete.
+      &quot;productId&quot;: &quot;A String&quot;, # Required. The parent one-time product (ID) of the purchase option to delete.
+      &quot;purchaseOptionId&quot;: &quot;A String&quot;, # Required. The purchase option ID of the purchase option to delete.
+    <code class="details" id="batchUpdateStates">batchUpdateStates(packageName, productId, body=None, x__xgafv=None)</code>
+  <pre>Activates or deactivates purchase options across one or multiple one-time products.
+  packageName: string, Required. The parent app (package name) of the updated purchase options. (required)
+  productId: string, Required. The product ID of the parent one-time product, if all updated purchase options belong to the same one-time product. If this batch update spans multiple one-time products, set this field to &quot;-&quot;. (required)
+{ # Request message for BatchUpdatePurchaseOptionStates.
+  &quot;requests&quot;: [ # Required. The update request list of up to 100 elements. All requests must update different purchase options.
+    { # Request message to update the state of a one-time product purchase option.
+      &quot;activatePurchaseOptionRequest&quot;: { # Request message for UpdatePurchaseOptionState. # Activates a purchase option. Once activated, the purchase option will be available.
+        &quot;packageName&quot;: &quot;A String&quot;, # Required. The parent app (package name) of the purchase option to activate.
+        &quot;productId&quot;: &quot;A String&quot;, # Required. The parent one-time product (ID) of the purchase option to activate.
+        &quot;purchaseOptionId&quot;: &quot;A String&quot;, # Required. The purchase option ID of the purchase option to activate.
+      &quot;deactivatePurchaseOptionRequest&quot;: { # Request message for UpdatePurchaseOptionState. # Deactivates a purchase option. Once deactivated, the purchase option will become unavailable.
+        &quot;packageName&quot;: &quot;A String&quot;, # Required. The parent app (package name) of the purchase option to deactivate.
+        &quot;productId&quot;: &quot;A String&quot;, # Required. The parent one-time product (ID) of the purchase option to deactivate.
+        &quot;purchaseOptionId&quot;: &quot;A String&quot;, # Required. The purchase option ID of the purchase option to deactivate.
+    { # Response message for BatchUpdatePurchaseOptionStates.
+  &quot;oneTimeProducts&quot;: [ # The list of updated one-time products. This list will match the requests one to one, in the same order.

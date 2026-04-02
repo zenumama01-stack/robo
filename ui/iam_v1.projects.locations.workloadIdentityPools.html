@@ -1,0 +1,57 @@
+<h1><a href="iam_v1.html">Identity and Access Management (IAM) API</a> . <a href="iam_v1.projects.html">projects</a> . <a href="iam_v1.projects.locations.html">locations</a> . <a href="iam_v1.projects.locations.workloadIdentityPools.html">workloadIdentityPools</a></h1>
+  <code><a href="iam_v1.projects.locations.workloadIdentityPools.namespaces.html">namespaces()</a></code>
+  <code><a href="iam_v1.projects.locations.workloadIdentityPools.operations.html">operations()</a></code>
+  <code><a href="iam_v1.projects.locations.workloadIdentityPools.providers.html">providers()</a></code>
+  <code><a href="#create">create(parent, body=None, workloadIdentityPoolId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Creates a new WorkloadIdentityPool. You cannot reuse the name of a deleted pool until 30 days after deletion.</p>
+<p class="firstline">Deletes a WorkloadIdentityPool. You cannot use a deleted pool to exchange external credentials for Google Cloud credentials. However, deletion does not revoke credentials that have already been issued. Credentials issued for a deleted pool do not grant access to resources. If the pool is undeleted, and the credentials are not expired, they grant access again. You can undelete a pool for 30 days. After 30 days, deletion is permanent. You cannot update deleted pools. However, you can view and list them.</p>
+<p class="firstline">Gets an individual WorkloadIdentityPool.</p>
+<p class="firstline">Gets the IAM policy of a WorkloadIdentityPool.</p>
+<p class="firstline">Lists all non-deleted WorkloadIdentityPools in a project. If `show_deleted` is set to `true`, then deleted pools are also listed.</p>
+<p class="firstline">Updates an existing WorkloadIdentityPool.</p>
+<p class="firstline">Sets the IAM policies on a WorkloadIdentityPool</p>
+<p class="firstline">Returns the caller's permissions on a WorkloadIdentityPool</p>
+<p class="firstline">Undeletes a WorkloadIdentityPool, as long as it was deleted fewer than 30 days ago.</p>
+    <code class="details" id="create">create(parent, body=None, workloadIdentityPoolId=None, x__xgafv=None)</code>
+  <pre>Creates a new WorkloadIdentityPool. You cannot reuse the name of a deleted pool until 30 days after deletion.
+  parent: string, Required. The parent resource to create the pool in. The only supported location is `global`. (required)
+{ # Represents a collection of workload identities. You can define IAM policies to grant these identities access to Google Cloud resources.
+  &quot;disabled&quot;: True or False, # Optional. Whether the pool is disabled. You cannot use a disabled pool to exchange tokens, or use existing tokens to access resources. If the pool is re-enabled, existing tokens grant access again.
+  &quot;expireTime&quot;: &quot;A String&quot;, # Output only. Time after which the workload identity pool will be permanently purged and cannot be recovered.
+  &quot;inlineCertificateIssuanceConfig&quot;: { # Represents configuration for generating mutual TLS (mTLS) certificates for the identities within this pool. # Optional. Defines the Certificate Authority (CA) pool resources and configurations required for issuance and rotation of mTLS workload certificates.
+    &quot;caPools&quot;: { # Optional. A required mapping of a Google Cloud region to the CA pool resource located in that region. The CA pool is used for certificate issuance, adhering to the following constraints: * Key format: A supported cloud region name equivalent to the location identifier in the corresponding map entry&#x27;s value. * Value format: A valid CA pool resource path format like: &quot;projects/{project}/locations/{location}/caPools/{ca_pool}&quot; * Region Matching: Workloads are ONLY issued certificates from CA pools within the same region. Also the CA pool region (in value) must match the workload&#x27;s region (key).
+    &quot;keyAlgorithm&quot;: &quot;A String&quot;, # Optional. Key algorithm to use when generating the key pair. This key pair will be used to create the certificate. If not specified, this will default to ECDSA_P256.
+    &quot;lifetime&quot;: &quot;A String&quot;, # Optional. Lifetime of the workload certificates issued by the CA pool. Must be between 24 hours and 30 days. If not specified, this will be defaulted to 24 hours.
+    &quot;rotationWindowPercentage&quot;: 42, # Optional. Rotation window percentage, the percentage of remaining lifetime after which certificate rotation is initiated. Must be between 50 and 80. If no value is specified, rotation window percentage is defaulted to 50.
+    &quot;useDefaultSharedCa&quot;: True or False, # Optional. If set to true, the trust domain will utilize the GCP-provisioned default CA. A default CA in the same region as the workload will be selected to issue the certificate. Enabling this will clear any existing `ca_pools` configuration to provision the certificates. NOTE: This field is mutually exclusive with `ca_pools`. If this flag is enabled, certificates will be automatically provisioned from the default shared CAs. This flag should not be set if you want to use your own CA pools to provision the certificates.
+  &quot;inlineTrustConfig&quot;: { # Defines configuration for extending trust to additional trust domains. By establishing trust with another domain, the current domain will recognize and accept certificates issued by entities within the trusted domains. Note that a trust domain automatically trusts itself, eliminating the need for explicit configuration. # Optional. Represents config to add additional trusted trust domains.
+    &quot;additionalTrustBundles&quot;: { # Optional. Maps specific trust domains (e.g., &quot;example.com&quot;) to their corresponding TrustStore, which contain the trusted root certificates for that domain. There can be a maximum of 10 trust domain entries in this map. Note that a trust domain automatically trusts itself and don&#x27;t need to be specified here. If however, this WorkloadIdentityPool&#x27;s trust domain contains any trust anchors in the additional_trust_bundles map, those trust anchors will be *appended to* the trust bundle automatically derived from your InlineCertificateIssuanceConfig&#x27;s ca_pools.
+      &quot;a_key&quot;: { # Trust store that contains trust anchors and optional intermediate CAs used in PKI to build a trust chain(trust hierarchy) and verify a client&#x27;s identity.
+        &quot;intermediateCas&quot;: [ # Optional. Set of intermediate CA certificates used for building the trust chain to the trust anchor. Important: Intermediate CAs are only supported for X.509 federation.
+          { # Intermediate CA certificates used for building the trust chain to trust anchor
+            &quot;pemCertificate&quot;: &quot;A String&quot;, # PEM certificate of the PKI used for validation. Must only contain one ca certificate.
+        &quot;trustAnchors&quot;: [ # Required. List of trust anchors to be used while performing validation against a given TrustStore. The incoming end entity&#x27;s certificate must be in the trust chain of one of the trust anchors here.
+          { # Represents a root of trust.
+            &quot;pemCertificate&quot;: &quot;A String&quot;, # PEM certificate of the PKI used for validation. Must only contain one ca certificate (either root or intermediate cert).
+        &quot;trustDefaultSharedCa&quot;: True or False, # Optional. If set to True, the trust bundle will include the private ca managed identity regional root public certificates. Important: `trust_default_shared_ca` is only supported for managed identity trust domain resource.
+  &quot;mode&quot;: &quot;A String&quot;, # Immutable. The mode the pool is operating in.
+  &quot;name&quot;: &quot;A String&quot;, # Identifier. The resource name of the pool.
+  workloadIdentityPoolId: string, Required. The ID to use for the pool, which becomes the final component of the resource name. This value should be 4-32 characters, and may contain the characters [a-z0-9-]. The prefix `gcp-` is reserved for use by Google, and may not be specified.
+  <pre>Deletes a WorkloadIdentityPool. You cannot use a deleted pool to exchange external credentials for Google Cloud credentials. However, deletion does not revoke credentials that have already been issued. Credentials issued for a deleted pool do not grant access to resources. If the pool is undeleted, and the credentials are not expired, they grant access again. You can undelete a pool for 30 days. After 30 days, deletion is permanent. You cannot update deleted pools. However, you can view and list them.
+  name: string, Required. The name of the pool to delete. (required)
+  <pre>Gets an individual WorkloadIdentityPool.
+  name: string, Required. The name of the pool to retrieve. (required)
+  <pre>Gets the IAM policy of a WorkloadIdentityPool.
+  <pre>Lists all non-deleted WorkloadIdentityPools in a project. If `show_deleted` is set to `true`, then deleted pools are also listed.
+  parent: string, Required. The parent resource to list pools for. (required)
+  pageSize: integer, The maximum number of pools to return. If unspecified, at most 50 pools are returned. The maximum value is 1000; values above are 1000 truncated to 1000.
+  pageToken: string, A page token, received from a previous `ListWorkloadIdentityPools` call. Provide this to retrieve the subsequent page.
+    { # Response message for ListWorkloadIdentityPools.
+  &quot;workloadIdentityPools&quot;: [ # A list of pools.
+  <pre>Updates an existing WorkloadIdentityPool.
+  name: string, Identifier. The resource name of the pool. (required)
+  <pre>Sets the IAM policies on a WorkloadIdentityPool
+  <pre>Returns the caller&#x27;s permissions on a WorkloadIdentityPool
+  <pre>Undeletes a WorkloadIdentityPool, as long as it was deleted fewer than 30 days ago.
+  name: string, Required. The name of the pool to undelete. (required)
+{ # Request message for UndeleteWorkloadIdentityPool.

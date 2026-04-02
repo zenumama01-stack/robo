@@ -1,0 +1,17 @@
+<h1><a href="gkehub_v1beta1.html">GKE Hub API</a> . <a href="gkehub_v1beta1.projects.html">projects</a> . <a href="gkehub_v1beta1.projects.locations.html">locations</a> . <a href="gkehub_v1beta1.projects.locations.memberships.html">memberships</a></h1>
+  <code><a href="#generateConnectManifest">generateConnectManifest(name, connectAgent_name=None, connectAgent_namespace=None, connectAgent_proxy=None, imagePullSecretContent=None, isUpgrade=None, registry=None, version=None, x__xgafv=None)</a></code></p>
+    &quot;issuer&quot;: &quot;A String&quot;, # Optional. A JSON Web Token (JWT) issuer URI. `issuer` must start with `https://` and be a valid URL with length &lt;2000 characters. If set, then Google will allow valid OIDC tokens from this issuer to authenticate within the workload_identity_pool. OIDC discovery will be performed on this URI to validate tokens from the issuer. Clearing `issuer` disables Workload Identity. `issuer` cannot be directly modified; it must be cleared (and Workload Identity disabled) before using a new issuer (and re-enabling Workload Identity).
+  &quot;description&quot;: &quot;A String&quot;, # Optional. Description of this membership, limited to 63 characters. Must match the regex: `a-zA-Z0-9*`
+    &quot;gkeCluster&quot;: { # GkeCluster contains information specific to GKE clusters. # Optional. Specific information for a GKE-on-Google Cloud cluster.
+      &quot;nodeProviderId&quot;: &quot;A String&quot;, # Output only. Node providerID as reported by the first node in the list of nodes on the Kubernetes endpoint. On Kubernetes platforms that support zero-node clusters (like GKE-on-Google Cloud), the node_count will be zero and the node_provider_id will be empty.
+  &quot;labels&quot;: { # Optional. Google Cloud labels for this membership. These labels are not leveraged by multi-cluster features, instead, we prefer cluster labels, which can be set on GKE cluster or other cluster types.
+  &quot;state&quot;: { # State of the Membership resource. # Output only. State of the Membership resource.
+    &quot;description&quot;: &quot;A String&quot;, # This field is never set by the Hub Service.
+    &quot;updateTime&quot;: &quot;A String&quot;, # This field is never set by the Hub Service.
+    <code class="details" id="generateConnectManifest">generateConnectManifest(name, connectAgent_name=None, connectAgent_namespace=None, connectAgent_proxy=None, imagePullSecretContent=None, isUpgrade=None, registry=None, version=None, x__xgafv=None)</code>
+  connectAgent_name: string, Do not set.
+  connectAgent_namespace: string, Optional. Namespace for GKE Connect agent resources. Defaults to `gke-connect`. The Connect Agent is authorized automatically when run in the default namespace. Otherwise, explicit authorization must be granted with an additional IAM binding.
+  connectAgent_proxy: string, Optional. URI of a proxy if connectivity from the agent to gkeconnect.googleapis.com requires the use of a proxy. Format must be in the form `http(s)://{proxy_address}`, depending on the HTTP/HTTPS protocol supported by the proxy. This will direct the connect agent&#x27;s outbound traffic through a HTTP(S) proxy.
+    { # Response message for the `GkeHubMembershipService.ListMemberships` method.
+  name: string, Required. The membership resource name in the format: `projects/[project_id]/locations/global/memberships/[membership_id]` (required)
+  updateMask: string, Required. Mask of fields to update. At least one field path must be specified in this mask.

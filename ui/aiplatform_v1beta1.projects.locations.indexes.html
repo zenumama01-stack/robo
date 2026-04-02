@@ -1,0 +1,24 @@
+<h1><a href="aiplatform_v1beta1.html">Vertex AI API</a> . <a href="aiplatform_v1beta1.projects.html">projects</a> . <a href="aiplatform_v1beta1.projects.locations.html">locations</a> . <a href="aiplatform_v1beta1.projects.locations.indexes.html">indexes</a></h1>
+  <code><a href="aiplatform_v1beta1.projects.locations.indexes.operations.html">operations()</a></code>
+<p class="firstline">Imports an Index from an external source (e.g., BigQuery).</p>
+  <pre>Imports an Index from an external source (e.g., BigQuery).
+  name: string, Required. The name of the Index resource to import data to. Format: `projects/{project}/locations/{location}/indexes/{index}` (required)
+{ # Request message for IndexService.ImportIndex.
+  &quot;config&quot;: { # Configuration for importing data from an external source. # Required. Configuration for importing data from an external source.
+    &quot;bigQuerySourceConfig&quot;: { # Configuration for importing data from a BigQuery table. # Configuration for importing data from a BigQuery table.
+      &quot;datapointFieldMapping&quot;: { # Mapping of datapoint fields to column names for columnar data sources. # Required. Mapping of datapoint fields to BigQuery column names.
+        &quot;embeddingColumn&quot;: &quot;A String&quot;, # Required. The column with the vector embeddings for each data point.
+        &quot;idColumn&quot;: &quot;A String&quot;, # Required. The column with unique identifiers for each data point.
+        &quot;metadataColumns&quot;: [ # Optional. List of columns containing metadata to be included in the index.
+        &quot;numericRestricts&quot;: [ # Optional. List of restricts for numeric values.
+          { # Restrictions on numeric values.
+            &quot;namespace&quot;: &quot;A String&quot;, # Required. The namespace of the restrict.
+            &quot;valueColumn&quot;: &quot;A String&quot;, # Optional. The column containing the numeric value.
+            &quot;valueType&quot;: &quot;A String&quot;, # Required. Numeric type of the restrict. Must be consistent for all datapoints within the namespace.
+        &quot;restricts&quot;: [ # Optional. List of restricts for string values.
+          { # Restrictions on string values.
+            &quot;allowColumn&quot;: [ # Optional. The columns containing the allow values.
+            &quot;denyColumn&quot;: [ # Optional. The columns containing the deny values.
+            &quot;namespace&quot;: &quot;A String&quot;, # Required. The namespace of the restrict in the index.
+      &quot;tablePath&quot;: &quot;A String&quot;, # Required. The path to the BigQuery table containing the index data, in the format of `bq://..`.
+  &quot;isCompleteOverwrite&quot;: True or False, # Optional. If true, completely replace existing index data. Must be true for streaming update indexes.

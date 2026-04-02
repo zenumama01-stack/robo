@@ -1,0 +1,45 @@
+<h1><a href="migrationcenter_v1.html">Migration Center API</a> . <a href="migrationcenter_v1.projects.html">projects</a> . <a href="migrationcenter_v1.projects.locations.html">locations</a> . <a href="migrationcenter_v1.projects.locations.discoveryClients.html">discoveryClients</a></h1>
+  <code><a href="#create">create(parent, body=None, discoveryClientId=None, requestId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Creates a new discovery client.</p>
+<p class="firstline">Deletes a discovery client.</p>
+<p class="firstline">Gets the details of a discovery client.</p>
+<p class="firstline">Lists all the discovery clients in a given project and location.</p>
+<p class="firstline">Updates a discovery client.</p>
+  <code><a href="#sendHeartbeat">sendHeartbeat(name, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Sends a discovery client heartbeat. Healthy clients are expected to send heartbeats regularly (normally every few minutes).</p>
+    <code class="details" id="create">create(parent, body=None, discoveryClientId=None, requestId=None, x__xgafv=None)</code>
+  <pre>Creates a new discovery client.
+{ # Represents an installed Migration Center Discovery Client instance.
+  &quot;createTime&quot;: &quot;A String&quot;, # Output only. Time when the discovery client was first created.
+  &quot;description&quot;: &quot;A String&quot;, # Optional. Free text description. Maximum length is 1000 characters.
+  &quot;displayName&quot;: &quot;A String&quot;, # Optional. Free text display name. Maximum length is 63 characters.
+  &quot;errors&quot;: [ # Output only. Errors affecting client functionality.
+  &quot;expireTime&quot;: &quot;A String&quot;, # Optional. Client expiration time in UTC. If specified, the backend will not accept new frames after this time.
+  &quot;heartbeatTime&quot;: &quot;A String&quot;, # Output only. Last heartbeat time. Healthy clients are expected to send heartbeats regularly (normally every few minutes).
+  &quot;name&quot;: &quot;A String&quot;, # Output only. Identifier. Full name of this discovery client.
+  &quot;serviceAccount&quot;: &quot;A String&quot;, # Required. Service account used by the discovery client for various operation.
+  &quot;signalsEndpoint&quot;: &quot;A String&quot;, # Output only. This field is intended for internal use.
+  &quot;source&quot;: &quot;A String&quot;, # Required. Immutable. Full name of the source object associated with this discovery client.
+  &quot;state&quot;: &quot;A String&quot;, # Output only. Current state of the discovery client.
+  &quot;ttl&quot;: &quot;A String&quot;, # Optional. Input only. Client time-to-live. If specified, the backend will not accept new frames after this time. This field is input only. The derived expiration time is provided as output through the `expire_time` field.
+  &quot;updateTime&quot;: &quot;A String&quot;, # Output only. Time when the discovery client was last updated. This value is not updated by heartbeats, to view the last heartbeat time please refer to the `heartbeat_time` field.
+  &quot;version&quot;: &quot;A String&quot;, # Output only. Client version, as reported in recent heartbeat.
+  discoveryClientId: string, Required. User specified ID for the discovery client. It will become the last component of the discovery client name. The ID must be unique within the project, is restricted to lower-cased letters and has a maximum length of 63 characters. The ID must match the regular expression: `[a-z]([a-z0-9-]{0,61}[a-z0-9])?`.
+  <pre>Deletes a discovery client.
+  name: string, Required. The discovery client name. (required)
+  <pre>Gets the details of a discovery client.
+  <pre>Lists all the discovery clients in a given project and location.
+  filter: string, Optional. Filter expression to filter results by.
+  orderBy: string, Optional. Field to sort by.
+  pageSize: integer, Optional. The maximum number of items to return. The server may return fewer items than requested. If unspecified, the server will pick an appropriate default value.
+  pageToken: string, Optional. A page token, received from a previous `ListDiscoveryClients` call. Provide this to retrieve the subsequent page. When paginating, all other parameters provided to `ListDiscoveryClients` must match the call that provided the page token.
+    { # Response message for listing discovery clients.
+  &quot;discoveryClients&quot;: [ # List of discovery clients.
+  <pre>Updates a discovery client.
+  name: string, Output only. Identifier. Full name of this discovery client. (required)
+  updateMask: string, Required. Update mask is used to specify the fields to be overwritten in the `DiscoveryClient` resource by the update. The values specified in the `update_mask` field are relative to the resource, not the full request. A field will be overwritten if it is in the mask. A single * value in the mask lets you to overwrite all fields.
+    <code class="details" id="sendHeartbeat">sendHeartbeat(name, body=None, x__xgafv=None)</code>
+  <pre>Sends a discovery client heartbeat. Healthy clients are expected to send heartbeats regularly (normally every few minutes).
+{ # A request to send a discovery client heartbeat.
+  &quot;errors&quot;: [ # Optional. Errors affecting client functionality.
+  &quot;version&quot;: &quot;A String&quot;, # Optional. Client application version.

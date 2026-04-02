@@ -1,0 +1,21 @@
+<h1><a href="apihub_v1.html">API hub API</a> . <a href="apihub_v1.projects.html">projects</a> . <a href="apihub_v1.projects.locations.html">locations</a> . <a href="apihub_v1.projects.locations.runtimeProjectAttachments.html">runtimeProjectAttachments</a></h1>
+  <code><a href="#create">create(parent, body=None, runtimeProjectAttachmentId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Attaches a runtime project to the host project.</p>
+<p class="firstline">Delete a runtime project attachment in the API Hub. This call will detach the runtime project from the host project.</p>
+<p class="firstline">Gets a runtime project attachment.</p>
+<p class="firstline">List runtime projects attached to the host project.</p>
+    <code class="details" id="create">create(parent, body=None, runtimeProjectAttachmentId=None, x__xgafv=None)</code>
+  <pre>Attaches a runtime project to the host project.
+  parent: string, Required. The parent resource for the Runtime Project Attachment. Format: `projects/{project}/locations/{location}` (required)
+{ # Runtime project attachment represents an attachment from the runtime project to the host project. Api Hub looks for deployments in the attached runtime projects and creates corresponding resources in Api Hub for the discovered deployments.
+  runtimeProjectAttachmentId: string, Required. The ID to use for the Runtime Project Attachment, which will become the final component of the Runtime Project Attachment&#x27;s name. The ID must be the same as the project ID of the Google cloud project specified in the runtime_project_attachment.runtime_project field.
+  <pre>Delete a runtime project attachment in the API Hub. This call will detach the runtime project from the host project.
+  name: string, Required. The name of the Runtime Project Attachment to delete. Format: `projects/{project}/locations/{location}/runtimeProjectAttachments/{runtime_project_attachment}` (required)
+  <pre>Gets a runtime project attachment.
+  name: string, Required. The name of the API resource to retrieve. Format: `projects/{project}/locations/{location}/runtimeProjectAttachments/{runtime_project_attachment}` (required)
+  <pre>List runtime projects attached to the host project.
+  parent: string, Required. The parent, which owns this collection of runtime project attachments. Format: `projects/{project}/locations/{location}` (required)
+  filter: string, Optional. An expression that filters the list of RuntimeProjectAttachments. A filter expression consists of a field name, a comparison operator, and a value for filtering. The value must be a string. All standard operators as documented at https://google.aip.dev/160 are supported. The following fields in the `RuntimeProjectAttachment` are eligible for filtering: * `name` - The name of the RuntimeProjectAttachment. * `create_time` - The time at which the RuntimeProjectAttachment was created. The value should be in the (RFC3339)[https://tools.ietf.org/html/rfc3339] format. * `runtime_project` - The Google cloud project associated with the RuntimeProjectAttachment.
+  pageSize: integer, Optional. The maximum number of runtime project attachments to return. The service may return fewer than this value. If unspecified, at most 50 runtime project attachments will be returned. The maximum value is 1000; values above 1000 will be coerced to 1000.
+  pageToken: string, Optional. A page token, received from a previous `ListRuntimeProjectAttachments` call. Provide this to retrieve the subsequent page. When paginating, all other parameters (except page_size) provided to `ListRuntimeProjectAttachments` must match the call that provided the page token.
+  &quot;runtimeProjectAttachments&quot;: [ # List of runtime project attachments.

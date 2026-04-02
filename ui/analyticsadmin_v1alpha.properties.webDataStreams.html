@@ -1,0 +1,24 @@
+<h1><a href="analyticsadmin_v1alpha.html">Google Analytics Admin API</a> . <a href="analyticsadmin_v1alpha.properties.html">properties</a> . <a href="analyticsadmin_v1alpha.properties.webDataStreams.html">webDataStreams</a></h1>
+<p class="firstline">Creates a web stream with the specified location and attributes.</p>
+<p class="firstline">Deletes a web stream on a property.</p>
+<p class="firstline">Lookup for a single WebDataStream</p>
+<p class="firstline">Returns child web data streams under the specified parent property. Web data streams will be excluded if the caller does not have access. Returns an empty list if no relevant web data streams are found.</p>
+<p class="firstline">Updates a web stream on a property.</p>
+  <pre>Creates a web stream with the specified location and attributes.
+  parent: string, Required. The parent resource where this web data stream will be created. Format: properties/123 (required)
+{ # A resource message representing a Google Analytics web stream.
+  &quot;defaultUri&quot;: &quot;A String&quot;, # Immutable. Domain name of the web app being measured, or empty. Example: &quot;http://www.google.com&quot;, &quot;https://www.google.com&quot;
+  &quot;displayName&quot;: &quot;A String&quot;, # Required. Human-readable display name for the Data Stream. The max allowed display name length is 255 UTF-16 code units.
+  &quot;measurementId&quot;: &quot;A String&quot;, # Output only. Analytics &quot;Measurement ID&quot;, without the &quot;G-&quot; prefix. Example: &quot;G-1A2BCD345E&quot; would just be &quot;1A2BCD345E&quot;
+  &quot;name&quot;: &quot;A String&quot;, # Output only. Resource name of this Data Stream. Format: properties/{property_id}/webDataStreams/{stream_id} Example: &quot;properties/1000/webDataStreams/2000&quot;
+  <pre>Deletes a web stream on a property.
+  name: string, Required. The name of the web data stream to delete. Format: properties/{property_id}/webDataStreams/{stream_id} Example: &quot;properties/123/webDataStreams/456&quot; (required)
+  <pre>Lookup for a single WebDataStream
+  name: string, Required. The name of the web data stream to lookup. Format: properties/{property_id}/webDataStreams/{stream_id} Example: &quot;properties/123/webDataStreams/456&quot; (required)
+  <pre>Returns child web data streams under the specified parent property. Web data streams will be excluded if the caller does not have access. Returns an empty list if no relevant web data streams are found.
+  parent: string, Required. The name of the parent property. For example, to list results of web streams under the property with Id 123: &quot;properties/123&quot; (required)
+  pageToken: string, A page token, received from a previous `ListWebDataStreams` call. Provide this to retrieve the subsequent page. When paginating, all other parameters provided to `ListWebDataStreams` must match the call that provided the page token.
+    { # Request message for ListWebDataStreams RPC.
+  &quot;webDataStreams&quot;: [ # Results that matched the filter criteria and were accessible to the caller.
+  <pre>Updates a web stream on a property.
+  name: string, Output only. Resource name of this Data Stream. Format: properties/{property_id}/webDataStreams/{stream_id} Example: &quot;properties/1000/webDataStreams/2000&quot; (required)

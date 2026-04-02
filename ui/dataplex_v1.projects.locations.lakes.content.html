@@ -1,0 +1,42 @@
+<h1><a href="dataplex_v1.html">Cloud Dataplex API</a> . <a href="dataplex_v1.projects.html">projects</a> . <a href="dataplex_v1.projects.locations.html">locations</a> . <a href="dataplex_v1.projects.locations.lakes.html">lakes</a> . <a href="dataplex_v1.projects.locations.lakes.content.html">content</a></h1>
+<p class="firstline">Create a content.</p>
+<p class="firstline">Delete a content.</p>
+<p class="firstline">Get a content resource.</p>
+<p class="firstline">Gets the access control policy for a contentitem resource. A NOT_FOUND error is returned if the resource does not exist. An empty policy is returned if the resource exists but does not have a policy set on it.Caller must have Google IAM dataplex.content.getIamPolicy permission on the resource.</p>
+<p class="firstline">List content.</p>
+<p class="firstline">Update a content. Only supports full resource update.</p>
+<p class="firstline">Sets the access control policy on the specified contentitem resource. Replaces any existing policy.Caller must have Google IAM dataplex.content.setIamPolicy permission on the resource.</p>
+<p class="firstline">Returns the caller's permissions on a resource. If the resource does not exist, an empty set of permissions is returned (a NOT_FOUND error is not returned).A caller is not required to have Google IAM permission to make this request.Note: This operation is designed to be used for building permission-aware UIs and command-line tools, not for authorization checking. This operation may "fail open" without warning.</p>
+  <pre>Create a content.
+  parent: string, Required. The resource name of the parent lake: projects/{project_id}/locations/{location_id}/lakes/{lake_id} (required)
+{ # Content represents a user-visible notebook or a sql script
+  &quot;createTime&quot;: &quot;A String&quot;, # Output only. Content creation time.
+  &quot;dataText&quot;: &quot;A String&quot;, # Required. Content data in string format.
+  &quot;description&quot;: &quot;A String&quot;, # Optional. Description of the content.
+  &quot;labels&quot;: { # Optional. User defined labels for the content.
+  &quot;name&quot;: &quot;A String&quot;, # Output only. The relative resource name of the content, of the form: projects/{project_id}/locations/{location_id}/lakes/{lake_id}/content/{content_id}
+  &quot;notebook&quot;: { # Configuration for Notebook content. # Notebook related configurations.
+    &quot;kernelType&quot;: &quot;A String&quot;, # Required. Kernel Type of the notebook.
+  &quot;path&quot;: &quot;A String&quot;, # Required. The path for the Content file, represented as directory structure. Unique within a lake. Limited to alphanumerics, hyphens, underscores, dots and slashes.
+  &quot;sqlScript&quot;: { # Configuration for the Sql Script content. # Sql Script related configurations.
+    &quot;engine&quot;: &quot;A String&quot;, # Required. Query Engine to be used for the Sql Query.
+  &quot;uid&quot;: &quot;A String&quot;, # Output only. System generated globally unique ID for the content. This ID will be different if the content is deleted and re-created with the same name.
+  &quot;updateTime&quot;: &quot;A String&quot;, # Output only. The time when the content was last updated.
+  <pre>Delete a content.
+  name: string, Required. The resource name of the content: projects/{project_id}/locations/{location_id}/lakes/{lake_id}/content/{content_id} (required)
+  <pre>Get a content resource.
+  view: string, Optional. Specify content view to make a partial request.
+      CONTENT_VIEW_UNSPECIFIED - Content view not specified. Defaults to BASIC. The API will default to the BASIC view.
+      BASIC - Will not return the data_text field.
+      FULL - Returns the complete proto.
+  <pre>Gets the access control policy for a contentitem resource. A NOT_FOUND error is returned if the resource does not exist. An empty policy is returned if the resource exists but does not have a policy set on it.Caller must have Google IAM dataplex.content.getIamPolicy permission on the resource.
+  <pre>List content.
+  filter: string, Optional. Filter request. Filters are case-sensitive. The following formats are supported:labels.key1 = &quot;value1&quot; labels:key1 type = &quot;NOTEBOOK&quot; type = &quot;SQL_SCRIPT&quot;These restrictions can be coinjoined with AND, OR and NOT conjunctions.
+  pageSize: integer, Optional. Maximum number of content to return. The service may return fewer than this value. If unspecified, at most 10 content will be returned. The maximum value is 1000; values above 1000 will be coerced to 1000.
+  pageToken: string, Optional. Page token received from a previous ListContent call. Provide this to retrieve the subsequent page. When paginating, all other parameters provided to ListContent must match the call that provided the page token.
+    { # List content response.
+  &quot;content&quot;: [ # Content under the given parent lake.
+  <pre>Update a content. Only supports full resource update.
+  name: string, Output only. The relative resource name of the content, of the form: projects/{project_id}/locations/{location_id}/lakes/{lake_id}/content/{content_id} (required)
+  <pre>Sets the access control policy on the specified contentitem resource. Replaces any existing policy.Caller must have Google IAM dataplex.content.setIamPolicy permission on the resource.
+  <pre>Returns the caller&#x27;s permissions on a resource. If the resource does not exist, an empty set of permissions is returned (a NOT_FOUND error is not returned).A caller is not required to have Google IAM permission to make this request.Note: This operation is designed to be used for building permission-aware UIs and command-line tools, not for authorization checking. This operation may &quot;fail open&quot; without warning.

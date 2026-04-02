@@ -1,0 +1,162 @@
+  <div class="panel-backdrop" (click)="closeDialog()"></div>
+    <!-- Resize Handle (left edge) -->
+        <i class="fa-solid fa-flask"></i>
+        Test MCP Tool
+      <button class="close-btn" (click)="closeDialog()" title="Close">
+      <div class="step" [class.active]="CurrentStep === 'select'" [class.completed]="CurrentStep !== 'select'">
+        <span class="step-number">1</span>
+        <span class="step-label">Select Tool</span>
+      <div class="step-connector" [class.completed]="CurrentStep !== 'select'"></div>
+      <div class="step" [class.active]="CurrentStep === 'configure'" [class.completed]="CurrentStep === 'results'">
+        <span class="step-number">2</span>
+        <span class="step-label">Configure</span>
+      <div class="step-connector" [class.completed]="CurrentStep === 'results'"></div>
+      <div class="step" [class.active]="CurrentStep === 'results'">
+        <span class="step-number">3</span>
+        <span class="step-label">Results</span>
+      <!-- Step 1: Select Server, Connection, Tool -->
+      @if (CurrentStep === 'select') {
+        <div class="step-content">
+          <div class="selection-form">
+            <!-- Server Selection -->
+              <label class="form-label">
+                <span class="required">*</span>
+                [data]="DisplayServers"
+                [textField]="'Name'"
+                [(ngModel)]="ServerID"
+                (valueChange)="onServerChange()"
+                (filterChange)="onServerFilterChange($event)"
+                placeholder="Select a server...">
+                  <div class="dropdown-item">
+                    <span class="item-name">{{ dataItem.Name }}</span>
+                    <span class="item-status" [class]="'status-' + dataItem.Status.toLowerCase()">
+                      {{ dataItem.Status }}
+            <!-- Connection Selection -->
+                [data]="DisplayConnections"
+                [(ngModel)]="ConnectionID"
+                (valueChange)="onConnectionChange()"
+                [disabled]="!ServerID || NoConnectionsWarning !== null"
+                (filterChange)="onConnectionFilterChange($event)"
+                placeholder="Select a connection...">
+                    @if (dataItem.Description) {
+                      <span class="item-description">{{ dataItem.Description }}</span>
+              @if (!ServerID) {
+                <span class="field-hint">Select a server first</span>
+              @if (NoConnectionsWarning) {
+                <span class="field-error">
+                  {{ NoConnectionsWarning }}
+              @if (FilteredConnections.length === 1 && ConnectionID) {
+                <span class="field-hint auto-selected">
+                  Auto-selected (only connection available)
+            <!-- Tool Selection -->
+                [data]="DisplayTools"
+                [textField]="'ToolTitle'"
+                [(ngModel)]="ToolID"
+                (valueChange)="onToolChange()"
+                [disabled]="!ServerID"
+                (filterChange)="onToolFilterChange($event)"
+                placeholder="Select a tool...">
+                <ng-template kendoDropDownListValueTemplate let-dataItem>
+                  {{ dataItem?.ToolTitle || dataItem?.ToolName || 'Select a tool...' }}
+                  <div class="dropdown-item tool-item">
+                    <span class="item-name">{{ dataItem.ToolTitle || dataItem.ToolName }}</span>
+                    @if (dataItem.ToolDescription) {
+                      <span class="item-description">{{ dataItem.ToolDescription }}</span>
+      <!-- Step 2: Configure Parameters -->
+      @if (CurrentStep === 'configure') {
+          <div class="tool-header">
+            <div class="tool-info">
+              <h3 class="tool-name">
+                {{ SelectedTool?.ToolTitle || SelectedTool?.ToolName }}
+              @if (SelectedTool?.ToolDescription) {
+                <p class="tool-description">{{ SelectedTool?.ToolDescription }}</p>
+            <div class="tool-context">
+              <span class="context-item">
+                {{ SelectedServerName }}
+                {{ SelectedConnectionName }}
+          @if (ParameterConfigs.length === 0) {
+            <div class="no-params">
+              <p>This tool requires no parameters.</p>
+            <div class="parameters-form">
+              <h4 class="params-title">Parameters</h4>
+              @for (config of ParameterConfigs; track config.name) {
+                <div class="param-group" [class.required]="config.required">
+                  <label class="param-label">
+                    {{ config.name }}
+                    @if (config.required) {
+                  @if (config.description) {
+                    <p class="param-description">{{ config.description }}</p>
+                  <!-- Enum/Select -->
+                  @if (config.enumValues.length > 0) {
+                      [data]="config.enumValues"
+                      [(ngModel)]="ParameterValues[config.name]"
+                      (valueChange)="onParameterChange(config.name, $event)">
+                  <!-- Boolean -->
+                  @else if (config.type === 'boolean') {
+                  <div class="checkbox-wrapper">
+                      [id]="'param-' + config.name"
+                      [checked]="ParameterValues[config.name]"
+                      (change)="onParameterChange(config.name, $any($event.target).checked)">
+                    <label [for]="'param-' + config.name">Enabled</label>
+                <!-- Number/Integer -->
+                @else if (config.type === 'number' || config.type === 'integer') {
+                  [format]="config.type === 'integer' ? 'n0' : 'n'"
+                  [step]="config.type === 'integer' ? 1 : 0.1"
+              <!-- Array/Object (Textarea with JSON) -->
+              @else if (config.type === 'array' || config.type === 'object') {
+              <textarea class="json-input"
+                rows="4"
+                [value]="getTextareaValue(config.name)"
+                (input)="onTextareaChange(config.name, $any($event.target).value, config)"
+              placeholder="Enter JSON {{ config.type }}..."></textarea>
+              <span class="field-hint">Enter valid JSON</span>
+            <!-- String (default) -->
+            @if (isTextarea(config)) {
+              <textarea class="text-input"
+                (input)="onParameterChange(config.name, $any($event.target).value)"
+              [placeholder]="config.description || 'Enter value...'"></textarea>
+                (valueChange)="onParameterChange(config.name, $event)"
+                [placeholder]="config.description || 'Enter value...'">
+<!-- Step 3: Results -->
+@if (CurrentStep === 'results') {
+  <div class="step-content results-step">
+    <div class="results-container">
+      <!-- Success/Error Header -->
+      <div class="result-header" [class.success]="ExecutionResult?.Success" [class.error]="!ExecutionResult?.Success">
+        @if (ExecutionResult?.Success) {
+          <span class="result-status">Execution Successful</span>
+          <span class="result-status">Execution Failed</span>
+        @if (ExecutionResult?.DurationMs) {
+          <span class="duration">{{ ExecutionResult?.DurationMs }}ms</span>
+      <!-- Executed Tool Info (moved to top) -->
+          <span class="info-label">Tool:</span>
+          <span class="info-value">{{ SelectedToolName }}</span>
+          <span class="info-label">Server:</span>
+          <span class="info-value">{{ SelectedServerName }}</span>
+          <span class="info-label">Connection:</span>
+          <span class="info-value">{{ SelectedConnectionName }}</span>
+      @if (ExecutionResult?.ErrorMessage) {
+        <div class="error-panel">
+          <h4><i class="fa-solid fa-exclamation-triangle"></i> Error</h4>
+          <pre class="error-message">{{ ExecutionResult?.ErrorMessage }}</pre>
+      <!-- Result Data (fills remaining space) -->
+      @if (ExecutionResult?.Result) {
+        <div class="result-panel fill-space">
+          <div class="result-panel-header">
+            <h4><i class="fa-solid fa-code"></i> Result</h4>
+            <button kendoButton fillMode="flat" (click)="copyResult()" title="Copy to clipboard">
+  @switch (CurrentStep) {
+    @case ('select') {
+      <button kendoButton themeColor="primary" (click)="proceedToConfig()" [disabled]="!CanProceedToConfig">
+      <button kendoButton fillMode="flat" (click)="closeDialog()">Cancel</button>
+    @case ('configure') {
+      <button kendoButton themeColor="primary" (click)="executeTool()" [disabled]="!IsValid || IsExecuting">
+        @if (IsExecuting) {
+          Executing...
+          Execute Tool
+      <button kendoButton fillMode="flat" (click)="goBack()">
+    @case ('results') {
+      <button kendoButton themeColor="primary" (click)="runAgain()">
+        <i class="fa-solid fa-redo"></i>
+        Edit Parameters
+      <button kendoButton fillMode="flat" (click)="closeDialog()">Close</button>

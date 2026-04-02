@@ -1,0 +1,30 @@
+<h1><a href="osconfig_v1alpha.html">OS Config API</a> . <a href="osconfig_v1alpha.projects.html">projects</a> . <a href="osconfig_v1alpha.projects.locations.html">locations</a> . <a href="osconfig_v1alpha.projects.locations.instanceOSPoliciesCompliances.html">instanceOSPoliciesCompliances</a></h1>
+<p class="firstline">Get OS policies compliance data for the specified Compute Engine VM instance.</p>
+<p class="firstline">List OS policies compliance data for all Compute Engine VM instances in the specified zone.</p>
+  <pre>Get OS policies compliance data for the specified Compute Engine VM instance.
+  name: string, Required. API resource name for instance OS policies compliance resource. Format: `projects/{project}/locations/{location}/instanceOSPoliciesCompliances/{instance}` For `{project}`, either Compute Engine project-number or project-id can be provided. For `{instance}`, either Compute Engine VM instance-id or instance-name can be provided. (required)
+    { # This API resource represents the OS policies compliance data for a Compute Engine virtual machine (VM) instance at a given point in time. A Compute Engine VM can have multiple OS policy assignments, and each assignment can have multiple OS policies. As a result, multiple OS policies could be applied to a single VM. You can use this API resource to determine both the compliance state of your VM as well as the compliance state of an individual OS policy. For more information, see [View compliance](https://cloud.google.com/compute/docs/os-configuration-management/view-compliance).
+  &quot;detailedState&quot;: &quot;A String&quot;, # Output only. Detailed compliance state of the VM. This field is populated only when compliance state is `UNKNOWN`. It may contain one of the following values: * `no-compliance-data`: Compliance data is not available for this VM. * `no-agent-detected`: OS Config agent is not detected for this VM. * `config-not-supported-by-agent`: The version of the OS Config agent running on this VM does not support configuration management. * `inactive`: VM is not running. * `internal-service-errors`: There were internal service errors encountered while enforcing compliance. * `agent-errors`: OS config agent encountered errors while enforcing compliance.
+  &quot;detailedStateReason&quot;: &quot;A String&quot;, # Output only. The reason for the `detailed_state` of the VM (if any).
+  &quot;instance&quot;: &quot;A String&quot;, # Output only. The Compute Engine VM instance name.
+  &quot;lastComplianceCheckTime&quot;: &quot;A String&quot;, # Output only. Timestamp of the last compliance check for the VM.
+  &quot;lastComplianceRunId&quot;: &quot;A String&quot;, # Output only. Unique identifier for the last compliance run. This id will be logged by the OS config agent during a compliance run and can be used for debugging and tracing purpose.
+  &quot;name&quot;: &quot;A String&quot;, # Output only. The `InstanceOSPoliciesCompliance` API resource name. Format: `projects/{project_number}/locations/{location}/instanceOSPoliciesCompliances/{instance_id}`
+  &quot;osPolicyCompliances&quot;: [ # Output only. Compliance data for each `OSPolicy` that is applied to the VM.
+      &quot;osPolicyResourceCompliances&quot;: [ # Compliance data for each `OSPolicyResource` that is applied to the VM.
+          &quot;configSteps&quot;: [ # Ordered list of configuration steps taken by the agent for the OS policy resource.
+            { # Step performed by the OS Config agent for configuring an `OSPolicyResource` to its desired state.
+              &quot;errorMessage&quot;: &quot;A String&quot;, # An error message recorded during the execution of this step. Only populated when outcome is FAILED.
+              &quot;outcome&quot;: &quot;A String&quot;, # Outcome of the configuration step.
+            &quot;enforcementOutput&quot;: &quot;A String&quot;, # Output from Enforcement phase output file (if run). Output size is limited to 100K bytes.
+          &quot;osPolicyResourceId&quot;: &quot;A String&quot;, # The id of the OS policy resource.
+          &quot;state&quot;: &quot;A String&quot;, # Compliance state of the OS policy resource.
+      &quot;state&quot;: &quot;A String&quot;, # Compliance state of the OS policy.
+  &quot;state&quot;: &quot;A String&quot;, # Output only. Compliance state of the VM.
+  <pre>List OS policies compliance data for all Compute Engine VM instances in the specified zone.
+  parent: string, Required. The parent resource name. Format: `projects/{project}/locations/{location}` For `{project}`, either Compute Engine project-number or project-id can be provided. (required)
+  filter: string, If provided, this field specifies the criteria that must be met by a `InstanceOSPoliciesCompliance` API resource to be included in the response.
+  pageToken: string, A pagination token returned from a previous call to `ListInstanceOSPoliciesCompliances` that indicates where this listing should continue from.
+    { # A response message for listing OS policies compliance data for all Compute Engine VMs in the given location.
+  &quot;instanceOsPoliciesCompliances&quot;: [ # List of instance OS policies compliance objects.
+  &quot;nextPageToken&quot;: &quot;A String&quot;, # The pagination token to retrieve the next page of instance OS policies compliance objects.

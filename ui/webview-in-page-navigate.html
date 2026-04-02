@@ -1,0 +1,7 @@
+  function SendZoomLevel() {
+      ipcRenderer.send('webview-zoom-in-page', zoomLevel, zoomFactor, finalNavigation)
+    SendZoomLevel().then(() => {
+      if (!finalNavigation) {
+        view.executeJavaScript('window.location.hash=123')
+  view.addEventListener('did-navigate-in-page', () => {
+    SendZoomLevel()

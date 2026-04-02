@@ -1,0 +1,47 @@
+<div class="filter-panel">
+  <div class="filter-panel-header">
+    <h3>Agent Filters</h3>
+    <div class="filter-summary-inline">
+      <span class="summary-value">{{ filteredAgents.length }}</span>
+      <span class="summary-label">of {{ agents.length }}</span>
+    <button class="close-btn" (click)="toggleFilterPanel()">
+      <span class="fa-solid fa-times"></span>
+  <div class="filter-content">
+    <!-- Search Filter -->
+      <label class="filter-label">
+        <span class="fa-solid fa-search"></span>
+        class="filter-input"
+        [(ngModel)]="filters.searchTerm"
+        (input)="onFilterChange()"
+        placeholder="Search agents...">
+    <!-- Agent Type Filter -->
+        <span class="fa-solid fa-robot"></span>
+        class="filter-select"
+        [(ngModel)]="filters.agentType"
+        (ngModelChange)="onFilterChange()">
+        @for (option of agentTypeOptions; track option.value) {
+          <option [value]="option.value">{{ option.text }}</option>
+    <!-- Parent Agent Filter -->
+        <span class="fa-solid fa-sitemap"></span>
+        Parent
+        [(ngModel)]="filters.parentAgent"
+        @for (option of parentAgentOptions; track option.value) {
+    <!-- Status Filter -->
+        <span class="fa-solid fa-toggle-on"></span>
+        [(ngModel)]="filters.status"
+        @for (option of statusOptions; track option.value) {
+    <!-- Execution Mode Filter -->
+        <span class="fa-solid fa-list-ol"></span>
+        Execution Mode
+        [(ngModel)]="filters.executionMode"
+        @for (option of executionModeOptions; track option.value) {
+    <!-- Expose As Action Filter -->
+        <span class="fa-solid fa-share"></span>
+        Action Exposure
+        [(ngModel)]="filters.exposeAsAction"
+        @for (option of exposeAsActionOptions; track option.value) {
+    <!-- Reset Button -->
+    <div class="filter-actions">
+      <button class="reset-btn" (click)="resetAllFilters()" title="Reset all filters">
+        <span class="fa-solid fa-undo"></span>
+        Reset Filters

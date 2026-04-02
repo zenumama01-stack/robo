@@ -1,0 +1,85 @@
+<div class="sub-agent-dialog">
+  <div class="sub-agent-header">
+    <h2 class="dialog-title">
+      <i class="fa-solid fa-robot"></i>
+      {{ config.title || 'Create New Sub-Agent' }}
+    @if (config.parentAgentName) {
+      <p class="parent-info">
+        Sub-agent of: <strong>{{ config.parentAgentName }}</strong>
+    <div class="loading-container">
+      <span>Loading sub-agent creation form...</span>
+    <form [formGroup]="subAgentForm" class="sub-agent-form">
+      <!-- Basic Information Section -->
+            <label for="name">Name *</label>
+            <input type="text" id="name" formControlName="name" class="form-control" placeholder="Enter sub-agent name">
+            <label for="typeID">Type *</label>
+            <select id="typeID" formControlName="typeID" class="form-control">
+              <option value="">Select agent type...</option>
+              @for (type of availableAgentTypes$ | async; track type.ID) {
+                <option [value]="type.ID">{{ type.Name }}</option>
+            <label for="description">Description</label>
+            <textarea id="description" formControlName="description" class="form-control" rows="2" placeholder="Enter description"></textarea>
+            <select id="status" formControlName="status" class="form-control">
+            <label for="executionMode">Execution Mode</label>
+            <select id="executionMode" formControlName="executionMode" class="form-control">
+              <option value="Sequential">Sequential</option>
+              <option value="Parallel">Parallel</option>
+      <!-- Purpose & Messages Section -->
+          <i class="fa-solid fa-bullseye"></i>
+          Purpose & Messages
+            <input type="text" id="purpose" formControlName="purpose" class="form-control" placeholder="Enter the purpose of this sub-agent">
+            <label for="userMessage">User Message</label>
+            <textarea id="userMessage" formControlName="userMessage" class="form-control" rows="3" placeholder="Enter user message"></textarea>
+        <!-- System Message field removed - property does not exist on MJAIAgentEntity -->
+      <!-- Model Configuration Section -->
+          Model Configuration
+            <label for="modelSelectionMode">Model Selection Mode</label>
+            <select id="modelSelectionMode" formControlName="modelSelectionMode" class="form-control">
+              <option value="Agent Type">Agent Type</option>
+              <option value="Agent">Agent</option>
+            <label for="temperature">Temperature</label>
+            <input type="number" id="temperature" formControlName="temperature" class="form-control" min="0" max="2" step="0.1">
+            <label for="topP">Top P</label>
+            <input type="number" id="topP" formControlName="topP" class="form-control" min="0" max="1" step="0.1">
+            <label for="topK">Top K</label>
+            <input type="number" id="topK" formControlName="topK" class="form-control" min="1" max="100" step="1">
+            <label for="maxTokens">Max Tokens</label>
+            <input type="number" id="maxTokens" formControlName="maxTokens" class="form-control" min="1" max="32000" step="1">
+            <label for="enableCaching">
+              <input type="checkbox" id="enableCaching" formControlName="enableCaching">
+              Enable Caching
+            <label for="cacheTTL">Cache TTL (seconds)</label>
+            <input type="number" id="cacheTTL" formControlName="cacheTTL" class="form-control" min="60" max="86400" step="60">
+      <!-- Prompts Section -->
+          Prompts ({{ linkedPromptCount }})
+        <div class="section-actions">
+          <button type="button" class="btn btn-primary btn-sm" (click)="addPrompt()">
+            Add Existing Prompt
+          <button type="button" class="btn btn-success btn-sm" (click)="createNewPrompt()">
+            Create New Prompt
+        @if (linkedPrompts.length > 0) {
+          <div class="linked-items">
+            @for (prompt of linkedPrompts; track prompt.ID) {
+              <div class="linked-item prompt-item">
+                <div class="item-info">
+                  <span class="item-name">{{ prompt.Name }}</span>
+                  @if (prompt.Description) {
+                    <span class="item-description">{{ prompt.Description }}</span>
+                <button type="button" class="btn btn-danger btn-xs" (click)="removePrompt(prompt)">
+            <p>No prompts added yet. Click the buttons above to add prompts.</p>
+      <!-- Actions Section -->
+          Actions ({{ linkedActionCount }})
+          <button type="button" class="btn btn-primary btn-sm" (click)="addAction()">
+            Add Action
+        @if (linkedActions.length > 0) {
+            @for (action of linkedActions; track action.ID) {
+              <div class="linked-item action-item">
+                  <span class="item-name">{{ action.Name }}</span>
+                    <span class="item-description">{{ action.Description }}</span>
+                <button type="button" class="btn btn-danger btn-xs" (click)="removeAction(action)">
+            <p>No actions added yet. Click the button above to add actions.</p>
+  <!-- Dialog Actions -->
+  <div class="dialog-actions">
+    <button type="button" class="btn btn-secondary" (click)="cancel()" [disabled]="isSaving$ | async">
+    <button type="button" class="btn btn-primary" (click)="save()" [disabled]="(isSaving$ | async) || !subAgentForm.valid">
+        Create Sub-Agent

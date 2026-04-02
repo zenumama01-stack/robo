@@ -1,0 +1,22 @@
+<h1><a href="migrationcenter_v1.html">Migration Center API</a> . <a href="migrationcenter_v1.projects.html">projects</a> . <a href="migrationcenter_v1.projects.locations.html">locations</a> . <a href="migrationcenter_v1.projects.locations.sources.html">sources</a> . <a href="migrationcenter_v1.projects.locations.sources.errorFrames.html">errorFrames</a></h1>
+<p class="firstline">Gets the details of an error frame.</p>
+<p class="firstline">Lists all error frames in a given source and location.</p>
+  <pre>Gets the details of an error frame.
+  name: string, Required. The name of the frame to retrieve. Format: projects/{project}/locations/{location}/sources/{source}/errorFrames/{error_frame} (required)
+  view: string, Optional. An optional view mode to control the level of details for the frame. The default is a basic frame view.
+      ERROR_FRAME_VIEW_UNSPECIFIED - Value is unset. The system will fallback to the default value.
+      ERROR_FRAME_VIEW_BASIC - Include basic frame data, but not the full contents.
+      ERROR_FRAME_VIEW_FULL - Include everything.
+    { # Message representing a frame which failed to be processed due to an error.
+  &quot;ingestionTime&quot;: &quot;A String&quot;, # Output only. Frame ingestion time.
+  &quot;name&quot;: &quot;A String&quot;, # Output only. The identifier of the ErrorFrame.
+  &quot;originalFrame&quot;: { # Contains data reported from an inventory source on an asset. # Output only. The frame that was originally reported.
+  &quot;violations&quot;: [ # Output only. All the violations that were detected for the frame.
+    { # A resource that contains a single violation of a reported `AssetFrame` resource.
+      &quot;field&quot;: &quot;A String&quot;, # The field of the original frame where the violation occurred.
+      &quot;violation&quot;: &quot;A String&quot;, # A message describing the violation.
+  <pre>Lists all error frames in a given source and location.
+  parent: string, Required. Parent value (the source) for `ListErrorFramesRequest`. (required)
+  view: string, Optional. An optional view mode to control the level of details of each error frame. The default is a BASIC frame view.
+    { # A response for listing error frames.
+  &quot;errorFrames&quot;: [ # The list of error frames.

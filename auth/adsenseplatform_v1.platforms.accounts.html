@@ -1,0 +1,39 @@
+<h1><a href="adsenseplatform_v1.html">AdSense Platform API</a> . <a href="adsenseplatform_v1.platforms.html">platforms</a> . <a href="adsenseplatform_v1.platforms.accounts.html">accounts</a></h1>
+  <code><a href="adsenseplatform_v1.platforms.accounts.events.html">events()</a></code>
+<p class="firstline">Returns the events Resource.</p>
+  <code><a href="adsenseplatform_v1.platforms.accounts.sites.html">sites()</a></code>
+  <code><a href="#close">close(name, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Closes a sub-account.</p>
+<p class="firstline">Creates a sub-account.</p>
+<p class="firstline">Gets information about the selected sub-account.</p>
+<p class="firstline">Lists a partial view of sub-accounts for a specific parent account.</p>
+  <code><a href="#lookup">lookup(parent, creationRequestId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Looks up information about a sub-account for a specified creation_request_id. If no account exists for the given creation_request_id, returns 404.</p>
+    <code class="details" id="close">close(name, body=None, x__xgafv=None)</code>
+  <pre>Closes a sub-account.
+  name: string, Required. Account to close. Format: platforms/{platform}/accounts/{account_id} (required)
+{ # Request definition for the account close rpc.
+    { # Response definition for the account close rpc.
+  <pre>Creates a sub-account.
+  parent: string, Required. Platform to create an account for. Format: platforms/{platform} (required)
+{ # Representation of an Account.
+  &quot;creationRequestId&quot;: &quot;A String&quot;, # Required. An opaque token that uniquely identifies the account among all the platform&#x27;s accounts. This string may contain at most 64 non-whitespace ASCII characters, but otherwise has no predefined structure. However, it is expected to be a platform-specific identifier for the user creating the account, so that only a single account can be created for any given user. This field must not contain any information that is recognizable as personally identifiable information. e.g. it should not be an email address or login name. Once an account has been created, a second attempt to create an account using the same creation_request_id will result in an ALREADY_EXISTS error.
+  &quot;displayName&quot;: &quot;A String&quot;, # Display name of this account.
+  &quot;name&quot;: &quot;A String&quot;, # Output only. Resource name of the account. Format: platforms/pub-[0-9]+/accounts/pub-[0-9]+
+  &quot;regionCode&quot;: &quot;A String&quot;, # Required. Input only. CLDR region code of the country/region of the address. Set this to country code of the child account if known, otherwise to your own country code.
+  &quot;state&quot;: &quot;A String&quot;, # Output only. Approval state of the account.
+  &quot;timeZone&quot;: { # Represents a time zone from the [IANA Time Zone Database](https://www.iana.org/time-zones). # Required. The IANA TZ timezone code of this account. For more information, see https://en.wikipedia.org/wiki/List_of_tz_database_time_zones. This field is used for reporting. It is recommended to set it to the same value for all child accounts.
+  <pre>Gets information about the selected sub-account.
+  name: string, Required. Account to get information about. Format: platforms/{platform}/accounts/{account_id} (required)
+  <pre>Lists a partial view of sub-accounts for a specific parent account.
+  parent: string, Required. Platform who parents the accounts. Format: platforms/{platform} (required)
+  pageSize: integer, Optional. The maximum number of accounts to include in the response, used for paging. If unspecified, at most 10000 accounts will be returned. The maximum value is 10000; values above 10000 will be coerced to 10000.
+  pageToken: string, Optional. A page token, received from a previous `ListAccounts` call. Provide this to retrieve the subsequent page.
+    { # Response definition for the list accounts rpc.
+  &quot;accounts&quot;: [ # The Accounts returned in the list response. Represented by a partial view of the Account resource, populating `name` and `creation_request_id`.
+    <code class="details" id="lookup">lookup(parent, creationRequestId=None, x__xgafv=None)</code>
+  <pre>Looks up information about a sub-account for a specified creation_request_id. If no account exists for the given creation_request_id, returns 404.
+  parent: string, Required. Platform who parents the account. Format: platforms/{platform} (required)
+  creationRequestId: string, Optional. The creation_request_id provided when calling createAccount.
+    { # Response definition for the lookup account rpc.
+  &quot;name&quot;: &quot;A String&quot;, # The name of the Account Format: platforms/{platform}/accounts/{account_id}

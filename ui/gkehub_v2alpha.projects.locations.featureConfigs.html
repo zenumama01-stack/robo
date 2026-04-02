@@ -1,0 +1,30 @@
+<h1><a href="gkehub_v2alpha.html">GKE Hub API</a> . <a href="gkehub_v2alpha.projects.html">projects</a> . <a href="gkehub_v2alpha.projects.locations.html">locations</a> . <a href="gkehub_v2alpha.projects.locations.featureConfigs.html">featureConfigs</a></h1>
+  <code><a href="#create">create(parent, body=None, featureConfigId=None, requestId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Creates FeatureConfig under a given parent.</p>
+<p class="firstline">Removes a FeatureConfig.</p>
+<p class="firstline">========= FeatureConfig Services ========= Gets details of a featureConfig.</p>
+<p class="firstline">Lists all FeatureConfigs in a given project and location.</p>
+    <code class="details" id="create">create(parent, body=None, featureConfigId=None, requestId=None, x__xgafv=None)</code>
+  <pre>Creates FeatureConfig under a given parent.
+  parent: string, Required. The name of parent where the FeatureConfig will be created. Specified in the format `projects/{project}/locations/global/featureConfigs/{feature_type}/{feature_config}/`. (required)
+{ # FeatureConfig contains configurations for a Fleet feature. FeatureConfig can be applied to MembershipFeature(s) to setup per-membership FeatureSpec.
+  &quot;createTime&quot;: &quot;A String&quot;, # Output only. When the FeatureConfig resource was created.
+  &quot;deleteTime&quot;: &quot;A String&quot;, # Output only. When the FeatureConfig resource was deleted.
+  &quot;labels&quot;: { # GCP labels for this FeatureConfig.
+  &quot;name&quot;: &quot;A String&quot;, # Output only. Resource name of this FeatureConfig, in the format: `projects/{project}/locations/global/FeatureConfigs/{feature_type}/{feature_config}`
+  &quot;spec&quot;: { # FeatureSpec contains user input per-feature spec information. # Input only. Immutable. User input of feature spec. Note that this field is immutable. Must create a new FeatureConfig if a new feature spec is needed.
+  &quot;state&quot;: { # FeatureConfigState describes the state of a FeatureConfig resource. # Lifecycle information of the FeatureConfig.
+    &quot;state&quot;: &quot;A String&quot;, # Output only. The current state of the FeatureConfig resource.
+  &quot;uniqueId&quot;: &quot;A String&quot;, # Output only. Google-generated UUID for this resource. This is unique across all FeatureConfig resources. If a Membership resource is deleted and another resource with the same name is created, it gets a different unique_id.
+  &quot;updateTime&quot;: &quot;A String&quot;, # Output only. When the FeatureConfig resource was last updated.
+  featureConfigId: string, The ID of the feature config to create.
+  <pre>Removes a FeatureConfig.
+  name: string, Required. The name of the membershipFeature to be deleted. Specified in the format `projects/*/locations/*/featureConfigs/**`. (required)
+  <pre>========= FeatureConfig Services ========= Gets details of a featureConfig.
+  name: string, Required. The FeatureConfig resource name in the format `projects/*/locations/*/featureConfigs/**`. (required)
+  <pre>Lists all FeatureConfigs in a given project and location.
+  parent: string, Required. The parent where the FeatureConfigs will be listed. In the format: `projects/*/locations/*`. (required)
+  filter: string, Lists FeatureConfigs that match the filter expression, following the syntax outlined in https://google.aip.dev/160.
+    { # Response message for the `GkeHubFeature.ListFeatureConfigs` method.
+  &quot;featureConfigs&quot;: [ # The list of FeatureConfig(s).
+  &quot;nextPageToken&quot;: &quot;A String&quot;, # A token to request the next page of resources from the `ListFeatureConfigs` method. The value of an empty string means that there are no more resources to return.

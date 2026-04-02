@@ -1,0 +1,53 @@
+<h1><a href="firebaseappdistribution_v1alpha.html">Firebase App Distribution API</a> . <a href="firebaseappdistribution_v1alpha.projects.html">projects</a> . <a href="firebaseappdistribution_v1alpha.projects.apps.html">apps</a> . <a href="firebaseappdistribution_v1alpha.projects.apps.testCases.html">testCases</a></h1>
+<p class="firstline">Deletes multiple test cases.</p>
+<p class="firstline">Updates multiple test cases.</p>
+  <code><a href="#clearTestCaseCache">clearTestCaseCache(testCase, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Clears cached test runs for a specific test case and device(s).</p>
+  <code><a href="#create">create(parent, body=None, testCaseId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Create a new test case.</p>
+<p class="firstline">Delete a test case.</p>
+<p class="firstline">Get a test case.</p>
+<p class="firstline">List test cases.</p>
+<p class="firstline">Update a test case.</p>
+  <pre>Deletes multiple test cases.
+  parent: string, Required. The parent resource of the test cases being deleted. Format: `projects/{project_number}/apps/{app}` (required)
+{ # The request message for `BatchDeleteTestCase`.
+  &quot;names&quot;: [ # Required. The name of the test cases to delete. A maximum number of 1000 test cases can be deleted in one batch Format: `projects/{project_number}/apps/{app}/testCases/{test_case}`
+  <pre>Updates multiple test cases.
+  parent: string, Required. The parent resource of the test cases being updated. Format: `projects/{project_number}/apps/{app}` (required)
+{ # The request message for `BatchUpdateTestCase`.
+  &quot;requests&quot;: [ # Required. The update requests. A maximum number of 1000 test cases can be updated in one batch
+    { # The request message for `UpdateTestCase`.
+      &quot;allowMissing&quot;: True or False, # Optional. If set to true, and the test case is not found, a new test case will be created.
+      &quot;testCase&quot;: { # AI test cases # Required. The test case to update. The test case&#x27;s `name` field is used to identify the test case to update. Format: `projects/{project_number}/apps/{app}/testCases/{test_case}`
+        &quot;createTime&quot;: &quot;A String&quot;, # Output only. Timestamp when the test case was created
+        &quot;dependentTestCases&quot;: [ # Output only. Other test cases that depend on this test case as a prerequisite.
+        &quot;displayName&quot;: &quot;A String&quot;, # Required. Display name of the test case.
+        &quot;name&quot;: &quot;A String&quot;, # Identifier. The name of the test case resource. Format: `projects/{project_number}/apps/{app}/testCases/{test_case}`
+        &quot;prerequisiteTestCase&quot;: &quot;A String&quot;, # Optional. Test case that must be run before this test case.
+    { # The response message for `BatchUpdateTestCase`.
+  &quot;testCases&quot;: [ # The updated test cases.
+    { # AI test cases
+    <code class="details" id="clearTestCaseCache">clearTestCaseCache(testCase, body=None, x__xgafv=None)</code>
+  <pre>Clears cached test runs for a specific test case and device(s).
+  testCase: string, Required. The name of the test case resource for which to clear the cache. Format: `projects/{project_number}/apps/{app}/testCases/{test_case}` (required)
+{ # Request message for `ClearTestCaseCache`.
+  &quot;testDevices&quot;: [ # Optional. The list of devices for which to clear the cache. If not present, clear all of them.
+    { # Response empty (google.protobuf.Empty) message for `ClearTestCaseCache`
+    <code class="details" id="create">create(parent, body=None, testCaseId=None, x__xgafv=None)</code>
+  <pre>Create a new test case.
+  parent: string, Required. The parent resource where this test case will be created. Format: `projects/{project_number}/apps/{app}` (required)
+  testCaseId: string, Optional. The ID to use for the test case, which will become the final component of the test case&#x27;s resource name. This value should be 4-63 characters, and valid characters are /a-z-/.
+  <pre>Delete a test case.
+  name: string, Required. The name of the test case resource to delete. Format: `projects/{project_number}/apps/{app}/testCases/{test_case}` (required)
+  <pre>Get a test case.
+  name: string, Required. The name of the test case resource to retrieve. Format: `projects/{project_number}/apps/{app}/testCases/{test_case}` (required)
+  <pre>List test cases.
+  parent: string, Required. The parent resource from which to list test cases. Format: `projects/{project_number}/apps/{app}` (required)
+  pageSize: integer, Optional. The maximum number of test cases to return. The service may return fewer than this value. If unspecified, at most 50 test cases will be returned. The maximum value is 1000; values above 1000 will be coerced to 1000.
+  pageToken: string, Optional. A page token, received from a previous `ListTestCases` call. Provide this to retrieve the subsequent page. When paginating, all other parameters provided to `ListTestCases` must match the call that provided the page token.
+    { # The response message for `ListTestCases`.
+  &quot;testCases&quot;: [ # The test cases from the specified app.
+  <pre>Update a test case.
+  name: string, Identifier. The name of the test case resource. Format: `projects/{project_number}/apps/{app}/testCases/{test_case}` (required)
+  allowMissing: boolean, Optional. If set to true, and the test case is not found, a new test case will be created.

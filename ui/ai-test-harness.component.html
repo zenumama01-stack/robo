@@ -1,0 +1,338 @@
+  <div class="harness-container" kendoWindowContainer>
+            @if (hasEntityLogo()) {
+              <img [src]="getEntityLogoURL()" [alt]="getEntityName() + ' logo'" class="entity-logo">
+              <i [class]="getEntityIconClass()"></i>
+              <h3>{{ getEntityName() }}</h3>
+                <p>{{ entity.Description }}</p>
+              class="custom-button"
+              (click)="clearConversation()"
+              [disabled]="isExecuting || conversationMessages.length === 0"
+              title="Clear conversation">
+              <i class="fa-solid fa-broom"></i>
+              (click)="saveConversation()"
+              [disabled]="conversationMessages.length === 0"
+              title="Save conversation">
+              (click)="exportConversation()"
+              title="Export conversation">
+              (click)="importConversation()"
+              title="Import conversation">
+              <i class="fa-solid fa-upload"></i>
+              Import
+              accept=".json"
+              (change)="onFileSelected($event)">
+              class="custom-button icon-only"
+              title="Toggle sidebar">
+              <i class="fa-solid" [class.fa-chevron-right]="!showSidebar" [class.fa-chevron-left]="showSidebar"></i>
+    <!-- Main Content Area with Splitter -->
+    <div class="harness-body">
+      @if (showSidebar) {
+          style="height: 100%; width: 100%;">
+          <!-- Chat Area (Left Pane) -->
+            [min]="'400px'">
+            <div class="chat-area">
+              <!-- Messages Container -->
+              <div class="messages-container" #messagesContainer>
+                @if (conversationMessages.length === 0) {
+                    <h4>Start a conversation</h4>
+                    <p>Send a message to begin testing the AI agent</p>
+                @for (message of conversationMessages; track message.id) {
+                  <div [ngClass]="getMessageClass(message)">
+                    <div class="message-header">
+                      <span class="message-role">
+                        @if (message.role === 'user') {
+                          <i class="fa-solid fa-user"></i> You
+                            <img [src]="getEntityLogoURL()" [alt]="getEntityName() + ' logo'" class="message-role-logo">
+                          {{ getEntityName() || 'Assistant' }}
+                      <span class="message-time">{{ formatTimestamp(message.timestamp) }}</span>
+                      @if (message.isStreaming && message.elapsedTime !== undefined) {
+                        <span class="execution-time streaming">
+                          <i class="fa-solid fa-spinner fa-spin"></i> {{ formatElapsedTime(message.elapsedTime) }}
+                      } @else if (message.executionTime) {
+                        <span class="execution-time" [title]="getExecutionSummary(message)">{{ formatExecutionTime(message.executionTime) }}</span>
+                      @if (showRawToggle(message)) {
+                        <button class="raw-toggle" (click)="showRawJsonDialog(message)" title="View raw JSON response">
+                      <button class="copy-button-in-bubble" (click)="copyMessage(message)" title="Copy message">
+                      @if (message.isStreaming) {
+                        <div class="streaming-wrapper">
+                          <span class="streaming-content" [innerHTML]="getFormattedStreamingContent(message)"></span>
+                          <span class="cursor">|</span>
+                        <div [innerHTML]="getFormattedContent(message)"></div>
+                      @if (message.error) {
+                          {{ message.error }}
+                      @if (hasPayload(message.payload) && mode === 'agent' && message.role === 'assistant') {
+                        <div class="payload-section" [class.collapsed]="message.payloadCollapsed">
+                          <div class="payload-header" (click)="togglePayloadCollapse(message)">
+                            <span class="payload-label">
+                              <i class="fa-solid fa-code"></i> Payload
+                            <button class="payload-toggle" type="button">
+                              <i class="fa-solid" [class.fa-chevron-down]="!message.payloadCollapsed" [class.fa-chevron-right]="message.payloadCollapsed"></i>
+                          @if (!message.payloadCollapsed) {
+                            <div class="payload-content">
+                                [ngModel]="formatJson(message.payload)"
+              <!-- Input Area -->
+                @if (originalPromptRunId && conversationMessages.length > 0) {
+                  <!-- Re-run mode - show loaded message -->
+                  <div class="rerun-mode-container">
+                    <div class="rerun-message">
+                      <span>Messages from Prompt Run <strong>{{ originalPromptRunId.substring(0, 8) }}</strong> loaded above</span>
+                    <div class="rerun-buttons">
+                      @if (!hasExecutedRerun) {
+                        <!-- Show Re-Run button if we haven't executed yet -->
+                          class="send-button rerun-button"
+                          (click)="executeRerun()"
+                          [disabled]="isExecuting"
+                          title="Re-run with loaded messages">
+                          @if (isExecuting) {
+                            <span>Running...</span>
+                            <span>Re-Run</span>
+                        <!-- Show only Reset button after execution -->
+                          class="send-button reset-button"
+                          (click)="resetToOriginalMessages()"
+                          title="Reset conversation messages to the original state from the prompt run. Model settings and parameters will be preserved.">
+                          <i class="fa-solid fa-rotate-left"></i>
+                          <span>Reset Messages</span>
+                  <!-- Normal mode - show text input -->
+                  <div class="input-container">
+                      #messageInput
+                      [(ngModel)]="currentUserMessage"
+                      placeholder="Type your message here... (Press Enter to send, Shift+Enter for new line)"
+                      (keypress)="handleKeyPress($event)"
+                      class="message-input">
+                      class="send-button"
+                      (click)="sendMessage()"
+                      [disabled]="isExecuting || !currentUserMessage.trim()"
+          <!-- Sidebar (Right Pane) -->
+            [size]="'30%'"
+            [min]="'300px'">
+              <div class="sidebar-tabs">
+                @if (mode === 'agent') {
+                    class="tab-button"
+                    [class.active]="activeTab === 'agentVariables'"
+                    [disabled]="executionMonitorMode === 'live' && activeTab !== 'agentVariables'"
+                    (click)="selectTab('agentVariables')">
+                    Agent Variables
+                    [class.active]="activeTab === 'executionMonitor'"
+                    (click)="selectTab('executionMonitor')">
+                    Execution Monitor
+                    [class.active]="activeTab === 'agentSettings'"
+                    [disabled]="executionMonitorMode === 'live' && activeTab !== 'agentSettings'"
+                    (click)="selectTab('agentSettings')">
+                    Settings
+                    [class.active]="activeTab === 'templateVariables'"
+                    (click)="selectTab('templateVariables')">
+                    Template Variables
+                    [class.active]="activeTab === 'modelSettings'"
+                    (click)="selectTab('modelSettings')">
+                    Model Settings
+                  [class.active]="activeTab === 'savedConversations'"
+                  [disabled]="executionMonitorMode === 'live' && activeTab !== 'savedConversations'"
+                  (click)="selectTab('savedConversations')">
+                  Saved
+                  @if (savedConversations.length > 0) {
+                    <span class="badge">{{ savedConversations.length }}</span>
+                <!-- Agent Variables Tab (Unified) -->
+                @if (activeTab === 'agentVariables') {
+                      <h4>Agent Variables</h4>
+                      <p>Variables available during agent execution and template rendering</p>
+                    <div class="variables-list">
+                      @if (agentVariables.length === 0) {
+                        <div class="empty-variables">
+                          <p>No variables defined. Click "Add Variable" to get started.</p>
+                      @for (variable of agentVariables; track $index) {
+                        <div class="variable-item">
+                            [(ngModel)]="variable.name"
+                            placeholder="Variable name"
+                            class="variable-name">
+                            [(ngModel)]="variable.type"
+                                                    {text: 'String', value: 'string'}, 
+                                                    {text: 'Number', value: 'number'}, 
+                                                    {text: 'Boolean', value: 'boolean'}, 
+                                                    {text: 'Object', value: 'object'}
+                            class="variable-type">
+                            [(ngModel)]="variable.value"
+                            [placeholder]="variable.type === 'object' ? 'JSON value' : 'Value'"
+                            class="variable-value">
+                            (click)="removeAgentVariable($index)"
+                            title="Remove variable">
+                      (click)="addAgentVariable()"
+                      [disabled]="isExecuting">
+                      <i class="fa-solid fa-plus"></i> Add Variable
+                <!-- Execution Monitor Tab -->
+                @if (activeTab === 'executionMonitor') {
+                  <div class="tab-content" style="padding: 0; height: 100%;">
+                    <mj-agent-execution-monitor
+                      [mode]="executionMonitorMode"
+                      [agentRun]="currentAgentRun"
+                      [liveSteps]="liveAgentSteps"
+                      [autoExpand]="true"
+                      (viewRunClick)="navigateToAgentRun($event)"
+                      [runId]="getLastRunId()"
+                      [runType]="mode">
+                    </mj-agent-execution-monitor>
+                <!-- Agent Settings Tab -->
+                @if (activeTab === 'agentSettings') {
+                      <h4>Agent Settings</h4>
+                      <p>Configure agent execution parameters</p>
+                    <div class="model-settings">
+                        <label>AI Configuration</label>
+                          [(ngModel)]="agentConfigurationId"
+                          placeholder="Select a configuration..."
+                          class="configuration-selector">
+                        <div class="setting-help">
+                          @if (agentConfigurationId) {
+                            @for (config of availableConfigurations; track config.ID) {
+                              @if (config.ID === agentConfigurationId && config.Description) {
+                                {{ config.Description }}
+                            Using default configuration
+                <!-- Template Variables Tab (Prompt Mode) -->
+                @if (activeTab === 'templateVariables') {
+                      <h4>Template Variables</h4>
+                      <p>Variables for prompt template rendering</p>
+                      @for (variable of templateVariables; track $index) {
+                            (click)="removeTemplateVariable($index)"
+                      (click)="addTemplateVariable()">
+                      Add Variable
+                <!-- Model Settings Tab (Prompt Mode) -->
+                @if (activeTab === 'modelSettings') {
+                  <div class="tab-content" style="overflow-y: auto;">
+                      <h4>Model Settings</h4>
+                      <p>Configure AI model parameters</p>
+                      <button class="custom-button icon-only" (click)="resetToPromptDefaults()" title="Reset to Prompt Settings">
+                        <label>AI Model</label>
+                          [(ngModel)]="selectedModelId"
+                          (ngModelChange)="onModelSelectionChange()"
+                          class="model-selector">
+                        <label>AI Vendor</label>
+                          [(ngModel)]="selectedVendorId"
+                          [data]="availableVendors"
+                          [disabled]="availableVendors.length <= 1 || !selectedModelId"
+                          placeholder="Select a vendor..."
+                          class="vendor-selector">
+                          @if (!selectedModelId) {
+                            Using default vendor for the default model
+                          } @else if (availableVendors.length <= 1) {
+                            Only one vendor available for this model
+                            Select the inference provider for this model
+                          [(ngModel)]="selectedConfigurationId"
+                          @if (selectedConfigurationId) {
+                              @if (config.ID === selectedConfigurationId && config.Description) {
+                          [(ngModel)]="selectedResponseFormat"
+                          [data]="responseFormatOptions"
+                          placeholder="Select format..."
+                          class="format-selector">
+                          Expected format for AI response (defaults to prompt setting)
+                          [(ngModel)]="maxTokens"
+                          [min]="100"
+                          placeholder="Max tokens..."
+                          class="max-tokens-input">
+                          Maximum length of generated response
+                            [(ngModel)]="skipValidation"
+                            class="skip-validation-checkbox">
+                          Skip Validation
+                          Skip output validation during testing
+                      <!-- Advanced Parameters Expansion Panel -->
+                        [expanded]="advancedParamsExpanded"
+                        (action)="toggleAdvancedParams()"
+                        title="Advanced Parameters"
+                        class="advanced-params-panel">
+                            <label title="Controls randomness: 0 = more focused and deterministic, 2 = more random and creative">
+                              Temperature
+                              [(ngModel)]="advancedParams.temperature"
+                              [step]="0.1"
+                              [format]="'n1'"
+                              placeholder="None"
+                              class="advanced-param-input">
+                            <label title="Nucleus sampling: only consider tokens with cumulative probability up to this value. 1 = consider all tokens">
+                              Top P
+                              [(ngModel)]="advancedParams.topP"
+                              [max]="1"
+                              [step]="0.01"
+                              [format]="'n2'"
+                            <label title="Only sample from the top K tokens. Lower values reduce randomness">
+                              Top K
+                              [(ngModel)]="advancedParams.topK"
+                              [max]="100"
+                            <label title="Minimum probability for token selection. Filters out low-probability tokens">
+                              Min P
+                              [(ngModel)]="advancedParams.minP"
+                            <label title="Penalizes tokens based on their frequency in the text. Positive values reduce repetition">
+                              Frequency Penalty
+                              [(ngModel)]="advancedParams.frequencyPenalty"
+                              [min]="-2"
+                            <label title="Penalizes tokens that have appeared in the text. Positive values increase topic diversity">
+                              Presence Penalty
+                              [(ngModel)]="advancedParams.presencePenalty"
+                            <label title="Random seed for deterministic generation. Same seed produces same output">
+                              Seed
+                              [(ngModel)]="advancedParams.seed"
+                            <label title="Sequences that will stop generation when encountered. Enter comma-separated values">
+                              Stop Sequences
+                              [(ngModel)]="stopSequencesText"
+                              (ngModelChange)="updateStopSequences()"
+                              placeholder="Enter comma-separated sequences"
+                              Separate multiple sequences with commas
+                            <label title="Include log probabilities of the output tokens in the response">
+                              Include Log Probs
+                            <kendo-switch
+                              [(ngModel)]="advancedParams.includeLogProbs"
+                              class="advanced-param-switch">
+                          @if (advancedParams.includeLogProbs) {
+                              <label title="Number of top log probabilities to include for each token">
+                                Top Log Probs
+                                [(ngModel)]="advancedParams.topLogProbs"
+                                [min]="2"
+                                [max]="20"
+                                placeholder="2"
+                <!-- Saved Conversations Tab -->
+                @if (activeTab === 'savedConversations') {
+                      <h4>Saved Conversations</h4>
+                      <p>Previously saved test sessions</p>
+                      @if (currentConversationId) {
+                        <button class="custom-button small primary" (click)="newConversation()" title="Start a new conversation">
+                    <div class="saved-list">
+                      @if (savedConversations.length === 0) {
+                        <div class="empty-saved">
+                          <p>No saved conversations</p>
+                      @for (conv of savedConversations; track conv.id) {
+                        <div class="saved-item"
+                          [class.current]="conv.id === currentConversationId"
+                          (click)="loadConversation(conv)">
+                          <div class="saved-info">
+                            <h5>{{ conv.name }}</h5>
+                            <p>{{ conv.messages.length }} messages</p>
+                            <span class="saved-date">{{ conv.updatedAt | date:'short' }}</span>
+                            class="delete-button"
+                            (click)="deleteConversation(conv, $event)"
+                            title="Delete conversation">
+        <!-- No sidebar - full width chat -->
+                      <i class="fa-solid fa-robot"></i> {{ getEntityName() || 'Assistant' }}
+                  @if (message.executionData && mode === 'agent' && message.role === 'assistant') {
+                    <button class="execution-history-toggle" (click)="showMessageExecutionHistory(message)" title="View execution details">
+                  @if (message.agentRunId && mode === 'agent' && message.role === 'assistant') {
+                    <button class="execution-history-toggle" (click)="navigateToAgentRun({runId: message.agentRunId, runType: 'agent'})" title="View full run details">
+                      <span class="streaming-content">{{ message.streamingContent }}<span class="cursor">|</span></span>
+                          <pre>{{ formatJson(message.payload) }}</pre>
+<!-- Save Conversation Dialog -->
+@if (showSaveDialog) {
+    [title]="'Save Conversation'"
+    [width]="400"
+    (close)="cancelSaveDialog()"
+    class="save-dialog">
+      <p>Enter a name for this conversation:</p>
+        #saveDialogInput
+        (keyup)="updateTempConversation()"
+        placeholder="Conversation name"
+        class="k-textbox k-input k-input-md k-rounded-md k-input-solid full-width"  />
+      <button kendoButton (click)="cancelSaveDialog()">Cancel</button>
+        (click)="confirmSaveConversation()"
+        [disabled]="tempConversationName === ''">
+<!-- Load Confirmation Dialog -->
+@if (showLoadConfirmDialog) {
+    [title]="'Replace Current Conversation?'"
+    (close)="cancelLoadConversation()"
+    class="confirm-dialog">
+      <p>Loading this conversation will replace the current one. Any unsaved changes will be lost.</p>
+      <p>Do you want to continue?</p>
+      <button kendoButton (click)="cancelLoadConversation()">Cancel</button>
+        (click)="confirmLoadConversation()">
+        Load Conversation

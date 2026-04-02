@@ -1,0 +1,63 @@
+<h1><a href="workloadmanager_v1.html">Workload Manager API</a> . <a href="workloadmanager_v1.projects.html">projects</a> . <a href="workloadmanager_v1.projects.locations.html">locations</a> . <a href="workloadmanager_v1.projects.locations.workloadProfiles.html">workloadProfiles</a></h1>
+<p class="firstline">Gets details of a single workload.</p>
+<p class="firstline">List workloads</p>
+  <pre>Gets details of a single workload.
+    { # workload resource
+  &quot;application&quot;: { # The database layer # Optional. The application layer
+    &quot;applicationType&quot;: &quot;A String&quot;, # the application layer
+    &quot;databaseType&quot;: &quot;A String&quot;, # Optional. the database layer
+    &quot;instances&quot;: [ # Optional. instances in a layer
+      { # a vm instance
+        &quot;name&quot;: &quot;A String&quot;, # Output only. name of the VM
+        &quot;region&quot;: &quot;A String&quot;, # Output only. The location of the VM
+        &quot;status&quot;: &quot;A String&quot;, # Output only. The state of the VM
+    &quot;sid&quot;: &quot;A String&quot;, # Output only. system identification of a layer
+  &quot;ascs&quot;: { # The database layer # Optional. The ascs layer
+  &quot;database&quot;: { # The database layer # Optional. The database layer
+  &quot;name&quot;: &quot;A String&quot;, # Identifier. name of resource names have the form &#x27;projects/{project_id}/workloads/{workload_id}&#x27;
+    &quot;application&quot;: { # The component of sap workload # Output only. the acsc componment
+      &quot;haHosts&quot;: [ # A list of host URIs that are part of the HA configuration if present. An empty list indicates the component is not configured for HA.
+    &quot;database&quot;: { # The component of sap workload # Output only. the database componment
+  &quot;sqlserverWorkload&quot;: { # The body of sqlserver workload # The sqlserver workload content
+    &quot;ags&quot;: [ # Output only. The availability groups for sqlserver
+      { # The availability groups for sqlserver
+        &quot;databases&quot;: [ # Output only. The databases
+        &quot;name&quot;: &quot;A String&quot;, # Output only. The availability group name
+        &quot;primaryServer&quot;: &quot;A String&quot;, # Output only. The primary server
+        &quot;secondaryServers&quot;: [ # Output only. The secondary servers
+    &quot;cluster&quot;: { # The cluster for sqlserver # Output only. The cluster for sqlserver
+      &quot;nodes&quot;: [ # Output only. The nodes
+      &quot;witnessServer&quot;: &quot;A String&quot;, # Output only. The witness server
+    &quot;databases&quot;: [ # Output only. The databases for sqlserver
+      { # The database for sqlserver
+        &quot;backupFile&quot;: &quot;A String&quot;, # Output only. The backup file
+        &quot;backupSchedule&quot;: &quot;A String&quot;, # Output only. The backup schedule
+        &quot;hostVm&quot;: &quot;A String&quot;, # Output only. The host VM
+        &quot;name&quot;: &quot;A String&quot;, # Output only. The database name
+    &quot;loadBalancerServer&quot;: { # The load balancer for sqlserver # Output only. The load balancer for sqlserver
+      &quot;ip&quot;: &quot;A String&quot;, # Output only. The IP address
+      &quot;vm&quot;: &quot;A String&quot;, # Output only. The VM name
+  &quot;state&quot;: &quot;A String&quot;, # Output only. [output only] the current state if a a workload
+  &quot;threeTierWorkload&quot;: { # The body of three tier workload # The 3 tier web app workload content
+    &quot;apiLayer&quot;: { # The API layer server # Output only. The API layer for three tier workload
+      &quot;name&quot;: &quot;A String&quot;, # Output only. The api layer name
+      &quot;osVersion&quot;: &quot;A String&quot;, # Output only. OS information
+    &quot;backend&quot;: { # The backend server # Output only. The backend for three tier workload
+      &quot;name&quot;: &quot;A String&quot;, # Output only. The backend name
+    &quot;endpoint&quot;: &quot;A String&quot;, # Output only. the workload endpoint
+    &quot;frontend&quot;: { # The front end server # Output only. The frontend for three tier workload
+      &quot;name&quot;: &quot;A String&quot;, # Output only. The frontend name
+  <pre>List workloads
+  parent: string, Required. Parent value for ListWorkloadRequest (required)
+    { # List workloadResponse returns a response with the list of workload overview
+  &quot;workloadOverviews&quot;: [ # Output only. The list of Workload Overview
+    { # a workload profile overview
+      &quot;sapWorkloadOverview&quot;: { # The overview of sap workload # The sap workload overview
+        &quot;appSid&quot;: &quot;A String&quot;, # Output only. The application SID
+        &quot;dbSid&quot;: &quot;A String&quot;, # Output only. The database SID
+        &quot;sapSystemId&quot;: &quot;A String&quot;, # Output only. The UUID for a SAP workload
+      &quot;sqlserverWorkloadOverview&quot;: { # The overview of sqlserver workload # The sqlserver workload overview
+        &quot;availabilityGroup&quot;: [ # Output only. The availability groups
+        &quot;sqlserverSystemId&quot;: &quot;A String&quot;, # Output only. The UUID for a Sqlserver workload
+      &quot;threeTierWorkloadOverview&quot;: { # The overview of three tier workload # The three tier workload overview
+        &quot;threeTierSystemId&quot;: &quot;A String&quot;, # Output only. The UUID for a three tier workload

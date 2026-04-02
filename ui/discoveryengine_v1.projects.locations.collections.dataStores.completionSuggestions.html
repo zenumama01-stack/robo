@@ -1,0 +1,19 @@
+<h1><a href="discoveryengine_v1.html">Discovery Engine API</a> . <a href="discoveryengine_v1.projects.html">projects</a> . <a href="discoveryengine_v1.projects.locations.html">locations</a> . <a href="discoveryengine_v1.projects.locations.collections.html">collections</a> . <a href="discoveryengine_v1.projects.locations.collections.dataStores.html">dataStores</a> . <a href="discoveryengine_v1.projects.locations.collections.dataStores.completionSuggestions.html">completionSuggestions</a></h1>
+<p class="firstline">Imports CompletionSuggestions for a DataStore.</p>
+<p class="firstline">Permanently deletes all CompletionSuggestions for a DataStore.</p>
+  <pre>Imports CompletionSuggestions for a DataStore.
+  parent: string, Required. The parent data store resource name for which to import customer autocomplete suggestions. Follows pattern `projects/*/locations/*/collections/*/dataStores/*` (required)
+{ # Request message for CompletionService.ImportCompletionSuggestions method.
+  &quot;inlineSource&quot;: { # The inline source for CompletionSuggestions. # The Inline source for suggestion entries.
+    &quot;suggestions&quot;: [ # Required. A list of all denylist entries to import. Max of 1000 items.
+      { # Autocomplete suggestions that are imported from Customer.
+        &quot;alternativePhrases&quot;: [ # Alternative matching phrases for this suggestion.
+        &quot;frequency&quot;: &quot;A String&quot;, # Frequency of this suggestion. Will be used to rank suggestions when score is not available.
+        &quot;globalScore&quot;: 3.14, # Global score of this suggestion. Control how this suggestion would be scored / ranked.
+        &quot;groupId&quot;: &quot;A String&quot;, # If two suggestions have the same groupId, they will not be returned together. Instead the one ranked higher will be returned. This can be used to deduplicate semantically identical suggestions.
+        &quot;groupScore&quot;: 3.14, # The score of this suggestion within its group.
+        &quot;languageCode&quot;: &quot;A String&quot;, # BCP-47 language code of this suggestion.
+        &quot;suggestion&quot;: &quot;A String&quot;, # Required. The suggestion text.
+  <pre>Permanently deletes all CompletionSuggestions for a DataStore.
+  parent: string, Required. The parent data store resource name for which to purge completion suggestions. Follows pattern projects/*/locations/*/collections/*/dataStores/*. (required)
+{ # Request message for CompletionService.PurgeCompletionSuggestions method.

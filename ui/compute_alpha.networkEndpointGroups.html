@@ -1,0 +1,42 @@
+<h1><a href="compute_alpha.html">Compute Engine API</a> . <a href="compute_alpha.networkEndpointGroups.html">networkEndpointGroups</a></h1>
+<p class="firstline">Retrieves the list of network endpoint groups and sorts them by zone.</p>
+  <code><a href="#attachNetworkEndpoints">attachNetworkEndpoints(project, zone, networkEndpointGroup, body=None, requestId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Attach a list of network endpoints to the specified network endpoint group.</p>
+  <code><a href="#delete">delete(project, zone, networkEndpointGroup, requestId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Deletes the specified network endpoint group. The network endpoints in the</p>
+  <code><a href="#detachNetworkEndpoints">detachNetworkEndpoints(project, zone, networkEndpointGroup, body=None, requestId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Detach a list of network endpoints from the specified network endpoint</p>
+  <code><a href="#get">get(project, zone, networkEndpointGroup, x__xgafv=None)</a></code></p>
+  <code><a href="#listNetworkEndpoints">listNetworkEndpoints(project, zone, networkEndpointGroup, body=None, filter=None, maxResults=None, orderBy=None, pageToken=None, returnPartialSuccess=None, x__xgafv=None)</a></code></p>
+  <pre>Retrieves the list of network endpoint groups and sorts them by zone.
+  &quot;items&quot;: { # A list of NetworkEndpointGroupsScopedList resources.
+    &quot;a_key&quot;: { # The name of the scope that contains this set of network endpoint groups.
+      &quot;networkEndpointGroups&quot;: [ # Output only. [Output Only] The list ofnetwork
+          # endpoint groups that are contained in this scope.
+      &quot;warning&quot;: { # Output only. [Output Only] An informational warning that replaces the list of network
+          # endpoint groups when the list is empty.
+  &quot;kind&quot;: &quot;compute#networkEndpointGroupAggregatedList&quot;, # Output only. [Output Only] The resource type, which is alwayscompute#networkEndpointGroupAggregatedList for aggregated
+      # lists of network endpoint groups.
+    <code class="details" id="attachNetworkEndpoints">attachNetworkEndpoints(project, zone, networkEndpointGroup, body=None, requestId=None, x__xgafv=None)</code>
+  <pre>Attach a list of network endpoints to the specified network endpoint group.
+the network endpoint group is located. It should comply with RFC1035. (required)
+    <code class="details" id="delete">delete(project, zone, networkEndpointGroup, requestId=None, x__xgafv=None)</code>
+  <pre>Deletes the specified network endpoint group. The network endpoints in the
+NEG and the VM instances they belong to are not terminated when the NEG is
+deleted. Note that the NEG cannot be deleted if there are backend services
+referencing it.
+    <code class="details" id="detachNetworkEndpoints">detachNetworkEndpoints(project, zone, networkEndpointGroup, body=None, requestId=None, x__xgafv=None)</code>
+  <pre>Detach a list of network endpoints from the specified network endpoint
+    <code class="details" id="get">get(project, zone, networkEndpointGroup, x__xgafv=None)</code>
+you want to create the network endpoint group. It should comply with
+where the network endpoint group is located. It should comply with RFC1035. (required)
+    <code class="details" id="listNetworkEndpoints">listNetworkEndpoints(project, zone, networkEndpointGroup, body=None, filter=None, maxResults=None, orderBy=None, pageToken=None, returnPartialSuccess=None, x__xgafv=None)</code>
+  &quot;endpointFilters&quot;: [ # Optional list of endpoints to query.
+      # This is a more efficient but also limited version of filter parameter.
+      # Endpoints in the filter must have ip_address and port fields populated,
+      # other fields are not supported.
+      &quot;networkEndpoint&quot;: { # The network endpoint.
+  &quot;healthStatus&quot;: &quot;A String&quot;, # Optional query parameter for showing the health status of each network
+      # endpoint. Valid options are SKIP or SHOW. If you
+      # don&#x27;t specify this parameter, the health status of network endpoints will
+      # not be provided.

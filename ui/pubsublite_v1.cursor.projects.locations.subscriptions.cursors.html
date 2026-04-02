@@ -1,0 +1,12 @@
+<h1><a href="pubsublite_v1.html">Pub/Sub Lite API</a> . <a href="pubsublite_v1.cursor.html">cursor</a> . <a href="pubsublite_v1.cursor.projects.html">projects</a> . <a href="pubsublite_v1.cursor.projects.locations.html">locations</a> . <a href="pubsublite_v1.cursor.projects.locations.subscriptions.html">subscriptions</a> . <a href="pubsublite_v1.cursor.projects.locations.subscriptions.cursors.html">cursors</a></h1>
+<p class="firstline">Returns all committed cursor information for a subscription.</p>
+  <pre>Returns all committed cursor information for a subscription.
+  parent: string, Required. The subscription for which to retrieve cursors. Structured like `projects/{project_number}/locations/{location}/subscriptions/{subscription_id}`. (required)
+  pageSize: integer, The maximum number of cursors to return. The service may return fewer than this value. If unset or zero, all cursors for the parent will be returned.
+  pageToken: string, A page token, received from a previous `ListPartitionCursors` call. Provide this to retrieve the subsequent page. When paginating, all other parameters provided to `ListPartitionCursors` must match the call that provided the page token.
+    { # Response for ListPartitionCursors
+  &quot;partitionCursors&quot;: [ # The partition cursors from this request.
+    { # A pair of a Cursor and the partition it is for.
+      &quot;cursor&quot;: { # A cursor that describes the position of a message within a topic partition. # The value of the cursor.
+        &quot;offset&quot;: &quot;A String&quot;, # The offset of a message within a topic partition. Must be greater than or equal 0.
+      &quot;partition&quot;: &quot;A String&quot;, # The partition this is for.

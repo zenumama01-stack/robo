@@ -1,0 +1,16 @@
+    <!-- Registry Core Info Section -->
+        SectionKey="registryCoreInfo"
+        SectionName="Registry Core Info"
+    <!-- Access Details Section -->
+        SectionKey="accessDetails"
+        SectionName="Access Details"
+            FieldName="URI"
+            FieldName="APIVersion"
+    <!-- MJ: Components Section -->
+        SectionKey="mJComponents"
+        SectionName="MJ: Components"
+        [BadgeCount]="GetSectionRowCount('mJComponents')"
+                [Params]="BuildRelationshipViewParamsByEntityName('MJ: Components','SourceRegistryID')"
+                [NewRecordValues]="NewRecordValues('MJ: Components')"
+                [AllowLoad]="IsSectionExpanded('mJComponents')"
+                (AfterDataLoad)="SetSectionRowCount('mJComponents', $event.totalRowCount)"

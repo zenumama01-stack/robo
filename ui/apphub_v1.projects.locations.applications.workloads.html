@@ -1,0 +1,37 @@
+<h1><a href="apphub_v1.html">App Hub API</a> . <a href="apphub_v1.projects.html">projects</a> . <a href="apphub_v1.projects.locations.html">locations</a> . <a href="apphub_v1.projects.locations.applications.html">applications</a> . <a href="apphub_v1.projects.locations.applications.workloads.html">workloads</a></h1>
+  <code><a href="#create">create(parent, body=None, requestId=None, workloadId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Creates a Workload in an Application.</p>
+<p class="firstline">Deletes a Workload from an Application.</p>
+<p class="firstline">Gets a Workload in an Application.</p>
+<p class="firstline">Lists Workloads in an Application.</p>
+<p class="firstline">Updates a Workload in an Application.</p>
+    <code class="details" id="create">create(parent, body=None, requestId=None, workloadId=None, x__xgafv=None)</code>
+  <pre>Creates a Workload in an Application.
+  parent: string, Required. Fully qualified name of the Application to create Workload in. Expected format: `projects/{project}/locations/{location}/applications/{application}`. (required)
+{ # Workload is an App Hub data model that contains a discovered workload, which represents a binary deployment (such as managed instance groups (MIGs) and GKE deployments) that performs the smallest logical subset of business functionality.
+  &quot;description&quot;: &quot;A String&quot;, # Optional. User-defined description of a Workload. Can have a maximum length of 2048 characters.
+  &quot;discoveredWorkload&quot;: &quot;A String&quot;, # Required. Immutable. The resource name of the original discovered workload.
+  &quot;displayName&quot;: &quot;A String&quot;, # Optional. User-defined name for the Workload. Can have a maximum length of 63 characters.
+  &quot;name&quot;: &quot;A String&quot;, # Identifier. The resource name of the Workload. Format: `&quot;projects/{host-project-id}/locations/{location}/applications/{application-id}/workloads/{workload-id}&quot;`
+  &quot;state&quot;: &quot;A String&quot;, # Output only. Workload state.
+  &quot;uid&quot;: &quot;A String&quot;, # Output only. A universally unique identifier (UUID) for the `Workload` in the UUID4 format.
+  &quot;workloadProperties&quot;: { # Properties of an underlying compute resource represented by the Workload. # Output only. Properties of an underlying compute resource represented by the Workload. These are immutable.
+    &quot;functionalType&quot;: { # The functional type of a service or workload. # Output only. The type of the workload.
+    &quot;gcpProject&quot;: &quot;A String&quot;, # Output only. The service project identifier that the underlying cloud resource resides in. Empty for non-cloud resources.
+    &quot;identity&quot;: { # The identity associated with a service or workload. # Output only. The identity associated with the workload.
+    &quot;location&quot;: &quot;A String&quot;, # Output only. The location that the underlying compute resource resides in (for example, us-west1).
+    &quot;zone&quot;: &quot;A String&quot;, # Output only. The location that the underlying compute resource resides in if it is zonal (for example, us-west1-a).
+  &quot;workloadReference&quot;: { # Reference of an underlying compute resource represented by the Workload. # Output only. Reference of an underlying compute resource represented by the Workload. These are immutable.
+    &quot;uri&quot;: &quot;A String&quot;, # Output only. The underlying compute resource uri.
+  workloadId: string, Required. The Workload identifier. Must contain only lowercase letters, numbers or hyphens, with the first character a letter, the last a letter or a number, and a 63 character maximum.
+  <pre>Deletes a Workload from an Application.
+  name: string, Required. Fully qualified name of the Workload to delete from an Application. Expected format: `projects/{project}/locations/{location}/applications/{application}/workloads/{workload}`. (required)
+  <pre>Gets a Workload in an Application.
+  name: string, Required. Fully qualified name of the Workload to fetch. Expected format: `projects/{project}/locations/{location}/applications/{application}/workloads/{workload}`. (required)
+  <pre>Lists Workloads in an Application.
+  parent: string, Required. Fully qualified name of the parent Application to list Workloads for. Expected format: `projects/{project}/locations/{location}/applications/{application}`. (required)
+    { # Response for ListWorkloads.
+  &quot;workloads&quot;: [ # List of Workloads.
+  <pre>Updates a Workload in an Application.
+  name: string, Identifier. The resource name of the Workload. Format: `&quot;projects/{host-project-id}/locations/{location}/applications/{application-id}/workloads/{workload-id}&quot;` (required)
+  updateMask: string, Required. Field mask is used to specify the fields to be overwritten in the Workload resource by the update. The fields specified in the update_mask are relative to the resource, not the full request. The API changes the values of the fields as specified in the update_mask. The API ignores the values of all fields not covered by the update_mask. You can also unset a field by not specifying it in the updated message, but adding the field to the mask. This clears whatever value the field previously had.

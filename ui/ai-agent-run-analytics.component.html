@@ -1,0 +1,211 @@
+<div class="analytics-container">
+      <i class="fas fa-spinner fa-spin fa-2x"></i>
+      <p>Loading analytics data...</p>
+  @if (error && !isLoading) {
+    <div class="error-state">
+      <i class="fas fa-exclamation-triangle fa-2x"></i>
+      <p>{{ error }}</p>
+      <button kendoButton (click)="loadData()">Retry</button>
+  <!-- Analytics Content -->
+  @if (!isLoading && !error) {
+    <div class="analytics-content">
+        <kendo-panelbar-item [expanded]="true">
+            <i class="fas fa-tachometer-alt"></i> Overview
+            <div class="summary-cards">
+                <div class="card-icon prompts">
+                <div class="card-content">
+                  <h3>Total Prompts</h3>
+                  <div class="metric-value">{{ promptMetrics.totalCount }}</div>
+                    <span class="success">{{ promptMetrics.statusBreakdown.success }} successful</span>
+                    @if (promptMetrics.statusBreakdown.failed > 0) {
+                      <span class="failed">{{ promptMetrics.statusBreakdown.failed }} failed</span>
+                <div class="card-icon actions">
+                  <h3>Total Actions</h3>
+                  <div class="metric-value">{{ actionMetrics.totalCount }}</div>
+                    <span class="success">{{ actionMetrics.statusBreakdown.success }} successful</span>
+                    @if (actionMetrics.statusBreakdown.failed > 0) {
+                      <span class="failed">{{ actionMetrics.statusBreakdown.failed }} failed</span>
+                <div class="card-icon cost">
+                  <h3>Total Cost</h3>
+                  <div class="metric-value">{{ formatCost(promptMetrics.costBreakdown.totalCost) }}</div>
+                    <span>{{ promptMetrics.tokenUsage.totalInput + promptMetrics.tokenUsage.totalOutput }} tokens</span>
+                <div class="card-icon time">
+                  <h3>Execution Time</h3>
+                  <div class="metric-value">{{ formatDuration(promptMetrics.totalExecutionTime + actionMetrics.totalExecutionTime) }}</div>
+                    <span>{{ timelineMetrics.totalSteps }} total steps</span>
+        <!-- Prompt Analytics -->
+            <i class="fas fa-microchip"></i> Prompt Analytics
+            <div class="analytics-panel">
+              <!-- View Mode Toggle -->
+              @if (promptMetrics.totalCount > 0) {
+                    (click)="toggleViewMode()">
+                    <i class="fas" [ngClass]="viewMode === 'grid' ? 'fa-expand-arrows-alt' : 'fa-compress-arrows-alt'"></i>
+                    {{ viewMode === 'grid' ? 'Expand All' : 'Collapse All' }}
+              <!-- No prompts message -->
+              @if (promptMetrics.totalCount === 0) {
+                <div class="no-data-message">
+                  <p>No prompt executions found in this agent run.</p>
+                  <p class="small">This agent run may have only executed actions without any AI prompts.</p>
+                <div class="charts-grid">
+                  <!-- Model Distribution -->
+                  <div class="chart-card" [class.expanded]="expandedCharts['modelDistribution']">
+                    <div class="chart-card-header" (click)="toggleChartExpansion('modelDistribution')">
+                      <h3><i class="fas fa-chart-pie"></i> Prompts by Model</h3>
+                      <button class="expand-btn">
+                        <i class="fas" [ngClass]="expandedCharts['modelDistribution'] ? 'fa-compress' : 'fa-expand'"></i>
+                    <div class="chart-card-body">
+                        <div id="modelDistributionChart" #modelDistributionChart></div>
+                        @if (promptMetrics.byModel.size > 0) {
+                            @for (item of promptMetrics.byModel | keyvalue; track trackByKey($index, item)) {
+                              <div class="legend-item">
+                                <span class="legend-color" [style.backgroundColor]="getModelColor(item.key)"></span>
+                                <span class="legend-label">{{ item.key }}: {{ item.value.count }} ({{ (item.value.count / promptMetrics.totalCount * 100).toFixed(1) }}%)</span>
+                  <!-- Execution Time by Vendor -->
+                  <div class="chart-card" [class.expanded]="expandedCharts['executionTime']">
+                    <div class="chart-card-header" (click)="toggleChartExpansion('executionTime')">
+                      <h3><i class="fas fa-clock"></i> Average Execution Time by Vendor</h3>
+                        <i class="fas" [ngClass]="expandedCharts['executionTime'] ? 'fa-compress' : 'fa-expand'"></i>
+                        <div id="executionTimeChart" #executionTimeChart></div>
+                  <!-- Cost by Vendor -->
+                  <div class="chart-card" [class.expanded]="expandedCharts['costByVendor']">
+                    <div class="chart-card-header" (click)="toggleChartExpansion('costByVendor')">
+                      <h3><i class="fas fa-dollar-sign"></i> Cost Distribution by Vendor</h3>
+                        <i class="fas" [ngClass]="expandedCharts['costByVendor'] ? 'fa-compress' : 'fa-expand'"></i>
+                        <div id="costByVendorChart" #costByVendorChart></div>
+                        <div class="chart-total">Total: {{ formatCost(promptMetrics.costBreakdown.totalCost) }}</div>
+                  <!-- Token Usage -->
+                  <div class="chart-card" [class.expanded]="expandedCharts['tokenUsage']">
+                    <div class="chart-card-header" (click)="toggleChartExpansion('tokenUsage')">
+                      <h3><i class="fas fa-coins"></i> Token Usage by Model</h3>
+                        <i class="fas" [ngClass]="expandedCharts['tokenUsage'] ? 'fa-compress' : 'fa-expand'"></i>
+                        <div id="tokenUsageChart" #tokenUsageChart></div>
+              <!-- Additional Prompt Analytics Charts -->
+                <div class="charts-grid" style="margin-top: 20px;">
+                  <!-- Prompt Execution Time Distribution -->
+                  <div class="chart-card" [class.expanded]="expandedCharts['promptTime']">
+                    <div class="chart-card-header" (click)="toggleChartExpansion('promptTime')">
+                      <h3><i class="fas fa-hourglass-half"></i> Average Execution Time by Prompt</h3>
+                        <i class="fas" [ngClass]="expandedCharts['promptTime'] ? 'fa-compress' : 'fa-expand'"></i>
+                        <div id="promptTimeDistributionChart" #promptTimeDistributionChart></div>
+                  <!-- Prompt Token Usage -->
+                  <div class="chart-card" [class.expanded]="expandedCharts['promptToken']">
+                    <div class="chart-card-header" (click)="toggleChartExpansion('promptToken')">
+                      <h3><i class="fas fa-database"></i> Token Usage by Prompt</h3>
+                        <i class="fas" [ngClass]="expandedCharts['promptToken'] ? 'fa-compress' : 'fa-expand'"></i>
+                        <div id="promptTokenDistributionChart" #promptTokenDistributionChart></div>
+                  <!-- Prompt Cost Distribution -->
+                  <div class="chart-card" [class.expanded]="expandedCharts['promptCost']">
+                    <div class="chart-card-header" (click)="toggleChartExpansion('promptCost')">
+                      <h3><i class="fas fa-chart-pie"></i> Cost Distribution by Prompt</h3>
+                        <i class="fas" [ngClass]="expandedCharts['promptCost'] ? 'fa-compress' : 'fa-expand'"></i>
+                        <div id="promptCostDistributionChart" #promptCostDistributionChart></div>
+                  <!-- Prompt Count by Name -->
+                  <div class="chart-card" [class.expanded]="expandedCharts['promptCount']">
+                    <div class="chart-card-header" (click)="toggleChartExpansion('promptCount')">
+                      <h3><i class="fas fa-list-ol"></i> Prompt Execution Count</h3>
+                        <i class="fas" [ngClass]="expandedCharts['promptCount'] ? 'fa-compress' : 'fa-expand'"></i>
+                        <div id="promptCountByNameChart" #promptCountByNameChart></div>
+              <!-- Detailed Prompt Metrics -->
+                  (click)="promptDetailsExpanded = !promptDetailsExpanded">
+                  <i class="fas" [ngClass]="promptDetailsExpanded ? 'fa-chevron-up' : 'fa-chevron-down'"></i>
+                  Detailed Prompt Metrics
+                @if (promptDetailsExpanded) {
+                  <div class="metrics-table">
+                          <th>Prompt Name</th>
+                          <th>Count</th>
+                          <th>Avg Time</th>
+                          <th>Total Time</th>
+                          <th>Success Rate</th>
+                        @for (prompt of promptMetrics.byPrompt | keyvalue; track trackByKey($index, prompt)) {
+                            <td>{{ prompt.key }}</td>
+                            <td>{{ prompt.value.count }}</td>
+                            <td>{{ formatDuration(prompt.value.avgTime) }}</td>
+                            <td>{{ formatDuration(prompt.value.totalTime) }}</td>
+                              <span class="success-rate">
+                                <!-- Calculate success rate for this prompt -->
+                                {{ calculatePromptSuccessRate(prompt.key) }}%
+        <!-- Action Analytics -->
+            <i class="fas fa-cog"></i> Action Analytics
+                <!-- Action Success Rate -->
+                <div class="chart-card" [class.expanded]="expandedCharts['actionSuccess']">
+                  <div class="chart-card-header" (click)="toggleChartExpansion('actionSuccess')">
+                    <h3><i class="fas fa-chart-bar"></i> Action Success Rate</h3>
+                      <i class="fas" [ngClass]="expandedCharts['actionSuccess'] ? 'fa-compress' : 'fa-expand'"></i>
+                      <div id="actionSuccessRateChart" #actionSuccessRateChart></div>
+                <!-- Step Type Distribution -->
+                <div class="chart-card" [class.expanded]="expandedCharts['stepType']">
+                  <div class="chart-card-header" (click)="toggleChartExpansion('stepType')">
+                    <h3><i class="fas fa-layer-group"></i> Step Type Distribution</h3>
+                      <i class="fas" [ngClass]="expandedCharts['stepType'] ? 'fa-compress' : 'fa-expand'"></i>
+                      <div id="stepTypeChart" #stepTypeChart></div>
+              <!-- Detailed Action Metrics -->
+                  (click)="actionDetailsExpanded = !actionDetailsExpanded">
+                  <i class="fas" [ngClass]="actionDetailsExpanded ? 'fa-chevron-up' : 'fa-chevron-down'"></i>
+                  Detailed Action Metrics
+                @if (actionDetailsExpanded) {
+                          <th>Action Name</th>
+                          <th>Type</th>
+                        @for (action of actionMetrics.byAction | keyvalue; track trackByKey($index, action)) {
+                            <td>{{ action.key }}</td>
+                            <td>{{ action.value.count }}</td>
+                            <td>{{ formatDuration(action.value.avgTime) }}</td>
+                              <span class="success-rate" [class.high]="action.value.successRate > 0.9"
+                                [class.medium]="action.value.successRate > 0.7 && action.value.successRate <= 0.9"
+                                [class.low]="action.value.successRate <= 0.7">
+                                {{ (action.value.successRate * 100).toFixed(1) }}%
+                            <td>{{ getActionType(action.key) }}</td>
+              <!-- Error Analysis -->
+              <div class="error-analysis-section">
+                @if (actionMetrics.errorAnalysis.size > 0) {
+                  <div class="error-analysis">
+                    <h3>
+                      Common Errors
+                    <p class="error-analysis-description">
+                      This section shows the most frequent error messages from failed actions, helping identify systemic issues that may need attention.
+                    <div class="error-list">
+                      @for (error of getTopErrors(); track trackByErrorMessage($index, error)) {
+                        <div class="error-item">
+                          <span class="error-count">{{ error.count }}x</span>
+                          <span class="error-message">{{ error.message }}</span>
+                @if (actionMetrics.errorAnalysis.size === 0) {
+                  <div class="no-errors">
+                    <p>No action errors detected in this run. All actions completed successfully!</p>
+        <!-- Model Performance Comparison -->
+            <i class="fas fa-chart-line"></i> Model Performance Comparison
+              <div class="model-comparison">
+                      <th>Model</th>
+                      <th>Vendor</th>
+                      <th>Prompts</th>
+                      <th>Total Cost</th>
+                      <th>Avg Cost/Prompt</th>
+                      <th>Input Tokens</th>
+                      <th>Output Tokens</th>
+                    @for (model of getModelPerformanceData(); track trackByModelName($index, model)) {
+                        <td>{{ model.name }}</td>
+                        <td>{{ model.vendor }}</td>
+                        <td>{{ model.count }}</td>
+                        <td>{{ formatDuration(model.avgTime) }}</td>
+                        <td>{{ formatCost(model.totalCost) }}</td>
+                        <td>{{ formatCost(model.avgCost) }}</td>
+                        <td>{{ model.inputTokens | number:'1.0-0' }}</td>
+                        <td>{{ model.outputTokens | number:'1.0-0' }}</td>
+        <!-- Timeline Analysis -->
+            <i class="fas fa-stream"></i> Execution Timeline Analysis
+              <div class="timeline-stats">
+                  <span class="stat-label">Total Steps</span>
+                  <span class="stat-value">{{ timelineMetrics.totalSteps }}</span>
+                  <span class="stat-label">Parallel Executions</span>
+                  <span class="stat-value">{{ timelineMetrics.parallelExecutions }}</span>
+                  <span class="stat-label">Max Nesting Depth</span>
+                  <span class="stat-value">{{ timelineMetrics.deepestNesting }}</span>
+                  <span class="stat-label">Sub-Agent Runs</span>
+                  <span class="stat-value">{{ subAgentRuns.length }}</span>
+              <div class="step-breakdown">
+                <h3>Steps by Type</h3>
+                <div class="step-type-list">
+                  @for (type of timelineMetrics.stepsByType | keyvalue; track trackByKey($index, type)) {
+                    <div class="step-type-item">
+                      <i class="fas" [ngClass]="getStepTypeIcon(type.key)"></i>
+                      <span class="type-name">{{ type.key }}</span>
+                      <span class="type-count">{{ type.value }}</span>
+                      <span class="type-percentage">({{ (type.value / timelineMetrics.totalSteps * 100).toFixed(1) }}%)</span>

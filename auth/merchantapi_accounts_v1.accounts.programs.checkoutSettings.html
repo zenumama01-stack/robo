@@ -1,0 +1,30 @@
+<h1><a href="merchantapi_accounts_v1.html">Merchant API</a> . <a href="merchantapi_accounts_v1.accounts.html">accounts</a> . <a href="merchantapi_accounts_v1.accounts.programs.html">programs</a> . <a href="merchantapi_accounts_v1.accounts.programs.checkoutSettings.html">checkoutSettings</a></h1>
+<p class="firstline">Creates `CheckoutSettings` for the given merchant.</p>
+  <code><a href="#deleteCheckoutSettings">deleteCheckoutSettings(name, x__xgafv=None)</a></code></p>
+<p class="firstline">Deletes `CheckoutSettings` and unenrolls merchant from `Checkout` program.</p>
+  <code><a href="#getCheckoutSettings">getCheckoutSettings(name, x__xgafv=None)</a></code></p>
+<p class="firstline">Gets `CheckoutSettings` for the given merchant. This includes information about review state, enrollment state and URL settings.</p>
+  <code><a href="#updateCheckoutSettings">updateCheckoutSettings(name, body=None, updateMask=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Updates `CheckoutSettings` for the given merchant.</p>
+  <pre>Creates `CheckoutSettings` for the given merchant.
+  parent: string, Required. The merchant account for which the `CheckoutSettings` will be created. (required)
+{ # [CheckoutSettings](https://support.google.com/merchants/answer/13945960) for a specific merchant.
+  &quot;effectiveEnrollmentState&quot;: &quot;A String&quot;, # Output only. The effective value of enrollment_state for a given merchant ID. If account level settings are present then this value will be a copy of the account level settings. Otherwise, it will have the value of the parent account (for only marketplace sellers).
+  &quot;effectiveReviewState&quot;: &quot;A String&quot;, # Output only. The effective value of `review_state` for a given merchant ID. If account level settings are present then this value will be a copy of the account level settings. Otherwise, it will have the value of the parent account (for only marketplace sellers).
+  &quot;effectiveUriSettings&quot;: { # URL settings for cart or checkout URL. # Output only. The effective value of `uri_settings` for a given merchant. If account level settings are present then this value will be a copy of url settings. Otherwise, it will have the value of the parent account (for only marketplace sellers).
+    &quot;cartUriTemplate&quot;: &quot;A String&quot;, # Cart URL template. When the placeholders are expanded will redirect the buyer to the cart page on the merchant website with the selected item in cart. For more details, check the [help center doc](https://support.google.com/merchants/answer/13945960#method1&amp;zippy=%2Cproduct-level-url-formatting%2Caccount-level-url-formatting)
+    &quot;checkoutUriTemplate&quot;: &quot;A String&quot;, # Checkout URL template. When the placeholders are expanded will redirect the buyer to the merchant checkout page with the item in the cart. For more details, check the [help center doc](https://support.google.com/merchants/answer/13945960#method1&amp;zippy=%2Cproduct-level-url-formatting%2Caccount-level-url-formatting)
+  &quot;eligibleDestinations&quot;: [ # Optional. Required for the create operation. The destinations (also known as [Marketing methods](https://support.google.com/merchants/answer/15130232)) to which the checkout program applies. Valid destination values are `SHOPPING_ADS` and `FREE_LISTINGS`.
+  &quot;enrollmentState&quot;: &quot;A String&quot;, # Output only. Reflects the merchant enrollment state in `Checkout` program.
+  &quot;name&quot;: &quot;A String&quot;, # Identifier. The resource name of the program configuration settings. Format: `accounts/{account}/programs/{program}/checkoutSettings`
+  &quot;reviewState&quot;: &quot;A String&quot;, # Output only. Reflects the merchant review state in `Checkout` program. This is set based on the data quality reviews of the URL provided by the merchant. A merchant with enrollment state as `ENROLLED` can be in the following review states: `IN_REVIEW`, `APPROVED` or `DISAPPROVED`. A merchant must be in an `enrollment_state` of `ENROLLED` before a review can begin for the merchant.For more details, check the help center doc.
+  &quot;uriSettings&quot;: { # URL settings for cart or checkout URL. # URI settings for cart or checkout URL.
+    <code class="details" id="deleteCheckoutSettings">deleteCheckoutSettings(name, x__xgafv=None)</code>
+  <pre>Deletes `CheckoutSettings` and unenrolls merchant from `Checkout` program.
+  name: string, Required. The name/identifier of the merchant account. Format: `accounts/{account}/programs/{program}/checkoutSettings` (required)
+    <code class="details" id="getCheckoutSettings">getCheckoutSettings(name, x__xgafv=None)</code>
+  <pre>Gets `CheckoutSettings` for the given merchant. This includes information about review state, enrollment state and URL settings.
+    <code class="details" id="updateCheckoutSettings">updateCheckoutSettings(name, body=None, updateMask=None, x__xgafv=None)</code>
+  <pre>Updates `CheckoutSettings` for the given merchant.
+  name: string, Identifier. The resource name of the program configuration settings. Format: `accounts/{account}/programs/{program}/checkoutSettings` (required)
+  updateMask: string, Required. List of fields being updated. The following fields are supported (in both `snake_case` and `lowerCamelCase`): - `eligible_destinations` - `uri_settings`

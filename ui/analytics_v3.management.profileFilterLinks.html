@@ -1,0 +1,55 @@
+<h1><a href="analytics_v3.html">Google Analytics API</a> . <a href="analytics_v3.management.html">management</a> . <a href="analytics_v3.management.profileFilterLinks.html">profileFilterLinks</a></h1>
+  <code><a href="#delete">delete(accountId, webPropertyId, profileId, linkId)</a></code></p>
+<p class="firstline">Delete a profile filter link.</p>
+  <code><a href="#get">get(accountId, webPropertyId, profileId, linkId)</a></code></p>
+<p class="firstline">Returns a single profile filter link.</p>
+<p class="firstline">Create a new profile filter link.</p>
+<p class="firstline">Lists all profile filter links for a profile.</p>
+  <code><a href="#patch">patch(accountId, webPropertyId, profileId, linkId, body=None)</a></code></p>
+<p class="firstline">Update an existing profile filter link. This method supports patch semantics.</p>
+  <code><a href="#update">update(accountId, webPropertyId, profileId, linkId, body=None)</a></code></p>
+<p class="firstline">Update an existing profile filter link.</p>
+    <code class="details" id="delete">delete(accountId, webPropertyId, profileId, linkId)</code>
+  <pre>Delete a profile filter link.
+  accountId: string, Account ID to which the profile filter link belongs. (required)
+  webPropertyId: string, Web property Id to which the profile filter link belongs. (required)
+  profileId: string, Profile ID to which the filter link belongs. (required)
+  linkId: string, ID of the profile filter link to delete. (required)
+    <code class="details" id="get">get(accountId, webPropertyId, profileId, linkId)</code>
+  <pre>Returns a single profile filter link.
+  accountId: string, Account ID to retrieve profile filter link for. (required)
+  webPropertyId: string, Web property Id to retrieve profile filter link for. (required)
+  profileId: string, Profile ID to retrieve filter link for. (required)
+  linkId: string, ID of the profile filter link. (required)
+    { # JSON template for an Analytics profile filter link.
+  &quot;filterRef&quot;: { # JSON template for a profile filter link. # Filter for this link.
+    &quot;href&quot;: &quot;A String&quot;, # Link for this filter.
+    &quot;kind&quot;: &quot;analytics#filterRef&quot;, # Kind value for filter reference.
+  &quot;id&quot;: &quot;A String&quot;, # Profile filter link ID.
+  &quot;kind&quot;: &quot;analytics#profileFilterLink&quot;, # Resource type for Analytics filter.
+  &quot;rank&quot;: 42, # The rank of this profile filter link relative to the other filters linked to the same profile.
+      # For readonly (i.e., list and get) operations, the rank always starts at 1.
+      # For write (i.e., create, update, or delete) operations, you may specify a value between 0 and 255 inclusively, [0, 255]. In order to insert a link at the end of the list, either don&#x27;t specify a rank or set a rank to a number greater than the largest rank in the list. In order to insert a link to the beginning of the list specify a rank that is less than or equal to 1. The new link will move all existing filters with the same or lower rank down the list. After the link is inserted/updated/deleted all profile filter links will be renumbered starting at 1.
+  &quot;selfLink&quot;: &quot;A String&quot;, # Link for this profile filter link.
+  <pre>Create a new profile filter link.
+  accountId: string, Account ID to create profile filter link for. (required)
+  webPropertyId: string, Web property Id to create profile filter link for. (required)
+  profileId: string, Profile ID to create filter link for. (required)
+  <pre>Lists all profile filter links for a profile.
+  accountId: string, Account ID to retrieve profile filter links for. (required)
+  webPropertyId: string, Web property Id for profile filter links for. Can either be a specific web property ID or &#x27;~all&#x27;, which refers to all the web properties that user has access to. (required)
+  profileId: string, Profile ID to retrieve filter links for. Can either be a specific profile ID or &#x27;~all&#x27;, which refers to all the profiles that user has access to. (required)
+  max_results: integer, The maximum number of profile filter links to include in this response.
+    { # A profile filter link collection lists profile filter links between profiles and filters. Each resource in the collection corresponds to a profile filter link.
+  &quot;items&quot;: [ # A list of profile filter links.
+  &quot;kind&quot;: &quot;analytics#profileFilterLinks&quot;, # Collection type.
+  &quot;nextLink&quot;: &quot;A String&quot;, # Link to next page for this profile filter link collection.
+  &quot;previousLink&quot;: &quot;A String&quot;, # Link to previous page for this profile filter link collection.
+    <code class="details" id="patch">patch(accountId, webPropertyId, profileId, linkId, body=None)</code>
+  <pre>Update an existing profile filter link. This method supports patch semantics.
+  accountId: string, Account ID to which profile filter link belongs. (required)
+  webPropertyId: string, Web property Id to which profile filter link belongs (required)
+  profileId: string, Profile ID to which filter link belongs (required)
+  linkId: string, ID of the profile filter link to be updated. (required)
+    <code class="details" id="update">update(accountId, webPropertyId, profileId, linkId, body=None)</code>
+  <pre>Update an existing profile filter link.

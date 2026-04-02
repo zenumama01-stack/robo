@@ -1,0 +1,52 @@
+<h1><a href="apigee_v1.html">Apigee API</a> . <a href="apigee_v1.organizations.html">organizations</a> . <a href="apigee_v1.organizations.appgroups.html">appgroups</a></h1>
+  <code><a href="apigee_v1.organizations.appgroups.apps.html">apps()</a></code>
+  <code><a href="apigee_v1.organizations.appgroups.balance.html">balance()</a></code>
+<p class="firstline">Returns the balance Resource.</p>
+  <code><a href="apigee_v1.organizations.appgroups.subscriptions.html">subscriptions()</a></code>
+<p class="firstline">Creates an AppGroup. Once created, user can register apps under the AppGroup to obtain secret key and password. At creation time, the AppGroup's state is set as `active`.</p>
+<p class="firstline">Deletes an AppGroup. All app and API keys associations with the AppGroup are also removed. **Warning**: This API will permanently delete the AppGroup and related artifacts. **Note**: The delete operation is asynchronous. The AppGroup is deleted immediately, but its associated resources, such as apps and API keys, may take anywhere from a few seconds to a few minutes to be deleted.</p>
+<p class="firstline">Returns the AppGroup details for the provided AppGroup name in the request URI.</p>
+  <code><a href="#getBalance">getBalance(name, x__xgafv=None)</a></code></p>
+<p class="firstline">Gets the account balance for the AppGroup.</p>
+  <code><a href="#getMonetizationConfig">getMonetizationConfig(name, x__xgafv=None)</a></code></p>
+<p class="firstline">Gets the monetization configuration for the AppGroup.</p>
+<p class="firstline">Lists all AppGroups in an organization. A maximum of 1000 AppGroups are returned in the response if PageSize is not specified, or if the PageSize is greater than 1000.</p>
+<p class="firstline">Updates an AppGroup. This API replaces the existing AppGroup details with those specified in the request. Include or exclude any existing details that you want to retain or delete, respectively. Note that the state of the AppGroup should be updated using `action`, and not via AppGroup.</p>
+  <code><a href="#updateMonetizationConfig">updateMonetizationConfig(name, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Updates the monetization configuration for the AppGroup.</p>
+  <pre>Creates an AppGroup. Once created, user can register apps under the AppGroup to obtain secret key and password. At creation time, the AppGroup&#x27;s state is set as `active`.
+  parent: string, Required. Name of the Apigee organization in which the AppGroup is created. Use the following structure in your request: `organizations/{org}`. (required)
+{ # AppGroup contains the request/response fields representing the logical grouping of apps. Note that appgroup_id, create_time and update_time cannot be changed by the user, and gets updated by the system. The name and the organization once provided cannot be edited subsequently.
+  &quot;appGroupId&quot;: &quot;A String&quot;, # Output only. Internal identifier that cannot be edited
+  &quot;attributes&quot;: [ # A list of attributes
+  &quot;channelId&quot;: &quot;A String&quot;, # channel identifier identifies the owner maintaing this grouping.
+  &quot;channelUri&quot;: &quot;A String&quot;, # A reference to the associated storefront/marketplace.
+  &quot;createdAt&quot;: &quot;A String&quot;, # Output only. Created time as milliseconds since epoch.
+  &quot;displayName&quot;: &quot;A String&quot;, # app group name displayed in the UI
+  &quot;email&quot;: &quot;A String&quot;, # Optional. Email of the AppGroup.
+  &quot;lastModifiedAt&quot;: &quot;A String&quot;, # Output only. Modified time as milliseconds since epoch.
+  &quot;name&quot;: &quot;A String&quot;, # Immutable. Name of the AppGroup. Characters you can use in the name are restricted to: A-Z0-9._\-$ %.
+  &quot;organization&quot;: &quot;A String&quot;, # Immutable. the org the app group is created
+  &quot;status&quot;: &quot;A String&quot;, # Valid values are `active` or `inactive`. Note that the status of the AppGroup should be updated via UpdateAppGroupRequest by setting the action as `active` or `inactive`.
+  <pre>Deletes an AppGroup. All app and API keys associations with the AppGroup are also removed. **Warning**: This API will permanently delete the AppGroup and related artifacts. **Note**: The delete operation is asynchronous. The AppGroup is deleted immediately, but its associated resources, such as apps and API keys, may take anywhere from a few seconds to a few minutes to be deleted.
+  name: string, Required. Name of the AppGroup. Use the following structure in your request: `organizations/{org}/appgroups/{app_group_name}` (required)
+  <pre>Returns the AppGroup details for the provided AppGroup name in the request URI.
+    <code class="details" id="getBalance">getBalance(name, x__xgafv=None)</code>
+  <pre>Gets the account balance for the AppGroup.
+    <code class="details" id="getMonetizationConfig">getMonetizationConfig(name, x__xgafv=None)</code>
+  <pre>Gets the monetization configuration for the AppGroup.
+  name: string, Required. Monetization configuration for the AppGroup. Use the following structure in your request: `organizations/{org}/appgroups/{app_group}/monetizationConfig` (required)
+    { # Monetization configuration for the AppGroup.
+  &quot;billingType&quot;: &quot;A String&quot;, # Required. Billing type.
+  <pre>Lists all AppGroups in an organization. A maximum of 1000 AppGroups are returned in the response if PageSize is not specified, or if the PageSize is greater than 1000.
+  parent: string, Required. Name of the Apigee organization. Use the following structure in your request: `organizations/{org}`. (required)
+  filter: string, The filter expression to be used to get the list of AppGroups, where filtering can be done on status, channelId or channelUri of the app group. Examples: filter=status=active&quot;, filter=channelId=, filter=channelUri=
+  pageSize: integer, Count of AppGroups a single page can have in the response. If unspecified, at most 1000 AppGroups will be returned. The maximum value is 1000; values above 1000 will be coerced to 1000.
+  pageToken: string, The starting index record for listing the AppGroups.
+    { # ListAppGroupsResponse contains the 0 or more AppGroups, along with the optional page token and the total count of apps.
+  &quot;appGroups&quot;: [ # List of AppGroups.
+  &quot;totalSize&quot;: 42, # Total count of AppGroups.
+  <pre>Updates an AppGroup. This API replaces the existing AppGroup details with those specified in the request. Include or exclude any existing details that you want to retain or delete, respectively. Note that the state of the AppGroup should be updated using `action`, and not via AppGroup.
+  action: string, Activate or de-activate the AppGroup by setting the action as `active` or `inactive`. The `Content-Type` header must be set to `application/octet-stream`, with empty body.
+    <code class="details" id="updateMonetizationConfig">updateMonetizationConfig(name, body=None, x__xgafv=None)</code>
+  <pre>Updates the monetization configuration for the AppGroup.

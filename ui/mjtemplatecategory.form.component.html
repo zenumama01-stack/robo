@@ -1,0 +1,20 @@
+    <!-- Management Audit Section -->
+        SectionKey="managementAudit"
+        SectionName="Management Audit"
+    <!-- Template Categories Section -->
+        SectionKey="templateCategories"
+        SectionName="Template Categories"
+        [BadgeCount]="GetSectionRowCount('templateCategories')"
+                [Params]="BuildRelationshipViewParamsByEntityName('MJ: Template Categories','ParentID')"
+                [NewRecordValues]="NewRecordValues('MJ: Template Categories')"
+                [AllowLoad]="IsSectionExpanded('templateCategories')"
+                (AfterDataLoad)="SetSectionRowCount('templateCategories', $event.totalRowCount)"
+    <!-- Templates Section -->
+        SectionKey="templates"
+        SectionName="Templates"
+        Icon="fa-regular fa-rectangle-list"
+        [BadgeCount]="GetSectionRowCount('templates')"
+                [Params]="BuildRelationshipViewParamsByEntityName('MJ: Templates','CategoryID')"
+                [NewRecordValues]="NewRecordValues('MJ: Templates')"
+                [AllowLoad]="IsSectionExpanded('templates')"
+                (AfterDataLoad)="SetSectionRowCount('templates', $event.totalRowCount)"

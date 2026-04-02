@@ -1,0 +1,28 @@
+<h1><a href="admob_v1beta.html">AdMob API</a> . <a href="admob_v1beta.accounts.html">accounts</a> . <a href="admob_v1beta.accounts.campaigns.html">campaigns</a></h1>
+  <code><a href="#batchUpdate">batchUpdate(parent, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Batch update operation for campaigns under the specified AdMob publisher.</p>
+<p class="firstline">List the campaigns under the specified AdMob account.</p>
+    <code class="details" id="batchUpdate">batchUpdate(parent, body=None, x__xgafv=None)</code>
+  <pre>Batch update operation for campaigns under the specified AdMob publisher.
+  parent: string, Required. Resource name of the account to list campaigns for. The `parent` field in the individual UpdateCampaignRequest messages should match the value set here. Example: accounts/pub-9876543210987654 (required)
+{ # The request for the BatchUpdateCampaigns API.
+  &quot;requests&quot;: [ # Required. The individual requests to update campaigns. Max 1000 allowed.
+    { # An update request for a singular campaign. Currently only cpi_micros of MAX_CPI and TARGET_CPI campaigns can be updated.
+      &quot;campaign&quot;: { # Describes an AdMob campaign. # Required. The campaign which is being updated.
+        &quot;cpiSetting&quot;: { # CPI setting for AdMob campaign. Ignored unless campaign goal type is MAX_CPI or TARGET_CPI. # The CPI setting of the campaign.
+          &quot;cpiMicros&quot;: &quot;A String&quot;, # Cost-per-install for this campaign in micro units in the currency of the GoogleAds account linked to this AdMob publisher.
+        &quot;displayName&quot;: &quot;A String&quot;, # Output only. The display name for the campaign.
+        &quot;goalType&quot;: &quot;A String&quot;, # Output only. The Goal type of the campaign.
+        &quot;name&quot;: &quot;A String&quot;, # Output only. Resource name for this campaign. Format is: accounts/{publisher_id}/campaigns/{campaign_id} Example: accounts/pub-9876543210987654/campaigns/0123456789
+      &quot;updateMask&quot;: &quot;A String&quot;, # List of campaign fields to be updated. Currently this field is not supported as only the cpi_micros field can be updated.
+    { # The response for the BatchUpdateCampaigns API.
+  &quot;campaigns&quot;: [ # The updated campaigns per the request.
+    { # Describes an AdMob campaign.
+  <pre>List the campaigns under the specified AdMob account.
+  parent: string, Required. Resource name of the account to list campaigns for. Example: accounts/pub-9876543210987654 (required)
+  filter: string, The filter string that uses [EBNF grammar syntax](https://google.aip.dev/assets/misc/ebnf-filtering.txt). Possible field to filter by is: - &quot;CAMPAIGN_GOAL_TYPE&quot; Possible filter function is: - `IN`: Used to filter fields that represent a singleton including &quot;CAMPAIGN_GOAL_TYPE&quot;. The filter functions can be added together using `AND`. `OR` functionality is not supported. Example: filter: IN(CAMPAIGN_GOAL_TYPE, &quot;NUMBER_OF_CLICKS&quot;, &quot;MEDIATED_ADS&quot;)
+  pageSize: integer, The maximum number of campaigns to return.
+  pageToken: string, The value returned by the last `ListCampaignsResponse`; indicates that this is a continuation of a prior `ListGoogleBiddingAdUnits` call, and that the system should return the next page of data.
+    { # Response for the ListCampaignsRequest.
+  &quot;campaigns&quot;: [ # The resulting mediation groups for the requested account.
+  &quot;nextPageToken&quot;: &quot;A String&quot;, # Used to set the `page_token` in the `ListCampaignsRequest` to retrieve the next page. If this field is omitted, there are no subsequent pages.

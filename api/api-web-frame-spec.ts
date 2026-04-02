@@ -1,0 +1,110 @@
+import { BrowserWindow, ipcMain, WebContents } from 'electron/main';
+describe('webFrame module', () => {
+  it('can use executeJavaScript', async () => {
+        preload: path.join(fixtures, 'pages', 'world-safe-preload.js')
+    defer(() => w.close());
+    const isSafe = once(ipcMain, 'executejs-safe');
+    const [, wasSafe] = await isSafe;
+    expect(wasSafe).to.equal(true);
+  it('can use executeJavaScript and catch conversion errors', async () => {
+        preload: path.join(fixtures, 'pages', 'world-safe-preload-error.js')
+    const execError = once(ipcMain, 'executejs-safe');
+    const [, error] = await execError;
+    expect(error).to.not.equal(null, 'Error should not be null');
+    expect(error).to.have.property('message', 'Uncaught Error: An object could not be cloned.');
+  it('calls a spellcheck provider', async () => {
+    await w.loadFile(path.join(fixtures, 'pages', 'webframe-spell-check.html'));
+    await w.webContents.executeJavaScript('document.querySelector("input").focus()', true);
+    const spellCheckerFeedback =
+      new Promise<[string[], boolean]>(resolve => {
+        ipcMain.on('spec-spell-check', (e, words, callbackDefined) => {
+          if (words.length === 5) {
+            // The API calls the provider after every completed word.
+            // The promise is resolved only after this event is received with all words.
+            resolve([words, callbackDefined]);
+    const inputText = 'spleling test you\'re ';
+    for (const keyCode of inputText) {
+      w.webContents.sendInputEvent({ type: 'char', keyCode });
+    const [words, callbackDefined] = await spellCheckerFeedback;
+    expect(words.sort()).to.deep.equal(['spleling', 'test', 'you\'re', 'you', 're'].sort());
+    expect(callbackDefined).to.be.true();
+  describe('api', () => {
+    let win: BrowserWindow;
+      win = new BrowserWindow({ show: false, webPreferences: { contextIsolation: false, nodeIntegration: true } });
+      await win.loadURL('data:text/html,<iframe name="test"></iframe>');
+      w = win.webContents;
+      await w.executeJavaScript(`
+        var { webFrame } = require('electron');
+        var isSameWebFrame = (a, b) => a.context === b.context;
+        childFrame = webFrame.firstChild;
+      win.close();
+      win = null as unknown as BrowserWindow;
+    describe('top', () => {
+      it('is self for top frame', async () => {
+        const equal = await w.executeJavaScript('isSameWebFrame(webFrame.top, webFrame)');
+        expect(equal).to.be.true();
+      it('is self for child frame', async () => {
+        const equal = await w.executeJavaScript('isSameWebFrame(childFrame.top, webFrame)');
+    describe('opener', () => {
+      it('is null for top frame', async () => {
+        const equal = await w.executeJavaScript('webFrame.opener === null');
+    describe('parent', () => {
+        const equal = await w.executeJavaScript('webFrame.parent === null');
+      it('is top frame for child frame', async () => {
+        const equal = await w.executeJavaScript('isSameWebFrame(childFrame.parent, webFrame)');
+    describe('firstChild', () => {
+      it('is child frame for top frame', async () => {
+        const equal = await w.executeJavaScript('isSameWebFrame(webFrame.firstChild, childFrame)');
+      it('is null for child frame', async () => {
+        const equal = await w.executeJavaScript('childFrame.firstChild === null');
+    describe('getFrameForSelector()', () => {
+      it('does not crash when not found', async () => {
+        const equal = await w.executeJavaScript('webFrame.getFrameForSelector("unexist-selector") === null');
+      it('returns the webFrame when found', async () => {
+        const equal = await w.executeJavaScript('isSameWebFrame(webFrame.getFrameForSelector("iframe"), childFrame)');
+    describe('findFrameByName()', () => {
+        const equal = await w.executeJavaScript('webFrame.findFrameByName("unexist-name") === null');
+        const equal = await w.executeJavaScript('isSameWebFrame(webFrame.findFrameByName("test"), childFrame)');
+    describe('findFrameByToken()', () => {
+        const equal = await w.executeJavaScript('webFrame.findFrameByToken("unknown") === null');
+        const equal = await w.executeJavaScript('isSameWebFrame(webFrame.findFrameByToken(childFrame.frameToken), childFrame)');
+    describe('setZoomFactor()', () => {
+        const zoom = await w.executeJavaScript('childFrame.setZoomFactor(2.0); childFrame.getZoomFactor()');
+        expect(zoom).to.equal(2.0);
+    describe('setZoomLevel()', () => {
+        const zoom = await w.executeJavaScript('childFrame.setZoomLevel(5); childFrame.getZoomLevel()');
+        expect(zoom).to.equal(5);
+    describe('getResourceUsage()', () => {
+        const result = await w.executeJavaScript('childFrame.getResourceUsage()');
+        expect(result).to.have.property('images').that.is.an('object');
+        expect(result).to.have.property('scripts').that.is.an('object');
+        expect(result).to.have.property('cssStyleSheets').that.is.an('object');
+        expect(result).to.have.property('xslStyleSheets').that.is.an('object');
+        expect(result).to.have.property('fonts').that.is.an('object');
+        expect(result).to.have.property('other').that.is.an('object');
+    describe('executeJavaScript', () => {
+      it('executeJavaScript() yields results via a promise and a sync callback', async () => {
+        const { callbackResult, callbackError, result } = await w.executeJavaScript(`new Promise(resolve => {
+          let callbackResult, callbackError;
+          childFrame
+            .executeJavaScript('1 + 1', (result, error) => {
+              callbackResult = result;
+              callbackError = error;
+            }).then(result => resolve({callbackResult, callbackError, result}))
+        expect(callbackResult).to.equal(2);
+        expect(callbackError).to.be.undefined();
+        expect(result).to.equal(2);
+      it('executeJavaScriptInIsolatedWorld() yields results via a promise and a sync callback', async () => {
+            .executeJavaScriptInIsolatedWorld(999, [{code: '1 + 1'}], (result, error) => {
+      it('executeJavaScript() yields errors via a promise and a sync callback', async () => {
+        const { callbackResult, callbackError, error } = await w.executeJavaScript(`new Promise(resolve => {
+            .executeJavaScript('thisShouldProduceAnError()', (result, error) => {
+            }).then(result => {throw new Error}, error => resolve({callbackResult, callbackError, error}))
+        expect(callbackResult).to.be.undefined();
+        expect(callbackError).to.be.an('error');
+        expect(error).to.be.an('error');
+      it('executeJavaScriptInIsolatedWorld() yields errors via a promise and a sync callback', async () => {
+            .executeJavaScriptInIsolatedWorld(999, [{code: 'thisShouldProduceAnError()'}], (result, error) => {
+      it('executeJavaScript(InIsolatedWorld) can be used without a callback', async () => {
+        expect(await w.executeJavaScript('webFrame.executeJavaScript(\'1 + 1\')')).to.equal(2);
+        expect(await w.executeJavaScript('webFrame.executeJavaScriptInIsolatedWorld(999, [{code: \'1 + 1\'}])')).to.equal(2);

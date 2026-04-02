@@ -1,0 +1,79 @@
+<!-- Overlay mode -->
+@if (!Inline) {
+  <div class="micro-backdrop" [class.visible]="IsVisible" (click)="OnBackdropClick()"></div>
+  <div class="micro-panel" [class.visible]="IsVisible">
+    <ng-container *ngTemplateOutlet="microContent"></ng-container>
+<!-- Inline mode (embedded in parent panel) -->
+@if (Inline) {
+  <div class="micro-inline">
+<!-- Shared content template -->
+<ng-template #microContent>
+  <!-- Header (overlay mode only) -->
+    <div class="micro-header">
+      <div class="micro-header-info">
+        <div class="micro-entity">
+          <i [class]="EntityIcon" class="micro-entity-icon"></i>
+          <span>{{Data.EntityName}}</span>
+          @if (RecordDisplayName) {
+            <span class="micro-record-name">{{RecordDisplayName}}</span>
+        <div class="micro-record-id">
+          <span>{{DisplayRecordID}}</span>
+      <div class="micro-header-actions">
+        <button class="micro-open-btn" (click)="OnOpenRecord()" title="Open this record">
+        <button class="micro-close" (click)="OnClose()">
+  <!-- Inline header -->
+    <div class="micro-inline-header">
+      <div class="micro-header-left">
+  <div class="micro-content" [class.micro-content-inline]="Inline">
+      <mj-loading text="Loading record data..."></mj-loading>
+    @if (!IsLoading && ErrorMessage) {
+      <div class="micro-error">
+    <!-- Field table -->
+    @if (!IsLoading && !ErrorMessage && Fields.length > 0) {
+      <div class="micro-fields">
+        <!-- Null toggle toolbar -->
+        @if (HiddenNullCount > 0) {
+          <div class="micro-toolbar">
+            <label class="null-toggle">
+              <input type="checkbox" [checked]="ShowNullValues" (change)="ToggleShowNulls()" />
+              <span class="null-toggle-label">Show null values ({{HiddenNullCount}})</span>
+        <div class="micro-field-header">
+          <span class="mf-col-name">Field</span>
+          @if (!HasDiffs) {
+            <span class="mf-col-value">Value</span>
+          @if (HasDiffs) {
+            <span class="mf-col-old">Old</span>
+            <span class="mf-col-new">New</span>
+        @for (field of VisibleFields; track field; let odd = $odd) {
+          <div class="micro-field-row"
+            [class.odd]="odd" [ngClass]="field.DiffClass">
+            <span class="mf-col-name" [title]="field.Description">
+              <i [class]="GetTypeIcon(field.Type)" class="mf-type-icon"></i>
+              <span class="mf-field-name">{{field.DisplayName}}</span>
+              <span class="mf-col-value" [title]="field.Value">
+                <!-- Boolean field -->
+                @if (field.IsBoolean && !field.IsNull) {
+                  <i [class]="field.BooleanValue ? 'fa-solid fa-square-check mf-bool-true' : 'fa-regular fa-square mf-bool-false'"
+                  class="mf-bool-icon"></i>
+                  <span class="mf-bool-label">{{field.BooleanValue ? 'Yes' : 'No'}}</span>
+                <!-- FK field with display value — show display name (ID) with open icon -->
+                @if (!field.IsBoolean && field.ForeignKeyEntityName && field.ForeignKeyDisplayValue) {
+                  <a class="mf-fk-link" (click)="OnEntityLinkClicked($event, field)"
+                    [title]="field.ForeignKeyEntityName + ': ' + field.ForeignKeyRecordId">
+                    {{field.ForeignKeyDisplayValue}}
+                    <span class="mf-fk-id">({{field.ForeignKeyRecordId | slice:0:8}}...)</span>
+                    <i class="fa-solid fa-arrow-up-right-from-square mf-fk-icon"></i>
+                <!-- FK field without display value — show raw ID with open icon -->
+                @if (!field.IsBoolean && field.ForeignKeyEntityName && !field.ForeignKeyDisplayValue) {
+                    [title]="'Open ' + field.ForeignKeyEntityName">
+                    {{field.Value}}
+                <!-- JSON field — formatted -->
+                @if (!field.IsBoolean && !field.ForeignKeyEntityName && field.IsJson) {
+                  <pre class="mf-json-value">{{field.Value}}</pre>
+                @if (!field.IsBoolean && !field.ForeignKeyEntityName && !field.IsJson) {
+              <span class="mf-col-old" [title]="field.OldValue">
+                {{field.OldValue || field.Value}}
+              <span class="mf-col-new" [title]="field.Value">
+    @if (!IsLoading && !ErrorMessage && Fields.length === 0) {
+      <div class="micro-empty">
+        <p>No field data available.</p>

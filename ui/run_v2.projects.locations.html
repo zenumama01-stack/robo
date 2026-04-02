@@ -1,0 +1,32 @@
+<h1><a href="run_v2.html">Cloud Run Admin API</a> . <a href="run_v2.projects.html">projects</a> . <a href="run_v2.projects.locations.html">locations</a></h1>
+  <code><a href="run_v2.projects.locations.builds.html">builds()</a></code>
+  <code><a href="run_v2.projects.locations.instances.html">instances()</a></code>
+  <code><a href="run_v2.projects.locations.jobs.html">jobs()</a></code>
+  <code><a href="run_v2.projects.locations.operations.html">operations()</a></code>
+  <code><a href="run_v2.projects.locations.services.html">services()</a></code>
+  <code><a href="run_v2.projects.locations.workerPools.html">workerPools()</a></code>
+  <code><a href="#exportImage">exportImage(name, body=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Export image for a given resource.</p>
+  <code><a href="#exportImageMetadata">exportImageMetadata(name, x__xgafv=None)</a></code></p>
+<p class="firstline">Export image metadata for a given resource.</p>
+  <code><a href="#exportMetadata">exportMetadata(name, x__xgafv=None)</a></code></p>
+<p class="firstline">Export generated customer metadata for a given resource.</p>
+  <code><a href="#exportProjectMetadata">exportProjectMetadata(name, x__xgafv=None)</a></code></p>
+<p class="firstline">Export generated customer metadata for a given project.</p>
+    <code class="details" id="exportImage">exportImage(name, body=None, x__xgafv=None)</code>
+  <pre>Export image for a given resource.
+  name: string, Required. The name of the resource of which image metadata should be exported. Format: `projects/{project_id_or_number}/locations/{location}/services/{service}/revisions/{revision}` for Revision `projects/{project_id_or_number}/locations/{location}/jobs/{job}/executions/{execution}` for Execution (required)
+{ # Request message for exporting Cloud Run image.
+  &quot;destinationRepo&quot;: &quot;A String&quot;, # Required. The export destination url (the Artifact Registry repo).
+    { # ExportImageResponse contains an operation Id to track the image export operation.
+  &quot;operationId&quot;: &quot;A String&quot;, # An operation ID used to track the status of image exports tied to the original pod ID in the request.
+    <code class="details" id="exportImageMetadata">exportImageMetadata(name, x__xgafv=None)</code>
+  <pre>Export image metadata for a given resource.
+    { # Metadata represents the JSON encoded generated customer metadata.
+  &quot;metadata&quot;: &quot;A String&quot;, # JSON encoded Google-generated Customer Metadata for a given resource/project.
+    <code class="details" id="exportMetadata">exportMetadata(name, x__xgafv=None)</code>
+  <pre>Export generated customer metadata for a given resource.
+  name: string, Required. The name of the resource of which metadata should be exported. Format: `projects/{project_id_or_number}/locations/{location}/services/{service}` for Service `projects/{project_id_or_number}/locations/{location}/services/{service}/revisions/{revision}` for Revision `projects/{project_id_or_number}/locations/{location}/jobs/{job}/executions/{execution}` for Execution {project_id_or_number} may contains domain-scoped project IDs (required)
+    <code class="details" id="exportProjectMetadata">exportProjectMetadata(name, x__xgafv=None)</code>
+  <pre>Export generated customer metadata for a given project.
+  name: string, Required. The name of the project of which metadata should be exported. Format: `projects/{project_id_or_number}/locations/{location}` for Project in a given location. (required)

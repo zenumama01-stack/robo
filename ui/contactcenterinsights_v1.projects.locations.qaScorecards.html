@@ -1,0 +1,40 @@
+<h1><a href="contactcenterinsights_v1.html">Contact Center AI Insights API</a> . <a href="contactcenterinsights_v1.projects.html">projects</a> . <a href="contactcenterinsights_v1.projects.locations.html">locations</a> . <a href="contactcenterinsights_v1.projects.locations.qaScorecards.html">qaScorecards</a></h1>
+  <code><a href="contactcenterinsights_v1.projects.locations.qaScorecards.revisions.html">revisions()</a></code>
+  <code><a href="#create">create(parent, body=None, qaScorecardId=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Create a QaScorecard.</p>
+<p class="firstline">Deletes a QaScorecard.</p>
+<p class="firstline">Gets a QaScorecard.</p>
+  <code><a href="#list">list(parent, pageSize=None, pageToken=None, qaScorecardSources=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Lists QaScorecards.</p>
+<p class="firstline">Updates a QaScorecard.</p>
+    <code class="details" id="create">create(parent, body=None, qaScorecardId=None, x__xgafv=None)</code>
+  <pre>Create a QaScorecard.
+  parent: string, Required. The parent resource of the QaScorecard. (required)
+{ # A QaScorecard represents a collection of questions to be scored during analysis.
+  &quot;createTime&quot;: &quot;A String&quot;, # Output only. The time at which this scorecard was created.
+  &quot;description&quot;: &quot;A String&quot;, # A text description explaining the intent of the scorecard.
+  &quot;displayName&quot;: &quot;A String&quot;, # The user-specified display name of the scorecard.
+  &quot;isDefault&quot;: True or False, # Whether the scorecard is the default one for the project. A default scorecard cannot be deleted and will always appear first in scorecard selector.
+  &quot;name&quot;: &quot;A String&quot;, # Identifier. The scorecard name. Format: projects/{project}/locations/{location}/qaScorecards/{qa_scorecard}
+  &quot;source&quot;: &quot;A String&quot;, # Output only. The source of the scorecard.
+  &quot;updateTime&quot;: &quot;A String&quot;, # Output only. The most recent time at which the scorecard was updated.
+  qaScorecardId: string, Optional. A unique ID for the new QaScorecard. This ID will become the final component of the QaScorecard&#x27;s resource name. If no ID is specified, a server-generated ID will be used. This value should be 4-64 characters and must match the regular expression `^[a-z0-9-]{4,64}$`. Valid characters are `a-z-`.
+  <pre>Deletes a QaScorecard.
+  name: string, Required. The name of the QaScorecard to delete. (required)
+  force: boolean, Optional. If set to true, all of this QaScorecard&#x27;s child resources will also be deleted. Otherwise, the request will only succeed if it has none.
+  <pre>Gets a QaScorecard.
+  name: string, Required. The name of the QaScorecard to get. (required)
+    <code class="details" id="list">list(parent, pageSize=None, pageToken=None, qaScorecardSources=None, x__xgafv=None)</code>
+  <pre>Lists QaScorecards.
+  parent: string, Required. The parent resource of the scorecards. (required)
+  pageSize: integer, Optional. The maximum number of scorecards to return in the response. If the value is zero, the service will select a default size. A call might return fewer objects than requested. A non-empty `next_page_token` in the response indicates that more data is available.
+  pageToken: string, Optional. The value returned by the last `ListQaScorecardsResponse`. This value indicates that this is a continuation of a prior `ListQaScorecards` call and that the system should return the next page of data.
+  qaScorecardSources: string, Optional. The source of scorecards are based on how those Scorecards were created, e.g., a customer-defined scorecard, a predefined scorecard, etc. This field is used to retrieve Scorecards of one or more sources. (repeated)
+      QA_SCORECARD_SOURCE_UNSPECIFIED - The source of the scorecard is unspecified. Default to QA_SCORECARD_SOURCE_CUSTOMER_DEFINED.
+      QA_SCORECARD_SOURCE_CUSTOMER_DEFINED - The scorecard is a custom scorecard created by the user.
+      QA_SCORECARD_SOURCE_DISCOVERY_ENGINE - The scorecard is a scorecard created through discovery engine deployment.
+    { # The response from a ListQaScorecards request.
+  &quot;qaScorecards&quot;: [ # The QaScorecards under the parent.
+  <pre>Updates a QaScorecard.
+  name: string, Identifier. The scorecard name. Format: projects/{project}/locations/{location}/qaScorecards/{qa_scorecard} (required)
+  updateMask: string, Required. The list of fields to be updated. All possible fields can be updated by passing `*`, or a subset of the following updateable fields can be provided: * `description` * `display_name`

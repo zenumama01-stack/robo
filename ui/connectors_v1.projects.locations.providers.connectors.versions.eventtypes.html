@@ -1,0 +1,16 @@
+<h1><a href="connectors_v1.html">Connectors API</a> . <a href="connectors_v1.projects.html">projects</a> . <a href="connectors_v1.projects.locations.html">locations</a> . <a href="connectors_v1.projects.locations.providers.html">providers</a> . <a href="connectors_v1.projects.locations.providers.connectors.html">connectors</a> . <a href="connectors_v1.projects.locations.providers.connectors.versions.html">versions</a> . <a href="connectors_v1.projects.locations.providers.connectors.versions.eventtypes.html">eventtypes</a></h1>
+<p class="firstline">Gets details of a single event type.</p>
+<p class="firstline">Lists Event Types in a given Connector Version.</p>
+  <pre>Gets details of a single event type.
+  name: string, Required. Resource name of the form: `projects/*/locations/*/providers/*/connectors/*/versions/*/eventtypes/*` Only global location is supported for EventType resource. (required)
+    { # EventType includes fields.
+  &quot;enrichedEventPayloadSchema&quot;: &quot;A String&quot;, # Output only. Schema of the event payload after enriched. Will be null if read before send is not supported.
+  &quot;entityType&quot;: &quot;A String&quot;, # Output only. Runtime entity type name. Will be null if entity type map is not available. Used for read before send feature.
+  &quot;eventPayloadSchema&quot;: &quot;A String&quot;, # Output only. Schema of webhook event payload.
+  &quot;eventTypeId&quot;: &quot;A String&quot;, # Output only. Event type id. Example: `ticket.created`.
+  &quot;idPath&quot;: &quot;A String&quot;, # Output only. Id path denotes the path of id in webhook payload.
+  &quot;name&quot;: &quot;A String&quot;, # Output only. Resource name of the eventtype. Format: projects/{project}/locations/{location}/providers/{provider}/connectors/{connector}/versions/{version}/eventtypes/{eventtype} Only global location is supported for Connector resource.
+  <pre>Lists Event Types in a given Connector Version.
+  parent: string, Required. Parent resource of the connectors, of the form: `projects/*/locations/*/providers/*/connectors/*/versions/*` Only global location is supported for EventType resource. (required)
+    { # Response message for Connectors.ListEventTypes.
+  &quot;eventTypes&quot;: [ # A list of connector versions.

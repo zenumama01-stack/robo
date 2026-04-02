@@ -1,0 +1,14 @@
+<h1><a href="poly_v1.html">Poly API</a> . <a href="poly_v1.users.html">users</a> . <a href="poly_v1.users.assets.html">assets</a></h1>
+  <code><a href="#list">list(name, format=None, orderBy=None, pageSize=None, pageToken=None, visibility=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Lists assets authored by the given user. Only the value 'me', representing the currently-authenticated user, is supported. May include assets with an access level of PRIVATE or UNLISTED and assets which are All Rights Reserved for the currently-authenticated user.</p>
+    <code class="details" id="list">list(name, format=None, orderBy=None, pageSize=None, pageToken=None, visibility=None, x__xgafv=None)</code>
+  <pre>Lists assets authored by the given user. Only the value &#x27;me&#x27;, representing the currently-authenticated user, is supported. May include assets with an access level of PRIVATE or UNLISTED and assets which are All Rights Reserved for the currently-authenticated user.
+  name: string, A valid user id. Currently, only the special value &#x27;me&#x27;, representing the currently-authenticated user is supported. To use &#x27;me&#x27;, you must pass an OAuth token with the request. (required)
+  format: string, Return only assets with the matching format. Acceptable values are: `BLOCKS`, `FBX`, `GLTF`, `GLTF2`, `OBJ`, and `TILT`.
+  visibility: string, The visibility of the assets to be returned. Defaults to VISIBILITY_UNSPECIFIED which returns all assets.
+      VISIBILITY_UNSPECIFIED - No visibility specified. Returns all assets.
+      PUBLISHED - Returns only published assets.
+      PRIVATE - Returns only private assets.
+  &quot;userAssets&quot;: [ # A list of UserAssets matching the request.
+    { # Data about the user&#x27;s asset.
+      &quot;asset&quot;: { # Represents and describes an asset in the Poly library. An asset is a 3D model or scene created using [Tilt Brush](//www.tiltbrush.com), [Blocks](//vr.google.com/blocks/), or any 3D program that produces a file that can be upload to Poly. # An Asset.

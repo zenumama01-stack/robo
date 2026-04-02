@@ -1,0 +1,74 @@
+<h1><a href="compute_alpha.html">Compute Engine API</a> . <a href="compute_alpha.interconnectRemoteLocations.html">interconnectRemoteLocations</a></h1>
+  <code><a href="#get">get(project, interconnectRemoteLocation, x__xgafv=None)</a></code></p>
+<p class="firstline">Returns the details for the specified interconnect remote location. Gets a</p>
+<p class="firstline">Retrieves the list of interconnect remote locations available to the</p>
+    <code class="details" id="get">get(project, interconnectRemoteLocation, x__xgafv=None)</code>
+  <pre>Returns the details for the specified interconnect remote location. Gets a
+list of available interconnect remote locations by making alist() request.
+  interconnectRemoteLocation: string, Name of the interconnect remote location to return. (required)
+    { # Represents a Cross-Cloud Interconnect Remote Location resource.
+    # You can use this resource to find remote location details about an
+    # Interconnect attachment (VLAN).
+  &quot;attachmentConfigurationConstraints&quot;: { # Output only. [Output Only] Subset of fields from InterconnectAttachment&#x27;s
+      # |configurationConstraints| field that apply to all attachments for this
+      # remote location.
+  &quot;city&quot;: &quot;A String&quot;, # Output only. [Output Only] Metropolitan area designator that indicates which city an
+  &quot;constraints&quot;: { # Output only. [Output Only] Constraints on the parameters for creating Cross-Cloud
+      # Interconnect and associated InterconnectAttachments.
+    &quot;portPairRemoteLocation&quot;: &quot;A String&quot;, # Output only. [Output Only] Port pair remote location constraints, which can take one
+        # of the following values: PORT_PAIR_UNCONSTRAINED_REMOTE_LOCATION,
+        # PORT_PAIR_MATCHING_REMOTE_LOCATION.
+        # Google Cloud API refers only to individual ports, but the UI uses this
+        # field when ordering a pair of ports, to prevent users from accidentally
+        # ordering something that is incompatible with their cloud provider.
+        # Specifically, when ordering a redundant pair of Cross-Cloud Interconnect
+        # ports, and one of them uses a remote location with
+        # portPairMatchingRemoteLocation set to matching, the UI requires that
+        # both ports use the same remote location.
+    &quot;portPairVlan&quot;: &quot;A String&quot;, # Output only. [Output Only] Port pair VLAN constraints, which can take one of the
+        # following values: PORT_PAIR_UNCONSTRAINED_VLAN, PORT_PAIR_MATCHING_VLAN
+    &quot;subnetLengthRange&quot;: { # Output only. [Output Only]
+        # [min-length, max-length]
+        # The minimum and maximum value (inclusive) for the IPv4 subnet
+        # length.
+        #  For example, an  interconnectRemoteLocation for Azure has {min: 30,
+        # max:
+        # 30} because Azure requires /30 subnets.
+        # This range specifies the values supported by both cloud providers.
+        # Interconnect currently supports /29 and /30 IPv4 subnet lengths. If a
+        # remote cloud has no constraint on IPv4 subnet length, the range would
+        # thus be {min: 29, max: 30}.
+  &quot;continent&quot;: &quot;A String&quot;, # Output only. [Output Only] Continent for this location, which can take one of the
+  &quot;kind&quot;: &quot;compute#interconnectRemoteLocation&quot;, # Output only. [Output Only] Type of the resource. Alwayscompute#interconnectRemoteLocation for interconnect remote
+  &quot;lacp&quot;: &quot;A String&quot;, # Output only. [Output Only] Link Aggregation Control Protocol (LACP) constraints, which
+      # can take one of the following values: LACP_SUPPORTED, LACP_UNSUPPORTED
+  &quot;maxLagSize100Gbps&quot;: 42, # Output only. [Output Only]
+      # The maximum number of 100 Gbps ports supported in a link aggregation group
+      # (LAG). When linkType is 100 Gbps, requestedLinkCount cannot exceed
+      # max_lag_size_100_gbps.
+  &quot;maxLagSize10Gbps&quot;: 42, # Output only. [Output Only]
+      # The maximum number of 10 Gbps ports supported in a link aggregation group
+      # (LAG). When linkType is 10 Gbps, requestedLinkCount cannot exceed
+      # max_lag_size_10_gbps.
+  &quot;maxLagSize400Gbps&quot;: 42, # Output only. [Output Only]
+      # The maximum number of 400 Gbps ports supported in a link aggregation group
+      # (LAG). When linkType is 400 Gbps, requestedLinkCount cannot exceed
+      # max_lag_size_400_gbps.
+  &quot;permittedConnections&quot;: [ # Output only. [Output Only] Permitted connections.
+      &quot;interconnectLocation&quot;: &quot;A String&quot;, # Output only. [Output Only] URL of an Interconnect location that is permitted to
+          # connect to this Interconnect remote location.
+  &quot;remoteService&quot;: &quot;A String&quot;, # Output only. [Output Only] Indicates the service provider present at the remote
+      # location. Example values: &quot;Amazon Web Services&quot;, &quot;Microsoft Azure&quot;.
+  &quot;status&quot;: &quot;A String&quot;, # Output only. [Output Only] The status of this InterconnectRemoteLocation, which can take
+      # one of the following values:
+      #    - CLOSED: The InterconnectRemoteLocation is closed and is unavailable
+      #    for provisioning new Cross-Cloud Interconnects.
+      #    - AVAILABLE: The
+      #    InterconnectRemoteLocation is available for provisioning new
+      #    Cross-Cloud Interconnects.
+  <pre>Retrieves the list of interconnect remote locations available to the
+    { # Response to the list request, and contains a list of interconnect remote
+  &quot;items&quot;: [ # A list of InterconnectRemoteLocation resources.
+  &quot;kind&quot;: &quot;compute#interconnectRemoteLocationList&quot;, # Output only. [Output Only] Type of resource. Alwayscompute#interconnectRemoteLocationList for lists of
+      # interconnect remote locations.
+  &quot;nextPageToken&quot;: &quot;A String&quot;, # [Output Only] This token lets you get the next page of results for

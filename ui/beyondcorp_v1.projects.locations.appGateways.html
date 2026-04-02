@@ -1,0 +1,28 @@
+<h1><a href="beyondcorp_v1.html">BeyondCorp API</a> . <a href="beyondcorp_v1.projects.html">projects</a> . <a href="beyondcorp_v1.projects.locations.html">locations</a> . <a href="beyondcorp_v1.projects.locations.appGateways.html">appGateways</a></h1>
+  <code><a href="#create">create(parent, appGatewayId=None, body=None, requestId=None, validateOnly=None, x__xgafv=None)</a></code></p>
+<p class="firstline">Creates a new AppGateway in a given project and location.</p>
+<p class="firstline">Deletes a single AppGateway.</p>
+<p class="firstline">Gets details of a single AppGateway.</p>
+<p class="firstline">Lists AppGateways in a given project and location.</p>
+    <code class="details" id="create">create(parent, appGatewayId=None, body=None, requestId=None, validateOnly=None, x__xgafv=None)</code>
+  <pre>Creates a new AppGateway in a given project and location.
+  parent: string, Required. The resource project name of the AppGateway location using the form: `projects/{project_id}/locations/{location_id}` (required)
+{ # A BeyondCorp AppGateway resource represents a BeyondCorp protected AppGateway to a remote application. It creates all the necessary GCP components needed for creating a BeyondCorp protected AppGateway. Multiple connectors can be authorised for a single AppGateway.
+  &quot;allocatedConnections&quot;: [ # Output only. A list of connections allocated for the Gateway
+    { # Allocated connection of the AppGateway.
+      &quot;ingressPort&quot;: 42, # Required. The ingress port of an allocated connection
+      &quot;pscUri&quot;: &quot;A String&quot;, # Required. The PSC uri of an allocated connection
+  &quot;displayName&quot;: &quot;A String&quot;, # Optional. An arbitrary user-provided name for the AppGateway. Cannot exceed 64 characters.
+  &quot;hostType&quot;: &quot;A String&quot;, # Required. The type of hosting used by the AppGateway.
+  &quot;name&quot;: &quot;A String&quot;, # Required. Unique resource name of the AppGateway. The name is ignored when creating an AppGateway.
+  &quot;state&quot;: &quot;A String&quot;, # Output only. The current state of the AppGateway.
+  &quot;type&quot;: &quot;A String&quot;, # Required. The type of network connectivity used by the AppGateway.
+  appGatewayId: string, Optional. User-settable AppGateway resource ID. * Must start with a letter. * Must contain between 4-63 characters from `/a-z-/`. * Must end with a number or a letter.
+  <pre>Deletes a single AppGateway.
+  name: string, Required. BeyondCorp AppGateway name using the form: `projects/{project_id}/locations/{location_id}/appGateways/{app_gateway_id}` (required)
+  <pre>Gets details of a single AppGateway.
+  <pre>Lists AppGateways in a given project and location.
+  parent: string, Required. The resource name of the AppGateway location using the form: `projects/{project_id}/locations/{location_id}` (required)
+  pageToken: string, Optional. The next_page_token value returned from a previous ListAppGatewaysRequest, if any.
+    { # Response message for BeyondCorp.ListAppGateways.
+  &quot;appGateways&quot;: [ # A list of BeyondCorp AppGateways in the project.
