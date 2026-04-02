@@ -9,13 +9,15 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    env:
+      FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
 
     steps:
     - name: Checkout repository
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4   # নতুন ভার্সন
 
     - name: Set up Python
-      uses: actions/setup-python@v4
+      uses: actions/setup-python@v5   # নতুন ভার্সন
       with:
         python-version: "3.11"
 
